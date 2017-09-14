@@ -1,20 +1,14 @@
 #!/bin/bash
 
-os='U'
-
-if [ -z "$1" ];
-    then
-        read -p "(M)ac or (L)inux? " os
-else
-    os=${1//-/}
-fi
-
-if [ $os == 'L' ];
+if [ $OSTYPE == 'linux-gnu' ];
     then
         echo You are running Linux
-elif [ $os == 'M' ];
+elif [ $OSTYPE == 'darwin' ];
     then
         echo You are running Mac
+elif [ $OSTYPE == 'msys' ]; 
+    then
+        echo You are using Git Bash on Windows
 else
     echo "OS not set... Exiting with no change."
 fi
