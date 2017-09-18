@@ -13,7 +13,7 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
 
     echo -ne "Creating backups..."
     if [[ -d "$BAKDIR" ]]; then
-        echo -ne "existing backup detected.\n\e[33mContinue? (y/n) \e[0m"
+        echo -ne "[\e[31mExisting backup detected\e[0m]\n\e[33mContinue? (y/n) \e[0m"
         read -n 1 REPLY
         echo ""
         if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -48,10 +48,18 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
         echo -n "Placing custom config files..."
         cp ./editors/nanorc.sh "$HOME/.nanorc"
         cp ./bash/bash_aliases.sh "$HOME/.bash_aliases"
+        cp ./bash/bashrc.sh "$HOME/.bashrc"
+        echo -e "[\e[32mOK\e[0m]"
+
+        echo -n "Enabling bashrc..."
+        cd "$HOME"
+        . "$HOME/.bashrc"
+
         echo -e "[\e[32mOK\e[0m]"
 
         echo -n "Enabling aliases..."
         . "$HOME/.bash_aliases"
+        cd "$WD"
         echo -e "[\e[32mOK\e[0m]"
     fi
 
