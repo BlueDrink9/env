@@ -1,46 +1,76 @@
 #!/bin/bash
 
-wd=eval pwd                 # Save working dir to return after navigation.
-version='0.1'               # Version of the program.
-bakdir=$HOME/.env_backup    # Directory to store config backups.
-vimdir=$HOME/.vim_runtime   # Directory containing Vim extras.
+WD="$PWD"                   # Save working dir to return after navigation.
+VERSION='0.4'               # Version of the program.
+BAKDIR=$HOME/.env_backup    # Directory to store config backups.
+VIMDIR=$HOME/.vim_runtime   # Directory containing Vim extras.
+SKIP='0'
+
+echo -ne Detecting OS...
 
 if [ $OSTYPE == 'linux-gnu' ]; then
-    echo Detected OS is Linux
+    echo -e "[\e[32mLinux\e[0m]"
 
-    if [ -d "$bakdir" ]; then
-        read -p "Backup folder detected, continue? (y/n) " answer
-        if [ ! "$answer" == 'y' ]; then
+    echo -ne "Creating backups..."
+    if [ -d "$BAKDIR" ]; then
+        echo -ne "existing backup detected.\n\e[33mContinue? (y/n) \e[0m"
+        read -n 1 REPLY
+        echo ""
+        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
             exit
         fi
     else
-        mkdir "$bakdir"
+        mkdir "$BAKDIR"
     fi
 
-    echo "$version" > "$bakdir/.version"
+    if [ -f "$BAKDIR/.version" ]; then
+        echo -ne "Checking existing version..."
+        EXISTING=$(< "$BAKDIR/.version")
+        if [ "$EXISTING" == "$VERSION" ]; then
+            echo -e "Detected [\e[32m$VERSION\e[0m] Skipping to check Vim."
+            SKIP='2'
+        else
+            out="cat $BAKDIR/.version"
+            echo $out   
+            echo -e "Detected [\e[31m$EXISTING\e[0m] Updating => [\e[32m$VERSION\e[0m]"
+        fi
+    fi
 
-    echo "Backing up existing config files to $bakdir"
-	cp "$HOME/.bash_aliases" "$bakdir"
-	cp "$HOME/.nanorc" "$bakdir"
-    cp "$HOME/.bashrc" "$bakdir"
+    if [ ! "$SKIP" == '2' ]; then
+        echo "$VERSION" > "$BAKDIR/.version"
 
-    echo Placing custom config files.
-	cp ./.nanorc "$HOME"
-	cp ./.bash_aliases "$HOME"
+        echo -ne "Backing up existing config files to \e[36mfile://$BAKDIR\e[0m..."
+        cp "$HOME/.bash_aliases" "$BAKDIR"
+        cp "$HOME/.nanorc" "$BAKDIR"
+        cp "$HOME/.bashrc" "$BAKDIR"
+        echo -e "[\e[32mOK\e[0m]"
 
-    echo Enabling aliases
-    . "$HOME/.bash_aliases"
+        echo -n "Placing custom config files..."
+        cp ./editors/nanorc.sh "$HOME/.nanorc"
+        cp ./bash/bash_aliases.sh "$HOME/.bash_aliases"
+        echo -e "[\e[32mOK\e[0m]"
 
-    if [ -d "$vimdir" ]; then
-        echo Detected existing Vim runtime... checking update.
-        cd "$vimdir"
-        git rebase
-        cd "$wd"
+        echo -n "Enabling aliases..."
+        . "$HOME/.bash_aliases"
+        echo -e "[\e[32mOK\e[0m]"
+    fi
+
+    echo -ne "Checking Vim..."
+
+    if [ -d "$VIMDIR" ]; then
+        echo -ne "found custom Vim.\nUpdating => "
+
+        cd "$VIMDIR"
+        git rebase | xargs echo -n 
+        cd "$WD"
+        echo -e " [\e[32mOK\e[0m]"
     else
         echo Installing Amix\'s Awesome Vim config
-	    git clone --depth=1 https://github.com/amix/vimrc.git "$vimdir"
+	    git clone --depth=1 https://github.com/amix/vimrc.git "$VIMDIR"
     fi
-    sh "$vimdir/install_awesome_vimrc.sh"
+    sh "$VIMDIR/install_awesome_vimrc.sh" 2> /dev/null
+    
+    echo -e "[\e[32mInstall Complete\e[0m]" 
 
 elif [ $OSTYPE == 'darwin' ]; then
     echo You are running Mac
