@@ -1,7 +1,7 @@
 #!/bin/bash
 
 WD="$PWD"                   # Save working dir to return after navigation.
-VERSION='0.4'               # Version of the program.
+VERSION='0.8'               # Version of the program.
 BAKDIR=$HOME/.env_backup    # Directory to store config backups.
 VIMDIR=$HOME/.vim_runtime   # Directory containing Vim extras.
 SKIP='0'
@@ -53,12 +53,12 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
 
         echo -n "Enabling bashrc..."
         cd "$HOME"
-        . "$HOME/.bashrc"
+        source .bashrc
 
         echo -e "[\e[32mOK\e[0m]"
 
         echo -n "Enabling aliases..."
-        . "$HOME/.bash_aliases"
+        source .bash_aliases
         cd "$WD"
         echo -e "[\e[32mOK\e[0m]"
     fi
