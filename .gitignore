@@ -1,0 +1,6 @@
+
+# Ignore extracted fonts.
+fonts/ttf/
+fonts/woff/
+fonts/woff2/
+
