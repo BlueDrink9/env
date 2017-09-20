@@ -1,18 +1,32 @@
 #!/bin/bash
 
 WD="$PWD"                   # Save working dir to return after navigation.
-VERSION='0.8'               # Version of the program.
+VERSION='0.9'               # Version of the program.
 BAKDIR=$HOME/.env_backup    # Directory to store config backups.
 VIMDIR=$HOME/.vim_runtime   # Directory containing Vim extras.
-SKIP='0'
+FONTDIR="/usr/local/share/fonts"
+SKIP=0
 
 echo -ne Detecting OS...
 
+function copyFonts() {
+    unzip -o "./fonts/*.zip" -d "./fonts" -x "woff/*" "woff2/*"
+    sudo cp ./fonts/ttf/* $FONTDIR/truetype/custom
+    sudo chown root $FONTDIR/truetype/custom/*.ttf
+    fc-cache
+    rm -rf "./fonts/ttf"
+}
+
 if [[ $OSTYPE == 'linux-gnu' ]]; then
+
     echo -e "[\e[32mLinux\e[0m]"
 
+    if [[ $1 =~ -[Yy]$ ]]; then
+        SKIP=1
+    fi
+
     echo -ne "Creating backups..."
-    if [[ -d "$BAKDIR" ]]; then
+    if [[ -d "$BAKDIR" ]] && [[ ! $SKIP == 1 ]]; then
         echo -ne "[\e[31mExisting backup detected\e[0m]\n\e[33mContinue? (y/n) \e[0m"
         read -n 1 REPLY
         echo ""
@@ -20,7 +34,7 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
             exit
         fi
     else
-        mkdir "$BAKDIR"
+        mkdir -p "$BAKDIR"
     fi
 
     if [[ -f "$BAKDIR/.version" ]]; then
@@ -28,15 +42,17 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
         EXISTING=$(< "$BAKDIR/.version")
         if [[ "$EXISTING" == "$VERSION" ]]; then
             echo -e "Detected [\e[32m$VERSION\e[0m] Skipping to check Vim."
-            SKIP='2'
+            SKIP=2
         else
+            sudo echo "This gets sudo" > /dev/null
             out="cat $BAKDIR/.version"
             echo $out
             echo -e "Detected [\e[31m$EXISTING\e[0m] Updating => [\e[32m$VERSION\e[0m]"
         fi
     fi
 
-    if [[ ! "$SKIP" == '2' ]]; then
+    if [[ ! "$SKIP" == 2 ]]; then
+        echo "Updating installed version."
         echo "$VERSION" > "$BAKDIR/.version"
 
         echo -ne "Backing up existing config files to \e[36mfile://$BAKDIR\e[0m..."
@@ -50,6 +66,14 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
         cp ./bash/bash_aliases.sh "$HOME/.bash_aliases"
         cp ./bash/bashrc.sh "$HOME/.bashrc"
         echo -e "[\e[32mOK\e[0m]"
+
+        echo -e "Installing fonts... (requires root)"
+        if [[ ! -d "$FONTDIR/truetype/custom" ]]; then
+            sudo mkdir -p "$FONTDIR/truetype/custom"
+            copyFonts
+        else
+            copyFonts
+        fi
 
         echo -n "Enabling bashrc..."
         cd "$HOME"
