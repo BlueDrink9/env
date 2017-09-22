@@ -1,11 +1,12 @@
 #!/bin/bash
 
 WD="$PWD"                   # Save working dir to return after navigation.
-VERSION='0.9'               # Version of the program.
+VERSION='1.1'               # Version of the program.
 BAKDIR=$HOME/.env_backup    # Directory to store config backups.
 VIMDIR=$HOME/.vim_runtime   # Directory containing Vim extras.
 FONTDIR="/usr/local/share/fonts"
 SKIP=0
+GIT_UPDATE=0
 
 echo -ne Detecting OS...
 
@@ -23,6 +24,10 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
 
     if [[ $1 =~ -[Yy]$ ]]; then
         SKIP=1
+    fi
+
+    if [[ $1 =~ -[Gg][Uu]$ ]]; then
+        GIT_UPDATE=1
     fi
 
     echo -ne "Creating backups..."
@@ -49,6 +54,22 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
             echo $out
             echo -e "Detected [\e[31m$EXISTING\e[0m] Updating => [\e[32m$VERSION\e[0m]"
         fi
+    fi
+
+    if [[ ! "$SKIP" == 2 ]] || [[ "$GIT_UPDATE" == 1 ]]; then
+        echo -e "\e[33mSetting up git global user...\e[0m"
+        echo -ne "\e[34mEnter your git username:\e[0m "
+        read GIT_USER
+        echo -ne "\e[34mEnter your git email:\e[0m "
+        read GIT_EMAIL
+
+        echo -e "\e[32mConfiguring git.\e[0m"
+        echo "Username: $GIT_USER"
+        echo "Email: $GIT_EMAIL"
+        git config --global user.name "$GIT_USER"
+        git config --global user.email "$GIT_EMAIL"
+        echo -e "\e[36mYou can update your git user by entering:\e[0m ./install -gu"
+        echo ""
     fi
 
     if [[ ! "$SKIP" == 2 ]]; then
