@@ -1,7 +1,7 @@
 #!/bin/bash
 
 WD="$PWD"                   # Save working dir to return after navigation.
-VERSION='1.5'               # Version of the program.
+VERSION='1.6'               # Version of the program.
 BAKDIR=$HOME/.env_backup    # Directory to store config backups.
 VIMDIR=$HOME/.vim_runtime   # Directory containing Vim extras.
 FONTDIR="/usr/local/share/fonts"
@@ -18,15 +18,17 @@ function copyFonts() {
 }
 
 function setVimColorscheme() {
-    echo -e "Installing Vim colorschemes."
-    git clone --depth=1 https://github.com/flazz/vim-colorschemes.git
-    if [[ ! -d "$HOME/.vim" ]]; then
-        mkdir -p "$HOME/.vim/colors"
+    if [ ! -d "$HOME/.vim/colors" ] || [ ! $SKIP == 2 ]; then
+        echo -e "Installing Vim colorschemes."
+        git clone --depth=1 https://github.com/flazz/vim-colorschemes.git
+        if [[ ! -d "$HOME/.vim" ]]; then
+            mkdir -p "$HOME/.vim/colors"
+        fi
+        echo -ne "Placing color schemes..."
+        cp ./vim-colorschemes/colors/*.vim "$HOME/.vim/colors"
+        echo -e "\r[\e[32m   OK   \e[0m] Placing color schemes...Done."
+        rm -rf "./vim-colorschemes"
     fi
-    echo -ne "Placing color schemes..."
-    cp ./vim-colorschemes/colors/*.vim "$HOME/.vim/colors"
-    echo -e "\r[\e[32m   OK   \e[0m] Placing color schemes...Done."
-    rm -rf "./vim-colorschemes"
 
     echo -ne "\e[33mEnter chosen color scheme name: \e[0m"
     read COLORSCHEME
