@@ -37,6 +37,9 @@ Clones and installs configuration.
 Updates the configuration if install is run again.  
 Uses Amir Salihefendic's Ultimate Vim Configuration https://github.com/amix/vimrc
 
+Clones and installs color schemes from: flazz https://github.com/flazz/vim-colorschemes  
+Allows selection of a color scheme, and a shorcut to change it: `./install.sh -vc`
+
 ### Nano
 
 Simple nano config:
