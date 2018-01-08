@@ -1,7 +1,7 @@
 #!/bin/bash
 
 WD="$PWD"                   # Save working dir to return after navigation.
-VERSION='1.6'               # Version of the program.
+VERSION='1.7'               # Version of the program.
 BAKDIR=$HOME/.env_backup    # Directory to store config backups.
 VIMDIR=$HOME/.vim_runtime   # Directory containing Vim extras.
 FONTDIR="/usr/local/share/fonts"
