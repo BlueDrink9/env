@@ -1,0 +1,11 @@
+# vim: set ft=sh:
+# Set bash movement keys to be more vi-like
+# Can use `set -o vi` for short version
+set editing-mode vi
+
+# Used for set -o, shows a symbol at start of prompt for bash vi mode
+set show-mode-in-prompt on
+bind '"kv":vi-movement-mode'
+
+# Allows custom bindings?
+set keymap vi-command

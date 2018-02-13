@@ -1,0 +1,71 @@
+# -*-  mode: shell-script; -*-
+# vim: set ft=sh:
+
+# For debugging, `use set -x` to show all bash commands run.
+# (More plusses mean different file/function)
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Keyboard setup stuff
+capsToBS="-option caps:backspace"
+altWinSwap="-option altwin:swap_alt_win"
+altShiftToggle="-option grp:alt_shift_toggle"
+capsLed="-option grp_led:caps"
+colemak="-layout 'us, us' -variant 'colemak,'"
+alias wwkb="setxkbmap $colemak $capsToBS $altWinSwap $altShiftToggle $capsLed"
+
+alias term="xfce4-terminal"
+
+source ${SCRIPT_DIR}/bash_functions
+source ${SCRIPT_DIR}/bash_aliases
+source ${SCRIPT_DIR}/bash_prompt
+INPUTRC="${SCRIPT_DIR}/inputrc"
+source ${INPUTRC}
+
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# Allow sending ctrl+S to applications in terminal (prev stops scrolling)
+stty -ixon
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
