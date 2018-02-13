@@ -10,9 +10,11 @@ alias ls="ls -F --color=auto"
 alias lsa="ls -aF"
 alias ll="ls -alF"
 alias l='ls -CF'
-alias gc="git clone"
 alias open="nautilus $1 >/dev/null 2>&1"
 alias :q="exit"
+
+alias gca="git commit -a"
+alias gc="git clone"
 
 alias e="emacs -nw"
 alias v="vim"
