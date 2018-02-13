@@ -107,11 +107,12 @@ function get_git_branch() {
 
 # get current branch in git repo
 # Check status of branch
+# Green if no changes, yellow if modified. White if there are changes to files.
 function parse_git_branch() {
+  STATUS_COLOUR=${White} 
   BRANCH=`get_git_branch`
   if [ ! "${BRANCH}" == "" ]
   then
-    STATUS_COLOUR=""
     status=`git status 2>&1 | tee`
     dirty=`echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?"`
     untracked=`echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?"`
@@ -120,20 +121,20 @@ function parse_git_branch() {
     renamed=`echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?"`
     deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`
     bits=''
-    if [ "${renamed}" == "0" ]; then
-        bits=">${bits}"
-    fi
     if [ "${ahead}" == "0" ]; then
         bits="^${bits}"
     fi
-    if [ "${newfile}" == "0" ]; then
-        bits="+${bits}"
+    if [ "${renamed}" == "0" ]; then
+        bits=">${bits}"
     fi
     if [ "${untracked}" == "0" ]; then
         bits="?${bits}"
     fi
     if [ "${deleted}" == "0" ]; then
         bits="X${bits}"
+    fi
+    if [ "${newfile}" == "0" ]; then
+        bits="+${bits}"
     fi
     if [ "${dirty}" == "0" ]; then
         STATUS_COLOUR=${Yellow} 
