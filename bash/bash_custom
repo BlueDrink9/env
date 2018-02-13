@@ -26,7 +26,9 @@ source ${SCRIPT_DIR}/bash_functions
 source ${SCRIPT_DIR}/bash_aliases
 source ${SCRIPT_DIR}/bash_prompt
 INPUTRC="${SCRIPT_DIR}/inputrc"
-source ${INPUTRC}
+#"kv" will enter vi command mode
+bind '"kv":vi-movement-mode'
+#source ${INPUTRC}
 
 
 # don't put duplicate lines or lines starting with space in the history.

@@ -1,28 +1,15 @@
 # -*-  mode: shell-script; -*-
 # vim: set ft=sh:
 
-# Removes carriage return characters.
-function rmcr() {
-    sed -i 's/\r$//' $1
-}
-
-# Replaces a file with the .bak version of itself.
-function mkbak() {
-    cp $1 $1.bak
-}
-
-function mkcd() {
-    mkdir -p $1 && cd $1
-}
 
 alias cl="clear"
 alias ..="cd .. && ls"
 alias cd..="cd .. && ls"
 
 alias ls="ls -F --color=auto"
-alias lsa="ls -alF"
+alias lsa="ls -aF"
+alias ll="ls -alF"
 alias l='ls -CF'
-
 alias gc="git clone"
 alias open="nautilus $1 >/dev/null 2>&1"
 alias :q="exit"

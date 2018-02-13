@@ -110,8 +110,9 @@ function parse_git_branch() {
   BRANCH=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
   if [ ! "${BRANCH}" == "" ]
   then
-    # Commented out status because it's slow as hell. Not worth it.
+    STATUS_COLOUR=""
     STATUS=`parse_git_dirty`
+    # Sometimes status can be slow. Consider removing.
     GIT_PROMPT="${STATUS_COLOUR}[${BRANCH}${STATUS}]${NC}"
   else
     GIT_PROMPT=""
