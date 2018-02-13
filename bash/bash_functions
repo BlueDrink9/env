@@ -1,0 +1,158 @@
+# vim: set ft=sh:
+# vim:ts=2:sw=2
+
+# Removes carriage return characters from argument file.
+function rmcr() {
+    sed -i 's/\r$//' $1
+}
+
+# Replaces a file with the .bak version of itself.
+function mkbak() {
+    cp $1 $1.bak
+}
+
+function mkcd() {
+    mkdir -p $1 && cd $1
+}
+
+# Delete and reclone current git directory
+function reclone() {
+  if is_git_repository ; then
+        remoteUrl=`git config --get remote.origin.url`
+        repoFolder=`pwd`
+        cd .. && rm -rf ${repoFolder} && git clone ${remoteUrl} && cd ${repoFolder}
+  else
+    echo "Error: not a git repository ${remoteUrl}"
+    return 1
+  fi
+}
+
+function randGen(){
+    for ((i = 0; i < $1; i++)); do
+        echo $RANDOM
+    done
+}
+
+# Return the prompt symbol ($) to use, colorized based on the return value of the
+# previous command.
+function set_prompt_symbol () {
+  if test $1 -eq 0 ; then
+      PROMPT_SYMBOL="${Green}\$${NC}";
+      PREV_COMMAND_COLOUR="${Green}";
+  else
+      PROMPT_SYMBOL="${Red}\$${NC}";
+      PREV_COMMAND_COLOUR="${Red}";
+  fi
+}
+
+# Detect whether the current directory is a git repository.
+function is_git_repository {
+  git branch > /dev/null 2>&1
+}
+
+# Determine the branch/state information for this git repository.
+function set_git_branch {
+  # Capture the output of the "git status" command.
+  git_status="$(git status 2> /dev/null)"
+
+  # Set color based on clean/staged/dirty.
+  if [[ ${git_status} =~ "working directory clean" ]]; then
+    state="${BGreen}"
+  elif [[ ${git_status} =~ "Changes to be committed" ]]; then
+    state="${Yellow}"
+  else
+    state="${Red}"
+  fi
+
+  # Set arrow icon based on status against remote.
+  remote_pattern="# Your branch is (.*) of"
+  if [[ ${git_status} =~ ${remote_pattern} ]]; then
+    if [[ ${BASH_REMATCH[1]} == "ahead" ]]; then
+      remote="^"
+    else
+      remote="v"
+    fi
+  else
+    remote="diverged"
+  fi
+  diverge_pattern="# Your branch and (.*) have diverged"
+  if [[ ${git_status} =~ ${diverge_pattern} ]]; then
+    remote=""
+  fi
+
+  # Get the name of the branch.
+  branch_pattern="^# On branch ([^${IFS}]*)"
+  if [[ ${git_status} =~ ${branch_pattern} ]]; then
+    branch=${BASH_REMATCH[1]}
+  fi
+
+  # Set the final branch string.
+  BRANCH="${state}(${branch})${remote}${NC} "
+}
+
+# Set the BRANCH variable.
+function set_git_prompt () {
+  if is_git_repository ; then
+    set_git_branch
+  else
+    BRANCH=''
+  fi
+}
+
+
+function get_git_branch() {
+  BRANCH=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
+  echo "${BRANCH}"
+}
+
+# get current branch in git repo
+function parse_git_branch() {
+  BRANCH=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
+  if [ ! "${BRANCH}" == "" ]
+  then
+    # Commented out status because it's slow as hell. Not worth it.
+    STATUS=`parse_git_dirty`
+    GIT_PROMPT="${STATUS_COLOUR}[${BRANCH}${STATUS}]${NC}"
+  else
+    GIT_PROMPT=""
+  fi
+}
+
+# get current status of git repo
+function parse_git_dirty {
+  STATUS_COLOUR=""
+  status=`git status 2>&1 | tee`
+  dirty=`echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?"`
+  untracked=`echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?"`
+  ahead=`echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?"`
+  newfile=`echo -n "${status}" 2> /dev/null | grep "new file:" &> /dev/null; echo "$?"`
+  renamed=`echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?"`
+  deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`
+  bits=''
+  if [ "${renamed}" == "0" ]; then
+      bits=" >${bits}"
+  fi
+  if [ "${ahead}" == "0" ]; then
+      bits=" ^${bits}"
+  fi
+  if [ "${newfile}" == "0" ]; then
+      bits=" +${bits}"
+  fi
+  if [ "${untracked}" == "0" ]; then
+      bits=" ?${bits}"
+  fi
+  if [ "${deleted}" == "0" ]; then
+      bits=" X${bits}"
+  fi
+  if [ "${dirty}" == "0" ]; then
+      bits=" !${bits}"
+      STATUS_COLOUR=${Yellow} 
+  fi
+  if [ ! "${bits}" == "" ]; then
+      echo "${bits}"
+  else
+      echo ""
+      STATUS_COLOUR=${Green} 
+  fi
+}
+
