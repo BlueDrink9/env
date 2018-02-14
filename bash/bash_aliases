@@ -14,7 +14,7 @@ alias open="nautilus $1 >/dev/null 2>&1"
 alias :q="exit"
 
 alias gca="git commit -a"
-alias gc="git clone"
+alias gc="git_clone"
 
 alias e="emacs -nw"
 alias v="vim"
