@@ -35,15 +35,18 @@ bind '"kv":vi-movement-mode'
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
 
-# Allow sending ctrl+S to applications in terminal (prev stops scrolling)
-stty -ixon
+# Save to history when command is executed, rather than when terminal is closed.
+PROMPT_COMMAND="history -a && ${PROMPT_COMMAND}"
 
 # append to the history file, don't overwrite it
 shopt -s histappend
 
+# Allow sending ctrl+S to applications in terminal (prev stops scrolling)
+stty -ixon
+
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=10000
+HISTFILESIZE=20000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
