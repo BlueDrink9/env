@@ -2,7 +2,6 @@
 
 WD="$PWD"                   # Save working dir to return after navigation.
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-VERSION='1.7'               # Version of the program.
 BAKDIR=$HOME/.env_backup    # Directory to store config backups.
 VIMDIR=$HOME/.vim_runtime   # Directory containing Vim extras.
 FONTDIR="/usr/local/share/fonts"
@@ -138,7 +137,8 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
         cd "$WD"
         echo -e "\r\e[2K[\e[32m   OK   \e[0m] Vim configuration is up to date."
     else
-        echo -ne Installing Amix\'s Awesome Vim config
+        echo -ne Installing Amix\'s Awesome Vim config and WW\'s vimrc
+        echo "so $SCRIPTDIR/editors/vimrc" >> ${HOME}/.vimrc
         git clone --depth=1 https://github.com/amix/vimrc.git "$VIMDIR"
         echo -e "\r[\e[32m   OK   \e[0m] Installed Amix'\s Awesome Vim config."
     fi

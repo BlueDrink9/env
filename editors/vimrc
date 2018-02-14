@@ -1,0 +1,85 @@
+
+
+inoremap kv <esc>
+set nu
+
+execute pathogen#infect()
+syntax on
+
+if has("gui_running")
+    " GUI is running or is about to start.
+    "   " Maximize gvim window (for an alternative on Windows, see simalt
+    "   below).
+    set lines=30 columns=100
+    set background=dark
+    colorscheme solarized
+    " set guifont=Source\ Code\ Pro\ Medium\ 11
+" else
+    " This is console Vim.
+    " if exists("+lines")
+        " set lines=30
+    " endif
+    " if exists("+columns")
+        " set columns=100
+    " endif
+endif
+
+" ctrl+S = save (otherwise unused)
+noremap <C-S> :update<CR>
+vnoremap <C-S> <C-C>:update<CR>
+inoremap <C-S> <C-O>:update<CR>
+
+" Alias so that :W and :Q still work
+:command W w
+:command Q q
+
+" Don't have to hold shift for commands. Comes highly recommended.
+nnoremap ; :
+vnoremap ; :
+set expandtab
+set shiftwidth=4
+set softtabstop=4
+filetype plugin indent on
+set modeline
+set modelines=5
+set wrap
+" Linebreak relates to when a line wraps (ie not in a word)
+set linebreak
+
+" Vertical window splits open on right side
+set splitright
+
+" Pipes the output of shell commands into a new window for viewing.
+function! WindowOutput(cmd)
+  redir => message
+  silent execute a:cmd
+  redir END
+  if empty(message)
+    echoerr "no output"
+  else
+    " use "new" instead of "tabnew" below if you prefer split windows instead of tabs
+    vnew
+    setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
+    silent put=message
+  endif
+endfunction
+command! -nargs=+ -complete=command WindowOutput call WindowOutput(<q-args>)
+nnoremap <F9> :w<enter> :WindowOutput !%:p<Enter>
+
+"Use TAB to complete when typing words, else inserts TABs as usual.
+"Uses dictionary and source files to find matching words to complete.
+
+"See help completion for source,
+"Note: usual completion is on <C-n> but more trouble to press all the time.
+"Never type the same word twice and maybe learn a new spellings!
+"Use the Linux dictionary when spelling is in doubt.
+"Window users can copy the file to their machine.
+function! Tab_Or_Complete()
+  if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+    return "\<C-N>"
+  else
+    return "\<Tab>"
+  endif
+endfunction
+:inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
+:set dictionary="/usr/dict/words"
