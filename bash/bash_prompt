@@ -23,7 +23,11 @@ function set_bash_prompt () {
   # Sets GIT_PROMPT
   parse_git_branch
   GIT_STATUS_PROMPT="${GIT_PROMPT}"
-  GIT_BRANCH="\`get_git_branch\`"
+  GIT_BRANCH="`get_git_branch`"
+  if [ ! "${BRANCH}" == "" ]
+  then
+    GIT_BRANCH="{${GIT_BRANCH}}"
+  fi
   #set_git_prompt
   #GIT_STATUS_PROMPT="${BRANCH}"
   # \e]0 escapes to window title, \a ends it.
@@ -31,13 +35,6 @@ function set_bash_prompt () {
   CURR_FULL_PATH="\w"
   CURR_DIR="\W"
   TIME_PROMPT="\t"
-
-  # Set the BRANCH variable.
-  if is_git_repository ; then
-    set_git_branch
-  else
-    BRANCH=''
-  fi
 
   # Set the bash prompt variable.
   # Space left after title is actually for start of prompt. 
@@ -47,13 +44,3 @@ function set_bash_prompt () {
 
 # Tell bash to execute this function just before displaying its prompt.
 PROMPT_COMMAND=set_bash_prompt
-
-
-
-# PROMPT_COMMAND='export PS1="${WINDOW_TITLE_BASH_PATH} ${TIME_PROMPT} ${USER_AT_HOST}: ${PREV_COMMAND_STATUS}[${CURR_DIR}]${NC} ${GIT_STATUS_PROMPT}\\$"'
-
-#Custom shell prompt and window title.
-# export PS1="\[\e]0;Bash: \u@\h:\w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$"
-
-
-
