@@ -38,6 +38,16 @@ function git_clone() {
   fi
 }
 
+
+# Save all commands with timestamp and working dir to log file. Doesn't 
+# affect bash's recallable history, or speed.
+# https://spin.atomicobject.com/2016/05/28/log-bash-history/
+function log_command() {
+  if [ "$(id -u)" -ne 0 ]; then
+    echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $(history 1)" >> ~/.logs/bash-history-$(date "+%Y-%m-%d").log;
+  fi
+}
+
 function randGen() {
     for ((i = 0; i < $1; i++)); do
         echo $RANDOM

@@ -28,12 +28,15 @@ source ${SCRIPT_DIR}/bash_prompt
 INPUTRC="${SCRIPT_DIR}/inputrc"
 #"kv" will enter vi command mode
 bind '"kv":vi-movement-mode'
-#source ${INPUTRC}
-
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
+
+if [ ! -d "${HOME}/.logs" ] ; then
+   mkdir ${HOME}/.logs 
+fi
+PROMPT_COMMAND="${PROMPT_COMMAND} && log_command"
 
 # Save to history when command is executed, rather than when terminal is closed.
 PROMPT_COMMAND="history -a && ${PROMPT_COMMAND}"
@@ -45,8 +48,8 @@ shopt -s histappend
 stty -ixon
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=10000
-HISTFILESIZE=20000
+HISTSIZE=1000
+HISTFILESIZE=2000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
