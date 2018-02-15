@@ -4,3 +4,6 @@ fonts/ttf/
 fonts/woff/
 fonts/woff2/
 
+*.swp
+
+install\.sh
