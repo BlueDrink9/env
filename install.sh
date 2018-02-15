@@ -155,7 +155,7 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
             mkdir -p "${FONTDIR}/truetype/custom"
         fi
         copyFonts
-        echo -e "${OK} Fonts installed to ${ORANGE}file:///${FONTDIR}${WHITE}"
+        echo -e "${OK} Fonts installed to ${Orange}file:///${FONTDIR}${White}"
 
         cd "$WD"
     fi
