@@ -14,16 +14,18 @@ TAB="\e[1A\e[2L"
 
 # -------------
 
-DONE=1
-while [ ! $DONE ] ; do
-    echo "Are you WS or WW?"
-    read USER
-    if [ $USER == "WS" ] || [ $USER == "WW" ] ; then
-        DONE=0
+echo "Are you WS or WW?"
+while [ 1 ] ; do
+    read U
+    U=`echo "$U" | tr '[:lower:]' '[:upper:]'`
+    if [ $U == "WS" ] || [ $U == "WW" ] ; then
+        break
+    else
+        echo "Who now? Are you sure?"
     fi
 done
 
-if [ $USER == "WS" ] ; then
+if [ $U == "WS" ] ; then
     IS_SHAW=0
 else
     IS_SHAW=1
@@ -103,7 +105,7 @@ function updateGitUser() {
 
 if [[ $OSTYPE == 'linux-gnu' ]]; then
 
-    echo -e "[$GREEN Linux $WHITE]"
+    echo -e "[$Green Linux $White]"
 
     if [[ $1 =~ -[Yy]$ ]]; then
         SKIP=1
@@ -121,19 +123,18 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
 
     dualBootLocalTime
 
-    echo -e "Copying custom bash files..."
-    if [[ -d "${BASH_CUSTOM}" ]] && [[ ! $SKIP == 1 ]]; then
-        echo -e "${OK} ${BASH_CUSTOM} directory exists."
-    else
-        mkdir -p "${BAKDIR}"
-
-        echo -n "Enabling custom bash setup..."
-        if IS_SHAW ; then
-            cp -r source $SCRIPTDIR/bash >> ${BASH_CUSTOM}
-            echo "source $BASH_CUSTOM/bash_custom" >> ${HOME}/.bashrc
+    if [ "$IS_SHAW" == 0 ] ; then
+        echo -e "Copying custom bash files..."
+        if [[ -d "${BASH_CUSTOM}" ]] && [[ ! $SKIP == 1 ]]; then
+            echo -e "${OK} ${BASH_CUSTOM} directory exists."
         else
-            echo "source $SCRIPTDIR/bash/bash_custom" >> ${HOME}/.bashrc
+            mkdir -p ${BASH_CUSTOM}
+            cp -r $SCRIPTDIR/bash/* ${BASH_CUSTOM}/
+            echo "source $BASH_CUSTOM/bash_custom" >> ${HOME}/.bashrc
         fi
+    else
+        echo -n "Enabling custom bash setup..."
+        echo "source $SCRIPTDIR/bash/bash_custom" >> ${HOME}/.bashrc
     fi
 
 
@@ -159,27 +160,33 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
         cd "$WD"
     fi
 
-    echo -ne "Checking Vim..."
+    echo $IS_SHAW
+    if [ "$IS_SHAW" == 0 ] ; then
 
-    if [[ -d "${VIMDIR}" ]]; then
-        echo -ne "found custom Vim.\nUpdating => "
+        echo -ne "Checking Vim..."
 
-        cd "${VIMDIR}"
-        git stash | xargs echo > /dev/null
-        git rebase origin master | xargs echo -n
-        git stash pop | xargs echo > /dev/null
-        cd "${WD}"
-        echo -e "\r\e[2K${OK} Vim configuration is up to date."
+        if [[ -d "${VIMDIR}" ]]; then
+            echo -ne "found custom Vim.\nUpdating => "
+
+            cd "${VIMDIR}"
+            git stash | xargs echo > /dev/null
+            git rebase origin master | xargs echo -n
+            git stash pop | xargs echo > /dev/null
+            cd "${WD}"
+            echo -e "\r\e[2K${OK} Vim configuration is up to date."
+        else
+            echo -ne Installing Amix\'s Awesome Vim config
+            git clone --depth=1 https://github.com/amix/vimrc.git "$VIMDIR"
+            echo -e "\r[\e[32m   OK   \e[0m] Installed Amix'\s Awesome Vim config."
+        fi
+        sh "${VIMDIR}/install_awesome_vimrc.sh" | xargs echo > /dev/null
+
+        if [[ ! "$SKIP" == 2 ]]; then
+            setVimColorscheme
+        fi
     else
-        echo -ne Installing Amix\'s Awesome Vim config and WW\'s vimrc
+        echo "Using WW's vimrc"
         echo "so $SCRIPTDIR/editors/vimrc" >> ${HOME}/.vimrc
-        git clone --depth=1 https://github.com/amix/vimrc.git "$VIMDIR"
-        echo -e "\r[\e[32m   OK   \e[0m] Installed Amix'\s Awesome Vim config."
-    fi
-    sh "${VIMDIR}/install_awesome_vimrc.sh" | xargs echo > /dev/null
-
-    if [[ ! "$SKIP" == 2 ]]; then
-        setVimColorscheme
     fi
 
     echo -e "[\e[32mInstall Complete\e[0m]"
