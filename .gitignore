@@ -7,3 +7,5 @@ fonts/woff2/
 *.swp
 
 install\.sh
+
+tmp/
