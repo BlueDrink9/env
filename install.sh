@@ -103,26 +103,7 @@ function updateGitUser() {
     echo -e "\e[36mYou can update your git user by entering:\e[0m ./install -gu"
 }
 
-if [[ $OSTYPE == 'linux-gnu' ]]; then
-
-    echo -e "[$Green Linux $White]"
-
-    if [[ $1 =~ -[Yy]$ ]]; then
-        SKIP=1
-    fi
-
-    if [[ $1 =~ -[Gg][Uu]$ ]]; then
-        updateGitUser
-        exit
-    fi
-
-    if [[ $1 =~ -[vV][cC]$ ]]; then
-        setVimColorscheme
-        exit
-    fi
-
-    dualBootLocalTime
-
+function setupShell() {
     if [ "$IS_SHAW" == 0 ] ; then
         echo -e "Copying custom bash files..."
         if [[ -d "${BASH_CUSTOM}" ]] && [[ ! $SKIP == 1 ]]; then
@@ -136,31 +117,9 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
         echo -n "Enabling custom bash setup..."
         echo "source $SCRIPTDIR/bash/bash_custom" >> ${HOME}/.bashrc
     fi
+}
 
-
-    if [[ ! "$SKIP" == 2 ]]; then
-
-        if [[ "$(git config --global user.name)" =~ .+ ]] && [[ $(git config --global user.email) =~ .+ ]]; then
-            echo -e "$OK Git global user is set."
-            echo -e "${TAB}Re-run with ( ./install -gu ) to force update."
-        else
-            updateGitUser
-        fi
-
-        echo "Updating installed version."
-        echo "${VERSION}" > "${BAKDIR}/.version"
-
-        echo -e "Installing fonts... "
-        if [[ ! -d "${FONTDIR}/truetype/custom" ]]; then
-            mkdir -p "${FONTDIR}/truetype/custom"
-        fi
-        copyFonts
-        echo -e "${OK} Fonts installed to ${Orange}file:///${FONTDIR}${White}"
-
-        cd "$WD"
-    fi
-
-    echo $IS_SHAW
+function setupVim(){
     if [ "$IS_SHAW" == 0 ] ; then
 
         echo -ne "Checking Vim..."
@@ -187,6 +146,48 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
     else
         echo "Using WW's vimrc"
         echo "so $SCRIPTDIR/editors/vimrc" >> ${HOME}/.vimrc
+    fi
+}
+
+if [[ $OSTYPE == 'linux-gnu' ]]; then
+
+    echo -e "[$Green Linux $White]"
+
+    if [[ $1 =~ -[Yy]$ ]]; then
+        SKIP=1
+    fi
+
+    if [[ $1 =~ -[Gg][Uu]$ ]]; then
+        updateGitUser
+        exit
+    fi
+
+    if [[ $1 =~ -[vV][cC]$ ]]; then
+        setVimColorscheme
+        exit
+    fi
+
+    dualBootLocalTime
+    setupShell
+    setupVim
+
+    if [[ ! "$SKIP" == 2 ]]; then
+
+        if [[ "$(git config --global user.name)" =~ .+ ]] && [[ $(git config --global user.email) =~ .+ ]]; then
+            echo -e "$OK Git global user is set."
+            echo -e "${TAB}Re-run with ( ./install -gu ) to force update."
+        else
+            updateGitUser
+        fi
+
+        echo -e "Installing fonts... "
+        if [[ ! -d "${FONTDIR}/truetype/custom" ]]; then
+            mkdir -p "${FONTDIR}/truetype/custom"
+        fi
+        copyFonts
+        echo -e "${OK} Fonts installed to ${Orange}file:///${FONTDIR}${White}"
+
+        cd "$WD"
     fi
 
     echo -e "[\e[32mInstall Complete\e[0m]"
