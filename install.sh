@@ -7,6 +7,22 @@ VIMDIR=$HOME/.vim_runtime   # Directory containing Vim extras.
 FONTDIR="/usr/local/share/fonts"
 SKIP=0
 
+DONE=1
+
+while [ ! $DONE ] ; do
+    echo "Are you WS or WW?"
+    read USER
+    if [ $USER == "WS" ] || [ $USER == "WW" ] ; then
+        DONE=0
+    fi
+done
+
+if [ $USER == "WS" ] ; then
+    IS_SHAW=0
+else
+    IS_SHAW=1
+fi
+
 
 echo -ne Detecting OS...
 
@@ -98,7 +114,12 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
         mkdir -p "$BAKDIR"
 
         echo -n "Enabling custom bash setup..."
-        echo "source $SCRIPTDIR/bash/bash_custom" >> ${HOME}/.bashrc
+        if IS_SHAW ; then
+            cp source $SCRIPTDIR/bash/bash_custom >> ${HOME}/.bash_custom
+            echo "source ${HOME}/.bash_custom/bash_custom" >> ${HOME}/.bashrc
+        else
+            echo "source $SCRIPTDIR/bash/bash_custom" >> ${HOME}/.bashrc
+        fi
     fi
 
 
