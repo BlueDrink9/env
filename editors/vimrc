@@ -33,6 +33,10 @@ inoremap <C-S> <C-O>:update<CR>
 :command W w
 :command Q q
 
+" :W! sudo saves the file 
+" (useful for handling the permission-denied error)
+command W! w !sudo tee % > /dev/null
+
 " Don't have to hold shift for commands. Comes highly recommended.
 nnoremap ; :
 vnoremap ; :
