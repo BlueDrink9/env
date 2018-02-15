@@ -22,7 +22,7 @@ function set_bash_prompt () {
 
   # Sets GIT_PROMPT
   parse_git_branch
-  GIT_STATUS_PROMPT="${GIT_PROMPT}"
+  GIT_STATUS_PROMPT=" ${GIT_PROMPT}"
   GIT_BRANCH="`get_git_branch`"
   if [ ! "${BRANCH}" == "" ]
   then
@@ -39,7 +39,7 @@ function set_bash_prompt () {
   # Set the bash prompt variable.
   # Space left after title is actually for start of prompt. 
   # Gives space between vi +: and time.
-  PS1="${WINDOW_TITLE_BASH_PATH} ${White}${On_Black}${TIME_PROMPT}${NC} ${USER_AT_HOST}: ${PREV_COMMAND_COLOUR}[${CURR_DIR}]${NC} ${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL}"
+  PS1="${WINDOW_TITLE_BASH_PATH} ${White}${On_Black}${TIME_PROMPT}${NC} ${USER_AT_HOST}: ${PREV_COMMAND_COLOUR}[${CURR_DIR}]${NC}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL} "
 }
 
 # Tell bash to execute this function just before displaying its prompt.
