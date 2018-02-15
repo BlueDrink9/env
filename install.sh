@@ -127,14 +127,10 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
     else
         mkdir -p "${BAKDIR}"
 
-        mkdir -p "${BASH_CUSTOM}"
-
-        cp -r ./bash/* ${BASH_CUSTOM}/
-
         echo -n "Enabling custom bash setup..."
         if IS_SHAW ; then
-            cp source $SCRIPTDIR/bash/bash_custom >> ${HOME}/.bash_custom
-            echo "source ${HOME}/.bash_custom/bash_custom" >> ${HOME}/.bashrc
+            cp -r source $SCRIPTDIR/bash >> ${BASH_CUSTOM}
+            echo "source $BASH_CUSTOM/bash_custom" >> ${HOME}/.bashrc
         else
             echo "source $SCRIPTDIR/bash/bash_custom" >> ${HOME}/.bashrc
         fi
