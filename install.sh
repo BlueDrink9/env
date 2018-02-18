@@ -139,7 +139,7 @@ function dualBootLocalTime() {
     fi
 }
 
-function updateGitUser() {
+function gitUser() {
     if [[ $1 =~ ^--?[gG](it)?-?[cC](redentials)? ]]; then
         echo -e "Force git update."
     elif [[ "$(git config --global user.name)" =~ .+ ]] && [[ $(git config --global user.email) =~ .+ ]]; then
@@ -147,7 +147,6 @@ function updateGitUser() {
         echo -e "Re-run with ( ./install -gu ) to force update."
         return 0
     fi
-
 
     echo -e "Setting up git global user..."
     echo -ne "${Green}Enter your git username:${NC} "
@@ -161,7 +160,36 @@ function updateGitUser() {
     git config --global user.name "$GIT_USER"
     git config --global user.email "$GIT_EMAIL"
     echo -e "\e[36mYou can update your git user by entering:\e[0m ./install -gu"
+}
 
+function gitCredentialCache() {
+    if [[ $ALL == 1 ]]; then
+        REPLY=y
+    else
+        echo -ne "\e[33mWant Git to store your credentials for a while? (y/N)\e[0m "
+        read -n 1 REPLY
+    fi
+
+    if [[ $REPLY =~ ^[yY]$ ]]; then
+
+        if [[ ! "$(git config --global user.name)" =~ .+ ]] || [[ ! $(git config --global user.email) =~ .+ ]]; then
+            echo -e "$OK Git global user is not setup correctly."
+            echo -e "Re-run with ( ./install -gu ) to force update."
+            return 0
+        fi
+
+        echo -ne "\n\e[33mHow long should Git store your credentials? (minutes)\e[0m "
+        while [ 1 ]; do
+            read REPLY
+            if [[ $REPLY =~ ^[0-9]+$ ]]; then
+                break
+            else
+                echo -e "$\n{Red}NaN${NC}"
+            fi
+        done
+        echo -e "Git will remember your credentials for $REPLY minutes."
+        git config --global credential.helper cache $REPLY
+    fi
 }
 
 function setupShell() {
@@ -213,7 +241,8 @@ function main() {
     vscodeExtensions
 
     echo -e "\n------------------- GIT"
-    updateGitUser $1
+    gitUser $1
+    gitCredentialCache
 
     echo -e "\n------------------- LOCAL TIME"
     dualBootLocalTime
