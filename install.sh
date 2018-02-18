@@ -230,6 +230,9 @@ function setupVim(){
         fi
         sh "${VIMDIR}/install_awesome_vimrc.sh" | xargs echo > /dev/null
 
+        echo -e "\n------------------- VIM COLOR SCHEME"
+        setVimColorscheme
+
     else
         echo "Using WW's vimrc"
         echo "so $SCRIPTDIR/editors/vim/vimrc" >> ${HOME}/.vimrc
@@ -254,8 +257,10 @@ function main() {
     gitUser $1
     gitCredentialCache
 
-    echo -e "\n------------------- LOCAL TIME"
-    dualBootLocalTime
+    if [ "$IS_SHAW" == 0 ] ; then
+        echo -e "\n------------------- LOCAL TIME"
+        dualBootLocalTime
+    fi
 
     echo -e "\n------------------- SHELL"
     setupShell
@@ -263,8 +268,6 @@ function main() {
     echo -e "\n------------------- VIM"
     setupVim
 
-    echo -e "\n------------------- VIM COLOR SCHEME"
-    setVimColorscheme
 
     return 0
 }
