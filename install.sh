@@ -240,6 +240,7 @@ function setupVim(){
         cd ~/.vim/bundle
         git clone git://github.com/altercation/vim-colors-solarized.git
         git clone git://github.com/tpope/vim-surround.git
+        git clone git://github.com/maxbrunsfeld/vim-yankstack.git
         cd $WD
     fi
 }
