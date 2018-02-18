@@ -181,14 +181,14 @@ function gitCredentialCache() {
         echo -ne "\n\e[33mHow long should Git store your credentials? (minutes)\e[0m "
         while [ 1 ]; do
             read REPLY
-            if [[ $REPLY =~ ^[0-9]+$ ]]; then
+            if [[ $REPLY =~ ^[0-9]+$ ]] && [[ $REPLY > 0 ]]; then
                 break
             else
-                echo -e "$\n{Red}NaN${NC}"
+                echo -e "${Red}Invalid input${NC}"
             fi
         done
-        echo -e "Git will remember your credentials for $REPLY minutes."
-        git config --global credential.helper cache $REPLY
+        echo -e "Git will remember your credentials for $REPLY minutes ($(( $REPLY * 60 )) seconds)."
+        git config --global credential.helper "cache --timeout=$(( $REPLY * 60 ))"
     fi
 }
 
