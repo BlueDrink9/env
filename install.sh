@@ -21,6 +21,7 @@ TAB="\e[1A\e[2L"
 echo "Are you WS or WW?"
 while [ 1 ] ; do
     read U
+    # Convert to upper case
     U=`echo "$U" | tr '[:lower:]' '[:upper:]'`
     if [ $U == "WS" ] || [ $U == "WW" ] ; then
         break
@@ -231,7 +232,15 @@ function setupVim(){
 
     else
         echo "Using WW's vimrc"
-        echo "so $SCRIPTDIR/editors/vimrc" >> ${HOME}/.vimrc
+        echo "so $SCRIPTDIR/editors/vim/vimrc" >> ${HOME}/.vimrc
+        echo "Installing pathogen..."
+        mkdir -p ~/.vim/autoload ~/.vim/bundle && \
+        curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+        echo "Installing plugins..."
+        cd ~/.vim/bundle
+        git clone git://github.com/altercation/vim-colors-solarized.git
+        git clone git://github.com/tpope/vim-surround.git
+        cd $WD
     fi
 }
 
