@@ -1,0 +1,56 @@
+" Folder in which current script resides:
+let s:path = expand('<sfile>:p:h')
+
+" Show line numbers
+set nu
+
+execute pathogen#infect()
+syntax on
+syntax enable
+
+if has("gui_running")
+    " GUI is running or is about to start.
+    "   " Maximize gvim window (for an alternative on Windows, see simalt
+    "   below).
+    set lines=40 columns=120
+    set background=light
+    colorscheme solarized
+    set guifont=Source\ Code\ Pro\ Medium\ 10.5
+" else
+    " This is console Vim.
+    " if exists("+lines")
+        " set lines=30
+    " endif
+    " if exists("+columns")
+        " set columns=100
+    " endif
+endif
+
+set expandtab
+set shiftwidth=4
+set softtabstop=4
+filetype plugin indent on
+set modeline
+set modelines=5
+set wrap
+" Linebreak relates to when a line wraps (ie not in a word)
+set linebreak
+
+" Vertical window splits open on right side
+set splitright
+
+" Ignore case in searches excepted if an uppercase letter is used
+set smartcase
+
+
+" backspace and cursor keys wrap to previous/next line
+set backspace=indent,eol,start whichwrap+=<,>,[,]
+
+" No annoying sound on errors
+set noerrorbells
+" set novisualbell
+" set t_vb=
+" set tm=500
+
+execute 'source' .s:path . "/functions.vim"
+execute 'source' .s:path . "/mappings.vim"
