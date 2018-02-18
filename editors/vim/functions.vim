@@ -1,57 +1,4 @@
-
-
-inoremap kv <esc>
-set nu
-
-execute pathogen#infect()
-syntax on
-
-if has("gui_running")
-    " GUI is running or is about to start.
-    "   " Maximize gvim window (for an alternative on Windows, see simalt
-    "   below).
-    set lines=30 columns=100
-    set background=dark
-    colorscheme solarized
-    " set guifont=Source\ Code\ Pro\ Medium\ 11
-" else
-    " This is console Vim.
-    " if exists("+lines")
-        " set lines=30
-    " endif
-    " if exists("+columns")
-        " set columns=100
-    " endif
-endif
-
-" ctrl+S = save (otherwise unused)
-noremap <C-S> :update<CR>
-vnoremap <C-S> <C-C>:update<CR>
-inoremap <C-S> <C-O>:update<CR>
-
-" Alias so that :W and :Q still work
-:command W w
-:command Q q
-
-" :W! sudo saves the file 
-" (useful for handling the permission-denied error)
-command W! w !sudo tee % > /dev/null
-
-" Don't have to hold shift for commands. Comes highly recommended.
-nnoremap ; :
-vnoremap ; :
-set expandtab
-set shiftwidth=4
-set softtabstop=4
-filetype plugin indent on
-set modeline
-set modelines=5
-set wrap
-" Linebreak relates to when a line wraps (ie not in a word)
-set linebreak
-
-" Vertical window splits open on right side
-set splitright
+" vim: set filetype=vim:
 
 " Pipes the output of shell commands into a new window for viewing.
 function! WindowOutput(cmd)
@@ -87,3 +34,10 @@ function! Tab_Or_Complete()
 endfunction
 :inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
 :set dictionary="/usr/dict/words"
+
+" Allow insertion of single character in normal mode.
+function! RepeatChar(char, count)
+      return repeat(a:char, a:count)
+  endfunction
+nnoremap s :<C-U>exec "normal i".RepeatChar(nr2char(getchar()), v:count1)<CR>
+nnoremap S :<C-U>exec "normal a".RepeatChar(nr2char(getchar()), v:count1)<CR>
