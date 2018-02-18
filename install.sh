@@ -8,6 +8,10 @@ VIMDIR=$HOME/.vim_runtime   # Directory containing Vim extras.
 FONTDIR=$HOME/.fonts
 SKIP=0
 
+ALL=0
+
+VSCODE_EXTENSIONS_DIR=$HOME/.vscode/extensions
+
 # SCRIPT COLORS are kept in file "colour_variables"
 OK="[$Green  OK  ]$White"
 TAB="\e[1A\e[2L"
@@ -31,21 +35,62 @@ else
     IS_SHAW=1
 fi
 
+if [[ $1 =~ ^--?[aA][lL]{2}?$ ]]; then
+    ALL=1
+fi
 
-echo -ne Detecting OS...
+function vscodeExtensions() {
+    if [[ $ALL == 1 ]]; then
+        REPLY="y"
+    else
+        echo -ne "\e[33mInstall Visual Studio Code extensions? (Y/n/c)\e[0m "
+        read -n 1 REPLY
+    fi
+    if hash code 2> /dev/null; then # Check if 'code' exists.
+
+        if [[ $REPLY =~ ^[yY]$ ]]; then # Install extensions from '.vscode/extensions'
+
+            if [[ ! -d "$VSCODE_EXTENSIONS_DIR" ]]; then
+                mkdir -p "$VSCODE_EXTENSIONS_DIR"
+            fi
+
+            while IFS='' read -r LINE || [[ -n "$LINE" ]]; do
+                code --install-extension $LINE
+            done < "./.vscode/extensions"
+
+        elif [[ $REPLY =~ ^[cC]$ ]]; then # Load VSCode which detects recommendations.json
+            code .
+        fi
+    else
+        echo -e "VSCode not installed or variable not set."
+        return 1
+    fi
+    return 0
+}
+
 
 function copyFonts() {
-    mkdir -p "$FONTDIR"
-    unzip -o "./fonts/*.zip" -d "./fonts" -x "woff/*" "woff2/*" | xargs > /dev/null
-    cp ./fonts/ttf/* $FONTDIR/truetype/custom
-    fc-cache
-    rm -rf "./fonts/ttf"
+    if [[ $ALL == 1 ]]; then
+        REPLY="y"
+    else
+        echo -ne "\e[33mInstall fonts? (Y/n)\e[0m "
+        read -n 1 REPLY
+    fi
+    if [[ $REPLY =~ ^[yY]$ ]]; then
+        if [[ ! -d "${FONTDIR}/truetype/custom" ]]; then
+            mkdir -p "${FONTDIR}/truetype/custom"
+        fi
+        mkdir -p "$FONTDIR"
+        cp ./fonts/* $FONTDIR/truetype/custom
+        fc-cache
+        echo -e "${OK} Fonts installed to ${Orange}file:///${FONTDIR}${White}"
+    fi
 }
 
 function setVimColorscheme() {
     if [ ! -d "$HOME/.vim/colors" ] || [ ! $SKIP == 2 ]; then
-        echo -e "Installing Vim colorschemes."
-        git clone --depth=1 https://github.com/flazz/vim-colorschemes.git
+        echo -e "Downloading Vim colorschemes."
+        git clone --depth=1 https://github.com/flazz/vim-colorschemes.git 2> /dev/null
         if [[ ! -d "$HOME/.vim" ]]; then
             mkdir -p "$HOME/.vim/colors"
         fi
@@ -60,21 +105,27 @@ function setVimColorscheme() {
 
     echo -e "\e[1A\e[2L$OK Color scheme = $COLORSCHEME"
 
-    sed 's/${VIM_COLORSCHEME}/'$COLORSCHEME'/g' ./editors/extended.vim > "$VIMDIR/vimrcs/extended.vim"
+    sed 's/${VIM_COLORSCHEME}/'$COLORSCHEME'/g' ./editors/extended.vim > ./extended.vim
 
     setVimLineNumbers
 }
 
 function setVimLineNumbers() {
-    echo -ne "\e[33mDo you want to enable line numbers? (y/N)\e[0m "
-    read -n 1 REPLY
-    if [[ ! $REPLY =~ ^[yY]$ ]]; then
-        echo -e "\r$OK Vim line numbers disabled.       "
-        sed -i 's/${NUMBER}/ /g' "$VIMDIR/vimrcs/extended.vim"
+    if [[ $ALL == 1 ]]; then
+        REPLY=y
     else
-        echo -e "\r$OK Vim line numbers enabled.        "
-        sed -i 's/${NUMBER}/set number/g' "$VIMDIR/vimrcs/extended.vim"
+        echo -ne "\e[33mDo you want to enable line numbers? (y/N)\e[0m "
+        read -n 1 REPLY
     fi
+    if [[ ! $REPLY =~ ^[yY]$ ]]; then
+        echo -e "\n$OK Vim line numbers disabled."
+        sed -i 's/${NUMBER}/ /g' ./extended.vim
+    else
+        echo -e "\n$OK Vim line numbers enabled."
+        sed -i 's/${NUMBER}/set number/g' ./extended.vim
+    fi
+    cp ./extended.vim $VIMDIR/vimrcs/extended.vim
+    rm ./extended.vim
 }
 
 function dualBootLocalTime() {
@@ -88,11 +139,19 @@ function dualBootLocalTime() {
     fi
 }
 
-function updateGitUser() {
-    echo -e "\e[33mSetting up git global user...\e[0m"
-    echo -ne "\e[34mEnter your git username:\e[0m "
+function gitUser() {
+    if [[ $1 =~ ^--?[gG](it)?-?[cC](redentials)? ]]; then
+        echo -e "Force git update."
+    elif [[ "$(git config --global user.name)" =~ .+ ]] && [[ $(git config --global user.email) =~ .+ ]]; then
+        echo -e "$OK Git global user is set."
+        echo -e "Re-run with ( ./install -gu ) to force update."
+        return 0
+    fi
+
+    echo -e "Setting up git global user..."
+    echo -ne "${Green}Enter your git username:${NC} "
     read GIT_USER
-    echo -ne "\e[34mEnter your git email:\e[0m "
+    echo -ne "${Green}Enter your git email:${NC} "
     read GIT_EMAIL
 
     echo -e "\e[32mConfiguring git.\e[0m"
@@ -101,6 +160,36 @@ function updateGitUser() {
     git config --global user.name "$GIT_USER"
     git config --global user.email "$GIT_EMAIL"
     echo -e "\e[36mYou can update your git user by entering:\e[0m ./install -gu"
+}
+
+function gitCredentialCache() {
+    if [[ $ALL == 1 ]]; then
+        REPLY=y
+    else
+        echo -ne "\e[33mWant Git to store your credentials for a while? (y/N)\e[0m "
+        read -n 1 REPLY
+    fi
+
+    if [[ $REPLY =~ ^[yY]$ ]]; then
+
+        if [[ ! "$(git config --global user.name)" =~ .+ ]] || [[ ! $(git config --global user.email) =~ .+ ]]; then
+            echo -e "$OK Git global user is not setup correctly."
+            echo -e "Re-run with ( ./install -gu ) to force update."
+            return 0
+        fi
+
+        echo -ne "\n\e[33mHow long should Git store your credentials? (minutes)\e[0m "
+        while [ 1 ]; do
+            read REPLY
+            if [[ $REPLY =~ ^[0-9]+$ ]] && [[ $REPLY > 0 ]]; then
+                break
+            else
+                echo -e "${Red}Invalid input${NC}"
+            fi
+        done
+        echo -e "Git will remember your credentials for $REPLY minutes ($(( $REPLY * 60 )) seconds)."
+        git config --global credential.helper "cache --timeout=$(( $REPLY * 60 ))"
+    fi
 }
 
 function setupShell() {
@@ -140,63 +229,49 @@ function setupVim(){
         fi
         sh "${VIMDIR}/install_awesome_vimrc.sh" | xargs echo > /dev/null
 
-        if [[ ! "$SKIP" == 2 ]]; then
-            setVimColorscheme
-        fi
     else
         echo "Using WW's vimrc"
         echo "so $SCRIPTDIR/editors/vimrc" >> ${HOME}/.vimrc
     fi
 }
 
+function main() {
+
+    echo -e "\n------------------- VSCODE EXTENSIONS"
+    vscodeExtensions
+
+    echo -e "\n------------------- GIT"
+    gitUser $1
+    gitCredentialCache
+
+    echo -e "\n------------------- LOCAL TIME"
+    dualBootLocalTime
+
+    echo -e "\n------------------- SHELL"
+    setupShell
+
+    echo -e "\n------------------- VIM"
+    setupVim
+
+    echo -e "\n------------------- VIM COLOR SCHEME"
+    setVimColorscheme
+
+    return 0
+}
+
 if [[ $OSTYPE == 'linux-gnu' ]]; then
 
     echo -e "[$Green Linux $White]"
 
-    if [[ $1 =~ -[Yy]$ ]]; then
-        SKIP=1
-    fi
-
-    if [[ $1 =~ -[Gg][Uu]$ ]]; then
-        updateGitUser
-        exit
-    fi
-
-    if [[ $1 =~ -[vV][cC]$ ]]; then
-        setVimColorscheme
-        exit
-    fi
-
-    dualBootLocalTime
-    setupShell
-    setupVim
-
-    if [[ ! "$SKIP" == 2 ]]; then
-
-        if [[ "$(git config --global user.name)" =~ .+ ]] && [[ $(git config --global user.email) =~ .+ ]]; then
-            echo -e "$OK Git global user is set."
-            echo -e "${TAB}Re-run with ( ./install -gu ) to force update."
-        else
-            updateGitUser
-        fi
-
-        echo -e "Installing fonts... "
-        if [[ ! -d "${FONTDIR}/truetype/custom" ]]; then
-            mkdir -p "${FONTDIR}/truetype/custom"
-        fi
-        copyFonts
-        echo -e "${OK} Fonts installed to ${Orange}file:///${FONTDIR}${White}"
-
-        cd "$WD"
-    fi
+    main $1
 
     echo -e "[\e[32mInstall Complete\e[0m]"
 
 elif [[ $OSTYPE == 'darwin' ]]; then
-    echo You are running Mac
+    echo -e "${Red}MacOS not supported."
 elif [[ $OSTYPE == 'msys' ]]; then
-    echo You are using Git Bash on Windows
+    echo -e "${Red}Git Bash not supported."
 else
-    echo "OS not set... Exiting with no change."
+    echo "OS not set... Exiting without change."
 fi
 

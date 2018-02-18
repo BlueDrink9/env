@@ -22,7 +22,7 @@ function set_bash_prompt () {
 
   # Sets GIT_PROMPT
   parse_git_branch
-  GIT_STATUS_PROMPT=" ${GIT_PROMPT}"
+  GIT_STATUS_PROMPT="${GIT_PROMPT}"
   GIT_BRANCH="`get_git_branch`"
   if [ ! "${BRANCH}" == "" ]
   then
