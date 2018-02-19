@@ -3,7 +3,6 @@
 # Can use `set -o vi` for short version
 set editing-mode vi
 
-
 # Used for set -o, shows a symbol at start of prompt for bash vi mode
 set show-mode-in-prompt on
 
@@ -19,7 +18,7 @@ set menu-complete-display-prefix on
 # Keymaps for when we're in command mode (e.g., after hitting ESC)
 set keymap vi-command
 
-# Insert the arguments from the last command
+# Insert the arguments from the last command with p
 "p": "i !!*\r"
 
 # When hitting option-up/option-down, cycle through the previous commands
