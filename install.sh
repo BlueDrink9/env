@@ -44,7 +44,8 @@ if [[ $1 = "-u" ]]; then
     return
 fi
 
-# Currently doesn't uninstall vim plugins, VSCODE, or anything else
+# Currently doesn't uninstall WS's vim config, VSCODE, or anything else
+# Only removes WW's vim and any bash customisation, as well as this script.
 function uninstall() {
 echo -ne "Really uninstall? (y/n)"
 read -n 1 REPLY
@@ -52,6 +53,9 @@ if [[ $REPLY =~ ^[yY]$ ]]; then
     sed '/*bash_custom*/d' ${HOME}/.bashrc
     sed "/*${SCRIPTDIR}/editors/vimrc*/d" ${HOME}/.vimrc
     rm -rf "${BASH_CUSTOM}"
+    rm -f "~/.vim/autoload/plug.vim"
+
+    # Remove self
     rm -rf "${SCRIPTDIR}"
 }
 
@@ -251,7 +255,11 @@ function setupVim(){
     else
         echo "Using WW's vimrc"
         echo "so $SCRIPTDIR/editors/vim/vimrc" >> ${HOME}/.vimrc
-    fi
+        # Install Plug (plugin manager)
+        curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+                https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        echo "PlugInstall" | vim -es
+   fi
 }
 
 function main() {
