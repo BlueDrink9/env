@@ -82,11 +82,11 @@ function vscodeExtensions() {
 
             while IFS='' read -r LINE || [[ -n "$LINE" ]]; do
                 code --install-extension $LINE
-            done < "${SCRIPTDIR}/editors/vscode/extensions"
+            done < "${SCRIPTDIR}/editors/.vscode/extensions"
 
         elif [[ $REPLY =~ ^[cC]$ ]]; then # Load VSCode which detects recommendations.json
             #TODO Where is this meant to be CDed to?
-            code .
+            code ./editors
         fi
     else
         echo -e "VSCode not installed or variable not set."
@@ -132,7 +132,7 @@ function setVimColorscheme() {
 
     echo -e "\e[1A\e[2L$OK Color scheme = $COLORSCHEME"
 
-    sed 's/${VIM_COLORSCHEME}/'$COLORSCHEME'/g' ./editors/extended.vim > ./extended.vim
+    sed 's/${VIM_COLORSCHEME}/'$COLORSCHEME'/g' ./editors/vim/extended.vim > ./extended.vim
 
     setVimLineNumbers
 }
