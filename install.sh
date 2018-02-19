@@ -241,9 +241,9 @@ function setupVim(){
         curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
         echo "Installing plugins..."
         cd ~/.vim/bundle
-        git clone git://github.com/altercation/vim-colors-solarized.git
-        git clone git://github.com/tpope/vim-surround.git
-        git clone git://github.com/maxbrunsfeld/vim-yankstack.git
+        git clone --depth=1 git://github.com/altercation/vim-colors-solarized.git
+        git clone --depth=1 git://github.com/tpope/vim-surround.git
+        git clone --depth=1 git://github.com/maxbrunsfeld/vim-yankstack.git
         cd $WD
     fi
 }
@@ -267,7 +267,6 @@ function main() {
 
     echo -e "\n------------------- VIM"
     setupVim
-
 
     return 0
 }
