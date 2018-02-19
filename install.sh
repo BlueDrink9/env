@@ -259,6 +259,7 @@ function setupVim(){
         git clone --depth=1 git://github.com/altercation/vim-colors-solarized.git
         git clone --depth=1 git://github.com/tpope/vim-surround.git
         git clone --depth=1 git://github.com/maxbrunsfeld/vim-yankstack.git
+        git clone --depth=1 git://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
         cd $WD
     fi
 }
