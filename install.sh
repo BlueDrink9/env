@@ -260,6 +260,8 @@ function setupVim(){
         git clone --depth=1 git://github.com/tpope/vim-surround.git
         git clone --depth=1 git://github.com/maxbrunsfeld/vim-yankstack.git
         git clone --depth=1 git://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
+        git clone --depth=1 git://github.com/jlanzarotta/bufexplorer.git ~/.vim/bundle/bufexplorer.vim
+        git clone --depth=1 git://github.com/vim-scripts/ShowMarks.git
         cd $WD
     fi
 }
