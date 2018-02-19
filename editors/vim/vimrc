@@ -4,6 +4,7 @@ let s:path = expand('<sfile>:p:h')
 execute 'source' .s:path . "/functions.vim"
 execute 'source' .s:path . "/mappings.vim"
 execute 'source' .s:path . "/plugins.vim"
+PlugInstall
 
 " Show line numbers
 set number
@@ -69,8 +70,9 @@ let g:netrw_liststyle = 3
 let g:netrw_browse_split = 4
 let g:netrw_altv = 1
 let g:netrw_winsize = 25
-augroup ProjectDrawer
-    autocmd!
-    autocmd VimEnter * :Vexplore
-augroup END
+" Run on startup
+" augroup ProjectDrawer
+"     autocmd!
+"     autocmd VimEnter * :Vexplore
+" augroup END
 

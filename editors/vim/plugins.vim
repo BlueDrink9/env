@@ -2,15 +2,9 @@
 
 " Folder in which current script resides:
 let s:path = expand('<sfile>:p:h')
+let s:pluginPath = s:path . "/plugins"
 
-" Auto-install plug (manager) if not yet installed
-if empty(glob('~/.vim/autoload/plug.vim'))
-      silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-          \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
-call plug#begin(".s:path . '/plugins'")
+call plug#begin(s:pluginPath)
 
 Plug 'https://github.com/altercation/vim-colors-solarized.git'
 Plug 'https://github.com/tpope/vim-surround.git'
