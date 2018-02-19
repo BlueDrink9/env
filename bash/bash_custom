@@ -34,7 +34,7 @@ bind '"vk":vi-movement-mode'
 export EDITOR=vim
 export VISUAL=vim
 export GIT_EDITOR=vim
-git config [--global] core.editor "vim"
+git config --global core.editor "vim"
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
