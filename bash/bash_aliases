@@ -25,7 +25,8 @@ set -o noclobber
 # Don't accidentally remove or overwrite files.
 alias cp="cp -i"
 alias mv="mv -i"
-alias rm="rm -i"
+# Safer than rm
+alias del='mv "$@" ~/.trash'
 
 if [ -d "$HOME/.redis" ]; then
     alias redis="cd $HOME/.redis/redis-server"
