@@ -9,8 +9,8 @@ vnoremap <C-S> <C-C>:update<CR>
 inoremap <C-S> <C-O>:update<CR>
 
 " Alias so that :W and :Q still work
-:command-bang W w<bang>
-:command-bang Q q<bang>
+:command! -bang W w<bang>
+:command! -bang Q q<bang>
 
 " :W! sudo saves the file 
 " (useful for handling the permission-denied error)
