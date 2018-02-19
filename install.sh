@@ -17,10 +17,32 @@ OK="[$Green  OK  ]$White"
 TAB="\e[1A\e[2L"
 
 # -------------
+# Currently doesn't uninstall WS's vim config, VSCODE, or anything else
+# Only removes WW's vim and any bash customisation, as well as this script.
+function uninstall() {
+echo -ne "Really uninstall? (y/n)"
+read -n 1 REPLY
+if [[ $REPLY =~ ^[yY]$ ]]; then
+    sed -in "s|.*bash_custom.*||g" ${HOME}/.bashrc
+    sed -in "s|.*${SCRIPTDIR}/editors/vim/vimrc.*||g" ${HOME}/.vimrc
+    rm -rf "${BASH_CUSTOM}"
+    rm -f "${HOME}/.vim/autoload/plug.vim"
+    # Reset bash
+    exec bash
+
+    # Remove self
+    # rm -rf "${SCRIPTDIR}"
+fi
+}
+if [[ $1 = "-u" ]]; then
+    uninstall
+    exit
+fi
+
 
 echo "Are you WS or WW?"
 while [ 1 ] ; do
-    read U
+    read -n 2U
     # Convert to upper case
     U=`echo "$U" | tr '[:lower:]' '[:upper:]'`
     if [ $U == "WS" ] || [ $U == "WW" ] ; then
@@ -39,26 +61,7 @@ if [[ $1 =~ ^--?[aA][lL]{2}?$ ]]; then
     ALL=1
 fi
 
-if [[ $1 = "-u" ]]; then
-    uninstall
-    return
-fi
 
-# Currently doesn't uninstall WS's vim config, VSCODE, or anything else
-# Only removes WW's vim and any bash customisation, as well as this script.
-function uninstall() {
-echo -ne "Really uninstall? (y/n)"
-read -n 1 REPLY
-if [[ $REPLY =~ ^[yY]$ ]]; then
-    sed '/*bash_custom*/d' ${HOME}/.bashrc
-    sed "/*${SCRIPTDIR}/editors/vimrc*/d" ${HOME}/.vimrc
-    rm -rf "${BASH_CUSTOM}"
-    rm -f "~/.vim/autoload/plug.vim"
-
-    # Remove self
-    rm -rf "${SCRIPTDIR}"
-fi
-}
 
 function vscodeExtensions() {
     if [[ $ALL == 1 ]]; then
@@ -258,7 +261,7 @@ function setupVim(){
         echo "so $SCRIPTDIR/editors/vim/vimrc" >> ${HOME}/.vimrc
         # Install Plug (plugin manager)
         curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-                https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+                https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --silent
         echo "PlugInstall" | vim -es
    fi
 }
@@ -292,8 +295,9 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
 
     main $1
 
-    echo -e "[\e[32mInstall Complete\e[0m]"
-    source ${HOME}/.bashrc
+    echo -e "${Green} Install Complete${NC}"
+    # Restart bash
+    exec bash
 
 elif [[ $OSTYPE == 'darwin' ]]; then
     echo -e "${Red}MacOS not supported."
