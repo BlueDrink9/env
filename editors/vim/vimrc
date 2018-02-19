@@ -1,12 +1,25 @@
 " Folder in which current script resides:
 let s:path = expand('<sfile>:p:h')
 
-" Show line numbers
-set nu
-
 execute pathogen#infect()
+
+" Show line numbers
+set number
+" Show cursor coords
+set ruler
+" Highligh search as you go
+set incsearch
+" Ignore case in searches excepted if an uppercase letter is used
+set smartcase
+" Highlight search results. Use :noh to undo
+set hlsearch
+" Enables some basic mouse input
+set mouse=a
+
 syntax on
 syntax enable
+" May be needed if terminal doesn't support.
+" let g:solarized_termcolors=256
 
 if has("gui_running")
     " GUI is running or is about to start.
@@ -38,10 +51,6 @@ set linebreak
 
 " Vertical window splits open on right side
 set splitright
-
-" Ignore case in searches excepted if an uppercase letter is used
-set smartcase
-
 
 " backspace and cursor keys wrap to previous/next line
 set backspace=indent,eol,start whichwrap+=<,>,[,]
