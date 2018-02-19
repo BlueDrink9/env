@@ -4,7 +4,6 @@ let s:path = expand('<sfile>:p:h')
 execute 'source' .s:path . "/functions.vim"
 execute 'source' .s:path . "/mappings.vim"
 execute 'source' .s:path . "/plugins.vim"
-PlugInstall
 
 " Show line numbers
 set number
@@ -18,6 +17,17 @@ set smartcase
 set hlsearch
 " Enables some basic mouse input
 set mouse=a
+" We need this for plugins like Syntastic and vim-gitgutter which put symbols
+" in the sign column.
+hi clear SignColumn
+
+" ----- scrooloose/syntastic settings -----
+let g:syntastic_error_symbol = '✘'
+let g:syntastic_warning_symbol = "▲"
+augroup mySyntastic
+  au!
+  au FileType tex let b:syntastic_mode = "passive"
+augroup END
 
 syntax on
 syntax enable
