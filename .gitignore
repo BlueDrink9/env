@@ -1,12 +1,9 @@
 
-# Ignore extracted fonts.
-fonts/ttf/
-fonts/woff/
-fonts/woff2/
-
 *.swp
-
-install\.sh
+*.swo
 
 tmp/
 editors/vim/plugins/*
+
+extended\.vim
+editors/extended\.vim

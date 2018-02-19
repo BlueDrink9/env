@@ -12,20 +12,22 @@ ALL=0
 
 VSCODE_EXTENSIONS_DIR=$HOME/.vscode/extensions
 
-# SCRIPT COLORS are kept in file "colour_variables"
-OK="[$Green  OK  ]$White"
+# SCRIPT COLORS are kept in this file
+# source $SCRIPTDIR/bash/colour_variables
+OK="[ $Green  OK  ] $NC"
 TAB="\e[1A\e[2L"
 
 # -------------
-# Currently doesn't uninstall WS's vim config, VSCODE, or anything else
-# Only removes WW's vim and any bash customisation, as well as this script.
+# Currently only removes vim configs and any bash customisation, as well as this script.
 function uninstall() {
 echo -ne "Really uninstall? (y/n)"
 read -n 1 REPLY
 if [[ $REPLY =~ ^[yY]$ ]]; then
     sed -in "s|.*bash_custom.*||g" ${HOME}/.bashrc
     sed -in "s|.*${SCRIPTDIR}/editors/vim/vimrc.*||g" ${HOME}/.vimrc
+    sed -in "s|.*vim_runtime.*||g" ${HOME}/.vimrc
     rm -rf "${BASH_CUSTOM}"
+    rm -rf "${HOME}/.vim_runtime"
     rm -f "${HOME}/.vim/autoload/plug.vim"
     # Reset bash
     exec bash
@@ -42,7 +44,7 @@ fi
 
 echo "Are you WS or WW?"
 while [ 1 ] ; do
-    read -n 2U
+    read -n 2 U
     # Convert to upper case
     U=`echo "$U" | tr '[:lower:]' '[:upper:]'`
     if [ $U == "WS" ] || [ $U == "WW" ] ; then
