@@ -251,19 +251,6 @@ function setupVim(){
     else
         echo "Using WW's vimrc"
         echo "so $SCRIPTDIR/editors/vim/vimrc" >> ${HOME}/.vimrc
-        echo "Installing pathogen..."
-        mkdir -p ~/.vim/autoload ~/.vim/bundle && \
-        curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
-        echo "Installing plugins..."
-        cd ~/.vim/bundle
-        git clone --depth=1 git://github.com/altercation/vim-colors-solarized.git
-        git clone --depth=1 git://github.com/tpope/vim-surround.git
-        git clone --depth=1 git://github.com/maxbrunsfeld/vim-yankstack.git
-        git clone --depth=1 git://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
-        git clone --depth=1 git://github.com/jlanzarotta/bufexplorer.git ~/.vim/bundle/bufexplorer.vim
-        git clone --depth=1 git://github.com/vim-scripts/ShowMarks.git
-        git clone --depth=1 git://github.com/vim-syntastic/syntastic.git
-        cd $WD
     fi
 }
 

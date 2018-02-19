@@ -1,7 +1,9 @@
 " Folder in which current script resides:
 let s:path = expand('<sfile>:p:h')
 
-execute pathogen#infect()
+execute 'source' .s:path . "/functions.vim"
+execute 'source' .s:path . "/mappings.vim"
+execute 'source' .s:path . "/plugins.vim"
 
 " Show line numbers
 set number
@@ -72,5 +74,3 @@ augroup ProjectDrawer
     autocmd VimEnter * :Vexplore
 augroup END
 
-execute 'source' .s:path . "/functions.vim"
-execute 'source' .s:path . "/mappings.vim"

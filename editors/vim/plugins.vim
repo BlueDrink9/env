@@ -1,0 +1,23 @@
+" vim: set ft=vim:
+
+" Folder in which current script resides:
+let s:path = expand('<sfile>:p:h')
+
+" Auto-install plug (manager) if not yet installed
+if empty(glob('~/.vim/autoload/plug.vim'))
+      silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+          \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin(".s:path . '/plugins'")
+
+Plug 'https://github.com/altercation/vim-colors-solarized.git'
+Plug 'https://github.com/tpope/vim-surround.git'
+Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
+Plug 'https://github.com/scrooloose/nerdtree.git'
+Plug 'https://github.com/jlanzarotta/bufexplorer.git'
+Plug 'https://github.com/vim-scripts/ShowMarks.git'
+Plug 'https://github.com/vim-syntastic/syntastic.git'
+
+call plug#end()
