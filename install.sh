@@ -74,7 +74,7 @@ function vscodeExtensions() {
     fi
     if hash code 2> /dev/null; then # Check if 'code' exists.
 
-        if [[ $REPLY =~ ^[yY]$ ]]; then # Install extensions from '.vscode/extensions'
+        if [[ $REPLY =~ ^[yY]$ ]]; then # Install extensions from 'vscode/extensions'
 
             if [[ ! -d "$VSCODE_EXTENSIONS_DIR" ]]; then
                 mkdir -p "$VSCODE_EXTENSIONS_DIR"
@@ -85,6 +85,7 @@ function vscodeExtensions() {
             done < "${SCRIPTDIR}/editors/vscode/extensions"
 
         elif [[ $REPLY =~ ^[cC]$ ]]; then # Load VSCode which detects recommendations.json
+            #TODO Where is this meant to be CDed to?
             code .
         fi
     else
