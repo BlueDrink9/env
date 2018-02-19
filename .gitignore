@@ -9,3 +9,4 @@ fonts/woff2/
 install\.sh
 
 tmp/
+editors/vim/plugins/*
