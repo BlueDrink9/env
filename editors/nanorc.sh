@@ -1,2 +1,0 @@
-set tabsize 4
-set tabstospaces
