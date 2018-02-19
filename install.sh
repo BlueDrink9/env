@@ -29,7 +29,6 @@ while [ 1 ] ; do
         echo "Who now? Are you sure?"
     fi
 done
-
 if [ $U == "WS" ] ; then
     IS_SHAW=0
 else
@@ -39,6 +38,22 @@ fi
 if [[ $1 =~ ^--?[aA][lL]{2}?$ ]]; then
     ALL=1
 fi
+
+if [[ $1 = "-u" ]]; then
+    uninstall
+    return
+fi
+
+# Currently doesn't uninstall vim plugins, VSCODE, or anything else
+function uninstall() {
+echo -ne "Really uninstall? (y/n)"
+read -n 1 REPLY
+if [[ $REPLY =~ ^[yY]$ ]]; then
+    sed '/*bash_custom*/d' ${HOME}/.bashrc
+    sed "/*${SCRIPTDIR}/editors/vimrc*/d" ${HOME}/.vimrc
+    rm -rf "${BASH_CUSTOM}"
+    rm -rf "${SCRIPTDIR}"
+}
 
 function vscodeExtensions() {
     if [[ $ALL == 1 ]]; then
