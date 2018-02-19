@@ -57,6 +57,7 @@ if [[ $REPLY =~ ^[yY]$ ]]; then
 
     # Remove self
     rm -rf "${SCRIPTDIR}"
+fi
 }
 
 function vscodeExtensions() {
@@ -292,6 +293,7 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
     main $1
 
     echo -e "[\e[32mInstall Complete\e[0m]"
+    source ${HOME}/.bashrc
 
 elif [[ $OSTYPE == 'darwin' ]]; then
     echo -e "${Red}MacOS not supported."
