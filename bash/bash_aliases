@@ -19,6 +19,7 @@ alias gc="git_clone"
 
 alias e="emacs -nw"
 alias v="vim"
+alias qvim="vim --noplugin"
 
 # Prevent files from being overwritten by redirection.
 set -o noclobber
