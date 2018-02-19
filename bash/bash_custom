@@ -26,8 +26,15 @@ source ${SCRIPT_DIR}/bash_functions
 source ${SCRIPT_DIR}/bash_aliases
 source ${SCRIPT_DIR}/bash_prompt
 INPUTRC="${SCRIPT_DIR}/inputrc"
-#"kv" will enter vi command mode
+#"kv" will enter vi command mode. Use ctrl+v to avoid.
 bind '"kv":vi-movement-mode'
+bind '"vk":vi-movement-mode'
+
+# You know it, baby. Shouldn't need to use nano ever
+export EDITOR=vim
+export VISUAL=vim
+export GIT_EDITOR=vim
+git config [--global] core.editor "vim"
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
