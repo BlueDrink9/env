@@ -82,7 +82,7 @@ function vscodeExtensions() {
 
             while IFS='' read -r LINE || [[ -n "$LINE" ]]; do
                 code --install-extension $LINE
-            done < "./.vscode/extensions"
+            done < "${SCRIPTDIR}/editors/vscode/extensions"
 
         elif [[ $REPLY =~ ^[cC]$ ]]; then # Load VSCode which detects recommendations.json
             code .
