@@ -18,6 +18,8 @@ call plug#begin(s:pluginPath)
 " Plug 'https://github.com/tpope/vim-fugitive'
 " Uses leader rather than g
 " Plug 'https://github.com/scrooloose/nerdcommenter'
+" Awesome code completion, but requires specific installations
+" Plug 'https://github.com/Valloric/YouCompleteMe'
 
 Plug 'https://github.com/altercation/vim-colors-solarized.git'
 Plug 'https://github.com/tpope/vim-surround.git'
@@ -32,10 +34,19 @@ Plug 'https://github.com/tpope/vim-eunuch'
 Plug 'https://github.com/tpope/vim-commentary'
 Plug 'https://github.com/kien/rainbow_parentheses.vim'
 Plug 'https://github.com/simnalamburt/vim-mundo'
+
 Plug 'https://github.com/honza/vim-snippets'
 Plug 'https://github.com/garbas/vim-snipmate.git'
 Plug 'https://github.com/tomtom/tlib_vim.git'
 Plug 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
+
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-easytags'
+Plug 'majutsushi/tagbar'
+
+Plug 'https://github.com/ryanoasis/vim-devicons'
+Plug 'https://github.com/vim-airline/vim-airline'
+Plug 'https://github.com/vim-airline/vim-airline-themes/blob/master/autoload/airline/themes/solarized.vim'
 
 call plug#end()
 
@@ -68,3 +79,13 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Unknown"   : "?"
     \ }
 
+" ----- majutsushi/tagbar settings -----
+" Open/close tagbar with \b
+nmap <silent> <leader>b :TagbarToggle<CR>
+" Uncomment to open tagbar automatically whenever possible
+"autocmd BufEnter * nested :call tagbar#autoopen(0)
+
+
+" Show buffers in tab line when 1 tab open
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme='solarized'
