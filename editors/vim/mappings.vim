@@ -25,6 +25,8 @@ nnoremap : ;
 vnoremap : ;
 
 
+" leader w opens new vert window, switches to it
+nnoremap <leader>w <C-w>v<C-w>l
 " Easier way to move between windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
