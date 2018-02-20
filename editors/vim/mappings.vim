@@ -32,6 +32,13 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+nmap <C-Up>
+if bufwinnr(1)
+    map + 10<C-W>>
+    map - 10<C-W><
+      map <kPlus> <C-W>+
+    map <kMinus> <C-W>-
+endif
 
 " In insert or visual mode, use standard cut/copy/paste shortcuts.
 " In normal mode, use ctrl+q
