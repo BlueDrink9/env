@@ -14,7 +14,10 @@ call plug#begin(s:pluginPath)
 " Plug 'https://github.com/tpope/vim-repeat'
 " Way better search and replace
 " Plug 'https://github.com/tpope/vim-abolish'
-" Plug '
+" Git from within vim. Highly recommended, don't see the point yet
+" Plug 'https://github.com/tpope/vim-fugitive'
+" Uses leader rather than g
+" Plug 'https://github.com/scrooloose/nerdcommenter'
 
 Plug 'https://github.com/altercation/vim-colors-solarized.git'
 Plug 'https://github.com/tpope/vim-surround.git'
@@ -27,6 +30,12 @@ Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
 Plug 'https://github.com/tpope/vim-eunuch'
 Plug 'https://github.com/tpope/vim-commentary'
+Plug 'https://github.com/kien/rainbow_parentheses.vim'
+Plug 'https://github.com/simnalamburt/vim-mundo'
+Plug 'https://github.com/honza/vim-snippets'
+Plug 'https://github.com/garbas/vim-snipmate.git'
+Plug 'https://github.com/tomtom/tlib_vim.git'
+Plug 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
 
 call plug#end()
 
