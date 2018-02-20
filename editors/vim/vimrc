@@ -1,9 +1,14 @@
 " Folder in which current script resides:
-let s:path = expand('<sfile>:p:h')
+let s:scriptpath = fnameescape(expand('<sfile>:p:h'))
 
-execute 'source' .s:path . "/functions.vim"
-execute 'source' .s:path . "/mappings.vim"
-execute 'source' .s:path . "/plugins.vim"
+function! SourceCustoms(...)
+    for vimfile in a:000
+        " Converts the path properly for win or unix
+        exec 'source ' . s:scriptpath . expand(vimfile)
+    endfor
+endfunction
+
+exec SourceCustoms("/functions.vim", "/mappings.vim", "/plugins.vim")
 
 " Show line numbers
 set number
@@ -41,7 +46,7 @@ if has("gui_running")
     set lines=40 columns=120
     set background=light
     colorscheme solarized
-    set guifont=Source\ Code\ Pro\ Medium\ 10.5
+    set guifont=Source\ Code\ Pro\ Semibold:h10.5
 " else
     " This is console Vim.
     " if exists("+lines")
