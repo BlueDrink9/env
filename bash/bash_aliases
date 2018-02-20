@@ -13,6 +13,7 @@ alias l='ls -CF'
 alias open="nautilus $1 >/dev/null 2>&1"
 alias :q="exit"
 alias :Q="exit"
+alias ZZ="exit"
 
 alias gca="git commit -a"
 alias gc="git_clone"
