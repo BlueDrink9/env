@@ -4,6 +4,7 @@
 let s:path = expand('<sfile>:p:h')
 let s:pluginPath = s:path . "/plugins"
 
+
 call plug#begin(s:pluginPath)
 
 " Maybe later, once I want them.
@@ -46,12 +47,13 @@ Plug 'majutsushi/tagbar'
 
 Plug 'https://github.com/ryanoasis/vim-devicons'
 Plug 'https://github.com/vim-airline/vim-airline'
-Plug 'https://github.com/vim-airline/vim-airline-themes/blob/master/autoload/airline/themes/solarized.vim'
+" Plug 'https://github.com/vim-airline/vim-airline-themes'
+" exec "Plug \'https://github.com/vim-airline/vim-airline-themes\', {\'rtp\' : \'autoload/airline/themes/". colorSch . ".vim\'}"
 
 call plug#end()
 
 " May be needed if terminal doesn't support.
-let g:solarized_termcolors=256
+exec 'let g:' . colorSch . '_termcolors=256'
 
 " We need this for plugins like Syntastic and vim-gitgutter which put symbols
 " in the sign column.
@@ -61,23 +63,23 @@ highlight clear SignColumn
 let g:syntastic_error_symbol = '✘'
 let g:syntastic_warning_symbol = "▲"
 augroup mySyntastic
-  au!
-  au FileType tex let b:syntastic_mode = "passive"
+    au!
+    au FileType tex let b:syntastic_mode = "passive"
 augroup END
 
 " Change these if you feel the desire...
 let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "✹",
-    \ "Staged"    : "✚",
-    \ "Untracked" : "✭",
-    \ "Renamed"   : "➜",
-    \ "Unmerged"  : "═",
-    \ "Deleted"   : "✖",
-    \ "Dirty"     : "✗",
-    \ "Clean"     : "✔︎",
-    \ 'Ignored'   : '☒',
-    \ "Unknown"   : "?"
-    \ }
+            \ "Modified"  : "✹",
+            \ "Staged"    : "✚",
+            \ "Untracked" : "✭",
+            \ "Renamed"   : "➜",
+            \ "Unmerged"  : "═",
+            \ "Deleted"   : "✖",
+            \ "Dirty"     : "✗",
+            \ "Clean"     : "✔︎",
+            \ 'Ignored'   : '☒',
+            \ "Unknown"   : "?"
+\}
 
 " ----- majutsushi/tagbar settings -----
 " Open/close tagbar with \b
@@ -88,4 +90,4 @@ nmap <silent> <leader>b :TagbarToggle<CR>
 
 " Show buffers in tab line when 1 tab open
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='solarized'
+let g:airline_theme=colorSch

@@ -1,6 +1,9 @@
 " Folder in which current script resides:
 let s:scriptpath = fnameescape(expand('<sfile>:p:h'))
 
+" Set colorScheme variable for use in other settings
+let colorSch="solarized"
+
 function! SourceCustoms(...)
     for vimfile in a:000
         " Converts the path properly for win or unix
@@ -9,6 +12,9 @@ function! SourceCustoms(...)
 endfunction
 
 exec SourceCustoms("/functions.vim", "/mappings.vim", "/plugins.vim")
+
+
+exec 'colorscheme ' . colorSch
 
 set nocompatible
 set encoding=utf-8
@@ -72,8 +78,8 @@ if has("gui_running")
     set background=light
     set guifont=Source\ Code\ Pro\ Semibold:h10.5
 else
-    let g:solarized_termcolors=&t_Co
-    let g:solarized_termtrans=1
+    exec "let g:".colorSch . "_termcolors=&t_Co"
+    exec "let g:".colorSch . "_termtrans=1"
     " This is console Vim.
     " if exists("+lines")
         " set lines=30
@@ -83,7 +89,6 @@ else
     " endif
 endif
 
-colorscheme solarized
 
 
 " Set up default file explorer plugin to be like NERDTree (for using noplugin
