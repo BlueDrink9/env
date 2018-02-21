@@ -52,6 +52,8 @@ Plug 'https://github.com/vim-airline/vim-airline'
 
 call plug#end()
 
+exec 'colorscheme ' . colorSch
+
 " May be needed if terminal doesn't support.
 exec 'let g:' . colorSch . '_termcolors=256'
 
@@ -88,6 +90,20 @@ nmap <silent> <leader>b :TagbarToggle<CR>
 "autocmd BufEnter * nested :call tagbar#autoopen(0)
 
 
+" ----- Airline -----
 " Show buffers in tab line when 1 tab open
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme=colorSch
+" let g:airline_symbols_ascii=1
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+" unicode symbols
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+" airline symbols
+let g:airline_symbols.readonly = ''
