@@ -63,17 +63,23 @@ if has("gui_running")
     "   below).
     set lines=40 columns=120
     set background=light
-    set guifont=Source\ Code\ Pro\ Semibold:h10.5
+    set guifont=Source\ Code\ Pro\ Medium\ 11
+    " Put buffer name in window title, without "Vim" (because it'll have a logo)
+    autocmd BufEnter * let &titlestring = '' . expand("%:t") . ' [' . expand("%:p") . ']'
+    set title
 else
+    " This is console Vim.
     exec "let g:".colorSch . "_termcolors=&t_Co"
     exec "let g:".colorSch . "_termtrans=1"
-    " This is console Vim.
     " if exists("+lines")
         " set lines=30
     " endif
     " if exists("+columns")
         " set columns=100
     " endif
+    " Put buffer name in window title
+    autocmd BufEnter * let &titlestring = '|Vim| ' . expand("%:t") . ' [' . expand("%:p") . ']'
+    set title
 endif
 
 
@@ -91,7 +97,3 @@ let g:netrw_winsize = 25
 "     autocmd VimEnter * :Vexplore
 " augroup END
 
-" Put buffer name in window title
-" set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:p:h\")})%)%(\ %a%)\ -\ %{v:servername}
-autocmd BufEnter * let &titlestring = '|Vim| ' . expand("%:t") . ' [' . expand("%:p") . ']'
-set title
