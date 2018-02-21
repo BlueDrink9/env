@@ -48,7 +48,7 @@ Plug 'majutsushi/tagbar'
 
 Plug 'https://github.com/ryanoasis/vim-devicons'
 Plug 'https://github.com/vim-airline/vim-airline'
-" Plug 'https://github.com/vim-airline/vim-airline-themes'
+Plug 'https://github.com/vim-airline/vim-airline-themes'
 " exec "Plug \'https://github.com/vim-airline/vim-airline-themes\', {\'rtp\' : \'autoload/airline/themes/". colorSch . ".vim\'}"
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 
@@ -95,7 +95,10 @@ nmap <silent> <leader>b :TagbarToggle<CR>
 " ----- Airline -----
 " Show buffers in tab line when 1 tab open
 let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#show_tabs = 0
 let g:airline_theme=colorSch
+let g:airline#extensions#tabline#left_sep = '▶'
+let g:airline#extensions#tabline#left_alt_sep = '|'
 " let g:airline_symbols_ascii=1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -112,8 +115,11 @@ let g:airline_symbols.whitespace = '☲'
 " airline symbols
 let g:airline_symbols.readonly = ''
 " Skip gap between col symbol and number (custom section)
-call airline#parts#define_raw('linenr', '%l')
-call airline#parts#define_accent('linenr', 'bold')
+" call airline#parts#define_raw('linenr', '%l')
+" call airline#parts#define_accent('linenr', 'bold')
 let g:airline_section_z = airline#section#create(['%3p%%  ',
             \ g:airline_symbols.linenr .' ', 'linenr',
             \' ' . g:airline_symbols.columnr, '%c '])
+let g:airline_section_tabline = airline#section#create(['%{getcwd()}'])
+
+
