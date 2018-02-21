@@ -91,3 +91,7 @@ let g:netrw_winsize = 25
 "     autocmd VimEnter * :Vexplore
 " augroup END
 
+" Put buffer name in window title
+" set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:p:h\")})%)%(\ %a%)\ -\ %{v:servername}
+autocmd BufEnter * let &titlestring = '|Vim| ' . expand("%:t") . ' [' . expand("%:p") . ']'
+set title
