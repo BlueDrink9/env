@@ -13,7 +13,9 @@ set ruler
 " Highligh search as you go
 set incsearch
 " Ignore case in searches excepted if an uppercase letter is used
+set ignorecase
 set smartcase
+
 " Highlight search results. Use :noh to undo
 set hlsearch
 " Enables some basic mouse input

@@ -108,18 +108,16 @@ let g:airline_left_sep = '▶'
 let g:airline_right_sep = '◀'
 let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = ''
-let g:airline_symbols.columnr = '∥'
+let g:airline_symbols.columnnr = '∥'
 let g:airline_symbols.branch = '⎇'
 let g:airline_symbols.paste = 'PASTE'
 let g:airline_symbols.whitespace = '☲'
 " airline symbols
 let g:airline_symbols.readonly = ''
 " Skip gap between col symbol and number (custom section)
-" call airline#parts#define_raw('linenr', '%l')
+ call airline#parts#define_raw('linenr', g:airline_symbols.linenr . ' %l')
+ call airline#parts#define_raw('columnnr', g:airline_symbols.columnnr . '%c')
 " call airline#parts#define_accent('linenr', 'bold')
-let g:airline_section_z = airline#section#create(['%3p%%  ',
-            \ g:airline_symbols.linenr .' ', 'linenr',
-            \' ' . g:airline_symbols.columnr, '%c '])
-let g:airline_section_tabline = airline#section#create(['%{getcwd()}'])
-
-
+let g:airline_section_z = airline#section#create([
+            \ 'linenr', 'maxlinenr',' ', 'columnnr'])
+"let g:airline_section_tabline = airline#section#create(['%{getcwd()}'])
