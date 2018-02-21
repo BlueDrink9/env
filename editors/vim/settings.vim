@@ -22,6 +22,8 @@ set mouse=a
 set number
 " Line numbers are displayed relative to current line.
 set relativenumber
+" Hide buffer (don't ask for save) when navigating away.
+set hidden
 
 let s:undodir = fnamemodify(expand("$MYVIMRC"), ":p:h")
 " Create undo file for inter-session undo
