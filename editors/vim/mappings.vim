@@ -3,6 +3,8 @@
 inoremap kv <esc>
 inoremap vk <esc>
 
+map <SPACE> <leader>
+
 " ctrl+S = save (otherwise unused)
 noremap <C-S> :update<CR>
 vnoremap <C-S> <C-C>:update<CR>
