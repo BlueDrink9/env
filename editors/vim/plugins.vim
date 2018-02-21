@@ -16,6 +16,7 @@ call plug#begin(s:pluginPath)
 " Way better search and replace
 " Plug 'https://github.com/tpope/vim-abolish'
 " Git from within vim. Highly recommended, don't see the point yet
+" Works iwth airline
 " Plug 'https://github.com/tpope/vim-fugitive'
 " Uses leader rather than g
 " Plug 'https://github.com/scrooloose/nerdcommenter'
@@ -49,6 +50,7 @@ Plug 'https://github.com/ryanoasis/vim-devicons'
 Plug 'https://github.com/vim-airline/vim-airline'
 " Plug 'https://github.com/vim-airline/vim-airline-themes'
 " exec "Plug \'https://github.com/vim-airline/vim-airline-themes\', {\'rtp\' : \'autoload/airline/themes/". colorSch . ".vim\'}"
+Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 
 call plug#end()
 
@@ -101,9 +103,17 @@ endif
 " unicode symbols
 let g:airline_left_sep = '▶'
 let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.columnr = '∥'
 let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
+let g:airline_symbols.paste = 'PASTE'
+let g:airline_symbols.whitespace = '☲'
 " airline symbols
 let g:airline_symbols.readonly = ''
+" Skip gap between col symbol and number (custom section)
+call airline#parts#define_raw('linenr', '%l')
+call airline#parts#define_accent('linenr', 'bold')
+let g:airline_section_z = airline#section#create(['%3p%%  ',
+            \ g:airline_symbols.linenr .' ', 'linenr',
+            \' ' . g:airline_symbols.columnr, '%c '])
