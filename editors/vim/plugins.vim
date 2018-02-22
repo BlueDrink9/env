@@ -51,6 +51,8 @@ Plug 'https://github.com/vim-airline/vim-airline'
 Plug 'https://github.com/vim-airline/vim-airline-themes'
 " exec "Plug \'https://github.com/vim-airline/vim-airline-themes\', {\'rtp\' : \'autoload/airline/themes/". colorSch . ".vim\'}"
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
+Plug 'https://github.com/xolox/vim-session'
+Plug 'https://github.com/thaerkh/vim-workspace'
 
 call plug#end()
 
