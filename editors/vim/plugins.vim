@@ -108,6 +108,7 @@ let g:syntastic_check_on_wq = 0
 
 " ----- Airline -----
 let g:airline_theme=colorSch
+let g:airline_solarized_bg=backgroundColor
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#show_tabs = 0

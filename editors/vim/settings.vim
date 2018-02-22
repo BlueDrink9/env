@@ -1,5 +1,6 @@
 " Set colorScheme variable for use in other settings
 let colorSch="solarized"
+let backgroundColor="dark"
 set encoding=utf-8
 set nocompatible
 
@@ -74,7 +75,8 @@ if has("gui_running")
     "   " Maximize gvim window (for an alternative on Windows, see simalt
     "   below).
     set lines=40 columns=120
-    set background=light
+    backgroundColor="light"
+    set background=backgroundColor
     if has ("windows") || has ("gui_macvim")
         set guifont=Source\ Code\ Pro\ Medium:h11
     else
