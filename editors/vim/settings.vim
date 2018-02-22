@@ -17,7 +17,7 @@ set ignorecase
 set smartcase
 
 " Highlight search results. Use :noh to undo
-set hlsearch
+" set hlsearch
 " Enables some basic mouse input
 set mouse=a
 " Show line numbers
@@ -26,13 +26,23 @@ set number
 set relativenumber
 " Hide buffer (don't ask for save) when navigating away.
 set hidden
+" Don't save hidden and unloaded buffers in sessions.
+set sessionoptions-=buffers
+set wildmenu
+set wildmode=list:longest
+set scrolloff=2
+" Tabs, trailing ws visible
+set listchars=tab:>-,trail:·,eol:$
 
-let s:undodir = fnamemodify(expand("$MYVIMRC"), ":p:h")
+let s:vimrcdir = fnamemodify(expand("$MYVIMRC"), ":p:h")
 " Create undo file for inter-session undo
 set undofile
-exec 'set undodir=' . s:undodir . '/vimundo'
+exec 'set undodir=' . s:vimrcdir . '/vimfiles/vimundo'
 " Save on focus loss
 au FocusLost * :wa
+
+exec 'set backupdir=' . s:vimrcdir . '/vimfiles/vimbackup'
+exec 'set directory=' . s:vimrcdir . '/vimfiles/vimbackup'
 
 set expandtab
 set shiftwidth=4
