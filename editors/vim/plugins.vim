@@ -15,16 +15,16 @@ call plug#begin(s:pluginPath)
 " Plug 'https://github.com/tpope/vim-repeat'
 " Way better search and replace
 " Plug 'https://github.com/tpope/vim-abolish'
-" Git from within vim. Highly recommended, don't see the point yet
-" Works iwth airline
-" Plug 'https://github.com/tpope/vim-fugitive'
 " Uses leader rather than g
 " Plug 'https://github.com/scrooloose/nerdcommenter'
 " Awesome code completion, but requires specific installations
 " Plug 'https://github.com/Valloric/YouCompleteMe'
+" Align CSV files at commas, align Markdown tables, and more
+" Plug 'godlygeek/tabular'
 
 Plug 'https://github.com/altercation/vim-colors-solarized.git'
 Plug 'https://github.com/tpope/vim-surround.git'
+Plug 'https://github.com/tpope/vim-fugitive'
 Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
 Plug 'https://github.com/scrooloose/nerdtree.git'
 Plug 'https://github.com/jlanzarotta/bufexplorer.git'
@@ -46,13 +46,14 @@ Plug 'xolox/vim-misc'
 Plug 'xolox/vim-easytags'
 Plug 'majutsushi/tagbar'
 
-" Plug 'https://github.com/ryanoasis/vim-devicons'
 Plug 'https://github.com/vim-airline/vim-airline'
 Plug 'https://github.com/vim-airline/vim-airline-themes'
 " exec "Plug \'https://github.com/vim-airline/vim-airline-themes\', {\'rtp\' : \'autoload/airline/themes/". colorSch . ".vim\'}"
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 Plug 'https://github.com/xolox/vim-session'
 Plug 'https://github.com/lervag/vimtex'
+Plug 'vim-scripts/a.vim'
+Plug 'https://github.com/vim-scripts/autohotkey-ahk'
 
 call plug#end()
 
@@ -93,6 +94,17 @@ nmap <silent> <leader>b :TagbarToggle<CR>
 " Uncomment to open tagbar automatically whenever possible
 "autocmd BufEnter * nested :call tagbar#autoopen(0)
 
+
+" ----- Syntastic -----
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+" let g:syntastic_python_checkers = ['pylint']
 
 " ----- Airline -----
 let g:airline_theme=colorSch
@@ -136,6 +148,7 @@ let g:airline_symbols.readonly = ''
 let g:airline_section_z = airline#section#create([
             \ 'linenr', 'maxlinenr',' ', 'columnnr'])
 let g:airline_section_tabline = airline#section#create(['%{getcwd()}'])
+let g:airline#extensions#hunks#non_zero_only = 1
 
 " Session settings
 let g:session_persist_colors = 0
