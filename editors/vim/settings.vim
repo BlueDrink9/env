@@ -75,7 +75,10 @@ if has("gui_running")
     "   below).
     set lines=40 columns=120
     set background=light
-    set guifont=Source\ Code\ Pro\ Medium\ 11
+    if has ("windows") || has ("gui_macvim")
+        set guifont=Source\ Code\ Pro\ Medium:h11
+    else
+        set guifont=Source\ Code\ Pro\ Medium\ 11
     " Put buffer name in window title, without "Vim" (because it'll have a logo)
     autocmd BufEnter * let &titlestring = '' . expand("%:t") . ' [' . expand("%:p") . ']'
     set title
