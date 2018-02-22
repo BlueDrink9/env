@@ -3,6 +3,8 @@
 inoremap kv <esc>
 inoremap vk <esc>
 
+" let mapleader = "\<Space>"
+" nnoremap <SPACE> <Nop>
 map <SPACE> <leader>
 
 " ctrl+S = save (otherwise unused)
@@ -14,7 +16,7 @@ inoremap <C-S> <C-O>:update<CR>
 :command! -bang W w<bang>
 :command! -bang Q q<bang>
 
-" :W! sudo saves the file 
+" :W! sudo saves the file
 " (useful for handling the permission-denied error)
 " File needs to already exist.
 command! -bang -nargs=* SudoSave w !sudo tee % > /dev/null
@@ -54,4 +56,11 @@ nnoremap <C-q> "+P
 inoremap <C-Q> <C-V>
 
 " CTRL-A is Select all in insert mode
-inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
+inoremap <C-A> <C-O>gg<C-O><S-V><C-O>G
+
+"Faster scrolling
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
+
+nnoremap ' `
+nnoremap ` '
