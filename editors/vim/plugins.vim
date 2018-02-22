@@ -46,13 +46,13 @@ Plug 'xolox/vim-misc'
 Plug 'xolox/vim-easytags'
 Plug 'majutsushi/tagbar'
 
-Plug 'https://github.com/ryanoasis/vim-devicons'
+" Plug 'https://github.com/ryanoasis/vim-devicons'
 Plug 'https://github.com/vim-airline/vim-airline'
 Plug 'https://github.com/vim-airline/vim-airline-themes'
 " exec "Plug \'https://github.com/vim-airline/vim-airline-themes\', {\'rtp\' : \'autoload/airline/themes/". colorSch . ".vim\'}"
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 Plug 'https://github.com/xolox/vim-session'
-Plug 'https://github.com/thaerkh/vim-workspace'
+Plug 'https://github.com/lervag/vimtex'
 
 call plug#end()
 
@@ -95,17 +95,30 @@ nmap <silent> <leader>b :TagbarToggle<CR>
 
 
 " ----- Airline -----
-" Show buffers in tab line when 1 tab open
-let g:airline#extensions#tabline#enabled = 1
-" let g:airline#extensions#tabline#show_tabs = 0
 let g:airline_theme=colorSch
-let g:airline#extensions#tabline#left_sep = '▶'
-let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#show_tabs = 0
+let g:airline#extensions#tabline#buffer_min_count = 2
+let g:airline#extensions#tabline#tab_min_count = 2
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#show_close_button = 0
+let g:airline#extensions#tabline#buffers_label = 'B'
+let g:airline#extensions#tabline#alt_sep = 1
+let g:airline#extensions#tabline# = 1
+" let g:airline#extensions#tabline#show_tabs = 0
 " let g:airline_symbols_ascii=1
+" let g:airline_powerline_fonts = 0
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 " unicode symbols
+let g:airline#extensions#tabline#left_sep = '▶'
+let g:airline#extensions#tabline#right_sep = '◀'
+let g:airline#extensions#tabline#left_sep_alt = '|'
+let g:airline#extensions#tabline#right_sep_alt = '|'
 let g:airline_left_sep = '▶'
 let g:airline_right_sep = '◀'
 let g:airline_symbols.linenr = '☰'
@@ -122,4 +135,11 @@ let g:airline_symbols.readonly = ''
 " call airline#parts#define_accent('linenr', 'bold')
 let g:airline_section_z = airline#section#create([
             \ 'linenr', 'maxlinenr',' ', 'columnnr'])
-"let g:airline_section_tabline = airline#section#create(['%{getcwd()}'])
+let g:airline_section_tabline = airline#section#create(['%{getcwd()}'])
+
+" Session settings
+let g:session_persist_colors = 0
+let g:session_persist_font = 0
+let g:session_default_to_last = 'yes'
+let g:session_autosave_periodic = 5
+let g:session_autosave = 'yes'
