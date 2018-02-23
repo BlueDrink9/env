@@ -31,6 +31,7 @@ Plug 'https://github.com/vim-scripts/ShowMarks.git'
 Plug 'https://github.com/vim-syntastic/syntastic.git'
 Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
+" Adds a bunch of unix-mapped filesystem ops from vim
 Plug 'https://github.com/tpope/vim-eunuch'
 Plug 'https://github.com/tpope/vim-commentary'
 Plug 'https://github.com/kien/rainbow_parentheses.vim'
@@ -51,10 +52,12 @@ Plug 'https://github.com/vim-airline/vim-airline-themes'
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 Plug 'https://github.com/xolox/vim-session'
 Plug 'https://github.com/lervag/vimtex'
+" For switching between header and alt files
 Plug 'vim-scripts/a.vim'
-Plug 'https://github.com/vim-scripts/autohotkey-ahk'
 Plug 'https://github.com/reedes/vim-pencil'
 
+" TODO: move this to windows-specific
+Plug 'https://github.com/vim-scripts/autohotkey-ahk'
 call plug#end()
 
 exec 'colorscheme ' . colorSch
