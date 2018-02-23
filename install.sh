@@ -34,6 +34,7 @@ if [[ $REPLY =~ ^[yY]$ ]]; then
     exec bash
 
     # Remove self
+    #TODO remove comment to exit debugmode
     # rm -rf "${SCRIPTDIR}"
 fi
 }
