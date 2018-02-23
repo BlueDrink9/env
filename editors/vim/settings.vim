@@ -36,14 +36,26 @@ set scrolloff=2
 set listchars=tab:>-,trail:·,eol:$
 
 let s:vimrcdir = fnamemodify(expand("$MYVIMRC"), ":p:h")
+
+" Automatically create vimfile directories
+function! CreateVimDir(dir)
+    if filewritable(s:vimrcdir) && ! filewritable(s:vimrcdir . a:dir)
+        exec "silent execute '!mkdir " . s:vimrcdir . a:dir . "'"
+    endif
+    return s:vimrcdir . a:dir
+endfunction
+call CreateVimDir("/vimfiles")
+
 " Create undo file for inter-session undo
+" Extra slash means files will have unique names
 set undofile
-exec 'set undodir=' . s:vimrcdir . '/vimfiles/vimundo'
+exec 'set undodir=' . CreateVimDir("/vimfiles/undo") . '/'
 " Save on focus loss
 au FocusLost * :wa
 
-exec 'set backupdir=' . s:vimrcdir . '/vimfiles/vimbackup'
-exec 'set directory=' . s:vimrcdir . '/vimfiles/vimbackup'
+exec 'set backupdir=' . CreateVimDir("/vimfiles/backup") . '/'
+exec 'set directory=' . CreateVimDir("/vimfiles/swap") . '/'
+" ,"$TMP//","$TEMP//",.//
 
 set expandtab
 set shiftwidth=4
@@ -75,16 +87,17 @@ if has("gui_running")
     "   " Maximize gvim window (for an alternative on Windows, see simalt
     "   below).
     set lines=40 columns=120
-    backgroundColor="light"
-    set background=backgroundColor
-    if has ("windows") || has ("gui_macvim")
+    let backgroundColor="light"
+    exec 'set background=' . backgroundColor
+    if has ("win32") || has ("gui_macvim")
         set guifont=Source\ Code\ Pro\ Medium:h11
     else
         set guifont=Source\ Code\ Pro\ Medium\ 11
-    " Put buffer name in window title, without "Vim" (because it'll have a logo)
-    autocmd BufEnter * let &titlestring = '' . expand("%:t") . ' [' . expand("%:p") . ']'
-    set title
-else
+    endif
+        " Put buffer name in window title, without "Vim" (because it'll have a logo)
+        autocmd BufEnter * let &titlestring = '' . expand("%:t") . ' [' . expand("%:p") . ']'
+        set title
+    else
     " This is console Vim.
     exec "let g:".colorSch . "_termcolors=&t_Co"
     exec "let g:".colorSch . "_termtrans=1"

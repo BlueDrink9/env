@@ -3,10 +3,33 @@
 inoremap kv <esc>
 inoremap vk <esc>
 
+" Don't have to hold shift for commands. Comes highly recommended.
+nnoremap ; :
+vnoremap ; :
+nnoremap : ;
+vnoremap : ;
+
 " let mapleader = "\<Space>"
 " nnoremap <SPACE> <Nop>
 map <SPACE> <leader>
 
+" leader w opens new vert window, switches to it
+nnoremap <leader>w <C-w>v<C-w>l
+" Easier way to move between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+"Faster scrolling
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
+
+nnoremap ' `
+nnoremap ` '
+
+" Consistent with D, C
+nnoremap Y y$
 " ctrl+S = save (otherwise unused)
 noremap <C-S> :update<CR>
 vnoremap <C-S> <C-C>:update<CR>
@@ -21,21 +44,6 @@ inoremap <C-S> <C-O>:update<CR>
 " File needs to already exist.
 command! -bang -nargs=* SudoSave w !sudo tee % > /dev/null
 cmap W! SudoSave
-
-" Don't have to hold shift for commands. Comes highly recommended.
-nnoremap ; :
-vnoremap ; :
-nnoremap : ;
-vnoremap : ;
-
-
-" leader w opens new vert window, switches to it
-nnoremap <leader>w <C-w>v<C-w>l
-" Easier way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
 
 if bufwinnr(1)
     map + 10<C-W>>
@@ -57,10 +65,3 @@ inoremap <C-Q> <C-V>
 
 " CTRL-A is Select all in insert mode
 inoremap <C-A> <C-O>gg<C-O><S-V><C-O>G
-
-"Faster scrolling
-nnoremap <C-e> 3<C-e>
-nnoremap <C-y> 3<C-y>
-
-nnoremap ' `
-nnoremap ` '
