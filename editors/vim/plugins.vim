@@ -1,10 +1,13 @@
 " vim: set ft=vim:
 
 " Folder in which current script resides:
-let s:path = expand('<sfile>:p:h')
+let s:scriptpath = fnameescape(expand('<sfile>:p:h'))
 let s:pluginPath = CreateVimDir("/vimfiles/plugins")
 
 call plug#begin(s:pluginPath)
+
+" Get light plugin set first
+exec 'source ' . s:scriptpath . "/plugins_light.vim"
 
 " Maybe later, once I want them.
 " s + 2 letters jumps to it (like 2 letter f or t, but vert)
@@ -21,20 +24,13 @@ call plug#begin(s:pluginPath)
 " Align CSV files at commas, align Markdown tables, and more
 " Plug 'godlygeek/tabular'
 
-Plug 'https://github.com/altercation/vim-colors-solarized.git'
-Plug 'https://github.com/tpope/vim-surround.git'
-Plug 'https://github.com/tpope/vim-fugitive'
-Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
 Plug 'https://github.com/scrooloose/nerdtree.git'
-Plug 'https://github.com/jlanzarotta/bufexplorer.git'
 Plug 'https://github.com/vim-scripts/ShowMarks.git'
 Plug 'https://github.com/vim-syntastic/syntastic.git'
 Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
 " Adds a bunch of unix-mapped filesystem ops from vim
 Plug 'https://github.com/tpope/vim-eunuch'
-Plug 'https://github.com/tpope/vim-commentary'
-Plug 'https://github.com/kien/rainbow_parentheses.vim'
 Plug 'https://github.com/simnalamburt/vim-mundo'
 
 Plug 'https://github.com/honza/vim-snippets'
@@ -50,11 +46,8 @@ Plug 'https://github.com/vim-airline/vim-airline'
 Plug 'https://github.com/vim-airline/vim-airline-themes'
 " exec "Plug \'https://github.com/vim-airline/vim-airline-themes\', {\'rtp\' : \'autoload/airline/themes/". colorSch . ".vim\'}"
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
-Plug 'https://github.com/xolox/vim-session'
-Plug 'https://github.com/lervag/vimtex'
 " For switching between header and alt files
 Plug 'vim-scripts/a.vim'
-Plug 'https://github.com/reedes/vim-pencil'
 
 " TODO: move this to windows-specific
 Plug 'https://github.com/vim-scripts/autohotkey-ahk'
