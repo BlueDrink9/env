@@ -2,8 +2,7 @@
 
 " Folder in which current script resides:
 let s:path = expand('<sfile>:p:h')
-let s:pluginPath = s:path . "/plugins"
-
+let s:pluginPath = CreateVimDir("/vimfiles/plugins")
 
 call plug#begin(s:pluginPath)
 
@@ -54,6 +53,7 @@ Plug 'https://github.com/xolox/vim-session'
 Plug 'https://github.com/lervag/vimtex'
 Plug 'vim-scripts/a.vim'
 Plug 'https://github.com/vim-scripts/autohotkey-ahk'
+Plug 'https://github.com/reedes/vim-pencil'
 
 call plug#end()
 
@@ -108,7 +108,7 @@ let g:syntastic_check_on_wq = 0
 
 " ----- Airline -----
 let g:airline_theme=colorSch
-let g:airline_solarized_bg=backgroundColor
+exec 'let g:airline_solarized_bg="' . backgroundColor . '"'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#show_tabs = 0

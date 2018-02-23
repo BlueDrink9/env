@@ -28,6 +28,7 @@ if [[ $REPLY =~ ^[yY]$ ]]; then
     sed -in "s|.*vim_runtime.*||g" ${HOME}/.vimrc
     rm -rf "${BASH_CUSTOM}"
     rm -rf "${HOME}/.vim_runtime"
+    rm -rf "${HOME}/vimfiles"
     rm -f "${HOME}/.vim/autoload/plug.vim"
     # Reset bash
     exec bash
