@@ -48,6 +48,13 @@ Plug 'https://github.com/vim-airline/vim-airline-themes'
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 " For switching between header and alt files
 Plug 'vim-scripts/a.vim'
+" Run shell commands async (uses python)
+Plug 'https://github.com/joonty/vim-do'
+Plug 'https://github.com/python-mode/python-mode'
+Plug 'https://github.com/thinca/vim-quickrun'
+Plug 'https://github.com/vim-scripts/SingleCompile'
+" Make is run async (view quickfix with :COpen)
+Plug 'https://github.com/tpope/vim-dispatch'
 
 " TODO: move this to windows-specific
 Plug 'https://github.com/vim-scripts/autohotkey-ahk'
