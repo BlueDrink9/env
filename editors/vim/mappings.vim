@@ -62,9 +62,10 @@ nnoremap <C-q> "+P
 
 " Use CTRL-Q to do what CTRL-V used to do in insert
 inoremap <C-Q> <C-V>
-
 " CTRL-A is Select all in insert mode
 inoremap <C-A> <C-O>gg<C-O><S-V><C-O>G
-
 " Spellcheck with completion list
 nnoremap <leader>s ea<C-X><C-S>
+" Remember cursor location and reformat file
+nnoremap g= mmgg=G`m
+nnoremap gQ mmgggqG`m
