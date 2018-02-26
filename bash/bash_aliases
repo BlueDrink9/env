@@ -1,6 +1,8 @@
 # -*-  mode: shell-script; -*-
 # vim: set ft=sh:
 
+# Always used
+shopt -s expand_aliases  
 
 alias cl="clear"
 alias ..="cd .. && ls"
