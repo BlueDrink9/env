@@ -65,3 +65,6 @@ inoremap <C-Q> <C-V>
 
 " CTRL-A is Select all in insert mode
 inoremap <C-A> <C-O>gg<C-O><S-V><C-O>G
+
+" Spellcheck with completion list
+nnoremap <leader>s ea<C-X><C-S>
