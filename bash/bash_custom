@@ -47,7 +47,7 @@ stty -ixon
 HISTCONTROL=ignoreboth
 
 if [ ! -d "${HOME}/.logs" ] ; then
-   mkdir ${HOME}/.logs 
+   mkdir ${HOME}/.logs
 fi
 PROMPT_COMMAND="${PROMPT_COMMAND} && log_command"
 

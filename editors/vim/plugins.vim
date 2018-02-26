@@ -16,7 +16,6 @@ call plug#begin(s:pluginPath)
 " Get light plugin set first
 exec 'source ' . s:scriptpath . "/plugins_light.vim"
 
-
 " Maybe later, once I want them.
 " s + 2 letters jumps to it (like 2 letter f or t, but vert)
 " Plug 'https://github.com/justinmk/vim-sneak'
@@ -60,6 +59,13 @@ Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 " For switching between header and alt files
 Plug 'vim-scripts/a.vim'
 Plug 'https://github.com/lervag/vimtex'
+" Run shell commands async (uses python)
+Plug 'https://github.com/joonty/vim-do'
+Plug 'https://github.com/python-mode/python-mode'
+Plug 'https://github.com/thinca/vim-quickrun'
+Plug 'https://github.com/vim-scripts/SingleCompile'
+" Make is run async (view quickfix with :COpen)
+Plug 'https://github.com/tpope/vim-dispatch'
 
 " Unplugs and replacements go here
 exec 'source ' . s:localPlugins
