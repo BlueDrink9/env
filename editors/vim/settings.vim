@@ -133,3 +133,7 @@ let g:netrw_winsize = 25
 "     autocmd VimEnter * :Vexplore
 " augroup END
 
+"highlight whitespace at the ends of lines
+autocmd InsertEnter * syn clear EOLWS | syn match EOLWS excludenl /\s\+\%#\@!$/
+autocmd InsertLeave * syn clear EOLWS | syn match EOLWS excludenl /\s\+$/
+highlight EOLWS ctermbg=red guibg=red
