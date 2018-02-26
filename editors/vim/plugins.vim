@@ -3,6 +3,13 @@
 " Folder in which current script resides:
 let s:scriptpath = fnameescape(expand('<sfile>:p:h'))
 let s:pluginPath = CreateVimDir("/vimfiles/plugins")
+let s:localPlugins = fnameescape(expand(s:pluginPath . "/local.vim"))
+
+if !filereadable(s:localPlugins)
+    new
+    silent exec 'write ' . s:localPlugins
+    bdelete
+endif
 
 call plug#begin(s:pluginPath)
 
@@ -25,13 +32,16 @@ exec 'source ' . s:scriptpath . "/plugins_light.vim"
 " Plug 'godlygeek/tabular'
 
 Plug 'https://github.com/scrooloose/nerdtree.git'
-Plug 'https://github.com/vim-scripts/ShowMarks.git'
+Plug 'https://github.com/jacquesbh/vim-showmarks.git'
 Plug 'https://github.com/vim-syntastic/syntastic.git'
 Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
+" Git wrapper
+Plug 'https://github.com/tpope/vim-fugitive'
 " Adds a bunch of unix-mapped filesystem ops from vim
 Plug 'https://github.com/tpope/vim-eunuch'
 Plug 'https://github.com/simnalamburt/vim-mundo'
+Plug 'https://github.com/plasticboy/vim-markdown'
 
 Plug 'https://github.com/honza/vim-snippets'
 Plug 'https://github.com/garbas/vim-snipmate.git'
@@ -48,6 +58,7 @@ Plug 'https://github.com/vim-airline/vim-airline-themes'
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 " For switching between header and alt files
 Plug 'vim-scripts/a.vim'
+Plug 'https://github.com/lervag/vimtex'
 " Run shell commands async (uses python)
 Plug 'https://github.com/joonty/vim-do'
 Plug 'https://github.com/python-mode/python-mode'
@@ -56,8 +67,8 @@ Plug 'https://github.com/vim-scripts/SingleCompile'
 " Make is run async (view quickfix with :COpen)
 Plug 'https://github.com/tpope/vim-dispatch'
 
-" TODO: move this to windows-specific
-Plug 'https://github.com/vim-scripts/autohotkey-ahk'
+" Unplugs and replacements go here
+exec 'source ' . s:localPlugins
 call plug#end()
 
 exec 'colorscheme ' . colorSch
