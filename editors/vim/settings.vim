@@ -21,6 +21,7 @@ set smartcase
 " set hlsearch
 " Enables some basic mouse input
 set mouse=a
+set mousemodel="popup_setpos"
 " Show line numbers
 set number
 " Line numbers are displayed relative to current line.
@@ -34,6 +35,9 @@ set wildmode=list:longest
 set scrolloff=2
 " Tabs, trailing ws visible
 set listchars=tab:>-,trail:·,eol:$
+set autowrite       " Automatically save before commands like :next and :make
+set complete-=i     " Searching includes can be slow
+set display=lastline
 
 let s:vimrcdir = fnamemodify(expand("$MYVIMRC"), ":p:h")
 
