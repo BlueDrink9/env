@@ -38,15 +38,17 @@ set listchars=tab:>-,trail:·,eol:$
 set autowrite       " Automatically save before commands like :next and :make
 set complete-=i     " Searching includes can be slow
 set display=lastline
+set diffopt+=vertical
 
 let s:vimrcdir = fnamemodify(expand("$MYVIMRC"), ":p:h")
 
-" Automatically create vimfile directories
+" Automatically create vimfile directories in same location as vimrc
 function! CreateVimDir(dir)
-    if filewritable(s:vimrcdir) && ! filewritable(s:vimrcdir . a:dir)
-        exec "silent execute '!mkdir " . s:vimrcdir . a:dir . "'"
+    let l:dir = fnameescape(expand(a:dir))
+    if filewritable(s:vimrcdir) && !isdirectory(s:vimrcdir . l:dir)
+        mkdir(s:vimrcdir . l:dir)
     endif
-    return s:vimrcdir . a:dir
+    return s:vimrcdir . l:dir
 endfunction
 call CreateVimDir("/vimfiles")
 

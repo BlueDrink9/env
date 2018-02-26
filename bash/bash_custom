@@ -22,6 +22,7 @@ alias wwkb="setxkbmap $colemak $capsToBS $altWinSwap $altShiftToggle $capsLed"
 
 alias term="xfce4-terminal"
 
+BASH_ENV="${SCRIPT_DIR}/bash_aliases"
 source ${SCRIPT_DIR}/bash_functions
 source ${SCRIPT_DIR}/bash_aliases
 source ${SCRIPT_DIR}/bash_prompt
