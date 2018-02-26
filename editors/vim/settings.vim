@@ -38,6 +38,7 @@ set listchars=tab:>-,trail:·,eol:$
 set autowrite       " Automatically save before commands like :next and :make
 set complete-=i     " Searching includes can be slow
 set display=lastline
+set diffopt+=vertical
 
 let s:vimrcdir = fnamemodify(expand("$MYVIMRC"), ":p:h")
 
