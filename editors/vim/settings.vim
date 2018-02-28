@@ -1,12 +1,57 @@
 " Set colorScheme variable for use in other settings
-let colorSch="solarized"
-let backgroundColor="dark"
+" Doesn't override preset scheme
+" Background should always be set after colorscheme.
+if exists('&g:colors_name') 
+    let colorSch = g:colors_name
+endif
+if !exists ('&colorSch')
+    let colorSch="solarized"
+endif
+if exists ('&background')
+    let backgroundColor = &background
+endif
+if !exists ('&backgroundColor')
+    let backgroundColor="dark"
+endif
+
 set encoding=utf-8
 set nocompatible
-
 filetype plugin indent on
 " For highlighting, and color schemes
 syntax on
+
+if has("gui_running")
+    " GUI is running or is about to start.
+    "   " Maximize gvim window (for an alternative on Windows, see simalt
+    "   below).
+    set lines=40 columns=120
+    if colorSch == ""
+        let backgroundColor="light"
+    endif
+    exec 'set background=' . backgroundColor
+    if has ("win32") || has ("gui_macvim")
+        set guifont=Source\ Code\ Pro\ Medium:h11
+    else
+        set guifont=Source\ Code\ Pro\ Medium\ 11
+    endif
+        " Put buffer name in window title, without "Vim" (because it'll have a logo)
+        autocmd BufEnter * let &titlestring = '' . expand("%:t") . ' [' . expand("%:p") . ']'
+        set title
+    else
+    " Console Vim settings
+    exec "let g:".colorSch . "_termcolors=&t_Co"
+    exec "let g:".colorSch . "_termtrans=1"
+    " if exists("+lines")
+        " set lines=30
+    " endif
+    " if exists("+columns")
+        " set columns=100
+    " endif
+    " Put buffer name in window title
+    autocmd BufEnter * let &titlestring = '|Vim| ' . expand("%:t") . ' [' . expand("%:p") . ']'
+    set title
+endif
+
 set showmode
 set showcmd
 " Show cursor coords
@@ -87,38 +132,6 @@ set noerrorbells
 " set novisualbell
 " set t_vb=
 " set tm=500
-
-if has("gui_running")
-    " GUI is running or is about to start.
-    "   " Maximize gvim window (for an alternative on Windows, see simalt
-    "   below).
-    set lines=40 columns=120
-    let backgroundColor="light"
-    exec 'set background=' . backgroundColor
-    if has ("win32") || has ("gui_macvim")
-        set guifont=Source\ Code\ Pro\ Medium:h11
-    else
-        set guifont=Source\ Code\ Pro\ Medium\ 11
-    endif
-        " Put buffer name in window title, without "Vim" (because it'll have a logo)
-        autocmd BufEnter * let &titlestring = '' . expand("%:t") . ' [' . expand("%:p") . ']'
-        set title
-    else
-    " This is console Vim.
-    exec "let g:".colorSch . "_termcolors=&t_Co"
-    exec "let g:".colorSch . "_termtrans=1"
-    " if exists("+lines")
-        " set lines=30
-    " endif
-    " if exists("+columns")
-        " set columns=100
-    " endif
-    " Put buffer name in window title
-    autocmd BufEnter * let &titlestring = '|Vim| ' . expand("%:t") . ' [' . expand("%:p") . ']'
-    set title
-endif
-
-
 
 " Set up default file explorer plugin to be like NERDTree (for using noplugin
 " mode).

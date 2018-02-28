@@ -124,7 +124,7 @@ let g:syntastic_check_on_wq = 0
 
 " ----- Airline -----
 let g:airline_theme=colorSch
-exec 'let g:airline_solarized_bg="' . backgroundColor . '"'
+exec 'let g:airline_' . colorSch . '_bg="' . backgroundColor . '"'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#show_tabs = 0
