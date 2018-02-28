@@ -66,6 +66,8 @@ Plug 'https://github.com/thinca/vim-quickrun'
 Plug 'https://github.com/vim-scripts/SingleCompile'
 " Make is run async (view quickfix with :COpen)
 Plug 'https://github.com/tpope/vim-dispatch'
+" Close buffers without changing window
+Plug 'https://github.com/moll/vim-bbye'
 
 " Unplugs and replacements go here
 exec 'source ' . s:localPlugins
