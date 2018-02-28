@@ -37,8 +37,22 @@ if has("gui_running")
         " Put buffer name in window title, without "Vim" (because it'll have a logo)
         autocmd BufEnter * let &titlestring = '' . expand("%:t") . ' [' . expand("%:p") . ']'
         set title
+
     else
+
     " Console Vim settings
+ 
+    " If the current iTerm tab has been
+    " created using the **dark** profile:
+    if $ITERM_PROFILE == 'Solarized Dark'
+      set background=dark
+    endif
+    " If the current iTerm tab has been
+    " created using the **light** profile:
+    if $ITERM_PROFILE == 'Solarized Light'
+      set background=light
+    endif
+
     exec "let g:".colorSch . "_termcolors=&t_Co"
     exec "let g:".colorSch . "_termtrans=1"
     " if exists("+lines")

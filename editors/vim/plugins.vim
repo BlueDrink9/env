@@ -75,8 +75,12 @@ call plug#end()
 
 exec 'colorscheme ' . colorSch
 
-" May be needed if terminal doesn't support.
-exec 'let g:' . colorSch . '_termcolors=256'
+if !has("GUI")
+" if $TERM contains "-256color"
+    " May be needed if terminal doesn't support.
+    exec 'let g:' . colorSch . '_termcolors=256'
+" endif
+endif
 
 " We need this for plugins like Syntastic and vim-gitgutter which put symbols
 " in the sign column.
@@ -125,6 +129,8 @@ let g:syntastic_check_on_wq = 0
 " ----- Airline -----
 let g:airline_theme=colorSch
 exec 'let g:airline_' . colorSch . '_bg="' . backgroundColor . '"'
+exec 'let g:airline_base16_' . colorSch . '= 0'
+exec 'let g:' . colorSch . '_base16 = 0'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#show_tabs = 0
