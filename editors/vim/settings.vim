@@ -10,9 +10,6 @@ endif
 if exists ('&background')
     let backgroundColor = &background
 endif
-if !exists ('&backgroundColor')
-    let backgroundColor="dark"
-endif
 
 set encoding=utf-8
 set nocompatible
@@ -25,6 +22,9 @@ if has("gui_running")
     "   " Maximize gvim window (for an alternative on Windows, see simalt
     "   below).
     set lines=40 columns=120
+    if !exists ('&backgroundColor')
+        let backgroundColor="light"
+    endif
     if colorSch == ""
         let backgroundColor="light"
     endif
@@ -51,6 +51,10 @@ if has("gui_running")
     " created using the **light** profile:
     if $ITERM_PROFILE == 'Solarized Light'
       set background=light
+    endif
+
+    if !exists ('&backgroundColor')
+        let backgroundColor="dark"
     endif
 
     exec "let g:".colorSch . "_termcolors=&t_Co"
@@ -94,7 +98,6 @@ set wildmode=list:longest
 set scrolloff=2
 " Tabs, trailing ws visible
 set listchars=tab:>-,trail:·,eol:$
-set autowrite       " Automatically save before commands like :next and :make
 set complete-=i     " Searching includes can be slow
 set display=lastline
 set diffopt+=vertical
@@ -115,8 +118,15 @@ call CreateVimDir("/vimfiles")
 " Extra slash means files will have unique names
 set undofile
 exec 'set undodir=' . CreateVimDir("/vimfiles/undo") . '/'
-" Save on focus loss
-au FocusLost * :wa
+
+" Don't autosave if there is no buffer name.
+if bufname('%') != ''
+    set autowrite       " Automatically save before commands like :next and :make
+    " Save on focus loss
+    au FocusLost * :wa
+    " Save leaving insert
+    au InsertLeave <buffer> update
+endif
 
 exec 'set backupdir=' . CreateVimDir("/vimfiles/backup") . '/'
 exec 'set directory=' . CreateVimDir("/vimfiles/swap") . '/'
