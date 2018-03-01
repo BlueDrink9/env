@@ -22,36 +22,51 @@ exec 'source ' . s:scriptpath . "/plugins_light.vim"
 " Plug 'https://github.com/easymotion/vim-easymotion'
 " Allows plugin maps to use '.' to repeat
 " Plug 'https://github.com/tpope/vim-repeat'
-" Way better search and replace
-" Plug 'https://github.com/tpope/vim-abolish'
 " Uses leader rather than g
 " Plug 'https://github.com/scrooloose/nerdcommenter'
 " Awesome code completion, but requires specific installations
 " Plug 'https://github.com/Valloric/YouCompleteMe'
 " Align CSV files at commas, align Markdown tables, and more
 " Plug 'godlygeek/tabular'
+" Looks really nice, esp for prose. Highlight slightly current paraghraph.
+" https://github.com/junegunn/limelight.vim
+" Scrollwheel on mouse moves screen with cursor (more natural)
+" https://github.com/reedes/vim-wheel
 
-Plug 'https://github.com/scrooloose/nerdtree.git'
-Plug 'https://github.com/jacquesbh/vim-showmarks.git'
-Plug 'https://github.com/vim-syntastic/syntastic.git'
+"--- Git ---"
 Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
 " Git wrapper
 Plug 'https://github.com/tpope/vim-fugitive'
-" Adds a bunch of unix-mapped filesystem ops from vim
-Plug 'https://github.com/tpope/vim-eunuch'
-Plug 'https://github.com/simnalamburt/vim-mundo'
-Plug 'https://github.com/plasticboy/vim-markdown'
 
+"--- Snippits ---"
 Plug 'https://github.com/honza/vim-snippets'
 Plug 'https://github.com/garbas/vim-snipmate.git'
 Plug 'https://github.com/tomtom/tlib_vim.git'
 Plug 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
 
+"--- Tags ---"
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-easytags'
 Plug 'majutsushi/tagbar'
 
+"--- Prose ---"
+" Better prose spellchecking
+Plug 'https://github.com/reedes/vim-lexical'
+" Neccesary for next plugin
+Plug 'https://github.com/kana/vim-textobj-user'
+" Expands what a sentence/word is for prose.
+Plug 'https://github.com/reedes/vim-textobj-sentence'
+Plug 'https://github.com/plasticboy/vim-markdown'
+Plug 'https://github.com/reedes/vim-wordy'
+
+
+Plug 'https://github.com/scrooloose/nerdtree.git'
+Plug 'https://github.com/jacquesbh/vim-showmarks.git'
+Plug 'https://github.com/vim-syntastic/syntastic.git'
+" Adds a bunch of unix-mapped filesystem ops from vim
+Plug 'https://github.com/tpope/vim-eunuch'
+Plug 'https://github.com/simnalamburt/vim-mundo'
 Plug 'https://github.com/vim-airline/vim-airline'
 Plug 'https://github.com/vim-airline/vim-airline-themes'
 " exec "Plug \'https://github.com/vim-airline/vim-airline-themes\', {\'rtp\' : \'autoload/airline/themes/". colorSch . ".vim\'}"
@@ -68,6 +83,8 @@ Plug 'https://github.com/vim-scripts/SingleCompile'
 Plug 'https://github.com/tpope/vim-dispatch'
 " Close buffers without changing window
 Plug 'https://github.com/moll/vim-bbye'
+" Way better search and replace, also case coersion
+Plug 'https://github.com/tpope/vim-abolish'
 
 " Unplugs and replacements go here
 exec 'source ' . s:localPlugins
@@ -179,3 +196,23 @@ let g:session_persist_font = 0
 let g:session_default_to_last = 'yes'
 let g:session_autosave_periodic = 5
 let g:session_autosave = 'yes'
+
+" Prose plugins
+let g:pencil#wrapModeDefault = 'soft'
+let g:lexical#spell_key = '<leader>s'
+let g:lexical#thesaurus_key = '<leader>lt'
+let g:lexical#dictionary_key = '<leader>ld'
+augroup prose
+    autocmd!
+    autocmd FileType markdown,mkd call pencil#init()    
+                \ | setl spell spl=en_uk " fdl=4 noru nonu nornu
+    autocmd FileType text         call pencil#init()
+                \ | setl spell spl=en_uk " fdl=4 noru nonu nornu
+    autocmd FileType tex         call pencil#init()
+                \ | setl spell spl=en_uk " fdl=4 noru nonu nornu
+    autocmd FileType markdown call textobj#sentence#init()
+    autocmd FileType textile call textobj#sentence#init()
+    autocmd FileType text call AutoCorrect()
+    autocmd FileType markdown call AutoCorrect()
+    autocmd FileType tex call AutoCorrect()
+augroup END
