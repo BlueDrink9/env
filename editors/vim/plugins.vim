@@ -75,7 +75,7 @@ call plug#end()
 
 exec 'colorscheme ' . colorSch
 
-if !has("GUI")
+if !has("gui_running")
 " if $TERM contains "-256color"
     " May be needed if terminal doesn't support.
     exec 'let g:' . colorSch . '_termcolors=256'
