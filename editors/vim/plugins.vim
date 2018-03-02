@@ -5,6 +5,12 @@ let s:scriptpath = fnameescape(expand('<sfile>:p:h'))
 let s:pluginPath = CreateVimDir("/vimfiles/plugins")
 let s:localPlugins = fnameescape(expand(s:pluginPath . "/local.vim"))
 
+let s:proseFileTypes = "tex,latex,context,plaintex,
+            \markdown,mkd,
+            \text,textile,
+            \git,gitsendemail,*commit*,*COMMIT*,
+            \mail"
+
 if !filereadable(s:localPlugins)
     new
     silent exec 'write ' . s:localPlugins
@@ -51,14 +57,17 @@ Plug 'xolox/vim-easytags'
 Plug 'majutsushi/tagbar'
 
 "--- Prose ---"
+Plug 'https://github.com/reedes/vim-pencil'
 " Better prose spellchecking
-Plug 'https://github.com/reedes/vim-lexical'
+Plug 'https://github.com/reedes/vim-lexical', { 'for': s:proseFileTypes}
 " Neccesary for next plugin
 Plug 'https://github.com/kana/vim-textobj-user'
 " Expands what a sentence/word is for prose.
 Plug 'https://github.com/reedes/vim-textobj-sentence'
-Plug 'https://github.com/plasticboy/vim-markdown'
-Plug 'https://github.com/reedes/vim-wordy'
+" Plug 'https://github.com/plasticboy/vim-markdown'
+Plug 'https://github.com/tpope/vim-markdown'
+Plug 'https://github.com/reedes/vim-wordy', { 'for': s:proseFileTypes}
+Plug 'https://github.com/panozzaj/vim-autocorrect', { 'for': s:proseFileTypes}
 
 
 Plug 'https://github.com/scrooloose/nerdtree.git'
@@ -202,17 +211,25 @@ let g:pencil#wrapModeDefault = 'soft'
 let g:lexical#spell_key = '<leader>s'
 let g:lexical#thesaurus_key = '<leader>lt'
 let g:lexical#dictionary_key = '<leader>ld'
+function! SetProseOptions()
+    call AutoCorrect()
+    call textobj#sentence#init()
+    setl spell spl=en_us " fdl=4 noru nonu nornu
+    call pencil#init()    
+endfunction
 augroup prose
     autocmd!
-    autocmd FileType markdown,mkd call pencil#init()    
-                \ | setl spell spl=en_uk " fdl=4 noru nonu nornu
-    autocmd FileType text         call pencil#init()
-                \ | setl spell spl=en_uk " fdl=4 noru nonu nornu
-    autocmd FileType tex         call pencil#init()
-                \ | setl spell spl=en_uk " fdl=4 noru nonu nornu
-    autocmd FileType markdown call textobj#sentence#init()
-    autocmd FileType textile call textobj#sentence#init()
-    autocmd FileType text call AutoCorrect()
-    autocmd FileType markdown call AutoCorrect()
-    autocmd FileType tex call AutoCorrect()
+    exec 'autocmd Filetype ' . s:proseFileTypes . ' call SetProseOptions()'
+    " Override default prose settings for some files:
+    autocmd Filetype git,gitsendemail,*commit*,*COMMIT*
+                \ call pencil#init({'wrap': 'hard', 'textwidth': 72})
+                " \ | setl spell spl=en_uk " fdl=4 noru nonu nornu
+    " autocmd FileType text         call pencil#init()
+                " \ | setl spell spl=en_uk " fdl=4 noru nonu nornu
+    " autocmd FileType tex         call pencil#init()
+    " autocmd FileType markdown call textobj#sentence#init()
+    " autocmd FileType textile call textobj#sentence#init()
+    " autocmd FileType text call AutoCorrect()
+    " autocmd FileType markdown call AutoCorrect()
+    " autocmd FileType tex call AutoCorrect()
 augroup END
