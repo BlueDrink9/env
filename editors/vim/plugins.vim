@@ -8,7 +8,7 @@ let s:localPlugins = fnameescape(expand(s:pluginPath . "/local.vim"))
 let s:proseFileTypes = "'tex,latex,context,plaintex,
             \markdown,mkd,
             \text,textile,
-            \git,gitsendemail,*commit*,*COMMIT*,
+            \git,gitsendemail,
             \mail'"
 
 if !filereadable(s:localPlugins)
@@ -215,8 +215,9 @@ let g:lexical#dictionary_key = '<leader>ld'
 function! SetProseOptions()
     call AutoCorrect()
     call textobj#sentence#init()
-    setl spell spl=en_us " fdl=4 noru nonu nornu
+    setl spell spl=en_us
     call pencil#init()    
+    setl ai
 endfunction
 augroup prose
     autocmd!
@@ -224,13 +225,5 @@ augroup prose
     " Override default prose settings for some files:
     autocmd Filetype git,gitsendemail,*commit*,*COMMIT*
                 \ call pencil#init({'wrap': 'hard', 'textwidth': 72})
-                " \ | setl spell spl=en_uk " fdl=4 noru nonu nornu
-    " autocmd FileType text         call pencil#init()
-                " \ | setl spell spl=en_uk " fdl=4 noru nonu nornu
-    " autocmd FileType tex         call pencil#init()
-    " autocmd FileType markdown call textobj#sentence#init()
-    " autocmd FileType textile call textobj#sentence#init()
-    " autocmd FileType text call AutoCorrect()
-    " autocmd FileType markdown call AutoCorrect()
-    " autocmd FileType tex call AutoCorrect()
+    autocmd BufEnter * if &filetype == "" | call pencil#init()
 augroup END
