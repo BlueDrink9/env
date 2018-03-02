@@ -5,11 +5,11 @@ let s:scriptpath = fnameescape(expand('<sfile>:p:h'))
 let s:pluginPath = CreateVimDir("/vimfiles/plugins")
 let s:localPlugins = fnameescape(expand(s:pluginPath . "/local.vim"))
 
-let s:proseFileTypes = "tex,latex,context,plaintex,
+let s:proseFileTypes = "'tex,latex,context,plaintex,
             \markdown,mkd,
             \text,textile,
             \git,gitsendemail,*commit*,*COMMIT*,
-            \mail"
+            \mail'"
 
 if !filereadable(s:localPlugins)
     new
@@ -57,17 +57,18 @@ Plug 'xolox/vim-easytags'
 Plug 'majutsushi/tagbar'
 
 "--- Prose ---"
-Plug 'https://github.com/reedes/vim-pencil'
 " Better prose spellchecking
-Plug 'https://github.com/reedes/vim-lexical', { 'for': s:proseFileTypes}
-" Neccesary for next plugin
-Plug 'https://github.com/kana/vim-textobj-user'
-" Expands what a sentence/word is for prose.
-Plug 'https://github.com/reedes/vim-textobj-sentence'
-" Plug 'https://github.com/plasticboy/vim-markdown'
-Plug 'https://github.com/tpope/vim-markdown'
-Plug 'https://github.com/reedes/vim-wordy', { 'for': s:proseFileTypes}
-Plug 'https://github.com/panozzaj/vim-autocorrect', { 'for': s:proseFileTypes}
+            " Neccesary for next plugin
+            " Expands what a sentence/word is for prose.
+            " Plug 'https://github.com/plasticboy/vim-markdown'
+exec "Plug 'https://github.com/reedes/vim-pencil'
+            \| Plug 'https://github.com/reedes/vim-lexical', { 'for': " . s:proseFileTypes . " }
+            \| Plug 'https://github.com/kana/vim-textobj-user'
+            \| Plug 'https://github.com/reedes/vim-textobj-sentence'
+            \| Plug 'https://github.com/tpope/vim-markdown'
+            \| Plug 'https://github.com/reedes/vim-wordy', { 'for': " . s:proseFileTypes . " }
+            \| Plug 'https://github.com/panozzaj/vim-autocorrect', { 'for': " . s:proseFileTypes . " }
+            \"
 
 
 Plug 'https://github.com/scrooloose/nerdtree.git'
@@ -208,7 +209,7 @@ let g:session_autosave = 'yes'
 
 " Prose plugins
 let g:pencil#wrapModeDefault = 'soft'
-let g:lexical#spell_key = '<leader>s'
+let g:lexical#spell_key = '<leader>ls'
 let g:lexical#thesaurus_key = '<leader>lt'
 let g:lexical#dictionary_key = '<leader>ld'
 function! SetProseOptions()
