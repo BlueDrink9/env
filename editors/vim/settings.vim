@@ -176,4 +176,8 @@ autocmd InsertLeave * syn clear EOLWS | syn match EOLWS excludenl /\s\+$/
 highlight EOLWS ctermbg=red guibg=red
 
 " Autoset new buffers to markdown.
-autocmd BufEnter * if &filetype == "" | setlocal ft=markdown | endif
+augroup scratch
+    autocmd!
+    autocmd BufEnter * if &filetype == "" | setlocal ft=scratch | endif
+    autocmd BufEnter * if &filetype == "" | setlocal spell | setl ai
+augroup END
