@@ -1,3 +1,15 @@
+let s:vimrcdir = fnamemodify(expand("$MYVIMRC"), ":p:h")
+
+" Automatically create vimfile directories in same location as vimrc
+function! CreateVimDir(dir)
+    let l:dir = fnameescape(expand(a:dir))
+    if filewritable(s:vimrcdir) && !isdirectory(s:vimrcdir . l:dir)
+        mkdir(s:vimrcdir . l:dir)
+    endif
+    return s:vimrcdir . l:dir
+endfunction
+call CreateVimDir("/vimfiles")
+
 " Set colorScheme variable for use in other settings
 " Doesn't override preset scheme
 " Background should always be set after colorscheme.
@@ -101,18 +113,6 @@ set listchars=tab:>-,trail:·,eol:$
 set complete-=i     " Searching includes can be slow
 set display=lastline
 set diffopt+=vertical
-
-let s:vimrcdir = fnamemodify(expand("$MYVIMRC"), ":p:h")
-
-" Automatically create vimfile directories in same location as vimrc
-function! CreateVimDir(dir)
-    let l:dir = fnameescape(expand(a:dir))
-    if filewritable(s:vimrcdir) && !isdirectory(s:vimrcdir . l:dir)
-        mkdir(s:vimrcdir . l:dir)
-    endif
-    return s:vimrcdir . l:dir
-endfunction
-call CreateVimDir("/vimfiles")
 
 " Create undo file for inter-session undo
 " Extra slash means files will have unique names
