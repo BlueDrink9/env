@@ -1,15 +1,3 @@
-let s:vimrcdir = fnamemodify(expand("$MYVIMRC"), ":p:h")
-
-" Automatically create vimfile directories in same location as vimrc
-function! CreateVimDir(dir)
-    let l:dir = fnameescape(expand(a:dir))
-    if filewritable(s:vimrcdir) && !isdirectory(s:vimrcdir . l:dir)
-        mkdir(s:vimrcdir . l:dir)
-    endif
-    return s:vimrcdir . l:dir
-endfunction
-call CreateVimDir("/vimfiles")
-
 " Set colorScheme variable for use in other settings
 " Doesn't override preset scheme
 " Background should always be set after colorscheme.
