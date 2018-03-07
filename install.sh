@@ -28,11 +28,13 @@ if [[ $REPLY =~ ^[yY]$ ]]; then
     sed -in "s|.*vim_runtime.*||g" ${HOME}/.vimrc
     rm -rf "${BASH_CUSTOM}"
     rm -rf "${HOME}/.vim_runtime"
+    rm -rf "${HOME}/vimfiles"
     rm -f "${HOME}/.vim/autoload/plug.vim"
     # Reset bash
     exec bash
 
     # Remove self
+    #TODO remove comment to exit debugmode
     # rm -rf "${SCRIPTDIR}"
 fi
 }
@@ -109,6 +111,10 @@ function copyFonts() {
         fi
         mkdir -p "$FONTDIR"
         cp ./fonts/* $FONTDIR/truetype/custom
+        curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+            https://github.com/ryanoasis/nerd-fonts/blob/1.2.0/patched-fonts/SourceCodePro/Medium/complete/Sauce%20Code%20Pro%20Medium%20Nerd%20Font%20Complete%20Mono.ttf --silent
+
+
         fc-cache
         echo -e "${OK} Fonts installed to ${Orange}file:///${FONTDIR}${White}"
     fi
