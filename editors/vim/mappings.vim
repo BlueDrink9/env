@@ -69,3 +69,7 @@ nnoremap <leader>s ea<C-X><C-S>
 " Remember cursor location and reformat file
 nnoremap g= gg=G``
 nnoremap gQ gggqG``
+
+" Quick entry into paste
+nnoremap <leader>p :set paste!<CR>
+" MapToggle <F1> hlsearch
