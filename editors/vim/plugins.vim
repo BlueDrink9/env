@@ -17,6 +17,15 @@ if !filereadable(s:localPlugins)
     bdelete
 endif
 
+" To remove a Plugged repo using UnPlug
+function! s:deregister(repo)
+  let repo = substitute(a:repo, '[\/]\+$', '', '')
+  let name = fnamemodify(repo, ':t:s?\.git$??')
+  call remove(g:plugs, name)
+  call remove(g:plugs_order, index(g:plugs_order, name))
+endfunction
+command! -nargs=1 -bar UnPlug call s:deregister(<args>)
+
 call plug#begin(s:pluginPath)
 
 " Get light plugin set first
