@@ -102,11 +102,12 @@ set complete-=i     " Searching includes can be slow
 set display=lastline
 set diffopt+=vertical
 
+exec 'set backupdir=' . CreateVimDir("/vimfiles/backup") . '/'
+exec 'set directory=' . CreateVimDir("/vimfiles/swap") . '/'
+exec 'set undodir=' . CreateVimDir("/vimfiles/undo") . '/'
 " Create undo file for inter-session undo
 " Extra slash means files will have unique names
 set undofile
-exec 'set undodir=' . CreateVimDir("/vimfiles/undo") . '/'
-
 " Don't autosave if there is no buffer name.
 if bufname('%') != ''
     set autowrite       " Automatically save before commands like :next and :make
@@ -115,10 +116,6 @@ if bufname('%') != ''
     " Save leaving insert
     au InsertLeave <buffer> update
 endif
-
-exec 'set backupdir=' . CreateVimDir("/vimfiles/backup") . '/'
-exec 'set directory=' . CreateVimDir("/vimfiles/swap") . '/'
-" ,"$TMP//","$TEMP//",.//
 
 set expandtab
 set shiftwidth=4
