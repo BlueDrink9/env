@@ -221,6 +221,20 @@ let g:pencil#wrapModeDefault = 'soft'
 let g:lexical#spell_key = '<leader>ls'
 let g:lexical#thesaurus_key = '<leader>lt'
 let g:lexical#dictionary_key = '<leader>ld'
+let g:pencil#autoformat_blacklist = [
+        \ 'markdownCode',
+        \ 'markdownUrl',
+        \ 'markdownIdDeclaration',
+        \ 'markdownLinkDelimiter',
+        \ 'markdownHighlight[A-Za-z0-9]+',
+        \ 'mkdCode',
+        \ 'mkdIndentCode',
+        \ 'markdownFencedCodeBlock',
+        \ 'markdownInlineCode',
+        \ 'mmdTable[A-Za-z0-9]*',
+        \ 'txtCode',
+        \ 'texMath',
+        \ ]
 function! SetProseOptions()
     call AutoCorrect()
     call textobj#sentence#init()
@@ -232,7 +246,7 @@ augroup prose
     autocmd!
     exec 'autocmd Filetype ' . s:proseFileTypes . ' call SetProseOptions()'
     " Override default prose settings for some files:
-    autocmd Filetype git,gitsendemail,*commit*,*COMMIT*
-                \ call pencil#init({'wrap': 'hard', 'textwidth': 72})
+    " autocmd Filetype git,gitsendemail,*commit*,*COMMIT*
+                "\ call pencil#init({'wrap': 'hard', 'textwidth': 72})
     autocmd BufEnter * if &filetype == "" | call pencil#init()
 augroup END

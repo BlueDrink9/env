@@ -122,7 +122,8 @@ set shiftwidth=4
 set softtabstop=4
 set smarttab
 " set tabstop=4
-"
+" See :h fo-table. Wrapping and joingin options.
+set formatoptions +=lj
 
 set modeline
 set modelines=5
