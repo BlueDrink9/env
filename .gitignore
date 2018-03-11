@@ -5,5 +5,7 @@
 tmp/
 editors/vim/plugins/*
 
+vimsession
+Session.vim
 extended\.vim
 editors/extended\.vim

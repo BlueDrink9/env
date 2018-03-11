@@ -1,6 +1,8 @@
 # -*-  mode: shell-script; -*-
 # vim: set ft=sh:
 
+# Always used
+shopt -s expand_aliases  
 
 alias cl="clear"
 alias ..="cd .. && ls"
@@ -13,12 +15,18 @@ alias l='ls -CF'
 alias open="nautilus $1 >/dev/null 2>&1"
 alias :q="exit"
 alias :Q="exit"
+alias ZZ="exit"
 
 alias gca="git commit -a"
 alias gc="git_clone"
 
-alias e="emacs -nw"
-alias v="vim"
+# Try to set vim to xvim (has x11 clipboard support)
+if [ -e /usr/bin/vimx ]; then 
+    alias vim='/usr/bin/vimx'
+elif [ -e /usr/bin/gvim ]; then
+    alias vim='/usr/bin/gvim -v'
+fi
+
 alias qvim="vim --noplugin"
 
 # Prevent files from being overwritten by redirection.
