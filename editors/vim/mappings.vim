@@ -3,7 +3,7 @@
 inoremap kv <esc>
 inoremap vk <esc>
 
-" Don't have to hold shift for commands. Comes highly recommended.
+" Don't have to hold shift for commands. So nice
 nnoremap ; :
 vnoremap ; :
 nnoremap : ;
@@ -71,5 +71,7 @@ nnoremap g= gg=G``
 nnoremap gQ gggqG``
 
 " Quick entry into paste
-nnoremap <leader>p :set paste!<CR>
-" MapToggle <F1> hlsearch
+MapToggle <leader>p paste
+
+MapToggle <F1> hlsearch
+MapToggle <leader>lc list

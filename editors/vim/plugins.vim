@@ -38,6 +38,11 @@ exec 'source ' . s:scriptpath . "/plugins_light.vim"
 " https://github.com/junegunn/limelight.vim
 " Scrollwheel on mouse moves screen with cursor (more natural)
 " https://github.com/reedes/vim-wheel
+" Function argument movements
+" Plug 'https://github.com/PeterRincker/vim-argumentative'
+
+" NOTE: Remember that lightweight plugins (screen+resources+non-niche situations)
+" go in plugins_light.vim
 
 "--- Git ---"
 Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
@@ -91,12 +96,13 @@ Plug 'https://github.com/thinca/vim-quickrun'
 Plug 'https://github.com/vim-scripts/SingleCompile'
 " Make is run async (view quickfix with :COpen)
 Plug 'https://github.com/tpope/vim-dispatch'
-" Close buffers without changing window
-Plug 'https://github.com/moll/vim-bbye'
 " Way better search and replace, also case coersion
 Plug 'https://github.com/tpope/vim-abolish'
+Plug 'https://github.com/benmills/vimux'
 
 " Unplugs and replacements go here
+
+" \unplugs
 exec 'source ' . s:localPlugins
 call plug#end()
 
@@ -199,6 +205,7 @@ let g:airline_section_z = airline#section#create([
             \ 'linenr', 'maxlinenr',' ', 'columnnr'])
 let g:airline_section_tabline = airline#section#create(['%{getcwd()}'])
 let g:airline#extensions#hunks#non_zero_only = 1
+let g:airline#extensions#whitespace#checks = []
 
 " Session settings
 let g:session_persist_colors = 0
@@ -216,7 +223,7 @@ function! SetProseOptions()
     call AutoCorrect()
     call textobj#sentence#init()
     setl spell spl=en_us
-    call pencil#init()    
+    call pencil#init()
     setl ai
 endfunction
 augroup prose
@@ -227,3 +234,13 @@ augroup prose
                 \ call pencil#init({'wrap': 'hard', 'textwidth': 72})
     autocmd BufEnter * if &filetype == "" | call pencil#init()
 augroup END
+
+"Better-whitespace
+let g:show_spaces_that_precede_tabs=1
+let g:better_whitespace_skip_empty_lines=1
+
+" ----------- TMUX --------------
+" Prompt for a command to run
+map <Leader>vp :VimuxPromptCommand<CR>
+" Run last command executed by VimuxRunCommand
+map <Leader>vl :VimuxRunLastCommand<CR>

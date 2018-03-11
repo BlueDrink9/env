@@ -94,10 +94,9 @@ set hidden
 " Don't save hidden and unloaded buffers in sessions.
 set sessionoptions-=buffers
 set wildmenu
-set wildmode=list:longest
+set wildmode=longest,list:longest
 set scrolloff=2
-" Tabs, trailing ws visible
-set listchars=tab:>-,trail:·,eol:$
+set listchars=tab:>-,trail:·,eol:¬,precedes:←,extends:→,nbsp:·
 set complete-=i     " Searching includes can be slow
 set display=lastline
 set diffopt+=vertical
@@ -109,11 +108,14 @@ exec 'set undodir=' . CreateVimDir("/vimfiles/undo") . '/'
 
 " Don't autosave if there is no buffer name.
 if bufname('%') != ''
-    set autowrite       " Automatically save before commands like :next and :make
-    " Save on focus loss
-    au FocusLost * :wa
-    " Save leaving insert
-    au InsertLeave <buffer> update
+    " Automatically save before commands like :next and :make
+    set autowrite
+    augroup autowrite
+        " Save on focus loss
+        au FocusLost * :wa
+        " Save leaving insert
+        au InsertLeave <buffer> update
+    augroup END
 endif
 
 exec 'set backupdir=' . CreateVimDir("/vimfiles/backup") . '/'
@@ -136,8 +138,9 @@ set colorcolumn=80
 set linebreak
 " backspace and cursor keys wrap to previous/next line
 set backspace=indent,eol,start whichwrap+=<,>,[,]
-" Vertical window splits open on right side
+" Vertical window splits open on right side, horizontal below
 set splitright
+set splitbelow
 
 " No annoying sound on errors
 set noerrorbells
@@ -159,9 +162,9 @@ let g:netrw_winsize = 25
 " augroup END
 
 "highlight whitespace at the ends of lines
-autocmd InsertEnter * syn clear EOLWS | syn match EOLWS excludenl /\s\+\%#\@!$/
-autocmd InsertLeave * syn clear EOLWS | syn match EOLWS excludenl /\s\+$/
-highlight EOLWS ctermbg=red guibg=red
+" autocmd InsertEnter * syn clear EOLWS | syn match EOLWS excludenl /\s\+\%#\@!$/
+" autocmd InsertLeave * syn clear EOLWS | syn match EOLWS excludenl /\s\+$/
+" highlight EOLWS ctermbg=red guibg=red
 
 " Autoset new buffers to markdown.
 augroup scratch
@@ -169,3 +172,8 @@ augroup scratch
     autocmd BufEnter * if &filetype == "" | setlocal ft=scratch | endif
     autocmd BufEnter * if &filetype == "" | setlocal spell | setl ai
 augroup END
+
+" Set spellfile to location that is guaranteed to exist, can be symlinked to
+" " Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using
+" rcm.
+" set spellfile=$HOME/.vim-spell-en.utf-8.add
