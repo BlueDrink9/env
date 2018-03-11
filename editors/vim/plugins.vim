@@ -17,6 +17,15 @@ if !filereadable(s:localPlugins)
     bdelete
 endif
 
+" To remove a Plugged repo using UnPlug
+function! s:deregister(repo)
+  let repo = substitute(a:repo, '[\/]\+$', '', '')
+  let name = fnamemodify(repo, ':t:s?\.git$??')
+  call remove(g:plugs, name)
+  call remove(g:plugs_order, index(g:plugs_order, name))
+endfunction
+command! -nargs=1 -bar UnPlug call s:deregister(<args>)
+
 call plug#begin(s:pluginPath)
 
 " Get light plugin set first
@@ -99,6 +108,8 @@ Plug 'https://github.com/tpope/vim-dispatch'
 " Way better search and replace, also case coersion
 Plug 'https://github.com/tpope/vim-abolish'
 Plug 'https://github.com/benmills/vimux'
+" Autoset Paste/nopaste
+Plug 'https://github.com/ConradIrwin/vim-bracketed-paste'
 
 " Unplugs and replacements go here
 
@@ -219,6 +230,20 @@ let g:pencil#wrapModeDefault = 'soft'
 let g:lexical#spell_key = '<leader>ls'
 let g:lexical#thesaurus_key = '<leader>lt'
 let g:lexical#dictionary_key = '<leader>ld'
+let g:pencil#autoformat_blacklist = [
+        \ 'markdownCode',
+        \ 'markdownUrl',
+        \ 'markdownIdDeclaration',
+        \ 'markdownLinkDelimiter',
+        \ 'markdownHighlight[A-Za-z0-9]+',
+        \ 'mkdCode',
+        \ 'mkdIndentCode',
+        \ 'markdownFencedCodeBlock',
+        \ 'markdownInlineCode',
+        \ 'mmdTable[A-Za-z0-9]*',
+        \ 'txtCode',
+        \ 'texMath',
+        \ ]
 function! SetProseOptions()
     call AutoCorrect()
     call textobj#sentence#init()
@@ -230,8 +255,8 @@ augroup prose
     autocmd!
     exec 'autocmd Filetype ' . s:proseFileTypes . ' call SetProseOptions()'
     " Override default prose settings for some files:
-    autocmd Filetype git,gitsendemail,*commit*,*COMMIT*
-                \ call pencil#init({'wrap': 'hard', 'textwidth': 72})
+    " autocmd Filetype git,gitsendemail,*commit*,*COMMIT*
+                "\ call pencil#init({'wrap': 'hard', 'textwidth': 72})
     autocmd BufEnter * if &filetype == "" | call pencil#init()
 augroup END
 

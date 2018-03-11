@@ -3,7 +3,7 @@ let s:vimrcdir = fnamemodify(expand("$MYVIMRC"), ":p:h")
 function! CreateVimDir(dir)
     let l:dir = fnameescape(expand(a:dir))
     if filewritable(s:vimrcdir) && !isdirectory(s:vimrcdir . l:dir)
-        mkdir(s:vimrcdir . l:dir)
+        exec silent "!mkdir "s:vimrcdir . l:dir
     endif
     return s:vimrcdir . l:dir
 endfunction

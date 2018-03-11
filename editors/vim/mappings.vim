@@ -75,3 +75,21 @@ MapToggle <leader>p paste
 
 MapToggle <F1> hlsearch
 MapToggle <leader>lc list
+
+" n and N always go the same direction regardless of whether / or ? was used.
+nnoremap <expr> n  'Nn'[v:searchforward]
+nnoremap <expr> N  'nN'[v:searchforward]
+
+" Move through previous commands
+nnoremap <expr> n  'Nn'[v:searchforward]
+nnoremap <expr> N  'nN'[v:searchforward]
+
+" Reset screen entirely (inc highlights)
+nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+
+" Quickly edit macros
+nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
+
+" Don't lose selection on < or >
+xnoremap <  <gv
+xnoremap >  >gv

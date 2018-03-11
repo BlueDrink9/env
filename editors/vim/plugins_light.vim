@@ -12,10 +12,11 @@ Plug 'https://github.com/xolox/vim-session'
 Plug 'https://github.com/lervag/vimtex'
 Plug 'https://github.com/reedes/vim-pencil'
 
-
 "--- Misc ---"
 Plug 'https://github.com/ntpeters/vim-better-whitespace'
 Plug 'https://github.com/tmux-plugins/vim-tmux'
 Plug 'https://github.com/christoomey/vim-tmux-navigator'
 " Close buffers without changing window
 Plug 'https://github.com/moll/vim-bbye'
+Plug 'ericbn/vim-relativize'
+

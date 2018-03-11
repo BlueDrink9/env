@@ -101,11 +101,12 @@ set complete-=i     " Searching includes can be slow
 set display=lastline
 set diffopt+=vertical
 
+exec 'set backupdir=' . CreateVimDir("/vimfiles/backup") . '/'
+exec 'set directory=' . CreateVimDir("/vimfiles/swap") . '/'
+exec 'set undodir=' . CreateVimDir("/vimfiles/undo") . '/'
 " Create undo file for inter-session undo
 " Extra slash means files will have unique names
 set undofile
-exec 'set undodir=' . CreateVimDir("/vimfiles/undo") . '/'
-
 " Don't autosave if there is no buffer name.
 if bufname('%') != ''
     " Automatically save before commands like :next and :make
@@ -118,16 +119,13 @@ if bufname('%') != ''
     augroup END
 endif
 
-exec 'set backupdir=' . CreateVimDir("/vimfiles/backup") . '/'
-exec 'set directory=' . CreateVimDir("/vimfiles/swap") . '/'
-" ,"$TMP//","$TEMP//",.//
-
 set expandtab
 set shiftwidth=4
 set softtabstop=4
 set smarttab
 " set tabstop=4
-"
+" See :h fo-table. Wrapping and joingin options.
+set formatoptions +=lj
 
 set modeline
 set modelines=5
@@ -177,3 +175,13 @@ augroup END
 " " Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using
 " rcm.
 " set spellfile=$HOME/.vim-spell-en.utf-8.add
+" Set cursor based on mode. Designed for iTerm, may be different for others.
+if empty($TMUX)
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+  let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+else
+  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+  let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+endif
