@@ -14,6 +14,9 @@ set completion-ignore-case on
 # options when hitting TAB
 set menu-complete-display-prefix on
 
+# Neat feature that detects pasted chars without running them.
+set enable-bracketed-paste on
+
 ###########################################################
 # Keymaps for when we're in command mode (e.g., after hitting ESC)
 set keymap vi-command
