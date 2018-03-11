@@ -9,3 +9,6 @@ Plug 'xolox/vim-misc'
 Plug 'https://github.com/xolox/vim-session'
 Plug 'https://github.com/lervag/vimtex'
 Plug 'https://github.com/reedes/vim-pencil'
+
+Plug 'ericbn/vim-relativize'
+

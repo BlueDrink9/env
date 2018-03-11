@@ -104,6 +104,8 @@ Plug 'https://github.com/tpope/vim-dispatch'
 Plug 'https://github.com/moll/vim-bbye'
 " Way better search and replace, also case coersion
 Plug 'https://github.com/tpope/vim-abolish'
+" Autoset Paste/nopaste
+Plug 'https://github.com/ConradIrwin/vim-bracketed-paste'
 
 " Unplugs and replacements go here
 exec 'source ' . s:localPlugins
