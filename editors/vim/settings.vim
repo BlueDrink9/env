@@ -1,7 +1,7 @@
 " Set colorScheme variable for use in other settings
 " Doesn't override preset scheme
 " Background should always be set after colorscheme.
-if exists('&g:colors_name') 
+if exists('&g:colors_name')
     let colorSch = g:colors_name
 endif
 if !exists ('&colorSch')
@@ -19,7 +19,9 @@ syntax on
 
 if has("gui_running")
     " GUI is running or is about to start.
-    "   " Maximize gvim window (for an alternative on Windows, see simalt
+    " Remove menus to speed up startup
+    set guioptions=M
+    " Maximize gvim window (for an alternative on Windows, see simalt
     "   below).
     set lines=40 columns=120
     if !exists ('&backgroundColor')
