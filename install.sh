@@ -13,7 +13,7 @@ ALL=0
 VSCODE_EXTENSIONS_DIR=$HOME/.vscode/extensions
 
 function askQuestionYN() {
-    echo -ne $1 " (y/n)"
+    echo -ne $1 " (y/n)" >&2
     read -n 1 REPLY
     if [[ $REPLY =~ ^[yY]$ ]]; then
         return 0
@@ -32,21 +32,23 @@ TAB="\e[1A\e[2L"
 # -------------
 # Currently only removes vim configs and any bash customisation, as well as this script.
 function uninstall() {
-    if [[ `askQuestionYN "Really uninstall? "` ]]; then
-        sed -in "s|.*bash_custom.*||g" ${HOME}/.bashrc
-        sed -in "s|.*${SCRIPTDIR}/editors/vim/vimrc.*||g" ${HOME}/.vimrc
-        sed -in "s|.*${SCRIPTDIR}/terminal/tmux\.conf.*||g" ${HOME}/.tmux.conf
-        sed -in "s|.*vim_runtime.*||g" ${HOME}/.vimrc
+    if askQuestionYN "Really uninstall? "; then
+        printf "Uninstalling...\n"
         rm -rf "${BASH_CUSTOM}"
         rm -rf "${HOME}/.vim_runtime"
+        sed -in "s|.*vim_runtime.*||g" ${HOME}/.vimrc
+
+        sed -in "s|.*bash_custom.*||g" ${HOME}/.bashrc
+        sed -in "s|.*${SCRIPTDIR}/terminal/tmux\.conf.*||g" ${HOME}/.tmux.conf
+        sed -in "s|.*${SCRIPTDIR}/editors/vim/vimrc.*||g" ${HOME}/.vimrc
         rm -rf "${HOME}/vimfiles"
         rm -f "${HOME}/.vim/autoload/plug.vim"
+
+
         # Reset bash
         exec bash
-
         # Remove self
-        #TODO remove comment to exit debugmode. Check that any changes are
-        pushed...
+        #TODO remove comment to exit debugmode. Check that any changes are pushed...
         # rm -rf "${SCRIPTDIR}"
     fi
 }
@@ -111,7 +113,7 @@ function vscodeExtensions() {
 
 
 function copyFonts() {
-    if [[  $ALL == 1 || `askQuestionYN "\e[33mInstall fonts? \e[0m "` ]]; then
+    if [  $ALL == 1 ] || askQuestionYN "\e[33mInstall fonts? \e[0m "; then
         if [[ ! -d "${FONTDIR}/truetype/custom" ]]; then
             mkdir -p "${FONTDIR}/truetype/custom"
         fi
@@ -150,7 +152,7 @@ function setVimColorscheme() {
 }
 
 function setVimLineNumbers() {
-    if [[  $ALL == 1 || `askQuestionYN "\e[33mDo you want to enable line numbers?\e[0m "` ]]; then
+    if [  $ALL == 1 ] || askQuestionYN "\e[33mDo you want to enable line numbers?\e[0m "; then
         echo -e "\n$OK Vim line numbers disabled."
         sed -i 's/${NUMBER}/ /g' ./extended.vim
     else
@@ -162,7 +164,7 @@ function setVimLineNumbers() {
 }
 
 function dualBootLocalTime() {
-    if [[ `askQuestionYN "\e[33mInterpret hardware clock as local time? \e[0m "` ]]; then
+    if askQuestionYN "\e[33mInterpret hardware clock as local time? \e[0m "; then
         echo -e "\r$OK Linux using local time."
         timedatectl set-local-rtc 1
     else
@@ -194,7 +196,7 @@ function gitUser() {
 }
 
 function gitCredentialCache() {
-    if [[ $ALL == 1 || `askQuestionYN "\e[33mWant Git to store your credentials for a while? \e[0m "` ]]; then
+    if [ $ALL == 1 ] || askQuestionYN "\e[33mWant Git to store your credentials for a while? \e[0m "; then
 
         if [[ ! "$(git config --global user.name)" =~ .+ ]] || [[ ! $(git config --global user.email) =~ .+ ]]; then
             echo -e "$OK Git global user is not setup correctly."
@@ -265,7 +267,7 @@ function setupVim(){
         # Install Plug (plugin manager)
         curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --silent
-        printf "\n" | vim -c PlugInstall\|qa!
+        # echo -ne "\n" | vim -c PlugInstall\|qa!
     fi
 }
 
@@ -289,6 +291,10 @@ function main() {
     echo -e "\n------------------- VIM"
     setupVim
 
+
+    # Restart bash
+    exec bash
+
     return 0
 }
 
@@ -299,13 +305,17 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
     main $1
 
     echo -e "${Green} Install Complete${NC}"
-    # Restart bash
-    exec bash
 
 elif [[ $OSTYPE == 'darwin' ]]; then
-    echo -e "${Red}MacOS not supported."
+    echo -e "${Red}MacOS not fully supported."
+    if askQuestionYN "Continue anyway?" ; then
+        main $1
+    fi
 elif [[ $OSTYPE == 'msys' ]]; then
     echo -e "${Red}Git Bash not supported."
+    if askQuestionYN "Continue anyway?" ; then
+        main $1
+    fi
 else
     echo "OS not set... Exiting without change."
 fi
