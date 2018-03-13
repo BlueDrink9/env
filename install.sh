@@ -25,6 +25,7 @@ read -n 1 REPLY
 if [[ $REPLY =~ ^[yY]$ ]]; then
     sed -in "s|.*bash_custom.*||g" ${HOME}/.bashrc
     sed -in "s|.*${SCRIPTDIR}/editors/vim/vimrc.*||g" ${HOME}/.vimrc
+    sed -in "s|.*${SCRIPTDIR}/terminal/tmux\.conf.*||g" ${HOME}/.tmux.conf
     sed -in "s|.*vim_runtime.*||g" ${HOME}/.vimrc
     rm -rf "${BASH_CUSTOM}"
     rm -rf "${HOME}/.vim_runtime"
@@ -34,7 +35,7 @@ if [[ $REPLY =~ ^[yY]$ ]]; then
     exec bash
 
     # Remove self
-    #TODO remove comment to exit debugmode
+    #TODO remove comment to exit debugmode. Check that any changes are pushed...
     # rm -rf "${SCRIPTDIR}"
 fi
 }
@@ -238,6 +239,8 @@ function setupShell() {
     else
         echo -n "Enabling custom bash setup..."
         echo "source $SCRIPTDIR/bash/bash_custom" >> ${HOME}/.bashrc
+        echo -n "Enabling custom tmux setup..."
+        echo "source-file $SCRIPTDIR/terminal/tmux.conf" >> ${HOME}/.tmux.conf
     fi
 }
 

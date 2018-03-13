@@ -151,6 +151,8 @@ let g:NERDTreeIndicatorMapCustom = {
             \ 'Ignored'   : '☒',
             \ "Unknown"   : "?"
 \}
+" Open nerdtree in currently focussed window, rather than sidebar.
+let NERDTreeHijackNetrw=1
 
 " ----- majutsushi/tagbar settings -----
 " Open/close tagbar with \b
@@ -269,3 +271,6 @@ let g:better_whitespace_skip_empty_lines=1
 map <Leader>vp :VimuxPromptCommand<CR>
 " Run last command executed by VimuxRunCommand
 map <Leader>vl :VimuxRunLastCommand<CR>
+
+let g:ctrlp_cmd = 'CtrlPMixed'
+
