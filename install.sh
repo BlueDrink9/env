@@ -12,32 +12,43 @@ ALL=0
 
 VSCODE_EXTENSIONS_DIR=$HOME/.vscode/extensions
 
+function askQuestionYN() {
+    echo -ne $1 " (y/n)"
+    read -n 1 REPLY
+    if [[ $REPLY =~ ^[yY]$ ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+
 # SCRIPT COLORS are kept in this file
 # source $SCRIPTDIR/bash/colour_variables
 OK="[ $Green  OK  ] $NC"
 TAB="\e[1A\e[2L"
 
+
 # -------------
 # Currently only removes vim configs and any bash customisation, as well as this script.
 function uninstall() {
-echo -ne "Really uninstall? (y/n)"
-read -n 1 REPLY
-if [[ $REPLY =~ ^[yY]$ ]]; then
-    sed -in "s|.*bash_custom.*||g" ${HOME}/.bashrc
-    sed -in "s|.*${SCRIPTDIR}/editors/vim/vimrc.*||g" ${HOME}/.vimrc
-    sed -in "s|.*${SCRIPTDIR}/terminal/tmux\.conf.*||g" ${HOME}/.tmux.conf
-    sed -in "s|.*vim_runtime.*||g" ${HOME}/.vimrc
-    rm -rf "${BASH_CUSTOM}"
-    rm -rf "${HOME}/.vim_runtime"
-    rm -rf "${HOME}/vimfiles"
-    rm -f "${HOME}/.vim/autoload/plug.vim"
-    # Reset bash
-    exec bash
+    if [[ `askQuestionYN "Really uninstall? "` ]]; then
+        sed -in "s|.*bash_custom.*||g" ${HOME}/.bashrc
+        sed -in "s|.*${SCRIPTDIR}/editors/vim/vimrc.*||g" ${HOME}/.vimrc
+        sed -in "s|.*${SCRIPTDIR}/terminal/tmux\.conf.*||g" ${HOME}/.tmux.conf
+        sed -in "s|.*vim_runtime.*||g" ${HOME}/.vimrc
+        rm -rf "${BASH_CUSTOM}"
+        rm -rf "${HOME}/.vim_runtime"
+        rm -rf "${HOME}/vimfiles"
+        rm -f "${HOME}/.vim/autoload/plug.vim"
+        # Reset bash
+        exec bash
 
-    # Remove self
-    #TODO remove comment to exit debugmode. Check that any changes are pushed...
-    # rm -rf "${SCRIPTDIR}"
-fi
+        # Remove self
+        #TODO remove comment to exit debugmode. Check that any changes are
+        pushed...
+        # rm -rf "${SCRIPTDIR}"
+    fi
 }
 if [[ $1 = "-u" ]]; then
     uninstall
@@ -100,13 +111,7 @@ function vscodeExtensions() {
 
 
 function copyFonts() {
-    if [[ $ALL == 1 ]]; then
-        REPLY="y"
-    else
-        echo -ne "\e[33mInstall fonts? (Y/n)\e[0m "
-        read -n 1 REPLY
-    fi
-    if [[ $REPLY =~ ^[yY]$ ]]; then
+    if [[  $ALL == 1 || `askQuestionYN "\e[33mInstall fonts? \e[0m "` ]]; then
         if [[ ! -d "${FONTDIR}/truetype/custom" ]]; then
             mkdir -p "${FONTDIR}/truetype/custom"
         fi
@@ -145,13 +150,7 @@ function setVimColorscheme() {
 }
 
 function setVimLineNumbers() {
-    if [[ $ALL == 1 ]]; then
-        REPLY=y
-    else
-        echo -ne "\e[33mDo you want to enable line numbers? (y/N)\e[0m "
-        read -n 1 REPLY
-    fi
-    if [[ ! $REPLY =~ ^[yY]$ ]]; then
+    if [[  $ALL == 1 || `askQuestionYN "\e[33mDo you want to enable line numbers?\e[0m "` ]]; then
         echo -e "\n$OK Vim line numbers disabled."
         sed -i 's/${NUMBER}/ /g' ./extended.vim
     else
@@ -163,9 +162,7 @@ function setVimLineNumbers() {
 }
 
 function dualBootLocalTime() {
-    echo -ne "\e[33mInterpret hardware clock as local time? (y/N)\e[0m "
-    read -n 1 REPLY
-    if [[ $REPLY =~ ^[yY]$ ]]; then
+    if [[ `askQuestionYN "\e[33mInterpret hardware clock as local time? \e[0m "` ]]; then
         echo -e "\r$OK Linux using local time."
         timedatectl set-local-rtc 1
     else
@@ -197,14 +194,7 @@ function gitUser() {
 }
 
 function gitCredentialCache() {
-    if [[ $ALL == 1 ]]; then
-        REPLY=y
-    else
-        echo -ne "\e[33mWant Git to store your credentials for a while? (y/N)\e[0m "
-        read -n 1 REPLY
-    fi
-
-    if [[ $REPLY =~ ^[yY]$ ]]; then
+    if [[ $ALL == 1 || `askQuestionYN "\e[33mWant Git to store your credentials for a while? \e[0m "` ]]; then
 
         if [[ ! "$(git config --global user.name)" =~ .+ ]] || [[ ! $(git config --global user.email) =~ .+ ]]; then
             echo -e "$OK Git global user is not setup correctly."
@@ -271,11 +261,12 @@ function setupVim(){
     else
         echo "Using WW's vimrc"
         echo "so $SCRIPTDIR/editors/vim/vimrc" >> ${HOME}/.vimrc
+        echo "Installing vim plugins..."
         # Install Plug (plugin manager)
         curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-                https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --silent
-        vim -c PlugInstall\|qa!
-   fi
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --silent
+        vim -Esc PlugInstall\|qa!
+    fi
 }
 
 function main() {
