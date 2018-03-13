@@ -2,7 +2,7 @@
 # vim: set ft=sh:
 
 # Always used
-shopt -s expand_aliases  
+shopt -s expand_aliases
 
 alias cl="clear"
 alias ..="cd .. && ls"
@@ -21,7 +21,7 @@ alias gca="git commit -a"
 alias gc="git_clone"
 
 # Try to set vim to xvim (has x11 clipboard support)
-if [ -e /usr/bin/vimx ]; then 
+if [ -e /usr/bin/vimx ]; then
     alias vim='/usr/bin/vimx'
 elif [ -e /usr/bin/gvim ]; then
     alias vim='/usr/bin/gvim -v'

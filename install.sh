@@ -274,7 +274,7 @@ function setupVim(){
         # Install Plug (plugin manager)
         curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
                 https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --silent
-        echo "PlugInstall" | vim -es
+        vim -c PlugInstall\|qa!
    fi
 }
 
