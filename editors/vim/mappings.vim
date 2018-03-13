@@ -71,10 +71,10 @@ nnoremap g= gg=G``
 nnoremap gQ gggqG``
 
 " Quick entry into paste
-MapToggle <leader>p paste
+nnoremap <leader>p set paste!
 
-MapToggle <F1> hlsearch
-MapToggle <leader>lc list
+nnoremap <F1> set hlsearch!
+nnoremap <leader>lc set list!
 
 " n and N always go the same direction regardless of whether / or ? was used.
 nnoremap <expr> n  'Nn'[v:searchforward]
