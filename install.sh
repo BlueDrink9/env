@@ -34,6 +34,8 @@ TAB="\e[1A\e[2L"
 function uninstall() {
     if askQuestionYN "Really uninstall? "; then
         printf "Uninstalling...\n"
+
+        # The sed commands replace source lines with blanks
         rm -rf "${BASH_CUSTOM}"
         rm -rf "${HOME}/.vim_runtime"
         sed -in "s|.*vim_runtime.*||g" ${HOME}/.vimrc
@@ -44,6 +46,11 @@ function uninstall() {
         rm -rf "${HOME}/vimfiles"
         rm -f "${HOME}/.vim/autoload/plug.vim"
 
+        if askQuestionYN "Remove stored git username and email?"; then
+            git config --global --unset-all user.name
+            git config --global --unset-all credential.https://github.com.username
+            git config --global --unset-all user.email
+        fi
 
         # Reset bash
         exec bash
@@ -182,7 +189,7 @@ function gitUser() {
     fi
 
     echo -e "Setting up git global user..."
-    echo -ne "${Green}Enter your git username:${NC} "
+    echo -ne "${Green}Enter your github username:${NC} "
     read GIT_USER
     echo -ne "${Green}Enter your git email:${NC} "
     read GIT_EMAIL
@@ -191,6 +198,7 @@ function gitUser() {
     echo "Username: $GIT_USER"
     echo "Email: $GIT_EMAIL"
     git config --global user.name "$GIT_USER"
+    git config --global credential.https://github.com.username "$GIT_USER"
     git config --global user.email "$GIT_EMAIL"
     echo -e "\e[36mYou can update your git user by entering:\e[0m ./install -gu"
 }
