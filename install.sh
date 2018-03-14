@@ -275,7 +275,10 @@ function setupVim(){
         # Install Plug (plugin manager)
         curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --silent
-        # echo -ne "\n" | vim -c PlugInstall\|qa!
+        # This has the problem of making the caret disappear in WSL...
+        vim -E +PlugInstall +qall
+        # Recover missing cursor due to previous command
+        reset
     fi
 }
 
