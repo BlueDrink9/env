@@ -6,8 +6,8 @@
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-source ${SCRIPT_DIR}/colour_variables
-source ${SCRIPT_DIR}/bash_functions
+source ${SCRIPT_DIR}/colour_variables.sh
+source ${SCRIPT_DIR}/functions.sh
 
 
 FLASHING="\[\E[5m\]"

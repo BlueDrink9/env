@@ -40,7 +40,7 @@ function uninstall() {
         rm -rf "${HOME}/.vim_runtime"
         sed -in "s|.*vim_runtime.*||g" ${HOME}/.vimrc
 
-        sed -in "s|.*bash_custom.*||g" ${HOME}/.bashrc
+        sed -in "s|.*[^.]bashrc.*||g" ${HOME}/.bashrc
         sed -in "s|.*${SCRIPTDIR}/terminal/tmux\.conf.*||g" ${HOME}/.tmux.conf
         sed -in "s|.*${SCRIPTDIR}/editors/vim/vimrc.*||g" ${HOME}/.vimrc
         rm -rf "${HOME}/vimfiles"
@@ -234,11 +234,11 @@ function setupShell() {
         else
             mkdir -p ${BASH_CUSTOM}
             cp -r $SCRIPTDIR/bash/* ${BASH_CUSTOM}/
-            echo "source $BASH_CUSTOM/bash_custom" >> ${HOME}/.bashrc
+            echo "source $BASH_CUSTOM/bashrc" >> ${HOME}/.bashrc
         fi
     else
         echo -n "Enabling custom bash setup..."
-        echo "source $SCRIPTDIR/bash/bash_custom" >> ${HOME}/.bashrc
+        echo "source $SCRIPTDIR/bash/bashrc" >> ${HOME}/.bashrc
         echo -n "Enabling custom tmux setup..."
         echo "source-file $SCRIPTDIR/terminal/tmux.conf" >> ${HOME}/.tmux.conf
     fi

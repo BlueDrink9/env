@@ -1,53 +1,6 @@
 # -*-  mode: shell-script; -*-
 # vim: set ft=sh:
 
-# For debugging, `use set -x` to show all bash commands run.
-# (More plusses mean different file/function)
-
-# # If not running interactively, don't do anything
-# case $- in
-#     *i*) ;;
-#       *) return;;
-# esac
-
-# # Run TMUX, close on exit.
-#     { tmux attach || exec tmux new-session && exit;}
-# fi
-# Run tmux on connect
-case $- in
-    *i*)
-    if command -v tmux>/dev/null; then
-        if [[ ! $TERM =~ screen ]] && [[ -z $TMUX ]]; then
-            PNAME="$(ps -o comm= $PPID)";
-            if [ $PNAME == "login" ] || [ $PNAME == "sshd" ] || [ $PNAME == "gnome-terminal" ] ; then
-                if tmux ls 2> /dev/null | grep -q -v attached; then
-                    exec tmux attach -t $(tmux ls 2> /dev/null | grep -v attached | head -1 | cut -d : -f 1)
-                else
-                    exec tmux
-                fi
-            fi
-        fi
-    fi
-    ;;
-esac
-
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-# Keyboard setup stuff
-capsToBS="-option caps:backspace"
-altWinSwap="-option altwin:swap_alt_win"
-altShiftToggle="-option grp:alt_shift_toggle"
-capsLed="-option grp_led:caps"
-colemak="-layout 'us, us' -variant 'colemak,'"
-alias wwkb="setxkbmap $colemak $capsToBS $altWinSwap $altShiftToggle $capsLed"
-
-alias term="xfce4-terminal"
-
-BASH_ENV="${SCRIPT_DIR}/bash_aliases"
-source ${SCRIPT_DIR}/bash_functions
-source ${SCRIPT_DIR}/bash_aliases
-source ${SCRIPT_DIR}/bash_prompt
-INPUTRC="${SCRIPT_DIR}/inputrc"
 #"kv" will enter vi command mode. Use ctrl+v to avoid.
 bind '"kv":vi-movement-mode'
 bind '"vk":vi-movement-mode'
@@ -58,6 +11,15 @@ export VISUAL=vim
 export GIT_EDITOR=vim
 git config --global core.editor "vim"
 
+# Keyboard setup stuff
+capsToBS="-option caps:backspace"
+altWinSwap="-option altwin:swap_alt_win"
+altShiftToggle="-option grp:alt_shift_toggle"
+capsLed="-option grp_led:caps"
+colemak="-layout 'us, us' -variant 'colemak,'"
+alias wwkb="setxkbmap $colemak $capsToBS $altWinSwap $altShiftToggle $capsLed"
+
+alias term="xfce4-terminal"
 export LC_CTYPE="en_US.UTF-8"
 
 # Allow sending ctrl+S to applications in terminal (prev stops scrolling)
