@@ -34,6 +34,7 @@ esac
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 BASH_ENV="${SCRIPT_DIR}/aliases.sh" # Aliases are used for all readline apps.
+source ${SCRIPT_DIR}/settings.sh
 source ${SCRIPT_DIR}/functions.sh
 source ${SCRIPT_DIR}/aliases.sh
 source ${SCRIPT_DIR}/prompt.sh
