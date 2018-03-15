@@ -3,16 +3,16 @@
 
 # Removes carriage return characters from argument file.
 rmcr() {
-    sed -i 's/\r$//' $1
+  sed -i 's/\r$//' $1
 }
 
 # Replaces a file with the .bak version of itself.
 mkbak() {
-    cp $1 $1.bak
+  cp $1 $1.bak
 }
 
 mkcd() {
-    mkdir -p $1 && cd $1
+  mkdir -p $1 && cd $1
 }
 
 del() {
@@ -23,9 +23,9 @@ del() {
 # Delete and reclone current git directory
 reclone() {
   if is_git_repository ; then
-        remoteUrl=`git config --get remote.origin.url`
-        repoFolder=`pwd`
-        cd .. && rm -rf ${repoFolder} && git clone ${remoteUrl} && cd ${repoFolder}
+    remoteUrl=`git config --get remote.origin.url`
+    repoFolder=`pwd`
+    cd .. && rm -rf ${repoFolder} && git clone ${remoteUrl} && cd ${repoFolder}
   else
     echo "Error: not a git repository ${remoteUrl}"
     return 1
@@ -39,12 +39,12 @@ git_clone() {
   elif [[  "$1" =~ "github.com" ]] ; then
     git clone https://$1
   else
-    git clone https://github.com/$1  
+    git clone https://github.com/$1
   fi
 }
 
 
-# Save all commands with timestamp and working dir to log file. Doesn't 
+# Save all commands with timestamp and working dir to log file. Doesn't
 # affect bash's recallable history, or speed.
 # https://spin.atomicobject.com/2016/05/28/log-bash-history/
 log_command() {
@@ -54,20 +54,20 @@ log_command() {
 }
 
 randGen() {
-    for ((i = 0; i < $1; i++)); do
-        echo $RANDOM
-    done
+  for ((i = 0; i < $1; i++)); do
+    echo $RANDOM
+  done
 }
 
 # Return the prompt symbol ($) to use, colorized based on the return value of the
 # previous command.
 set_prompt_symbol () {
   if test $1 -eq 0 ; then
-      PROMPT_SYMBOL="${Green}\$${NC}";
-      PREV_COMMAND_COLOUR="${Green}";
+    PROMPT_SYMBOL="${Green}\$${NC}";
+    PREV_COMMAND_COLOUR="${Green}";
   else
-      PROMPT_SYMBOL="${Red}\$${NC}";
-      PREV_COMMAND_COLOUR="${Red}";
+    PROMPT_SYMBOL="${Red}\$${NC}";
+    PREV_COMMAND_COLOUR="${Red}";
   fi
 }
 
@@ -85,7 +85,7 @@ get_git_branch() {
 # Check status of branch
 # Green if no changes, yellow if modified. White if there are changes to files.
 parse_git_branch() {
-  STATUS_COLOUR=${White} 
+  STATUS_COLOUR=${White}
   BRANCH=`get_git_branch`
   if [ ! "${BRANCH}" == "" ]
   then
@@ -98,35 +98,35 @@ parse_git_branch() {
     deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`
     bits=''
     if [ "${ahead}" == "0" ]; then
-        bits="^${bits}"
+      bits="^${bits}"
     fi
     if [ "${renamed}" == "0" ]; then
-        bits=">${bits}"
+      bits=">${bits}"
     fi
     if [ "${untracked}" == "0" ]; then
-        bits="?${bits}"
+      bits="?${bits}"
     fi
     if [ "${deleted}" == "0" ]; then
-        bits="X${bits}"
+      bits="X${bits}"
     fi
     if [ "${newfile}" == "0" ]; then
-        bits="+${bits}"
+      bits="+${bits}"
     fi
     if [ "${dirty}" == "0" ]; then
-        STATUS_COLOUR=${Yellow} 
+      STATUS_COLOUR=${Yellow}
     fi
     if [ ! "${bits}" == "" ]; then
-        STATUS="${bits}"
+      STATUS="${bits}"
     else
-        STATUS=""
-        STATUS_COLOUR=${Green} 
+      STATUS=""
+      STATUS_COLOUR=${Green}
     fi
 
-      # Sometimes status can be slow. Consider removing.
-      GIT_PROMPT="${STATUS_COLOUR}{${BRANCH}${STATUS}}${NC}"
-    else
-      GIT_PROMPT=""
-    fi
+    # Sometimes status can be slow. Consider removing.
+    GIT_PROMPT="${STATUS_COLOUR}{${BRANCH}${STATUS}}${NC}"
+  else
+    GIT_PROMPT=""
+  fi
 }
 
 
@@ -180,7 +180,13 @@ set_git_prompt () {
   fi
 }
 
-# If a string list (separated by ,) contains the 2nd argument.
-# contains() {
-  # [[ $1 =~ (^|[[:space:]])$2($|[[:space:]]) ]] && exit(0) || exit(1)
-# }
+# If a string list (separated by a space, " ") contains the 2nd argument.
+# @param $1 the list variable, eg $list = "one two"
+# @param $2 the word to check
+contains() {
+  if  [[ $1 =~ (^|[[:space:]])$2($|[[:space:]]) ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
