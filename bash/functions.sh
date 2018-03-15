@@ -2,26 +2,26 @@
 # vim:ts=2:sw=2
 
 # Removes carriage return characters from argument file.
-function rmcr() {
+rmcr() {
     sed -i 's/\r$//' $1
 }
 
 # Replaces a file with the .bak version of itself.
-function mkbak() {
+mkbak() {
     cp $1 $1.bak
 }
 
-function mkcd() {
+mkcd() {
     mkdir -p $1 && cd $1
 }
 
-function del() {
+del() {
   # Safer than rm
   mv "$1" "${HOME}/.local/share/Trash/files/$1"
 }
 
 # Delete and reclone current git directory
-function reclone() {
+reclone() {
   if is_git_repository ; then
         remoteUrl=`git config --get remote.origin.url`
         repoFolder=`pwd`
@@ -33,7 +33,7 @@ function reclone() {
 }
 
 # provides shortcuts for git cloning
-function git_clone() {
+git_clone() {
   if [[  "$1" =~ "https://github.com" ]] ; then
     git clone $1
   elif [[  "$1" =~ "github.com" ]] ; then
@@ -47,13 +47,13 @@ function git_clone() {
 # Save all commands with timestamp and working dir to log file. Doesn't 
 # affect bash's recallable history, or speed.
 # https://spin.atomicobject.com/2016/05/28/log-bash-history/
-function log_command() {
+log_command() {
   if [ "$(id -u)" -ne 0 ]; then
     echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $(history 1)" >> ~/.logs/bash-history-$(date "+%Y-%m-%d").log;
   fi
 }
 
-function randGen() {
+randGen() {
     for ((i = 0; i < $1; i++)); do
         echo $RANDOM
     done
@@ -61,7 +61,7 @@ function randGen() {
 
 # Return the prompt symbol ($) to use, colorized based on the return value of the
 # previous command.
-function set_prompt_symbol () {
+set_prompt_symbol () {
   if test $1 -eq 0 ; then
       PROMPT_SYMBOL="${Green}\$${NC}";
       PREV_COMMAND_COLOUR="${Green}";
@@ -72,11 +72,11 @@ function set_prompt_symbol () {
 }
 
 # Detect whether the current directory is a git repository.
-function is_git_repository {
+is_git_repository() {
   git branch > /dev/null 2>&1
 }
 
-function get_git_branch() {
+get_git_branch() {
   BRANCH=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
   echo "${BRANCH}"
 }
@@ -84,7 +84,7 @@ function get_git_branch() {
 # get current branch in git repo
 # Check status of branch
 # Green if no changes, yellow if modified. White if there are changes to files.
-function parse_git_branch() {
+parse_git_branch() {
   STATUS_COLOUR=${White} 
   BRANCH=`get_git_branch`
   if [ ! "${BRANCH}" == "" ]
@@ -132,7 +132,7 @@ function parse_git_branch() {
 
 
 # Determine the branch/state information for this git repository.
-function set_git_branch {
+set_git_branch(){
   # Capture the output of the "git status" command.
   git_status="$(git status 2> /dev/null)"
 
@@ -172,7 +172,7 @@ function set_git_branch {
 }
 
 # Set the BRANCH variable.
-function set_git_prompt () {
+set_git_prompt () {
   if is_git_repository ; then
     set_git_branch
   else
@@ -180,5 +180,7 @@ function set_git_prompt () {
   fi
 }
 
-
-
+# If a string list (separated by ,) contains the 2nd argument.
+# contains() {
+  # [[ $1 =~ (^|[[:space:]])$2($|[[:space:]]) ]] && exit(0) || exit(1)
+# }
