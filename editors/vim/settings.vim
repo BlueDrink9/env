@@ -103,6 +103,13 @@ set complete-=i     " Searching includes can be slow
 set display=lastline
 set diffopt+=vertical
 
+" set viminfo +=
+
+let s:vimrcdir = fnamemodify($MYVIMRC, ":p:h")
+let s:viminfoPath=s:vimrcdir . expand("/vimfiles/viminfo")
+let s:viminfoPath=substitute(s:viminfoPath,'\\','/','g')
+exec 'set viminfo+=n' . fnameescape(s:viminfoPath)
+
 exec 'set backupdir=' . CreateVimDir("/vimfiles/backup") . '/'
 exec 'set directory=' . CreateVimDir("/vimfiles/swap") . '/'
 exec 'set undodir=' . CreateVimDir("/vimfiles/undo") . '/'
