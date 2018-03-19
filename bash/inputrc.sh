@@ -9,6 +9,7 @@ set show-mode-in-prompt on
 
 # Show all completions as soon as I press tab, even if there's more than one
 set show-all-if-ambiguous on
+set menu-complete-display-prefix on
 # Ignore case
 set completion-ignore-case on
 # on menu-complete, first display the common prefix, then cycle through the 
