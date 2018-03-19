@@ -12,7 +12,6 @@ if exists ('&background')
 endif
 
 set encoding=utf-8
-set nocompatible
 filetype plugin indent on
 " For highlighting, and color schemes
 syntax on
@@ -103,6 +102,13 @@ set complete-=i     " Searching includes can be slow
 set display=lastline
 set diffopt+=vertical
 
+" set viminfo +=
+
+let s:vimrcdir = fnamemodify($MYVIMRC, ":p:h")
+let s:viminfoPath=s:vimrcdir . expand("/vimfiles/viminfo")
+let s:viminfoPath=substitute(s:viminfoPath,'\\','/','g')
+exec 'set viminfo+=n' . fnameescape(s:viminfoPath)
+
 exec 'set backupdir=' . CreateVimDir("/vimfiles/backup") . '/'
 exec 'set directory=' . CreateVimDir("/vimfiles/swap") . '/'
 exec 'set undodir=' . CreateVimDir("/vimfiles/undo") . '/'
@@ -141,6 +147,8 @@ set backspace=indent,eol,start whichwrap+=<,>,[,]
 " Vertical window splits open on right side, horizontal below
 set splitright
 set splitbelow
+set shortmess=a
+set cmdheight=4
 
 " No annoying sound on errors
 set noerrorbells
@@ -187,3 +195,9 @@ else
   let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
   let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
 endif
+
+augroup misc
+    autocmd!
+    " Auto cd to working dir of this window's file
+    autocmd BufEnter * silent! lcd %:p:h
+augroup END

@@ -35,8 +35,6 @@ exec 'source ' . s:scriptpath . "/plugins_light.vim"
 " s + 2 letters jumps to it (like 2 letter f or t, but vert)
 " Plug 'https://github.com/justinmk/vim-sneak'
 " Plug 'https://github.com/easymotion/vim-easymotion'
-" Allows plugin maps to use '.' to repeat
-" Plug 'https://github.com/tpope/vim-repeat'
 " Uses leader rather than g
 " Plug 'https://github.com/scrooloose/nerdcommenter'
 " Awesome code completion, but requires specific installations
@@ -110,6 +108,11 @@ Plug 'https://github.com/tpope/vim-abolish'
 Plug 'https://github.com/benmills/vimux'
 " Autoset Paste/nopaste
 Plug 'https://github.com/ConradIrwin/vim-bracketed-paste'
+" Allows plugin maps to use '.' to repeat
+Plug 'https://github.com/tpope/vim-repeat'
+" Adds indent block as text object. ii , ai or aI
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'bkad/camelcasemotion'
 
 " Unplugs and replacements go here
 
@@ -174,6 +177,7 @@ let g:syntastic_check_on_wq = 0
 
 " ----- Airline -----
 let g:airline_theme=colorSch
+let g:airline#extensions#wordcount#enabled = 1
 exec 'let g:airline_' . colorSch . '_bg="' . backgroundColor . '"'
 exec 'let g:airline_base16_' . colorSch . '= 0'
 exec 'let g:' . colorSch . '_base16 = 0'
@@ -272,5 +276,15 @@ map <Leader>vp :VimuxPromptCommand<CR>
 " Run last command executed by VimuxRunCommand
 map <Leader>vl :VimuxRunLastCommand<CR>
 
+
 let g:ctrlp_cmd = 'CtrlPMixed'
 
+let g:session_autoload = 'yes'
+
+call camelcasemotion#CreateMotionMappings('<leader>c')
+
+call yankstack#setup()
+nnoremap Y y$
+
+GitGutterEnable
+GitGutterSignsEnable

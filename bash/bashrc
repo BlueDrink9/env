@@ -10,6 +10,15 @@
 #       *) return;;
 # esac
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+BASH_ENV="${SCRIPT_DIR}/aliases.sh" # Aliases are used for all readline apps.
+source ${SCRIPT_DIR}/settings.sh
+source ${SCRIPT_DIR}/functions.sh
+source ${SCRIPT_DIR}/aliases.sh
+source ${SCRIPT_DIR}/prompt.sh
+INPUTRC="${SCRIPT_DIR}/inputrc.sh"
+
 # # Run TMUX, close on exit.
 #     { tmux attach || exec tmux new-session && exit;}
 # fi
@@ -19,7 +28,8 @@ case $- in
     if command -v tmux>/dev/null; then
         if [[ ! $TERM =~ screen ]] && [[ -z $TMUX ]]; then
             PNAME="$(ps -o comm= $PPID)";
-            if [ $PNAME == "login" ] || [ $PNAME == "sshd" ] || [ $PNAME == "gnome-terminal" ] ; then
+            useTmuxFor="login sshd gnome-terminal init"
+            if contains "$useTmuxFor" "$PNAME"; then
                 if tmux ls 2> /dev/null | grep -q -v attached; then
                     exec tmux attach -t $(tmux ls 2> /dev/null | grep -v attached | head -1 | cut -d : -f 1)
                 else
@@ -30,11 +40,3 @@ case $- in
     fi
     ;;
 esac
-
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-BASH_ENV="${SCRIPT_DIR}/aliases.sh" # Aliases are used for all readline apps.
-source ${SCRIPT_DIR}/functions.sh
-source ${SCRIPT_DIR}/aliases.sh
-source ${SCRIPT_DIR}/prompt.sh
-INPUTRC="${SCRIPT_DIR}/inputrc.sh"
