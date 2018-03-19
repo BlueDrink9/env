@@ -1,3 +1,4 @@
+set nocompatible
 " Automatically create vimfile directories in same location as vimrc
 let s:vimrcdir = fnamemodify(expand("$MYVIMRC"), ":p:h")
 function! CreateVimDir(dir)
