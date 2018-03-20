@@ -85,7 +85,7 @@ get_git_branch() {
 # Check status of branch
 # Green if no changes, yellow if modified. White if there are changes to files.
 parse_git_branch() {
-  STATUS_COLOUR=${White}
+  STATUS_COLOUR=${BCyan}
   BRANCH=`get_git_branch`
   if [ ! "${BRANCH}" == "" ]
   then
