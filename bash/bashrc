@@ -4,8 +4,11 @@
 # XXX For debugging, `use set -x` to show all bash commands run.
 # (More plusses mean different file/function)
 # This line redirects it to a file.
-exec 19>setxlogfile
-BASH_XTRACEFD=19
+logpath=${HOME}/.setxlogfile
+if [[ -z $logpath ]]; then
+    exec 19>$logpath
+    BASH_XTRACEFD=19
+fi
 
 # # If not running interactively, don't do anything
 # case $- in
