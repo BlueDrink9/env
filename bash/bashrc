@@ -3,6 +3,9 @@
 
 # XXX For debugging, `use set -x` to show all bash commands run.
 # (More plusses mean different file/function)
+# This line redirects it to a file.
+exec 19>setxlogfile
+BASH_XTRACEFD=19
 
 # # If not running interactively, don't do anything
 # case $- in
@@ -16,7 +19,7 @@ BASH_ENV="${SCRIPT_DIR}/aliases.sh" # Aliases are used for all readline apps.
 source ${SCRIPT_DIR}/settings.sh
 source ${SCRIPT_DIR}/functions.sh
 source ${SCRIPT_DIR}/aliases.sh
-source ${SCRIPT_DIR}/prompt.sh
+# source ${SCRIPT_DIR}/prompt.sh
 INPUTRC="${SCRIPT_DIR}/inputrc.sh"
 
 # # Run TMUX, close on exit.
@@ -28,7 +31,7 @@ case $- in
     if command -v tmux>/dev/null; then
         if [[ ! $TERM =~ screen ]] && [[ -z $TMUX ]]; then
             PNAME="$(ps -o comm= $PPID)";
-            useTmuxFor="login sshd gnome-terminal init"
+            # useTmuxFor="login sshd gnome-terminal init"
             if contains "$useTmuxFor" "$PNAME"; then
                 if tmux ls 2> /dev/null | grep -q -v attached; then
                     exec tmux attach -t $(tmux ls 2> /dev/null | grep -v attached | head -1 | cut -d : -f 1)
