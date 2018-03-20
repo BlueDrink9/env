@@ -293,5 +293,6 @@ let g:session_autoload = 'yes'
 
 call camelcasemotion#CreateMotionMappings('<leader>c')
 
+let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
 call yankstack#setup()
 nnoremap Y y$
