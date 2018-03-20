@@ -66,11 +66,12 @@ nnoremap <leader>s ea<C-X><C-S>
 " Remember cursor location and reformat file
 nnoremap g= gg=G``
 nnoremap gQ gggqG``
-" Quick entry into paste
-nnoremap <leader>p :set paste!<CR>
-
-nnoremap <F1> :set hlsearch!<CR>
-nnoremap <leader>lc :set list!<CR>
+" Commented because vim-unimpaired gives similar mappings (=ol and h). yo
+" enters PASTE mode.
+" " Quick entry into paste
+" nnoremap <leader>p :set paste!<CR>
+" nnoremap <F1> :set hlsearch!<CR>
+" nnoremap <leader>lc :set list!<CR>
 
 " n and N always go the same direction regardless of whether / or ? was used.
 nnoremap <expr> n  'Nn'[v:searchforward]
@@ -103,4 +104,8 @@ inoremap <c-u> <c-g>u<c-u>
 inoremap <c-w> <c-g>u<c-w>
 " Dot operator leaves cursor where it was
 nmap . .`[
-
+" Cycle through buffers
+nmap <S-C-Tab> :bp<CR>
+nmap <C-Tab> :bn<CR>
+" Delete word under cursor, replace with pasted.
+nnoremap <leader># "_diwP

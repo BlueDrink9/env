@@ -2,13 +2,13 @@ set nocompatible
 " Automatically create vimfile directories in same location as vimrc
 let s:vimrcdir = fnamemodify(expand("$MYVIMRC"), ":p:h")
 function! CreateVimDir(dir)
-    let l:dir = fnameescape(expand(a:dir))
+    let l:dir = fnameescape(expand('/' . a:dir))
     if filewritable(s:vimrcdir) && !isdirectory(s:vimrcdir . l:dir)
         silent exec "!mkdir "s:vimrcdir . l:dir
     endif
     return s:vimrcdir . l:dir
 endfunction
-call CreateVimDir("/vimfiles")
+call CreateVimDir("vimfiles")
 
 " Folder in which current script resides:
 let s:scriptpath = fnameescape(expand('<sfile>:p:h'))
@@ -17,9 +17,9 @@ let s:scriptpath = fnameescape(expand('<sfile>:p:h'))
 function! SourceCustoms(...)
     for vimfile in a:000
         " Converts the path properly for win or unix
-        exec 'source ' . s:scriptpath . expand(vimfile)
+        exec 'source ' . s:scriptpath . expand('/' . vimfile)
     endfor
 endfunction
 
-exec SourceCustoms("/functions.vim", "/settings.vim", "/mappings.vim", "/plugins.vim")
+exec SourceCustoms("functions.vim", "settings.vim", "mappings.vim", "plugins.vim")
 

@@ -37,10 +37,11 @@ function set_bash_prompt () {
   TIME_PROMPT="\t"
 
   # Set the bash prompt variable.
-  # Space left after title is actually for start of prompt. 
+  # Space left after title is actually for start of prompt.
   # Gives space between vi +: and time.
   PS1="${WINDOW_TITLE_BASH_PATH} ${White}${On_Black}${TIME_PROMPT}${NC} ${USER_AT_HOST}: ${PREV_COMMAND_COLOUR}[${CURR_DIR}]${NC}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL} "
 }
 
 # Tell bash to execute this function just before displaying its prompt.
 PROMPT_COMMAND=set_bash_prompt
+PROMPT_COMMAND=$PROMPT_COMMAND && tmux rename-window "$WINDOW_TITLE_BASH_PATH"
