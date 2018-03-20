@@ -18,14 +18,14 @@ fi
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+# Reload/source readline settings
+bind -f  ${SCRIPT_DIR}/inputrc.sh
+INPUTRC="${SCRIPT_DIR}/inputrc.sh"
 BASH_ENV="${SCRIPT_DIR}/aliases.sh" # Aliases are used for all readline apps.
-source ${SCRIPT_DIR}/settings.sh
 source ${SCRIPT_DIR}/functions.sh
+source ${SCRIPT_DIR}/settings.sh
 source ${SCRIPT_DIR}/aliases.sh
 source ${SCRIPT_DIR}/prompt.sh
-INPUTRC="${SCRIPT_DIR}/inputrc.sh"
-# Reload/source
-bind -f  ${SCRIPT_DIR}/inputrc.sh
 
 # # Run TMUX, close on exit.
 #     { tmux attach || exec tmux new-session && exit;}
