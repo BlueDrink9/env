@@ -2,9 +2,15 @@
 
 " Folder in which current script resides:
 let s:scriptpath = fnameescape(expand('<sfile>:p:h'))
-let s:pluginPath = CreateVimDir("/vimfiles/plugins")
+let s:pluginPath = CreateVimDir("vimfiles/plugins")
 let s:localPlugins = fnameescape(expand(s:pluginPath . "/local.vim"))
 
+
+" We need this for plugins like Syntastic and vim-gitgutter which put symbols
+" in the sign column. Don't know if it should go before plugs or after
+" colorscheme.
+" highlight clear SignColumn
+"
 let s:proseFileTypes = "'tex,latex,context,plaintex,
             \markdown,mkd,
             \text,textile,
@@ -29,7 +35,7 @@ command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 call plug#begin(s:pluginPath)
 
 " Get light plugin set first
-exec 'source ' . s:scriptpath . "/plugins_light.vim"
+exec 'source ' . s:scriptpath . "/light_plugins.vim"
 
 " Maybe later, once I want them.
 " s + 2 letters jumps to it (like 2 letter f or t, but vert)
@@ -129,10 +135,6 @@ if !has("gui_running")
 " endif
 endif
 
-" We need this for plugins like Syntastic and vim-gitgutter which put symbols
-" in the sign column.
-highlight clear SignColumn
-
 " ----- scrooloose/syntastic settings -----
 let g:syntastic_error_symbol = '✘'
 let g:syntastic_warning_symbol = "▲"
@@ -230,6 +232,7 @@ let g:session_persist_font = 0
 let g:session_default_to_last = 'yes'
 let g:session_autosave_periodic = 5
 let g:session_autosave = 'yes'
+let g:session_directory = CreateVimDir("vimfiles/sessions/")
 
 " Prose plugins
 let g:pencil#wrapModeDefault = 'soft'
@@ -237,19 +240,19 @@ let g:lexical#spell_key = '<leader>ls'
 let g:lexical#thesaurus_key = '<leader>lt'
 let g:lexical#dictionary_key = '<leader>ld'
 let g:pencil#autoformat_blacklist = [
-        \ 'markdownCode',
-        \ 'markdownUrl',
-        \ 'markdownIdDeclaration',
-        \ 'markdownLinkDelimiter',
-        \ 'markdownHighlight[A-Za-z0-9]+',
-        \ 'mkdCode',
-        \ 'mkdIndentCode',
-        \ 'markdownFencedCodeBlock',
-        \ 'markdownInlineCode',
-        \ 'mmdTable[A-Za-z0-9]*',
-        \ 'txtCode',
-        \ 'texMath',
-        \ ]
+            \ 'markdownCode',
+            \ 'markdownUrl',
+            \ 'markdownIdDeclaration',
+            \ 'markdownLinkDelimiter',
+            \ 'markdownHighlight[A-Za-z0-9]+',
+            \ 'mkdCode',
+            \ 'mkdIndentCode',
+            \ 'markdownFencedCodeBlock',
+            \ 'markdownInlineCode',
+            \ 'mmdTable[A-Za-z0-9]*',
+            \ 'txtCode',
+            \ 'texMath',
+            \ ]
 function! SetProseOptions()
     call AutoCorrect()
     call textobj#sentence#init()
@@ -262,9 +265,16 @@ augroup prose
     exec 'autocmd Filetype ' . s:proseFileTypes . ' call SetProseOptions()'
     " Override default prose settings for some files:
     " autocmd Filetype git,gitsendemail,*commit*,*COMMIT*
-                "\ call pencil#init({'wrap': 'hard', 'textwidth': 72})
+    "\ call pencil#init({'wrap': 'hard', 'textwidth': 72})
     autocmd BufEnter * if &filetype == "" | call pencil#init()
 augroup END
+" Bullets.vim
+let g:bullets_enabled_file_types = [
+            \ 'markdown',
+            \ 'text',
+            \ 'gitcommit',
+            \ 'scratch'
+            \]
 
 "Better-whitespace
 let g:show_spaces_that_precede_tabs=1
@@ -285,6 +295,3 @@ call camelcasemotion#CreateMotionMappings('<leader>c')
 
 call yankstack#setup()
 nnoremap Y y$
-
-GitGutterEnable
-GitGutterSignsEnable
