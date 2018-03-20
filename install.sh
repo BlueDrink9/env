@@ -317,7 +317,7 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
 
     echo -e "${Green} Install Complete${NC}"
 
-elif [[ $OSTYPE == 'darwin' ]]; then
+elif [[ $OSTYPE =~ 'darwin' ]]; then
     echo -e "${Red}MacOS not fully supported."
     if askQuestionYN "Continue anyway?" ; then
         main $1
