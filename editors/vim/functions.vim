@@ -35,15 +35,6 @@ endfunction
 :inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
 :set dictionary="/usr/dict/words"
 
-function! PrintChar()
-    let chr=""
-    if getchar(1)
-        let chr = getchar()
-    endif
-    call feedkeys("\<F8>")
-    echo chr
-    return ''
-endfunction
 " Allow insertion of single character in normal mode.
 function! RepeatChar(char, count)
     return repeat(a:char, a:count)
