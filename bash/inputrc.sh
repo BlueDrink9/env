@@ -71,3 +71,4 @@ Tab: menu-complete
 # Needed because binding 'p' in command mode above wipes its insert mode
 # function, too. This fixes that, and will insert 'p' when you type 'p'.
 "p": self-insert
+"i": self-insert
