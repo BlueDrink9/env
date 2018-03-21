@@ -18,6 +18,9 @@ alias :Q="exit"
 alias ZZ="exit"
 
 alias gca="git commit -a"
+alias gco="git commit"
+alias gs="git status"
+# Custom function with logic for different address formats
 alias gc="git_clone"
 
 # Try to set vim to xvim (has x11 clipboard support)
