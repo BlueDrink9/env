@@ -1,10 +1,6 @@
 # -*-  mode: shell-script; -*-
 # vim: set ft=sh:
 
-#"kv" will enter vi command mode. Use ctrl+v to avoid.
-bind '"kv":vi-movement-mode'
-bind '"vk":vi-movement-mode'
-
 # Enable smart completion in bash
 if [ -f /etc/bash_completion ]; then
  . /etc/bash_completion

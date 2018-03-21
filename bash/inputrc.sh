@@ -9,14 +9,19 @@ set editing-mode vi
 # Used for set -o, shows a symbol at start of prompt for bash vi mode
 set show-mode-in-prompt on
 
-# Show all completions as soon as I press tab, even if there's more than one.
-# On menu-complete, first display the common prefix, then cycle through the
-# options when hitting TAB
-set menu-complete-display-prefix on
-set show-all-if-ambiguous on
 set show-all-if-unmodified on
+# Show all completions as soon as I press tab, even if there's more than one
+set show-all-if-ambiguous on
 # Ignore case
 set completion-ignore-case on
+# on menu-complete, first display the common prefix, then cycle through the
+# options when hitting TAB
+set menu-complete-display-prefix on
+
+# Expand history automatically on !!
+$if Bash
+  Space: magic-space
+$endif
 
 # Colour common prefixes of tab-completion
 set colored-completion-prefix on
@@ -54,11 +59,14 @@ k:history-search-backward
 # Keymaps for when we're in insert (i.e., typing stuff in) mode
 set keymap vi-insert
 
+#"kv" will enter vi command mode. Use ctrl+v to avoid.
+"kv":vi-movement-mode
+"vk":vi-movement-mode
 
-# Pressing tab will list all completions & select the first one. Pressing it 
+# Pressing tab will list all completions & select the first one. Pressing it
 # again will cycle through available completions.
 # Commented because undesirable (can't type letter to jump to selection.)
-# Tab: menu-complete
+Tab: menu-complete
 # Shift-TAB cycles completions backward
 \e[Z: menu-complete-backward
 # "\C-n": menu-complete
@@ -71,4 +79,3 @@ set keymap vi-insert
 # Needed because binding 'p' in command mode above wipes its insert mode
 # function, too. This fixes that, and will insert 'p' when you type 'p'.
 "p": self-insert
-"i": self-insert
