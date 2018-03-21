@@ -68,7 +68,7 @@ set keymap vi-insert
 # Commented because undesirable (can't type letter to jump to selection.)
 Tab: menu-complete
 # Shift-TAB cycles completions backward
-\e[Z: menu-complete-backward
+"\e[Z": menu-complete-backward
 # "\C-n": menu-complete
 # "\C-p": menu-complete-backward
 
