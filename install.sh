@@ -12,7 +12,7 @@ ALL=0
 
 VSCODE_EXTENSIONS_DIR=$HOME/.vscode/extensions
 
-function askQuestionYN() { 
+function askQuestionYN() {
     echo -ne $1 " (y/n)" >&2
     read -n 1 REPLY
     if [[ $REPLY =~ ^[yY]$ ]]; then
@@ -43,6 +43,7 @@ function uninstall() {
         sed -in "s|.*[^.]bashrc.*||g" ${HOME}/.bashrc
         sed -in "s|.*${SCRIPTDIR}/terminal/tmux\.conf.*||g" ${HOME}/.tmux.conf
         sed -in "s|.*${SCRIPTDIR}/editors/vim/vimrc.*||g" ${HOME}/.vimrc
+        sed -in "s|.*${SCRIPTDIR}/bash/inputrc.sh.*||g" ${HOME}/.inputrc
         rm -rf "${HOME}/vimfiles"
         rm -f "${HOME}/.vim/autoload/plug.vim"
 
@@ -241,6 +242,8 @@ function setupShell() {
         echo "source $SCRIPTDIR/bash/bashrc" >> ${HOME}/.bashrc
         echo -n "Enabling custom tmux setup..."
         echo "source-file $SCRIPTDIR/terminal/tmux.conf" >> ${HOME}/.tmux.conf
+        echo -n "Enabling custom readline (inputrc) setup..."
+        echo "\$include $SCRIPTDIR/bash/inputrc.sh" >> ${HOME}/.inputrc
     fi
 }
 
