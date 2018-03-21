@@ -12,7 +12,7 @@ ALL=0
 
 VSCODE_EXTENSIONS_DIR=$HOME/.vscode/extensions
 
-function askQuestionYN() {
+function askQuestionYN() { 
     echo -ne $1 " (y/n)" >&2
     read -n 1 REPLY
     if [[ $REPLY =~ ^[yY]$ ]]; then

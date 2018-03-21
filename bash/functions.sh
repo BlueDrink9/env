@@ -85,7 +85,7 @@ get_git_branch() {
 # Check status of branch
 # Green if no changes, yellow if modified. White if there are changes to files.
 parse_git_branch() {
-  STATUS_COLOUR=${BCyan}
+  STATUS_COLOUR=${NC}
   BRANCH=`get_git_branch`
   if [ ! "${BRANCH}" == "" ]
   then
@@ -98,7 +98,7 @@ parse_git_branch() {
     deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`
     bits=''
     if [ "${ahead}" == "0" ]; then
-      STATUS_COLOUR=${On_Green}${STATUS_COLOUR}
+      STATUS_COLOUR=${Cyan}
       bits="^${bits}"
     fi
     if [ "${renamed}" == "0" ]; then
@@ -115,6 +115,7 @@ parse_git_branch() {
     fi
     if [ "${dirty}" == "0" ]; then
       STATUS_COLOUR=${Yellow}
+      bits="*${bits}"
     fi
     if [ ! "${bits}" == "" ]; then
       STATUS="${bits}"
