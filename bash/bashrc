@@ -18,9 +18,9 @@ fi
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+INPUTRC="${SCRIPT_DIR}/inputrc.sh"
 # Reload/source inputrc
 # bind -f  ${SCRIPT_DIR}/inputrc.sh
-INPUTRC="${SCRIPT_DIR}/inputrc.sh"
 BASH_ENV="${SCRIPT_DIR}/aliases.sh" # Aliases are used for all readline apps.
 source ${SCRIPT_DIR}/settings.sh
 source ${SCRIPT_DIR}/functions.sh

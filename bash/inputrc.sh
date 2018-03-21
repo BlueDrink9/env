@@ -58,7 +58,7 @@ set keymap vi-insert
 # Pressing tab will list all completions & select the first one. Pressing it 
 # again will cycle through available completions.
 # Commented because undesirable (can't type letter to jump to selection.)
-Tab: menu-complete
+# Tab: menu-complete
 # Shift-TAB cycles completions backward
 \e[Z: menu-complete-backward
 # "\C-n": menu-complete
