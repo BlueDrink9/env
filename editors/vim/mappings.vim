@@ -105,7 +105,7 @@ inoremap <c-w> <c-g>u<c-w>
 " Dot operator leaves cursor where it was
 nmap . .`[
 " Cycle through buffers
-nmap <S-C-Tab> :bp<CR>
-nmap <C-Tab> :bn<CR>
+nnoremap <S-C-tab> :bp<CR>
+nnoremap <C-tab> :bn<CR>
 " Delete word under cursor, replace with pasted.
 nnoremap <leader># "_diwP
