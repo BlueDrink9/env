@@ -96,7 +96,7 @@ set hidden
 set sessionoptions-=buffers
 set wildmenu
 set wildmode=longest,list:longest
-set scrolloff=2
+set scrolloff=5
 set listchars=tab:>-,trail:·,eol:¬,precedes:←,extends:→,nbsp:·
 set complete-=i     " Searching includes can be slow
 set display=lastline
@@ -109,9 +109,9 @@ let s:viminfoPath=s:vimrcdir . expand("/vimfiles/viminfo")
 let s:viminfoPath=substitute(s:viminfoPath,'\\','/','g')
 exec 'set viminfo+=n' . fnameescape(s:viminfoPath)
 
-exec 'set backupdir=' . CreateVimDir("/vimfiles/backup") . '/'
-exec 'set directory=' . CreateVimDir("/vimfiles/swap") . '/'
-exec 'set undodir=' . CreateVimDir("/vimfiles/undo") . '/'
+exec 'set backupdir=' . CreateVimDir("vimfiles/backup") . expand('/')
+exec 'set directory=' . CreateVimDir("vimfiles/swap") . expand('/')
+exec 'set undodir=' . CreateVimDir("vimfiles/undo") . expand('/')
 " Create undo file for inter-session undo
 " Extra slash means files will have unique names
 set undofile
@@ -123,7 +123,7 @@ if bufname('%') != ''
         " Save on focus loss
         au FocusLost * :wa
         " Save leaving insert
-        au InsertLeave <buffer> update
+        au InsertLeave <buffer> :update
     augroup END
 endif
 
@@ -148,7 +148,7 @@ set backspace=indent,eol,start whichwrap+=<,>,[,]
 set splitright
 set splitbelow
 set shortmess=a
-set cmdheight=4
+set cmdheight=2
 
 " No annoying sound on errors
 set noerrorbells
@@ -174,17 +174,16 @@ let g:netrw_winsize = 25
 " autocmd InsertLeave * syn clear EOLWS | syn match EOLWS excludenl /\s\+$/
 " highlight EOLWS ctermbg=red guibg=red
 
-" Autoset new buffers to markdown.
+" Autoset new buffers to scratch
 augroup scratch
     autocmd!
     autocmd BufEnter * if &filetype == "" | setlocal ft=scratch | endif
     autocmd BufEnter * if &filetype == "" | setlocal spell | setl ai
 augroup END
 
-" Set spellfile to location that is guaranteed to exist, can be symlinked to
-" " Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using
-" rcm.
+" Set spellfile to location that is guaranteed to exist, can be symlinked to Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
 " set spellfile=$HOME/.vim-spell-en.utf-8.add
+
 " Set cursor based on mode. Designed for iTerm, may be different for others.
 if empty($TMUX)
   let &t_SI = "\<Esc>]50;CursorShape=1\x7"
@@ -199,5 +198,5 @@ endif
 augroup misc
     autocmd!
     " Auto cd to working dir of this window's file
-    autocmd BufEnter * silent! lcd %:p:h
+    " autocmd BufEnter * silent! lcd %:p:h
 augroup END

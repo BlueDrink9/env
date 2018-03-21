@@ -1,4 +1,6 @@
 # vim: set ft=sh:
+# Readline settings
+
 include /etc/inputrc
 # Set bash movement keys to be more vi-like
 # Can use `set -o vi` for short version
@@ -7,14 +9,25 @@ set editing-mode vi
 # Used for set -o, shows a symbol at start of prompt for bash vi mode
 set show-mode-in-prompt on
 
-# Show all completions as soon as I press tab, even if there's more than one
-set show-all-if-ambiguous on
-set menu-complete-display-prefix on
-# Ignore case
-set completion-ignore-case on
-# on menu-complete, first display the common prefix, then cycle through the 
+# Show all completions as soon as I press tab, even if there's more than one.
+# On menu-complete, first display the common prefix, then cycle through the
 # options when hitting TAB
 set menu-complete-display-prefix on
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+# Ignore case
+set completion-ignore-case on
+
+# Colour common prefixes of tab-completion
+set colored-completion-prefix on
+# Colour completion based on file type (like ls)
+set colored-stats on
+# Case insensitive completion
+# set completion-ignore-case on
+# Symlinks get completed with trailing /
+set mark-symlinked-directories on
+# Symbol after file specifying type
+set visible-stats on
 
 # Neat feature that detects pasted chars without running them.
 set enable-bracketed-paste on
@@ -45,9 +58,11 @@ set keymap vi-insert
 # Pressing tab will list all completions & select the first one. Pressing it 
 # again will cycle through available completions.
 # Commented because undesirable (can't type letter to jump to selection.)
-"\C-n": menu-complete
+Tab: menu-complete
 # Shift-TAB cycles completions backward
-"\C-p": menu-complete-backward
+\e[Z: menu-complete-backward
+# "\C-n": menu-complete
+# "\C-p": menu-complete-backward
 
 # up/down should also apply to insert mode
 "\e[A": history-search-backward

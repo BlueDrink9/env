@@ -98,6 +98,7 @@ parse_git_branch() {
     deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`
     bits=''
     if [ "${ahead}" == "0" ]; then
+      STATUS_COLOUR=${On_Green}${STATUS_COLOUR}
       bits="^${bits}"
     fi
     if [ "${renamed}" == "0" ]; then

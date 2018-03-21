@@ -5,6 +5,11 @@
 bind '"kv":vi-movement-mode'
 bind '"vk":vi-movement-mode'
 
+# Enable smart completion in bash
+if [ -f /etc/bash_completion ]; then
+ . /etc/bash_completion
+fi
+
 # You know it, baby. Shouldn't need to use nano ever
 export EDITOR=vim
 export VISUAL=vim
