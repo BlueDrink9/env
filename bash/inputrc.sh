@@ -44,8 +44,8 @@ set bell-style none
 # Keymaps for when we're in command mode (e.g., after hitting ESC)
 set keymap vi-command
 
-# Insert the arguments from the last command with p. Use P to paste
-"p": "i !!*\r"
+# Insert the arguments from the last command with P.
+"P": "i !!*\r"
 
 # When hitting up/down, cycle through the previous commands
 # which start with the prefix you've entered, rather than just cycling through
@@ -78,4 +78,4 @@ Tab: menu-complete
 
 # Needed because binding 'p' in command mode above wipes its insert mode
 # function, too. This fixes that, and will insert 'p' when you type 'p'.
-"p": self-insert
+"P": self-insert
