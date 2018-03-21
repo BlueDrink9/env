@@ -115,6 +115,7 @@ parse_git_branch() {
     fi
     if [ "${dirty}" == "0" ]; then
       STATUS_COLOUR=${Yellow}
+      bits="*${bits}"
     fi
     if [ ! "${bits}" == "" ]; then
       STATUS="${bits}"
