@@ -62,6 +62,8 @@ Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
 " Git wrapper
 Plug 'https://github.com/tpope/vim-fugitive'
+Plug 'https://github.com/christoomey/vim-conflicted'
+set stl+=%{ConflictedVersion()}
 
 "--- Snippits ---"
 Plug 'https://github.com/honza/vim-snippets'
