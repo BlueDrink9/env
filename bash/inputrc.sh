@@ -79,3 +79,6 @@ Tab: menu-complete
 # Needed because binding 'p' in command mode above wipes its insert mode
 # function, too. This fixes that, and will insert 'p' when you type 'p'.
 "P": self-insert
+
+# ctrl + backspace deletes word
+"\C-?":"\C-W"
