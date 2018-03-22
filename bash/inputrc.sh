@@ -81,4 +81,5 @@ Tab: menu-complete
 "P": self-insert
 
 # ctrl + backspace deletes word
-"\C-?":"\C-W"
+# Doesn't work on all systems, needs looking at.
+# "\C-?":"\C-W"
