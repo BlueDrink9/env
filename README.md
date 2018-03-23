@@ -1,6 +1,8 @@
 # Environment
 Coding environment setup.
 
+**Oh man, this is soooo out of date now...**
+
 ## Fonts
 
 ### Iosevka Term
