@@ -127,8 +127,12 @@ function copyFonts() {
         fi
         mkdir -p "$FONTDIR"
         cp ./fonts/* $FONTDIR/truetype/custom
-        curl -fLo ~/$FONTDIR/truetype/custom --create-dirs \
-            https://github.com/ryanoasis/nerd-fonts/blob/1.2.0/patched-fonts/SourceCodePro/Medium/complete/Sauce%20Code%20Pro%20Medium%20Nerd%20Font%20Complete%20Mono.ttf --silent
+        if [[ ! -d "~/$FONTDIR/truetype/custom" ]]; then
+            mkdir -p ~/$FONTDIR/truetype/custom
+        fi
+        wget -O "~/$FONTDIR/truetype/custom/Sauce Code Pro Medium Nerd Font Complete Mono.ttf" https://github.com/ryanoasis/nerd-fonts/blob/1.2.0/patched-fonts/SourceCodePro/Medium/complete/Sauce%20Code%20Pro%20Medium%20Nerd%20Font%20Complete%20Mono.ttf
+        # curl -fLo ~/$FONTDIR/truetype/custom --create-dirs \
+            # https://github.com/ryanoasis/nerd-fonts/blob/1.2.0/patched-fonts/SourceCodePro/Medium/complete/Sauce%20Code%20Pro%20Medium%20Nerd%20Font%20Complete%20Mono.ttf --silent
 
 
         fc-cache
