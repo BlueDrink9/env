@@ -62,7 +62,7 @@ randGen() {
 # Return the prompt symbol ($) to use, colorized based on the return value of the
 # previous command.
 set_prompt_symbol () {
-  if test $1 -eq 0 ; then
+  if [ $1 -eq 0 ] ; then
     PROMPT_SYMBOL="${Green}\\$ ${NC}";
     PREV_COMMAND_COLOUR="${Green}";
   else

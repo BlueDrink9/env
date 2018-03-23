@@ -16,7 +16,7 @@ FLASHING="\[\E[5m\]"
 function set_bash_prompt () {
   # Set the PROMPT_SYMBOL variable. We do this first so we don't lose the
   # return value of the last command.
-  set_prompt_symbol \\$?
+  set_prompt_symbol $?
 
   USER_AT_HOST="${Blue}\u${NC}@${Yellow}\h${NC}"
 
