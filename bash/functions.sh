@@ -94,6 +94,7 @@ parse_git_branch() {
     untracked=`echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?"`
     ahead=`echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?"`
     behind=`echo -n "${status}" 2> /dev/null | grep "Your branch is behind" &> /dev/null; echo "$?"`
+    diverged=`echo -n "${status}" 2> /dev/null | grep "diverged" &> /dev/null; echo "$?"`
     newfile=`echo -n "${status}" 2> /dev/null | grep "new file:" &> /dev/null; echo "$?"`
     renamed=`echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?"`
     deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`
@@ -105,6 +106,11 @@ parse_git_branch() {
     if [ "${behind}" == "0" ]; then
       STATUS_COLOUR=${Cyan}
       bits="v${bits}"
+    fi
+    if [ "${diverged}" == "0" ]; then
+      STATUS_COLOUR=${Cyan}
+      bits="^v${bits}"
+			# optional: use several other possible unicode symbols.
     fi
     if [ "${untracked}" == "0" ]; then
       bits="?${bits}"
