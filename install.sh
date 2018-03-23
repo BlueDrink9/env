@@ -127,7 +127,7 @@ function copyFonts() {
         fi
         mkdir -p "$FONTDIR"
         cp ./fonts/* $FONTDIR/truetype/custom
-        curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+        curl -fLo ~/$FONTDIR/truetype/custom --create-dirs \
             https://github.com/ryanoasis/nerd-fonts/blob/1.2.0/patched-fonts/SourceCodePro/Medium/complete/Sauce%20Code%20Pro%20Medium%20Nerd%20Font%20Complete%20Mono.ttf --silent
 
 
