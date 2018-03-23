@@ -11,7 +11,7 @@ let s:localPlugins = fnameescape(expand(s:pluginPath . "/local.vim"))
 " colorscheme.
 " highlight clear SignColumn
 "
-let s:proseFileTypes = "'tex,latex,context,plaintex,
+let g:proseFileTypes = "'tex,latex,context,plaintex,
             \markdown,mkd,
             \text,textile,
             \git,gitsendemail,
@@ -62,6 +62,8 @@ Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
 " Git wrapper
 Plug 'https://github.com/tpope/vim-fugitive'
+" github wrapper
+Plug 'https://github.com/tpope/vim-rhubarb'
 Plug 'https://github.com/christoomey/vim-conflicted'
 set stl+=%{ConflictedVersion()}
 
@@ -82,12 +84,12 @@ Plug 'majutsushi/tagbar'
             " Expands what a sentence/word is for prose.
             " Plug 'https://github.com/plasticboy/vim-markdown'
 exec "Plug 'https://github.com/reedes/vim-pencil'
-            \| Plug 'https://github.com/reedes/vim-lexical', { 'for': " . s:proseFileTypes . " }
+            \| Plug 'https://github.com/reedes/vim-lexical', { 'for': " . g:proseFileTypes . " }
             \| Plug 'https://github.com/kana/vim-textobj-user'
             \| Plug 'https://github.com/reedes/vim-textobj-sentence'
             \| Plug 'https://github.com/tpope/vim-markdown'
-            \| Plug 'https://github.com/reedes/vim-wordy', { 'for': " . s:proseFileTypes . " }
-            \| Plug 'https://github.com/panozzaj/vim-autocorrect', { 'for': " . s:proseFileTypes . " }
+            \| Plug 'https://github.com/reedes/vim-wordy', { 'for': " . g:proseFileTypes . " }
+            \| Plug 'https://github.com/panozzaj/vim-autocorrect', { 'for': " . g:proseFileTypes . " }
             \"
 
 
@@ -264,7 +266,7 @@ function! SetProseOptions()
 endfunction
 augroup prose
     autocmd!
-    exec 'autocmd Filetype ' . s:proseFileTypes . ' call SetProseOptions()'
+    exec 'autocmd Filetype ' . g:proseFileTypes . ' call SetProseOptions()'
     " Override default prose settings for some files:
     " autocmd Filetype git,gitsendemail,*commit*,*COMMIT*
     "\ call pencil#init({'wrap': 'hard', 'textwidth': 72})
