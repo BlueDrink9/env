@@ -63,10 +63,10 @@ randGen() {
 # previous command.
 set_prompt_symbol () {
   if test $1 -eq 0 ; then
-    PROMPT_SYMBOL="${Green}\$${NC}";
+    PROMPT_SYMBOL="${Green}\\$ ${NC}";
     PREV_COMMAND_COLOUR="${Green}";
   else
-    PROMPT_SYMBOL="${Red}\$${NC}";
+    PROMPT_SYMBOL="${Red}\\$ ${NC}";
     PREV_COMMAND_COLOUR="${Red}";
   fi
 }

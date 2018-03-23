@@ -16,7 +16,7 @@ FLASHING="\[\E[5m\]"
 function set_bash_prompt () {
   # Set the PROMPT_SYMBOL variable. We do this first so we don't lose the
   # return value of the last command.
-  set_prompt_symbol $?
+  set_prompt_symbol \\$?
 
   USER_AT_HOST="${Blue}\u${NC}@${Yellow}\h${NC}"
 
@@ -39,7 +39,7 @@ function set_bash_prompt () {
   # Set the bash prompt variable.
   # Space left after title is actually for start of prompt.
   # Gives space between vi +: and time.
-  PS1="${WINDOW_TITLE_BASH_PATH} ${White}${On_Black}${TIME_PROMPT}${NC} ${USER_AT_HOST}: ${PREV_COMMAND_COLOUR}[${CURR_DIR}]${NC}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL} "
+  PS1="${WINDOW_TITLE_BASH_PATH} ${White}${On_Black}${TIME_PROMPT}${NC} ${USER_AT_HOST}: ${PREV_COMMAND_COLOUR}[${CURR_DIR}]${NC}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL}"
 }
 
 # Tell bash to execute this function just before displaying its prompt.
