@@ -91,6 +91,7 @@ parse_git_branch() {
   then
     status=`git status 2>&1 | tee`
     dirty=`echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?"`
+    clean=`echo -n "${status}" 2> /dev/null | grep "clean" &> /dev/null; echo "$?"`
     untracked=`echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?"`
     ahead=`echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?"`
     behind=`echo -n "${status}" 2> /dev/null | grep "Your branch is behind" &> /dev/null; echo "$?"`
@@ -99,6 +100,10 @@ parse_git_branch() {
     renamed=`echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?"`
     deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`
     bits=''
+    if [ "${clean}" == "0" ]; then
+      STATUS_COLOUR=${Green}
+      bits=""
+    fi
     if [ "${ahead}" == "0" ]; then
       STATUS_COLOUR=${Cyan}
       bits="^${bits}"
@@ -128,11 +133,10 @@ parse_git_branch() {
       STATUS_COLOUR=${Yellow}
       bits="*${bits}"
     fi
-    if [ ! "${bits}" == "" ]; then
+    if [ ! "${bits}" == "" ] || [ "${clean}" == "0" ]; then
       STATUS="${bits}"
     else
-      STATUS=""
-      STATUS_COLOUR=${Green}
+      STATUS="!"
     fi
 
     # Sometimes status can be slow. Consider removing.
