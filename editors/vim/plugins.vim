@@ -121,6 +121,7 @@ Plug 'https://github.com/tpope/vim-repeat'
 " Adds indent block as text object. ii , ai or aI
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'bkad/camelcasemotion'
+Plug 'https://github.com/tpope/vim-speeddating'
 
 " Unplugs and replacements go here
 
