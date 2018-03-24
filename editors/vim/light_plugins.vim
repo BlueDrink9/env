@@ -18,6 +18,8 @@ Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
 Plug 'https://github.com/jlanzarotta/bufexplorer.git'
 Plug 'https://github.com/tpope/vim-commentary'
 Plug 'https://github.com/kien/rainbow_parentheses.vim'
+" Lighter alt to airline for putting buffers in tabline.
+Plug 'https://github.com/ap/vim-buftabline'
 
 "--- Prose ---"
 Plug 'xolox/vim-misc'
