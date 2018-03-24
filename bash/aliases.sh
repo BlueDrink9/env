@@ -4,19 +4,22 @@
 # Always used
 shopt -s expand_aliases
 
+# ctrl + L often does this anyway though...
 alias cl="clear"
+
 alias ..="cd .. && ls"
 alias cd..="cd .. && ls"
-
 alias ls="ls -CF"
+alias l='ls -CF'
 alias lsa="ls -aF"
 alias ll="ls -alF"
-alias l='ls -CF'
+# TODO make this more flexible (method?)
 alias open="nautilus $1 >/dev/null 2>&1"
 alias :q="exit"
 alias :Q="exit"
 alias ZZ="exit"
 
+alias g="git"
 alias gca="git commit -a"
 alias gco="git commit"
 alias gs="git status"
@@ -29,22 +32,15 @@ if [ -e /usr/bin/vimx ]; then
 elif [ -e /usr/bin/gvim ]; then
     alias vim='/usr/bin/gvim -v'
 fi
-
+# Much faster startup for vim without plugins.
 alias qvim="vim --noplugin"
+alias vi="vim --noplugin"
 
 # Prevent files from being overwritten by redirection.
 set -o noclobber
 # Don't accidentally remove or overwrite files.
 alias cp="cp -i"
 alias mv="mv -i"
-
-if [ -d "$HOME/.redis" ]; then
-    alias redis="cd $HOME/.redis/redis-server"
-fi
-
-if [ -d "$HOME/workspace" ]; then
-    alias ws="cd $HOME/workspace"
-fi
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
