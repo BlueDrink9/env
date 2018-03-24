@@ -56,7 +56,7 @@ exec 'source ' . s:scriptpath . "/light_plugins.vim"
 " Plug 'https://github.com/PeterRincker/vim-argumentative'
 
 " NOTE: Remember that lightweight plugins (screen+resources+non-niche situations)
-" go in plugins_light.vim
+" go in light_plugins.vim
 
 "--- Git ---"
 Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
