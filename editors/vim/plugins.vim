@@ -46,8 +46,6 @@ exec 'source ' . s:scriptpath . "/light_plugins.vim"
 " Plug 'https://github.com/scrooloose/nerdcommenter'
 " Awesome code completion, but requires specific installations
 " Plug 'https://github.com/Valloric/YouCompleteMe'
-" Align CSV files at commas, align Markdown tables, and more
-" Plug 'godlygeek/tabular'
 " Looks really nice, esp for prose. Highlight slightly current paraghraph.
 " https://github.com/junegunn/limelight.vim
 " Scrollwheel on mouse moves screen with cursor (more natural)
@@ -126,6 +124,10 @@ Plug 'https://github.com/tpope/vim-repeat'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'bkad/camelcasemotion'
 Plug 'https://github.com/tpope/vim-speeddating'
+" Align CSV files at commas, align Markdown tables, and more.
+" Could go in prose... but maybe I'll use it more later.
+Plug 'https://github.com/junegunn/vim-easy-align'
+
 
 " Unplugs and replacements go here
 
@@ -305,3 +307,8 @@ call camelcasemotion#CreateMotionMappings('<leader>c')
 let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
 call yankstack#setup()
 nnoremap Y y$
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
