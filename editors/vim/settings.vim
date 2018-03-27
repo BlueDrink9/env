@@ -149,6 +149,7 @@ set splitright
 set splitbelow
 set shortmess=a
 set cmdheight=2
+set laststatus=2
 
 " No annoying sound on errors
 set noerrorbells

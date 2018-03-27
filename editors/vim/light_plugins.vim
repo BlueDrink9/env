@@ -18,6 +18,10 @@ Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
 Plug 'https://github.com/jlanzarotta/bufexplorer.git'
 Plug 'https://github.com/tpope/vim-commentary'
 Plug 'https://github.com/kien/rainbow_parentheses.vim'
+" Lighter alt to airline for putting buffers in tabline.
+Plug 'https://github.com/ap/vim-buftabline'
+" Superlight airline (no plugins)
+" Plug 'https://github.com/itchyny/lightline.vim'
 
 "--- Prose ---"
 Plug 'xolox/vim-misc'
@@ -26,4 +30,7 @@ Plug 'https://github.com/lervag/vimtex'
 Plug 'https://github.com/reedes/vim-pencil'
 Plug 'https://github.com/dkarter/bullets.vim'
 
-
+" Settings to maximise speed/screen space
+set cmdheight=1
+set laststatus=0
+set showmode

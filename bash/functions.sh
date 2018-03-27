@@ -91,6 +91,7 @@ parse_git_branch() {
   then
     status=`git status 2>&1 | tee`
     dirty=`echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?"`
+    clean=`echo -n "${status}" 2> /dev/null | grep "clean" &> /dev/null; echo "$?"`
     untracked=`echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?"`
     ahead=`echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?"`
     behind=`echo -n "${status}" 2> /dev/null | grep "Your branch is behind" &> /dev/null; echo "$?"`
@@ -99,6 +100,10 @@ parse_git_branch() {
     renamed=`echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?"`
     deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`
     bits=''
+    if [ "${clean}" == "0" ]; then
+      STATUS_COLOUR=${Green}
+      bits=""
+    fi
     if [ "${ahead}" == "0" ]; then
       STATUS_COLOUR=${Cyan}
       bits="^${bits}"
@@ -128,68 +133,16 @@ parse_git_branch() {
       STATUS_COLOUR=${Yellow}
       bits="*${bits}"
     fi
-    if [ ! "${bits}" == "" ]; then
+    if [ ! "${bits}" == "" ] || [ "${clean}" == "0" ]; then
       STATUS="${bits}"
     else
-      STATUS=""
-      STATUS_COLOUR=${Green}
+      STATUS="!"
     fi
 
     # Sometimes status can be slow. Consider removing.
     GIT_PROMPT="${STATUS_COLOUR}{${BRANCH}${STATUS}}${NC}"
   else
     GIT_PROMPT=""
-  fi
-}
-
-
-
-# Determine the branch/state information for this git repository.
-set_git_branch(){
-  # Capture the output of the "git status" command.
-  git_status="$(git status 2> /dev/null)"
-
-  # Set color based on clean/staged/dirty.
-  if [[ ${git_status} =~ "working directory clean" ]]; then
-    state="${BGreen}"
-  elif [[ ${git_status} =~ "Changes to be committed" ]]; then
-    state="${Yellow}"
-  else
-    state="${Red}"
-  fi
-
-  # Set arrow icon based on status against remote.
-  remote_pattern="# Your branch is (.*) of"
-  if [[ ${git_status} =~ ${remote_pattern} ]]; then
-    if [[ ${BASH_REMATCH[1]} == "ahead" ]]; then
-      remote="^"
-    else
-      remote="v"
-    fi
-  else
-    remote="diverged"
-  fi
-  diverge_pattern="# Your branch and (.*) have diverged"
-  if [[ ${git_status} =~ ${diverge_pattern} ]]; then
-    remote=""
-  fi
-
-  # Get the name of the branch.
-  branch_pattern="^# On branch ([^${IFS}]*)"
-  if [[ ${git_status} =~ ${branch_pattern} ]]; then
-    branch=${BASH_REMATCH[1]}
-  fi
-
-  # Set the final branch string.
-  BRANCH="${state}(${branch})${remote}${NC} "
-}
-
-# Set the BRANCH variable.
-set_git_prompt () {
-  if is_git_repository ; then
-    set_git_branch
-  else
-    BRANCH=''
   fi
 }
 

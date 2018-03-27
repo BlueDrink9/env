@@ -1,4 +1,5 @@
 " vim: set ft=vim:
+" set laststatus=2
 
 " Folder in which current script resides:
 let s:scriptpath = fnameescape(expand('<sfile>:p:h'))
@@ -45,8 +46,6 @@ exec 'source ' . s:scriptpath . "/light_plugins.vim"
 " Plug 'https://github.com/scrooloose/nerdcommenter'
 " Awesome code completion, but requires specific installations
 " Plug 'https://github.com/Valloric/YouCompleteMe'
-" Align CSV files at commas, align Markdown tables, and more
-" Plug 'godlygeek/tabular'
 " Looks really nice, esp for prose. Highlight slightly current paraghraph.
 " https://github.com/junegunn/limelight.vim
 " Scrollwheel on mouse moves screen with cursor (more natural)
@@ -55,7 +54,7 @@ exec 'source ' . s:scriptpath . "/light_plugins.vim"
 " Plug 'https://github.com/PeterRincker/vim-argumentative'
 
 " NOTE: Remember that lightweight plugins (screen+resources+non-niche situations)
-" go in plugins_light.vim
+" go in light_plugins.vim
 
 "--- Git ---"
 Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
@@ -99,6 +98,7 @@ Plug 'https://github.com/vim-syntastic/syntastic.git'
 " Adds a bunch of unix-mapped filesystem ops from vim
 Plug 'https://github.com/tpope/vim-eunuch'
 Plug 'https://github.com/simnalamburt/vim-mundo'
+Plug 'https://github.com/fholgado/minibufexpl.vim'
 Plug 'https://github.com/vim-airline/vim-airline'
 Plug 'https://github.com/vim-airline/vim-airline-themes'
 " exec "Plug \'https://github.com/vim-airline/vim-airline-themes\', {\'rtp\' : \'autoload/airline/themes/". colorSch . ".vim\'}"
@@ -123,6 +123,11 @@ Plug 'https://github.com/tpope/vim-repeat'
 " Adds indent block as text object. ii , ai or aI
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'bkad/camelcasemotion'
+Plug 'https://github.com/tpope/vim-speeddating'
+" Align CSV files at commas, align Markdown tables, and more.
+" Could go in prose... but maybe I'll use it more later.
+Plug 'https://github.com/junegunn/vim-easy-align'
+
 
 " Unplugs and replacements go here
 
@@ -229,6 +234,8 @@ let g:airline_section_z = airline#section#create([
 let g:airline_section_tabline = airline#section#create(['%{getcwd()}'])
 let g:airline#extensions#hunks#non_zero_only = 1
 let g:airline#extensions#whitespace#checks = []
+" Disable mode shown in cmdline
+set noshowmode
 
 " Session settings
 let g:session_persist_colors = 0
@@ -300,3 +307,8 @@ call camelcasemotion#CreateMotionMappings('<leader>c')
 let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
 call yankstack#setup()
 nnoremap Y y$
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
