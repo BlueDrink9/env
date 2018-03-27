@@ -42,6 +42,7 @@ function uninstall() {
 
         sed -in "s|.*[^.]bashrc.*||g" ${HOME}/.bashrc
         sed -in "s|.*${SCRIPTDIR}/terminal/tmux\.conf.*||g" ${HOME}/.tmux.conf
+        rm -rf "${HOME}/.dircolours_solarized"
         sed -in "s|.*${SCRIPTDIR}/editors/vim/vimrc.*||g" ${HOME}/.vimrc
         sed -in "s|.*${SCRIPTDIR}/bash/inputrc.sh.*||g" ${HOME}/.inputrc
         rm -rf "${HOME}/vimfiles"
@@ -244,6 +245,8 @@ function setupShell() {
     else
         echo -n "Enabling custom bash setup..."
         echo "source $SCRIPTDIR/bash/bashrc" >> ${HOME}/.bashrc
+        wget -O ${HOME}/.dircolours_solarized \
+           https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-universal
         echo -n "Enabling custom tmux setup..."
         echo "source-file $SCRIPTDIR/terminal/tmux.conf" >> ${HOME}/.tmux.conf
         echo -n "Enabling custom readline (inputrc) setup..."

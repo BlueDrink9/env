@@ -12,6 +12,9 @@ export VISUAL=vim
 export GIT_EDITOR=vim
 git config --global core.editor "vim"
 
+# Source .dir_colours
+eval `dircolors ~/.dircolours_solarized`
+
 # Keyboard setup stuff
 capsToBS="-option caps:backspace"
 altWinSwap="-option altwin:swap_alt_win"
