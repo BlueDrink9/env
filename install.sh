@@ -22,6 +22,15 @@ function askQuestionYN() {
     fi
 }
 
+downloadURLtoFile() {
+
+    downloadDirectory=$(dirname "$2")
+    if [ ! -d "$downloadDirectory" ]; then
+        mkdir -p "$downloadDirectory"
+    fi
+    wget -O $2 $1
+}
+
 
 # SCRIPT COLORS are kept in this file
 # source $SCRIPTDIR/bash/colour_variables
@@ -128,10 +137,7 @@ function copyFonts() {
         fi
         mkdir -p "$FONTDIR"
         cp ./fonts/* $FONTDIR/truetype/custom
-        if [[ ! -d "~/$FONTDIR/truetype/custom" ]]; then
-            mkdir -p ~/$FONTDIR/truetype/custom
-        fi
-        wget -O "~/$FONTDIR/truetype/custom/Sauce Code Pro Medium Nerd Font Complete Mono.ttf" https://github.com/ryanoasis/nerd-fonts/blob/1.2.0/patched-fonts/SourceCodePro/Medium/complete/Sauce%20Code%20Pro%20Medium%20Nerd%20Font%20Complete%20Mono.ttf
+        downloadURLtoFile https://github.com/ryanoasis/nerd-fonts/blob/1.2.0/patched-fonts/SourceCodePro/Medium/complete/Sauce%20Code%20Pro%20Medium%20Nerd%20Font%20Complete%20Mono.ttf "~/$FONTDIR/truetype/custom/Sauce Code Pro Medium Nerd Font Complete Mono.ttf"
         # curl -fLo ~/$FONTDIR/truetype/custom --create-dirs \
             # https://github.com/ryanoasis/nerd-fonts/blob/1.2.0/patched-fonts/SourceCodePro/Medium/complete/Sauce%20Code%20Pro%20Medium%20Nerd%20Font%20Complete%20Mono.ttf --silent
 
@@ -245,8 +251,10 @@ function setupShell() {
     else
         echo -n "Enabling custom bash setup..."
         echo "source $SCRIPTDIR/bash/bashrc" >> ${HOME}/.bashrc
-        wget -O ${HOME}/.dircolours_solarized \
-           https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-universal
+        downloadURLtoFile  \
+            https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-universal \
+            "${HOME}/.dircolours_solarized"
+
         echo -n "Enabling custom tmux setup..."
         echo "source-file $SCRIPTDIR/terminal/tmux.conf" >> ${HOME}/.tmux.conf
         echo -n "Enabling custom readline (inputrc) setup..."
@@ -283,13 +291,7 @@ function setupVim(){
         echo "so $SCRIPTDIR/editors/vim/vimrc" >> ${HOME}/.vimrc
         echo "Installing vim plugins..."
         # Install Plug (plugin manager)
-        # wget is installed on more systems.
-        if [[ ! -d "~/.vim/autoload/" ]]; then
-            mkdir -p ~/.vim/autoload/
-        fi
-        wget -O ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        # curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-            # https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --silent
+        downloadURLtoFile https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "${HOME}/.vim/autoload/plug.vim"
         # This has the problem of making the caret disappear in WSL...
         vim -E +PlugInstall +qall
         # Recover missing cursor due to previous command
