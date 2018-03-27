@@ -3,8 +3,9 @@
 
 " Folder in which current script resides:
 let s:scriptpath = fnameescape(expand('<sfile>:p:h'))
+let s:vimfilesDir = CreateVimDir("vimfiles")
 let s:pluginPath = CreateVimDir("vimfiles/plugins")
-let s:localPlugins = fnameescape(expand(s:pluginPath . "/local.vim"))
+let s:localPlugins = fnameescape(expand(s:vimfilesDir . "/local_plugins.vim"))
 
 
 " We need this for plugins like Syntastic and vim-gitgutter which put symbols
