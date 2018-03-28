@@ -13,7 +13,7 @@ let s:localPlugins = fnameescape(expand(s:vimfilesDir . "/local_plugins.vim"))
 " colorscheme.
 " highlight clear SignColumn
 "
-let g:proseFileTypes = "'tex,latex,context,plaintex,
+let g:proseFileTypes = "'latex,context,plaintex,tex,
             \markdown,mkd,
             \text,textile,
             \git,gitsendemail,
