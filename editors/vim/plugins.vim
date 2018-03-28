@@ -40,9 +40,6 @@ call plug#begin(s:pluginPath)
 exec 'source ' . s:scriptpath . "/light_plugins.vim"
 
 " Maybe later, once I want them.
-" s + 2 letters jumps to it (like 2 letter f or t, but vert)
-" Plug 'https://github.com/justinmk/vim-sneak'
-" Plug 'https://github.com/easymotion/vim-easymotion'
 " Awesome code completion, but requires specific installations
 " Plug 'https://github.com/Valloric/YouCompleteMe'
 " Looks really nice, esp for prose. Highlight slightly current paraghraph.
@@ -118,6 +115,11 @@ Plug 'https://github.com/vim-scripts/SingleCompile'
 Plug 'https://github.com/tpope/vim-dispatch'
 " Way better search and replace, also case coersion
 Plug 'https://github.com/tpope/vim-abolish'
+" Improves incremental search to match everythign that it should.
+Plug 'https://github.com/haya14busa/incsearch.vim'
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
 Plug 'https://github.com/benmills/vimux'
 " Autoset Paste/nopaste
 Plug 'https://github.com/ConradIrwin/vim-bracketed-paste'
@@ -130,6 +132,8 @@ Plug 'https://github.com/tpope/vim-speeddating'
 " Align CSV files at commas, align Markdown tables, and more.
 " Could go in prose... but maybe I'll use it more later.
 Plug 'https://github.com/junegunn/vim-easy-align'
+" Let's give it a go then.
+Plug 'https://github.com/easymotion/vim-easymotion'
 
 
 " Unplugs and replacements go here
@@ -319,3 +323,10 @@ nmap ga <Plug>(EasyAlign)
 nnoremap <leader>gc :Gwrite <bar> Gcommit<CR>
 noremap <leader>gs :Gstatus<CR>
 
+" Gif config
+map <Leader>l <Plug>(easymotion-lineforward)
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+map <Leader>h <Plug>(easymotion-linebackward)
+
+let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
