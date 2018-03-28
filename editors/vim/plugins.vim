@@ -106,6 +106,8 @@ Plug 'https://github.com/vim-airline/vim-airline-themes'
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 " For switching between header and alt files
 Plug 'vim-scripts/a.vim'
+Plug 'https://github.com/vim-latex/vim-latex'
+let g:Tex_DefaultTargetFormat="pdf"
 Plug 'https://github.com/lervag/vimtex'
 " Run shell commands async (uses python)
 Plug 'https://github.com/joonty/vim-do'
@@ -196,7 +198,7 @@ exec 'let g:' . colorSch . '_base16 = 0'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#show_tabs = 0
-let g:airline#extensions#tabline#buffer_min_count = 2
+" let g:airline#extensions#tabline#buffer_min_count = 2
 let g:airline#extensions#tabline#tab_min_count = 2
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#show_tab_type = 0
@@ -238,15 +240,16 @@ let g:airline#extensions#whitespace#checks = []
 " Disable mode shown in cmdline
 set noshowmode
 
-" Session settings
+" ----- Session -----
 let g:session_persist_colors = 0
 let g:session_persist_font = 0
 let g:session_default_to_last = 'yes'
-let g:session_autosave_periodic = 5
+let g:session_autosave_periodic = 10
 let g:session_autosave = 'yes'
+let g:session_autoload = 'yes'
 let g:session_directory = CreateVimDir("vimfiles/sessions/")
 
-" Prose plugins
+" ----- Prose -----
 let g:pencil#wrapModeDefault = 'soft'
 let g:lexical#spell_key = '<leader>ls'
 let g:lexical#thesaurus_key = '<leader>lt'
@@ -299,9 +302,9 @@ map <Leader>vp :VimuxPromptCommand<CR>
 map <Leader>vl :VimuxRunLastCommand<CR>
 
 
-let g:ctrlp_cmd = 'CtrlPMixed'
+" ----------- Misc --------------
 
-let g:session_autoload = 'yes'
+let g:ctrlp_cmd = 'CtrlPMixed'
 
 call camelcasemotion#CreateMotionMappings('<leader>c')
 
@@ -313,3 +316,6 @@ nnoremap Y y$
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+nnoremap <leader>gc :Gwrite <bar> Gcommit<CR>
+noremap <leader>gs :Gstatus<CR>
