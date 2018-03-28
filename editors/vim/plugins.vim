@@ -43,8 +43,6 @@ exec 'source ' . s:scriptpath . "/light_plugins.vim"
 " s + 2 letters jumps to it (like 2 letter f or t, but vert)
 " Plug 'https://github.com/justinmk/vim-sneak'
 " Plug 'https://github.com/easymotion/vim-easymotion'
-" Uses leader rather than g
-" Plug 'https://github.com/scrooloose/nerdcommenter'
 " Awesome code completion, but requires specific installations
 " Plug 'https://github.com/Valloric/YouCompleteMe'
 " Looks really nice, esp for prose. Highlight slightly current paraghraph.
@@ -93,6 +91,8 @@ exec "Plug 'https://github.com/reedes/vim-pencil'
             \"
 
 
+Plug 'https://github.com/tomtom/tcomment_vim'
+let g:tcomment_opleader1='<leader>c'
 Plug 'https://github.com/scrooloose/nerdtree.git'
 Plug 'https://github.com/jacquesbh/vim-showmarks.git'
 Plug 'https://github.com/vim-syntastic/syntastic.git'
@@ -318,3 +318,4 @@ nmap ga <Plug>(EasyAlign)
 
 nnoremap <leader>gc :Gwrite <bar> Gcommit<CR>
 noremap <leader>gs :Gstatus<CR>
+
