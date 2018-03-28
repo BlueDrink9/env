@@ -9,9 +9,11 @@ Plug 'https://github.com/christoomey/vim-tmux-navigator'
 Plug 'https://github.com/moll/vim-bbye'
 Plug 'ericbn/vim-relativize'
 " Highlight f and t chars to get where you want.
-Plug 'unblevable/quick-scope'
+" TODO monitor progress of this branch. May be updated soon.
+" Plug 'unblevable/quick-scope'
+Plug 'https://github.com/bradford-smith94/quick-scope'
 " Trigger a highlight in the appropriate direction when pressing these keys:
-"let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+" let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 Plug 'https://github.com/altercation/vim-colors-solarized.git'
 Plug 'https://github.com/tpope/vim-surround.git'
 Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
