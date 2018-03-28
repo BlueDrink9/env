@@ -1,4 +1,4 @@
-# vim: set ft=sh:
+
 # vim:ts=2:sw=2
 # This file holds reusable functions
 
@@ -42,6 +42,32 @@ git_clone() {
   else
     git clone https://github.com/$1
   fi
+}
+
+open() {
+    filebrowsers="
+    xdg-open
+    explorer.exe
+    finder
+    nautilus
+    gnome-open
+    caja
+    dolphin
+    konquerer
+    nemo
+    "
+    fbarray=($filebrowsers)
+    for browser in "${fbarray[@]}" ; do
+        # if [ $(function_exists "$browser") ]; then
+        function_exists "$browser"
+        command -v $browser >/dev/null 2>&1
+        if [ "$?" -eq 0 ]; then
+            $browser "$1"
+            break
+        fi
+    done
+    # (>&2 echo "File browser unknown")
+    # return 1
 }
 
 
@@ -157,8 +183,10 @@ contains() {
     return 1
   fi
 }
+
 function_exists() {
-  declare -f -F $1 > /dev/null
-  return $?
+    FUNCTION_NAME=$1
+    declare -F "$FUNCTION_NAME" > /dev/null 2>&1
+    return $?
 }
 
