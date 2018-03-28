@@ -1,5 +1,6 @@
 # vim: set ft=sh:
 # vim:ts=2:sw=2
+# This file holds reusable functions
 
 # Removes carriage return characters from argument file.
 rmcr() {
@@ -156,3 +157,8 @@ contains() {
     return 1
   fi
 }
+function_exists() {
+  declare -f -F $1 > /dev/null
+  return $?
+}
+
