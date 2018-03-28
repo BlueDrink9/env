@@ -12,7 +12,7 @@ ALL=0
 
 VSCODE_EXTENSIONS_DIR=$HOME/.vscode/extensions
 
-function askQuestionYN() {
+askQuestionYN() {
     echo -ne $1 " (y/n)" >&2
     read -n 1 REPLY
     if [[ $REPLY =~ ^[yY]$ ]]; then
@@ -40,7 +40,7 @@ TAB="\e[1A\e[2L"
 
 # -------------
 # Currently only removes vim configs and any bash customisation, as well as this script.
-function uninstall() {
+uninstall() {
     if askQuestionYN "Really uninstall? "; then
         printf "Uninstalling...\n"
 
@@ -99,7 +99,7 @@ fi
 
 
 
-function vscodeExtensions() {
+vscodeExtensions() {
     if [[ $ALL == 1 ]]; then
         REPLY="y"
     else
@@ -130,7 +130,7 @@ function vscodeExtensions() {
 }
 
 
-function copyFonts() {
+copyFonts() {
     if [  $ALL == 1 ] || askQuestionYN "\e[33mInstall fonts? \e[0m "; then
         if [[ ! -d "${FONTDIR}/truetype/custom" ]]; then
             mkdir -p "${FONTDIR}/truetype/custom"
@@ -147,7 +147,7 @@ function copyFonts() {
     fi
 }
 
-function setVimColorscheme() {
+setVimColorscheme() {
     if [ ! -d "$HOME/.vim/colors" ] || [ ! $SKIP == 2 ]; then
         echo -e "Downloading Vim colorschemes."
         git clone --depth=1 https://github.com/flazz/vim-colorschemes.git 2> /dev/null
@@ -170,7 +170,7 @@ function setVimColorscheme() {
     setVimLineNumbers
 }
 
-function setVimLineNumbers() {
+setVimLineNumbers() {
     if [  $ALL == 1 ] || askQuestionYN "\e[33mDo you want to enable line numbers?\e[0m "; then
         echo -e "\n$OK Vim line numbers disabled."
         sed -i 's/${NUMBER}/ /g' ./extended.vim
@@ -182,7 +182,7 @@ function setVimLineNumbers() {
     rm ./extended.vim
 }
 
-function dualBootLocalTime() {
+dualBootLocalTime() {
     if askQuestionYN "\e[33mInterpret hardware clock as local time? \e[0m "; then
         echo -e "\r$OK Linux using local time."
         timedatectl set-local-rtc 1
@@ -191,7 +191,7 @@ function dualBootLocalTime() {
     fi
 }
 
-function gitUser() {
+gitUser() {
     if [[ $1 =~ ^--?[gG](it)?-?[cC](redentials)? ]]; then
         echo -e "Force git update."
     elif [[ "$(git config --global user.name)" =~ .+ ]] && [[ $(git config --global user.email) =~ .+ ]]; then
@@ -215,7 +215,7 @@ function gitUser() {
     echo -e "\e[36mYou can update your git user by entering:\e[0m ./install -gu"
 }
 
-function gitCredentialCache() {
+gitCredentialCache() {
     if [ $ALL == 1 ] || askQuestionYN "\e[33mWant Git to store your credentials for a while? \e[0m "; then
 
         if [[ ! "$(git config --global user.name)" =~ .+ ]] || [[ ! $(git config --global user.email) =~ .+ ]]; then
@@ -238,7 +238,7 @@ function gitCredentialCache() {
     fi
 }
 
-function setupShell() {
+setupShell() {
     if [ "$IS_SHAW" == 0 ] ; then
         echo -e "Copying custom bash files..."
         if [[ -d "${BASH_CUSTOM}" ]] && [[ ! $SKIP == 1 ]]; then
@@ -262,7 +262,7 @@ function setupShell() {
     fi
 }
 
-function setupVim(){
+setupVim(){
     if [ "$IS_SHAW" == 0 ] ; then
 
         echo -ne "Checking Vim..."
@@ -299,7 +299,7 @@ function setupVim(){
     fi
 }
 
-function main() {
+main() {
 
     echo -e "\n------------------- VSCODE EXTENSIONS"
     vscodeExtensions
