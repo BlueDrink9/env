@@ -105,3 +105,11 @@ nnoremap <S-C-tab> :bp<CR>
 nnoremap <C-tab> :bn<CR>
 " Delete word under cursor, replace with pasted.
 nnoremap <leader># "_diwP
+
+" Use to overwrite mappings defined in plugins...
+augroup override
+au!
+
+autocmd VimEnter * nnoremap Y y$
+
+augroup END

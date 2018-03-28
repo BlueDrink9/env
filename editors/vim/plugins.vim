@@ -310,7 +310,6 @@ call camelcasemotion#CreateMotionMappings('<leader>c')
 
 let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
 call yankstack#setup()
-nnoremap Y y$
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
