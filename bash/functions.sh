@@ -45,29 +45,34 @@ git_clone() {
 }
 
 open() {
-    filebrowsers="
-    xdg-open
-    explorer.exe
-    finder
-    nautilus
-    gnome-open
-    caja
-    dolphin
-    konquerer
-    nemo
-    "
-    fbarray=($filebrowsers)
-    for browser in "${fbarray[@]}" ; do
-        # if [ $(function_exists "$browser") ]; then
-        function_exists "$browser"
-        command -v $browser >/dev/null 2>&1
-        if [ "$?" -eq 0 ]; then
-            $browser "$1"
-            break
-        fi
-    done
-    # (>&2 echo "File browser unknown")
-    # return 1
+  if [ "$(uname)" == "Darwin" ]; then
+    # Mac OS X, open finder.
+    open $1
+    return
+  fi
+  filebrowsers="
+  xdg-open
+  explorer.exe
+  finder
+  nautilus
+  gnome-open
+  caja
+  dolphin
+  konquerer
+  nemo
+  "
+  fbarray=($filebrowsers)
+  for browser in "${fbarray[@]}" ; do
+    # if [ $(function_exists "$browser") ]; then
+    function_exists "$browser"
+    command -v $browser >/dev/null 2>&1
+    if [ "$?" -eq 0 ]; then
+      $browser "$1"
+      break
+    fi
+  done
+  # (>&2 echo "File browser unknown")
+  # return 1
 }
 
 
