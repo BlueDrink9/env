@@ -13,7 +13,7 @@ Plug 'ericbn/vim-relativize'
 " Plug 'unblevable/quick-scope'
 Plug 'https://github.com/bradford-smith94/quick-scope'
 " Trigger a highlight in the appropriate direction when pressing these keys:
-" let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 Plug 'https://github.com/altercation/vim-colors-solarized.git'
 Plug 'https://github.com/tpope/vim-surround.git'
 Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
