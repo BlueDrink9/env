@@ -8,10 +8,6 @@ let s:pluginPath = CreateVimDir("vimfiles/plugins")
 let s:localPlugins = fnameescape(expand(s:vimfilesDir . "/local_plugins.vim"))
 
 
-" We need this for plugins like Syntastic and vim-gitgutter which put symbols
-" in the sign column. Don't know if it should go before plugs or after
-" colorscheme.
-" highlight clear SignColumn
 "
 let g:proseFileTypes = "'latex,context,plaintex,tex,
             \markdown,mkd,
@@ -55,6 +51,9 @@ exec 'source ' . s:scriptpath . "/light_plugins.vim"
 "--- Git ---"
 Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
+" gitgutter needs grep to not output escap sequences.
+    " let g:gitgutter_grep = ''    let g:gitgutter_grep = 'grep --color=never'
+let g:gitgutter_override_sign_column_highlight = 0
 " Git wrapper
 Plug 'https://github.com/tpope/vim-fugitive'
 " github wrapper
@@ -152,6 +151,16 @@ if !has("gui_running")
 endif
 
 " ----- scrooloose/syntastic settings -----
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+" let g:syntastic_python_checkers = ['pylint']
+
 let g:syntastic_error_symbol = '✘'
 let g:syntastic_warning_symbol = "▲"
 augroup mySyntastic
@@ -181,17 +190,6 @@ nmap <silent> <leader>b :TagbarToggle<CR>
 " Uncomment to open tagbar automatically whenever possible
 "autocmd BufEnter * nested :call tagbar#autoopen(0)
 
-
-" ----- Syntastic -----
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-" let g:syntastic_python_checkers = ['pylint']
 
 " ----- Airline -----
 let g:airline_theme=colorSch
@@ -330,3 +328,9 @@ map <Leader>k <Plug>(easymotion-k)
 map <Leader>h <Plug>(easymotion-linebackward)
 
 let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
+"
+" We need this for plugins like Syntastic and vim-gitgutter which put symbols
+" in the sign column. Don't know if it should go before plugs or after
+" colorscheme.
+" Allows hlcolumn bg to meatach oloursche
+highlight clear SignColumn
