@@ -92,8 +92,7 @@ set number
 set relativenumber
 " Hide buffer (don't ask for save) when navigating away.
 set hidden
-" Don't save hidden and unloaded buffers in sessions.
-set sessionoptions-=buffers
+set sessionoptions-=blank
 set wildmenu
 set wildmode=longest,list:longest
 set scrolloff=5
