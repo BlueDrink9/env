@@ -255,7 +255,7 @@ let g:airline#extensions#hunks#non_zero_only = 1
 let g:airline#extensions#whitespace#checks = []
 " Disable mode shown in cmdline
 set noshowmode
- reduce delay on intert leaave?
+"  reduce delay on insert leaave?
   set ttimeoutlen=50
 
 " ----- Session -----
