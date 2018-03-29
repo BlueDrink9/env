@@ -105,3 +105,5 @@ nnoremap <S-C-tab> :bp<CR>
 nnoremap <C-tab> :bn<CR>
 " Delete word under cursor, replace with pasted.
 nnoremap <leader># "_diwP
+" fix typo I alwayr mmake
+nnoremap zQ ZQ
