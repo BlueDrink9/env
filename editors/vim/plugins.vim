@@ -175,6 +175,7 @@ augroup END
 " TODO make this window-specific.
 " let g:syntastic_shell = "/bin/sh"
 
+
 " Change these if you feel the desire...
 let g:NERDTreeIndicatorMapCustom = {
             \ "Modified"  : "✹",
@@ -190,6 +191,7 @@ let g:NERDTreeIndicatorMapCustom = {
 \}
 " Open nerdtree in currently focussed window, rather than sidebar.
 let NERDTreeHijackNetrw=1
+
 
 " ----- majutsushi/tagbar settings -----
 " Open/close tagbar with \b
