@@ -103,8 +103,8 @@ Plug 'https://github.com/vim-airline/vim-airline-themes'
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 " For switching between header and alt files
 Plug 'vim-scripts/a.vim'
-Plug 'https://github.com/vim-latex/vim-latex'
-let g:Tex_DefaultTargetFormat="pdf"
+" Plug 'https://github.com/vim-latex/vim-latex'
+" let g:Tex_DefaultTargetFormat="pdf"
 Plug 'https://github.com/lervag/vimtex'
 " Run shell commands async (uses python)
 Plug 'https://github.com/joonty/vim-do'
