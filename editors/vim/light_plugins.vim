@@ -33,8 +33,3 @@ Plug 'https://github.com/xolox/vim-session'
 Plug 'https://github.com/lervag/vimtex'
 Plug 'https://github.com/reedes/vim-pencil'
 Plug 'https://github.com/dkarter/bullets.vim'
-
-" Settings to maximise speed/screen space
-set cmdheight=1
-set laststatus=0
-set showmode
