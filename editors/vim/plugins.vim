@@ -151,22 +151,29 @@ if !has("gui_running")
 endif
 
 " ----- scrooloose/syntastic settings -----
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"  Airoline handles status stuff (or should)
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+" let g:syntastic_stl_format = "[%E{Err: #%e L%fe}%B{, }%W{Warn: #%w L%fw}]"
 
 let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_loc_list_height = 5
+"ausot open errors wen present, closn when donet.
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 " let g:syntastic_python_checkers = ['pylint']
 
-let g:syntastic_error_symbol = '✘'
-let g:syntastic_warning_symbol = "▲"
+let g:syntastic_error_symbol = 'X'
+let g:syntastic_warning_symbol = "!"
 augroup mySyntastic
     au!
     au FileType tex let b:syntastic_mode = "passive"
 augroup END
+" TODO make this window-specific.
+" let g:syntastic_shell = "/bin/sh"
 
 " Change these if you feel the desire...
 let g:NERDTreeIndicatorMapCustom = {
@@ -192,6 +199,9 @@ nmap <silent> <leader>b :TagbarToggle<CR>
 
 
 " ----- Airline -----
+"
+let g:airline#extensions#syntastic#stl_format_err="%E{Err: #%e L%fe}"
+let g:airline#extensions#syntastic#stl_format_warn='%W{Warn: #%w L%fw}'
 let g:airline_theme=colorSch
 let g:airline#extensions#wordcount#enabled = 1
 exec 'let g:airline_' . colorSch . '_bg="' . backgroundColor . '"'
@@ -329,7 +339,7 @@ map <Leader>h <Plug>(easymotion-linebackward)
 
 let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
 "
-" We need this for plugins like Syntastic and vim-gitgutter which put symbols
+" We need this for plugins like Syntastic(?) and vim-gitgutter which put symbols
 " in the sign column. Don't know if it should go before plugs or after
 " colorscheme.
 " Allows hlcolumn bg to meatach oloursche
