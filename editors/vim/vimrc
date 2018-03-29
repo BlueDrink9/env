@@ -21,4 +21,4 @@ function! SourceCustoms(...)
     endfor
 endfunction
 
-exec SourceCustoms("functions.vim", "settings.vim", "plugins.vim", "mappings.vim")
+exec SourceCustoms("functions.vim", "plugins.vim", "settings.vim", "mappings.vim")
