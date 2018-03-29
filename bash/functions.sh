@@ -44,7 +44,7 @@ git_clone() {
   fi
 }
 
-open() {
+fopen() {
   if [ "$(uname)" == "Darwin" ]; then
     # Mac OS X, open finder.
     open $1
@@ -70,9 +70,7 @@ open() {
       $browser "$1"
       break
     fi
-  done
-  # (>&2 echo "File browser unknown")
-  # return 1
+  done || echo "File browser unknown" >&2
 }
 
 
