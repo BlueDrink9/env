@@ -55,6 +55,9 @@ set keymap vi-command
 j:history-search-forward
 k:history-search-backward
 
+# modified vim-style quit.
+";q":"ccexit"
+
 ###########################################################
 # Keymaps for when we're in insert (i.e., typing stuff in) mode
 set keymap vi-insert
@@ -62,6 +65,9 @@ set keymap vi-insert
 #"kv" will enter vi command mode. Use ctrl+v to avoid.
 "kv":vi-movement-mode
 "vk":vi-movement-mode
+
+# modified vim-style quit.
+";q":"ccexit"
 
 # Pressing tab will list all completions & select the first one. Pressing it
 # again will cycle through available completions.

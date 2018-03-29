@@ -1,5 +1,6 @@
-# vim: set ft=sh:
+
 # vim:ts=2:sw=2
+# This file holds reusable functions
 
 # Removes carriage return characters from argument file.
 rmcr() {
@@ -41,6 +42,35 @@ git_clone() {
   else
     git clone https://github.com/$1
   fi
+}
+
+fopen() {
+  if [ "$(uname)" == "Darwin" ]; then
+    # Mac OS X, open finder.
+    open $1
+    return
+  fi
+  filebrowsers="
+  xdg-open
+  explorer.exe
+  finder
+  nautilus
+  gnome-open
+  caja
+  dolphin
+  konquerer
+  nemo
+  "
+  fbarray=($filebrowsers)
+  for browser in "${fbarray[@]}" ; do
+    # if [ $(function_exists "$browser") ]; then
+    function_exists "$browser"
+    command -v $browser >/dev/null 2>&1
+    if [ "$?" -eq 0 ]; then
+      $browser "$1"
+      break
+    fi
+  done || echo "File browser unknown" >&2
 }
 
 
@@ -156,3 +186,10 @@ contains() {
     return 1
   fi
 }
+
+function_exists() {
+    FUNCTION_NAME=$1
+    declare -F "$FUNCTION_NAME" > /dev/null 2>&1
+    return $?
+}
+

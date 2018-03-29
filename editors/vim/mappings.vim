@@ -30,10 +30,6 @@ nnoremap ` '
 
 " Consistent with D, C
 nnoremap Y y$
-" ctrl+S = save (otherwise unused)
-noremap <C-S> :update<CR>
-vnoremap <C-S> <C-C>:update<CR>
-inoremap <C-S> <C-O>:update<CR>
 
 " :W! sudo saves the file
 " (useful for handling the permission-denied error)

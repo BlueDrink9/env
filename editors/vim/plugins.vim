@@ -3,8 +3,9 @@
 
 " Folder in which current script resides:
 let s:scriptpath = fnameescape(expand('<sfile>:p:h'))
+let s:vimfilesDir = CreateVimDir("vimfiles")
 let s:pluginPath = CreateVimDir("vimfiles/plugins")
-let s:localPlugins = fnameescape(expand(s:pluginPath . "/local.vim"))
+let s:localPlugins = fnameescape(expand(s:vimfilesDir . "/local_plugins.vim"))
 
 
 " We need this for plugins like Syntastic and vim-gitgutter which put symbols
@@ -12,7 +13,7 @@ let s:localPlugins = fnameescape(expand(s:pluginPath . "/local.vim"))
 " colorscheme.
 " highlight clear SignColumn
 "
-let g:proseFileTypes = "'tex,latex,context,plaintex,
+let g:proseFileTypes = "'latex,context,plaintex,tex,
             \markdown,mkd,
             \text,textile,
             \git,gitsendemail,
@@ -39,11 +40,6 @@ call plug#begin(s:pluginPath)
 exec 'source ' . s:scriptpath . "/light_plugins.vim"
 
 " Maybe later, once I want them.
-" s + 2 letters jumps to it (like 2 letter f or t, but vert)
-" Plug 'https://github.com/justinmk/vim-sneak'
-" Plug 'https://github.com/easymotion/vim-easymotion'
-" Uses leader rather than g
-" Plug 'https://github.com/scrooloose/nerdcommenter'
 " Awesome code completion, but requires specific installations
 " Plug 'https://github.com/Valloric/YouCompleteMe'
 " Looks really nice, esp for prose. Highlight slightly current paraghraph.
@@ -92,6 +88,8 @@ exec "Plug 'https://github.com/reedes/vim-pencil'
             \"
 
 
+Plug 'https://github.com/tomtom/tcomment_vim'
+let g:tcomment_opleader1='<leader>c'
 Plug 'https://github.com/scrooloose/nerdtree.git'
 Plug 'https://github.com/jacquesbh/vim-showmarks.git'
 Plug 'https://github.com/vim-syntastic/syntastic.git'
@@ -105,6 +103,8 @@ Plug 'https://github.com/vim-airline/vim-airline-themes'
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 " For switching between header and alt files
 Plug 'vim-scripts/a.vim'
+Plug 'https://github.com/vim-latex/vim-latex'
+let g:Tex_DefaultTargetFormat="pdf"
 Plug 'https://github.com/lervag/vimtex'
 " Run shell commands async (uses python)
 Plug 'https://github.com/joonty/vim-do'
@@ -115,6 +115,11 @@ Plug 'https://github.com/vim-scripts/SingleCompile'
 Plug 'https://github.com/tpope/vim-dispatch'
 " Way better search and replace, also case coersion
 Plug 'https://github.com/tpope/vim-abolish'
+" Improves incremental search to match everythign that it should.
+Plug 'https://github.com/haya14busa/incsearch.vim'
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
 Plug 'https://github.com/benmills/vimux'
 " Autoset Paste/nopaste
 Plug 'https://github.com/ConradIrwin/vim-bracketed-paste'
@@ -127,6 +132,8 @@ Plug 'https://github.com/tpope/vim-speeddating'
 " Align CSV files at commas, align Markdown tables, and more.
 " Could go in prose... but maybe I'll use it more later.
 Plug 'https://github.com/junegunn/vim-easy-align'
+" Let's give it a go then.
+Plug 'https://github.com/easymotion/vim-easymotion'
 
 
 " Unplugs and replacements go here
@@ -195,7 +202,7 @@ exec 'let g:' . colorSch . '_base16 = 0'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#show_tabs = 0
-let g:airline#extensions#tabline#buffer_min_count = 2
+" let g:airline#extensions#tabline#buffer_min_count = 2
 let g:airline#extensions#tabline#tab_min_count = 2
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#show_tab_type = 0
@@ -237,15 +244,16 @@ let g:airline#extensions#whitespace#checks = []
 " Disable mode shown in cmdline
 set noshowmode
 
-" Session settings
+" ----- Session -----
 let g:session_persist_colors = 0
 let g:session_persist_font = 0
 let g:session_default_to_last = 'yes'
-let g:session_autosave_periodic = 5
+let g:session_autosave_periodic = 10
 let g:session_autosave = 'yes'
+let g:session_autoload = 'yes'
 let g:session_directory = CreateVimDir("vimfiles/sessions/")
 
-" Prose plugins
+" ----- Prose -----
 let g:pencil#wrapModeDefault = 'soft'
 let g:lexical#spell_key = '<leader>ls'
 let g:lexical#thesaurus_key = '<leader>lt'
@@ -298,17 +306,27 @@ map <Leader>vp :VimuxPromptCommand<CR>
 map <Leader>vl :VimuxRunLastCommand<CR>
 
 
-let g:ctrlp_cmd = 'CtrlPMixed'
+" ----------- Misc --------------
 
-let g:session_autoload = 'yes'
+let g:ctrlp_cmd = 'CtrlPMixed'
 
 call camelcasemotion#CreateMotionMappings('<leader>c')
 
 let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
 call yankstack#setup()
-nnoremap Y y$
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+nnoremap <leader>gc :Gwrite <bar> Gcommit<CR>
+noremap <leader>gs :Gstatus<CR>
+
+" Gif config
+map <Leader>l <Plug>(easymotion-lineforward)
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+map <Leader>h <Plug>(easymotion-linebackward)
+
+let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
