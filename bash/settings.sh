@@ -74,5 +74,8 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-# Maybe bad... should you mess with $TERM?
+# TODO Maybe bad... should you mess with $TERM?
 [[ -n "$DISPLAY" && "$TERM" = "xterm" ]] && export TERM=xterm-256color
+
+# make less more friendly for non-text input files, see lesspipe(0)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"

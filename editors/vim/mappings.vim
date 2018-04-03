@@ -105,3 +105,7 @@ nnoremap <S-C-tab> :bp<CR>
 nnoremap <C-tab> :bn<CR>
 " Delete word under cursor, replace with pasted.
 nnoremap <leader># "_diwP
+" TODO make this ft-specific or check for existign func in plugin.
+" Shift+enter is soft new line in markdown.
+inoremap <S-CR>   <CR>
+nnoremap <S-CR> A  <esc>
