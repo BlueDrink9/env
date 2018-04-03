@@ -107,3 +107,7 @@ nnoremap <C-tab> :bn<CR>
 nnoremap <leader># "_diwP
 " fix typo I alwayr mmake
 nnoremap zQ ZQ
+" TODO make this ft-specific or check for existign func in plugin.
+" Shift+enter is soft new line in markdown.
+inoremap <S-CR>   <CR>
+nnoremap <S-CR> A  <esc>

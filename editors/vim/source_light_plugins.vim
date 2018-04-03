@@ -19,3 +19,7 @@ exec 'read ' . s:scriptpath . "/light_plugins.vim"
 
 call plug#end()
 
+" Settings to maximise speed/screen space
+set cmdheight=1
+set laststatus=0
+set showmode
