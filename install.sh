@@ -252,7 +252,8 @@ setupShell() {
         echo -n "Enabling custom bash setup..."
         echo "source $SCRIPTDIR/bash/bashrc" >> ${HOME}/.bashrc
         downloadURLtoFile  \
-            https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-universal \
+            https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.256dark  \
+            # https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-universal \
             "${HOME}/.dircolours_solarized"
 
         echo -n "Enabling custom tmux setup..."
