@@ -14,6 +14,9 @@ git config --global core.editor "vim"
 
 # Source .dir_colours
 eval `dircolors ~/.dircolours_solarized`
+if [ -x /usr/bin.dircolors_solarized ]; then
+    test -r ~/.dircolors_solarized && eval "$.dircolors_solarized -b ~/.dircolors_solarized)" || eval "$.dircolors_solarized -b)"
+fi
 
 # Keyboard setup stuff
 capsToBS="-option caps:backspace"
