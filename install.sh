@@ -266,6 +266,9 @@ setupShell() {
         echo -n "Enabling custom readline (inputrc) setup..."
         echo "\$include $SCRIPTDIR/bash/inputrc.sh" >> ${HOME}/.inputrc
     fi
+    if [[ $OSTYPE =~ 'darwin' ]]; then
+        echo "source .bashrc" >> ${HOME}/.bash_profile
+    fi
 }
 
 setupVim(){
