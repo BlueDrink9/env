@@ -90,8 +90,8 @@ exec "Plug 'https://github.com/reedes/vim-pencil'
             \"
 
 
-" Separate buffer lists and tabs
-Plug 'https://github.com/zefei/vim-wintabs'
+" Separate buffer lists for differetn windows
+" Plug 'https://github.com/zefei/vim-wintabs'
 Plug 'https://github.com/tomtom/tcomment_vim'
 let g:tcomment_opleader1='<leader>c'
 Plug 'https://github.com/scrooloose/nerdtree.git'
@@ -223,8 +223,6 @@ exec 'let g:airline_' . colorSch . '_bg="' . backgroundColor . '"'
 " exec 'let g:airline_base16_' . colorSch . '= 0'
 let base16colorspace = 256
 exec 'let g:' . colorSch . '_base16 = 0'
-" Disable light tabline alternative
-let g:buftabline_show=0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#show_tabs = 0

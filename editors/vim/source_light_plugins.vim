@@ -14,6 +14,12 @@ let g:plugs_order=[]
 
 call plug#begin(s:pluginPath)
 
+" Lighter alt to airline for putting buffers in tabline.
+Plug 'https://github.com/ap/vim-buftabline'
+" Only show buffer line if there are > 2 buffers open.
+let g:buftabline_show=1
+let g:buftabline_numbers=2
+
 exec 'source ' . s:scriptpath . "/light_plugins.vim"
 exec 'read ' . s:scriptpath . "/light_plugins.vim"
 
