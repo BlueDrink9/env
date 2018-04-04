@@ -1,4 +1,5 @@
 " vim: set ft=vim:
+
 " set laststatus=2
 
 " Folder in which current script resides:
@@ -89,6 +90,8 @@ exec "Plug 'https://github.com/reedes/vim-pencil'
             \"
 
 
+" Separate buffer lists and tabs
+Plug 'https://github.com/zefei/vim-wintabs'
 Plug 'https://github.com/tomtom/tcomment_vim'
 let g:tcomment_opleader1='<leader>c'
 Plug 'https://github.com/scrooloose/nerdtree.git'
@@ -171,7 +174,7 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_error_symbol = 'X'
 let g:syntastic_warning_symbol = "!"
 augroup mySyntastic
-    au!
+    autocmd!
     au FileType tex let b:syntastic_mode = "passive"
 augroup END
 " TODO make this window-specific.
@@ -219,11 +222,13 @@ let g:airline_solarized_dark_inactive_border = 1
 exec 'let g:airline_' . colorSch . '_bg="' . backgroundColor . '"'
 " exec 'let g:airline_base16_' . colorSch . '= 0'
 let base16colorspace = 256
-" exec 'let g:' . colorSch . '_base16 = 0'
+exec 'let g:' . colorSch . '_base16 = 0'
+" Disable light tabline alternative
+let g:buftabline_show=0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#show_tabs = 0
-" let g:airline#extensions#tabline#buffer_min_count = 2
+let g:airline#extensions#tabline#buffer_min_count = 2
 let g:airline#extensions#tabline#tab_min_count = 2
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#show_tab_type = 0
@@ -233,6 +238,8 @@ let g:airline#extensions#tabline#buffers_label = 'B'
 let g:airline#extensions#tabline#alt_sep = 1
 let g:airline#extensions#tabline# = 1
 " let g:airline#extensions#tabline#show_tabs = 0
+let g:airline_section_tabline = airline#section#create(['%{getcwd()}'])
+
 " let g:airline_symbols_ascii=1
 " let g:airline_powerline_fonts = 0
 if !exists('g:airline_symbols')
@@ -259,7 +266,6 @@ let g:airline_symbols.readonly = ''
 " call airline#parts#define_accent('linenr', 'bold')
 let g:airline_section_z = airline#section#create([
             \ 'linenr', 'maxlinenr',' ', 'columnnr'])
-let g:airline_section_tabline = airline#section#create(['%{getcwd()}'])
 let g:airline#extensions#hunks#non_zero_only = 1
 let g:airline#extensions#whitespace#checks = []
 " Disable mode shown in cmdline
@@ -344,3 +350,4 @@ let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
 " colorscheme.
 " Allows hlcolumn bg to meatach oloursche
 highlight clear SignColumn
+

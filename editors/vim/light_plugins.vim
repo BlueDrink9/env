@@ -26,6 +26,9 @@ Plug 'https://github.com/jlanzarotta/bufexplorer.git'
 Plug 'https://github.com/kien/rainbow_parentheses.vim'
 " Lighter alt to airline for putting buffers in tabline.
 Plug 'https://github.com/ap/vim-buftabline'
+" Only show buffer line if there are > 2 buffers open.
+let g:buftabline_show=1
+let g:buftabline_numbers=2
 " Superlight airline (no plugins)
 " Plug 'https://github.com/itchyny/lightline.vim'
 
@@ -39,8 +42,6 @@ let g:session_autosave_periodic = 10
 let g:session_autosave = 'yes'
 let g:session_autoload = 'yes'
 let g:session_directory = CreateVimDir("vimfiles/sessions/")
-
-
 Plug 'https://github.com/lervag/vimtex'
 Plug 'https://github.com/reedes/vim-pencil'
 Plug 'https://github.com/dkarter/bullets.vim'

@@ -1,3 +1,4 @@
+" vim: set ft=vim:
 " Set colorScheme variable for use in other settings
 " Doesn't override preset scheme
 " Background should always be set after colorscheme.
@@ -120,18 +121,18 @@ exec 'set undodir=' . CreateVimDir("vimfiles/undo") . expand('/')
 " Create undo file for inter-session undo
 " Extra slash means files will have unique names
 set undofile
-" Don't autosave if there is no buffer name.
-if bufname('%') != ''
-    " Automatically save before commands like :next and :make
-    set autowrite
-    augroup autowrite
-        autocmd!
+augroup autowrite
+    autocmd!
+    " Don't autosave if there is no buffer name.
+    if bufname('%') != ''
+        " Automatically save before commands like :next and :make
+        set autowrite
         " Save on focus loss
-        au FocusLost * :wa
+        au FocusLost * silent! :wa
         " Save leaving insert
         au InsertLeave <buffer> :update
-    augroup END
-endif
+    endif
+augroup END
 
 set expandtab
 set shiftwidth=4
