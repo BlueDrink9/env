@@ -10,7 +10,9 @@ SKIP=0
 
 ALL=0
 
-VSCODE_EXTENSIONS_DIR=$HOME/.vscode/extensions
+VSCODE_EXTENSIONS_DIR="${HOME}/.vscode/extensions"
+VSCODE_VERSION=code
+VSCODE_APP_DATA="${HOME}/AppData/Roaming/Code"
 
 # SCRIPT COLORS are kept in this file
 # source $SCRIPTDIR/bash/colour_variables
@@ -66,33 +68,39 @@ if [[ $1 =~ ^--?[aA][lL]{2}?$ ]]; then
 fi
 
 
-
 function vscodeExtensions() {
     if [[ $ALL == 1 ]]; then
         REPLY="y"
     else
-        echo -ne "\e[33mInstall Visual Studio Code extensions? (Y/n/c)\e[0m "
+        echo -e "\e[33mInstall Visual Studio Code extensions? (Y/n/c)\e[0m "
         read -n 1 REPLY
     fi
     if hash code 2> /dev/null; then # Check if 'code' exists.
-
-        if [[ $REPLY =~ ^[yY]$ ]]; then # Install extensions from 'vscode/extensions'
-
-            if [[ ! -d "$VSCODE_EXTENSIONS_DIR" ]]; then
-                mkdir -p "$VSCODE_EXTENSIONS_DIR"
-            fi
-
-            while IFS='' read -r LINE || [[ -n "$LINE" ]]; do
-                code --install-extension $LINE
-            done < "${SCRIPTDIR}/editors/.vscode/extensions"
-
-        elif [[ $REPLY =~ ^[cC]$ ]]; then # Load VSCode which detects recommendations.json
-            #TODO Where is this meant to be CDed to?
-            code ./editors
-        fi
+        VSCODE_EXTENSIONS_DIR="${HOME}/.vscode/extensions"
+    elif hash code-insiders 2> /dev/null; then # Maybe insider version is being used.
+        VSCODE_VERSION=code-insiders
+        VSCODE_APP_DATA="${HOME}/AppData/Roaming/Code - Insiders/"
+        VSCODE_EXTENSIONS_DIR="${HOME}/.vscode-insiders/extensions"
     else
         echo -e "VSCode not installed or variable not set."
         return 1
+    fi
+    if [[ $REPLY =~ ^[yY]$ ]]; then # Install extensions from 'vscode/extensions'
+        if [[ ! -d "$VSCODE_EXTENSIONS_DIR" ]]; then
+            mkdir -p "$VSCODE_EXTENSIONS_DIR"
+        fi
+        if [[ ! -d "${VSCODE_APP_DATA}/User" ]]; then
+            mkdir -p "${VSCODE_APP_DATA}/User"
+        fi
+
+        while IFS='' read -r LINE || [[ -n "$LINE" ]]; do
+            ${VSCODE_VERSION} --install-extension $LINE
+        done < "${SCRIPTDIR}/editors/.vscode/extensions"
+
+        cp "${SCRIPTDIR}/editors/settings.json" "${VSCODE_APP_DATA}/User"
+
+    elif [[ $REPLY =~ ^[cC]$ ]]; then # Load VSCode which detects recommendations.json
+        $VSCODE_VERSION ./editors
     fi
     return 0
 }
@@ -311,8 +319,9 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
 elif [[ $OSTYPE == 'darwin' ]]; then
     echo -e "${Red}MacOS not supported."
 elif [[ $OSTYPE == 'msys' ]]; then
-    echo -e "${Red}Git Bash not supported."
+    echo -e "${Red}Attempting install on Git Bash."
+
+    main $1
 else
     echo "OS not set... Exiting without change."
 fi
-
