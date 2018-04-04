@@ -28,7 +28,12 @@ downloadURLtoFile() {
     if [ ! -d "$downloadDirectory" ]; then
         mkdir -p "$downloadDirectory"
     fi
+# OSX has curl by default, linux has wget by default
+if [[ $OSTYPE =~ 'darwin' ]]; then
+    curl -fLo $1 $2
+else
     wget -O $2 $1
+fi
 }
 
 
