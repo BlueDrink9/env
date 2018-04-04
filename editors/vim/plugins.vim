@@ -53,7 +53,7 @@ exec 'source ' . s:scriptpath . "/light_plugins.vim"
 Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
 " gitgutter needs grep to not output escap sequences.
-"let g:gitgutter_grep = ''
+" let g:gitgutter_grep = ''
 let g:gitgutter_grep = 'grep --color=never'
 let g:gitgutter_override_sign_column_highlight = 0
 let g:gitgutter_escape_grep = 1
@@ -162,6 +162,7 @@ endif
 " set statusline+=%*
 " let g:syntastic_stl_format = "[%E{Err: #%e L%fe}%B{, }%W{Warn: #%w L%fw}]"
 
+let g:syntastic_enable_signs=1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_loc_list_height = 5
@@ -346,6 +347,6 @@ let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
 " We need this for plugins like Syntastic(?) and vim-gitgutter which put symbols
 " in the sign column. Don't know if it should go before plugs or after
 " colorscheme.
-" Allows hlcolumn bg to meatach oloursche
+" Allows hlcolumn bg to match coloursch
 highlight clear SignColumn
 
