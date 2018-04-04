@@ -99,7 +99,7 @@ nnoremap :g// :g//
 inoremap <c-u> <c-g>u<c-u>
 inoremap <c-w> <c-g>u<c-w>
 " Dot operator leaves cursor where it was
-nmap . .`.
+nmap . .'.
 " Cycle through buffers
 nnoremap <silent> <Right> :bnext<CR>
 nnoremap <silent> <Left> :bprev<CR>
