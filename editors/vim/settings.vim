@@ -34,8 +34,11 @@ if has("gui_running")
         set guifont=Source\ Code\ Pro\ Medium\ 11
     endif
         " Put buffer name in window title, without "Vim" (because it'll have a logo)
-        autocmd BufEnter * let &titlestring = '' . expand("%:t") . ' [' . expand("%:p") . ']'
-        set title
+        augroup title
+            autocmd!
+            autocmd BufEnter * let &titlestring = '' . expand("%:t") . ' [' . expand("%:p") . ']'
+            set title
+        augroup END
 
     else
 
@@ -67,8 +70,11 @@ if has("gui_running")
         " set columns=100
     " endif
     " Put buffer name in window title
-    autocmd BufEnter * let &titlestring = '|Vim| ' . expand("%:t") . ' [' . expand("%:p") . ']'
-    set title
+        augroup title
+            autocmd!
+            autocmd BufEnter * let &titlestring = '|Vim| ' . expand("%:t") . ' [' . expand("%:p") . ']'
+            set title
+        augroup END
 endif
 
 set showmode
@@ -119,6 +125,7 @@ if bufname('%') != ''
     " Automatically save before commands like :next and :make
     set autowrite
     augroup autowrite
+        autocmd!
         " Save on focus loss
         au FocusLost * :wa
         " Save leaving insert
