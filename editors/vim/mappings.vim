@@ -101,8 +101,10 @@ inoremap <c-w> <c-g>u<c-w>
 " Dot operator leaves cursor where it was
 nmap . .`.
 " Cycle through buffers
-nnoremap <S-C-tab> :bp<CR>
-nnoremap <C-tab> :bn<CR>
+nnoremap <silent> <Right> :bnext<CR>
+nnoremap <silent> <Left> :bprev<CR>
+nnoremap <silent> <Up> :tabnext<CR>
+nnoremap <silent> <Down> :tabprevious<CR>
 " Delete word under cursor, replace with pasted.
 nnoremap <leader># "_diwP
 " fix typo I alwayr mmake
@@ -111,3 +113,5 @@ nnoremap zQ ZQ
 " Shift+enter is soft new line in markdown.
 inoremap <S-CR>   <CR>
 nnoremap <S-CR> A  <esc>
+" Because c-] doesn't work on colemak for some reason
+nnoremap <leader>t <c-]>
