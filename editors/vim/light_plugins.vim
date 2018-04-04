@@ -3,6 +3,8 @@
 " And [<space> for addign newlines.
 Plug 'https://github.com/tpope/vim-unimpaired'
 Plug 'https://github.com/ntpeters/vim-better-whitespace'
+let g:show_spaces_that_precede_tabs=1
+let g:better_whitespace_skip_empty_lines=1
 Plug 'https://github.com/tmux-plugins/vim-tmux'
 Plug 'https://github.com/christoomey/vim-tmux-navigator'
 " Close buffers without changing window
@@ -30,6 +32,15 @@ Plug 'https://github.com/ap/vim-buftabline'
 "--- Prose ---"
 Plug 'xolox/vim-misc'
 Plug 'https://github.com/xolox/vim-session'
+let g:session_persist_colors = 0
+let g:session_persist_font = 0
+let g:session_default_to_last = 'yes'
+let g:session_autosave_periodic = 10
+let g:session_autosave = 'yes'
+let g:session_autoload = 'yes'
+let g:session_directory = CreateVimDir("vimfiles/sessions/")
+
+
 Plug 'https://github.com/lervag/vimtex'
 Plug 'https://github.com/reedes/vim-pencil'
 Plug 'https://github.com/dkarter/bullets.vim'

@@ -52,8 +52,10 @@ exec 'source ' . s:scriptpath . "/light_plugins.vim"
 Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
 " gitgutter needs grep to not output escap sequences.
-    " let g:gitgutter_grep = ''    let g:gitgutter_grep = 'grep --color=never'
+"let g:gitgutter_grep = ''
+let g:gitgutter_grep = 'grep --color=never'
 let g:gitgutter_override_sign_column_highlight = 0
+let g:gitgutter_escape_grep = 1
 " Git wrapper
 Plug 'https://github.com/tpope/vim-fugitive'
 " github wrapper
@@ -99,6 +101,7 @@ Plug 'https://github.com/vim-airline/vim-airline'
 Plug 'https://github.com/vim-airline/vim-airline-themes'
 " exec "Plug \'https://github.com/vim-airline/vim-airline-themes\', {\'rtp\' : \'autoload/airline/themes/". colorSch . ".vim\'}"
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
+let g:ctrlp_cmd = 'CtrlPMixed'
 " For switching between header and alt files
 Plug 'vim-scripts/a.vim'
 " Plug 'https://github.com/vim-latex/vim-latex'
@@ -190,6 +193,13 @@ let g:NERDTreeIndicatorMapCustom = {
 \}
 " Open nerdtree in currently focussed window, rather than sidebar.
 let NERDTreeHijackNetrw=1
+" Open nerdtree on directory edit
+augroup NT
+    autocmd!
+    autocmd StdinReadPre * let s:std_in=1
+    autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup END
 
 
 " ----- majutsushi/tagbar settings -----
@@ -255,16 +265,7 @@ let g:airline#extensions#whitespace#checks = []
 " Disable mode shown in cmdline
 set noshowmode
 "  reduce delay on insert leaave?
-  set ttimeoutlen=50
-
-" ----- Session -----
-let g:session_persist_colors = 0
-let g:session_persist_font = 0
-let g:session_default_to_last = 'yes'
-let g:session_autosave_periodic = 10
-let g:session_autosave = 'yes'
-let g:session_autoload = 'yes'
-let g:session_directory = CreateVimDir("vimfiles/sessions/")
+set ttimeoutlen=50
 
 " ----- Prose -----
 let g:pencil#wrapModeDefault = 'soft'
@@ -308,9 +309,6 @@ let g:bullets_enabled_file_types = [
             \ 'scratch'
             \]
 
-"Better-whitespace
-let g:show_spaces_that_precede_tabs=1
-let g:better_whitespace_skip_empty_lines=1
 
 " ----------- TMUX --------------
 " Prompt for a command to run
@@ -320,9 +318,6 @@ map <Leader>vl :VimuxRunLastCommand<CR>
 
 
 " ----------- Misc --------------
-
-let g:ctrlp_cmd = 'CtrlPMixed'
-
 call camelcasemotion#CreateMotionMappings('<leader>c')
 
 let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
