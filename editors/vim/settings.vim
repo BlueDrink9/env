@@ -23,10 +23,8 @@ if has("gui_running")
     " Maximize gvim window (for an alternative on Windows, see simalt
     "   below).
     set lines=40 columns=120
+    " Default fallback for gui bg colour
     if !exists ('&backgroundColor')
-        let backgroundColor="light"
-    endif
-    if colorSch == ""
         let backgroundColor="light"
     endif
     exec 'set background=' . backgroundColor
@@ -41,22 +39,24 @@ if has("gui_running")
 
     else
 
-    " Console Vim settings
+    " XXX Console Vim settings XXX 
  
     " If the current iTerm tab has been
     " created using the **dark** profile:
     if $ITERM_PROFILE == 'Solarized Dark'
-      set background=dark
+        let backgroundColor="dark"
     endif
     " If the current iTerm tab has been
     " created using the **light** profile:
     if $ITERM_PROFILE == 'Solarized Light'
-      set background=light
+        let backgroundColor="light"
     endif
 
-    if !exists ('&backgroundColor')
+    " Default fallback for console bg colour
+    if !exists ('backgroundColor')
         let backgroundColor="dark"
     endif
+    exec "set background=".backgroundColor
 
     exec "let g:".colorSch . "_termcolors=&t_Co"
     exec "let g:".colorSch . "_termtrans=1"
