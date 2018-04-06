@@ -36,7 +36,7 @@ case $- in
     if command -v tmux>/dev/null; then
         if [[ ! $TERM =~ screen ]] && [[ -z $TMUX ]]; then
             PNAME="$(ps -o comm= $PPID)";
-            useTmuxFor="login sshd gnome-terminal init"
+            useTmuxFor="login sshd gnome-terminal init wslbridge-backe"
             if contains "$useTmuxFor" "$PNAME"; then
                 if tmux ls 2> /dev/null | grep -q -v attached; then
                     exec tmux attach -t $(tmux ls 2> /dev/null | grep -v attached | head -1 | cut -d : -f 1)
