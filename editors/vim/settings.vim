@@ -200,8 +200,8 @@ augroup cursor
     au!
     " Set cursor based on mode. Designed for iTerm, may be different for others.
     if &term =~ "xterm\\|rxvt"
-        let &t_SI .= "\<Esc>[5 q"
-        let &t_EI .= "\<Esc>[2 q"
+        let s:iCursor = "\<Esc>[6 q"
+        let s:nCursor = "\<Esc>[2 q"
         " 1 or 0 -> blinking block
         " 2 solid block
         " 3 -> blinking underscore
@@ -212,11 +212,19 @@ augroup cursor
         " reset cursor when vim exits
         autocmd VimLeave * silent !echo -ne "\033]112\007"
         " use \003]12;gray\007 for gnome-terminal and rxvt up to version 9.21
-    " elseif ! empty($TMUX)
-    "     let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-    "     let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-    "     let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
     endif
+    if exists('$TMUX')
+        let s:iCursor = "\<Esc>[5 q"
+        let s:nCursor = "\<Esc>[2 q"
+        " let s:iCursor = "\<Esc>Ptmux;\<Esc>\<Esc>[5 q\<Esc>\\"
+        " let s:nCursor = "\<Esc>Ptmux;\<Esc>\<Esc>[2 q\<Esc>\\"
+        " iTerm2?
+        " let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+        " let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+        " let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+    endif
+    exec 'let &t_SI = "' . s:iCursor . '"'
+    exec 'let &t_EI = "' . s:nCursor . '"'
 augroup END
 
 augroup misc
