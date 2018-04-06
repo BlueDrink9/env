@@ -196,16 +196,28 @@ augroup END
 " Set spellfile to location that is guaranteed to exist, can be symlinked to Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
 " set spellfile=$HOME/.vim-spell-en.utf-8.add
 
-" Set cursor based on mode. Designed for iTerm, may be different for others.
-if empty($TMUX)
-  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-  let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-else
-  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-  let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
-endif
+augroup cursor
+    au!
+    " Set cursor based on mode. Designed for iTerm, may be different for others.
+    if &term =~ "xterm\\|rxvt"
+        let &t_SI .= "\<Esc>[5 q"
+        let &t_EI .= "\<Esc>[2 q"
+        " 1 or 0 -> blinking block
+        " 2 solid block
+        " 3 -> blinking underscore
+        " 4 solid underscore
+        " Recent versions of xterm (282 or above) also support
+        " 5 -> blinking vertical bar
+        " 6 -> solid vertical bar
+        " reset cursor when vim exits
+        autocmd VimLeave * silent !echo -ne "\033]112\007"
+        " use \003]12;gray\007 for gnome-terminal and rxvt up to version 9.21
+    " elseif ! empty($TMUX)
+    "     let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+    "     let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+    "     let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+    endif
+augroup END
 
 augroup misc
     autocmd!
