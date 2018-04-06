@@ -42,6 +42,10 @@ if bufwinnr(1)
     map <c-,> 5<C-W><
     map <c-=> 5<C-W>+
     map <c--> 5<C-W>-
+    map <c-Right> 5<C-W>>
+    map <c-Left> 5<C-W><
+    map <c-Up> 5<C-W>+
+    map <c-Down> 5<C-W>-
 endif
 
 " In insert or visual mode, use standard cut/copy/paste shortcuts.
