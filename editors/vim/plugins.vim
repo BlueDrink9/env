@@ -112,7 +112,7 @@ Plug 'vim-scripts/a.vim'
 Plug 'https://github.com/lervag/vimtex'
 " Run shell commands async (uses python)
 Plug 'https://github.com/joonty/vim-do'
-Plug 'https://github.com/python-mode/python-mode'
+Plug 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
 Plug 'https://github.com/thinca/vim-quickrun'
 Plug 'https://github.com/vim-scripts/SingleCompile'
 " Make is run async (view quickfix with :COpen)
