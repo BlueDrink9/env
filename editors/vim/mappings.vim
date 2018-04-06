@@ -38,10 +38,10 @@ command! -bang -nargs=* SudoSave w !sudo tee % > /dev/null
 cmap W! SudoSave
 
 if bufwinnr(1)
-    map + 10<C-W>>
-    map - 10<C-W><
-    map <kPlus> <C-W>+
-    map <kMinus> <C-W>-
+    map <c-.> 5<C-W>>
+    map <c-,> 5<C-W><
+    map <c-=> 5<C-W>+
+    map <c--> 5<C-W>-
 endif
 
 " In insert or visual mode, use standard cut/copy/paste shortcuts.
