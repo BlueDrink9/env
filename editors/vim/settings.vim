@@ -223,7 +223,7 @@ augroup cursor
         " let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
         " let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
     endif
-    if exists(s.iCursor)
+    if exists('&s.iCursor')
         exec 'let &t_SI = "' . s:iCursor . '"'
         exec 'let &t_EI = "' . s:nCursor . '"'
     endif
