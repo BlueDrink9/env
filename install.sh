@@ -142,7 +142,7 @@ copyFonts() {
         fi
         mkdir -p "$FONTDIR"
         cp ./fonts/* $FONTDIR/truetype/custom
-        downloadURLtoFile https://github.com/ryanoasis/nerd-fonts/blob/1.2.0/patched-fonts/SourceCodePro/Medium/complete/Sauce%20Code%20Pro%20Medium%20Nerd%20Font%20Complete%20Mono.ttf "~/$FONTDIR/truetype/custom/Sauce Code Pro Medium Nerd Font Complete Mono.ttf"
+        downloadURLtoFile https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/SourceCodePro/Medium/complete/Sauce%20Code%20Pro%20Medium%20Nerd%20Font%20Complete%20Mono.ttf "~/$FONTDIR/truetype/custom/Sauce Code Pro Medium Nerd Font Complete Mono.ttf"
         # curl -fLo ~/$FONTDIR/truetype/custom --create-dirs \
             # https://github.com/ryanoasis/nerd-fonts/blob/1.2.0/patched-fonts/SourceCodePro/Medium/complete/Sauce%20Code%20Pro%20Medium%20Nerd%20Font%20Complete%20Mono.ttf --silent
 
