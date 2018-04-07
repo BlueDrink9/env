@@ -29,8 +29,10 @@ if has("gui_running")
         let backgroundColor="light"
     endif
     exec 'set background=' . backgroundColor
-    if has ("win32") || has ("gui_macvim")
+    if has ("win32")
         set guifont=Source\ Code\ Pro\ Medium:h11
+    elseif has ("gui_macvim")
+        set guifont=Source\ Code\ Pro\ Medium:h13
     else
         set guifont=Source\ Code\ Pro\ Medium\ 11
     endif
