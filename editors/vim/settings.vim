@@ -47,6 +47,11 @@ if has("gui_running")
 
     " XXX Console Vim settings XXX 
  
+    if !has("clipboard")
+        " Without clipboard, need mouse to select stuff sorry.
+        " Allow mouse in help files (for clicking).
+        set mouse=h
+    endif
     " If the current iTerm tab has been
     " created using the **dark** profile:
     if $ITERM_PROFILE == 'Solarized Dark'
