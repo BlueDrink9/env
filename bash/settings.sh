@@ -34,7 +34,7 @@ stty -ixon
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
-HISTCONTROL=ignoreboth
+export HISTCONTROL=ignoredups:erasedups
 
 if [ ! -d "${HOME}/.logs" ] ; then
    mkdir ${HOME}/.logs
@@ -42,7 +42,9 @@ fi
 PROMPT_COMMAND="${PROMPT_COMMAND} && log_command"
 
 # Save to history when command is executed, rather than when terminal is closed.
-PROMPT_COMMAND="history -a && ${PROMPT_COMMAND}"
+# Then reread it.
+# PROMPT_COMMAND="${PROMPT_COMMAND} && history -a; history -c; history -r"
+PROMPT_COMMAND="${PROMPT_COMMAND} && _bash_history_sync"
 
 # append to the history file, don't overwrite it
 shopt -s histappend
