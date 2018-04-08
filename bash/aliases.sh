@@ -30,6 +30,11 @@ alias gc="git_clone"
 # Try to set vim to xvim (has x11 clipboard support)
 if [ -e /usr/bin/vimx ]; then
     alias vim='/usr/bin/vimx'
+elif [ command -v mvim 2>/dev/null ]; then
+    # Prefer macvim to gvim.
+    alias vim='mvim -v'
+elif [ command -v gvim 2>/dev/null ]; then
+    alias vim='gvim -v'
 elif [ -e /usr/bin/gvim ]; then
     alias vim='/usr/bin/gvim -v'
 fi
