@@ -13,6 +13,7 @@ if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
     # Make esc act as backspace in terminal
 
 elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
+    alias ls="ls --color=auto"
     # enable color support of ls and also add handy aliases
     alias dir='dir --color=auto'
     alias vdir='vdir --color=auto'
