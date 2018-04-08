@@ -17,16 +17,6 @@ if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolours_solarized && eval "$(dircolors -b ~/.dircolours_solarized)" || eval "$(dircolors -b)"
 fi
 
-
-# Keyboard setup stuff
-capsToBS="-option caps:backspace"
-altWinSwap="-option altwin:swap_alt_win"
-altShiftToggle="-option grp:alt_shift_toggle"
-capsLed="-option grp_led:caps"
-colemak="-layout 'us, us' -variant 'colemak,'"
-alias wwkb="setxkbmap $colemak $capsToBS $altWinSwap $altShiftToggle $capsLed"
-
-alias term="xfce4-terminal"
 export LC_CTYPE="en_US.UTF-8"
 # Allow sending ctrl+S to applications in terminal (prev stops scrolling)
 stty -ixon
@@ -56,6 +46,31 @@ shopt -s checkwinsize
 #shopt -s globstar
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+export GREP_OPTIONS='--color=auto'
+
+if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
+    # Solarized ls dircolours (sort of)
+    export CLICOLOR=1
+    # Recommended... but wrong?
+    # export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
+    # Custom, created from comparing website and ls man
+    export LSCOLORS=exgxbAbAcxbhxbhBhDhcea
+    export HOMEBREW_PREFIX="$HOME/homebrew"
+    # Make esc act as backspace in terminal
+    # todo
+    # Remove tab menu completion :( (Doesn't work on OSX).
+    bind 'Tab: complete'
+
+elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
+   # Linuxbrew paths
+   export HOMEBREW_PREFIX="$HOME/.linuxbrew"
+fi
+
+# brew paths
+export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
+export XDG_DATA_DIRS="/$HOMEBREW_PREFIX/share:$XDG_DATA_DIRS"
+export MANPATH="$HOMEBREW_PREFIX/share/man:$MANPATH"
+export INFOPATH="$HOMEBREW_PREFIX/share/info:$INFOPATH"
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
