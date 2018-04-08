@@ -13,7 +13,7 @@ if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
     # Make esc act as backspace in terminal
 
 elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
-    alias ls="ls --color=auto"
+    alias ls="ls -F --color=auto"
     # enable color support of ls and also add handy aliases
     alias dir='dir --color=auto'
     alias vdir='vdir --color=auto'
@@ -32,11 +32,11 @@ alias wwkb="setxkbmap $colemak $capsToBS $altWinSwap $altShiftToggle $capsLed"
 
 alias ..="cd .. && ls"
 alias cd..="cd .. && ls"
-alias l='ls -CF'
-alias lsa="ls -aF"
-alias ll="ls -alF"
+alias l='ls -C'
+alias lsa="ls -a"
+alias ll="ls -al"
 alias lss="ls -lsh"
-alias ls="ls -CF"
+# alias ls="ls -CF --color=auto"
 # alias :q="exit"
 # alias :Q="exit"
 # alias ZZ="exit"
