@@ -36,8 +36,6 @@ alias lsa="ls -aF"
 alias ll="ls -alF"
 alias lss="ls -lsh"
 alias ls="ls -CF"
-# TODO make this more flexible (method?)
-alias open="nautilus $1 >/dev/null 2>&1"
 # alias :q="exit"
 # alias :Q="exit"
 # alias ZZ="exit"
