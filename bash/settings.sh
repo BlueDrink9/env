@@ -46,7 +46,6 @@ shopt -s checkwinsize
 #shopt -s globstar
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-export GREP_OPTIONS='--color=auto'
 
 if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
     # Solarized ls dircolours (sort of)
