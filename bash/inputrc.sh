@@ -9,30 +9,44 @@ set editing-mode vi
 # Used for set -o, shows a symbol at start of prompt for bash vi mode
 set show-mode-in-prompt on
 
+# Completions with no shared prefix will be listed.
 set show-all-if-unmodified on
-# Show all completions as soon as I press tab, even if there's more than one
-set show-all-if-ambiguous on
 # Ignore case
 set completion-ignore-case on
+# Only show next few chars of name when completing, so you can see what you
+# need to type.
+set completion-prefix-display-length 4
+# Hyphens and underscores are treated the same by completion.
+set completion-map-case on
+# Show all completions as soon as I press tab, even if there's more than one
+set show-all-if-ambiguous on
 # on menu-complete, first display the common prefix, then cycle through the
 # options when hitting TAB
 set menu-complete-display-prefix on
-
-# Expand history automatically on !!
-$if Bash
-  Space: magic-space
-$endif
 
 # Colour common prefixes of tab-completion
 set colored-completion-prefix on
 # Colour completion based on file type (like ls)
 set colored-stats on
-# Case insensitive completion
-# set completion-ignore-case on
 # Symlinks get completed with trailing /
 set mark-symlinked-directories on
 # Symbol after file specifying type
 set visible-stats on
+# Autocomplete hidden files without needing dot.
+set match-hidden-files on
+# If there are more than 40 possible completions for a word, ask to show them all
+set completion-query-items 40
+# Be more intelligent when autocompleting by also looking at the text after
+# the cursor. For example, when the current line is "cd ~/src/mozil", and
+# the cursor is on the "z", pressing Tab will not autocomplete it to "cd
+# ~/src/mozillail", but to "cd ~/src/mozilla". (This is supported by the
+# Readline used by Bash 4.)
+set skip-completed-text on
+
+# Expand history automatically on !!
+$if Bash
+  Space: magic-space
+$endif
 
 # Neat feature that detects pasted chars without running them.
 set enable-bracketed-paste on
@@ -44,8 +58,8 @@ set bell-style none
 # Keymaps for when we're in command mode (e.g., after hitting ESC)
 set keymap vi-command
 
-# Insert the arguments from the last command with P.
-"P": "i !!*\r"
+# Insert the arguments from the last command as if from register @a.
+"\"ap": "i !!*\r"
 
 # When hitting up/down, cycle through the previous commands
 # which start with the prefix you've entered, rather than just cycling through
@@ -56,7 +70,8 @@ j:history-search-forward
 k:history-search-backward
 
 # modified vim-style quit.
-";q":"ccexit"
+# ";q":"ccexit\"
+";q":"ccexit"
 
 ###########################################################
 # Keymaps for when we're in insert (i.e., typing stuff in) mode
@@ -67,7 +82,8 @@ set keymap vi-insert
 "vk":vi-movement-mode
 
 # modified vim-style quit.
-";q":"ccexit"
+# ";q":"ccexit\"
+";q":"ccexit"
 
 # Pressing tab will list all completions & select the first one. Pressing it
 # again will cycle through available completions.
