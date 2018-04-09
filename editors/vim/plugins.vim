@@ -24,10 +24,10 @@ endif
 
 " To remove a Plugged repo using UnPlug
 function! s:deregister(repo)
-  let repo = substitute(a:repo, '[\/]\+$', '', '')
-  let name = fnamemodify(repo, ':t:s?\.git$??')
-  call remove(g:plugs, name)
-  call remove(g:plugs_order, index(g:plugs_order, name))
+    let repo = substitute(a:repo, '[\/]\+$', '', '')
+    let name = fnamemodify(repo, ':t:s?\.git$??')
+    call remove(g:plugs, name)
+    call remove(g:plugs_order, index(g:plugs_order, name))
 endfunction
 command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 
@@ -77,9 +77,9 @@ Plug 'majutsushi/tagbar'
 
 "--- Prose ---"
 " Better prose spellchecking
-            " Neccesary for next plugin
-            " Expands what a sentence/word is for prose.
-            " Plug 'https://github.com/plasticboy/vim-markdown'
+" Neccesary for next plugin
+" Expands what a sentence/word is for prose.
+" Plug 'https://github.com/plasticboy/vim-markdown'
 exec "Plug 'https://github.com/reedes/vim-pencil'
             \| Plug 'https://github.com/reedes/vim-lexical', { 'for': " . g:proseFileTypes . " }
             \| Plug 'https://github.com/kana/vim-textobj-user'
@@ -152,10 +152,10 @@ call plug#end()
 exec 'colorscheme ' . colorSch
 
 if !has("gui_running")
-" if $TERM contains "-256color"
+    " if $TERM contains "-256color"
     " May be needed if terminal doesn't support.
     exec 'let g:' . colorSch . '_termcolors=256'
-" endif
+    " endif
 endif
 
 " ----- scrooloose/syntastic settings -----
@@ -197,7 +197,7 @@ let g:NERDTreeIndicatorMapCustom = {
             \ "Clean"     : "✔︎",
             \ 'Ignored'   : '☒',
             \ "Unknown"   : "?"
-\}
+            \}
 " Open nerdtree in currently focussed window, rather than sidebar.
 let NERDTreeHijackNetrw=1
 " Open nerdtree on directory edit
