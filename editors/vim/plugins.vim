@@ -189,7 +189,7 @@ augroup END
 let g:NERDTreeIndicatorMapCustom = {
             \ "Modified"  : "✹",
             \ "Staged"    : "✚",
-            \ "Untracked" : "✭",
+            \ "Untracked" : "?",
             \ "Renamed"   : "➜",
             \ "Unmerged"  : "═",
             \ "Deleted"   : "✖",
@@ -200,11 +200,16 @@ let g:NERDTreeIndicatorMapCustom = {
             \}
 " Open nerdtree in currently focussed window, rather than sidebar.
 let NERDTreeHijackNetrw=1
-" Open nerdtree on directory edit
+" Delete buffer if delete file in NT.
+let NERDTreeAutoDeleteBuffer = 1
+let NERDTreeDirArrows = 1
+let NERDTreeShowHidden=1
 augroup NT
     autocmd!
+    " Open nerdtree on directory edit (startup)
     autocmd StdinReadPre * let s:std_in=1
     autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+    autocmd BufRead * if isdirectory(@%) | exec 'NERDTree' | endif
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 augroup END
 
