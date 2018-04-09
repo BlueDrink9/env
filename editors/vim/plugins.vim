@@ -376,9 +376,6 @@ set noshowmode
 "  reduce delay on insert leaave?
 set ttimeoutlen=50
 
-let g:webdevicons_enable_airline_tabline = 1
-let g:webdevicons_enable_airline_statusline = 1
-
 
 " ----- Prose -----
 let g:pencil#wrapModeDefault = 'soft'
