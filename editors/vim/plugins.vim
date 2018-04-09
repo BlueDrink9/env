@@ -90,6 +90,7 @@ exec "Plug 'https://github.com/reedes/vim-pencil'
             \"
 
 
+" Plug 'ryanoasis/vim-devicons'
 " Separate buffer lists for differetn windows
 " Plug 'https://github.com/zefei/vim-wintabs'
 Plug 'https://github.com/tomtom/tcomment_vim'
@@ -240,31 +241,41 @@ let g:airline#extensions#tabline# = 1
 let g:airline_section_tabline = airline#section#create(['%{getcwd()}'])
 
 " let g:airline_symbols_ascii=1
-" let g:airline_powerline_fonts = 0
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
+if !exists('g:airline_powerline_fonts')
+    let g:airline_powerline_fonts = 0
 endif
-" unicode symbols
-let g:airline#extensions#tabline#left_sep = '▶'
-let g:airline#extensions#tabline#right_sep = '◀'
-let g:airline#extensions#tabline#left_sep_alt = '|'
-let g:airline#extensions#tabline#right_sep_alt = '|'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '☰'
-let g:airline_symbols.maxlinenr = ''
-let g:airline_symbols.columnnr = '∥'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'PASTE'
-let g:airline_symbols.whitespace = '☲'
-" airline symbols
-let g:airline_symbols.readonly = ''
-" Skip gap between col symbol and number (custom section)
- call airline#parts#define_raw('linenr', g:airline_symbols.linenr . ' %l')
- call airline#parts#define_raw('columnnr', g:airline_symbols.columnnr . '%c')
-" call airline#parts#define_accent('linenr', 'bold')
-let g:airline_section_z = airline#section#create([
-            \ 'linenr', 'maxlinenr',' ', 'columnnr'])
+if g:airline_powerline_fonts == 0
+    if !exists('g:airline_symbols')
+        let g:airline_symbols = {}
+    endif
+    " unicode symbols
+    let g:airline#extensions#tabline#left_sep = '▶'
+    let g:airline#extensions#tabline#right_sep = '◀'
+    let g:airline#extensions#tabline#left_sep_alt = '|'
+    let g:airline#extensions#tabline#right_sep_alt = '|'
+    let g:airline_left_sep = '▶'
+    let g:airline_right_sep = '◀'
+    let g:airline_symbols.linenr = '☰'
+    let g:airline_symbols.maxlinenr = ''
+    let g:airline_symbols.columnnr = '∥'
+    let g:airline_symbols.branch = '⎇'
+    let g:airline_symbols.paste = 'PASTE'
+    let g:airline_symbols.whitespace = '☲'
+    " airline symbols
+    let g:airline_symbols.readonly = ''
+
+    " Skip gap between col symbol and number (custom section)
+    call airline#parts#define_raw('linenr', g:airline_symbols.linenr . ' %l')
+    call airline#parts#define_raw('columnnr', g:airline_symbols.columnnr . '%c')
+    let g:airline_section_z = airline#section#create([
+                \ 'linenr', 'maxlinenr',' ', 'columnnr'])
+else
+    " Using predefined symbols
+    " call airline#parts#define_accent('linenr', 'bold')
+    let g:airline_section_z = airline#section#create([
+                \ 'linenr', 'maxlinenr',' ', '%c'])
+endif
+
 let g:airline#extensions#hunks#non_zero_only = 1
 let g:airline#extensions#whitespace#checks = []
 " Disable mode shown in cmdline
