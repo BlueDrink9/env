@@ -249,10 +249,10 @@ if !exists('g:airline_powerline_fonts')
         let s:uname = system("uname")
         if s:uname == "Darwin\n"
             " OSX
-            exec 'let s:fontdir = expand("' . $HOME . '/Library/Fonts")'
+            exec "let s:fontdir = expand('" . $HOME . "/Library/Fonts')"
         else
             " Linux
-            exec 'let s:fontdir = expand("' . $HOME . '/.fonts")'
+            exec "let s:fontdir = expand('" . $HOME . "/.fonts')"
         endif
     else
         " Windows
