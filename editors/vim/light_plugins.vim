@@ -31,6 +31,8 @@ Plug 'https://github.com/kien/rainbow_parentheses.vim'
 "--- Prose ---"
 Plug 'xolox/vim-misc'
 Plug 'https://github.com/xolox/vim-session'
+cnoremap cs CloseSession
+cnoremap os OpenSession
 let g:session_persist_colors = 0
 let g:session_persist_font = 0
 let g:session_default_to_last = 'yes'
