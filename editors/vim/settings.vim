@@ -199,8 +199,8 @@ let g:netrw_winsize = 25
 " Autoset new buffers to scratch
 augroup scratch
     autocmd!
-    autocmd BufEnter * if &filetype == "" | setlocal ft=scratch | endif
-    autocmd BufEnter * if &filetype == "" | setlocal spell | setl ai
+    autocmd BufEnter * if &filetype == "" | setlocal ft=scratch |
+                \  setlocal spell | setl ai| endif
 augroup END
 
 " Set spellfile to location that is guaranteed to exist, can be symlinked to Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
