@@ -31,20 +31,20 @@ source ${SCRIPT_DIR}/prompt.sh
 #     { tmux attach || exec tmux new-session && exit;}
 # fi
 # Run tmux on connect
-case $- in
-    *i*)
-    if command -v tmux>/dev/null; then
-        if [[ ! $TERM =~ screen ]] && [[ -z $TMUX ]]; then
-            PNAME="$(ps -o comm= $PPID)";
-            useTmuxFor="login sshd gnome-terminal init wslbridge-backe"
-            if contains "$useTmuxFor" "$PNAME"; then
-                if tmux ls 2> /dev/null | grep -q -v attached; then
-                    exec tmux attach -t $(tmux ls 2> /dev/null | grep -v attached | head -1 | cut -d : -f 1)
-                else
-                    exec tmux
-                fi
-            fi
-        fi
-    fi
-    ;;
-esac
+# case $- in
+#     *i*)
+#     if command -v tmux>/dev/null; then
+#         if [[ ! $TERM =~ screen ]] && [[ -z $TMUX ]]; then
+#             PNAME="$(ps -o comm= $PPID)";
+#             useTmuxFor="login sshd gnome-terminal init wslbridge-backe"
+#             if contains "$useTmuxFor" "$PNAME"; then
+#                 if tmux ls 2> /dev/null | grep -q -v attached; then
+#                     exec tmux attach -t $(tmux ls 2> /dev/null | grep -v attached | head -1 | cut -d : -f 1)
+#                 else
+#                     exec tmux
+#                 fi
+#             fi
+#         fi
+#     fi
+#     ;;
+# esac
