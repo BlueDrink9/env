@@ -5,7 +5,11 @@ SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BAKDIR=$HOME/.env_backup    # Directory to store config backups.
 BASH_CUSTOM=$HOME/.bash_custom # Directory to store custom bash includes.
 VIMDIR=$HOME/.vim_runtime   # Directory containing Vim extras.
-FONTDIR=$HOME/.fonts
+if [[ $OSTYPE == 'linux-gnu' ]]; then
+    FONTDIR=$HOME/.fonts
+elif [[ $OSTYPE =~ 'darwin' ]]; then
+    FONTDIR=$HOME/Library/Fonts
+fi
 SKIP=0
 
 ALL=0
@@ -142,10 +146,15 @@ copyFonts() {
         fi
         mkdir -p "$FONTDIR"
         cp ./fonts/* $FONTDIR/truetype/custom
-        downloadURLtoFile https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/SourceCodePro/Medium/complete/Sauce%20Code%20Pro%20Medium%20Nerd%20Font%20Complete%20Mono.ttf "~/$FONTDIR/truetype/custom/Sauce Code Pro Medium Nerd Font Complete Mono.ttf"
-        # curl -fLo ~/$FONTDIR/truetype/custom --create-dirs \
-            # https://github.com/ryanoasis/nerd-fonts/blob/1.2.0/patched-fonts/SourceCodePro/Medium/complete/Sauce%20Code%20Pro%20Medium%20Nerd%20Font%20Complete%20Mono.ttf --silent
 
+        # Get url of latest version of Nerdfont Source Code Pro.
+        downloadURLtoFile https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest $TMP/nerdfontsapi
+        SCPLatestURL=`sed -n -e 's#^.*\(https://github.com/ryanoasis/nerd-fonts/releases/download/[^/]*/SourceCodePro.zip\).*$#\1#p' < $TMP/nerdfontsapi`
+        rm -f $TMP/nerdfontsapi
+
+        downloadURLtoFile $SCPLatestURL $TMP/SCP.zip
+        unzip $TMP/SCP.zip -d "$FONTDIR" > /dev/null
+        rm -f $TMP/SCP.zip
 
         fc-cache
         echo -e "${OK} Fonts installed to ${Orange}file:///${FONTDIR}${White}"

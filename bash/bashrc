@@ -1,14 +1,9 @@
 # -*-  mode: shell-script; -*-
 # vim: set ft=sh:
 
-# XXX For debugging, `use set -x` to show all bash commands run.
+# XXX For debugging, call `bash_debug_log` with optional logfile param
+# to show all bash commands run. Default logfile is ${HOME}/.debug_log_bashsetx.
 # (More plusses mean different file/function)
-# This line redirects it to a file.
-logpath=${HOME}/.setxlogfile
-if [[ -z $logpath ]]; then
-    exec 19>$logpath
-    BASH_XTRACEFD=19
-fi
 
 # # If not running interactively, don't do anything
 # case $- in
