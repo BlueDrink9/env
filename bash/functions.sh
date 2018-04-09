@@ -208,3 +208,20 @@ history() {                  #5
   builtin history "$@"
 }
 
+# Log bash output into log given by argument (or into default log).
+bash_debug_log() {
+  if [ "$1" = "" ]; then
+    logfile="${HOME}/.debug_log_bashsetx"
+  else
+    logfile="$1"
+  fi
+  exec   >| >(tee -ia .debug_log_bashsetx)
+  exec  2>| >(tee -ia .debug_log_bashsetx >& 2)
+  exec 19>| .debug_log_bashsetx
+
+  export BASH_XTRACEFD="19"
+
+  # Fail on first error, output all commands, etc.
+  set pipefail
+  set -eEuxo
+}
