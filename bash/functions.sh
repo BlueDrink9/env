@@ -193,3 +193,18 @@ function_exists() {
     return $?
 }
 
+
+# https://unix.stackexchange.com/a/48116
+_bash_history_sync() {
+  # Consider using just -a if you want commands to only be available to new shells,
+  # so currently running shells have their commands listed more recently.
+  builtin history -a         #1
+  HISTFILESIZE=$HISTSIZE     #2
+  builtin history -c         #3
+  builtin history -r         #4
+}
+history() {                  #5
+  _bash_history_sync
+  builtin history "$@"
+}
+

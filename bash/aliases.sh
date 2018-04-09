@@ -7,6 +7,29 @@ shopt -s expand_aliases
 # ctrl + L often does this anyway though...
 alias cl="clear"
 
+if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
+    alias setssdir="defaults write com.apple.screencapture location"
+    # ls and grep should use colours automatically because CLICOLOR is set.
+    # Make esc act as backspace in terminal
+
+elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
+    alias ls="ls --color=auto"
+    # enable color support of ls and also add handy aliases
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# Keyboard setup stuff
+capsToBS="-option caps:backspace"
+altWinSwap="-option altwin:swap_alt_win"
+altShiftToggle="-option grp:alt_shift_toggle"
+capsLed="-option grp_led:caps"
+colemak="-layout 'us, us' -variant 'colemak,'"
+alias wwkb="setxkbmap $colemak $capsToBS $altWinSwap $altShiftToggle $capsLed"
+
 alias ..="cd .. && ls"
 alias cd..="cd .. && ls"
 alias l='ls -CF'
@@ -14,8 +37,6 @@ alias lsa="ls -aF"
 alias ll="ls -alF"
 alias lss="ls -lsh"
 alias ls="ls -CF"
-# TODO make this more flexible (method?)
-alias open="nautilus $1 >/dev/null 2>&1"
 # alias :q="exit"
 # alias :Q="exit"
 # alias ZZ="exit"
@@ -30,6 +51,11 @@ alias gc="git_clone"
 # Try to set vim to xvim (has x11 clipboard support)
 if [ -e /usr/bin/vimx ]; then
     alias vim='/usr/bin/vimx'
+elif [ command -v mvim 2>/dev/null ]; then
+    # Prefer macvim to gvim.
+    alias vim='mvim -v'
+elif [ command -v gvim 2>/dev/null ]; then
+    alias vim='gvim -v'
 elif [ -e /usr/bin/gvim ]; then
     alias vim='/usr/bin/gvim -v'
 fi
@@ -48,14 +74,6 @@ alias sagi="sudo apt install"
 alias sag="sudo apt"
 alias sagu="sudo apt update && sudo apt upgrade"
 
-# enable color support of ls and also add handy aliases
-# if [ -x /usr/bin/dircolors ]; then
-#     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-#     alias ls='ls --color=auto'
-#     alias dir='dir --color=auto'
-#     alias vdir='vdir --color=auto'
-#
-#     alias grep='grep --color=auto'
-#     alias fgrep='fgrep --color=auto'
-#     alias egrep='egrep --color=auto'
-# fi
+alias term="xfce4-terminal"
+
+

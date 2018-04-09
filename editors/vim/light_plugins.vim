@@ -9,6 +9,7 @@ Plug 'https://github.com/tmux-plugins/vim-tmux'
 Plug 'https://github.com/christoomey/vim-tmux-navigator'
 " Close buffers without changing window
 Plug 'https://github.com/moll/vim-bbye'
+xnoremap bd Bdelete
 Plug 'ericbn/vim-relativize'
 " Highlight f and t chars to get where you want.
 " TODO monitor progress of this branch. May be updated soon.
