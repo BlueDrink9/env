@@ -300,7 +300,7 @@ if !exists('g:airline_powerline_fonts') || !exists('g:webdevicons_enable')
     endif
 
     if s:useNerdFont == 0
-        if !exists('g:airline_powerline_fonts')
+        if !exists('g:webdevicons_enable')
             " disable devicons and dependents.
             let g:NERDTreeDisableFileExtensionHighlight = 1
             let g:NERDTreeDisableExactMatchHighlight = 1
@@ -375,6 +375,10 @@ let g:airline#extensions#whitespace#checks = []
 set noshowmode
 "  reduce delay on insert leaave?
 set ttimeoutlen=50
+
+let g:webdevicons_enable_airline_tabline = 1
+let g:webdevicons_enable_airline_statusline = 1
+
 
 " ----- Prose -----
 let g:pencil#wrapModeDefault = 'soft'
