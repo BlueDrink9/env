@@ -306,6 +306,32 @@ if !exists('g:airline_powerline_fonts') && !exists('g:webdevicons_enable')
     endif
 endif
 
+let g:airline#extensions#syntastic#stl_format_err="%E{Err: #%e L%fe}"
+let g:airline#extensions#syntastic#stl_format_warn='%W{Warn: #%w L%fw}'
+let g:airline_theme=colorSch
+let g:airline#extensions#wordcount#enabled = 1
+let g:airline_solarized_dark_inactive_border = 1
+exec 'let g:airline_' . colorSch . '_bg="' . backgroundColor . '"'
+" exec 'let g:airline_base16_' . colorSch . '= 0'
+let base16colorspace = 256
+exec 'let g:' . colorSch . '_base16 = 0'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#show_tabs = 0
+" let g:airline#extensions#tabline#buffer_min_count = 0
+" let g:airline#extensions#tabline#tab_min_count = 0
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#show_close_button = 0
+let g:airline#extensions#tabline#buffers_label = 'B'
+let g:airline#extensions#whitespace#mixed_indent_algo = 1
+" Alt sep gives b<c>b instead of b>c>b
+let g:airline#extensions#tabline#alt_sep = 1
+let g:airline#extensions#tabline# = 1
+" let g:airline#extensions#tabline#show_tabs = 0
+let g:airline_section_tabline = airline#section#create(['%{getcwd()}'])
+
 if g:airline_powerline_fonts == 0
     if !exists('g:airline_symbols')
         let g:airline_symbols = {}
@@ -338,30 +364,6 @@ else
     let g:airline_section_z = airline#section#create([
                 \ 'linenr', 'maxlinenr',' ', '%c'])
 endif
-
-let g:airline#extensions#syntastic#stl_format_err="%E{Err: #%e L%fe}"
-let g:airline#extensions#syntastic#stl_format_warn='%W{Warn: #%w L%fw}'
-let g:airline_theme=colorSch
-let g:airline#extensions#wordcount#enabled = 1
-let g:airline_solarized_dark_inactive_border = 1
-exec 'let g:airline_' . colorSch . '_bg="' . backgroundColor . '"'
-" exec 'let g:airline_base16_' . colorSch . '= 0'
-let base16colorspace = 256
-exec 'let g:' . colorSch . '_base16 = 0'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 1
-let g:airline#extensions#tabline#show_tabs = 0
-let g:airline#extensions#tabline#buffer_min_count = 2
-let g:airline#extensions#tabline#tab_min_count = 2
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#tabline#show_tab_type = 0
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline#extensions#tabline#show_close_button = 0
-let g:airline#extensions#tabline#buffers_label = 'B'
-let g:airline#extensions#tabline#alt_sep = 1
-let g:airline#extensions#tabline# = 1
-" let g:airline#extensions#tabline#show_tabs = 0
-let g:airline_section_tabline = airline#section#create(['%{getcwd()}'])
 
 let g:airline#extensions#hunks#non_zero_only = 1
 let g:airline#extensions#whitespace#checks = []
