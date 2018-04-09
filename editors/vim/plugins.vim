@@ -242,7 +242,8 @@ let g:airline_section_tabline = airline#section#create(['%{getcwd()}'])
 
 " let g:airline_symbols_ascii=1
 if !exists('g:airline_powerline_fonts')
-    " Automatically check for powerline compatible font in directory
+    " Automatically check for powerline compatible font installed locally
+    " (unix) or to system (windows)
     " If we are (probably) using a powerline compatible font, set it so.
     if has("unix")
         let s:uname = system("uname")
@@ -269,11 +270,17 @@ if !exists('g:airline_powerline_fonts')
         exec "let s:PLFontExists = " . s:PLFontExists . " || 
                     \ filereadable( expand('" . s:fontdir . "/" . name . "'))"
     endfor
-    let s:usePLFont =
+    let s:guiUsesPLFont = 
                 \ &guifont =~ "powerline" ||
                 \ &guifont =~ "nerd" ||
-                \ &guifont =~ "sauce" ||
-                \ s:PLFontExists
+                \ &guifont =~ "sauce"
+
+    if has("gui_running")
+        let s:usePLFont = s:guiUsesPLFont
+    else
+        let s:usePLFont = s:PLFontExists
+    endif
+
     if s:usePLFont
         let g:airline_powerline_fonts = 1
     else
