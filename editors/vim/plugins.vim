@@ -100,8 +100,8 @@ Plug 'https://github.com/vim-syntastic/syntastic.git'
 " Adds a bunch of unix-mapped filesystem ops from vim
 Plug 'https://github.com/tpope/vim-eunuch'
 Plug 'https://github.com/simnalamburt/vim-mundo'
-Plug 'https://github.com/vim-airline/vim-airline'
 Plug 'https://github.com/vim-airline/vim-airline-themes'
+Plug 'https://github.com/vim-airline/vim-airline'
 " exec "Plug \'https://github.com/vim-airline/vim-airline-themes\', {\'rtp\' : \'autoload/airline/themes/". colorSch . ".vim\'}"
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 let g:ctrlp_cmd = 'CtrlPMixed'
@@ -314,6 +314,7 @@ let g:airline#extensions#syntastic#stl_format_err="%E{Err: #%e L%fe}"
 let g:airline#extensions#syntastic#stl_format_warn='%W{Warn: #%w L%fw}'
 let g:airline_theme=colorSch
 let g:airline#extensions#wordcount#enabled = 1
+let g:airline_solarized_normal_green = 1
 let g:airline_solarized_dark_inactive_border = 1
 exec 'let g:airline_' . colorSch . '_bg="' . backgroundColor . '"'
 " exec 'let g:airline_base16_' . colorSch . '= 0'
