@@ -242,8 +242,45 @@ let g:airline_section_tabline = airline#section#create(['%{getcwd()}'])
 
 " let g:airline_symbols_ascii=1
 if !exists('g:airline_powerline_fonts')
-    let g:airline_powerline_fonts = 0
+    " Automatically check for powerline compatible font in directory
+    " If we are (probably) using a powerline compatible font, set it so.
+    if has("unix")
+        let s:uname = system("uname")
+        if s:uname == "Darwin\n"
+            " OSX
+            exec 'let s:fontdir = expand("' . $HOME . '/Library/Fonts")'
+        else
+            " Linux
+            exec 'let s:fontdir = expand("' . $HOME . '/.fonts")'
+        endif
+    else
+        " Windows
+        exec "let s:fontdir = expand('" . $windir . "/Fonts')"
+    endif
+
+    let s:possibleFontNames = [
+                \ "Sauce Code Pro Nerd Font Complete Mono Windows Compatible.ttf",
+                \ "Sauce Code Pro Nerd Font Complete Windows Compatible.ttf",
+                \ "Sauce Code Pro Nerd Font Complete Mono.ttf",
+                \ "Sauce Code Pro Nerd Font Complete.ttf" ]
+
+    let s:PLFontExists = 0
+    for name in s:possibleFontNames
+        exec "let s:PLFontExists = " . s:PLFontExists . " || 
+                    \ filereadable( expand('" . s:fontdir . "/" . name . "'))"
+    endfor
+    let s:usePLFont =
+                \ &guifont =~ "powerline" ||
+                \ &guifont =~ "nerd" ||
+                \ &guifont =~ "sauce" ||
+                \ s:PLFontExists
+    if s:usePLFont
+        let g:airline_powerline_fonts = 1
+    else
+        let g:airline_powerline_fonts = 0
+    endif
 endif
+
 if g:airline_powerline_fonts == 0
     if !exists('g:airline_symbols')
         let g:airline_symbols = {}
@@ -271,7 +308,8 @@ if g:airline_powerline_fonts == 0
                 \ 'linenr', 'maxlinenr',' ', 'columnnr'])
 else
     " Using predefined symbols
-    " call airline#parts#define_accent('linenr', 'bold')
+    " Skip gap between col symbol and number (custom section)
+    call airline#parts#define_raw('linenr', g:airline_symbols.linenr . '%l')
     let g:airline_section_z = airline#section#create([
                 \ 'linenr', 'maxlinenr',' ', '%c'])
 endif
