@@ -90,9 +90,6 @@ exec "Plug 'https://github.com/reedes/vim-pencil'
             \"
 
 
-Plug 'ryanoasis/vim-devicons'
-" May cause lag on scrolling.
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Separate buffer lists for differetn windows
 " Plug 'https://github.com/zefei/vim-wintabs'
 Plug 'https://github.com/tomtom/tcomment_vim'
@@ -141,6 +138,9 @@ Plug 'https://github.com/tpope/vim-speeddating'
 Plug 'https://github.com/junegunn/vim-easy-align'
 " Let's give it a go then.
 Plug 'https://github.com/easymotion/vim-easymotion'
+Plug 'ryanoasis/vim-devicons'
+" May cause lag on scrolling.
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 
 " Unplugs and replacements go here
