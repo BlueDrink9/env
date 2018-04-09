@@ -155,6 +155,13 @@ copyFonts() {
         downloadURLtoFile $SCPLatestURL $TMP/SCP.zip
         unzip $TMP/SCP.zip -d "$FONTDIR" > /dev/null
         rm -f $TMP/SCP.zip
+        if [[ $OSTYPE == 'linux-gnu' ]]; then
+            # Unused mac-required fonts.
+            rm -f "${FONTDIR}/*Windows Compatible.ttf"
+        elif [[ $OSTYPE =~ 'darwin' ]]; then
+            rm -f "${FONTDIR}/*Complete.ttf"
+            rm -f "${FONTDIR}/*Mono.ttf"
+        fi
 
         fc-cache
         echo -e "${OK} Fonts installed to ${Orange}file:///${FONTDIR}${White}"
