@@ -29,7 +29,7 @@ if has("gui_running")
         let backgroundColor="light"
     endif
     exec 'set background=' . backgroundColor
-    
+
     let s:useFont = "Source\\ Code\\ Pro\\ Medium"
     if has ("win32")
         exec 'set guifont=' . s:useFont . ':h11'
@@ -38,17 +38,17 @@ if has("gui_running")
     else
         exec 'set guifont=' . s:useFont . '\ 11'
     endif
-        " Put buffer name in window title, without "Vim" (because it'll have a logo)
-        augroup title
-            autocmd!
-            autocmd BufEnter * let &titlestring = '' . expand("%:t") . ' [' . expand("%:p") . ']'
-            set title
-        augroup END
+    " Put buffer name in window title, without "Vim" (because it'll have a logo)
+    augroup title
+        autocmd!
+        autocmd BufEnter * let &titlestring = '' . expand("%:t") . ' [' . expand("%:p") . ']'
+        set title
+    augroup END
 
-    else
+else
 
     " XXX Console Vim settings XXX 
- 
+
     if !has("clipboard")
         " Without clipboard, need mouse to select stuff sorry.
         " Allow mouse in help files (for clicking).
@@ -74,17 +74,17 @@ if has("gui_running")
     exec "let g:".colorSch . "_termcolors=&t_Co"
     exec "let g:".colorSch . "_termtrans=1"
     " if exists("+lines")
-        " set lines=30
+    " set lines=30
     " endif
     " if exists("+columns")
-        " set columns=100
+    " set columns=100
     " endif
     " Put buffer name in window title
-        augroup title
-            autocmd!
-            autocmd BufEnter * let &titlestring = '|Vim| ' . expand("%:t") . ' [' . expand("%:p") . ']'
-            set title
-        augroup END
+    augroup title
+        autocmd!
+        autocmd BufEnter * let &titlestring = '|Vim| ' . expand("%:t") . ' [' . expand("%:p") . ']'
+        set title
+    augroup END
 endif
 
 set showmode
