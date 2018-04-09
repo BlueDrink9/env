@@ -220,11 +220,7 @@ nmap <silent> <leader>b :TagbarToggle<CR>
 
 " let g:airline_symbols_ascii=1
 " Check if either of these have been specifically disabled or enabled.
-if !exists('g:airline_powerline_fonts') && !exists('g:webdevicons_enable')
-    " mya need to use patternhighlight, as g:webdevciocons may be set by
-    " edfualt.
-        " let g:NERDTreeDisablePatternMatchHighlight = 1
-        " let g:webdevicons_enable = 0
+if !exists('g:airline_powerline_fonts') || !exists('g:webdevicons_enable')
     " Automatically check for powerline compatible font installed locally
     " (unix) or to system (windows)
     " If we are (probably) using a powerline compatible font, set it so.
@@ -270,7 +266,6 @@ if !exists('g:airline_powerline_fonts') && !exists('g:webdevicons_enable')
             exec "call add(s:PLFontIsInstalled, 
                         \ filereadable( expand('" . s:fontdir . "/" . s:PLFontNames[i] . "')))"
             exec "let s:PLFontExists = " . s:PLFontExists . " || " . s:PLFontIsInstalled[i]
-                        exec "echo ( expand('" . s:fontdir . "/" . s:PLFontNames[i] . "')))"
             let i += 1
         endwhile
     endif
@@ -291,18 +286,22 @@ if !exists('g:airline_powerline_fonts') && !exists('g:webdevicons_enable')
         let s:useNerdFont = s:nerdFontExists
     endif
 
-    if s:usePLFont
-        let g:airline_powerline_fonts = 1
-    else
-        let g:airline_powerline_fonts = 0
+    if !exists('g:airline_powerline_fonts')
+        if s:usePLFont
+            let g:airline_powerline_fonts = 1
+        else
+            let g:airline_powerline_fonts = 0
+        endif
     endif
 
     if s:useNerdFont == 0
-        " disable devicons and dependents.
-        let g:NERDTreeDisableFileExtensionHighlight = 1
-        let g:NERDTreeDisableExactMatchHighlight = 1
-        let g:NERDTreeDisablePatternMatchHighlight = 1
-        let g:webdevicons_enable = 0
+        if !exists('g:airline_powerline_fonts')
+            " disable devicons and dependents.
+            let g:NERDTreeDisableFileExtensionHighlight = 1
+            let g:NERDTreeDisableExactMatchHighlight = 1
+            let g:NERDTreeDisablePatternMatchHighlight = 1
+            let g:webdevicons_enable = 0
+        endif
     endif
 endif
 
