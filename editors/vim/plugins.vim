@@ -90,7 +90,9 @@ exec "Plug 'https://github.com/reedes/vim-pencil'
             \"
 
 
-" Plug 'ryanoasis/vim-devicons'
+Plug 'ryanoasis/vim-devicons'
+" May cause lag on scrolling.
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Separate buffer lists for differetn windows
 " Plug 'https://github.com/zefei/vim-wintabs'
 Plug 'https://github.com/tomtom/tcomment_vim'
@@ -241,10 +243,15 @@ let g:airline#extensions#tabline# = 1
 let g:airline_section_tabline = airline#section#create(['%{getcwd()}'])
 
 " let g:airline_symbols_ascii=1
-if !exists('g:airline_powerline_fonts')
+if !exists('g:airline_powerline_fonts') && !exists('g:webdevicons_enable')
+    " mya need to use patternhighlight, as g:webdevciocons may be set by
+    " edfualt.
+        " let g:NERDTreeDisablePatternMatchHighlight = 1
+        " let g:webdevicons_enable = 0
     " Automatically check for powerline compatible font installed locally
     " (unix) or to system (windows)
     " If we are (probably) using a powerline compatible font, set it so.
+    " If a nerd font is found, assume powerline-compat, as well as devicons.
     if has("unix")
         let s:uname = system("uname")
         if s:uname == "Darwin\n"
@@ -259,32 +266,63 @@ if !exists('g:airline_powerline_fonts')
         exec "let s:fontdir = expand('" . $windir . "/Fonts')"
     endif
 
-    let s:possibleFontNames = [
+    let s:nerdFontNames = [
                 \ "Sauce Code Pro Nerd Font Complete Mono Windows Compatible.ttf",
                 \ "Sauce Code Pro Nerd Font Complete Windows Compatible.ttf",
                 \ "Sauce Code Pro Nerd Font Complete Mono.ttf",
                 \ "Sauce Code Pro Nerd Font Complete.ttf" ]
+    let s:nerdFontIsInstalled = []
+    let s:PLFontNames = [
+                \ "Source Code Pro for Powerline.otf"]
+    let s:PLFontIsInstalled = []
+
+    let s:nerdFontExists = 0
+    let i = 0
+    while i < len(s:nerdFontNames)
+        exec "call add(s:nerdFontIsInstalled, 
+                    \ filereadable( expand('" . s:fontdir . "/" . s:nerdFontNames[i] . "')))"
+        exec "let s:nerdFontExists = " . s:nerdFontExists . " || " . s:nerdFontIsInstalled[i]
+        exec "let s:PLFontExists = " . s:nerdFontExists . " || " . s:nerdFontIsInstalled[i]
+        let i += 1
+    endwhile
 
     let s:PLFontExists = 0
-    for name in s:possibleFontNames
-        exec "let s:PLFontExists = " . s:PLFontExists . " || 
-                    \ filereadable( expand('" . s:fontdir . "/" . name . "'))"
-    endfor
-    let s:guiUsesPLFont = 
-                \ &guifont =~ "powerline" ||
-                \ &guifont =~ "nerd" ||
-                \ &guifont =~ "sauce"
+    let i = 0
+    if !s:nerdFontExists
+        while i < len(s:PLFontNames)
+            exec "call add(s:PLFontIsInstalled, 
+                        \ filereadable( expand('" . s:fontdir . "/" . s:PLFontNames[i] . "')))"
+            exec "let s:PLFontExists = " . s:PLFontExists . " || " . s:PLFontIsInstalled[i]
+            let i += 1
+        endwhile
+    endif
+
+    let s:guiUsesNerdFont = 
+                \ &guifont =~ "Nerd" ||
+                \ &guifont =~ "Sauce"
+
+    let s:guiUsesPLFont = s:guiUsesNerdFont || &guifont =~ "Powerline"
 
     if has("gui_running")
         let s:usePLFont = s:guiUsesPLFont
+        let s:useNerdFont = s:guiUsesNerdFont
     else
         let s:usePLFont = s:PLFontExists
+        let s:useNerdFont = s:nerdFontExists
     endif
 
     if s:usePLFont
         let g:airline_powerline_fonts = 1
     else
         let g:airline_powerline_fonts = 0
+    endif
+
+    if !s:useNerdFont == 0
+        " disable devicons and dependents.
+        let g:NERDTreeDisableFileExtensionHighlight = 1
+        let g:NERDTreeDisableExactMatchHighlight = 1
+        let g:NERDTreeDisablePatternMatchHighlight = 1
+        let g:webdevicons_enable = 0
     endif
 endif
 
