@@ -217,32 +217,9 @@ nmap <silent> <leader>b :TagbarToggle<CR>
 
 
 " ----- Airline -----
-"
-let g:airline#extensions#syntastic#stl_format_err="%E{Err: #%e L%fe}"
-let g:airline#extensions#syntastic#stl_format_warn='%W{Warn: #%w L%fw}'
-let g:airline_theme=colorSch
-let g:airline#extensions#wordcount#enabled = 1
-let g:airline_solarized_dark_inactive_border = 1
-exec 'let g:airline_' . colorSch . '_bg="' . backgroundColor . '"'
-" exec 'let g:airline_base16_' . colorSch . '= 0'
-let base16colorspace = 256
-exec 'let g:' . colorSch . '_base16 = 0'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 1
-let g:airline#extensions#tabline#show_tabs = 0
-let g:airline#extensions#tabline#buffer_min_count = 2
-let g:airline#extensions#tabline#tab_min_count = 2
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#tabline#show_tab_type = 0
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline#extensions#tabline#show_close_button = 0
-let g:airline#extensions#tabline#buffers_label = 'B'
-let g:airline#extensions#tabline#alt_sep = 1
-let g:airline#extensions#tabline# = 1
-" let g:airline#extensions#tabline#show_tabs = 0
-let g:airline_section_tabline = airline#section#create(['%{getcwd()}'])
 
 " let g:airline_symbols_ascii=1
+" Check if either of these have been specifically disabled or enabled.
 if !exists('g:airline_powerline_fonts') && !exists('g:webdevicons_enable')
     " mya need to use patternhighlight, as g:webdevciocons may be set by
     " edfualt.
@@ -273,10 +250,11 @@ if !exists('g:airline_powerline_fonts') && !exists('g:webdevicons_enable')
                 \ "Sauce Code Pro Nerd Font Complete.ttf" ]
     let s:nerdFontIsInstalled = []
     let s:PLFontNames = [
-                \ "Source Code Pro for Powerline.otf"]
+                \ "SourceCodePro-Regular.ttf"]
     let s:PLFontIsInstalled = []
 
     let s:nerdFontExists = 0
+    let s:PLFontExists = 0
     let i = 0
     while i < len(s:nerdFontNames)
         exec "call add(s:nerdFontIsInstalled, 
@@ -286,13 +264,13 @@ if !exists('g:airline_powerline_fonts') && !exists('g:webdevicons_enable')
         let i += 1
     endwhile
 
-    let s:PLFontExists = 0
     let i = 0
     if !s:nerdFontExists
         while i < len(s:PLFontNames)
             exec "call add(s:PLFontIsInstalled, 
                         \ filereadable( expand('" . s:fontdir . "/" . s:PLFontNames[i] . "')))"
             exec "let s:PLFontExists = " . s:PLFontExists . " || " . s:PLFontIsInstalled[i]
+                        exec "echo ( expand('" . s:fontdir . "/" . s:PLFontNames[i] . "')))"
             let i += 1
         endwhile
     endif
@@ -301,7 +279,9 @@ if !exists('g:airline_powerline_fonts') && !exists('g:webdevicons_enable')
                 \ &guifont =~ "Nerd" ||
                 \ &guifont =~ "Sauce"
 
-    let s:guiUsesPLFont = s:guiUsesNerdFont || &guifont =~ "Powerline"
+    let s:guiUsesPLFont = s:guiUsesNerdFont || 
+                \ &guifont =~ "Powerline" ||
+                \ &guifont =~ "Source\\ Code\\ Pro"
 
     if has("gui_running")
         let s:usePLFont = s:guiUsesPLFont
@@ -317,7 +297,7 @@ if !exists('g:airline_powerline_fonts') && !exists('g:webdevicons_enable')
         let g:airline_powerline_fonts = 0
     endif
 
-    if !s:useNerdFont == 0
+    if s:useNerdFont == 0
         " disable devicons and dependents.
         let g:NERDTreeDisableFileExtensionHighlight = 1
         let g:NERDTreeDisableExactMatchHighlight = 1
@@ -358,6 +338,30 @@ else
     let g:airline_section_z = airline#section#create([
                 \ 'linenr', 'maxlinenr',' ', '%c'])
 endif
+
+let g:airline#extensions#syntastic#stl_format_err="%E{Err: #%e L%fe}"
+let g:airline#extensions#syntastic#stl_format_warn='%W{Warn: #%w L%fw}'
+let g:airline_theme=colorSch
+let g:airline#extensions#wordcount#enabled = 1
+let g:airline_solarized_dark_inactive_border = 1
+exec 'let g:airline_' . colorSch . '_bg="' . backgroundColor . '"'
+" exec 'let g:airline_base16_' . colorSch . '= 0'
+let base16colorspace = 256
+exec 'let g:' . colorSch . '_base16 = 0'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#show_tabs = 0
+let g:airline#extensions#tabline#buffer_min_count = 2
+let g:airline#extensions#tabline#tab_min_count = 2
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#show_close_button = 0
+let g:airline#extensions#tabline#buffers_label = 'B'
+let g:airline#extensions#tabline#alt_sep = 1
+let g:airline#extensions#tabline# = 1
+" let g:airline#extensions#tabline#show_tabs = 0
+let g:airline_section_tabline = airline#section#create(['%{getcwd()}'])
 
 let g:airline#extensions#hunks#non_zero_only = 1
 let g:airline#extensions#whitespace#checks = []
