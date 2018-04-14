@@ -244,4 +244,7 @@ augroup misc
     autocmd!
     " Auto cd to working dir of this window's file
     " autocmd BufEnter * silent! lcd %:p:h
+    " save folds
+    autocmd BufWinLeave *.* mkview
+    autocmd BufWinEnter *.* silent loadview
 augroup END
