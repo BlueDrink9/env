@@ -27,7 +27,6 @@ askQuestionYN() {
 }
 
 downloadURLtoFile() {
-
     downloadDirectory=$(dirname "$2")
     if [ ! -d "$downloadDirectory" ]; then
         mkdir -p "$downloadDirectory"
@@ -36,10 +35,14 @@ downloadURLtoFile() {
 if [[ $OSTYPE =~ 'darwin' ]]; then
     curl -fLo $1 $2
 else
-    wget -O $2 $1
+    wget -qO $2 $1
 fi
 }
 
+addTextIfAbsent() {
+    # Check if text exists in file, otherwise append.
+    grep -q -F "$1" "$2" || echo "$1" >> "$2"
+}
 
 # SCRIPT COLORS are kept in this file
 # source $SCRIPTDIR/bash/colour_variables
@@ -51,7 +54,7 @@ TAB="\e[1A\e[2L"
 # Currently only removes vim configs and any bash customisation, as well as this script.
 uninstall() {
     if askQuestionYN "Really uninstall? "; then
-        printf "Uninstalling...\n"
+        printf "\nUninstalling...\n"
 
         # The sed commands replace source lines with blanks
         rm -rf "${BASH_CUSTOM}"
@@ -84,23 +87,6 @@ if [[ $1 = "-u" ]]; then
     exit
 fi
 
-
-echo "Are you WS or WW?"
-while [ 1 ] ; do
-    read -n 2 U
-    # Convert to upper case
-    U=`echo "$U" | tr '[:lower:]' '[:upper:]'`
-    if [ $U == "WS" ] || [ $U == "WW" ] ; then
-        break
-    else
-        echo "Who now? Are you sure?"
-    fi
-done
-if [ $U == "WS" ] ; then
-    IS_SHAW=0
-else
-    IS_SHAW=1
-fi
 
 if [[ $1 =~ ^--?[aA][lL]{2}?$ ]]; then
     ALL=1
@@ -139,32 +125,37 @@ vscodeExtensions() {
 }
 
 
-copyFonts() {
+installFonts() {
     if [  $ALL == 1 ] || askQuestionYN "\e[33mInstall fonts? \e[0m "; then
+        mkdir -p "$FONTDIR"
         if [[ ! -d "${FONTDIR}/truetype/custom" ]]; then
             mkdir -p "${FONTDIR}/truetype/custom"
         fi
-        mkdir -p "$FONTDIR"
-        cp ./fonts/* $FONTDIR/truetype/custom
+        cp ./fonts/* ${FONTDIR}/truetype/custom
 
+        echo -ne "Downloading fonts..."
         # Get url of latest version of Nerdfont Source Code Pro.
-        downloadURLtoFile https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest $TMP/nerdfontsapi
-        SCPLatestURL=`sed -n -e 's#^.*\(https://github.com/ryanoasis/nerd-fonts/releases/download/[^/]*/SourceCodePro.zip\).*$#\1#p' < $TMP/nerdfontsapi`
-        rm -f $TMP/nerdfontsapi
+        nerdfontsapi=$(mktemp)
+        downloadURLtoFile https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest $nerdfontsapi
+        SCPLatestURL=`sed -n -e 's#^.*\(https://github.com/ryanoasis/nerd-fonts/releases/download/[^/]*/SourceCodePro.zip\).*$#\1#p' < $nerdfontsapi`
+        rm -f $nerdfontsapi
 
-        downloadURLtoFile $SCPLatestURL $TMP/SCP.zip
-        unzip $TMP/SCP.zip -d "$FONTDIR" > /dev/null
-        rm -f $TMP/SCP.zip
+        SCP=$(mktemp)
+        downloadURLtoFile $SCPLatestURL $SCP.zip
+        SCPdir="${FONTDIR}/SauceCodeProNF"
+        unzip -o $SCP.zip -d "$SCPdir" # > /dev/null
+        rm -f $SCP.zip
         if [[ $OSTYPE == 'linux-gnu' ]]; then
             # Unused mac-required fonts.
-            rm -f "${FONTDIR}/*Windows Compatible.ttf"
+            rm -f "${SCPdir}/*Windows Compatible.ttf"
         elif [[ $OSTYPE =~ 'darwin' ]]; then
-            rm -f "${FONTDIR}/*Complete.ttf"
-            rm -f "${FONTDIR}/*Mono.ttf"
+            rm -f "${SCPdir}/*Complete.ttf"
+            rm -f "${SCPdir}/*Mono.ttf"
         fi
+        echo -ne $FONTDIR
 
         fc-cache
-        echo -e "${OK} Fonts installed to ${Orange}file:///${FONTDIR}${White}"
+        echo -ne "${OK} Fonts installed to ${Orange}${FONTDIR}${White}"
     fi
 }
 
@@ -267,23 +258,23 @@ setupShell() {
         else
             mkdir -p ${BASH_CUSTOM}
             cp -r $SCRIPTDIR/bash/* ${BASH_CUSTOM}/
-            echo "source $BASH_CUSTOM/bashrc" >> ${HOME}/.bashrc
+            addTextIfAbsent "source $BASH_CUSTOM/bashrc" ${HOME}/.bashrc
         fi
     else
         echo -n "Enabling custom bash setup..."
-        echo "source $SCRIPTDIR/bash/bashrc" >> ${HOME}/.bashrc
+        addTextIfAbsent "source $SCRIPTDIR/bash/bashrc" ${HOME}/.bashrc
         downloadURLtoFile  \
             https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.256dark  \
-            # https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-universal \
             "${HOME}/.dircolours_solarized"
+            # https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-universal \
 
         echo -n "Enabling custom tmux setup..."
-        echo "source-file $SCRIPTDIR/terminal/tmux.conf" >> ${HOME}/.tmux.conf
+        addTextIfAbsent "source-file $SCRIPTDIR/terminal/tmux.conf" ${HOME}/.tmux.conf
         echo -n "Enabling custom readline (inputrc) setup..."
-        echo "\$include $SCRIPTDIR/bash/inputrc.sh" >> ${HOME}/.inputrc
+        addTextIfAbsent "\$include $SCRIPTDIR/bash/inputrc.sh" ${HOME}/.inputrc
     fi
     if [[ $OSTYPE =~ 'darwin' ]]; then
-        echo "source .bashrc" >> ${HOME}/.bash_profile
+        addTextIfAbsent "source .bashrc" ${HOME}/.bash_profile
     fi
 }
 
@@ -313,7 +304,7 @@ setupVim(){
 
     else
         echo "Using WW's vimrc"
-        echo "so $SCRIPTDIR/editors/vim/vimrc" >> ${HOME}/.vimrc
+        addTextIfAbsent "so $SCRIPTDIR/editors/vim/vimrc" ${HOME}/.vimrc
         echo "Installing vim plugins..."
         # Install Plug (plugin manager)
         downloadURLtoFile https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "${HOME}/.vim/autoload/plug.vim"
@@ -325,11 +316,27 @@ setupVim(){
 }
 
 main() {
+    echo -e "Are you WS or WW?"
+    while [ 1 ] ; do
+        read -n 2 U
+        # Convert to upper case
+        U=`echo "$U" | tr '[:lower:]' '[:upper:]'`
+        if [ $U == "WS" ] || [ $U == "WW" ] ; then
+            break
+        else
+            echo -e "Who now? Are you sure?"
+        fi
+    done
+    if [ $U == "WS" ] ; then
+        IS_SHAW=0
+    else
+        IS_SHAW=1
+    fi
 
-    echo -e "\n------------------- VSCODE EXTENSIONS"
+    echo -ne "\n------------------- VSCODE EXTENSIONS"
     vscodeExtensions
 
-    echo -e "\n------------------- GIT"
+    echo -ne "\n------------------- GIT"
     gitUser $1
     gitCredentialCache
 
@@ -338,10 +345,12 @@ main() {
         dualBootLocalTime
     fi
 
-    echo -e "\n------------------- SHELL"
+    echo -ne "\n------------------- SHELL"
     setupShell
 
-    echo -e "\n------------------- VIM"
+    installFonts
+
+    echo -ne "\n------------------- VIM"
     setupVim
 
 
@@ -355,7 +364,8 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
 
     echo -e "[$Green Linux $White]"
 
-    main $1
+    # main $1
+    installFonts
 
     echo -e "${Green} Install Complete${NC}"
 
