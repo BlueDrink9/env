@@ -33,6 +33,7 @@ Plug 'xolox/vim-misc'
 Plug 'https://github.com/xolox/vim-session'
 cabbrev cs CloseSession
 cabbrev os OpenSession
+let g:session_persist_globals = ['&spelllang', '&autoread', '&spell']
 let g:session_persist_colors = 0
 let g:session_persist_font = 0
 let g:session_default_to_last = 'yes'
