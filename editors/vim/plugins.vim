@@ -223,6 +223,14 @@ nmap <silent> <leader>b :TagbarToggle<CR>
 
 " ----- Airline -----
 
+exec 'let g:airline_' . colorSch . '_bg="' . &background . '"'
+let g:airline_theme=colorSch
+let g:airline#extensions#wordcount#enabled = 1
+let g:airline_solarized_normal_green = 1
+let g:airline_solarized_dark_inactive_border = 1
+" exec 'let g:airline_base16_' . colorSch . '= 0'
+let base16colorspace = 256
+exec 'let g:' . colorSch . '_base16 = 0'
 " let g:airline_symbols_ascii=1
 " Check if either of these have been specifically disabled or enabled.
 if !exists('g:airline_powerline_fonts') || !exists('g:webdevicons_enable')
@@ -312,14 +320,6 @@ endif
 
 let g:airline#extensions#syntastic#stl_format_err="%E{Err: #%e L%fe}"
 let g:airline#extensions#syntastic#stl_format_warn='%W{Warn: #%w L%fw}'
-let g:airline_theme=colorSch
-let g:airline#extensions#wordcount#enabled = 1
-let g:airline_solarized_normal_green = 1
-let g:airline_solarized_dark_inactive_border = 1
-exec 'let g:airline_' . colorSch . '_bg="' . backgroundColor . '"'
-" exec 'let g:airline_base16_' . colorSch . '= 0'
-let base16colorspace = 256
-exec 'let g:' . colorSch . '_base16 = 0'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#show_tabs = 0
@@ -376,6 +376,7 @@ let g:airline#extensions#whitespace#checks = []
 set noshowmode
 "  reduce delay on insert leaave?
 set ttimeoutlen=50
+AirlineRefresh
 
 
 " ----- Prose -----
