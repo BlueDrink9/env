@@ -5,7 +5,7 @@
 if exists('&g:colors_name')
     let colorSch = g:colors_name
 endif
-if !exists ('&colorSch')
+if !exists ('colorSch')
     let colorSch="solarized"
 endif
 if exists ('&background')
@@ -25,7 +25,7 @@ if has("gui_running")
     "   below).
     set lines=40 columns=120
     " Default fallback for gui bg colour
-    if !exists ('&backgroundColor')
+    if !exists ('backgroundColor')
         let backgroundColor="light"
     endif
     exec 'set background=' . backgroundColor
