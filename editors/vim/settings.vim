@@ -8,9 +8,10 @@ endif
 if !exists ('colorSch')
     let colorSch="solarized"
 endif
-if exists ('&background')
-    let backgroundColor = &background
-endif
+" if exists ('&background')
+"     echom &background
+"     let g:backgroundColour = &background
+" endif
 
 set encoding=utf-8
 filetype plugin indent on
@@ -25,10 +26,10 @@ if has("gui_running")
     "   below).
     set lines=40 columns=120
     " Default fallback for gui bg colour
-    if !exists ('backgroundColor')
-        let backgroundColor="light"
+    if !exists ('g:backgroundColour')
+        let g:backgroundColour="light"
     endif
-    exec 'set background=' . backgroundColor
+    exec 'set background=' . g:backgroundColour
     if !exists(&guifont)
         let s:useFont = "Source\\ Code\\ Pro\\ Medium"
         if has ("win32")
@@ -58,19 +59,20 @@ else
     " If the current iTerm tab has been
     " created using the **dark** profile:
     if $ITERM_PROFILE == 'Solarized Dark'
-        let backgroundColor="dark"
+        let g:backgroundColour="dark"
     endif
     " If the current iTerm tab has been
     " created using the **light** profile:
     if $ITERM_PROFILE == 'Solarized Light'
-        let backgroundColor="light"
+        let g:backgroundColour="light"
     endif
 
     " Default fallback for console bg colour
-    if !exists ('backgroundColor')
-        let backgroundColor="dark"
+    " if !exists ('&background')
+    if !exists ('g:backgroundColour')
+        let g:backgroundColour="dark"
     endif
-    exec "set background=".backgroundColor
+    exec "set background=".g:backgroundColour
 
     exec "let g:".colorSch . "_termcolors=&t_Co"
     exec "let g:".colorSch . "_termtrans=1"
