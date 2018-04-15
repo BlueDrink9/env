@@ -8,7 +8,6 @@ let s:vimfilesDir = CreateVimDir("vimfiles")
 let s:pluginPath = CreateVimDir("vimfiles/plugins")
 let s:localPlugins = fnameescape(expand(s:vimfilesDir . "/local_plugins.vim"))
 
-
 "
 let g:proseFileTypes = "'latex,context,plaintex,tex,
             \markdown,mkd,
@@ -376,7 +375,7 @@ let g:airline#extensions#whitespace#checks = []
 set noshowmode
 "  reduce delay on insert leaave?
 set ttimeoutlen=50
-AirlineRefresh
+" AirlineRefresh
 
 
 " ----- Prose -----
@@ -401,7 +400,7 @@ let g:pencil#autoformat_blacklist = [
 function! SetProseOptions()
     call AutoCorrect()
     call textobj#sentence#init()
-    setl spell spl=en_us
+    setl spell spl=en_nz
     call pencil#init()
     setl ai
 endfunction
