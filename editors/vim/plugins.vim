@@ -154,8 +154,13 @@ if !has("gui_running")
     " if $TERM contains "-256color"
     " May be needed if terminal doesn't support.
     exec 'let g:' . colorSch . '_termcolors=256'
-    " endif
+    exec 'let g:' . colorSch . '_base16 = 0'
+    let base16colorspace = 256
+    g:solarized_termtrans = 1
 endif
+
+" Settings doesn't recommend this...
+let g:solarized_contrast = "high"
 
 " ----- scrooloose/syntastic settings -----
 "  Airoline handles status stuff (or should)
@@ -228,8 +233,6 @@ let g:airline#extensions#wordcount#enabled = 1
 let g:airline_solarized_normal_green = 1
 let g:airline_solarized_dark_inactive_border = 1
 " exec 'let g:airline_base16_' . colorSch . '= 0'
-let base16colorspace = 256
-exec 'let g:' . colorSch . '_base16 = 0'
 " let g:airline_symbols_ascii=1
 " Check if either of these have been specifically disabled or enabled.
 if !exists('g:airline_powerline_fonts') || !exists('g:webdevicons_enable')
