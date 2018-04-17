@@ -82,7 +82,7 @@ else
         endif
     endif
     " exec 'let s:pasteCMD = ":let @j=system(\"' . s:paste . '\")<CR><CR>\"jp"'
-    if !exists(s:pasteCMD)
+    if !exists('s:pasteCMD')
         exec 'let s:pasteCMD = ":read !' . s:paste . '<CR><CR>"'
     endif
     " :exe 'norm i' . system("ls -l") inserts results at cursor, but with
