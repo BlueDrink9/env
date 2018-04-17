@@ -79,13 +79,18 @@ else
             let s:copy = "xclip"
         endif
     endif
-    exec 'inoremap <C-v> <Esc>:read !' . s:paste . '<CR><CR>a'
+    exec 'let s:pasteCMD = ":read !' . s:paste . '<CR><CR>"'
+    " <c-u> gets rid of range before calling.
+    exec 'let s:copyCMD = ":w !' . s:copy . '<CR><CR>"'
+
+    exec 'inoremap <C-v> <Esc>' . s:pasteCMD . 'a'
     " exec 'cnoremap <C-v> <C-r>:read !' . s:paste . '<CR>'
-    exec 'vnoremap <C-v> :read !' . s:paste . '<CR><CR>'
-    exec 'nnoremap <C-q> :read !' . s:paste . '<CR><CR>'
-    exec 'vnoremap <C-X> :w !' . s:copy . '<CR><CR>'
-    exec 'vnoremap <C-c> :w !' . s:copy . '<CR><CR>'
+    exec 'vnoremap <C-v> ' . s:pasteCMD
+    exec 'nnoremap <C-q> ' . s:pasteCMD
+    exec 'vnoremap <C-X> ' . s:copyCMD
+    exec 'vnoremap <C-c> ' . s:copyCMD
 endif
+
 
 
 " Use CTRL-Q to do what CTRL-V used to do in insert
