@@ -81,6 +81,8 @@ else
     endif
     " exec 'let s:pasteCMD = ":let @j=system(\"' . s:paste . '\")<CR><CR>\"jp"'
     exec 'let s:pasteCMD = ":read !' . s:paste . '<CR><CR>"'
+    " :exe 'norm i' . system("ls -l") inserts results at cursor, but with
+    " paste still adds two newlines.
     " <c-u> gets rid of range before calling.
     exec 'let s:copyCMD = ":w !' . s:copy . '<CR><CR>"'
 
