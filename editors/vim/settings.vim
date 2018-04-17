@@ -171,6 +171,7 @@ set laststatus=2
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor = "latex"
+set conceallevel=2
 
 " No annoying sound on errors
 set noerrorbells
