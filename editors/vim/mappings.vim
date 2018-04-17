@@ -52,7 +52,7 @@ endif
 " In normal mode, use ctrl+q
 inoremap <C-v> <C-r>+
 cnoremap <C-v> <C-r>+
-vnoremap <C-x> "+d
+vnoremap <C-X> "+d
 vnoremap <C-c> "+y
 vnoremap <C-v> "+P
 nnoremap <C-q> "+P
