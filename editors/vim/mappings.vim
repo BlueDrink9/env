@@ -68,6 +68,8 @@ else
         if IsWSL()
             let s:paste = "paste.exe"
             let s:copy = "clip.exe"
+            exec 'let s:pasteCMD = ":exec \"norm i\" . system(\"' . s:paste . '\")<CR><CR>
+                \ <esc>kkkkkJJJJhi"'
 
         elseif s:uname =~ "Darwin"
             let s:paste = "pbpaste"
@@ -80,13 +82,16 @@ else
         endif
     endif
     " exec 'let s:pasteCMD = ":let @j=system(\"' . s:paste . '\")<CR><CR>\"jp"'
-    exec 'let s:pasteCMD = ":read !' . s:paste . '<CR><CR>"'
+    if !exists(s:pasteCMD)
+        exec 'let s:pasteCMD = ":read !' . s:paste . '<CR><CR>"'
+    endif
     " :exe 'norm i' . system("ls -l") inserts results at cursor, but with
     " paste still adds two newlines.
+    " :exe 'norm i' . system("ls -l") inserts results at cursor, but with
     " <c-u> gets rid of range before calling.
     exec 'let s:copyCMD = ":w !' . s:copy . '<CR><CR>"'
 
-    exec 'inoremap <C-v> <Esc>' . s:pasteCMD . 'a'
+    exec 'inoremap <C-v> <Esc>' . s:pasteCMD
     " exec 'cnoremap <C-v> <C-r>:read !' . s:paste . '<CR>'
     exec 'vnoremap <C-v> ' . s:pasteCMD
     exec 'nnoremap <C-q> ' . s:pasteCMD
