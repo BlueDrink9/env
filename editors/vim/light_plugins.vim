@@ -18,6 +18,17 @@ Plug 'https://github.com/bradford-smith94/quick-scope'
 " Trigger a highlight in the appropriate direction when pressing these keys:
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 Plug 'https://github.com/altercation/vim-colors-solarized.git'
+if !has("gui_running")
+    " if $TERM contains "-256color"
+    " May be needed if terminal doesn't support.
+    exec 'let g:' . colorSch . '_termcolors=256'
+    exec 'let g:' . colorSch . '_base16 = 0'
+    let base16colorspace = 256
+    g:solarized_termtrans = 1
+endif
+" Settings doesn't recommend this...
+let g:solarized_contrast = "high"
+
 Plug 'https://github.com/tpope/vim-surround.git'
 Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
 Plug 'https://github.com/jlanzarotta/bufexplorer.git'
