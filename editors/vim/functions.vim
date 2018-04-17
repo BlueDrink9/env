@@ -41,3 +41,12 @@ function! RepeatChar(char, count)
 endfunction
 nnoremap s :<C-U>exec "normal i".RepeatChar(nr2char(getchar()), v:count1)<CR>
 nnoremap S :<C-U>exec "normal a".RepeatChar(nr2char(getchar()), v:count1)<CR>
+
+function! IsWSL()
+    let s:version = system("cat /proc/version")
+    if s:version=~"Microsoft"
+        return 1
+    else
+        return 0
+    endif
+endfunction

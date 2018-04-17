@@ -32,9 +32,9 @@ if has("gui_running")
     exec 'set background=' . g:backgroundColour
     if !exists(&guifont)
         let s:useFont = "Source\\ Code\\ Pro\\ Medium"
-        if has ("win32")
+        if has("win32")
             exec 'set guifont=' . s:useFont . ':h11'
-        elseif has ("gui_macvim")
+        elseif has("gui_macvim")
             exec 'set guifont=' . s:useFont . ':h13'
         else
             exec 'set guifont=' . s:useFont . '\ 11'

@@ -48,14 +48,45 @@ if bufwinnr(1)
     map <c-Down> 5<C-W>-
 endif
 
-" In insert or visual mode, use standard cut/copy/paste shortcuts.
-" In normal mode, use ctrl+q
-inoremap <C-v> <C-r>+
-cnoremap <C-v> <C-r>+
-vnoremap <C-X> "+d
-vnoremap <C-c> "+y
-vnoremap <C-v> "+P
-nnoremap <C-q> "+P
+if has("guirunning") || has("clipboard")
+    " In insert or visual mode, use standard cut/copy/paste shortcuts.
+    " In normal mode, use ctrl+q
+    inoremap <C-v> <C-r>+
+    cnoremap <C-v> <C-r>+
+    vnoremap <C-X> "+d
+    vnoremap <C-c> "+y
+    vnoremap <C-v> "+P
+    nnoremap <C-q> "+P
+else
+    " Replace with writing/reading from system commands in console vim.
+    if has("win32")
+        let s:paste = paste.exe
+        let s:copy = clip.exe
+
+    elseif has("unix")
+        let s:uname = system("uname")
+        if IsWSL()
+            let s:paste = "paste.exe"
+            let s:copy = "clip.exe"
+
+        elseif s:uname =~ "Darwin"
+            let s:paste = "pbpaste"
+            let s:copy = "pbcopy"
+
+        else
+            " Linux
+            let s:paste = "xclip -o"
+            let s:copy = "xclip"
+        endif
+    endif
+    exec 'inoremap <C-v> <Esc>:read !' . s:paste . '<CR><CR>a'
+    " exec 'cnoremap <C-v> <C-r>:read !' . s:paste . '<CR>'
+    exec 'vnoremap <C-v> :read !' . s:paste . '<CR><CR>'
+    exec 'nnoremap <C-q> :read !' . s:paste . '<CR><CR>'
+    exec 'vnoremap <C-X> :w !' . s:copy . '<CR><CR>'
+    exec 'vnoremap <C-c> :w !' . s:copy . '<CR><CR>'
+endif
+
 
 " Use CTRL-Q to do what CTRL-V used to do in insert
 inoremap <C-Q> <C-V>
