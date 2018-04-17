@@ -24,7 +24,7 @@ if !has("gui_running")
     exec 'let g:' . colorSch . '_termcolors=256'
     exec 'let g:' . colorSch . '_base16 = 0'
     let base16colorspace = 256
-    g:solarized_termtrans = 1
+    let g:solarized_termtrans = 1
 endif
 " Settings doesn't recommend this...
 let g:solarized_contrast = "high"
