@@ -21,4 +21,12 @@ function! SourceCustoms(...)
     endfor
 endfunction
 
-exec SourceCustoms("functions.vim", "settings.vim", "plugins.vim", "mappings.vim")
+if !exists("g:light_plugins")
+    let g:light_plugins = 0
+endif
+
+if g:light_plugins
+    exec SourceCustoms("functions.vim", "settings.vim", "source_light_plugins.vim", "mappings.vim")
+else
+    exec SourceCustoms("functions.vim", "settings.vim", "plugins.vim", "mappings.vim")
+endif
