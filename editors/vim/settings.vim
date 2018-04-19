@@ -117,7 +117,9 @@ set sessionoptions-=blank
 set wildmenu
 set wildmode=longest,list:longest
 set scrolloff=5
-set listchars=tab:>-,trail:·,eol:¬,precedes:←,extends:→,nbsp:·
+if v:version >= 703
+    set listchars=tab:>-,trail:·,eol:¬,precedes:←,extends:→,nbsp:·
+endif
 set complete-=i     " Searching includes can be slow
 set display=lastline
 set diffopt+=vertical
@@ -133,10 +135,10 @@ exec 'set backupdir=' . CreateVimDir("vimfiles/backup") . expand('/')
 exec 'set directory=' . CreateVimDir("vimfiles/swap") . expand('/')
 if v:version >= 703
     exec 'set undodir=' . CreateVimDir("vimfiles/undo") . expand('/')
+    " Create undo file for inter-session undo
+    " Extra slash means files will have unique names
+    set undofile
 endif
-" Create undo file for inter-session undo
-" Extra slash means files will have unique names
-set undofile
 augroup autowrite
     autocmd!
     " Don't autosave if there is no buffer name.

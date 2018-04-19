@@ -41,6 +41,9 @@ Plug 'https://github.com/kien/rainbow_parentheses.vim'
 
 "--- Prose ---"
 Plug 'xolox/vim-misc'
+" Map os commands (eg maximise), and open windows commands without shell
+" popup.
+Plug 'https://github.com/xolox/vim-shell'
 Plug 'https://github.com/xolox/vim-session'
 cabbrev cs CloseSession
 cabbrev os OpenSession
