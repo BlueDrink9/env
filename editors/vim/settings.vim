@@ -107,8 +107,10 @@ set mouse=a
 set mousemodel="popup_setpos"
 " Show line numbers
 set number
-" Line numbers are displayed relative to current line.
-set relativenumber
+if v:version >= 703
+    " Line numbers are displayed relative to current line.
+    set relativenumber
+endif
 " Hide buffer (don't ask for save) when navigating away.
 set hidden
 set sessionoptions-=blank
@@ -120,12 +122,12 @@ set complete-=i     " Searching includes can be slow
 set display=lastline
 set diffopt+=vertical
 
-" set viminfo +=
-
-let s:vimrcdir = fnamemodify($MYVIMRC, ":p:h")
-let s:viminfoPath=s:vimrcdir . expand("/vimfiles/viminfo")
-let s:viminfoPath=substitute(s:viminfoPath,'\\','/','g')
-exec 'set viminfo+=n' . fnameescape(s:viminfoPath)
+if v:version >= 703
+    let s:vimrcdir = fnamemodify($MYVIMRC, ":p:h")
+    let s:viminfoPath=s:vimrcdir . expand("/vimfiles/viminfo")
+    let s:viminfoPath=substitute(s:viminfoPath,'\\','/','g')
+    exec 'set viminfo+=n' . fnameescape(s:viminfoPath)
+endif
 
 exec 'set backupdir=' . CreateVimDir("vimfiles/backup") . expand('/')
 exec 'set directory=' . CreateVimDir("vimfiles/swap") . expand('/')
@@ -151,14 +153,21 @@ set shiftwidth=4
 set softtabstop=4
 set smarttab
 " set tabstop=4
-" See :h fo-table. Wrapping and joingin options.
-set formatoptions +=lj
+" formatoptins: See :h fo-table.
+" Don't format on wrap.
+set formatoptions +=l
+if v:version >= 704
+    " Remove comment leader on join.
+    set formatoptions +=j
+endif
 
 set modeline
 set modelines=5
 set wrap
-" Colour the 80th column
-set colorcolumn=80
+if v:version >= 703
+    " Colour the 80th column
+    set colorcolumn=80
+endif
 " Linebreak relates to when a line wraps (ie not in a word)
 set linebreak
 " backspace and cursor keys wrap to previous/next line
