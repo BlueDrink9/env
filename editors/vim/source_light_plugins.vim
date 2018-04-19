@@ -21,7 +21,6 @@ let g:buftabline_show=1
 let g:buftabline_numbers=2
 
 exec 'source ' . s:scriptpath . "/light_plugins.vim"
-exec 'read ' . s:scriptpath . "/light_plugins.vim"
 
 call plug#end()
 
