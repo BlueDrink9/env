@@ -21,13 +21,14 @@ function set_bash_prompt () {
 
   # if git exists (it doesn't on iOS).
   if hash git 2>/dev/null; then
-    # Sets GIT_PROMPT
-    parse_git_branch
-    GIT_STATUS_PROMPT="${GIT_PROMPT}"
     GIT_BRANCH="`get_git_branch`"
-    if [ ! "${BRANCH}" == "" ]
+    if [ ! "${GIT_BRANCH}" == "" ]
     then
-      GIT_BRANCH="{${GIT_BRANCH}}"
+      # Sets GIT_PROMPT
+      parse_git_branch
+      GIT_STATUS_PROMPT="${GIT_PROMPT}"
+    else
+      GIT_STATUS_PROMPT=""
     fi
   fi
 
