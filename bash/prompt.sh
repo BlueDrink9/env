@@ -19,14 +19,18 @@ function set_bash_prompt () {
 
   USER_AT_HOST="${Blue}\u${NC}@${Yellow}\h${NC}"
 
-  # Sets GIT_PROMPT
-  parse_git_branch
-  GIT_STATUS_PROMPT="${GIT_PROMPT}"
-  GIT_BRANCH="`get_git_branch`"
-  if [ ! "${BRANCH}" == "" ]
-  then
-    GIT_BRANCH="{${GIT_BRANCH}}"
+  # if git exists (it doesn't on iOS).
+  if hash git 2>/dev/null; then
+    # Sets GIT_PROMPT
+    parse_git_branch
+    GIT_STATUS_PROMPT="${GIT_PROMPT}"
+    GIT_BRANCH="`get_git_branch`"
+    if [ ! "${BRANCH}" == "" ]
+    then
+      GIT_BRANCH="{${GIT_BRANCH}}"
+    fi
   fi
+
   #set_git_prompt
   #GIT_STATUS_PROMPT="${BRANCH}"
   # \e]0 escapes to window title, \a ends it.
