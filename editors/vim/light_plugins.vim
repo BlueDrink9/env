@@ -11,12 +11,14 @@ Plug 'https://github.com/christoomey/vim-tmux-navigator'
 Plug 'https://github.com/moll/vim-bbye'
 xnoremap bd Bdelete
 Plug 'ericbn/vim-relativize'
-" Highlight f and t chars to get where you want.
-" TODO monitor progress of this branch. May be updated soon.
-" Plug 'unblevable/quick-scope'
-Plug 'https://github.com/bradford-smith94/quick-scope'
-" Trigger a highlight in the appropriate direction when pressing these keys:
-let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+if v:version >= 702
+    " Highlight f and t chars to get where you want.
+    " TODO monitor progress of this branch. May be updated soon.
+    " Plug 'unblevable/quick-scope'
+    Plug 'https://github.com/bradford-smith94/quick-scope'
+    " Trigger a highlight in the appropriate direction when pressing these keys:
+    let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+endif
 Plug 'https://github.com/altercation/vim-colors-solarized.git'
 if !has("gui_running")
     " if $TERM contains "-256color"
@@ -29,9 +31,21 @@ endif
 " Settings doesn't recommend this...
 let g:solarized_contrast = "high"
 
+Plug 'xolox/vim-misc'
+" Map os commands (eg maximise), and open windows commands without shell
+" popup.
+Plug 'https://github.com/xolox/vim-shell'
+if v:version >= 704
+    Plug 'https://github.com/xolox/vim-session'
+    cabbrev cs CloseSession
+    cabbrev os OpenSession
+endif
+
 Plug 'https://github.com/tpope/vim-surround.git'
 Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
-Plug 'https://github.com/jlanzarotta/bufexplorer.git'
+if v:version >= 704
+    Plug 'https://github.com/jlanzarotta/bufexplorer.git'
+endif
 " Replaced in favour of slightly heavier version tcomment.
 " See https://github.com/wincent/wincent/commit/913e79724456976549244893e9025aa6fcf3cc1c
 " Plug 'https://github.com/tpope/vim-commentary'
@@ -40,13 +54,6 @@ Plug 'https://github.com/kien/rainbow_parentheses.vim'
 " Plug 'https://github.com/itchyny/lightline.vim'
 
 "--- Prose ---"
-Plug 'xolox/vim-misc'
-" Map os commands (eg maximise), and open windows commands without shell
-" popup.
-Plug 'https://github.com/xolox/vim-shell'
-Plug 'https://github.com/xolox/vim-session'
-cabbrev cs CloseSession
-cabbrev os OpenSession
 let g:session_persist_globals = ['&spelllang', '&autoread', '&spell']
 let g:session_persist_colors = 0
 let g:session_persist_font = 0
