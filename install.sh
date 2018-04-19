@@ -39,6 +39,28 @@ else
 fi
 }
 
+getLatestReleaseFileURL() {
+    # Takes argument 1 of form user/repo, eg will-shaw/env.
+    # Gets the URL of the latest-released version of the specified filename arg 2.
+    repoapi=$(mktemp)
+    repo=$1
+    file=$2
+    downloadURLtoFile https://api.github.com/repos/${repo}/releases/latest $repoapi
+    fileLatestURL=`sed -n -e 's#^.*\(https://github.com/${repo}/releases/download/[^/]*/${file}\).*$#\1#p' < $repoapi`
+    rm -f $repoapi
+    echo $fileLatestURL
+}
+
+downloadURLAndExtractZipTo() {
+    # Two arguments: url, and destination folder.
+    url=$1
+    destDir=$2
+    tmpzipfile=$(mktemp)
+    downloadURLtoFile $url $tmpzipfile.zip
+    unzip -o $tmpzipfile.zip -d "$destDir" # > /dev/null
+    rm -f $tmpzipfile.zip
+}
+
 addTextIfAbsent() {
     # Check if text exists in file, otherwise append.
     grep -q -F "$1" "$2" || echo "$1" >> "$2"
@@ -134,17 +156,14 @@ installFonts() {
         cp ./fonts/* ${FONTDIR}/truetype/custom
 
         echo -ne "Downloading fonts..."
-        # Get url of latest version of Nerdfont Source Code Pro.
-        nerdfontsapi=$(mktemp)
-        downloadURLtoFile https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest $nerdfontsapi
-        SCPLatestURL=`sed -n -e 's#^.*\(https://github.com/ryanoasis/nerd-fonts/releases/download/[^/]*/SourceCodePro.zip\).*$#\1#p' < $nerdfontsapi`
-        rm -f $nerdfontsapi
+        # Get latest Iosevka font release.
+        fontUrl=`getLatestReleaseFileURL be5invis/iosevka iosevka-pack-*.zip`
+        fontdir="${FONTDIR}/Iosevka"
+        downloadURLAndExtractZipTo $fontUrl $fontdir
 
-        SCP=$(mktemp)
-        downloadURLtoFile $SCPLatestURL $SCP.zip
+        SCPUrl=`getLatestReleaseFileURL ryanoasis/nerd-fonts SourceCodePro.zip`
         SCPdir="${FONTDIR}/SauceCodeProNF"
-        unzip -o $SCP.zip -d "$SCPdir" # > /dev/null
-        rm -f $SCP.zip
+        downloadURLAndExtractZipTo $SCPUrl $SCPdir
         if [[ $OSTYPE == 'linux-gnu' ]]; then
             # Unused mac-required fonts.
             rm -f "${SCPdir}/*Windows Compatible.ttf"
