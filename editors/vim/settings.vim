@@ -131,7 +131,9 @@ endif
 
 exec 'set backupdir=' . CreateVimDir("vimfiles/backup") . expand('/')
 exec 'set directory=' . CreateVimDir("vimfiles/swap") . expand('/')
-exec 'set undodir=' . CreateVimDir("vimfiles/undo") . expand('/')
+if v:version >= 703
+    exec 'set undodir=' . CreateVimDir("vimfiles/undo") . expand('/')
+endif
 " Create undo file for inter-session undo
 " Extra slash means files will have unique names
 set undofile
@@ -182,7 +184,9 @@ set laststatus=2
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor = "latex"
-set conceallevel=2
+if v:version >= 703
+    set conceallevel=2
+endif
 
 " No annoying sound on errors
 set noerrorbells
