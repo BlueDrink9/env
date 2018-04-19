@@ -1,7 +1,11 @@
 " vim: set ft=vim:
 
 " Folder in which current script resides:
-let s:scriptpath = fnameescape(expand('<sfile>:p:h'))
+if v:version >= 703
+    let s:scriptpath = fnameescape(expand('<sfile>:p:h'))
+else
+    let s:scriptpath = expand('<sfile>:p:h')
+endif
 let s:pluginPath = CreateVimDir("vimfiles/plugins")
 
 " for plugin in g:plugs
