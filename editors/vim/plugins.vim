@@ -71,8 +71,10 @@ Plug 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
 
 "--- Tags ---"
 Plug 'xolox/vim-misc'
-Plug 'xolox/vim-easytags'
-Plug 'majutsushi/tagbar'
+if executable('ctags-exuberant') || executable('ctags')
+    Plug 'xolox/vim-easytags'
+    Plug 'majutsushi/tagbar'
+endif
 
 "--- Prose ---"
 " Better prose spellchecking
