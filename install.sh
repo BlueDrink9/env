@@ -1,36 +1,38 @@
 #!/bin/bash
 
 # For debugging use
-set -eEo pipefail
+# set -eEuxo pipefail
 WD="$PWD"                   # Save working dir to return after navigation.
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BAKDIR=$HOME/.env_backup    # Directory to store config backups.
 BASH_CUSTOM=$HOME/.bash_custom # Directory to store custom bash includes.
 VIMDIR=$HOME/.vim_runtime   # Directory containing Vim extras.
 # SCRIPT COLORS are kept in this file
-# source $SCRIPTDIR/bash/colour_variables
+source $SCRIPTDIR/bash/colour_variables.sh
 OK="[ $Green  OK  ] $NC"
 TAB="\e[1A\e[2L"
+SKIP=0
+ALL=0
+VSCODE_EXTENSIONS_DIR=$HOME/.vscode/extensions
 if [[ $OSTYPE == 'linux-gnu' ]]; then
     FONTDIR=$HOME/.fonts
 elif [[ $OSTYPE =~ 'darwin' ]]; then
     FONTDIR=$HOME/Library/Fonts
 fi
-SKIP=0
 
-ALL=0
-
-VSCODE_EXTENSIONS_DIR=$HOME/.vscode/extensions
+printLine() {
+   printf -- "$@\n" 
+}
+printErr() {
+   >&2 printLine "$@"
+}
 
 askQuestionYN() {
-    if $1 = ""; then
-        question=""
-    else
-        question="$1"
-    fi
-
-    echo -ne $question " (y/n)" >&2
+    default="?"
+    question=${1:-default}
+    echo -ne "${question} (y/n) " >&2
     read -n 1 REPLY
+    printErr ""
     if [[ $REPLY =~ ^[yY]$ ]]; then
         return 0
     else
@@ -39,24 +41,27 @@ askQuestionYN() {
 }
 
 getWebItem() {
-    url=$1
+    default="no-url-given"
+    url=${1:-default}
+    printErr "Downloading $url ... "
     # OSX has curl by default, linux has wget by default
     # if [[ $OSTYPE =~ 'darwin' ]]; then
     if hash curl 2> /dev/null; then
-        curl -fL $url
+        curl -fL $url 2> /dev/null
     else
-        wget -qO- $url
+        wget -qO- $url 2> /dev/null
     fi
+    printErr "Done"
 }
 
 downloadURLtoFile() {
-    url=$1
-    filename=$2
-    if $url = "" || $filename = ""; then
-        >&2 echo -ne "Error: Invalid url or filename"
+    default="invalid url or filename"
+    url=${1:-default}
+    filename=${2:-default}
+    if [ "$url" = "default" ] || [ "$filename" = "default" ]; then
+        printErr "Error: Invalid url or filename"
     fi
     downloadDirectory=$(dirname "$filename")
-    >&2 echo "to ( $filename ) "
     if [ ! -d "$downloadDirectory" ]; then
         mkdir -p "$downloadDirectory"
     fi
@@ -66,42 +71,46 @@ downloadURLtoFile() {
 getLatestReleaseFileURL() {
     # Takes argument 1 of form user/repo, eg will-shaw/env.
     # Gets the URL of the latest-released version of the specified filename arg 2.
+    default="invalid url or filename"
+    repo=${1:-default}
+    file=${2:-default}
     repo=$1
     file=$2
     repoapi=`getWebItem "https://api.github.com/repos/${repo}/releases/latest"`
-    >&2 printf "file ($file)"
     searchTemplate=https://github.com/${repo}/releases/download/[^/]*/${file}
     fileLatestURL=`echo $repoapi | sed -n -e "s,^.*\(${searchTemplate}\).*$,\1,p"`
-    >&2 printf "What the fuuuuuck ($fileLatestURL)"
     echo $fileLatestURL
 }
 
 downloadURLAndExtractZipTo() {
     # Two arguments: url, and destination folder.
-    url=$1
-    destDir=$2
-    if $url = "" || $destDir = ""; then
-       >&2 echo -ne "Error: Invalid url or dest"
+    default="invalid url or filename"
+    url=${1:-default}
+    destDir=${2:-default}
+    if [ "$url" = "default" ] || [ "$destDir" = "default" ]; then
+       printErr "Error: Invalid url or dest"
     fi
     if [ ! -d "$destDir" ]; then
         mkdir -p $destDir
     fi
     tmpzipfile=$(mktemp)
-    echo "downloading ($url) "
     downloadURLtoFile $url $tmpzipfile.zip
     unzip -o $tmpzipfile.zip -d "$destDir" # > /dev/null
     rm -f $tmpzipfile.zip
 }
 
 addTextIfAbsent() {
+    default="invalid text or filename"
+    text=${1:-default}
+    file=${2:-default}
     # Check if text exists in file, otherwise append.
-    grep -q -F "$1" "$2" || echo "$1" >> "$2"
+    grep -q -F "$text" "$file" || echo "$text" >> "$file"
 }
 
 # -------------
 # Currently only removes vim configs and any bash customisation, as well as this script.
 uninstall() {
-    if askQuestionYN "Really uninstall? "; then
+    if askQuestionYN "Really uninstall?"; then
         printf "\nUninstalling...\n"
 
         # The sed commands replace source lines with blanks
@@ -130,24 +139,12 @@ uninstall() {
         # rm -rf "${SCRIPTDIR}"
     fi
 }
-if [[ $1 = "-u" ]]; then
-    uninstall
-    exit
-fi
-
-
-if [[ $1 =~ ^--?[aA][lL]{2}?$ ]]; then
-    ALL=1
-fi
-
-
 
 vscodeExtensions() {
     if [[ $ALL == 1 ]]; then
         REPLY="y"
     else
-        echo -ne "\e[33mInstall Visual Studio Code extensions? (Y/n/c)\e[0m "
-        read -n 1 REPLY
+        askQuestionYN "${Orange}Install Visual Studio Code extensions?$NC"
     fi
     if hash code 2> /dev/null; then # Check if 'code' exists.
 
@@ -166,7 +163,7 @@ vscodeExtensions() {
             code ./editors
         fi
     else
-        echo -e "VSCode not installed or variable not set."
+        printErr "VSCode not installed or variable not set."
         return 1
     fi
     return 0
@@ -174,54 +171,54 @@ vscodeExtensions() {
 
 
 installFonts() {
-    if [  $ALL == 1 ] || askQuestionYN "\e[33mInstall fonts? \e[0m "; then
+    if [  $ALL == 1 ] || askQuestionYN "${Orange}Install fonts? $NC"; then
         mkdir -p "$FONTDIR"
         if [[ ! -d "${FONTDIR}/truetype/custom" ]]; then
             mkdir -p "${FONTDIR}/truetype/custom"
         fi
-        # cp ${SCRIPTDIR}/fonts/* ${FONTDIR}/truetype/custom
 
-        echo -ne "Downloading fonts..."
+        printErr "Downloading fonts..."
+
         # Get latest Iosevka font release.
         fontUrl=`getLatestReleaseFileURL "be5invis/Iosevka" "iosevka-pack-[^z]*zip"`
-        echo fontUrl = $fontUrl
         fontdir="${FONTDIR}/Iosevka"
-        downloadURLAndExtractZipTo $fontUrl $fontdir
+        downloadURLAndExtractZipTo $fontUrl $fontdir && \
+            printErr "${OK} Fonts installed to ${Orange}${fontdir}${White}"
 
         SCPUrl=`getLatestReleaseFileURL "ryanoasis/nerd-fonts" "SourceCodePro\.zip"`
         SCPdir="${FONTDIR}/SauceCodeProNF"
-        downloadURLAndExtractZipTo $SCPUrl $SCPdir
+        downloadURLAndExtractZipTo $SCPUrl $SCPdir && \
+            printErr "${OK} Fonts installed to ${Orange}${SCPdir}${White}"
+
         if [[ $OSTYPE == 'linux-gnu' ]]; then
-            # Unused mac-required fonts.
+            # Unused mac-required SCP fonts.
             rm -f "${SCPdir}/*Windows Compatible.ttf"
         elif [[ $OSTYPE =~ 'darwin' ]]; then
             rm -f "${SCPdir}/*Complete.ttf"
             rm -f "${SCPdir}/*Mono.ttf"
         fi
-        echo -ne $FONTDIR
 
-        fc-cache
-        echo -ne "${OK} Fonts installed to ${Orange}${FONTDIR}${White}"
+        fc-cache && printErr "${OK} Fontcache updated"
     fi
 }
 
 setVimColorscheme() {
     if [ ! -d "$HOME/.vim/colors" ] || [ ! $SKIP == 2 ]; then
-        echo -e "Downloading Vim colorschemes."
+        printErr "Downloading Vim colorschemes."
         git clone --depth=1 https://github.com/flazz/vim-colorschemes.git 2> /dev/null
         if [[ ! -d "$HOME/.vim" ]]; then
             mkdir -p "$HOME/.vim/colors"
         fi
-        echo -ne "Placing color schemes..."
+        printErr "Placing color schemes..."
         cp ./vim-colorschemes/colors/*.vim "$HOME/.vim/colors"
-        echo -e "\r$OK Placing color schemes...Done."
+        printErr "$OK Placing color schemes...Done."
         rm -rf "./vim-colorschemes"
     fi
 
-    echo -ne "\e[33mEnter chosen color scheme name: \e[0m"
+    echo -ne "${Orange}Enter chosen color scheme name: $NC"
     read COLORSCHEME
 
-    echo -e "\e[1A\e[2L$OK Color scheme = $COLORSCHEME"
+    printErr "\e[1A\e[2L$OK Color scheme = $COLORSCHEME"
 
     sed 's/${VIM_COLORSCHEME}/'$COLORSCHEME'/g' ./editors/vim/extended.vim > ./extended.vim
 
@@ -229,11 +226,11 @@ setVimColorscheme() {
 }
 
 setVimLineNumbers() {
-    if [  $ALL == 1 ] || askQuestionYN "\e[33mDo you want to enable line numbers?\e[0m "; then
-        echo -e "\n$OK Vim line numbers disabled."
+    if [  $ALL == 1 ] || askQuestionYN "${Orange}Do you want to enable line numbers?${NC}"; then
+        printErr "$OK Vim line numbers disabled."
         sed -i 's/${NUMBER}/ /g' ./extended.vim
     else
-        echo -e "\n$OK Vim line numbers enabled."
+        printErr "$OK Vim line numbers enabled."
         sed -i 's/${NUMBER}/set number/g' ./extended.vim
     fi
     cp ./extended.vim $VIMDIR/vimrcs/extended.vim
@@ -241,82 +238,82 @@ setVimLineNumbers() {
 }
 
 dualBootLocalTime() {
-    if askQuestionYN "\e[33mInterpret hardware clock as local time? \e[0m "; then
-        echo -e "\r$OK Linux using local time."
+    if askQuestionYN "${Orange}Interpret hardware clock as local time? ${NC}"; then
+        printErr "\r$OK Linux using local time."
         timedatectl set-local-rtc 1
     else
-        echo ''
+        printErr ''
     fi
 }
 
 gitUser() {
     if [[ $1 =~ ^--?[gG](it)?-?[cC](redentials)? ]]; then
-        echo -e "Force git update."
+        printErr "Forcing git update."
     elif [[ "$(git config --global user.name)" =~ .+ ]] && [[ $(git config --global user.email) =~ .+ ]]; then
-        echo -e "$OK Git global user is set."
-        echo -e "Re-run with ( ./install -gu ) to force update."
+        printErr "$OK Git global user is set."
+        printErr "Re-run with ( ./install -gu ) to force update."
         return 0
     fi
 
-    echo -e "Setting up git global user..."
+    printErr "Setting up git global user..."
     echo -ne "${Green}Enter your github username:${NC} "
     read GIT_USER
     echo -ne "${Green}Enter your git email:${NC} "
     read GIT_EMAIL
 
-    echo -e "\e[32mConfiguring git.\e[0m"
-    echo "Username: $GIT_USER"
-    echo "Email: $GIT_EMAIL"
+    printErr "${Orange}Configuring git.$NC"
+    printErr "Username: $GIT_USER"
+    printErr "Email: $GIT_EMAIL"
     git config --global user.name "$GIT_USER"
     git config --global credential.https://github.com.username "$GIT_USER"
     git config --global user.email "$GIT_EMAIL"
-    echo -e "\e[36mYou can update your git user by entering:\e[0m ./install -gu"
+    printErr "${Cyan}You can update your git user by entering:$NC ./install -gu"
 }
 
 gitCredentialCache() {
-    if [ $ALL == 1 ] || askQuestionYN "\e[33mWant Git to store your credentials for a while? \e[0m "; then
+    if [ $ALL == 1 ] || askQuestionYN "${Orange}Want Git to store your credentials for a while?${NC}"; then
 
         if [[ ! "$(git config --global user.name)" =~ .+ ]] || [[ ! $(git config --global user.email) =~ .+ ]]; then
-            echo -e "$OK Git global user is not setup correctly."
-            echo -e "Re-run with ( ./install -gu ) to force update."
+            printErr "$OK Git global user is not setup correctly."
+            printErr "Re-run with ( ./install -gu ) to force update."
             return 0
         fi
 
-        echo -ne "\n\e[33mHow long should Git store your credentials? (minutes)\e[0m "
+        printErr "\n\e[33mHow long should Git store your credentials? (minutes)\e[0m "
         while [ 1 ]; do
             read REPLY
             if [[ $REPLY =~ ^[0-9]+$ ]] && [[ $REPLY > 0 ]]; then
                 break
             else
-                echo -e "${Red}Invalid input${NC}"
+                printErr "${Red}Invalid input${NC}"
             fi
         done
-        echo -e "Git will remember your credentials for $REPLY minutes ($(( $REPLY * 60 )) seconds)."
+        printErr "Git will remember your credentials for $REPLY minutes ($(( $REPLY * 60 )) seconds)."
         git config --global credential.helper "cache --timeout=$(( $REPLY * 60 ))"
     fi
 }
 
 setupShell() {
     if [ "$IS_SHAW" == 0 ] ; then
-        echo -e "Copying custom bash files..."
+        printErr "Copying custom bash files..."
         if [[ -d "${BASH_CUSTOM}" ]] && [[ ! $SKIP == 1 ]]; then
-            echo -e "${OK} ${BASH_CUSTOM} directory exists."
+            printErr "${OK} ${BASH_CUSTOM} directory exists."
         else
             mkdir -p ${BASH_CUSTOM}
             cp -r $SCRIPTDIR/bash/* ${BASH_CUSTOM}/
             addTextIfAbsent "source $BASH_CUSTOM/bashrc" ${HOME}/.bashrc
         fi
     else
-        echo -n "Enabling custom bash setup..."
+        printErr "Enabling custom bash setup..."
         addTextIfAbsent "source $SCRIPTDIR/bash/bashrc" ${HOME}/.bashrc
         downloadURLtoFile  \
             https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.256dark  \
             "${HOME}/.dircolours_solarized"
             # https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-universal \
 
-        echo -n "Enabling custom tmux setup..."
+        printErr "Enabling custom tmux setup..."
         addTextIfAbsent "source-file $SCRIPTDIR/terminal/tmux.conf" ${HOME}/.tmux.conf
-        echo -n "Enabling custom readline (inputrc) setup..."
+        printErr "Enabling custom readline (inputrc) setup..."
         addTextIfAbsent "\$include $SCRIPTDIR/bash/inputrc.sh" ${HOME}/.inputrc
     fi
     if [[ $OSTYPE =~ 'darwin' ]]; then
@@ -327,31 +324,32 @@ setupShell() {
 setupVim(){
     if [ "$IS_SHAW" == 0 ] ; then
 
-        echo -ne "Checking Vim..."
+        printErr "Checking Vim..."
 
         if [[ -d "${VIMDIR}" ]]; then
-            echo -ne "found custom Vim.\nUpdating => "
+            printErr "found custom Vim.\nUpdating => "
 
             cd "${VIMDIR}"
             git stash | xargs echo > /dev/null
             git rebase origin master | xargs echo -n
             git stash pop | xargs echo > /dev/null
             cd "${WD}"
-            echo -e "\r\e[2K${OK} Vim configuration is up to date."
+            printErr "\r\e[2K${OK} Vim configuration is up to date."
         else
-            echo -ne Installing Amix\'s Awesome Vim config
+            printErr "Installing Amix's Awesome Vim config"
             git clone --depth=1 https://github.com/amix/vimrc.git "$VIMDIR"
-            echo -e "\r[\e[32m   OK   \e[0m] Installed Amix'\s Awesome Vim config."
+            printErr "\r[\e[32m   OK   \e[0m] Installed Amix's Awesome Vim config."
         fi
         sh "${VIMDIR}/install_awesome_vimrc.sh" | xargs echo > /dev/null
 
-        echo -e "\n------------------- VIM COLOR SCHEME"
+        printErr ""
+        printErr "------------------- VIM COLOR SCHEME"
         setVimColorscheme
 
     else
-        echo "Using WW's vimrc"
+        printErr "Using WW's vimrc"
         addTextIfAbsent "so $SCRIPTDIR/editors/vim/vimrc" ${HOME}/.vimrc
-        echo "Installing vim plugins..."
+        printErr "Installing vim plugins..."
         # Install Plug (plugin manager)
         downloadURLtoFile https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "${HOME}/.vim/autoload/plug.vim"
         # This has the problem of making the caret disappear in WSL...
@@ -362,15 +360,16 @@ setupVim(){
 }
 
 main() {
-    echo -e "Are you WS or WW?"
+    echo -ne "Are you WS or WW? "
     while [ 1 ] ; do
         read -n 2 U
+        printErr ""
         # Convert to upper case
         U=`echo "$U" | tr '[:lower:]' '[:upper:]'`
         if [ $U == "WS" ] || [ $U == "WW" ] ; then
             break
         else
-            echo -e "Who now? Are you sure?"
+            printErr "Who now? Are you sure?"
         fi
     done
     if [ $U == "WS" ] ; then
@@ -379,25 +378,32 @@ main() {
         IS_SHAW=1
     fi
 
-    echo -ne "\n------------------- VSCODE EXTENSIONS"
+    printErr ""
+    printErr '------------------- VSCODE EXTENSIONS'
     vscodeExtensions
 
-    echo -ne "\n------------------- GIT"
+    printErr ""
+    printErr "------------------- GIT"
     gitUser $1
     gitCredentialCache
 
     if [ "$IS_SHAW" == 0 ] ; then
-        echo -e "\n------------------- LOCAL TIME"
+        printErr ""
+        printErr "------------------- LOCAL TIME"
         dualBootLocalTime
     fi
 
-    echo -ne "\n------------------- SHELL"
+    printErr ""
+    printErr "------------------- SHELL"
     setupShell
 
+    printErr ""
+    printErr "------------------- FONTS"
     installFonts
 
-    echo -ne "\n------------------- VIM"
-    setupVim
+    printErr ""
+    printErr "------------------- VIM"
+    # setupVim
 
 
     # Restart bash
@@ -406,26 +412,38 @@ main() {
     return 0
 }
 
+# set default arg to avoid warnings
+arg1=${1:-}
+if [ ! -z $arg1 ]; then
+    if [[ $arg1 = "-u" ]]; then
+        uninstall
+        exit
+    fi
+
+    if [[ $arg1 =~ ^--?[aA][lL]{2}?$ ]]; then
+        ALL=1
+    fi
+fi
+
 if [[ $OSTYPE == 'linux-gnu' ]]; then
 
-    echo -e "[$Green Linux $White]"
+    printErr "[$Green Linux ${NC}]"
 
-    # main $1
-    installFonts
+    main $1
 
-    echo -e "${Green} Install Complete${NC}"
+    printErr "${Green} Install Complete${NC}"
 
 elif [[ $OSTYPE =~ 'darwin' ]]; then
-    echo -e "${Red}MacOS not fully supported."
+    printErr "${Red}MacOS not fully supported."
     if askQuestionYN "Continue anyway?" ; then
         main $1
     fi
 elif [[ $OSTYPE == 'msys' ]]; then
-    echo -e "${Red}Git Bash not supported."
+    printErr "${Red}Git Bash not supported."
     if askQuestionYN "Continue anyway?" ; then
         main $1
     fi
 else
-    echo "OS not set... Exiting without change."
+    printErr "OS not set... Exiting without change."
 fi
 
