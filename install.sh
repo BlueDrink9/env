@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # For debugging use
-set -eEuxo pipefail
+# set -eEuxo pipefail
+# set -uxo pipefail
 WD="$PWD"                   # Save working dir to return after navigation.
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BAKDIR=$HOME/.env_backup    # Directory to store config backups.
@@ -249,7 +250,7 @@ dualBootLocalTime() {
 }
 
 gitUser() {
-    if [[ $1 =~ ^--?[gG](it)?-?[cC](redentials)? ]]; then
+    if [[ ${1:-} =~ ^--?[gG](it)?-?[cC](redentials)? ]]; then
         printErr "Forcing git update."
     elif [[ "$(git config --global user.name)" =~ .+ ]] && [[ $(git config --global user.email) =~ .+ ]]; then
         printErr "$OK Git global user is set."
@@ -386,7 +387,7 @@ main() {
 
     printErr ""
     printErr "------------------- GIT"
-    gitUser $1
+    gitUser ${1:-}
     gitCredentialCache
 
     if [ "$IS_SHAW" == 0 ] ; then
@@ -407,7 +408,7 @@ main() {
     printErr "------------------- VIM"
     # setupVim
 
-
+    printErr "${Green} Install Complete${NC}"
     # Restart bash
     exec bash
 
@@ -431,7 +432,6 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
 
     printErr "[$Green Linux ${NC}]"
     main ${1:-}
-    printErr "${Green} Install Complete${NC}"
 
 elif [[ $OSTYPE =~ 'darwin' ]]; then
     printErr "${Red}MacOS not fully supported."
