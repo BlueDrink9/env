@@ -9,7 +9,7 @@ BASH_CUSTOM=$HOME/.bash_custom # Directory to store custom bash includes.
 VIMDIR=$HOME/.vim_runtime   # Directory containing Vim extras.
 # SCRIPT COLORS are kept in this file
 source $SCRIPTDIR/bash/colour_variables.sh
-OK="[ $Green  OK  ] $NC"
+OK="[ ${Green}OK${NC} ]"
 TAB="\e[1A\e[2L"
 SKIP=0
 ALL=0
@@ -183,12 +183,12 @@ installFonts() {
         fontUrl=`getLatestReleaseFileURL "be5invis/Iosevka" "iosevka-pack-[^z]*zip"`
         fontdir="${FONTDIR}/Iosevka"
         downloadURLAndExtractZipTo $fontUrl $fontdir && \
-            printErr "${OK} Fonts installed to ${Yellow}${fontdir}${White}"
+            printErr "${OK} Fonts installed to ${Yellow}${fontdir}${NC}"
 
         SCPUrl=`getLatestReleaseFileURL "ryanoasis/nerd-fonts" "SourceCodePro\.zip"`
         SCPdir="${FONTDIR}/SauceCodeProNF"
         downloadURLAndExtractZipTo $SCPUrl $SCPdir && \
-            printErr "${OK} Fonts installed to ${Yellow}${SCPdir}${White}"
+            printErr "${OK} Fonts installed to ${Yellow}${SCPdir}${NC}"
 
         if [[ $OSTYPE == 'linux-gnu' ]]; then
             # Unused mac-required SCP fonts.
@@ -218,7 +218,7 @@ setVimColorscheme() {
     echo -ne "${Yellow}Enter chosen color scheme name: $NC"
     read COLORSCHEME
 
-    printErr "\e[1A\e[2L$OK Color scheme = $COLORSCHEME"
+    printErr "$OK Color scheme = $COLORSCHEME"
 
     sed 's/${VIM_COLORSCHEME}/'$COLORSCHEME'/g' ./editors/vim/extended.vim > ./extended.vim
 
@@ -279,7 +279,7 @@ gitCredentialCache() {
             return 0
         fi
 
-        printErr "\n\e[33mHow long should Git store your credentials? (minutes)\e[0m "
+        printErr "${Green}How long should Git store your credentials? (minutes)${NC} "
         while [ 1 ]; do
             read REPLY
             if [[ $REPLY =~ ^[0-9]+$ ]] && [[ $REPLY > 0 ]]; then
@@ -334,11 +334,11 @@ setupVim(){
             git rebase origin master | xargs echo -n
             git stash pop | xargs echo > /dev/null
             cd "${WD}"
-            printErr "\r\e[2K${OK} Vim configuration is up to date."
+            printErr "${OK} Vim configuration is up to date."
         else
             printErr "Installing Amix's Awesome Vim config"
             git clone --depth=1 https://github.com/amix/vimrc.git "$VIMDIR"
-            printErr "\r[\e[32m   OK   \e[0m] Installed Amix's Awesome Vim config."
+            printErr "${OK} Installed Amix's Awesome Vim config."
         fi
         sh "${VIMDIR}/install_awesome_vimrc.sh" | xargs echo > /dev/null
 
@@ -428,9 +428,7 @@ fi
 if [[ $OSTYPE == 'linux-gnu' ]]; then
 
     printErr "[$Green Linux ${NC}]"
-
     main $1
-
     printErr "${Green} Install Complete${NC}"
 
 elif [[ $OSTYPE =~ 'darwin' ]]; then
