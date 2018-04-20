@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # For debugging use
-# set -eEuxo pipefail
+set -eEuxo pipefail
 WD="$PWD"                   # Save working dir to return after navigation.
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BAKDIR=$HOME/.env_backup    # Directory to store config backups.
@@ -146,9 +146,11 @@ vscodeExtensions() {
     else
         askQuestionYN "${Yellow}Install Visual Studio Code extensions?$NC"
     fi
-    if hash code 2> /dev/null; then # Check if 'code' exists.
+    if [[ $REPLY =~ ^[nN]$ ]]; then
+        return 0
+    elif [[ $REPLY =~ ^[yY]$ ]]; then # Install extensions from 'vscode/extensions'
 
-        if [[ $REPLY =~ ^[yY]$ ]]; then # Install extensions from 'vscode/extensions'
+        if hash code 2> /dev/null; then # Check if 'code' exists.
 
             if [[ ! -d "$VSCODE_EXTENSIONS_DIR" ]]; then
                 mkdir -p "$VSCODE_EXTENSIONS_DIR"
@@ -158,13 +160,13 @@ vscodeExtensions() {
                 code --install-extension $LINE
             done < "${SCRIPTDIR}/editors/.vscode/extensions"
 
-        elif [[ $REPLY =~ ^[cC]$ ]]; then # Load VSCode which detects recommendations.json
-            #TODO Where is this meant to be CDed to?
-            code ./editors
+            # elif [[ $REPLY =~ ^[cC]$ ]]; then # Load VSCode which detects recommendations.json
+            #     #TODO Where is this meant to be CDed to?
+            #     code ./editors
+        else
+            printErr "VSCode not in PATH"
+            return 1
         fi
-    else
-        printErr "VSCode not installed or variable not set."
-        return 1
     fi
     return 0
 }
@@ -428,7 +430,7 @@ fi
 if [[ $OSTYPE == 'linux-gnu' ]]; then
 
     printErr "[$Green Linux ${NC}]"
-    main $1
+    main ${1:-}
     printErr "${Green} Install Complete${NC}"
 
 elif [[ $OSTYPE =~ 'darwin' ]]; then
