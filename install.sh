@@ -1,10 +1,16 @@
 #!/bin/bash
 
+# For debugging use
+set -eEo pipefail
 WD="$PWD"                   # Save working dir to return after navigation.
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BAKDIR=$HOME/.env_backup    # Directory to store config backups.
 BASH_CUSTOM=$HOME/.bash_custom # Directory to store custom bash includes.
 VIMDIR=$HOME/.vim_runtime   # Directory containing Vim extras.
+# SCRIPT COLORS are kept in this file
+# source $SCRIPTDIR/bash/colour_variables
+OK="[ $Green  OK  ] $NC"
+TAB="\e[1A\e[2L"
 if [[ $OSTYPE == 'linux-gnu' ]]; then
     FONTDIR=$HOME/.fonts
 elif [[ $OSTYPE =~ 'darwin' ]]; then
@@ -17,7 +23,13 @@ ALL=0
 VSCODE_EXTENSIONS_DIR=$HOME/.vscode/extensions
 
 askQuestionYN() {
-    echo -ne $1 " (y/n)" >&2
+    if $1 = ""; then
+        question=""
+    else
+        question="$1"
+    fi
+
+    echo -ne $question " (y/n)" >&2
     read -n 1 REPLY
     if [[ $REPLY =~ ^[yY]$ ]]; then
         return 0
@@ -26,28 +38,41 @@ askQuestionYN() {
     fi
 }
 
+getWebItem() {
+    url=$1
+    # OSX has curl by default, linux has wget by default
+    # if [[ $OSTYPE =~ 'darwin' ]]; then
+    if hash curl 2> /dev/null; then
+        curl -fL $url
+    else
+        wget -qO- $url
+    fi
+}
+
 downloadURLtoFile() {
-    downloadDirectory=$(dirname "$2")
+    url=$1
+    filename=$2
+    if $url = "" || $filename = ""; then
+        >&2 echo -ne "Error: Invalid url or filename"
+    fi
+    downloadDirectory=$(dirname "$filename")
+    >&2 echo "to ( $filename ) "
     if [ ! -d "$downloadDirectory" ]; then
         mkdir -p "$downloadDirectory"
     fi
-# OSX has curl by default, linux has wget by default
-if [[ $OSTYPE =~ 'darwin' ]]; then
-    curl -fLo $1 $2
-else
-    wget -qO $2 $1
-fi
+    getWebItem $url >| $filename
 }
 
 getLatestReleaseFileURL() {
     # Takes argument 1 of form user/repo, eg will-shaw/env.
     # Gets the URL of the latest-released version of the specified filename arg 2.
-    repoapi=$(mktemp)
     repo=$1
     file=$2
-    downloadURLtoFile https://api.github.com/repos/${repo}/releases/latest $repoapi
-    fileLatestURL=`sed -n -e 's#^.*\(https://github.com/${repo}/releases/download/[^/]*/${file}\).*$#\1#p' < $repoapi`
-    rm -f $repoapi
+    repoapi=`getWebItem "https://api.github.com/repos/${repo}/releases/latest"`
+    >&2 printf "file ($file)"
+    searchTemplate=https://github.com/${repo}/releases/download/[^/]*/${file}
+    fileLatestURL=`echo $repoapi | sed -n -e "s,^.*\(${searchTemplate}\).*$,\1,p"`
+    >&2 printf "What the fuuuuuck ($fileLatestURL)"
     echo $fileLatestURL
 }
 
@@ -55,7 +80,14 @@ downloadURLAndExtractZipTo() {
     # Two arguments: url, and destination folder.
     url=$1
     destDir=$2
+    if $url = "" || $destDir = ""; then
+       >&2 echo -ne "Error: Invalid url or dest"
+    fi
+    if [ ! -d "$destDir" ]; then
+        mkdir -p $destDir
+    fi
     tmpzipfile=$(mktemp)
+    echo "downloading ($url) "
     downloadURLtoFile $url $tmpzipfile.zip
     unzip -o $tmpzipfile.zip -d "$destDir" # > /dev/null
     rm -f $tmpzipfile.zip
@@ -65,12 +97,6 @@ addTextIfAbsent() {
     # Check if text exists in file, otherwise append.
     grep -q -F "$1" "$2" || echo "$1" >> "$2"
 }
-
-# SCRIPT COLORS are kept in this file
-# source $SCRIPTDIR/bash/colour_variables
-OK="[ $Green  OK  ] $NC"
-TAB="\e[1A\e[2L"
-
 
 # -------------
 # Currently only removes vim configs and any bash customisation, as well as this script.
@@ -153,15 +179,17 @@ installFonts() {
         if [[ ! -d "${FONTDIR}/truetype/custom" ]]; then
             mkdir -p "${FONTDIR}/truetype/custom"
         fi
-        cp ./fonts/* ${FONTDIR}/truetype/custom
+        # cp ${SCRIPTDIR}/fonts/* ${FONTDIR}/truetype/custom
 
         echo -ne "Downloading fonts..."
         # Get latest Iosevka font release.
-        fontUrl=`getLatestReleaseFileURL be5invis/iosevka iosevka-pack-*.zip`
+        # fontUrl=`getLatestReleaseFileURL "be5invis/iosevka" "iosevka-pack-[^z]*zip"`
+        fontUrl=`getLatestReleaseFileURL "be5invis/Iosevka" "iosevka-pack-1.14.1.zip"`
+        echo fontUrl = $fontUrl
         fontdir="${FONTDIR}/Iosevka"
         downloadURLAndExtractZipTo $fontUrl $fontdir
 
-        SCPUrl=`getLatestReleaseFileURL ryanoasis/nerd-fonts SourceCodePro.zip`
+        SCPUrl=`getLatestReleaseFileURL "ryanoasis/nerd-fonts" "SourceCodePro\.zip"`
         SCPdir="${FONTDIR}/SauceCodeProNF"
         downloadURLAndExtractZipTo $SCPUrl $SCPdir
         if [[ $OSTYPE == 'linux-gnu' ]]; then
