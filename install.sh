@@ -14,12 +14,14 @@ OK="[ ${Green}OK${NC} ]"
 TAB="\e[1A\e[2L"
 SKIP=0
 ALL=0
-VSCODE_EXTENSIONS_DIR=$HOME/.vscode/extensions
 if [[ $OSTYPE == 'linux-gnu' ]]; then
     FONTDIR=$HOME/.fonts
 elif [[ $OSTYPE =~ 'darwin' ]]; then
     FONTDIR=$HOME/Library/Fonts
 fi
+VSCODE_EXTENSIONS_DIR="${HOME}/.vscode/extensions"
+VSCODE_VERSION=code
+VSCODE_APP_DATA="${HOME}/AppData/Roaming/Code"
 
 printLine() {
    printf -- "$@\n" 
@@ -150,8 +152,13 @@ vscodeExtensions() {
     if [[ $REPLY =~ ^[nN]$ ]]; then
         return 0
     elif [[ $REPLY =~ ^[yY]$ ]]; then # Install extensions from 'vscode/extensions'
-
-        if hash code 2> /dev/null; then # Check if 'code' exists.
+        
+        if hash code-insiders 2> /dev/null; then # Maybe insider version is being used.
+            VSCODE_VERSION=code-insiders
+            VSCODE_APP_DATA="${HOME}/AppData/Roaming/Code - Insiders/"
+            VSCODE_EXTENSIONS_DIR="${HOME}/.vscode-insiders/extensions"
+        fi
+        if hash code 2> /dev/null || hash code-insiders 2> /dev/null; then # Check if 'code' exists.
 
             if [[ ! -d "$VSCODE_EXTENSIONS_DIR" ]]; then
                 mkdir -p "$VSCODE_EXTENSIONS_DIR"
@@ -168,6 +175,29 @@ vscodeExtensions() {
             printErr "VSCode not in PATH"
             return 1
         fi
+    if hash code 2> /dev/null; then # Check if 'code' exists.
+        VSCODE_EXTENSIONS_DIR="${HOME}/.vscode/extensions"
+   
+    else
+        echo -e "VSCode not installed or variable not set."
+        return 1
+    fi
+    if [[ $REPLY =~ ^[yY]$ ]]; then # Install extensions from 'vscode/extensions'
+        if [[ ! -d "$VSCODE_EXTENSIONS_DIR" ]]; then
+            mkdir -p "$VSCODE_EXTENSIONS_DIR"
+        fi
+        if [[ ! -d "${VSCODE_APP_DATA}/User" ]]; then
+            mkdir -p "${VSCODE_APP_DATA}/User"
+        fi
+
+        while IFS='' read -r LINE || [[ -n "$LINE" ]]; do
+            ${VSCODE_VERSION} --install-extension $LINE
+        done < "${SCRIPTDIR}/editors/.vscode/extensions"
+
+        cp "${SCRIPTDIR}/editors/settings.json" "${VSCODE_APP_DATA}/User"
+
+    elif [[ $REPLY =~ ^[cC]$ ]]; then # Load VSCode which detects recommendations.json
+        $VSCODE_VERSION ./editors
     fi
     return 0
 }
@@ -441,9 +471,9 @@ elif [[ $OSTYPE =~ 'darwin' ]]; then
 elif [[ $OSTYPE == 'msys' ]]; then
     printErr "${Red}Git Bash not supported."
     if askQuestionYN "Continue anyway?" ; then
+        printLine "${Red}Attempting install on Git Bash."
         main $1
     fi
 else
     printErr "OS not set... Exiting without change."
 fi
-
