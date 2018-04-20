@@ -144,7 +144,7 @@ vscodeExtensions() {
     if [[ $ALL == 1 ]]; then
         REPLY="y"
     else
-        askQuestionYN "${Orange}Install Visual Studio Code extensions?$NC"
+        askQuestionYN "${Yellow}Install Visual Studio Code extensions?$NC"
     fi
     if hash code 2> /dev/null; then # Check if 'code' exists.
 
@@ -171,7 +171,7 @@ vscodeExtensions() {
 
 
 installFonts() {
-    if [  $ALL == 1 ] || askQuestionYN "${Orange}Install fonts? $NC"; then
+    if [  $ALL == 1 ] || askQuestionYN "${Yellow}Install fonts? $NC"; then
         mkdir -p "$FONTDIR"
         if [[ ! -d "${FONTDIR}/truetype/custom" ]]; then
             mkdir -p "${FONTDIR}/truetype/custom"
@@ -183,12 +183,12 @@ installFonts() {
         fontUrl=`getLatestReleaseFileURL "be5invis/Iosevka" "iosevka-pack-[^z]*zip"`
         fontdir="${FONTDIR}/Iosevka"
         downloadURLAndExtractZipTo $fontUrl $fontdir && \
-            printErr "${OK} Fonts installed to ${Orange}${fontdir}${White}"
+            printErr "${OK} Fonts installed to ${Yellow}${fontdir}${White}"
 
         SCPUrl=`getLatestReleaseFileURL "ryanoasis/nerd-fonts" "SourceCodePro\.zip"`
         SCPdir="${FONTDIR}/SauceCodeProNF"
         downloadURLAndExtractZipTo $SCPUrl $SCPdir && \
-            printErr "${OK} Fonts installed to ${Orange}${SCPdir}${White}"
+            printErr "${OK} Fonts installed to ${Yellow}${SCPdir}${White}"
 
         if [[ $OSTYPE == 'linux-gnu' ]]; then
             # Unused mac-required SCP fonts.
@@ -215,7 +215,7 @@ setVimColorscheme() {
         rm -rf "./vim-colorschemes"
     fi
 
-    echo -ne "${Orange}Enter chosen color scheme name: $NC"
+    echo -ne "${Yellow}Enter chosen color scheme name: $NC"
     read COLORSCHEME
 
     printErr "\e[1A\e[2L$OK Color scheme = $COLORSCHEME"
@@ -226,7 +226,7 @@ setVimColorscheme() {
 }
 
 setVimLineNumbers() {
-    if [  $ALL == 1 ] || askQuestionYN "${Orange}Do you want to enable line numbers?${NC}"; then
+    if [  $ALL == 1 ] || askQuestionYN "${Yellow}Do you want to enable line numbers?${NC}"; then
         printErr "$OK Vim line numbers disabled."
         sed -i 's/${NUMBER}/ /g' ./extended.vim
     else
@@ -238,7 +238,7 @@ setVimLineNumbers() {
 }
 
 dualBootLocalTime() {
-    if askQuestionYN "${Orange}Interpret hardware clock as local time? ${NC}"; then
+    if askQuestionYN "${Yellow}Interpret hardware clock as local time? ${NC}"; then
         printErr "\r$OK Linux using local time."
         timedatectl set-local-rtc 1
     else
@@ -261,7 +261,7 @@ gitUser() {
     echo -ne "${Green}Enter your git email:${NC} "
     read GIT_EMAIL
 
-    printErr "${Orange}Configuring git.$NC"
+    printErr "${Yellow}Configuring git.$NC"
     printErr "Username: $GIT_USER"
     printErr "Email: $GIT_EMAIL"
     git config --global user.name "$GIT_USER"
@@ -271,7 +271,7 @@ gitUser() {
 }
 
 gitCredentialCache() {
-    if [ $ALL == 1 ] || askQuestionYN "${Orange}Want Git to store your credentials for a while?${NC}"; then
+    if [ $ALL == 1 ] || askQuestionYN "${Yellow}Want Git to store your credentials for a while?${NC}"; then
 
         if [[ ! "$(git config --global user.name)" =~ .+ ]] || [[ ! $(git config --global user.email) =~ .+ ]]; then
             printErr "$OK Git global user is not setup correctly."
