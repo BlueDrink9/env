@@ -7,16 +7,39 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 source ${SCRIPT_DIR}/colour_variables.sh
-source ${SCRIPT_DIR}/functions.sh
+# source ${SCRIPT_DIR}/functions.sh
 
 FLASHING="\[\E[5m\]"
 
+prompt_escape(){
+  echo "\\[$1\\]"
+}
+
+colourVars="
+Blue
+Yellow
+Green
+Red
+On_Black
+NC
+White
+Cyan
+"
+escape_colours(){
+  # Replace colour sequence with its escaped cousin.
+  colarray=($colourVars)
+  for colour in "${colarray[@]}" ; do
+    printf -v $colour `prompt_escape ${!colour}`
+  done
+}
+
 # Set the full bash prompt.
-function set_bash_prompt () {
+set_bash_prompt () {
   # Set the PROMPT_SYMBOL variable. We do this first so we don't lose the
   # return value of the last command.
   set_prompt_symbol $?
 
+  escape_colours
   USER_AT_HOST="${Blue}\u${NC}@${Yellow}\h${NC}"
 
   # if git exists (it doesn't on iOS).
@@ -44,6 +67,9 @@ function set_bash_prompt () {
   # Space left after title is actually for start of prompt.
   # Gives space between vi +: and time.
   PS1="${WINDOW_TITLE_BASH_PATH} ${White}${On_Black}${TIME_PROMPT}${NC} ${USER_AT_HOST}: ${PREV_COMMAND_COLOUR}[${CURR_DIR}]${NC}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL}"
+
+  # Reset colours.
+  source ${SCRIPT_DIR}/colour_variables.sh
 }
 
 # Tell bash to execute this function just before displaying its prompt.
@@ -114,6 +140,5 @@ parse_git_branch() {
     GIT_PROMPT=""
   fi
 }
-
 
 
