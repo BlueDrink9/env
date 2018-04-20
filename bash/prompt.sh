@@ -76,7 +76,7 @@ set_prompt_symbol () {
     PROMPT_SYMBOL="${pgreen}\\$ ${pNC}";
     PREV_COMMAND_COLOUR="${pgreen}";
   else
-    PROMPT_SYMBOL="${pred}\\$ ${NC}";
+    PROMPT_SYMBOL="${pred}\\$ ${pNC}";
     PREV_COMMAND_COLOUR="${pred}";
   fi
 }
