@@ -183,8 +183,7 @@ installFonts() {
 
         echo -ne "Downloading fonts..."
         # Get latest Iosevka font release.
-        # fontUrl=`getLatestReleaseFileURL "be5invis/iosevka" "iosevka-pack-[^z]*zip"`
-        fontUrl=`getLatestReleaseFileURL "be5invis/Iosevka" "iosevka-pack-1.14.1.zip"`
+        fontUrl=`getLatestReleaseFileURL "be5invis/Iosevka" "iosevka-pack-[^z]*zip"`
         echo fontUrl = $fontUrl
         fontdir="${FONTDIR}/Iosevka"
         downloadURLAndExtractZipTo $fontUrl $fontdir
