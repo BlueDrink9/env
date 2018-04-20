@@ -1,7 +1,7 @@
 # vim: set ft=sh:
 # vim:ts=2:sw=2
 #
-# BlueDrink9 custom bash prompt. Relies on 2 other files.
+# pblueDrink9 custom bash prompt. Relies on 2 other files.
 # Assumes a solarised terminal, with 16 colours.
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -15,23 +15,23 @@ prompt_escape(){
   echo "\\[$1\\]"
 }
 
-colourVars="
-Blue
-Yellow
-Green
-Red
-On_Black
-NC
-White
-Cyan
-"
-escape_colours(){
-  # Replace colour sequence with its escaped cousin.
-  colarray=($colourVars)
-  for colour in "${colarray[@]}" ; do
-    printf -v $colour `prompt_escape ${!colour}`
-  done
-}
+# colourVars="
+# Blue
+# Yellow
+# Green
+# On_Black
+# NC
+# White
+# Cyan
+# Red
+# "
+# escape_colours(){
+#   # Replace colour sequence with its escaped cousin.
+#   colarray=($colourVars)
+#   for colour in "${colarray[@]}" ; do
+#     printf -v $colour `prompt_escape ${!colour}`
+#   done
+# }
 
 # Set the full bash prompt.
 set_bash_prompt () {
@@ -39,8 +39,8 @@ set_bash_prompt () {
   # return value of the last command.
   set_prompt_symbol $?
 
-  escape_colours
-  USER_AT_HOST="${Blue}\u${NC}@${Yellow}\h${NC}"
+  # escape_colours
+  USER_AT_HOST="${pblue}\u${pNC}@${pyellow}\h${pNC}"
 
   # if git exists (it doesn't on iOS).
   if hash git 2>/dev/null; then
@@ -66,10 +66,19 @@ set_bash_prompt () {
   # Set the bash prompt variable.
   # Space left after title is actually for start of prompt.
   # Gives space between vi +: and time.
-  PS1="${WINDOW_TITLE_BASH_PATH} ${White}${On_Black}${TIME_PROMPT}${NC} ${USER_AT_HOST}: ${PREV_COMMAND_COLOUR}[${CURR_DIR}]${NC}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL}"
+  PS1="${WINDOW_TITLE_BASH_PATH} ${pwhite}${pbg_Black}${TIME_PROMPT}${pNC} ${USER_AT_HOST}: ${PREV_COMMAND_COLOUR}[${CURR_DIR}]${pNC}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL}"
+}
 
-  # Reset colours.
-  source ${SCRIPT_DIR}/colour_variables.sh
+# Return the prompt symbol ($) to use, colorized based on the return value of the
+# previous command.
+set_prompt_symbol () {
+  if [ $1 -eq 0 ] ; then
+    PROMPT_SYMBOL="${pgreen}\\$ ${pNC}";
+    PREV_COMMAND_COLOUR="${pgreen}";
+  else
+    PROMPT_SYMBOL="${pred}\\$ ${NC}";
+    PREV_COMMAND_COLOUR="${pred}";
+  fi
 }
 
 # Tell bash to execute this function just before displaying its prompt.
@@ -80,9 +89,9 @@ fi
 
 # get current branch in git repo
 # Check status of branch
-# Green if no changes, yellow if modified. White if there are changes to files.
+# pgreen if no changes, yellow if modified. Cyan if there are misc changes to files.
 parse_git_branch() {
-  STATUS_COLOUR=${NC}
+  STATUS_COLOUR=${pNC}
   BRANCH=`get_git_branch`
   if [ ! "${BRANCH}" == "" ]
   then
@@ -98,19 +107,19 @@ parse_git_branch() {
     deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`
     bits=''
     if [ "${clean}" == "0" ]; then
-      STATUS_COLOUR=${Green}
+      STATUS_COLOUR=${pgreen}
       bits=""
     fi
     if [ "${ahead}" == "0" ]; then
-      STATUS_COLOUR=${Cyan}
+      STATUS_COLOUR=${pcyan}
       bits="^${bits}"
     fi
     if [ "${behind}" == "0" ]; then
-      STATUS_COLOUR=${Cyan}
+      STATUS_COLOUR=${pcyan}
       bits="v${bits}"
     fi
     if [ "${diverged}" == "0" ]; then
-      STATUS_COLOUR=${Cyan}
+      STATUS_COLOUR=${pcyan}
       bits="^v${bits}"
 			# optional: use several other possible unicode symbols.
     fi
@@ -127,7 +136,7 @@ parse_git_branch() {
       bits="+${bits}"
     fi
     if [ "${dirty}" == "0" ]; then
-      STATUS_COLOUR=${Yellow}
+      STATUS_COLOUR=${pyellow}
       bits="*${bits}"
     fi
     if [ ! "${bits}" == "" ] || [ "${clean}" == "0" ]; then
@@ -137,7 +146,7 @@ parse_git_branch() {
     fi
 
     # Sometimes status can be slow. Consider removing.
-    GIT_PROMPT="${STATUS_COLOUR}{${BRANCH}${STATUS}}${NC}"
+    GIT_PROMPT="${STATUS_COLOUR}{${BRANCH}${STATUS}}${pNC}"
   else
     GIT_PROMPT=""
   fi
