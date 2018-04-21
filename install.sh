@@ -250,7 +250,9 @@ setVimColorscheme() {
         fi
         printErr "Placing color schemes..."
         cp ./vim-colorschemes/colors/*.vim "$HOME/.vim/colors" && \
-            printErr "$OK Placing color schemes... Done."
+            printErr "$OK Placing color schemes... Done." || \
+            printErr "${Error}${Red}Failed previous command${NC}"
+
         rm -rf "./vim-colorschemes"
     fi
 
@@ -267,10 +269,14 @@ setVimColorscheme() {
 setVimLineNumbers() {
     if [  $ALL == 1 ] || askQuestionYN "${Yellow}Do you want to enable line numbers?${NC}"; then
         sed -i 's/${NUMBER}/ /g' ./extended.vim && \
-            printErr "$OK Vim line numbers disabled."
+            printErr "$OK Vim line numbers disabled." || \
+            printErr "${Error}${Red}Failed previous command${NC}"
+
     else
         sed -i 's/${NUMBER}/set number/g' ./extended.vim && \
-        printErr "$OK Vim line numbers enabled."
+            printErr "$OK Vim line numbers enabled." || \
+            printErr "${Error}${Red}Failed previous command${NC}"
+
     fi
     cp ./extended.vim $VIMDIR/vimrcs/extended.vim
     rm ./extended.vim
@@ -279,7 +285,9 @@ setVimLineNumbers() {
 dualBootLocalTime() {
     if askQuestionYN "${Yellow}Interpret hardware clock as local time? ${NC}"; then
         timedatectl set-local-rtc 1 && \
-            printErr "\r$OK Linux using local time."
+            printErr "\r$OK Linux using local time." || \
+            printErr "${Error}${Red}Failed previous command${NC}"
+
     else
         printErr ''
     fi
@@ -377,7 +385,9 @@ setupVim(){
         else
             printErr "Installing Amix's Awesome Vim config"
             git clone --depth=1 https://github.com/amix/vimrc.git "$VIMDIR" && \
-                printErr "${OK} Installed Amix's Awesome Vim config."
+                printErr "${OK} Installed Amix's Awesome Vim config." || \
+                printErr "${Error}${Red}Failed previous command${NC}"
+
         fi
         sh "${VIMDIR}/install_awesome_vimrc.sh" | xargs echo > /dev/null
 
