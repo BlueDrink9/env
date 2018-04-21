@@ -11,6 +11,7 @@ VIMDIR=$HOME/.vim_runtime   # Directory containing Vim extras.
 # SCRIPT COLORS are kept in this file
 source $SCRIPTDIR/bash/colour_variables.sh
 OK="[ ${Green}OK${NC} ]"
+Error="[ ${Red}ERROR${NC} ]"
 TAB="\e[1A\e[2L"
 SKIP=0
 ALL=0
@@ -216,12 +217,14 @@ installFonts() {
         fontUrl=`getLatestReleaseFileURL "be5invis/Iosevka" "iosevka-pack-[^z]*zip"`
         fontdir="${FONTDIR}/Iosevka"
         downloadURLAndExtractZipTo $fontUrl $fontdir && \
-            printErr "${OK} Fonts installed to ${Yellow}${fontdir}${NC}"
+            printErr "${OK} Fonts installed to ${Yellow}${fontdir}${NC}" || \
+            printErr "${Error} ${Red}Fonts failed to install to ${Yellow}${fontdir}${NC}"
 
         SCPUrl=`getLatestReleaseFileURL "ryanoasis/nerd-fonts" "SourceCodePro\.zip"`
         SCPdir="${FONTDIR}/SauceCodeProNF"
         downloadURLAndExtractZipTo $SCPUrl $SCPdir && \
-            printErr "${OK} Fonts installed to ${Yellow}${SCPdir}${NC}"
+            printErr "${OK} Fonts installed to ${Yellow}${SCPdir}${NC}" || \
+            printErr "${Error} ${Red}Fonts failed to install to ${Yellow}${SCPdir}${NC}"
 
         if [[ $OSTYPE == 'linux-gnu' ]]; then
             # Unused mac-required SCP fonts.
@@ -231,7 +234,10 @@ installFonts() {
             rm -f "${SCPdir}/*Mono.ttf"
         fi
 
-        fc-cache && printErr "${OK} Fontcache updated"
+        fc-cache && printErr "${OK} Fontcache updated" || \
+            printErr "${Error} ${Red}Failed to update fontcache${NC}"
+
+
     fi
 }
 
@@ -243,8 +249,8 @@ setVimColorscheme() {
             mkdir -p "$HOME/.vim/colors"
         fi
         printErr "Placing color schemes..."
-        cp ./vim-colorschemes/colors/*.vim "$HOME/.vim/colors"
-        printErr "$OK Placing color schemes...Done."
+        cp ./vim-colorschemes/colors/*.vim "$HOME/.vim/colors" && \
+            printErr "$OK Placing color schemes... Done."
         rm -rf "./vim-colorschemes"
     fi
 
@@ -260,11 +266,11 @@ setVimColorscheme() {
 
 setVimLineNumbers() {
     if [  $ALL == 1 ] || askQuestionYN "${Yellow}Do you want to enable line numbers?${NC}"; then
-        printErr "$OK Vim line numbers disabled."
-        sed -i 's/${NUMBER}/ /g' ./extended.vim
+        sed -i 's/${NUMBER}/ /g' ./extended.vim && \
+            printErr "$OK Vim line numbers disabled."
     else
+        sed -i 's/${NUMBER}/set number/g' ./extended.vim && \
         printErr "$OK Vim line numbers enabled."
-        sed -i 's/${NUMBER}/set number/g' ./extended.vim
     fi
     cp ./extended.vim $VIMDIR/vimrcs/extended.vim
     rm ./extended.vim
@@ -272,8 +278,8 @@ setVimLineNumbers() {
 
 dualBootLocalTime() {
     if askQuestionYN "${Yellow}Interpret hardware clock as local time? ${NC}"; then
-        printErr "\r$OK Linux using local time."
-        timedatectl set-local-rtc 1
+        timedatectl set-local-rtc 1 && \
+            printErr "\r$OK Linux using local time."
     else
         printErr ''
     fi
@@ -370,8 +376,8 @@ setupVim(){
             printErr "${OK} Vim configuration is up to date."
         else
             printErr "Installing Amix's Awesome Vim config"
-            git clone --depth=1 https://github.com/amix/vimrc.git "$VIMDIR"
-            printErr "${OK} Installed Amix's Awesome Vim config."
+            git clone --depth=1 https://github.com/amix/vimrc.git "$VIMDIR" && \
+                printErr "${OK} Installed Amix's Awesome Vim config."
         fi
         sh "${VIMDIR}/install_awesome_vimrc.sh" | xargs echo > /dev/null
 
