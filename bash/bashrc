@@ -26,7 +26,7 @@ source ${SCRIPT_DIR}/prompt.sh
 #     { tmux attach || exec tmux new-session && exit;}
 # fi
 # test if this is an ssh shell
-if [ -n "$ssh_client" ] || [ -n "$ssh_tty" ]; then
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
     SESSION_TYPE=remote/ssh
     # many other tests omitted
 else
