@@ -224,9 +224,10 @@ let g:airline_solarized_normal_green = 1
 let g:airline_solarized_dark_inactive_border = 1
 " exec 'let g:airline_base16_' . colorSch . '= 0'
 " let g:airline_symbols_ascii=1
-" If ssh, don't assume font avail... ? Or should we...
+" If ssh, don't assume font avail? Or should we...?
 if g:remoteSession
     let g:airline_powerline_fonts=0
+    let g:webdevicons_enable=0
 endif
 " Check if either of these have been specifically disabled or enabled.
 if !exists('g:airline_powerline_fonts') || !exists('g:webdevicons_enable')

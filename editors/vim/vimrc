@@ -1,7 +1,7 @@
 set nocompatible
 " Automatically create vimfile directories in same location as vimrc
 let s:vimrcdir = fnamemodify(expand("$MYVIMRC"), ":p:h")
-let g:remoteSession = ($STY == "")
+let g:remoteSession = ($SSH_CLIENT != "")
 
 " Version 7.1 doesn't support fnameescape. Used on iOS.
 if v:version >= 703
