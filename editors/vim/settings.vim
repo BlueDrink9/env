@@ -18,6 +18,8 @@ filetype plugin indent on
 " For highlighting, and color schemes
 syntax on
 
+let s:defaultBGGUI="light"
+let s:defaultBGConsole="light"
 if has("gui_running")
     " GUI is running or is about to start.
     " Remove menus to speed up startup
@@ -27,7 +29,7 @@ if has("gui_running")
     set lines=40 columns=120
     " Default fallback for gui bg colour
     if !exists ('g:backgroundColour')
-        let g:backgroundColour="light"
+        let g:backgroundColour=s:defaultBGGUI
     endif
     exec 'set background=' . g:backgroundColour
     if !exists(&guifont)
@@ -70,7 +72,7 @@ else
     " Default fallback for console bg colour
     " if !exists ('&background')
     if !exists ('g:backgroundColour')
-        let g:backgroundColour="dark"
+        let g:backgroundColour=s:defaultBGConsole
     endif
     exec "set background=".g:backgroundColour
 
