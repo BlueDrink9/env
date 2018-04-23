@@ -48,7 +48,7 @@ if bufwinnr(1)
     map <c-Down> 5<C-W>-
 endif
 
-if has("guirunning") || has("clipboard")
+if has("clipboard")
     " In insert or visual mode, use standard cut/copy/paste shortcuts.
     " In normal mode, use ctrl+q
     inoremap <C-v> <C-r>+
