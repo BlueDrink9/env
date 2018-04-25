@@ -426,8 +426,7 @@ map <Leader>vl :VimuxRunLastCommand<CR>
 
 
 " ----------- Misc --------------
-call camelcasemotion#CreateMotionMappings('<leader>c')
-
+call camelcasemotion#CreateMotionMappings('<leader>m')
 let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
 call yankstack#setup()
 
