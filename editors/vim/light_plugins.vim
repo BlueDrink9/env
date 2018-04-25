@@ -67,5 +67,13 @@ let g:session_autosave = 'yes'
 let g:session_autoload = 'yes'
 let g:session_directory = CreateVimDir("vimfiles/sessions/")
 Plug 'https://github.com/lervag/vimtex'
+" Plug 'https://github.com/vim-latex/vim-latex'
+" let g:Tex_DefaultTargetFormat="pdf"
+if has('win32')
+    let g:vimtex_view_general_viewer = 'explorer.exe'
+    let g:vimtex_view_general_options
+                \ = '-reuse-instance -forward-search @tex @line @pdf'
+    let g:vimtex_view_general_options_latexmk = '-reuse-instance'
+endif
 Plug 'https://github.com/reedes/vim-pencil'
 Plug 'https://github.com/dkarter/bullets.vim'
