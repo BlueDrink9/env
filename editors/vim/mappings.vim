@@ -51,7 +51,7 @@ endif
 if has("clipboard")
     " In insert or visual mode, use standard cut/copy/paste shortcuts.
     " In normal mode, use ctrl+q
-    inoremap <C-v> <C-r>+
+    inoremap <C-v> <C-o>"+P
     cnoremap <C-v> <C-r>+
     vnoremap <C-X> "+d
     vnoremap <C-c> "+y
