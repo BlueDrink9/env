@@ -2,6 +2,10 @@
 " Bunch of neat mappings, it's a tpope. Esp [n and ]n, for SCM conflict marks.
 " And [<space> for addign newlines.
 Plug 'https://github.com/tpope/vim-unimpaired'
+" For switching between header and alt files
+Plug 'vim-scripts/a.vim'
+" Bsgrep for searching in all open buffers. Also Bsreplace, Bstoc.
+Plug 'https://github.com/jeetsukumaran/vim-buffersaurus'
 Plug 'https://github.com/ntpeters/vim-better-whitespace'
 let g:show_spaces_that_precede_tabs=1
 let g:better_whitespace_skip_empty_lines=1

@@ -108,11 +108,6 @@ Plug 'https://github.com/vim-airline/vim-airline'
 " exec "Plug \'https://github.com/vim-airline/vim-airline-themes\', {\'rtp\' : \'autoload/airline/themes/". colorSch . ".vim\'}"
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 let g:ctrlp_cmd = 'CtrlPMixed'
-" For switching between header and alt files
-Plug 'vim-scripts/a.vim'
-" Plug 'https://github.com/vim-latex/vim-latex'
-" let g:Tex_DefaultTargetFormat="pdf"
-Plug 'https://github.com/lervag/vimtex'
 " Run shell commands async (uses python)
 Plug 'https://github.com/joonty/vim-do'
 Plug 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
