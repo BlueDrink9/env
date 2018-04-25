@@ -321,6 +321,7 @@ endif
 let g:airline#extensions#syntastic#stl_format_err="%E{Err: #%e L%fe}"
 let g:airline#extensions#syntastic#stl_format_warn='%W{Warn: #%w L%fw}'
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#show_tabs = 0
 " let g:airline#extensions#tabline#buffer_min_count = 0
