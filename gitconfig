@@ -1,0 +1,19 @@
+# vim: ft=cfg
+[user]
+[credential]
+    helper = cache --timeout=3600
+[core]
+    editor = vim
+    attributesfile = C:\\Users\\William\\.gitattributes
+	# autocrlf = input
+[push]
+    default = simple
+[pull]
+    rebase = true
+
+# diffs for word files use pandoc
+[diff "pandoc"]
+  textconv=pandoc --to=markdown
+  prompt = false
+[alias]
+  wdiff = diff --word-diff=color --unified=1

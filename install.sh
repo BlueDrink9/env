@@ -340,6 +340,18 @@ gitCredentialCache() {
     fi
 }
 
+gitSettings() {
+    # If files are missing, git will silently ignore. So potentially ok to not
+    # uninstall (would be messy/potentially damage other file).
+    # This is only supported on git versions > 1.7.10.
+    addTextIfAbsent "[include]
+        path = ${SCRIPTDIR}/gitglobal/gitconfig" ${HOME}/.gitconfig
+    addTextIfAbsent "[include]
+        path = ${SCRIPTDIR}/gitglobal/gitignore" ${HOME}/.gitignore
+    addTextIfAbsent "[include]
+        path = ${SCRIPTDIR}/gitglobal/gitattributes" ${HOME}/.gitattributes
+}
+
 setupShell() {
     if [ "$IS_SHAW" == 0 ] ; then
         printErr "Copying custom bash files..."
