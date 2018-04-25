@@ -38,8 +38,6 @@ exec 'source ' . s:scriptpath . "/light_plugins.vim"
 " Maybe later, once I want them.
 " Awesome code completion, but requires specific installations
 " Plug 'https://github.com/Valloric/YouCompleteMe'
-" Looks really nice, esp for prose. Highlight slightly current paraghraph.
-" https://github.com/junegunn/limelight.vim
 " Scrollwheel on mouse moves screen with cursor (more natural)
 " https://github.com/reedes/vim-wheel
 " Function argument movements
@@ -80,6 +78,8 @@ endif
 " Better prose spellchecking
 " Neccesary for next plugin
 " Expands what a sentence/word is for prose.
+" Distraction-free vim.
+" Limelight Looks really nice, esp for prose. Highlight slightly current paraghraph.
 " Plug 'https://github.com/plasticboy/vim-markdown'
 exec "Plug 'https://github.com/reedes/vim-pencil'
             \| Plug 'https://github.com/reedes/vim-lexical', { 'for': " . g:proseFileTypes . " }
@@ -88,6 +88,8 @@ exec "Plug 'https://github.com/reedes/vim-pencil'
             \| Plug 'https://github.com/tpope/vim-markdown'
             \| Plug 'https://github.com/reedes/vim-wordy', { 'for': " . g:proseFileTypes . " }
             \| Plug 'https://github.com/panozzaj/vim-autocorrect', { 'for': " . g:proseFileTypes . " }
+            \| Plug 'https://github.com/junegunn/goyo.vim', { 'for': " . g:proseFileTypes . " }
+            \| Plug 'junegunn/limelight.vim', { 'for': " . g:proseFileTypes . " }
             \"
 
 
