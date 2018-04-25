@@ -41,8 +41,17 @@ Plug 'xolox/vim-misc'
 Plug 'https://github.com/xolox/vim-shell'
 if v:version >= 704
     Plug 'https://github.com/xolox/vim-session'
+    let g:session_persist_globals = ['&spelllang', '&autoread', '&spell']
+    let g:session_persist_colors = 0
+    let g:session_persist_font = 0
+    let g:session_default_to_last = 'yes'
+    let g:session_autosave_periodic = 10
+    let g:session_autosave = 'yes'
+    let g:session_autoload = 'yes'
+    let g:session_directory = CreateVimDir("vimfiles/sessions/")
     cabbrev cs CloseSession
     cabbrev os OpenSession
+    cabbrev ss SaveSession
 endif
 
 Plug 'https://github.com/tpope/vim-surround.git'
@@ -58,14 +67,6 @@ Plug 'https://github.com/kien/rainbow_parentheses.vim'
 " Plug 'https://github.com/itchyny/lightline.vim'
 
 "--- Prose ---"
-let g:session_persist_globals = ['&spelllang', '&autoread', '&spell']
-let g:session_persist_colors = 0
-let g:session_persist_font = 0
-let g:session_default_to_last = 'yes'
-let g:session_autosave_periodic = 10
-let g:session_autosave = 'yes'
-let g:session_autoload = 'yes'
-let g:session_directory = CreateVimDir("vimfiles/sessions/")
 Plug 'https://github.com/lervag/vimtex'
 " Plug 'https://github.com/vim-latex/vim-latex'
 " let g:Tex_DefaultTargetFormat="pdf"
