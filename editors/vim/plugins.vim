@@ -36,8 +36,6 @@ call plug#begin(s:pluginPath)
 exec 'source ' . s:scriptpath . "/light_plugins.vim"
 
 " Maybe later, once I want them.
-" Awesome code completion, but requires specific installations
-" Plug 'https://github.com/Valloric/YouCompleteMe'
 " Scrollwheel on mouse moves screen with cursor (more natural)
 " https://github.com/reedes/vim-wheel
 " Function argument movements
@@ -54,16 +52,30 @@ Plug 'airblade/vim-gitgutter'
 let g:gitgutter_grep = 'grep --color=never'
 let g:gitgutter_override_sign_column_highlight = 0
 let g:gitgutter_escape_grep = 1
+Plug 'https://github.com/christoomey/vim-conflicted'
+set stl+=%{ConflictedVersion()}
+
+"---------- IDE ----------"
+Plug 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
+Plug 'https://github.com/vim-syntastic/syntastic.git'
+Plug 'ryanoasis/vim-devicons'
+" Awesome code completion, but requires specific installations
+" Plug 'https://github.com/Valloric/YouCompleteMe'
+
 " Git wrapper
 Plug 'https://github.com/tpope/vim-fugitive'
 " github wrapper
 Plug 'https://github.com/tpope/vim-rhubarb'
-Plug 'https://github.com/christoomey/vim-conflicted'
-set stl+=%{ConflictedVersion()}
 
 "--- Snippits ---"
-Plug 'https://github.com/honza/vim-snippets'
-Plug 'https://github.com/garbas/vim-snipmate.git'
+" Reddit thread from 7 years ago had lots of people voting for snipmate as
+" best. But it conflicts with mutemplate slightly, and is apparently
+" abandoned.
+" But here is a maintained version!
+" Plug 'https://github.com/garbas/vim-snipmate'
+Plug 'https://github.com/honza/vim-snippets' " Library of snippets
+Plug 'https://github.com/SirVer/ultisnips' " Snippit engine
+" Plug 'https://github.com/joereynolds/vim-minisnip' "way smaller engine than ultisnips
 Plug 'https://github.com/tomtom/tlib_vim.git'
 Plug 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
 
@@ -92,14 +104,31 @@ exec "Plug 'https://github.com/reedes/vim-pencil'
             \| Plug 'junegunn/limelight.vim', { 'for': " . g:proseFileTypes . " }
             \"
 
+"--- Syntax ---"
+Plug 'https://github.com/dragfire/Improved-Syntax-Highlighting-Vim'
+" For extensive cpp IDE stuff.
+" a.vim incompat with replacement provided here.
 
+" Plug 'https://github.com/LucHermitte/lh-dev'
+" Plug 'https://github.com/LucHermitte/mu-template'
+" Plug 'tomtom/stakeholders_vim.git'
+" Plug 'https://github.com/LucHermitte/lh-brackets' " Ooooh boy this one's problematic.
+" Plug 'https://github.com/LucHermitte/lh-vim-lib'
+" Plug 'luchermitte/lh-cpp'
+" May cause lag on scrolling.
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+
+
+
+"--- Misc ---"
+" Lighter-weight, native completion engine.
+Plug 'https://github.com/ajh17/VimCompletesMe'
 " Separate buffer lists for differetn windows
 " Plug 'https://github.com/zefei/vim-wintabs'
 Plug 'https://github.com/tomtom/tcomment_vim'
 let g:tcomment_opleader1='<leader>c'
 Plug 'https://github.com/scrooloose/nerdtree.git'
-Plug 'https://github.com/jacquesbh/vim-showmarks.git'
-Plug 'https://github.com/vim-syntastic/syntastic.git'
+Plug 'https://github.com/jacquesbh/vim-showmarks.git' " TODO fix
 " Adds a bunch of unix-mapped filesystem ops from vim
 Plug 'https://github.com/tpope/vim-eunuch'
 Plug 'https://github.com/simnalamburt/vim-mundo'
@@ -110,9 +139,8 @@ Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 let g:ctrlp_cmd = 'CtrlPMixed'
 " Run shell commands async (uses python)
 Plug 'https://github.com/joonty/vim-do'
-Plug 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
 Plug 'https://github.com/thinca/vim-quickrun'
-Plug 'https://github.com/vim-scripts/SingleCompile'
+Plug 'https://github.com/vim-scripts/SingleCompile' "?
 " Make is run async (view quickfix with :COpen)
 Plug 'https://github.com/tpope/vim-dispatch'
 " Way better search and replace, also case coersion
@@ -129,6 +157,8 @@ Plug 'https://github.com/ConradIrwin/vim-bracketed-paste'
 Plug 'https://github.com/tpope/vim-repeat'
 " Adds indent block as text object. ii , ai or aI
 Plug 'michaeljsmith/vim-indent-object'
+" Additional text objects for next braket, i/a comma, pairs, smarter searching.
+Plug 'wellle/targets.vim'
 Plug 'bkad/camelcasemotion'
 Plug 'https://github.com/tpope/vim-speeddating'
 " Align CSV files at commas, align Markdown tables, and more.
@@ -136,9 +166,6 @@ Plug 'https://github.com/tpope/vim-speeddating'
 Plug 'https://github.com/junegunn/vim-easy-align'
 " Let's give it a go then.
 Plug 'https://github.com/easymotion/vim-easymotion'
-Plug 'ryanoasis/vim-devicons'
-" May cause lag on scrolling.
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 
 " Unplugs and replacements go here
@@ -395,6 +422,8 @@ let g:pencil#autoformat_blacklist = [
             \ 'texMath',
             \ ]
 function! SetProseOptions()
+    " Add dictionary completion. Requires setting 'dictionary' option.
+    setlocal complete+=k
     call AutoCorrect()
     call textobj#sentence#init()
     setl spell spl=en_nz
@@ -452,3 +481,9 @@ let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
 " Allows hlcolumn bg to match coloursch
 highlight clear SignColumn
 
+augroup misc
+    au!
+    autocmd bufenter * let b:vcm_tab_complete = 'tags'
+    autocmd FileType vim let b:vcm_tab_complete = 'vim'
+    autocmd FileType vim let b:vcm_tab_complete = 'omni'
+augroup end

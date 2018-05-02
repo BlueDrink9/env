@@ -2,6 +2,7 @@
 " Bunch of neat mappings, it's a tpope. Esp [n and ]n, for SCM conflict marks.
 " And [<space> for addign newlines.
 Plug 'https://github.com/tpope/vim-unimpaired'
+Plug 'nathanaelkane/vim-indent-guides'
 " For switching between header and alt files
 Plug 'vim-scripts/a.vim'
 " Bsgrep for searching in all open buffers. Also Bsreplace, Bstoc.
@@ -13,7 +14,7 @@ Plug 'https://github.com/tmux-plugins/vim-tmux'
 Plug 'https://github.com/christoomey/vim-tmux-navigator'
 " Close buffers without changing window
 Plug 'https://github.com/moll/vim-bbye'
-xnoremap bd Bdelete
+cabbrev bd Bdelete
 Plug 'ericbn/vim-relativize'
 if v:version >= 702
     " Highlight f and t chars to get where you want.
@@ -78,3 +79,10 @@ if has('win32')
 endif
 Plug 'https://github.com/reedes/vim-pencil'
 Plug 'https://github.com/dkarter/bullets.vim'
+
+"--- Syntax ---"
+Plug 'octol/vim-cpp-enhanced-highlight'
+let g:cpp_class_decl_highlight = 1
+let g:cpp_member_variable_highlight = 1
+Plug 'https://github.com/WolfgangMehner/c-support'
+
