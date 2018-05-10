@@ -163,3 +163,7 @@ inoremap <S-CR>   <CR>
 nnoremap <S-CR> A  <esc>
 " Because c-] doesn't work on colemak for some reason
 nnoremap <leader>t <c-]>
+
+" x and X shouldn't overwrite the damn paste register!
+nnoremap x "_x
+nnoremap X "_X
