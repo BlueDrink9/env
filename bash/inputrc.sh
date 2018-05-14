@@ -8,6 +8,8 @@ set editing-mode vi
 
 # Used for set -o, shows a symbol at start of prompt for bash vi mode
 set show-mode-in-prompt on
+set vi-ins-mode-string ${WHITE}INS${NC}
+set vi-cmd-mode-string ${GREEN}NORM${NC}
 
 # Completions with no shared prefix will be listed.
 set show-all-if-unmodified on

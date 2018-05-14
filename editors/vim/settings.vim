@@ -18,10 +18,15 @@ filetype plugin indent on
 " For highlighting, and color schemes
 syntax on
 
+function! IdeSettings()
+    set complete+=it     " Include tags and includes in completion.
+endfunction
+
 let s:defaultBGGUI="light"
 let s:defaultBGConsole="light"
 if has("gui_running")
     " GUI is running or is about to start.
+    call IdeSettings()
     " Remove menus to speed up startup
     set guioptions=M
     " Maximize gvim window (for an alternative on Windows, see simalt

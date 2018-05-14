@@ -50,3 +50,10 @@ function! IsWSL()
         return 0
     endif
 endfunction
+
+" @ will play the macro over each line in visual range.
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction

@@ -17,8 +17,13 @@ mkcd() {
 }
 
 del() {
+  if [[ $OSTYPE == 'linux-gnu' ]]; then
+    TRASHDIR=${HOME}/.local/share/Trash/files
+  elif [[ $OSTYPE =~ 'darwin' ]]; then
+    TRASHDIR=${HOME}/.Trash
+  fi
   # Safer than rm
-  mv "$1" "${HOME}/.local/share/Trash/files/$1"
+  mv "$1" "${HOME}/${TRASHDIR}/$1"
 }
 
 # Delete and reclone current git directory

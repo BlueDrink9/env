@@ -71,6 +71,7 @@ set -o noclobber
 # alias mv="mv -i"
 
 
+alias svi="sudoedit"
 alias sagi="sudo apt install"
 alias sag="sudo apt"
 alias sagu="sudo apt update && sudo apt upgrade"
