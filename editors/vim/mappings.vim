@@ -123,10 +123,6 @@ nnoremap <expr> N  'nN'[v:searchforward]
 " Move through previous commands
 nnoremap <expr> n  'Nn'[v:searchforward]
 nnoremap <expr> N  'nN'[v:searchforward]
-" Reset screen entirely (inc highlights)
-nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
-" Quickly edit macros
-nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 " Don't lose selection on < or >
 xnoremap <  <gv
 xnoremap >  >gv
@@ -163,7 +159,10 @@ inoremap <S-CR>   <CR>
 nnoremap <S-CR> A  <esc>
 " Because c-] doesn't work on colemak for some reason
 nnoremap <leader>t <c-]>
-
 " x and X shouldn't overwrite the damn paste register!
 nnoremap x "_x
 nnoremap X "_X
+" Reset screen entirely (inc highlights)
+nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+" Quickly edit macros
+nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
