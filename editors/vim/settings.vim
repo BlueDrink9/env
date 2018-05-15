@@ -53,6 +53,7 @@ if has("gui_running")
     augroup title
         autocmd!
         autocmd BufEnter * let &titlestring = '' . expand("%:t") . ' [' . expand("%:p") . ']'
+        autocmd BufEnter * if &filetype == "" | let &titlestring = 'Vim - New Buffer' | endif
         set title
     augroup END
 
@@ -95,6 +96,7 @@ else
     augroup title
         autocmd!
         autocmd BufEnter * let &titlestring = '|Vim| ' . expand("%:t") . ' [' . expand("%:p") . ']'
+        autocmd BufEnter * if &filetype == "" | let &titlestring = 'Vim - New Buffer' | endif
         set title
     augroup END
 endif

@@ -99,6 +99,7 @@ exec "Plug 'https://github.com/reedes/vim-pencil'
             \| Plug 'https://github.com/reedes/vim-textobj-sentence'
             \| Plug 'https://github.com/tpope/vim-markdown'
             \| Plug 'https://github.com/reedes/vim-wordy', { 'for': " . g:proseFileTypes . " }
+            \| Plug 'bluedrink9/vim-highlight-gender', { 'for': " . g:proseFileTypes . " }
             \| Plug 'https://github.com/panozzaj/vim-autocorrect', { 'for': " . g:proseFileTypes . " }
             \| Plug 'https://github.com/junegunn/goyo.vim', { 'for': " . g:proseFileTypes . " }
             \| Plug 'junegunn/limelight.vim', { 'for': " . g:proseFileTypes . " }
@@ -436,8 +437,11 @@ augroup prose
     " Override default prose settings for some files:
     " autocmd Filetype git,gitsendemail,*commit*,*COMMIT*
     "\ call pencil#init({'wrap': 'hard', 'textwidth': 72})
-    autocmd BufEnter * if &filetype == "" | call pencil#init()
+    autocmd BufEnter * if &filetype == "" || &filetype == "scratch" | call pencil#init()
 augroup END
+" if &filetype == "" || &filetype == "scratch"
+"     call pencil#init()
+" endif
 " Bullets.vim
 let g:bullets_enabled_file_types = [
             \ 'markdown',
