@@ -19,7 +19,9 @@ filetype plugin indent on
 syntax on
 
 function! IdeSettings()
-    set complete+=it     " Include tags and includes in completion.
+    " Include tags and includes in completion.
+    set complete+=i
+    set complete+=t
 endfunction
 
 let s:defaultBGGUI="light"
