@@ -72,7 +72,7 @@ Plug 'https://github.com/lervag/vimtex'
 " Plug 'https://github.com/vim-latex/vim-latex'
 " let g:Tex_DefaultTargetFormat="pdf"
 if has('win32')
-    let g:vimtex_view_general_viewer = 'explorer.exe'
+    let g:vimtex_view_general_viewer = 'sumatrapdf'
     let g:vimtex_view_general_options
                 \ = '-reuse-instance -forward-search @tex @line @pdf'
     let g:vimtex_view_general_options_latexmk = '-reuse-instance'
