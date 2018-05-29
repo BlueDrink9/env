@@ -427,7 +427,11 @@ function! SetProseOptions()
     setlocal complete+=k
     call AutoCorrect()
     call textobj#sentence#init()
-    setl spell spl=en_nz
+    " Default spelling lang is En, I want en_nz.
+    if &spelllang == "en"
+        " Custom lang not set.
+        setl spell spl=en_nz
+    endif
     call pencil#init()
     setl ai
 endfunction
