@@ -10,6 +10,7 @@ Plug 'https://github.com/jeetsukumaran/vim-buffersaurus'
 Plug 'https://github.com/ntpeters/vim-better-whitespace'
 let g:show_spaces_that_precede_tabs=1
 let g:better_whitespace_skip_empty_lines=1
+let g:better_whitespace_operator='_s'
 Plug 'https://github.com/tmux-plugins/vim-tmux'
 Plug 'https://github.com/christoomey/vim-tmux-navigator'
 " Close buffers without changing window
@@ -63,7 +64,7 @@ endif
 " Replaced in favour of slightly heavier version tcomment.
 " See https://github.com/wincent/wincent/commit/913e79724456976549244893e9025aa6fcf3cc1c
 " Plug 'https://github.com/tpope/vim-commentary'
-Plug 'https://github.com/kien/rainbow_parentheses.vim'
+Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
 " Superlight airline (no plugins)
 " Plug 'https://github.com/itchyny/lightline.vim'
 
