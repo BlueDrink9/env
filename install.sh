@@ -25,10 +25,10 @@ VSCODE_VERSION=code
 VSCODE_APP_DATA="${HOME}/AppData/Roaming/Code"
 
 printLine() {
-   printf -- "$@\n" 
+    printf -- "$@\n" 
 }
 printErr() {
-   >&2 printLine "$@"
+    >&2 printLine "$@"
 }
 
 askQuestionYN() {
@@ -92,7 +92,7 @@ downloadURLAndExtractZipTo() {
     url=${1:-default}
     destDir=${2:-default}
     if [ "$url" = "default" ] || [ "$destDir" = "default" ]; then
-       printErr "Error: Invalid url or dest"
+        printErr "Error: Invalid url or dest"
     fi
     if [ ! -d "$destDir" ]; then
         mkdir -p $destDir
@@ -153,7 +153,7 @@ vscodeExtensions() {
     if [[ $REPLY =~ ^[nN]$ ]]; then
         return 0
     elif [[ $REPLY =~ ^[yY]$ ]]; then # Install extensions from 'vscode/extensions'
-        
+
         if hash code-insiders 2> /dev/null; then # Maybe insider version is being used.
             VSCODE_VERSION=code-insiders
             VSCODE_APP_DATA="${HOME}/AppData/Roaming/Code - Insiders/"
@@ -176,29 +176,30 @@ vscodeExtensions() {
             printErr "VSCode not in PATH"
             return 1
         fi
-    if hash code 2> /dev/null; then # Check if 'code' exists.
-        VSCODE_EXTENSIONS_DIR="${HOME}/.vscode/extensions"
-   
-    else
-        echo -e "VSCode not installed or variable not set."
-        return 1
-    fi
-    if [[ $REPLY =~ ^[yY]$ ]]; then # Install extensions from 'vscode/extensions'
-        if [[ ! -d "$VSCODE_EXTENSIONS_DIR" ]]; then
-            mkdir -p "$VSCODE_EXTENSIONS_DIR"
+        if hash code 2> /dev/null; then # Check if 'code' exists.
+            VSCODE_EXTENSIONS_DIR="${HOME}/.vscode/extensions"
+
+        else
+            echo -e "VSCode not installed or variable not set."
+            return 1
         fi
-        if [[ ! -d "${VSCODE_APP_DATA}/User" ]]; then
-            mkdir -p "${VSCODE_APP_DATA}/User"
+        if [[ $REPLY =~ ^[yY]$ ]]; then # Install extensions from 'vscode/extensions'
+            if [[ ! -d "$VSCODE_EXTENSIONS_DIR" ]]; then
+                mkdir -p "$VSCODE_EXTENSIONS_DIR"
+            fi
+            if [[ ! -d "${VSCODE_APP_DATA}/User" ]]; then
+                mkdir -p "${VSCODE_APP_DATA}/User"
+            fi
+
+            while IFS='' read -r LINE || [[ -n "$LINE" ]]; do
+                ${VSCODE_VERSION} --install-extension $LINE
+            done < "${SCRIPTDIR}/editors/.vscode/extensions"
+
+            j            cp "${SCRIPTDIR}/editors/settings.json" "${VSCODE_APP_DATA}/User"
+
+        elif [[ $REPLY =~ ^[cC]$ ]]; then # Load VSCode which detects recommendations.json
+            $VSCODE_VERSION ./editors
         fi
-
-        while IFS='' read -r LINE || [[ -n "$LINE" ]]; do
-            ${VSCODE_VERSION} --install-extension $LINE
-        done < "${SCRIPTDIR}/editors/.vscode/extensions"
-
-        cp "${SCRIPTDIR}/editors/settings.json" "${VSCODE_APP_DATA}/User"
-
-    elif [[ $REPLY =~ ^[cC]$ ]]; then # Load VSCode which detects recommendations.json
-        $VSCODE_VERSION ./editors
     fi
     return 0
 }
@@ -345,11 +346,11 @@ gitSettings() {
     # uninstall (would be messy/potentially damage other file).
     # This is only supported on git versions > 1.7.10.
     addTextIfAbsent "[include]
-        path = ${SCRIPTDIR}/gitglobal/gitconfig" ${HOME}/.gitconfig
+    path = ${SCRIPTDIR}/gitglobal/gitconfig" ${HOME}/.gitconfig
     addTextIfAbsent "[include]
-        path = ${SCRIPTDIR}/gitglobal/gitignore" ${HOME}/.gitignore
+    path = ${SCRIPTDIR}/gitglobal/gitignore" ${HOME}/.gitignore
     addTextIfAbsent "[include]
-        path = ${SCRIPTDIR}/gitglobal/gitattributes" ${HOME}/.gitattributes
+    path = ${SCRIPTDIR}/gitglobal/gitattributes" ${HOME}/.gitattributes
 }
 
 setupShell() {
@@ -368,9 +369,9 @@ setupShell() {
         downloadURLtoFile  \
             https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.256dark  \
             "${HOME}/.dircolours_solarized"
-            # https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-universal \
+        # https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-universal \
 
-        printErr "Enabling custom tmux setup..."
+            printErr "Enabling custom tmux setup..."
         addTextIfAbsent "source-file $SCRIPTDIR/terminal/tmux.conf" ${HOME}/.tmux.conf
         printErr "Enabling custom readline (inputrc) setup..."
         addTextIfAbsent "\$include $SCRIPTDIR/bash/inputrc.sh" ${HOME}/.inputrc
