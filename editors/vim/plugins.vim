@@ -278,6 +278,7 @@ if !exists('g:airline_powerline_fonts') || !exists('g:webdevicons_enable')
                 \ "Sauce Code Pro Nerd Font Complete Mono Windows Compatible.ttf",
                 \ "Sauce Code Pro Nerd Font Complete Windows Compatible.ttf",
                 \ "Sauce Code Pro Nerd Font Complete Mono.ttf",
+                \ "Sauce Code Pro Medium Nerd Font Complete.ttf",
                 \ "Sauce Code Pro Nerd Font Complete.ttf" ]
     let s:nerdFontIsInstalled = []
     let s:PLFontNames = [
