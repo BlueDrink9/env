@@ -68,8 +68,8 @@ set keymap vi-command
 # the last entered commands.
 "\e[A": history-search-backward
 "\e[B": history-search-forward
-j:history-search-forward
-k:history-search-backward
+"j":history-search-forward
+"k":history-search-backward
 
 # modified vim-style quit.
 # ";q":"ccexit\"
