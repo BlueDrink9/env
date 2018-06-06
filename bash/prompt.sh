@@ -62,11 +62,28 @@ set_bash_prompt () {
   CURR_FULL_PATH="\w"
   CURR_DIR="\W"
   TIME_PROMPT="\t"
+  # VI_MODE is empty var, but is here to remind you that it will exist
+  # in the actual prompt because of inputrc settings.
+  VI_MODE=""
 
+  TIME_PROMPT_COLOURED="${pwhite}${pbg_Black}${TIME_PROMPT}${pNC}"
+  PROMPT_MODULES="${USER_AT_HOST}: ${PREV_COMMAND_COLOUR}[${CURR_DIR}]${pNC}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL}"
+
+  # Don't include time on small screens and/or long hostnames/dirs.
+  DESIRED_COMMAND_SPACE=40
+  curr_dir=result=${PWD##*/}
+  HOST=`hostname -s`
+  prompt_variable_length=$(( ${#USER} + ${#curr_dir} + ${#HOST} ))
+  # + 9 is for the extra few symbols that make up the prompt.
+  # + 8 is number of chars in the time_prompt
+  let "remaining_space= ${COLUMNS} - ($prompt_variable_length + 8 + 9)"
+  if (( ${remaining_space} > ${DESIRED_COMMAND_SPACE})); then
+    PROMPT_STRING="${VI_MODE} ${TIME_PROMPT_COLOURED} ${PROMPT_MODULES}"
+  else
+    PROMPT_STRING="${VI_MODE} ${PROMPT_MODULES}"
+  fi
   # Set the bash prompt variable.
-  # Space left after title is actually for start of prompt.
-  # Gives space between vi +: and time.
-  PS1="${WINDOW_TITLE_BASH_PATH} ${pwhite}${pbg_Black}${TIME_PROMPT}${pNC} ${USER_AT_HOST}: ${PREV_COMMAND_COLOUR}[${CURR_DIR}]${pNC}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL}"
+  PS1="${WINDOW_TITLE_BASH_PATH}${PROMPT_STRING}"
 }
 
 # Return the prompt symbol ($) to use, colorized based on the return value of the
