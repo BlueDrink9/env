@@ -62,37 +62,61 @@ set_bash_prompt () {
   CURR_FULL_PATH="\w"
   CURR_DIR="\W"
   TIME_PROMPT="\t"
+  TIME_PROMPT_COLOURED="${pwhite}${pbg_Black}${TIME_PROMPT}${pNC}"
   # VI_MODE is empty var, but is here to remind you that it will exist
   # in the actual prompt because of inputrc settings.
   VI_MODE=""
 
-  TIME_PROMPT_COLOURED="${pwhite}${pbg_Black}${TIME_PROMPT}${pNC}"
-  PROMPT_MODULES="${USER_AT_HOST}: ${PREV_COMMAND_COLOUR}[${CURR_DIR}]${pNC}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL}"
+  # declare -a PROMPT_STRING=(\ "${TIME_PROMPT_COLOURED}: "\ "${USER_AT_HOST}: "\ "${PREV_COMMAND_COLOUR}[${CURR_DIR}]${pNC}"\ "${GIT_STATUS_PROMPT} "\ "${PROMPT_SYMBOL}"\)
+
+  PROMPT_STATICLEN="${VI_MODE} ${TIME_PROMPT_COLOURED}: ${USER_AT_HOST}: ${PREV_COMMAND_COLOUR}[${CURR_DIR}]${pNC}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL}"
+
+  declare -a PROMPT_MODULES=(\
+    "${TIME_PROMPT_COLOURED}: "\
+    "${USER_AT_HOST}: "\
+    "${PREV_COMMAND_COLOUR}[${CURR_DIR}]${pNC}"\
+    "${GIT_STATUS_PROMPT} "\
+    "${PROMPT_SYMBOL}"\
+    )
 
   # Don't include time on small screens and/or long hostnames/dirs.
   DESIRED_COMMAND_SPACE=40
   curr_dir=result=${PWD##*/}
   HOST=`hostname -s`
-  if [ -z $GIT_STATUS_PROMPT ]; then
+  if [ ! -z "$GIT_STATUS_PROMPT" ]; then
     # Contains roughly 20 escape chars.
-    git_length=$((${#GIT_STATUS_PROMPT} - 20))
+    git_len=$((${#GIT_STATUS_PROMPT} - 20))
+  else
+    git_len=0
   fi
 
   # + 9 is for the extra few symbols that make up the prompt.
   # + 8 is number of chars in the time_prompt
-  prompt_len_no_time_host_user=$(( ${#curr_dir} + $git_len + 7 ))
+  prompt_len_no_time_host_user=$(( ${#curr_dir} + "$git_len" + 7 ))
   prompt_len_no_time_host=$(($prompt_len_no_time_host_user + 1 + ${#USER}))
   prompt_len_no_time=$(( $prompt_len_no_time_host + ${#HOST} + 1 ))
   prompt_len=$(( $prompt_len_no_time + 8 ))
 
-  let "remaining_space= ${COLUMNS} - ($prompt_length)"
-  if (( ${remaining_space} > ${DESIRED_COMMAND_SPACE})); then
-    PROMPT_STRING="${VI_MODE} ${TIME_PROMPT_COLOURED} ${PROMPT_MODULES}"
-  else
-    PROMPT_STRING="${VI_MODE} ${PROMPT_MODULES}"
+  declare -a lengths=(\
+    "$prompt_len_no_time_host_user"\
+    "$prompt_len_no_time_host"\
+    "$prompt_len_no_time"\
+    "$prompt_len"\
+    )
+  for len in "${lengths[@]}"; do
+    let "remaining_space= ${COLUMNS} - $len"
+    if (( ${remaining_space} > ${DESIRED_COMMAND_SPACE})); then
+      PROMPT_STRING="${VI_MODE} ${TIME_PROMPT_COLOURED} ${PROMPT_MODULES}"
+    else
+      PROMPT_STRING="${VI_MODE} ${PROMPT_MODULES}"
   fi
+
+  done
+
+
   # Set the bash prompt variable.
-  PS1="${WINDOW_TITLE_BASH_PATH}${PROMPT_STRING}"
+  # PS1="${WINDOW_TITLE_BASH_PATH}${PROMPT_STRING}"
+  PS1="${WINDOW_TITLE_BASH_PATH}${PROMPT_STATICLEN}"
 }
 
 # Return the prompt symbol ($) to use, colorized based on the return value of the
