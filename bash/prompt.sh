@@ -39,9 +39,6 @@ set_bash_prompt () {
   # return value of the last command.
   set_prompt_symbol $?
 
-  # escape_colours
-  USER_AT_HOST="${pblue}\u${pNC}@${pyellow}\h${pNC}"
-
   # if git exists (it doesn't on iOS).
   if hash git 2>/dev/null; then
     GIT_BRANCH="`get_git_branch`"
@@ -59,8 +56,15 @@ set_bash_prompt () {
   #GIT_STATUS_PROMPT="${BRANCH}"
   # \e]0 escapes to window title, \a ends it.
   WINDOW_TITLE_BASH_PATH="\[\e]2;[\W] \u@\h: [\w] ${GIT_BRANCH} – Bash\a\]"
+
+  # escape_colours
+  USER_AT_HOST="${pblue}\u${pNC}@${pyellow}\h${pNC}"
+  USER_COLOURED="${pblue}\u${pNC}"
+  AT_HOST_COLOURED="@${pyellow}\h${pNC}"
+
   CURR_FULL_PATH="\w"
   CURR_DIR="\W"
+  CURR_DIR_COLOURED="${PREV_COMMAND_COLOUR}[${CURR_DIR}]${pNC}"
   TIME_PROMPT="\t"
   TIME_PROMPT_COLOURED="${pwhite}${pbg_Black}${TIME_PROMPT}${pNC}"
   # VI_MODE is empty var, but is here to remind you that it will exist
@@ -69,17 +73,17 @@ set_bash_prompt () {
 
   # declare -a PROMPT_STRING=(\ "${TIME_PROMPT_COLOURED}: "\ "${USER_AT_HOST}: "\ "${PREV_COMMAND_COLOUR}[${CURR_DIR}]${pNC}"\ "${GIT_STATUS_PROMPT} "\ "${PROMPT_SYMBOL}"\)
 
-  PROMPT_STATICLEN="${VI_MODE} ${TIME_PROMPT_COLOURED}: ${USER_AT_HOST}: ${PREV_COMMAND_COLOUR}[${CURR_DIR}]${pNC}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL}"
+  # PROMPT_STATICLEN="${VI_MODE} ${TIME_PROMPT_COLOURED}: ${USER_AT_HOST}: ${CURR_DIR_COLOURED}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL}"
 
-  declare -a PROMPT_MODULES=(\
+
+  # Dynamically build prompt based on the screen size and size of prompt.
+
+  declare -a PROMPT_OPTIONAL_MODULES=(\
+    "${USER_COLOURED}"\
+    "${AT_HOST_COLOURED}"\
     "${TIME_PROMPT_COLOURED}: "\
-    "${USER_AT_HOST}: "\
-    "${PREV_COMMAND_COLOUR}[${CURR_DIR}]${pNC}"\
-    "${GIT_STATUS_PROMPT} "\
-    "${PROMPT_SYMBOL}"\
     )
 
-  # Don't include time on small screens and/or long hostnames/dirs.
   DESIRED_COMMAND_SPACE=40
   curr_dir=result=${PWD##*/}
   HOST=`hostname -s`
@@ -89,12 +93,11 @@ set_bash_prompt () {
   else
     git_len=0
   fi
-
   # + 9 is for the extra few symbols that make up the prompt.
-  # + 8 is number of chars in the time_prompt
   prompt_len_no_time_host_user=$(( ${#curr_dir} + "$git_len" + 7 ))
   prompt_len_no_time_host=$(($prompt_len_no_time_host_user + 1 + ${#USER}))
   prompt_len_no_time=$(( $prompt_len_no_time_host + ${#HOST} + 1 ))
+  # + 8 is number of chars in the time_prompt
   prompt_len=$(( $prompt_len_no_time + 8 ))
 
   declare -a lengths=(\
@@ -103,20 +106,27 @@ set_bash_prompt () {
     "$prompt_len_no_time"\
     "$prompt_len"\
     )
-  for len in "${lengths[@]}"; do
-    let "remaining_space= ${COLUMNS} - $len"
+  VAR_PROMPT=""
+  # for module in "${#lengths[@]}"; do
+  for (( module=0; module<${#lengths[@]}; module++ )); do
+    let "remaining_space= ${COLUMNS} - ${lengths[$module]}"
     if (( ${remaining_space} > ${DESIRED_COMMAND_SPACE})); then
-      PROMPT_STRING="${VI_MODE} ${TIME_PROMPT_COLOURED} ${PROMPT_MODULES}"
+      # if [${PROMPT_OPTIONAL_MODULES[@]}
+      echo -n "${PROMPT_OPTIONAL_MODULES[$module]}"
+      printf "\n"
+      VAR_PROMPT="${VAR_PROMPT}${PROMPT_OPTIONAL_MODULES[$module]}"
     else
-      PROMPT_STRING="${VI_MODE} ${PROMPT_MODULES}"
-  fi
-
+      break
+    fi
   done
+
+  # PROMPT_STATICLEN="${VI_MODE} ${TIME_PROMPT_COLOURED}: ${USER_AT_HOST}: ${CURR_DIR_COLOURED}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL}"
+  PROMPT="${VI_MODE} ${VAR_PROMPT} ${CURR_DIR_COLOURED}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL}"
 
 
   # Set the bash prompt variable.
-  # PS1="${WINDOW_TITLE_BASH_PATH}${PROMPT_STRING}"
-  PS1="${WINDOW_TITLE_BASH_PATH}${PROMPT_STATICLEN}"
+  PS1="${WINDOW_TITLE_BASH_PATH}${PROMPT}"
+  # PS1="${WINDOW_TITLE_BASH_PATH}${PROMPT_STATICLEN}"
 }
 
 # Return the prompt symbol ($) to use, colorized based on the return value of the
@@ -171,7 +181,7 @@ parse_git_branch() {
     if [ "${diverged}" == "0" ]; then
       STATUS_COLOUR=${pcyan}
       bits="^v${bits}"
-			# optional: use several other possible unicode symbols.
+      # optional: use several other possible unicode symbols.
     fi
     if [ "${untracked}" == "0" ]; then
       bits="?${bits}"
