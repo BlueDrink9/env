@@ -464,6 +464,9 @@ call camelcasemotion#CreateMotionMappings('<leader>m')
 let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
 call yankstack#setup()
 
+highlight ExtraWhitespace ctermbg=Gray guibg=Lightgray
+" Snow3 looks good for gui solarized. LG looks better though.
+
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
