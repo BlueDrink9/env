@@ -107,18 +107,36 @@ set_bash_prompt () {
     "$prompt_len"\
     )
   VAR_PROMPT=""
-  # for module in "${#lengths[@]}"; do
-  for (( module=0; module<${#lengths[@]}; module++ )); do
-    let "remaining_space= ${COLUMNS} - ${lengths[$module]}"
-    if (( ${remaining_space} > ${DESIRED_COMMAND_SPACE})); then
-      # if [${PROMPT_OPTIONAL_MODULES[@]}
-      echo -n "${PROMPT_OPTIONAL_MODULES[$module]}"
-      printf "\n"
-      VAR_PROMPT="${VAR_PROMPT}${PROMPT_OPTIONAL_MODULES[$module]}"
-    else
-      break
-    fi
-  done
+
+  let "remaining_space= ${COLUMNS} - $prompt_len_no_time_host_user"
+  if (( ${remaining_space} > ${DESIRED_COMMAND_SPACE})); then
+    VAR_PROMPT=""
+  fi
+  let "remaining_space= ${COLUMNS} - $prompt_len_no_time_host"
+  if (( ${remaining_space} > ${DESIRED_COMMAND_SPACE})); then
+    VAR_PROMPT="${USER_COLOURED}: "
+  fi
+  let "remaining_space= ${COLUMNS} - $prompt_len_no_time"
+  if (( ${remaining_space} > ${DESIRED_COMMAND_SPACE})); then
+    VAR_PROMPT="${USER_COLOURED}${AT_HOST_COLOURED}: "
+  fi
+  let "remaining_space= ${COLUMNS} - $prompt_len"
+  if (( ${remaining_space} > ${DESIRED_COMMAND_SPACE})); then
+    VAR_PROMPT="${TIME_PROMPT_COLOURED} ${USER_COLOURED}${AT_HOST_COLOURED}:"
+  fi
+
+  # # for module in "${#lengths[@]}"; do
+  # for (( module=0; module<${#lengths[@]}; module++ )); do
+  #   let "remaining_space= ${COLUMNS} - ${lengths[$module]}"
+  #   if (( ${remaining_space} > ${DESIRED_COMMAND_SPACE})); then
+  #     # if [${PROMPT_OPTIONAL_MODULES[@]}
+  #     echo -n "${PROMPT_OPTIONAL_MODULES[$module]}"
+  #     printf "\n"
+  #     VAR_PROMPT="${VAR_PROMPT}${PROMPT_OPTIONAL_MODULES[$module]}"
+  #   else
+  #     break
+  #   fi
+  # done
 
   # PROMPT_STATICLEN="${VI_MODE} ${TIME_PROMPT_COLOURED}: ${USER_AT_HOST}: ${CURR_DIR_COLOURED}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL}"
   PROMPT="${VI_MODE} ${VAR_PROMPT} ${CURR_DIR_COLOURED}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL}"
