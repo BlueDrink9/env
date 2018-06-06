@@ -40,7 +40,7 @@ set visible-stats on
 # Autocomplete hidden files without needing dot.
 set match-hidden-files on
 # If there are more than 40 possible completions for a word, ask to show them all
-set completion-query-items 40
+set completion-query-items 70
 # Be more intelligent when autocompleting by also looking at the text after
 # the cursor. For example, when the current line is "cd ~/src/mozil", and
 # the cursor is on the "z", pressing Tab will not autocomplete it to "cd
