@@ -40,9 +40,19 @@ exec 'source ' . s:scriptpath . "/light_plugins.vim"
 " https://github.com/reedes/vim-wheel
 " Function argument movements
 " Plug 'https://github.com/PeterRincker/vim-argumentative'
+" Bunch of paste stuff, replacing, yankring stuff.
+" https://github.com/svermeulen/vim-easyclip
 
 " NOTE: Remember that lightweight plugins (screen+resources+non-niche situations)
 " go in light_plugins.vim
+
+"---------- IDE ----------"
+Plug 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
+Plug 'https://github.com/vim-syntastic/syntastic.git'
+Plug 'ryanoasis/vim-devicons'
+" Awesome code completion, but requires specific installations
+" Plug 'https://github.com/Valloric/YouCompleteMe'
+Plug 'https://github.com/vim-vdebug/vdebug'
 
 "--- Git ---"
 Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
@@ -54,13 +64,6 @@ let g:gitgutter_override_sign_column_highlight = 0
 let g:gitgutter_escape_grep = 1
 Plug 'https://github.com/christoomey/vim-conflicted'
 set stl+=%{ConflictedVersion()}
-
-"---------- IDE ----------"
-Plug 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
-Plug 'https://github.com/vim-syntastic/syntastic.git'
-Plug 'ryanoasis/vim-devicons'
-" Awesome code completion, but requires specific installations
-" Plug 'https://github.com/Valloric/YouCompleteMe'
 
 " Git wrapper
 Plug 'https://github.com/tpope/vim-fugitive'
