@@ -73,10 +73,19 @@ set_bash_prompt () {
   DESIRED_COMMAND_SPACE=40
   curr_dir=result=${PWD##*/}
   HOST=`hostname -s`
-  prompt_variable_length=$(( ${#USER} + ${#curr_dir} + ${#HOST} ))
+  if [ -z $GIT_STATUS_PROMPT ]; then
+    # Contains roughly 20 escape chars.
+    git_length=$((${#GIT_STATUS_PROMPT} - 20))
+  fi
+
   # + 9 is for the extra few symbols that make up the prompt.
   # + 8 is number of chars in the time_prompt
-  let "remaining_space= ${COLUMNS} - ($prompt_variable_length + 8 + 9)"
+  prompt_len_no_time_host_user=$(( ${#curr_dir} + $git_len + 7 ))
+  prompt_len_no_time_host=$(($prompt_len_no_time_host_user + 1 + ${#USER}))
+  prompt_len_no_time=$(( $prompt_len_no_time_host + ${#HOST} + 1 ))
+  prompt_len=$(( $prompt_len_no_time + 8 ))
+
+  let "remaining_space= ${COLUMNS} - ($prompt_length)"
   if (( ${remaining_space} > ${DESIRED_COMMAND_SPACE})); then
     PROMPT_STRING="${VI_MODE} ${TIME_PROMPT_COLOURED} ${PROMPT_MODULES}"
   else
