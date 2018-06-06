@@ -60,7 +60,15 @@ set_bash_prompt () {
   # escape_colours
   USER_AT_HOST="${pblue}\u${pNC}@${pyellow}\h${pNC}"
   USER_COLOURED="${pblue}\u${pNC}"
-  HOST_COLOURED="${pyellow}\h${pNC}"
+  USER_INTITIAL_COLOURED="${pblue}${USER:1:1}${pNC}"
+
+  HOST=`hostname -s`
+  if (( ${#HOST}  > 9 )); then
+    # Truncate hostname if it is too long.
+    HOST_COLOURED="${pyellow}${HOST:0:9}${pNC}"
+  else
+    HOST_COLOURED="${pyellow}\h${pNC}"
+  fi
 
   CURR_FULL_PATH="\w"
   CURR_DIR="\W"
@@ -80,7 +88,6 @@ set_bash_prompt () {
 
   DESIRED_COMMAND_SPACE=40
   curr_dir=result=${PWD##*/}
-  HOST=`hostname -s`
   if [ ! -z "$GIT_STATUS_PROMPT" ]; then
     # Contains roughly 20 escape chars.
     git_len=$((${#GIT_STATUS_PROMPT} - 20))
@@ -103,7 +110,7 @@ set_bash_prompt () {
   elif (( $((${COLUMNS} - $prompt_len_no_time)) > ${DESIRED_COMMAND_SPACE})); then
     VAR_PROMPT="${USER_COLOURED}@${HOST_COLOURED}: "
   elif (( $((${COLUMNS} - $prompt_len_no_time_host)) > ${DESIRED_COMMAND_SPACE})); then
-    VAR_PROMPT="${HOST_COLOURED}: "
+    VAR_PROMPT="${USER_INTITIAL_COLOURED}@${HOST_COLOURED}: "
   # elif (( $((${COLUMNS} - $prompt_len_no_time_host)) > ${DESIRED_COMMAND_SPACE})); then
   #   VAR_PROMPT="${USER_COLOURED}: "
     # let "remaining_space= ${COLUMNS} - $prompt_len_no_time_host_user"
