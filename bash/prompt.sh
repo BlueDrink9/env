@@ -60,7 +60,7 @@ set_bash_prompt () {
   # escape_colours
   USER_AT_HOST="${pblue}\u${pNC}@${pyellow}\h${pNC}"
   USER_COLOURED="${pblue}\u${pNC}"
-  AT_HOST_COLOURED="@${pyellow}\h${pNC}"
+  HOST_COLOURED="${pyellow}\h${pNC}"
 
   CURR_FULL_PATH="\w"
   CURR_DIR="\W"
@@ -78,12 +78,6 @@ set_bash_prompt () {
 
   # Dynamically build prompt based on the screen size and size of prompt.
 
-  declare -a PROMPT_OPTIONAL_MODULES=(\
-    "${USER_COLOURED}"\
-    "${AT_HOST_COLOURED}"\
-    "${TIME_PROMPT_COLOURED}: "\
-    )
-
   DESIRED_COMMAND_SPACE=40
   curr_dir=result=${PWD##*/}
   HOST=`hostname -s`
@@ -96,24 +90,22 @@ set_bash_prompt () {
   # + 9 is for the extra few symbols that make up the prompt.
   prompt_len_no_time_host_user=$(( ${#curr_dir} + "$git_len" + 7 ))
   prompt_len_no_time_host=$(($prompt_len_no_time_host_user + 1 + ${#USER}))
-  prompt_len_no_time=$(( $prompt_len_no_time_host + ${#HOST} + 1 ))
+  prompt_len_no_time_user=$(($prompt_len_no_time_host_user + 1 + ${#HOST}))
+  # prompt_len_no_time=$(( $prompt_len_no_time_host + ${#HOST} + 1 ))
+  prompt_len_no_time=$(( $prompt_len_no_time_user + ${#USER} + 1 ))
   # + 8 is number of chars in the time_prompt
   prompt_len=$(( $prompt_len_no_time + 8 ))
 
-  declare -a lengths=(\
-    "$prompt_len_no_time_host_user"\
-    "$prompt_len_no_time_host"\
-    "$prompt_len_no_time"\
-    "$prompt_len"\
-    )
   VAR_PROMPT=""
 
   if (( $((${COLUMNS} - $prompt_len)) > ${DESIRED_COMMAND_SPACE})); then
-    VAR_PROMPT="${TIME_PROMPT_COLOURED} ${USER_COLOURED}${AT_HOST_COLOURED}:"
+    VAR_PROMPT="${TIME_PROMPT_COLOURED} ${USER_COLOURED}@${HOST_COLOURED}:"
   elif (( $((${COLUMNS} - $prompt_len_no_time)) > ${DESIRED_COMMAND_SPACE})); then
-    VAR_PROMPT="${USER_COLOURED}${AT_HOST_COLOURED}: "
+    VAR_PROMPT="${USER_COLOURED}@${HOST_COLOURED}: "
   elif (( $((${COLUMNS} - $prompt_len_no_time_host)) > ${DESIRED_COMMAND_SPACE})); then
-    VAR_PROMPT="${USER_COLOURED}: "
+    VAR_PROMPT="${HOST_COLOURED}: "
+  # elif (( $((${COLUMNS} - $prompt_len_no_time_host)) > ${DESIRED_COMMAND_SPACE})); then
+  #   VAR_PROMPT="${USER_COLOURED}: "
     # let "remaining_space= ${COLUMNS} - $prompt_len_no_time_host_user"
   else
     VAR_PROMPT=""
