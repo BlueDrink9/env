@@ -11,8 +11,11 @@ set show-mode-in-prompt on
 # Doesn't seem to expand env variables.
 # Readline prompt-escape is \1\2 instead of \[\].
 # Yellow for ins, green for norm. Same as vim CS.
-set vi-ins-mode-string "\1\e[0;33m\2++\1\e[m\2"
-set vi-cmd-mode-string "\1\e[0;32m\2::\1\e[m\2"
+# set vi-ins-mode-string "\1\e[0;33m\2++\1\e[m\2"
+# set vi-cmd-mode-string "\1\e[0;32m\2::\1\e[m\2"
+# As backgrounds this time: Yellow for ins, green for norm. Same as vim CS.
+set vi-ins-mode-string "\1\e[43m\2+\1\e[m\2"
+set vi-cmd-mode-string "\1\e[42m\2:\1\e[m\2"
 
 # Completions with no shared prefix will be listed.
 set show-all-if-unmodified on
