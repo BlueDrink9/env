@@ -21,14 +21,14 @@ BCyan='\e[1;36m'        # Cyan
 BWhite='\e[1;37m'       # White
 
 # Background
-On_Black='\e[40m'       # Black
-On_Red='\e[41m'         # Red
-On_Green='\e[42m'       # Green
-On_Yellow='\e[43m'      # Yellow
-On_Blue='\e[44m'        # Blue
-On_Purple='\e[45m'      # Purple
-On_Cyan='\e[46m'        # Cyan
-On_White='\e[47m'       # White
+bg_Black='\e[40m'       # Black
+bg_Red='\e[41m'         # Red
+bg_Green='\e[42m'       # Green
+bg_Yellow='\e[43m'      # Yellow
+bg_Blue='\e[44m'        # Blue
+bg_Purple='\e[45m'      # Purple
+bg_Cyan='\e[46m'        # Cyan
+bg_White='\e[47m'       # White
 
 NC='\e[m'               # Color Reset
 
