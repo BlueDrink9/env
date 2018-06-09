@@ -91,7 +91,7 @@ if ! shopt -oq posix; then
   fi
 fi
 # TODO Maybe bad... should you mess with $TERM?
-[[ -n "$DISPLAY" && "$TERM" = "xterm" ]] && export TERM=xterm-256color
+# [[ -n "$DISPLAY" && "$TERM" = "xterm" ]] && export TERM=xterm-256color
 
 # make less more friendly for non-text input files, see lesspipe(0)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
