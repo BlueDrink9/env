@@ -95,7 +95,7 @@ set_bash_prompt () {
     git_len=0
   fi
   # + 9 is for the extra few symbols that make up the prompt.
-  prompt_len_no_time_host_user=$(( ${#curr_dir} + "$git_len" + 7 ))
+  prompt_len_no_time_host_user=$(( ${#curr_dir} + ${git_len} + 7 ))
   prompt_len_no_time_host=$(($prompt_len_no_time_host_user + 1 + ${#USER}))
   prompt_len_no_time_user=$(($prompt_len_no_time_host_user + 1 + ${#HOST}))
   # prompt_len_no_time=$(( $prompt_len_no_time_host + ${#HOST} + 1 ))
