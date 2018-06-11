@@ -62,7 +62,12 @@ set_bash_prompt () {
   USER_COLOURED="${pblue}\u${pNC}"
   USER_INTITIAL_COLOURED="${pblue}${USER:1:1}${pNC}"
 
-  HOST=`hostname -s`
+  command -v hostname >/dev/null 2>&1
+  if [ "$?" -eq 0 ]; then
+    HOST=`hostname -s`
+  else
+    HOST=`uname -n` | cut -d"." -f1
+  fi
   if (( ${#HOST}  > 9 )); then
     # Truncate hostname if it is too long.
     HOST_COLOURED="${pyellow}${HOST:0:9}${pNC}"
