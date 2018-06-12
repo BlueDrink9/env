@@ -40,9 +40,19 @@ exec 'source ' . s:scriptpath . "/light_plugins.vim"
 " https://github.com/reedes/vim-wheel
 " Function argument movements
 " Plug 'https://github.com/PeterRincker/vim-argumentative'
+" Bunch of paste stuff, replacing, yankring stuff.
+" https://github.com/svermeulen/vim-easyclip
 
 " NOTE: Remember that lightweight plugins (screen+resources+non-niche situations)
 " go in light_plugins.vim
+
+"---------- IDE ----------"
+Plug 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
+Plug 'https://github.com/vim-syntastic/syntastic.git'
+Plug 'ryanoasis/vim-devicons'
+" Awesome code completion, but requires specific installations
+" Plug 'https://github.com/Valloric/YouCompleteMe'
+Plug 'https://github.com/vim-vdebug/vdebug'
 
 "--- Git ---"
 Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
@@ -54,13 +64,6 @@ let g:gitgutter_override_sign_column_highlight = 0
 let g:gitgutter_escape_grep = 1
 Plug 'https://github.com/christoomey/vim-conflicted'
 set stl+=%{ConflictedVersion()}
-
-"---------- IDE ----------"
-Plug 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
-Plug 'https://github.com/vim-syntastic/syntastic.git'
-Plug 'ryanoasis/vim-devicons'
-" Awesome code completion, but requires specific installations
-" Plug 'https://github.com/Valloric/YouCompleteMe'
 
 " Git wrapper
 Plug 'https://github.com/tpope/vim-fugitive'
@@ -277,6 +280,7 @@ if !exists('g:airline_powerline_fonts') || !exists('g:webdevicons_enable')
                 \ "Sauce Code Pro Nerd Font Complete Mono Windows Compatible.ttf",
                 \ "Sauce Code Pro Nerd Font Complete Windows Compatible.ttf",
                 \ "Sauce Code Pro Nerd Font Complete Mono.ttf",
+                \ "Sauce Code Pro Medium Nerd Font Complete.ttf",
                 \ "Sauce Code Pro Nerd Font Complete.ttf" ]
     let s:nerdFontIsInstalled = []
     let s:PLFontNames = [
@@ -465,6 +469,9 @@ map <Leader>vl :VimuxRunLastCommand<CR>
 call camelcasemotion#CreateMotionMappings('<leader>m')
 let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
 call yankstack#setup()
+
+highlight ExtraWhitespace ctermbg=Gray guibg=Lightgray
+" Snow3 looks good for gui solarized. LG looks better though.
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)

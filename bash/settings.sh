@@ -20,12 +20,12 @@ fi
 export LC_CTYPE="en_US.UTF-8"
 # Allow sending ctrl+S to applications in terminal (prev stops scrolling)
 stty -ixon
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+export HISTSIZE=1000
+export HISTFILESIZE=2000
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
 export HISTCONTROL=ignoredups:erasedups
 if [ ! -d "${HOME}/.logs" ] ; then
    mkdir ${HOME}/.logs
@@ -41,9 +41,13 @@ shopt -s histappend
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
+# # If set, the pattern "**" used in a pathname expansion context will
+# # match all files and zero or more directories and subdirectories.
 #shopt -s globstar
+# No init prevents screen being cleared on enter/exit.
+# Window=4 is scrolling buffer.
+# export LESS='--quit-if-one-screen --ignore-case --status-column --HILITE-UNREAD --tabs=4 --window=-4'
+export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --HILITE-UNREAD --tabs=4 --no-init --window=-4 --RAW-CONTROL-CHARS'
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
@@ -87,7 +91,7 @@ if ! shopt -oq posix; then
   fi
 fi
 # TODO Maybe bad... should you mess with $TERM?
-[[ -n "$DISPLAY" && "$TERM" = "xterm" ]] && export TERM=xterm-256color
+# [[ -n "$DISPLAY" && "$TERM" = "xterm" ]] && export TERM=xterm-256color
 
 # make less more friendly for non-text input files, see lesspipe(0)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"

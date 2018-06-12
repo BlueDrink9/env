@@ -39,7 +39,7 @@ if has("gui_running")
         let g:backgroundColour=s:defaultBGGUI
     endif
     exec 'set background=' . g:backgroundColour
-    if !exists(&guifont)
+    if !exists("&guifont")
         let s:useFont = "Source\\ Code\\ Pro\\ Medium"
         if has("win32")
             exec 'set guifont=' . s:useFont . ':h11'
@@ -165,6 +165,7 @@ augroup END
 
 set expandtab
 set shiftwidth=4
+set tabstop=4
 set softtabstop=4
 set smarttab
 " set tabstop=4

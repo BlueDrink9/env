@@ -57,3 +57,15 @@ function! ExecuteMacroOverVisualRange()
   echo "@".getcmdline()
   execute ":'<,'>normal @".nr2char(getchar())
 endfunction
+
+" Search in all currently opened buffers. `SearchAll [pattern]`
+" Populates quicklist
+function! ClearQuickfixList()
+  call setqflist([])
+endfunction
+function! Vimgrepall(pattern)
+  call ClearQuickfixList()
+  exe 'bufdo vimgrepadd ' . a:pattern . ' %'
+  cnext
+endfunction
+command! -nargs=1 SearchAll call Vimgrepall(<f-args>)

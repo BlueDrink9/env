@@ -8,8 +8,14 @@ set editing-mode vi
 
 # Used for set -o, shows a symbol at start of prompt for bash vi mode
 set show-mode-in-prompt on
-set vi-ins-mode-string ${WHITE}INS${NC}
-set vi-cmd-mode-string ${GREEN}NORM${NC}
+# Doesn't seem to expand env variables.
+# Readline prompt-escape is \1\2 instead of \[\].
+# Yellow for ins, green for norm. Same as vim CS.
+# set vi-ins-mode-string "\1\e[0;33m\2++\1\e[m\2"
+# set vi-cmd-mode-string "\1\e[0;32m\2::\1\e[m\2"
+# As backgrounds this time: Yellow for ins, green for norm. Same as vim CS.
+set vi-ins-mode-string "\1\e[43m\2+\1\e[m\2"
+set vi-cmd-mode-string "\1\e[42m\2:\1\e[m\2"
 
 # Completions with no shared prefix will be listed.
 set show-all-if-unmodified on
@@ -37,7 +43,7 @@ set visible-stats on
 # Autocomplete hidden files without needing dot.
 set match-hidden-files on
 # If there are more than 40 possible completions for a word, ask to show them all
-set completion-query-items 40
+set completion-query-items 70
 # Be more intelligent when autocompleting by also looking at the text after
 # the cursor. For example, when the current line is "cd ~/src/mozil", and
 # the cursor is on the "z", pressing Tab will not autocomplete it to "cd
@@ -68,8 +74,8 @@ set keymap vi-command
 # the last entered commands.
 "\e[A": history-search-backward
 "\e[B": history-search-forward
-j:history-search-forward
-k:history-search-backward
+"j":history-search-forward
+"k":history-search-backward
 
 # modified vim-style quit.
 # ";q":"ccexit\"
