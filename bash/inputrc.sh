@@ -32,7 +32,7 @@ set show-all-if-ambiguous on
 # options when hitting TAB
 set menu-complete-display-prefix on
 
-# Colour common prefixes of tab-completion
+# Colour common prefixes of tab-completion (bash 4.4 only)
 set colored-completion-prefix on
 # Colour completion based on file type (like ls)
 set colored-stats on
@@ -92,6 +92,7 @@ set keymap vi-insert
 # modified vim-style quit.
 # ";q":"ccexit\"
 ";q":"ccexit"
+";e":"Ivim "
 
 # Pressing tab will list all completions & select the first one. Pressing it
 # again will cycle through available completions.
