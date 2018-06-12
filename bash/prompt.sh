@@ -126,8 +126,10 @@ set_bash_prompt () {
   # PROMPT_STATICLEN="${VI_MODE} ${TIME_PROMPT_COLOURED}: ${USER_AT_HOST}: ${CURR_DIR_COLOURED}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL}"
   PROMPT="${VI_MODE} ${VAR_PROMPT} ${CURR_DIR_COLOURED}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL}"
 
+  # Ensures you won't have prompt displaced by previous line's input (eg ^C)
+  cursorToBoL="\[\033[G\]"
   # Set the bash prompt variable.
-  PS1="${WINDOW_TITLE_BASH_PATH}${PROMPT}"
+  PS1="${WINDOW_TITLE_BASH_PATH}${cursorToBoL}${PROMPT}"
   # PS1="${WINDOW_TITLE_BASH_PATH}${PROMPT_STATICLEN}"
 }
 
