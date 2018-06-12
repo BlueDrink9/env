@@ -101,7 +101,6 @@ exec "Plug 'https://github.com/reedes/vim-pencil'
             \| Plug 'https://github.com/reedes/vim-wordy', { 'for': " . g:proseFileTypes . " }
             \| Plug 'bluedrink9/vim-highlight-gender', { 'for': " . g:proseFileTypes . " }
             \| Plug 'https://github.com/panozzaj/vim-autocorrect', { 'for': " . g:proseFileTypes . " }
-            \| Plug 'https://github.com/junegunn/goyo.vim', { 'for': " . g:proseFileTypes . " }
             \| Plug 'junegunn/limelight.vim', { 'for': " . g:proseFileTypes . " }
             \"
 

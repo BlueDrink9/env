@@ -79,6 +79,7 @@ if has('win32')
 endif
 Plug 'https://github.com/reedes/vim-pencil'
 Plug 'https://github.com/dkarter/bullets.vim'
+Plug 'https://github.com/junegunn/goyo.vim'
 
 "--- Syntax ---"
 Plug 'octol/vim-cpp-enhanced-highlight'
