@@ -262,65 +262,68 @@ if !exists('g:airline_powerline_fonts') || !exists('g:webdevicons_enable')
     " (unix) or to system (windows)
     " If we are (probably) using a powerline compatible font, set it so.
     " If a nerd font is found, assume powerline-compat, as well as devicons.
-    if has("unix")
-        let s:uname = system("uname")
-        if s:uname == "Darwin\n"
-            " OSX
-            exec "let s:fontdir = expand('" . $HOME . "/Library/Fonts')"
-        else
-            " Linux
-            exec "let s:fontdir = expand('" . $HOME . "/.fonts')"
-        endif
-    else
-        " Windows
-        exec "let s:fontdir = expand('" . $windir . "/Fonts')"
-    endif
-
-    let s:nerdFontNames = [
-                \ "Sauce Code Pro Nerd Font Complete Mono Windows Compatible.ttf",
-                \ "Sauce Code Pro Nerd Font Complete Windows Compatible.ttf",
-                \ "Sauce Code Pro Nerd Font Complete Mono.ttf",
-                \ "Sauce Code Pro Medium Nerd Font Complete.ttf",
-                \ "Sauce Code Pro Nerd Font Complete.ttf" ]
-    let s:nerdFontIsInstalled = []
-    let s:PLFontNames = [
-                \ "SourceCodePro-Regular.ttf",
-                \ "SourceCodePro-Regular.otf"]
-    let s:PLFontIsInstalled = []
-
-    let s:nerdFontExists = 0
-    let s:PLFontExists = 0
-    let i = 0
-    while i < len(s:nerdFontNames)
-        exec "call add(s:nerdFontIsInstalled, 
-                    \ filereadable( expand('" . s:fontdir . "/" . s:nerdFontNames[i] . "')))"
-        exec "let s:nerdFontExists = " . s:nerdFontExists . " || " . s:nerdFontIsInstalled[i]
-        exec "let s:PLFontExists = " . s:nerdFontExists . " || " . s:nerdFontIsInstalled[i]
-        let i += 1
-    endwhile
-
-    let i = 0
-    if !s:nerdFontExists
-        while i < len(s:PLFontNames)
-            exec "call add(s:PLFontIsInstalled, 
-                        \ filereadable( expand('" . s:fontdir . "/" . s:PLFontNames[i] . "')))"
-            exec "let s:PLFontExists = " . s:PLFontExists . " || " . s:PLFontIsInstalled[i]
-            let i += 1
-        endwhile
-    endif
-
-    let s:guiUsesNerdFont = 
-                \ &guifont =~ "Nerd" ||
-                \ &guifont =~ "Sauce"
-
-    let s:guiUsesPLFont = s:guiUsesNerdFont || 
-                \ &guifont =~ "Powerline" ||
-                \ &guifont =~ "Source\\ Code\\ Pro"
+    "
 
     if has("gui_running")
+        let s:guiUsesNerdFont = 
+                    \ &guifont =~ "Nerd" ||
+                    \ &guifont =~ "Sauce"
+
+        let s:guiUsesPLFont = s:guiUsesNerdFont || 
+                    \ &guifont =~ "Powerline" ||
+                    \ &guifont =~ "Source\\ Code\\ Pro"
+
         let s:usePLFont = s:guiUsesPLFont
         let s:useNerdFont = s:guiUsesNerdFont
     else
+
+        if has("unix")
+            let s:uname = system("uname")
+            if s:uname == "Darwin\n"
+                " OSX
+                exec "let s:fontdir = expand('" . $HOME . "/Library/Fonts')"
+            else
+                " Linux
+                exec "let s:fontdir = expand('" . $HOME . "/.fonts')"
+            endif
+        else
+            " Windows
+            exec "let s:fontdir = expand('" . $windir . "/Fonts')"
+        endif
+
+        let s:nerdFontNames = [
+                    \ "Sauce Code Pro Nerd Font Complete Mono Windows Compatible.ttf",
+                    \ "Sauce Code Pro Nerd Font Complete Windows Compatible.ttf",
+                    \ "Sauce Code Pro Nerd Font Complete Mono.ttf",
+                    \ "Sauce Code Pro Medium Nerd Font Complete.ttf",
+                    \ "Sauce Code Pro Nerd Font Complete.ttf" ]
+        let s:nerdFontIsInstalled = []
+        let s:PLFontNames = [
+                    \ "SourceCodePro-Regular.ttf",
+                    \ "SourceCodePro-Regular.otf"]
+        let s:PLFontIsInstalled = []
+
+        let s:nerdFontExists = 0
+        let s:PLFontExists = 0
+        let i = 0
+        while i < len(s:nerdFontNames)
+            exec "call add(s:nerdFontIsInstalled, 
+                        \ filereadable( expand('" . s:fontdir . "/" . s:nerdFontNames[i] . "')))"
+            exec "let s:nerdFontExists = " . s:nerdFontExists . " || " . s:nerdFontIsInstalled[i]
+            exec "let s:PLFontExists = " . s:nerdFontExists . " || " . s:nerdFontIsInstalled[i]
+            let i += 1
+        endwhile
+
+        let i = 0
+        if !s:nerdFontExists
+            while i < len(s:PLFontNames)
+                exec "call add(s:PLFontIsInstalled, 
+                            \ filereadable( expand('" . s:fontdir . "/" . s:PLFontNames[i] . "')))"
+                exec "let s:PLFontExists = " . s:PLFontExists . " || " . s:PLFontIsInstalled[i]
+                let i += 1
+            endwhile
+        endif
+
         let s:usePLFont = s:PLFontExists
         let s:useNerdFont = s:nerdFontExists
     endif
