@@ -465,7 +465,7 @@ main() {
 
     printErr ""
     printErr "------------------- VIM"
-    # setupVim
+    setupVim
 
     printErr "${Green} Install Complete${NC}"
     # Restart bash
