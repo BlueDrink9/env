@@ -57,16 +57,18 @@ set_bash_prompt () {
   # \e]0 escapes to window title, \a ends it.
   WINDOW_TITLE_BASH_PATH="\[\e]2;[\W] \u@\h: [\w] ${GIT_BRANCH} – Bash\a\]"
 
-  # escape_colours
+  if [ -z ${USER} ] ; then
+    USER=`id -u -n`
+  fi
   USER_AT_HOST="${pblue}\u${pNC}@${pyellow}\h${pNC}"
   USER_COLOURED="${pblue}\u${pNC}"
-  USER_INTITIAL_COLOURED="${pblue}${USER:1:1}${pNC}"
+  USER_INITIAL_COLOURED="${pblue}${USER:0:1}${pNC}"
 
   HOST=`uname -n | cut -d"." -f1`
 
-  if (( ${#HOST}  > 10 )); then
+  if (( ${#HOST}  > 12 )); then
     # Truncate hostname if it is too long.
-    HOST=${HOST:0:10}
+    HOST=${HOST:0:12}
     HOST_COLOURED="${pyellow}${HOST}${pNC}"
   else
     HOST_COLOURED="${pyellow}\h${pNC}"
@@ -112,7 +114,7 @@ set_bash_prompt () {
   elif (( $((${COLUMNS} - $prompt_len_no_time)) > ${DESIRED_COMMAND_SPACE})); then
     VAR_PROMPT="${USER_COLOURED}@${HOST_COLOURED}: "
   elif (( $((${COLUMNS} - $prompt_len_no_time_host)) > ${DESIRED_COMMAND_SPACE})); then
-    VAR_PROMPT="${USER_INTITIAL_COLOURED}@${HOST_COLOURED}: "
+    VAR_PROMPT="${USER_INITIAL_COLOURED}@${HOST_COLOURED}: "
   # elif (( $((${COLUMNS} - $prompt_len_no_time_host)) > ${DESIRED_COMMAND_SPACE})); then
   #   VAR_PROMPT="${USER_COLOURED}: "
     # let "remaining_space= ${COLUMNS} - $prompt_len_no_time_host_user"
