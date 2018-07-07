@@ -257,6 +257,13 @@ if g:remoteSession
     let g:airline_powerline_fonts=0
     let g:webdevicons_enable=0
 endif
+" Env variables, can be set by ssh client on login if it supports PL.
+if $USENF==1
+    let g:airline_powerline_fonts=1
+    let g:webdevicons_enable=1
+elseif $USEPOWERLINE==1
+    let g:airline_powerline_fonts=1
+endif
 " Check if either of these have been specifically disabled or enabled.
 if !exists('g:airline_powerline_fonts') || !exists('g:webdevicons_enable')
     " Automatically check for powerline compatible font installed locally
