@@ -29,6 +29,7 @@ Plug 'https://github.com/altercation/vim-colors-solarized.git'
 if !has("gui_running")
     " if $TERM contains "-256color"
     " May be needed if terminal doesn't support.
+    " TODO sort out base16 colours for solarized
     exec 'let g:' . colorSch . '_termcolors=256'
     exec 'let g:' . colorSch . '_base16 = 0'
     let base16colorspace = 256

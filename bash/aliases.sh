@@ -9,6 +9,7 @@ alias cl="clear"
 
 if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
     alias setssdir="defaults write com.apple.screencapture location"
+    alias ls="ls -Fh -G"
     # ls and grep should use colours automatically because CLICOLOR is set.
     # Make esc act as backspace in terminal
 
