@@ -1,3 +1,18 @@
+if g:liteMode
+    " Lighter alt to airline for putting buffers in tabline.
+    Plug 'https://github.com/ap/vim-buftabline'
+    " Only show buffer line if there are > 2 buffers open.
+    let g:buftabline_show=1
+    let g:buftabline_numbers=2
+endif
+
+if g:liteMode
+    " Settings to maximise speed/screen space
+    set cmdheight=1
+    set laststatus=0
+    set showmode
+endif
+
 "--- Misc ---"
 " Bunch of neat mappings, it's a tpope. Esp [n and ]n, for SCM conflict marks.
 " And [<space> for addign newlines.
@@ -89,4 +104,3 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 let g:cpp_class_decl_highlight = 1
 let g:cpp_member_variable_highlight = 1
 Plug 'https://github.com/WolfgangMehner/c-support'
-
