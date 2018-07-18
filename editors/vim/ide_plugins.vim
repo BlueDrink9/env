@@ -5,4 +5,6 @@ let g:syntastic_cpp_compiler_options="-std=c++11"
 Plug 'ryanoasis/vim-devicons'
 " Awesome code completion, but requires specific installations
 " Plug 'https://github.com/Valloric/YouCompleteMe'
-Plug 'https://github.com/vim-vdebug/vdebug'
+if has("python3")
+    Plug 'https://github.com/vim-vdebug/vdebug'
+endif

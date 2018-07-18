@@ -36,8 +36,11 @@ else
 fi
 
 # Run tmux on ssh connect
+
+# Check if interactive is part of shell options (running interactively)
 case $- in
     *i*)
+
     if command -v tmux>/dev/null; then
         if [[ ! $TERM =~ screen ]] && [[ -z $TMUX ]]; then
             PNAME="$(ps -o comm= $PPID)";
