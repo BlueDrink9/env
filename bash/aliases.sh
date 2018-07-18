@@ -61,8 +61,10 @@ elif [ command -v gvim 2>/dev/null ]; then
 elif [ -e /usr/bin/gvim ]; then
     alias vim='/usr/bin/gvim -v'
 fi
+
+alias idevim="vim --cmd \"let g:ideMode=1\""
 # Much faster startup for vim without plugins.
-alias qvim="vim --noplugin"
+alias qvim="vim --cmd \"let g:liteMode=1\""
 alias vi="vim --noplugin"
 
 # Prevent files from being overwritten by redirection.
