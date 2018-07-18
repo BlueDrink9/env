@@ -14,7 +14,11 @@ if v:version >= 703
     endfunction
 else
     function! CreateVimDir(dir)
-        return $HOME . "/" . a:dir
+        let l:dir = expand('/' . a:dir)
+        if filewritable(s:vimrcdir) && !isdirectory(s:vimrcdir . l:dir)
+            silent exec "!mkdir "s:vimrcdir . l:dir
+        endif
+        return s:vimrcdir . l:dir
     endfunction
 endif
 call CreateVimDir("vimfiles")
