@@ -1,4 +1,13 @@
 " vim: set ft=vim:
+" This file will source from light, main and ide plugin files, depending on
+" the value of 2 variables. These should be set from command line via the -c
+" option, eg `vim --cmd "let g:liteMode=1" [file]`
+if !exists("g:liteMode")
+    let g:liteMode=0
+endif
+if !exists("g:ideMode")
+    let g:ideMode=0
+endif
 
 " set laststatus=2
 
@@ -33,12 +42,17 @@ command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 call plug#begin(s:pluginPath)
 
 let g:pluginSettingsToExec = []
+
 " Get light plugin set first
 exec 'source ' . s:scriptpath . "/light_plugins.vim"
 
-exec 'source ' . s:scriptpath . "/main_plugins.vim"
+if !g:liteMode
+    exec 'source ' . s:scriptpath . "/main_plugins.vim"
 
-exec 'source ' . s:scriptpath . "/ide_plugins.vim"
+    if g:ideMode || has("gui_running")
+        exec 'source ' . s:scriptpath . "/ide_plugins.vim"
+    endif
+endif
 
 " Unplugs and replacements go here
 exec 'source ' . s:localPlugins
