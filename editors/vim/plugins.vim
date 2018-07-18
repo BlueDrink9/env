@@ -32,7 +32,7 @@ command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 
 call plug#begin(s:pluginPath)
 
-let g:pluginSettingsToExec = ['t',"echo test success"]
+let g:pluginSettingsToExec = []
 " Get light plugin set first
 exec 'source ' . s:scriptpath . "/light_plugins.vim"
 
@@ -46,6 +46,6 @@ exec 'source ' . s:localPlugins
 call plug#end()
 
 for item in g:pluginSettingsToExec
-    echom item
+    " echom item
     exec item
 endfor

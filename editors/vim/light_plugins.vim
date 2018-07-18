@@ -26,6 +26,7 @@ if v:version >= 702
     let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 endif
 Plug 'https://github.com/altercation/vim-colors-solarized.git'
+call add (g:pluginSettingsToExec, "colorscheme " . colorSch)
 if !has("gui_running")
     " if $TERM contains "-256color"
     " May be needed if terminal doesn't support.
