@@ -61,6 +61,7 @@ exec "Plug 'https://github.com/reedes/vim-textobj-sentence', { 'for': " . g:pros
 exec "Plug 'https://github.com/reedes/vim-wordy', { 'for': " . g:proseFileTypes . " }"
 exec "Plug 'bluedrink9/vim-highlight-gender', { 'for': " . g:proseFileTypes . " }"
 exec "Plug 'https://github.com/vim-scripts/LanguageTool', { 'for': " . g:proseFileTypes . " }"
+" An alternative to langtool:https://github.com/rhysd/vim-grammarous 
 exec "Plug 'https://github.com/panozzaj/vim-autocorrect', { 'for': " . g:proseFileTypes . " }"
 " Limelight Looks really nice, esp for prose. Highlight slightly current paraghraph.
 exec "Plug 'junegunn/limelight.vim', { 'for': " . g:proseFileTypes . " }"
