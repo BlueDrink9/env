@@ -317,8 +317,10 @@ if g:airline_powerline_fonts == 0
     let g:airline_symbols.readonly = ''
 
     " Skip gap between col symbol and number (custom section)
-    call airline#parts#define_raw('linenr', g:airline_symbols.linenr . ' %l')
-    call airline#parts#define_raw('columnnr', g:airline_symbols.columnnr . '%c')
+    call add (g:pluginSettingsToExec,
+                \ "call airline#parts#define_raw('linenr', g:airline_symbols.linenr . ' %l')")
+    call add (g:pluginSettingsToExec,
+                \ "call airline#parts#define_raw('columnnr', g:airline_symbols.columnnr . '%c')")
     call add (g:pluginSettingsToExec, "let g:airline_section_z = airline#section#create([
                 \ 'linenr', 'maxlinenr',' ', 'columnnr'])")
 else
