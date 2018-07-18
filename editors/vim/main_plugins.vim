@@ -44,23 +44,60 @@ if executable('ctags-exuberant') || executable('ctags')
     Plug 'majutsushi/tagbar'
 endif
 
+
 "--- Prose ---"
-" Better prose spellchecking
-" Neccesary for next plugin
-" Expands what a sentence/word is for prose.
-" Distraction-free vim.
-" Limelight Looks really nice, esp for prose. Highlight slightly current paraghraph.
+
 " Plug 'https://github.com/plasticboy/vim-markdown'
-exec "Plug 'https://github.com/reedes/vim-pencil'
-            \| Plug 'https://github.com/reedes/vim-lexical', { 'for': " . g:proseFileTypes . " }
-            \| Plug 'https://github.com/kana/vim-textobj-user'
-            \| Plug 'https://github.com/reedes/vim-textobj-sentence'
-            \| Plug 'https://github.com/tpope/vim-markdown'
-            \| Plug 'https://github.com/reedes/vim-wordy', { 'for': " . g:proseFileTypes . " }
-            \| Plug 'bluedrink9/vim-highlight-gender', { 'for': " . g:proseFileTypes . " }
-            \| Plug 'https://github.com/panozzaj/vim-autocorrect', { 'for': " . g:proseFileTypes . " }
-            \| Plug 'junegunn/limelight.vim', { 'for': " . g:proseFileTypes . " }
-            \"
+" Better prose spellchecking
+exec "Plug 'https://github.com/reedes/vim-lexical', { 'for': " . g:proseFileTypes . " }"
+let g:lexical#spell_key = '<leader>ls'
+let g:lexical#thesaurus_key = '<leader>lt'
+let g:lexical#dictionary_key = '<leader>ld'
+" Neccesary for next plugin
+exec "Plug 'https://github.com/kana/vim-textobj-user', { 'for': " . g:proseFileTypes . " }"
+" Expands what a sentence/word is for prose.
+exec "Plug 'https://github.com/reedes/vim-textobj-sentence', { 'for': " . g:proseFileTypes . " }" 
+" vimL word usage highlighter
+exec "Plug 'https://github.com/reedes/vim-wordy', { 'for': " . g:proseFileTypes . " }"
+exec "Plug 'bluedrink9/vim-highlight-gender', { 'for': " . g:proseFileTypes . " }"
+exec "Plug 'https://github.com/vim-scripts/LanguageTool', { 'for': " . g:proseFileTypes . " }"
+exec "Plug 'https://github.com/panozzaj/vim-autocorrect', { 'for': " . g:proseFileTypes . " }"
+" Limelight Looks really nice, esp for prose. Highlight slightly current paraghraph.
+exec "Plug 'junegunn/limelight.vim', { 'for': " . g:proseFileTypes . " }"
+
+function! SetProseOptions()
+    " Add dictionary completion. Requires setting 'dictionary' option.
+    setlocal complete+=k
+    call add (g:pluginSettingsToExec, "call AutoCorrect()")
+    call add (g:pluginSettingsToExec, "call textobj#sentence#init()")
+    " Default spelling lang is En, I want en_nz.
+    if &spelllang == "en"
+        " Custom lang not set.
+        setl spell spl=en_nz
+    endif
+    call add (g:pluginSettingsToExec, "call pencil#init()")
+    setl ai
+endfunction
+
+augroup prose
+    autocmd!
+    exec 'autocmd Filetype ' . g:proseFileTypes . ' call SetProseOptions()'
+    " Override default prose settings for some files:
+    " autocmd Filetype git,gitsendemail,*commit*,*COMMIT*
+    "\ call pencil#init({'wrap': 'hard', 'textwidth': 72})
+    autocmd BufEnter * if &filetype == "" || &filetype == "scratch" | call pencil#init()
+augroup END
+" if &filetype == "" || &filetype == "scratch"
+"     call pencil#init()
+" endif
+" Bullets.vim
+let g:bullets_enabled_file_types = [
+            \ 'markdown',
+            \ 'text',
+            \ 'gitcommit',
+            \ 'scratch'
+            \]
+
 
 "--- Syntax ---"
 Plug 'https://github.com/dragfire/Improved-Syntax-Highlighting-Vim'
@@ -363,57 +400,6 @@ nmap <silent> <leader>b :TagbarToggle<CR>
 " Uncomment to open tagbar automatically whenever possible
 "autocmd BufEnter * nested :call tagbar#autoopen(0)
 
-
-" ----- Prose -----
-let g:pencil#wrapModeDefault = 'soft'
-let g:lexical#spell_key = '<leader>ls'
-let g:lexical#thesaurus_key = '<leader>lt'
-let g:lexical#dictionary_key = '<leader>ld'
-let g:pencil#autoformat_blacklist = [
-            \ 'markdownCode',
-            \ 'markdownUrl',
-            \ 'markdownIdDeclaration',
-            \ 'markdownLinkDelimiter',
-            \ 'markdownHighlight[A-Za-z0-9]+',
-            \ 'mkdCode',
-            \ 'mkdIndentCode',
-            \ 'markdownFencedCodeBlock',
-            \ 'markdownInlineCode',
-            \ 'mmdTable[A-Za-z0-9]*',
-            \ 'txtCode',
-            \ 'texMath',
-            \ ]
-function! SetProseOptions()
-    " Add dictionary completion. Requires setting 'dictionary' option.
-    setlocal complete+=k
-    call AutoCorrect()
-    call textobj#sentence#init()
-    " Default spelling lang is En, I want en_nz.
-    if &spelllang == "en"
-        " Custom lang not set.
-        setl spell spl=en_nz
-    endif
-    call pencil#init()
-    setl ai
-endfunction
-augroup prose
-    autocmd!
-    exec 'autocmd Filetype ' . g:proseFileTypes . ' call SetProseOptions()'
-    " Override default prose settings for some files:
-    " autocmd Filetype git,gitsendemail,*commit*,*COMMIT*
-    "\ call pencil#init({'wrap': 'hard', 'textwidth': 72})
-    autocmd BufEnter * if &filetype == "" || &filetype == "scratch" | call pencil#init()
-augroup END
-" if &filetype == "" || &filetype == "scratch"
-"     call pencil#init()
-" endif
-" Bullets.vim
-let g:bullets_enabled_file_types = [
-            \ 'markdown',
-            \ 'text',
-            \ 'gitcommit',
-            \ 'scratch'
-            \]
 
 
 " ----------- TMUX --------------

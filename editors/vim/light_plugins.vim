@@ -1,4 +1,10 @@
 if g:liteMode
+" Superlight airline (no plugins)
+    " Plug 'https://github.com/itchyny/lightline.vim'
+    " Replaced in favour of slightly heavier version tcomment.
+    " See https://github.com/wincent/wincent/commit/913e79724456976549244893e9025aa6fcf3cc1c
+    " Plug 'https://github.com/tpope/vim-commentary'
+
     " Lighter alt to airline for putting buffers in tabline.
     Plug 'https://github.com/ap/vim-buftabline'
     " Only show buffer line if there are > 2 buffers open.
@@ -78,26 +84,38 @@ Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
 if v:version >= 704
     Plug 'https://github.com/jlanzarotta/bufexplorer.git'
 endif
-" Replaced in favour of slightly heavier version tcomment.
-" See https://github.com/wincent/wincent/commit/913e79724456976549244893e9025aa6fcf3cc1c
-" Plug 'https://github.com/tpope/vim-commentary'
 Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
-" Superlight airline (no plugins)
-" Plug 'https://github.com/itchyny/lightline.vim'
+" Distraction-free vim.
+Plug 'https://github.com/junegunn/goyo.vim'
 
 "--- Prose ---"
+Plug 'https://github.com/tpope/vim-markdown'
 Plug 'https://github.com/lervag/vimtex'
 " Plug 'https://github.com/vim-latex/vim-latex'
 " let g:Tex_DefaultTargetFormat="pdf"
 if has('win32')
-    let g:vimtex_view_general_viewer = 'sumatrapdf'
+    let g:vimtex_view_general_viewer = 'sumatrapdf %'
     let g:vimtex_view_general_options
                 \ = '-reuse-instance -forward-search @tex @line @pdf'
     let g:vimtex_view_general_options_latexmk = '-reuse-instance'
 endif
 Plug 'https://github.com/reedes/vim-pencil'
 Plug 'https://github.com/dkarter/bullets.vim'
-Plug 'https://github.com/junegunn/goyo.vim'
+let g:pencil#wrapModeDefault = 'soft'
+let g:pencil#autoformat_blacklist = [
+            \ 'markdownCode',
+            \ 'markdownUrl',
+            \ 'markdownIdDeclaration',
+            \ 'markdownLinkDelimiter',
+            \ 'markdownHighlight[A-Za-z0-9]+',
+            \ 'mkdCode',
+            \ 'mkdIndentCode',
+            \ 'markdownFencedCodeBlock',
+            \ 'markdownInlineCode',
+            \ 'mmdTable[A-Za-z0-9]*',
+            \ 'txtCode',
+            \ 'texMath',
+            \ ]
 
 "--- Syntax ---"
 Plug 'octol/vim-cpp-enhanced-highlight'
