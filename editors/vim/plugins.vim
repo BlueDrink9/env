@@ -17,11 +17,16 @@ endif
 
 " set laststatus=2
 
-" Folder in which current script resides:
-let s:scriptpath = fnameescape(expand('<sfile>:p:h'))
 let s:vimfilesDir = CreateVimDir("vimfiles")
 let s:pluginPath = CreateVimDir("vimfiles/plugins")
-let s:localPlugins = fnameescape(expand(s:vimfilesDir . "/local_plugins.vim"))
+if v:version >= 703
+    let s:scriptpath = fnameescape(expand('<sfile>:p:h'))
+    let s:localPlugins = fnameescape(expand(s:vimfilesDir . "/local_plugins.vim"))
+else
+    let s:scriptpath = expand('<sfile>:p:h')
+    let s:lpluginpathS=s:vimfilesDir . "/local_plugins.vim"
+    let s:localPlugins = expand(s:lpluginpathS)
+endif
 
 "
 let g:proseFileTypes = "'latex,context,plaintex,tex,

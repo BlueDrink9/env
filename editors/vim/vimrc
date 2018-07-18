@@ -14,7 +14,7 @@ if v:version >= 703
     endfunction
 else
     function! CreateVimDir(dir)
-        return a:dir
+        return $HOME . "/" . a:dir
     endfunction
 endif
 call CreateVimDir("vimfiles")
