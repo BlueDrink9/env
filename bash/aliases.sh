@@ -65,7 +65,7 @@ fi
 alias idevim="vim --cmd \"let g:ideMode=1\""
 # Much faster startup for vim without plugins.
 alias qvim="vim --cmd \"let g:liteMode=1\""
-alias vi="vim --noplugin"
+alias vi="vim --noplugin --cmd \"let g:noPlugins=1\""
 
 # Prevent files from being overwritten by redirection.
 set -o noclobber
