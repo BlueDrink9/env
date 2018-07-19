@@ -81,6 +81,8 @@ endif
 
 Plug 'https://github.com/tpope/vim-surround.git'
 Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
+let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
+call add(g:pluginSettingsToExec, "call yankstack#setup()")
 if v:version >= 704
     Plug 'https://github.com/jlanzarotta/bufexplorer.git'
 endif

@@ -154,6 +154,7 @@ Plug 'michaeljsmith/vim-indent-object'
 " Additional text objects for next braket, i/a comma, pairs, smarter searching.
 Plug 'wellle/targets.vim'
 Plug 'bkad/camelcasemotion'
+call add(g:pluginSettingsToExec, "call camelcasemotion#CreateMotionMappings('<leader>m')")
 Plug 'https://github.com/tpope/vim-speeddating'
 " Align CSV files at commas, align Markdown tables, and more.
 " Could go in prose... but maybe I'll use it more later.
@@ -413,9 +414,6 @@ map <Leader>vl :VimuxRunLastCommand<CR>
 
 
 " ----------- Misc --------------
-call add(g:pluginSettingsToExec, "call camelcasemotion#CreateMotionMappings('<leader>m')")
-let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
-call add(g:pluginSettingsToExec, "call yankstack#setup()")
 
 highlight ExtraWhitespace ctermbg=Gray guibg=Lightgray
 " Snow3 looks good for gui solarized. LG looks better though.
