@@ -3,24 +3,18 @@ set nocompatible
 let s:vimrcdir = fnamemodify(expand("$MYVIMRC"), ":p:h")
 let g:remoteSession = ($SSH_CLIENT != "")
 
-" Version 7.1 doesn't support fnameescape. Used on iOS.
-if v:version >= 703
-    function! CreateVimDir(dir)
+function! CreateVimDir(dir)
+    " Version 7.1 doesn't support fnameescape. Used on iOS.
+    if v:version >= 703
         let l:dir = fnameescape(expand('/' . a:dir))
-        if filewritable(s:vimrcdir) && !isdirectory(s:vimrcdir . l:dir)
-            silent exec "!mkdir "s:vimrcdir . l:dir
-        endif
-        return s:vimrcdir . l:dir
-    endfunction
-else
-    function! CreateVimDir(dir)
+    else
         let l:dir = expand('/' . a:dir)
-        if filewritable(s:vimrcdir) && !isdirectory(s:vimrcdir . l:dir)
-            silent exec "!mkdir "s:vimrcdir . l:dir
-        endif
-        return s:vimrcdir . l:dir
-    endfunction
-endif
+    endif
+    if filewritable(s:vimrcdir) && !isdirectory(s:vimrcdir . l:dir)
+        silent exec "call mkdir(\"" . s:vimrcdir . l:dir . "\")"
+    endif
+    return s:vimrcdir . l:dir
+endfunction
 call CreateVimDir("vimfiles")
 
 " Folder in which current script resides:
