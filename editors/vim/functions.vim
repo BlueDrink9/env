@@ -69,3 +69,5 @@ function! Vimgrepall(pattern)
   cnext
 endfunction
 command! -nargs=1 SearchAll call Vimgrepall(<f-args>)
+
+command! -nargs=1 Mkdir call mkdir(<f-args>)
