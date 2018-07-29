@@ -341,6 +341,14 @@ set noshowmode
 set ttimeoutlen=50
 " AirlineRefresh
 
+augroup myAirline
+    autocmd!
+    if winheight(0) < 20
+        " Hides airline/any other status bar.
+        set laststatus=0
+        au bufenter * set laststatus=0
+    endif
+augroup end
 
 " ----- scrooloose/syntastic settings -----
 "  Airline handles status stuff (or should)

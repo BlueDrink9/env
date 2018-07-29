@@ -12,13 +12,6 @@ if g:liteMode
     let g:buftabline_numbers=2
 endif
 
-if g:liteMode
-    " Settings to maximise speed/screen space
-    set cmdheight=1
-    set laststatus=0
-    set showmode
-endif
-
 "--- Misc ---"
 " Bunch of neat mappings, it's a tpope. Esp [n and ]n, for SCM conflict marks.
 " And [<space> for addign newlines.
@@ -96,7 +89,7 @@ Plug 'https://github.com/lervag/vimtex'
 " Plug 'https://github.com/vim-latex/vim-latex'
 " let g:Tex_DefaultTargetFormat="pdf"
 if has('win32')
-    let g:vimtex_view_general_viewer = 'sumatrapdf %'
+    let g:vimtex_view_general_viewer = 'sumatrapdf'
     let g:vimtex_view_general_options
                 \ = '-reuse-instance -forward-search @tex @line @pdf'
     let g:vimtex_view_general_options_latexmk = '-reuse-instance'

@@ -15,8 +15,6 @@ if !exists("g:ideMode")
     let g:ideMode=0
 endif
 
-" set laststatus=2
-
 let s:vimfilesDir = CreateVimDir("vimfiles")
 let s:pluginPath = CreateVimDir("vimfiles/plugins")
 if v:version >= 703
@@ -73,6 +71,7 @@ endif
 exec 'source ' . s:localPlugins
 
 call plug#end()
+
 
 for item in g:pluginSettingsToExec
     " echom item
