@@ -39,7 +39,7 @@ if !filereadable(s:localPlugins)
     bdelete
 endif
 
-" To remove a Plugged repo using UnPlug
+" To remove a Plugged repo using UnPlug 'user/repo'
 function! s:deregister(repo)
     let repo = substitute(a:repo, '[\/]\+$', '', '')
     let name = fnamemodify(repo, ':t:s?\.git$??')
