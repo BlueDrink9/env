@@ -22,28 +22,10 @@ set stl+=%{ConflictedVersion()}
 
 " Git wrapper
 Plug 'https://github.com/tpope/vim-fugitive'
+nnoremap <leader>gc :Gwrite <bar> Gcommit<CR>
+noremap <leader>gs :Gstatus<CR>
 " github wrapper
 Plug 'https://github.com/tpope/vim-rhubarb'
-
-"--- Snippits ---"
-" Reddit thread from 7 years ago had lots of people voting for snipmate as
-" best. But it conflicts with mutemplate slightly, and is apparently
-" abandoned.
-" But here is a maintained version!
-" Plug 'https://github.com/garbas/vim-snipmate'
-Plug 'https://github.com/honza/vim-snippets' " Library of snippets
-Plug 'https://github.com/SirVer/ultisnips' " Snippit engine
-" Plug 'https://github.com/joereynolds/vim-minisnip' "way smaller engine than ultisnips
-Plug 'https://github.com/tomtom/tlib_vim.git'
-Plug 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
-
-"--- Tags ---"
-Plug 'xolox/vim-misc'
-if executable('ctags-exuberant') || executable('ctags')
-    Plug 'xolox/vim-easytags'
-    Plug 'majutsushi/tagbar'
-endif
-
 
 "--- Prose ---"
 
@@ -99,31 +81,20 @@ let g:bullets_enabled_file_types = [
             \ 'scratch'
             \]
 
-
-"--- Syntax ---"
-Plug 'https://github.com/dragfire/Improved-Syntax-Highlighting-Vim'
-" For extensive cpp IDE stuff.
-" a.vim incompat with replacement provided here.
-
-" Plug 'https://github.com/LucHermitte/lh-dev'
-" Plug 'https://github.com/LucHermitte/mu-template'
-" Plug 'tomtom/stakeholders_vim.git'
-" Plug 'https://github.com/LucHermitte/lh-brackets' " Ooooh boy this one's problematic.
-" Plug 'https://github.com/LucHermitte/lh-vim-lib'
-" Plug 'luchermitte/lh-cpp'
-" May cause lag on scrolling.
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-
-
-
 "--- Misc ---"
-" Lighter-weight, native completion engine.
+" Lighter-weight, native completion engine. TODO sort
 Plug 'https://github.com/ajh17/VimCompletesMe'
+augroup vcm
+    au!
+    autocmd bufenter * let b:vcm_tab_complete = 'tags'
+    autocmd FileType vim let b:vcm_tab_complete = 'vim'
+    autocmd FileType vim let b:vcm_tab_complete = 'omni'
+augroup end
+
 " Separate buffer lists for differetn windows
 " Plug 'https://github.com/zefei/vim-wintabs'
 Plug 'https://github.com/tomtom/tcomment_vim'
 let g:tcomment_opleader1='<leader>c'
-Plug 'https://github.com/scrooloose/nerdtree.git'
 Plug 'https://github.com/jacquesbh/vim-showmarks.git' " TODO fix
 " Adds a bunch of unix-mapped filesystem ops from vim
 Plug 'https://github.com/tpope/vim-eunuch'
@@ -144,7 +115,6 @@ Plug 'https://github.com/haya14busa/incsearch.vim'
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
-Plug 'https://github.com/benmills/vimux'
 " Autoset Paste/nopaste
 Plug 'https://github.com/ConradIrwin/vim-bracketed-paste'
 " Allows plugin maps to use '.' to repeat
@@ -156,12 +126,53 @@ Plug 'wellle/targets.vim'
 Plug 'bkad/camelcasemotion'
 call add(g:pluginSettingsToExec, "call camelcasemotion#CreateMotionMappings('<leader>m')")
 Plug 'https://github.com/tpope/vim-speeddating'
+
 " Align CSV files at commas, align Markdown tables, and more.
 " Could go in prose... but maybe I'll use it more later.
 Plug 'https://github.com/junegunn/vim-easy-align'
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
 " Let's give it a go then.
 Plug 'https://github.com/easymotion/vim-easymotion'
+" Gif config
+map <Leader>l <Plug>(easymotion-lineforward)
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+map <Leader>h <Plug>(easymotion-linebackward)
+let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
 
+---- NerdTree ----
+Plug 'https://github.com/scrooloose/nerdtree.git'
+" Change these if you feel the desire...
+let g:NERDTreeIndicatorMapCustom = {
+            \ "Modified"  : "✹",
+            \ "Staged"    : "✚",
+            \ "Untracked" : "?",
+            \ "Renamed"   : "➜",
+            \ "Unmerged"  : "═",
+            \ "Deleted"   : "✖",
+            \ "Dirty"     : "✗",
+            \ "Clean"     : "✔︎",
+            \ 'Ignored'   : '☒',
+            \ "Unknown"   : "?"
+            \}
+" Open nerdtree in currently focussed window, rather than sidebar.
+let NERDTreeHijackNetrw=1
+" Delete buffer if delete file in NT.
+let NERDTreeAutoDeleteBuffer = 1
+let NERDTreeDirArrows = 1
+let NERDTreeShowHidden=1
+augroup NT
+    autocmd!
+    " Open nerdtree on directory edit (startup)
+    autocmd StdinReadPre * let s:std_in=1
+    autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+    autocmd BufRead * if isdirectory(@%) | exec 'NERDTree' | endif
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup END
 
 " ----- Airline -----
 Plug 'https://github.com/vim-airline/vim-airline-themes'
@@ -350,107 +361,10 @@ augroup myAirline
     endif
 augroup end
 
-" ----- scrooloose/syntastic settings -----
-"  Airline handles status stuff (or should)
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-" let g:syntastic_stl_format = "[%E{Err: #%e L%fe}%B{, }%W{Warn: #%w L%fw}]"
-
-let g:syntastic_enable_signs=1
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_loc_list_height = 5
-" open errors when present, close when done.
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-" let g:syntastic_python_checkers = ['pylint']
-
-let g:syntastic_error_symbol = 'X'
-let g:syntastic_warning_symbol = "!"
-augroup mySyntastic
-    autocmd!
-    au FileType tex let b:syntastic_mode = "passive"
-augroup END
-" TODO make this window-specific.
-" let g:syntastic_shell = "/bin/sh"
-
-
-" Change these if you feel the desire...
-let g:NERDTreeIndicatorMapCustom = {
-            \ "Modified"  : "✹",
-            \ "Staged"    : "✚",
-            \ "Untracked" : "?",
-            \ "Renamed"   : "➜",
-            \ "Unmerged"  : "═",
-            \ "Deleted"   : "✖",
-            \ "Dirty"     : "✗",
-            \ "Clean"     : "✔︎",
-            \ 'Ignored'   : '☒',
-            \ "Unknown"   : "?"
-            \}
-" Open nerdtree in currently focussed window, rather than sidebar.
-let NERDTreeHijackNetrw=1
-" Delete buffer if delete file in NT.
-let NERDTreeAutoDeleteBuffer = 1
-let NERDTreeDirArrows = 1
-let NERDTreeShowHidden=1
-augroup NT
-    autocmd!
-    " Open nerdtree on directory edit (startup)
-    autocmd StdinReadPre * let s:std_in=1
-    autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-    autocmd BufRead * if isdirectory(@%) | exec 'NERDTree' | endif
-    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-augroup END
-
-
-" ----- majutsushi/tagbar settings -----
-" Open/close tagbar with \b
-nmap <silent> <leader>b :TagbarToggle<CR>
-" Uncomment to open tagbar automatically whenever possible
-"autocmd BufEnter * nested :call tagbar#autoopen(0)
-
-
-
-" ----------- TMUX --------------
-" Prompt for a command to run
-map <Leader>vp :VimuxPromptCommand<CR>
-" Run last command executed by VimuxRunCommand
-map <Leader>vl :VimuxRunLastCommand<CR>
-
-
 " ----------- Misc --------------
 
-highlight ExtraWhitespace ctermbg=Gray guibg=Lightgray
-" Snow3 looks good for gui solarized. LG looks better though.
-
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
-nnoremap <leader>gc :Gwrite <bar> Gcommit<CR>
-noremap <leader>gs :Gstatus<CR>
-
-" Gif config
-map <Leader>l <Plug>(easymotion-lineforward)
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-map <Leader>h <Plug>(easymotion-linebackward)
-
-let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
-"
 " We need this for plugins like Syntastic(?) and vim-gitgutter which put symbols
 " in the sign column. Don't know if it should go before plugs or after
 " colorscheme.
 " Allows hlcolumn bg to match coloursch
 highlight clear SignColumn
-
-augroup misc
-    au!
-    autocmd bufenter * let b:vcm_tab_complete = 'tags'
-    autocmd FileType vim let b:vcm_tab_complete = 'vim'
-    autocmd FileType vim let b:vcm_tab_complete = 'omni'
-augroup end
