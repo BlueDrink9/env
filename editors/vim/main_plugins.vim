@@ -5,6 +5,8 @@
 " Plug 'https://github.com/PeterRincker/vim-argumentative'
 " Bunch of paste stuff, replacing, yankring stuff.
 " https://github.com/svermeulen/vim-easyclip
+" Inertial scrolling, easier to see jump movement.
+" Plug "https://github.com/yuttie/comfortable-motion.vim"
 
 " NOTE: Remember that lightweight plugins (screen+resources+non-niche situations)
 " go in light_plugins.vim
@@ -137,7 +139,6 @@ nmap ga <Plug>(EasyAlign)
 
 " Let's give it a go then.
 Plug 'https://github.com/easymotion/vim-easymotion'
-" Gif config
 map <Leader>l <Plug>(easymotion-lineforward)
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)

@@ -34,17 +34,73 @@ Plug 'ryanoasis/vim-devicons'
 if has("python3")
     Plug 'https://github.com/vim-vdebug/vdebug'
 endif
+" Look up documtenation for word under cursor with gk
+Plug "https://github.com/keith/investigate.vim"
+
+" https://github.com/kepbod/ivim/blob/master/vimrc
+  " if g:ivim_autocomplete=='NEO'
+  "       if has('lua')
+  "           let g:ivim_completion_engine='neocomplete'
+  "           Plug 'Shougo/neocomplete.vim' " Auto completion framework
+   " let g:neocomplete#enable_at_startup=1
+   "          let g:neocomplete#data_directory=$HOME . '/.vim/cache/neocomplete'
+   "          let g:neocomplete#enable_auto_delimiter=1
+   "          " Use <C-E> to close popup
+   "          inoremap <expr><C-E> neocomplete#cancel_popup()
+   "          inoremap <expr><CR> delimitMate#WithinEmptyPair() ?
+   "                      \ "\<C-R>=delimitMate#ExpandReturn()\<CR>" :
+   "                      \ pumvisible() ? neocomplete#close_popup() : "\<CR>""
+" if !exists('g:neocomplete#force_omni_input_patterns')
+"                 let g:neocomplete#force_omni_input_patterns={}
+"             endif
+"             let g:neocomplete#force_omni_input_patterns.python=
+"             \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+  "       else
+  "           let g:ivim_completion_engine='neocomplcache'
+  "           Plug 'Shougo/neocomplcache.vim' " Auto completion framework
+  " let g:neocomplcache_enable_at_startup=1
+  "           let g:neocomplcache_temporary_dir=$HOME . '/.vim/cache/neocomplcache'
+  "           let g:neocomplcache_enable_auto_delimiter=1
+  "           let g:neocomplcache_enable_fuzzy_completion=1
+  "           " Use <C-E> to close popup
+  "           inoremap <expr><C-E> neocomplcache#cancel_popup()
+  "           inoremap <expr><CR> delimitMate#WithinEmptyPair() ?
+  "                       \ "\<C-R>=delimitMate#ExpandReturn()\<CR>" :
+  "                       \ pumvisible() ? neocomplcache#close_popup() : "\<CR>""
+" if !exists('g:neocomplcache_force_omni_patterns')
+"                 let g:neocomplcache_force_omni_patterns={}
+"             endif
+"             let g:neocomplcache_force_omni_patterns.python=
+"             \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+  " "       endif
+  "       Plug 'Shougo/neosnippet.vim' " Snippet engine
+  "       Plug 'Shougo/neosnippet-snippets' " Snippets
+  "       Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+  "       Plug 'wellle/tmux-complete.vim' " Completion for tmux panes
+    " " -> Neocomplete & Neocomplcache
+    "     " Use Tab and S-Tab to select candidate
+    "     inoremap <expr><Tab>  pumvisible() ? "\<C-N>" : "\<Tab>"
+    "     inoremap <expr><S-Tab> pumvisible() ? "\<C-P>" : "\<S-Tab>""
+  "   else
+  "       " Auto completion framework
+  "       let g:ivim_completion_engine='YouCompleteMe'
+  "       Plug 'Valloric/YouCompleteMe', { 'do': './install.py' } "Auto completion framework
+  "       Plug 'honza/vim-snippets' " Snippets
+  "       Plug 'sirver/ultisnips' " Snippet engine
+  "   endif
 
 "--- Tags ---"
 Plug 'xolox/vim-misc'
 if executable('ctags-exuberant') || executable('ctags')
     Plug 'xolox/vim-easytags'
     Plug 'majutsushi/tagbar'
+    nmap <silent> <leader>tb :TagbarToggle<CR>
+    augroup tag
+        au!
+        " Uncomment to open tagbar automatically whenever possible
+        autocmd BufEnter * nested :call tagbar#autoopen(0)
+    augroup end
 endif
-
-nmap <silent> <leader>tb :TagbarToggle<CR>
-" Uncomment to open tagbar automatically whenever possible
-autocmd BufEnter * nested :call tagbar#autoopen(0)
 
 "--- Snippits ---"
 " Reddit thread from 7 years ago had lots of people voting for snipmate as
@@ -77,3 +133,19 @@ Plug 'https://github.com/dragfire/Improved-Syntax-Highlighting-Vim'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Multi-lang support
 Plug 'https://github.com/sheerun/vim-polyglot'
+
+" --- Git ---
+" Advanced commit history browser
+Plug 'https://github.com/junegunn/gv.vim'
+" Better diff algs with :PatientDiff or :EnhancedDiff
+Plug "https://github.com/chrisbra/vim-diff-enhanced"
+
+" Quickly compile small files with :SCCompile
+Plug 'https://github.com/xuhdev/SingleCompile'
+" Customisable start screen, including MRU files
+Plug 'https://github.com/mhinz/vim-startify'
+let g:startify_session_dir = CreateVimDir("vimfiles/sessions/")
+" visually show indentation
+if v:version >= 703
+    Plug 'https://github.com/Yggdroot/indentLine'
+endif

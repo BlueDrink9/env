@@ -58,11 +58,9 @@ let g:pluginSettingsToExec = []
 
 " Get light plugin set first
 exec 'source ' . s:scriptpath . "/light_plugins.vim"
-
 if !g:liteMode
     exec 'source ' . s:scriptpath . "/main_plugins.vim"
-
-    if g:ideMode || has("gui_running")
+    if g:ideMode
         exec 'source ' . s:scriptpath . "/ide_plugins.vim"
     endif
 endif
