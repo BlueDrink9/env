@@ -102,7 +102,6 @@ else
     augroup END
 endif
 
-set showmode
 set showcmd
 " Show cursor coords
 set ruler
@@ -193,8 +192,18 @@ set backspace=indent,eol,start whichwrap+=<,>,[,]
 set splitright
 set splitbelow
 set shortmess=a
-set cmdheight=2
-set laststatus=2
+if winheight(0) < 24
+    set cmdheight=1
+    if winheight(0) < 18
+        " Hides airline/any other status bar.
+        set laststatus=0
+        set showmode
+    else
+        set laststatus=2
+    endif
+else
+    set cmdheight=2
+endif
 " Starting with Vim 7, the filetype of empty .tex files defaults to
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
