@@ -103,8 +103,9 @@ endif
 
 " Use CTRL-Q to do what CTRL-V used to do in insert
 inoremap <C-Q> <C-V>
-" CTRL-A is Select all in insert mode
+" CTRL-A is Select all in insert mode, s is in visual
 inoremap <C-a> <C-o>gg<C-o><S-V>G
+vnoremap s <esc>gg<S-V>G
 " Spellcheck with completion list
 nnoremap <leader>s ea<C-X><C-S>
 " Remember cursor location and reformat file
