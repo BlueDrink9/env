@@ -46,7 +46,11 @@ alias :e="vim"
 alias g="git"
 alias gca="git commit -a"
 alias gco="git commit"
+alias gup="git commit --amend --no-edit"
+alias gupa="git commit -a --amend --no-edit"
 alias gs="git status"
+alias dif="git diff"
+alias greset="git checkout -- ."
 # Custom function with logic for different address formats
 alias gc="git_clone"
 

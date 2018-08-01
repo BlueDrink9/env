@@ -22,7 +22,7 @@ let s:defaultBGGUI="light"
 let s:defaultBGConsole="light"
 if has("gui_running")
     " GUI is running or is about to start.
-    if !exists(g:ideMode)
+    if !exists('g:ideMode')
         let g:ideMode = 1
     endif
     " Remove menus to speed up startup
@@ -127,7 +127,7 @@ set scrolloff=5
 if v:version >= 703
     set listchars=tab:>-,trail:·,eol:¬,precedes:←,extends:→,nbsp:·
 endif
-if exists(g:ideMode) && g:ideMode == 1
+if exists("g:ideMode") && g:ideMode == 1
     " Include tags and includes in completion.
     set complete+=i
     set complete+=t

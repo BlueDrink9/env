@@ -144,7 +144,7 @@ map <Leader>k <Plug>(easymotion-k)
 map <Leader>h <Plug>(easymotion-linebackward)
 let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
 
----- NerdTree ----
+" ---- NerdTree ----
 Plug 'https://github.com/scrooloose/nerdtree.git'
 " Change these if you feel the desire...
 let g:NERDTreeIndicatorMapCustom = {
