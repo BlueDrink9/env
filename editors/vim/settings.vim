@@ -98,6 +98,13 @@ else
     augroup END
 endif
 
+" Use true colors
+if (empty($TMUX))
+    if (has("termguicolors"))
+        set termguicolors
+    endif
+endif
+
 set showcmd
 " Show cursor coords
 set ruler
