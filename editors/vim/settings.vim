@@ -127,7 +127,7 @@ set scrolloff=5
 if v:version >= 703
     set listchars=tab:>-,trail:·,eol:¬,precedes:←,extends:→,nbsp:·
 endif
-if g:ideMode == 1
+if exists(g:ideMode) && g:ideMode == 1
     " Include tags and includes in completion.
     set complete+=i
     set complete+=t
