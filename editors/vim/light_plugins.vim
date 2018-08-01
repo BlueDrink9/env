@@ -25,8 +25,18 @@ Plug 'https://github.com/ntpeters/vim-better-whitespace'
 let g:show_spaces_that_precede_tabs=1
 let g:better_whitespace_skip_empty_lines=1
 let g:better_whitespace_operator='_s'
+highlight ExtraWhitespace ctermbg=Gray guibg=Lightgray
+" Snow3 looks good for gui solarized. LG looks better though.
+"
+" ----------- TMUX --------------
 Plug 'https://github.com/tmux-plugins/vim-tmux'
 Plug 'https://github.com/christoomey/vim-tmux-navigator'
+Plug 'https://github.com/benmills/vimux'
+" Prompt for a command to run
+map <Leader>vp :VimuxPromptCommand<CR>
+" Run last command executed by VimuxRunCommand
+map <Leader>vl :VimuxRunLastCommand<CR>
+
 " Close buffers without changing window
 Plug 'https://github.com/moll/vim-bbye'
 cabbrev bd Bdelete
@@ -120,9 +130,3 @@ let g:pencil#autoformat_blacklist = [
             \ 'txtCode',
             \ 'texMath',
             \ ]
-
-"--- Syntax ---"
-Plug 'octol/vim-cpp-enhanced-highlight'
-let g:cpp_class_decl_highlight = 1
-let g:cpp_member_variable_highlight = 1
-Plug 'https://github.com/WolfgangMehner/c-support'

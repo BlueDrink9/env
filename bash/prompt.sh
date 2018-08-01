@@ -128,7 +128,8 @@ set_bash_prompt () {
   # Ensures you won't have prompt displaced by previous line's input (eg ^C)
   cursorToBoL="\[\033[G\]"
   # Set the bash prompt variable.
-  PS1="${WINDOW_TITLE_BASH_PATH}${cursorToBoL}${PROMPT}"
+  # PS1="${WINDOW_TITLE_BASH_PATH}${cursorToBoL}${PROMPT}"
+  PS1="${WINDOW_TITLE_BASH_PATH}${PROMPT}"
   # PS1="${WINDOW_TITLE_BASH_PATH}${PROMPT_STATICLEN}"
 }
 
