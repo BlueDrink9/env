@@ -75,3 +75,5 @@ Plug 'https://github.com/dragfire/Improved-Syntax-Highlighting-Vim'
 " Plug 'luchermitte/lh-cpp'
 " May cause lag on scrolling.
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Multi-lang support
+Plug 'https://github.com/sheerun/vim-polyglot'
