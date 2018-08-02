@@ -8,8 +8,14 @@
 " Inertial scrolling, easier to see jump movement.
 " Plug "https://github.com/yuttie/comfortable-motion.vim"
 
-" NOTE: Remember that lightweight plugins (screen+resources+non-niche situations)
-" go in light_plugins.vim
+" Maybe ide candidates...
+Plug 'https://github.com/ctrlpvim/ctrlp.vim'
+let g:ctrlp_cmd = 'CtrlPMixed'
+" Run shell commands async (uses python)
+Plug 'https://github.com/joonty/vim-do'
+Plug 'https://github.com/thinca/vim-quickrun'
+" Make is run async (view quickfix with :COpen)
+Plug 'https://github.com/tpope/vim-dispatch'
 
 "--- Git ---"
 Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
@@ -102,14 +108,6 @@ Plug 'https://github.com/jacquesbh/vim-showmarks.git' " TODO fix
 Plug 'https://github.com/tpope/vim-eunuch'
 Plug 'https://github.com/simnalamburt/vim-mundo'
 
-Plug 'https://github.com/ctrlpvim/ctrlp.vim'
-let g:ctrlp_cmd = 'CtrlPMixed'
-" Run shell commands async (uses python)
-Plug 'https://github.com/joonty/vim-do'
-Plug 'https://github.com/thinca/vim-quickrun'
-Plug 'https://github.com/vim-scripts/SingleCompile' "?
-" Make is run async (view quickfix with :COpen)
-Plug 'https://github.com/tpope/vim-dispatch'
 " Way better search and replace, also case coersion
 Plug 'https://github.com/tpope/vim-abolish'
 " Improves incremental search to match everythign that it should.
