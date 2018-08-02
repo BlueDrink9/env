@@ -35,7 +35,7 @@ if has("python3")
     Plug 'https://github.com/vim-vdebug/vdebug'
 endif
 " Look up documtenation for word under cursor with gk
-Plug "https://github.com/keith/investigate.vim"
+Plug 'https://github.com/keith/investigate.vim'
 
 " https://github.com/kepbod/ivim/blob/master/vimrc
   " if g:ivim_autocomplete=='NEO'
@@ -138,7 +138,7 @@ Plug 'https://github.com/sheerun/vim-polyglot'
 " Advanced commit history browser
 Plug 'https://github.com/junegunn/gv.vim'
 " Better diff algs with :PatientDiff or :EnhancedDiff
-Plug "https://github.com/chrisbra/vim-diff-enhanced"
+Plug 'https://github.com/chrisbra/vim-diff-enhanced'
 
 " Quickly compile small files with :SCCompile
 Plug 'https://github.com/xuhdev/SingleCompile'
