@@ -25,7 +25,7 @@ Plug 'https://github.com/ntpeters/vim-better-whitespace'
 let g:show_spaces_that_precede_tabs=1
 let g:better_whitespace_skip_empty_lines=1
 let g:better_whitespace_operator='_s'
-highlight ExtraWhitespace ctermbg=Gray guibg=Lightgray
+highlight ExtraWhitespace ctermbg=Gray guibg=LightGray
 " Snow3 looks good for gui solarized. LG looks better though.
 "
 " ----------- TMUX --------------
@@ -51,6 +51,8 @@ if v:version >= 702
 endif
 Plug 'https://github.com/altercation/vim-colors-solarized.git'
 call add (g:pluginSettingsToExec, "colorscheme " . colorSch)
+call add (g:pluginSettingsToExec, "highlight! MatchParen cterm=bold,underline ctermbg=lightgray")
+call add (g:pluginSettingsToExec, "highlight! MatchParen gui=bold,underline guibg=gray90")
 if !has("gui_running")
     " if $TERM contains "-256color"
     " May be needed if terminal doesn't support.
