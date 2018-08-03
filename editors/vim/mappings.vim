@@ -167,3 +167,6 @@ nnoremap X "_X
 nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 " Quickly edit macros
 nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
+" Quicker access to system register
+" (`"` is default register anyway, so never need `""`)
+nnoremap "" "+
