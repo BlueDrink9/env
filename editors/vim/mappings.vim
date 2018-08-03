@@ -37,16 +37,18 @@ nnoremap Y y$
 command! -bang -nargs=* SudoSave w !sudo tee % > /dev/null
 cmap W! SudoSave
 
-if bufwinnr(1)
-    map <c-.> 5<C-W>>
-    map <c-,> 5<C-W><
-    map <c-=> 5<C-W>+
-    map <c--> 5<C-W>-
-    map <c-Right> 5<C-W>>
-    map <c-Left> 5<C-W><
-    map <c-Up> 5<C-W>+
-    map <c-Down> 5<C-W>-
-endif
+nnoremap <c-.> 5<C-W>>
+nnoremap <c-,> 5<C-W><
+nnoremap <c-=> 5<C-W>+
+nnoremap <c--> 5<C-W>-
+nnoremap <c-Right> 5<C-W>>
+nnoremap <c-Left> 5<C-W><
+nnoremap <c-Up> 5<C-W>+
+nnoremap <c-Down> 5<C-W>-
+" if has("gui")
+"     " If window id of last window is 1, assume only one window present
+"     if winnr($) == 1
+
 
 if has("clipboard")
     " In insert or visual mode, use standard cut/copy/paste shortcuts.
@@ -164,7 +166,7 @@ nnoremap <leader>t <c-]>
 nnoremap x "_x
 nnoremap X "_X
 " Reset screen entirely (inc highlights)
-nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+nnoremap <leader>cl :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 " Quickly edit macros
 nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 " Quicker access to system register
