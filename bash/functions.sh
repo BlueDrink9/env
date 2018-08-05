@@ -54,6 +54,27 @@ git_clone() {
   fi
 }
 
+#TODO rceate function to try a range of terms...
+term() {
+  terminals="
+  gnome-terminal
+  xfce4-terminal
+  terminal
+  iterm2
+  wsl.exe
+  "
+  tarray=($terminals)
+  for term in "${tarray[@]}" ; do
+    # if [ $(function_exists "$browser") ]; then
+    function_exists "$term"
+    command -v $term >/dev/null 2>&1
+    if [ "$?" -eq 0 ]; then
+      $term "$1"
+      break
+    fi
+  done || echo "Terminal emulator unknown" >&2
+}
+
 fopen() {
   if [ "$(uname)" == "Darwin" ]; then
     # Mac OS X, open finder.
