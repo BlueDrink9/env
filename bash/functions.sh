@@ -45,6 +45,8 @@ reclone() {
 git_clone() {
   if [[  "$1" =~ "https://github.com" ]] ; then
     git clone $1
+  elif [[  "$1" =~ "@github.com" ]] ; then
+    git clone $1
   elif [[  "$1" =~ "github.com" ]] ; then
     git clone https://$1
   else
