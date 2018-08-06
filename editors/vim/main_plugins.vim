@@ -11,23 +11,29 @@
 " NOTE: Remember that lightweight plugins (screen+resources+non-niche situations)
 " go in light_plugins.vim
 
-"--- Git ---"
-Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
-Plug 'airblade/vim-gitgutter'
-" gitgutter needs grep to not output escap sequences.
-" let g:gitgutter_grep = ''
-let g:gitgutter_grep = 'grep --color=never'
-let g:gitgutter_override_sign_column_highlight = 0
-let g:gitgutter_escape_grep = 1
-Plug 'https://github.com/christoomey/vim-conflicted'
-set stl+=%{ConflictedVersion()}
+if executable("git")
+    "--- Git ---"
+    Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
+    Plug 'airblade/vim-gitgutter'
+    " gitgutter needs grep to not output escap sequences.
+    " let g:gitgutter_grep = ''
+    let g:gitgutter_grep = 'grep --color=never'
+    let g:gitgutter_override_sign_column_highlight = 0
+    let g:gitgutter_escape_grep = 1
+    augroup ggutter
+        au!
+        au BufWrite * :GitGutterAll
+    augroup end
+    Plug 'https://github.com/christoomey/vim-conflicted'
+    set stl+=%{ConflictedVersion()}
 
-" Git wrapper
-Plug 'https://github.com/tpope/vim-fugitive'
-nnoremap <leader>gc :Gwrite <bar> Gcommit<CR>
-noremap <leader>gs :Gstatus<CR>
-" github wrapper
-Plug 'https://github.com/tpope/vim-rhubarb'
+    " Git wrapper
+    Plug 'https://github.com/tpope/vim-fugitive'
+    nnoremap <leader>gc :Gwrite <bar> Gcommit<CR>
+    noremap <leader>gs :Gstatus<CR>
+    " github wrapper
+    Plug 'https://github.com/tpope/vim-rhubarb'
+endif
 
 "--- Prose ---"
 
