@@ -26,8 +26,8 @@ let g:show_spaces_that_precede_tabs=1
 let g:better_whitespace_skip_empty_lines=1
 let g:better_whitespace_operator='_s'
 highlight ExtraWhitespace ctermbg=Gray guibg=LightGray
-" Snow3 looks good for gui solarized. LG looks better though.
-"
+" cx to select an object, then cx again to swap it with first thing.
+Plug 'https://github.com/tommcdo/vim-exchange'
 " ----------- TMUX --------------
 Plug 'https://github.com/tmux-plugins/vim-tmux'
 Plug 'https://github.com/christoomey/vim-tmux-navigator'

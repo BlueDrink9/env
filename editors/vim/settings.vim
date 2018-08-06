@@ -221,6 +221,7 @@ if v:version >= 703
     set conceallevel=2
 endif
 
+
 " No annoying sound on errors
 set noerrorbells
 " set novisualbell
