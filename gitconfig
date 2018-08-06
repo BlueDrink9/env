@@ -5,6 +5,9 @@
 [core]
 	editor = vim --cmd \"let g:liteMode=1\"
     # autocrlf = input
+    autocrlf = false
+    safecrlf = true
+    eol      = lf
 
 # diffs for word files use pandoc
 [diff "pandoc"]
