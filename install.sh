@@ -135,6 +135,9 @@ uninstall() {
             git config --global --unset-all credential.https://github.com.username
             git config --global --unset-all user.email
         fi
+        git config --global --unset core.ignoreFile
+        git config --global --unset core.attributesFile
+        git config --global --unset include.path
 
         # Reset bash
         exec bash
@@ -342,15 +345,11 @@ gitCredentialCache() {
 }
 
 gitSettings() {
-    # If files are missing, git will silently ignore. So potentially ok to not
-    # uninstall (would be messy/potentially damage other file).
-    # This is only supported on git versions > 1.7.10.
-    addTextIfAbsent "[include]
-    path = ${SCRIPTDIR}/gitglobal/gitconfig" ${HOME}/.gitconfig
-    addTextIfAbsent "[include]
-    path = ${SCRIPTDIR}/gitglobal/gitignore" ${HOME}/.gitignore
-    addTextIfAbsent "[include]
-    path = ${SCRIPTDIR}/gitglobal/gitattributes" ${HOME}/.gitattributes
+    # Include is only supported on git versions > 1.7.10 
+    # (but 2.0 is quite standard anyway).
+    git config --global include.path ${SCRIPTDIR}/gitconfig
+    git config --global core.excludesfile ${SCRIPTDIR}/gitignore
+    git config --global core.attributesfile ${SCRIPTDIR}/gitattributes
 }
 
 setupShell() {

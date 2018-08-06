@@ -135,10 +135,12 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'https://github.com/sheerun/vim-polyglot'
 
 " --- Git ---
-" Advanced commit history browser
-Plug 'https://github.com/junegunn/gv.vim'
-" Better diff algs with :PatientDiff or :EnhancedDiff
-Plug 'https://github.com/chrisbra/vim-diff-enhanced'
+if executable("git")
+    " Advanced commit history browser
+    Plug 'https://github.com/junegunn/gv.vim'
+    " Better diff algs with :PatientDiff or :EnhancedDiff
+    Plug 'https://github.com/chrisbra/vim-diff-enhanced'
+endif
 
 " Quickly compile small files with :SCCompile
 Plug 'https://github.com/xuhdev/SingleCompile'

@@ -40,6 +40,7 @@ alias lss="ls -ls"
 # alias ls="ls -CF --color=auto"
 alias :q="exit"
 alias :e="vim"
+alias e="vim"
 # alias :Q="exit"
 # alias ZZ="exit"
 
@@ -53,6 +54,8 @@ alias dif="git diff"
 alias greset="git checkout -- ."
 # Custom function with logic for different address formats
 alias gc="git_clone"
+# Way nicer and more compact way to view logs. Pass -p to see line differences.
+alias glog="log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
 # Try to set vim to xvim (has x11 clipboard support)
 if [ -e /usr/bin/vimx ]; then
@@ -82,7 +85,4 @@ alias svi="sudoedit"
 alias sagi="sudo apt install"
 alias sag="sudo apt"
 alias sagu="sudo apt update && sudo apt upgrade"
-
-alias term="xfce4-terminal"
-
 

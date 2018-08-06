@@ -7,10 +7,9 @@ if [ -f /etc/bash_completion ]; then
 fi
 
 # You know it, baby. Shouldn't need to use nano ever
-export EDITOR=vi
-export VISUAL=vi
-export GIT_EDITOR=qvim
-git config --global core.editor "qvim"
+export EDITOR="vim --noplugin --cmd \"let g:noPlugins=1\""
+export VISUAL="vim --cmd \"let g:liteMode=1\""
+export GIT_EDITOR="vim --cmd \"let g:liteMode=1\""
 
 # Source .dir_colours
 if [ -x /usr/bin/dircolors ]; then
