@@ -25,11 +25,15 @@ if has("gui_running")
     if !exists('g:ideMode')
         let g:ideMode = 1
     endif
-    " Remove menus to speed up startup
-    set guioptions=M
-    " Maximize gvim window (for an alternative on Windows, see simalt
-    "   below).
-    set lines=40 columns=120
+    set guioptions+=ciaegmrLtT!
+    " Larger gvim window
+    if g:ideMode
+        set lines=999 columns=999
+    else
+        " Remove menus to speed up startup
+        set guioptions+=M
+        set lines=40 columns=120
+    endif
     " Default fallback for gui bg colour
     if !exists ('g:backgroundColour')
         let g:backgroundColour=s:defaultBGGUI
