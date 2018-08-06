@@ -10,7 +10,6 @@ fi
 export EDITOR="vim --noplugin --cmd \"let g:noPlugins=1\""
 export VISUAL="vim --cmd \"let g:liteMode=1\""
 export GIT_EDITOR="vim --cmd \"let g:liteMode=1\""
-git config --global core.editor "vim --cmd \"let g:liteMode=1\""
 
 # Source .dir_colours
 if [ -x /usr/bin/dircolors ]; then
