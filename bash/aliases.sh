@@ -40,6 +40,7 @@ alias lss="ls -ls"
 # alias ls="ls -CF --color=auto"
 alias :q="exit"
 alias :e="vim"
+alias e="vim"
 # alias :Q="exit"
 # alias ZZ="exit"
 
@@ -84,7 +85,4 @@ alias svi="sudoedit"
 alias sagi="sudo apt install"
 alias sag="sudo apt"
 alias sagu="sudo apt update && sudo apt upgrade"
-
-alias term="xfce4-terminal"
-
 
