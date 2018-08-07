@@ -25,13 +25,15 @@ if has("gui_running")
     if !exists('g:ideMode')
         let g:ideMode = 1
     endif
-    set guioptions+=ciaegmrLtT!
     " Larger gvim window
     if g:ideMode
+        set guioptions+=ciaegmrLtT!
         set lines=999 columns=999
     else
         " Remove menus to speed up startup
+        set guioptions=M
         set guioptions+=M
+        set guioptions-=mtL
         set lines=40 columns=120
     endif
     " Default fallback for gui bg colour
@@ -181,7 +183,6 @@ set shiftwidth=4
 set tabstop=4
 set softtabstop=4
 set smarttab
-" set tabstop=4
 " formatoptins: See :h fo-table.
 " Don't format on wrap.
 set formatoptions +=l
@@ -293,6 +294,7 @@ augroup cursor
     endif
 augroup END
 
+set viewoptions-=options
 augroup misc
     autocmd!
     " Auto cd to working dir of this window's file

@@ -24,12 +24,20 @@ else
     let s:scriptpath = expand('<sfile>:p:h')
 endif
 
-
 function! SourceCustoms(...)
     for vimfile in a:000
         " Converts the path properly for win or unix
         exec 'source ' . s:scriptpath . expand('/' . vimfile)
     endfor
 endfunction
+
+" These settings affect what plugins are loaded, plus a couple of settings.
+" Set here to ensure consistency.
+if exists("g:liteMode") && g:liteMode==1
+    let g:ideMode=0
+endif
+if exists("g:ideMode") && g:ideMode==1
+    let g:liteMode=0
+endif
 
 exec SourceCustoms("functions.vim", "settings.vim", "plugins.vim", "mappings.vim")

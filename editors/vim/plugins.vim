@@ -5,6 +5,8 @@
 
 " Skip loading this file entirely.
 if exists("g:noPlugins")
+    let g:liteMode=0
+    let g:ideMode=0
     finish
 endif
 
