@@ -21,6 +21,21 @@ syntax on
 let s:defaultBGGUI="light"
 let s:defaultBGConsole="light"
 if has("gui_running")
+    if has("windows")
+        let b:shell="C:\Windows\Sysnative\wsl.exe"
+        if executable(b:shell)
+            " Use wsl as shell
+            set shell=b:shell
+            set shellcmdflag=
+            set shellquote=
+            set shellxquote=(
+            set shellxescape="&|<>()@^
+            set shellpipe=|
+            set shellredir=>
+            " Syntastic uses PATH to determine available checkers
+            " let $PATH .= ';C:\cygwin64\bin'"
+        endif
+    endif
     " GUI is running or is about to start.
     if !exists('g:ideMode')
         let g:ideMode = 1
@@ -228,7 +243,7 @@ if v:version >= 703
 endif
 set foldminlines=6
 set foldmethod=marker
-set foldmarker="{[},{]}"
+set foldmarker={[},{]}
 
 
 " No annoying sound on errors
