@@ -228,7 +228,7 @@ if v:version >= 703
 endif
 set foldminlines=6
 set foldmethod=marker
-set foldmarkder="{[},{]}"
+set foldmarker="{[},{]}"
 
 
 " No annoying sound on errors

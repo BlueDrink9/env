@@ -122,8 +122,11 @@ set_bash_prompt () {
     VAR_PROMPT=""
   fi
 
+  # number of bg jobs, or "" if 0.
+  JOBS=`if [ -n "$(jobs -p)" ]; then echo "\j"; fi`
+
   # PROMPT_STATICLEN="${VI_MODE} ${TIME_PROMPT_COLOURED}: ${USER_AT_HOST}: ${CURR_DIR_COLOURED}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL}"
-  PROMPT="${VI_MODE} ${VAR_PROMPT} ${CURR_DIR_COLOURED}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL}"
+  PROMPT="${VI_MODE} ${VAR_PROMPT} ${CURR_DIR_COLOURED}${GIT_STATUS_PROMPT} ${JOBS}${PROMPT_SYMBOL}"
 
   # Ensures you won't have prompt displaced by previous line's input (eg ^C)
   cursorToBoL="\[\033[G\]"
