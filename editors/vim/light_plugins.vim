@@ -28,6 +28,30 @@ let g:better_whitespace_operator='_s'
 highlight ExtraWhitespace ctermbg=Gray guibg=LightGray
 " cx to select an object, then cx again to swap it with first thing.
 Plug 'https://github.com/tommcdo/vim-exchange'
+" if v:version >= 800 || has("patch-7.4.1829")
+    " Commands sent to shell with AsyncRun appear in qf window.
+    " use AsyncRun! to prevent autoscroll.
+    Plug 'https://github.com/skywind3000/asyncrun.vim'
+    let g:hasAsyncrun = 1
+    " Open quickfix window at height 8 on running
+    let g:asyncrun_open = 8
+    " cmap !! AsyncRun
+    cmap ! AsyncRun
+    " cabbrev ! AsyncRun
+    let g:asyncrun_auto = "make"
+    command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
+    " Set qf statusbar to status of asyncrun
+    let g:asyncrun_status = "stopped"
+    augroup qf
+        au!
+        autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(8, 1)
+    augroup END
+    augroup QuickfixStatus
+        au! BufWinEnter quickfix setlocal 
+                    \ statusline=%t\ [%{g:asyncrun_status}]\ %{exists('w:quickfix_title')?\ '\ '.w:quickfix_title\ :\ ''}\ %=%-15(%l,%c%V%)\ %P
+augroup END
+" endif
+
 " ----------- TMUX --------------
 Plug 'https://github.com/tmux-plugins/vim-tmux'
 Plug 'https://github.com/christoomey/vim-tmux-navigator'

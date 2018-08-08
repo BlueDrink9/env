@@ -37,6 +37,17 @@ if executable("git")
     Plug 'https://github.com/tpope/vim-fugitive'
     nnoremap <leader>gc :Gwrite <bar> Gcommit<CR>
     noremap <leader>gs :Gstatus<CR>
+    " Async fugitive
+    if g:hasAsyncrun
+        call add(g:pluginSettingsToExec, "command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
+                    \if exists(':Make') == 2
+                    \noautocmd Make
+                    \else
+                    \silent noautocmd make!
+                    \redraw!
+                    \return 'call fugitive#cwindow()'
+                    \endif")
+    endif
     " github wrapper
     Plug 'https://github.com/tpope/vim-rhubarb'
 endif
@@ -97,7 +108,7 @@ let g:bullets_enabled_file_types = [
 
 "--- Misc ---"
 " Lighter-weight, native completion engine. TODO sort
-Plug 'https://github.com/ajh17/VimCompletesMe'
+" Plug 'https://github.com/ajh17/VimCompletesMe'
 augroup vcm
     au!
     autocmd bufenter * let b:vcm_tab_complete = 'tags'
@@ -183,6 +194,12 @@ augroup END
 Plug 'https://github.com/vim-airline/vim-airline-themes'
 " exec "Plug \'https://github.com/vim-airline/vim-airline-themes\', {\'rtp\' : \'autoload/airline/themes/". colorSch . ".vim\'}"
 Plug 'https://github.com/vim-airline/vim-airline'
+
+if g:hasAsyncrun
+    " Async errors appear in airline.
+    let g:asyncrun_status = ''
+    call add (g:pluginSettingsToExec, "let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])")
+endif
 
 exec 'let g:airline_' . colorSch . '_bg="' . &background . '"'
 let g:airline_theme=colorSch

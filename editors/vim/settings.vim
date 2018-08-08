@@ -27,7 +27,7 @@ if has("gui_running")
     endif
     " Larger gvim window
     if g:ideMode
-        set guioptions+=ciaegmrLtT!
+        set guioptions+=ciagmrLtT!
         set lines=999 columns=999
     else
         " Remove menus to speed up startup
@@ -135,7 +135,8 @@ endif
 set hidden
 set sessionoptions-=blank
 set wildmenu
-set wildmode=longest,list:longest
+" Complete longest common string, list options. Then cycle each full match
+set wildmode=list:longest,full
 set scrolloff=5
 if v:version >= 703
     set listchars=tab:>-,trail:·,eol:¬,precedes:←,extends:→,nbsp:·
