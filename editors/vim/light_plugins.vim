@@ -1,3 +1,5 @@
+" vim: foldmethod=marker
+" vim: foldmarker={[},{]}
 if g:liteMode
 " Superlight airline (no plugins)
     " Plug 'https://github.com/itchyny/lightline.vim'
@@ -12,7 +14,7 @@ if g:liteMode
     let g:buftabline_numbers=2
 endif
 
-"--- Misc ---"
+" {[}--- Misc ---
 " Bunch of neat mappings, it's a tpope. Esp [n and ]n, for SCM conflict marks.
 " And [<space> for addign newlines.
 Plug 'https://github.com/tpope/vim-unimpaired'
@@ -51,8 +53,9 @@ Plug 'https://github.com/tommcdo/vim-exchange'
                     \ statusline=%t\ [%{g:asyncrun_status}]\ %{exists('w:quickfix_title')?\ '\ '.w:quickfix_title\ :\ ''}\ %=%-15(%l,%c%V%)\ %P
 augroup END
 " endif
+" {]} Misc
 
-" ----------- TMUX --------------
+" {[} --- TMUX ---
 Plug 'https://github.com/tmux-plugins/vim-tmux'
 Plug 'https://github.com/christoomey/vim-tmux-navigator'
 Plug 'https://github.com/benmills/vimux'
@@ -60,6 +63,7 @@ Plug 'https://github.com/benmills/vimux'
 map <Leader>vp :VimuxPromptCommand<CR>
 " Run last command executed by VimuxRunCommand
 map <Leader>vl :VimuxRunLastCommand<CR>
+" {]} TMUX
 
 " Close buffers without changing window
 Plug 'https://github.com/moll/vim-bbye'
@@ -73,6 +77,8 @@ if v:version >= 702
     " Trigger a highlight in the appropriate direction when pressing these keys:
     let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 endif
+
+" {[} ---------- Colourschemes ----------
 Plug 'https://github.com/altercation/vim-colors-solarized.git'
 call add (g:pluginSettingsToExec, "colorscheme " . colorSch)
 call add (g:pluginSettingsToExec, "highlight! MatchParen cterm=bold,underline ctermbg=lightgray")
@@ -88,6 +94,7 @@ if !has("gui_running")
 endif
 " Settings doesn't recommend this...
 let g:solarized_contrast = "high"
+" {]} ---------- Colourschemes ----------
 
 Plug 'xolox/vim-misc'
 " Map os commands (eg maximise), and open windows commands without shell
@@ -119,7 +126,7 @@ Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
 " Distraction-free vim.
 Plug 'https://github.com/junegunn/goyo.vim'
 
-"--- Prose ---"
+" {[} ---------- Prose ----------
 Plug 'https://github.com/tpope/vim-markdown'
 Plug 'https://github.com/lervag/vimtex'
 " Ensure clean doesn't immediately get overridden...
@@ -156,3 +163,4 @@ let g:pencil#autoformat_blacklist = [
             \ 'txtCode',
             \ 'texMath',
             \ ]
+" {]} ---------- Prose----------

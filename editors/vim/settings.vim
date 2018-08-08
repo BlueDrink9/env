@@ -226,6 +226,9 @@ let g:tex_flavor = "latex"
 if v:version >= 703
     set conceallevel=2
 endif
+set foldminlines=6
+set foldmethod=marker
+set foldmarkder="{[},{]}"
 
 
 " No annoying sound on errors

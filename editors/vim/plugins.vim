@@ -3,6 +3,7 @@
 " the value of 2 variables. These should be set from command line via the
 " --cmd option, eg `vim --cmd "let g:liteMode=1" [file]`
 
+" {[} Settings and dir creation
 " Skip loading this file entirely.
 if exists("g:noPlugins")
     let g:liteMode=0
@@ -53,7 +54,7 @@ command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 " Reset plugins entirely
 " let g:plugs={}
 " let g:plugs_order=[]
-
+" {]}
 call plug#begin(s:pluginPath)
 
 let g:pluginSettingsToExec = []
