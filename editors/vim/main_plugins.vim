@@ -385,6 +385,7 @@ set ttimeoutlen=50
 
 augroup myAirline
     autocmd!
+    autocmd optionset background exec 'let g:airline_' . colorSch . '_bg="' . &background . '"' | AirlineRefresh
     if winheight(0) < 20
         " Hides airline/any other status bar.
         set laststatus=0
