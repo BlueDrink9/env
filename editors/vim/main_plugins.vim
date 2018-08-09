@@ -30,10 +30,12 @@ if executable("git")
     let g:gitgutter_grep = 'grep --color=never'
     let g:gitgutter_override_sign_column_highlight = 0
     let g:gitgutter_escape_grep = 1
-    augroup ggutter
-        au!
-        au BufWrite * :GitGutterAll
-    augroup end
+    " Wait 300 ms safter typing finishes before updating (vim default 4000)
+    set updatetime=300
+    " augroup ggutter
+    "     au!
+    "     au BufWritePost * :GitGutter
+    " augroup end
     Plug 'https://github.com/christoomey/vim-conflicted'
     set stl+=%{ConflictedVersion()}
 
@@ -125,6 +127,7 @@ augroup end
 " Plug 'https://github.com/zefei/vim-wintabs'
 Plug 'https://github.com/tomtom/tcomment_vim'
 let g:tcomment_opleader1='<leader>c'
+let g:tcomment#blank_lines=0
 Plug 'https://github.com/jacquesbh/vim-showmarks.git' " TODO fix
 " Adds a bunch of unix-mapped filesystem ops from vim
 Plug 'https://github.com/tpope/vim-eunuch'
