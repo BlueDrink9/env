@@ -21,34 +21,49 @@ syntax on
 let s:defaultBGGUI="light"
 let s:defaultBGConsole="light"
 if has("gui_running")
-    if has("windows")
-        let b:shell="C:\Windows\Sysnative\wsl.exe"
-        if executable(b:shell)
-            " Use wsl as shell
-            set shell=b:shell
-            set shellcmdflag=
-            set shellquote=
-            set shellxquote=(
-            set shellxescape="&|<>()@^
-            set shellpipe=|
-            set shellredir=>
-            " Syntastic uses PATH to determine available checkers
-            " let $PATH .= ';C:\cygwin64\bin'"
-        endif
-    endif
+    " {[} ----------- Shell ----------
+    " if has("win32") || has("win64")
+    "     let b:hasBash=0
+    "     if executable('bash -c')
+    "         echom "here"
+    "         let b:hasBash=1
+    "         set shell=C:\Windows\System32\bash.exe
+    "         " Syntastic uses PATH to determine available checkers
+    "         " let $PATH .= ';C:\cygwin64\bin'"
+    "     elseif executable('C:\Program Files\Git\git-bash.exe')
+    "         echom "now here"
+    "         let b:hasBash=1
+    "         set shell=\"C:\Program\ Files\Git\git-bash.exe\"
+    "     elseif executable('cygwin')
+    "         set shell=cygwin
+    "     endif
+    "     if b:hasBash
+    "         set shellredir=>%s\ 2>&1
+    "         set shellpipe=2>&1\|\ tee
+    "         set shellcmdflag=-c
+    "         set shellquote=
+    "         set shellxquote=\"
+    "         " set shellxquote='"'
+    "         set shellslash
+    "     endif
+    " endif
+    " {]} ----------- Shell ----------
     " GUI is running or is about to start.
     if !exists('g:ideMode')
         let g:ideMode = 1
     endif
-    " Larger gvim window
+    set guioptions-=e
     if g:ideMode
         set guioptions+=ciagmrLtT!
+        " Larger gvim window
         set lines=999 columns=999
     else
         " Remove menus to speed up startup
-        set guioptions=M
+        " set guioptions=M
+        set guioptions-=m
+        set guioptions-=tT
         set guioptions+=M
-        set guioptions-=mtL
+        " Larger gvim window
         set lines=40 columns=120
     endif
     " Default fallback for gui bg colour
