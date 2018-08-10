@@ -53,8 +53,8 @@ Plug 'https://github.com/tommcdo/vim-exchange'
     " Open quickfix window at height 8 on running
     let g:asyncrun_open = 8
     " cmap !! AsyncRun
-    cmap ! AsyncRun
-    " cabbrev ! AsyncRun
+    " cmap ! AsyncRun
+    cabbrev ! AsyncRun
     let g:asyncrun_auto = "make"
     command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
     " Set qf statusbar to status of asyncrun
