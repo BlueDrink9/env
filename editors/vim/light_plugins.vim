@@ -3,9 +3,24 @@
 if g:liteMode
 " Superlight airline (no plugins)
     " Plug 'https://github.com/itchyny/lightline.vim'
-    " Replaced in favour of slightly heavier version tcomment.
-    " See https://github.com/wincent/wincent/commit/913e79724456976549244893e9025aa6fcf3cc1c
-    " Plug 'https://github.com/tpope/vim-commentary'
+    " {[} Replace Tcomment with commentary
+    " Replaced in favour of slightly heavier version tcomment in main
+    " plugins. See https://github.com/wincent/wincent/commit/913e79724456976549244893e9025aa6fcf3cc1c
+    Plug 'https://github.com/tpope/vim-commentary'
+    function! UnmapCommentary()
+        unmap gc
+        nunmap gcc
+        nunmap cgc
+        nunmap gcu
+    endfunction
+    xmap <leader>c  <Plug>Commentary
+    nmap <leader>c  <Plug>Commentary
+    omap <leader>c  <Plug>Commentary
+    nmap <leader>cc <Plug>CommentaryLine
+    nmap l<leader>c <Plug>ChangeCommentary
+    nmap <leader>cu <Plug>Commentary<Plug>Commentary
+    call add(g:pluginSettingsToExec, "call UnmapCommentary()")
+    " {]} Replace Tcomment with commentary
 
     " Lighter alt to airline for putting buffers in tabline.
     Plug 'https://github.com/ap/vim-buftabline'
