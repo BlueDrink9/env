@@ -1,5 +1,8 @@
 #!/bin/bash
+# vim: foldmethod=marker
+# vim: foldmarker={[},{]}
 
+# {[} Setup and variables
 # For debugging use
 # set -eEuxo pipefail
 # set -uxo pipefail
@@ -24,6 +27,9 @@ VSCODE_EXTENSIONS_DIR="${HOME}/.vscode/extensions"
 VSCODE_VERSION=code
 VSCODE_APP_DATA="${HOME}/AppData/Roaming/Code"
 
+# {]} Setup and variables
+
+# {[} Utility functions
 printLine() {
     printf -- "$@\n" 
 }
@@ -111,7 +117,9 @@ addTextIfAbsent() {
     grep -q -F "$text" "$file" || echo "$text" >> "$file"
 }
 
-# -------------
+# {]} Utility functions
+
+# {[} Uninstall
 # Currently only removes vim configs and any bash customisation, as well as this script.
 uninstall() {
     if askQuestionYN "Really uninstall?"; then
@@ -147,104 +155,95 @@ uninstall() {
     fi
 }
 
+# {]} Uninstall
+
+# {[} VSCode
 vscodeExtensions() {
-    if [[ $ALL == 1 ]]; then
-        REPLY="y"
-    else
-        askQuestionYN "${Yellow}Install Visual Studio Code extensions?$NC"
+    if hash code-insiders 2> /dev/null; then # Maybe insider version is being used.
+        VSCODE_VERSION=code-insiders
+        VSCODE_APP_DATA="${HOME}/AppData/Roaming/Code - Insiders/"
+        VSCODE_EXTENSIONS_DIR="${HOME}/.vscode-insiders/extensions"
     fi
-    if [[ $REPLY =~ ^[nN]$ ]]; then
-        return 0
-    elif [[ $REPLY =~ ^[yY]$ ]]; then # Install extensions from 'vscode/extensions'
+    if hash code 2> /dev/null || hash code-insiders 2> /dev/null; then # Check if 'code' exists.
 
-        if hash code-insiders 2> /dev/null; then # Maybe insider version is being used.
-            VSCODE_VERSION=code-insiders
-            VSCODE_APP_DATA="${HOME}/AppData/Roaming/Code - Insiders/"
-            VSCODE_EXTENSIONS_DIR="${HOME}/.vscode-insiders/extensions"
+        if [[ ! -d "$VSCODE_EXTENSIONS_DIR" ]]; then
+            mkdir -p "$VSCODE_EXTENSIONS_DIR"
         fi
-        if hash code 2> /dev/null || hash code-insiders 2> /dev/null; then # Check if 'code' exists.
 
-            if [[ ! -d "$VSCODE_EXTENSIONS_DIR" ]]; then
-                mkdir -p "$VSCODE_EXTENSIONS_DIR"
-            fi
+        while IFS='' read -r LINE || [[ -n "$LINE" ]]; do
+            code --install-extension $LINE
+        done < "${SCRIPTDIR}/editors/.vscode/extensions"
 
-            while IFS='' read -r LINE || [[ -n "$LINE" ]]; do
-                code --install-extension $LINE
-            done < "${SCRIPTDIR}/editors/.vscode/extensions"
+        # elif [[ $REPLY =~ ^[cC]$ ]]; then # Load VSCode which detects recommendations.json
+        #     #TODO Where is this meant to be CDed to?
+        #     code ./editors
+    else
+        printErr "VSCode not in PATH"
+        return 1
+    fi
+    if hash code 2> /dev/null; then # Check if 'code' exists.
+        VSCODE_EXTENSIONS_DIR="${HOME}/.vscode/extensions"
 
-            # elif [[ $REPLY =~ ^[cC]$ ]]; then # Load VSCode which detects recommendations.json
-            #     #TODO Where is this meant to be CDed to?
-            #     code ./editors
-        else
-            printErr "VSCode not in PATH"
-            return 1
+    else
+        echo -e "VSCode not installed or variable not set."
+        return 1
+    fi
+    if [[ $REPLY =~ ^[yY]$ ]]; then # Install extensions from 'vscode/extensions'
+        if [[ ! -d "$VSCODE_EXTENSIONS_DIR" ]]; then
+            mkdir -p "$VSCODE_EXTENSIONS_DIR"
         fi
-        if hash code 2> /dev/null; then # Check if 'code' exists.
-            VSCODE_EXTENSIONS_DIR="${HOME}/.vscode/extensions"
-
-        else
-            echo -e "VSCode not installed or variable not set."
-            return 1
+        if [[ ! -d "${VSCODE_APP_DATA}/User" ]]; then
+            mkdir -p "${VSCODE_APP_DATA}/User"
         fi
-        if [[ $REPLY =~ ^[yY]$ ]]; then # Install extensions from 'vscode/extensions'
-            if [[ ! -d "$VSCODE_EXTENSIONS_DIR" ]]; then
-                mkdir -p "$VSCODE_EXTENSIONS_DIR"
-            fi
-            if [[ ! -d "${VSCODE_APP_DATA}/User" ]]; then
-                mkdir -p "${VSCODE_APP_DATA}/User"
-            fi
 
-            while IFS='' read -r LINE || [[ -n "$LINE" ]]; do
-                ${VSCODE_VERSION} --install-extension $LINE
-            done < "${SCRIPTDIR}/editors/.vscode/extensions"
+        while IFS='' read -r LINE || [[ -n "$LINE" ]]; do
+            ${VSCODE_VERSION} --install-extension $LINE
+        done < "${SCRIPTDIR}/editors/.vscode/extensions"
 
-            j            cp "${SCRIPTDIR}/editors/settings.json" "${VSCODE_APP_DATA}/User"
+        j            cp "${SCRIPTDIR}/editors/settings.json" "${VSCODE_APP_DATA}/User"
 
-        elif [[ $REPLY =~ ^[cC]$ ]]; then # Load VSCode which detects recommendations.json
-            $VSCODE_VERSION ./editors
-        fi
+    elif [[ $REPLY =~ ^[cC]$ ]]; then # Load VSCode which detects recommendations.json
+        $VSCODE_VERSION ./editors
     fi
     return 0
 }
-
+# {]} VSCode
 
 installFonts() {
-    if [  $ALL == 1 ] || askQuestionYN "${Yellow}Install fonts? $NC"; then
-        mkdir -p "$FONTDIR"
-        if [[ ! -d "${FONTDIR}/truetype/custom" ]]; then
-            mkdir -p "${FONTDIR}/truetype/custom"
-        fi
-
-        printErr "Downloading fonts..."
-
-        # Get latest Iosevka font release.
-        fontUrl=`getLatestReleaseFileURL "be5invis/Iosevka" "iosevka-pack-[^z]*zip"`
-        fontdir="${FONTDIR}/Iosevka"
-        downloadURLAndExtractZipTo $fontUrl $fontdir && \
-            printErr "${OK} Fonts installed to ${Yellow}${fontdir}${NC}" || \
-            printErr "${Error} ${Red}Fonts failed to install to ${Yellow}${fontdir}${NC}"
-
-        SCPUrl=`getLatestReleaseFileURL "ryanoasis/nerd-fonts" "SourceCodePro\.zip"`
-        SCPdir="${FONTDIR}/SauceCodeProNF"
-        downloadURLAndExtractZipTo $SCPUrl $SCPdir && \
-            printErr "${OK} Fonts installed to ${Yellow}${SCPdir}${NC}" || \
-            printErr "${Error} ${Red}Fonts failed to install to ${Yellow}${SCPdir}${NC}"
-
-        if [[ $OSTYPE == 'linux-gnu' ]]; then
-            # Unused mac-required SCP fonts.
-            rm -f "${SCPdir}/*Windows Compatible.ttf"
-        elif [[ $OSTYPE =~ 'darwin' ]]; then
-            rm -f "${SCPdir}/*Complete.ttf"
-            rm -f "${SCPdir}/*Mono.ttf"
-        fi
-
-        fc-cache && printErr "${OK} Fontcache updated" || \
-            printErr "${Error} ${Red}Failed to update fontcache${NC}"
-
-
+    mkdir -p "$FONTDIR"
+    if [[ ! -d "${FONTDIR}/truetype/custom" ]]; then
+        mkdir -p "${FONTDIR}/truetype/custom"
     fi
+
+    printErr "Downloading fonts..."
+
+    # Get latest Iosevka font release.
+    fontUrl=`getLatestReleaseFileURL "be5invis/Iosevka" "iosevka-pack-[^z]*zip"`
+    fontdir="${FONTDIR}/Iosevka"
+    downloadURLAndExtractZipTo $fontUrl $fontdir && \
+        printErr "${OK} Fonts installed to ${Yellow}${fontdir}${NC}" || \
+        printErr "${Error} ${Red}Fonts failed to install to ${Yellow}${fontdir}${NC}"
+
+    SCPUrl=`getLatestReleaseFileURL "ryanoasis/nerd-fonts" "SourceCodePro\.zip"`
+    SCPdir="${FONTDIR}/SauceCodeProNF"
+    downloadURLAndExtractZipTo $SCPUrl $SCPdir && \
+        printErr "${OK} Fonts installed to ${Yellow}${SCPdir}${NC}" || \
+        printErr "${Error} ${Red}Fonts failed to install to ${Yellow}${SCPdir}${NC}"
+
+    if [[ $OSTYPE == 'linux-gnu' ]]; then
+        # Unused mac-required SCP fonts.
+        rm -f "${SCPdir}/*Windows Compatible.ttf"
+    elif [[ $OSTYPE =~ 'darwin' ]]; then
+        rm -f "${SCPdir}/*Complete.ttf"
+        rm -f "${SCPdir}/*Mono.ttf"
+    fi
+
+    fc-cache && printErr "${OK} Fontcache updated" || \
+        printErr "${Error} ${Red}Failed to update fontcache${NC}"
 }
 
+# {[} Vim
+# {[} Vim finer settings (Shaw)
 setVimColorscheme() {
     if [ ! -d "$HOME/.vim/colors" ] || [ ! $SKIP == 2 ]; then
         printErr "Downloading Vim colorschemes."
@@ -285,6 +284,50 @@ setVimLineNumbers() {
     cp ./extended.vim $VIMDIR/vimrcs/extended.vim
     rm ./extended.vim
 }
+# {]} Vim finer settings (Shaw)
+
+setupVim(){
+    # {[} Shaw
+    if [ "$IS_SHAW" == 0 ] ; then
+
+        printErr "Checking Vim..."
+
+        if [[ -d "${VIMDIR}" ]]; then
+            printErr "found custom Vim.\nUpdating => "
+
+            cd "${VIMDIR}"
+            git stash | xargs echo > /dev/null
+            git rebase origin master | xargs echo -n
+            git stash pop | xargs echo > /dev/null
+            cd "${WD}"
+            printErr "${OK} Vim configuration is up to date."
+        else
+            printErr "Installing Amix's Awesome Vim config"
+            git clone --depth=1 https://github.com/amix/vimrc.git "$VIMDIR" && \
+                printErr "${OK} Installed Amix's Awesome Vim config." || \
+                printErr "${Error}${Red}Failed previous command${NC}"
+
+        fi
+        sh "${VIMDIR}/install_awesome_vimrc.sh" | xargs echo > /dev/null
+
+        printErr ""
+        printErr "------------------- VIM COLOR SCHEME"
+        setVimColorscheme
+    # {]} Shaw
+
+    else
+        printErr "Using WW's vimrc"
+        addTextIfAbsent "so $SCRIPTDIR/editors/vim/vimrc" ${HOME}/.vimrc
+        printErr "Installing vim plugins..."
+        # Install Plug (plugin manager)
+        downloadURLtoFile https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "${HOME}/.vim/autoload/plug.vim"
+        # This has the problem of making the caret disappear in WSL...
+        vim -E +PlugInstall +qall
+        # Recover missing cursor due to previous command
+        reset
+    fi
+}
+# {]} Shaw
 
 dualBootLocalTime() {
     if askQuestionYN "${Yellow}Interpret hardware clock as local time? ${NC}"; then
@@ -297,6 +340,7 @@ dualBootLocalTime() {
     fi
 }
 
+# {[} Git
 gitUser() {
     if [[ ${1:-} =~ ^--?[gG](it)?-?[cC](redentials)? ]]; then
         printErr "Forcing git update."
@@ -351,6 +395,7 @@ gitSettings() {
     git config --global core.excludesfile ${SCRIPTDIR}/gitignore
     git config --global core.attributesfile ${SCRIPTDIR}/gitattributes
 }
+# {]} Git
 
 setupShell() {
     if [ "$IS_SHAW" == 0 ] ; then
@@ -363,6 +408,7 @@ setupShell() {
             addTextIfAbsent "source $BASH_CUSTOM/bashrc" ${HOME}/.bashrc
         fi
     else
+        # {[} WW
         printErr "Enabling custom bash setup..."
         addTextIfAbsent "source $SCRIPTDIR/bash/bashrc" ${HOME}/.bashrc
         downloadURLtoFile  \
@@ -375,52 +421,13 @@ setupShell() {
         printErr "Enabling custom readline (inputrc) setup..."
         addTextIfAbsent "\$include $SCRIPTDIR/bash/inputrc.sh" ${HOME}/.inputrc
     fi
+    # {]} WW
     if [[ $OSTYPE =~ 'darwin' ]]; then
         addTextIfAbsent "source .bashrc" ${HOME}/.bash_profile
     fi
 }
 
-setupVim(){
-    if [ "$IS_SHAW" == 0 ] ; then
-
-        printErr "Checking Vim..."
-
-        if [[ -d "${VIMDIR}" ]]; then
-            printErr "found custom Vim.\nUpdating => "
-
-            cd "${VIMDIR}"
-            git stash | xargs echo > /dev/null
-            git rebase origin master | xargs echo -n
-            git stash pop | xargs echo > /dev/null
-            cd "${WD}"
-            printErr "${OK} Vim configuration is up to date."
-        else
-            printErr "Installing Amix's Awesome Vim config"
-            git clone --depth=1 https://github.com/amix/vimrc.git "$VIMDIR" && \
-                printErr "${OK} Installed Amix's Awesome Vim config." || \
-                printErr "${Error}${Red}Failed previous command${NC}"
-
-        fi
-        sh "${VIMDIR}/install_awesome_vimrc.sh" | xargs echo > /dev/null
-
-        printErr ""
-        printErr "------------------- VIM COLOR SCHEME"
-        setVimColorscheme
-
-    else
-        printErr "Using WW's vimrc"
-        addTextIfAbsent "so $SCRIPTDIR/editors/vim/vimrc" ${HOME}/.vimrc
-        printErr "Installing vim plugins..."
-        # Install Plug (plugin manager)
-        downloadURLtoFile https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "${HOME}/.vim/autoload/plug.vim"
-        # This has the problem of making the caret disappear in WSL...
-        vim -E +PlugInstall +qall
-        # Recover missing cursor due to previous command
-        reset
-    fi
-}
-
-main() {
+readSettings() {
     echo -ne "Are you WS or WW? "
     while [ 1 ] ; do
         read -n 2 U
@@ -439,14 +446,43 @@ main() {
         IS_SHAW=1
     fi
 
-    printErr ""
-    printErr '------------------- VSCODE EXTENSIONS'
-    vscodeExtensions
+    if [ $ALL != 1 ]; then
+        if askQuestionYN "Install VSCode extensions?" ; then
+            doVS=1
+        fi
+        if askQuestionYN "Set up git?" ; then
+            doGit=1
+        fi
+        if askQuestionYN "Set up vim?" ; then
+            doVim=1
+        fi
+        if askQuestionYN "Set up shell?" ; then
+            doShell=1
+        fi
+        if askQuestionYN "Install fonts?" ; then
+            doFonts=1
+        fi
+    fi
+}
 
-    printErr ""
-    printErr "------------------- GIT"
-    gitUser ${1:-}
-    gitCredentialCache
+main() {
+
+    if [ !$ALL == 1 ]; then
+        readSettings
+    fi
+
+    if [ $IS_SHAW == 1 && [ $doVS == 1 || $ALL == 1 ] ]; then
+        printErr ""
+        printErr '------------------- VSCODE EXTENSIONS'
+        vscodeExtensions
+    fi
+
+    if [ $ALL == 1 || $doGit == 1 ]; then
+        printErr ""
+        printErr "------------------- GIT"
+        gitUser ${1:-}
+        gitCredentialCache
+    fi
 
     if [ "$IS_SHAW" == 0 ] ; then
         printErr ""
@@ -454,17 +490,23 @@ main() {
         dualBootLocalTime
     fi
 
-    printErr ""
-    printErr "------------------- SHELL"
-    setupShell
+    if [ $ALL == 1 || $doShell == 1 ]; then
+        printErr ""
+        printErr "------------------- SHELL"
+        setupShell
+    fi
 
-    printErr ""
-    printErr "------------------- FONTS"
-    installFonts
+    if [ $ALL == 1 || $doFonts == 1 ]; then
+        printErr ""
+        printErr "------------------- FONTS"
+        installFonts
+    fi
 
-    printErr ""
-    printErr "------------------- VIM"
-    setupVim
+    if [ $ALL == 1 || $doVim == 1 ]; then
+        printErr ""
+        printErr "------------------- VIM"
+        setupVim
+    fi
 
     printErr "${Green} Install Complete${NC}"
     # Restart bash
