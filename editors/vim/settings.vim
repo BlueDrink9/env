@@ -259,6 +259,15 @@ endif
 set foldminlines=6
 set foldmethod=marker
 set foldmarker={[},{]}
+"Uses dictionary and source files to find matching words to complete.
+"See help completion for source,
+"Note: usual completion is on <C-n> but more trouble to press all the time.
+"Never type the same word twice and maybe learn a new spellings!
+"Use the Linux dictionary when spelling is in doubt.
+"Window users can copy the file to their machine.
+if has("unix")
+    set dictionary="/usr/dict/words"
+endif
 
 
 " No annoying sound on errors

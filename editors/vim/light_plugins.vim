@@ -15,6 +15,9 @@ if g:liteMode
     nmap <leader>cc <Plug>CommentaryLine
     nmap l<leader>c <Plug>ChangeCommentary
     nmap <leader>cu <Plug>Commentary<Plug>Commentary
+    xmap <C-/>  <Plug>Commentary
+    nmap <C-/>  <Plug>Commentary
+    omap <C-/>  <Plug>Commentary
     " {]} Replace Tcomment with commentary
 
     " Lighter alt to airline for putting buffers in tabline.
@@ -135,6 +138,8 @@ endif
 Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
 " Distraction-free vim.
 Plug 'https://github.com/junegunn/goyo.vim'
+
+
 
 " {[} ---------- Prose ----------
 Plug 'https://github.com/tpope/vim-markdown'

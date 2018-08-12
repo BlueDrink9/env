@@ -114,6 +114,13 @@ let g:bullets_enabled_file_types = [
 " {]} ---------- Prose----------
 
 " {[} ---------- Misc ----------
+Plug 'https://github.com/ervandew/supertab'
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabLongestEnhanced = 1
+let g:SuperTabLongestEnhanced = 1
+" List of omni completion option names in the order of precedence that they should be used if available
+" let g:SuperTabContextTextOmniPrecedence = ['&completefunc', '&omnifunc']
+
 " Lighter-weight, native completion engine. TODO sort
 " Plug 'https://github.com/ajh17/VimCompletesMe'
 augroup vcm
@@ -128,6 +135,9 @@ augroup end
 Plug 'https://github.com/tomtom/tcomment_vim'
 let g:tcomment_opleader1='<leader>c'
 let g:tcomment#blank_lines=0
+xmap <C-/>  :Tcomment<CR>
+nmap <C-/>  :TcommentBlock<CR>
+omap <C-/>  :Tcomment<CR>
 Plug 'https://github.com/jacquesbh/vim-showmarks.git' " TODO fix
 " Adds a bunch of unix-mapped filesystem ops from vim
 Plug 'https://github.com/tpope/vim-eunuch'

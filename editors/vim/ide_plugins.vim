@@ -94,16 +94,31 @@ endif
 " {]} ---------- Tags----------
 
 " {[} ---------- Snippits ----------
-" Reddit thread from 7 years ago had lots of people voting for snipmate as
-" best. But it conflicts with mutemplate slightly, and is apparently
-" abandoned.
-" But here is a maintained version!
-" Plug 'https://github.com/garbas/vim-snipmate'
 Plug 'https://github.com/honza/vim-snippets' " Library of snippets
-Plug 'https://github.com/SirVer/ultisnips' " Snippit engine
-" Plug 'https://github.com/joereynolds/vim-minisnip' "way smaller engine than ultisnips
-Plug 'https://github.com/tomtom/tlib_vim.git'
-Plug 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
+if (has("python") || has("python3")) && v:version >= 704
+    Plug 'https://github.com/SirVer/ultisnips' " Snippit engine
+    let g:UltiSnipsExpandTrigger="<c-n>"
+    let g:UltiSnipsJumpForwardTrigger="<c-n>"
+    let g:UltiSnipsJumpBackwardTrigger="<c-p>"
+    " Maybe use these to map <CR> to trigger in future?
+   " autocmd! User UltiSnipsEnterFirstSnippet
+   " autocmd User UltiSnipsEnterFirstSnippet call CustomInnerKeyMapper()
+   " autocmd! User UltiSnipsExitLastSnippet
+   " autocmd User UltiSnipsExitLastSnippet call CustomInnerKeyUnmapper()
+else
+    Plug 'https://github.com/tomtom/tlib_vim.git'
+    Plug 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
+    Plug 'https://github.com/garbas/vim-snipmate'
+    let g:snipMate = {}
+    let g:snipMate['description_in_completion'] = 1
+    let g:snipMate['no_match_completion_feedkeys_chars'] = ''
+    imap <C-N> <Plug>snipMateNextOrTrigger
+    smap <C-N> <Plug>snipMateNextOrTrigger
+    imap <C-P> <Plug>snipMateBack
+    smap <C-P> <Plug>snipMateBack
+endif
+" way smaller engine than ultisnips, not really much func. Can't use snip libs.
+" Plug 'https://github.com/joereynolds/vim-minisnip'
 " {]} ---------- Snippits----------
 
 " {[} ---------- Syntax ----------
@@ -140,6 +155,8 @@ endif
 " {[} ---------- IDE ----------
 Plug 'https://github.com/mh21/errormarker.vim'
 let &errorformat="%f:%l:%c: %t%*[^:]:%m,%f:%l: %t%*[^:]:%m," . &errorformat
+let errormarker_disablemappings = 1
+cabbrev er ErrorAtCursor
 Plug 'ryanoasis/vim-devicons'
 if has("python3")
     Plug 'https://github.com/vim-vdebug/vdebug'
