@@ -31,6 +31,13 @@ endif
 " Bunch of neat mappings, it's a tpope. Esp [n and ]n, for SCM conflict marks.
 " And [<space> for addign newlines.
 Plug 'https://github.com/tpope/vim-unimpaired'
+Plug 'https://github.com/chrisbra/csv.vim'
+let g:csv_autocmd_arrange	   = 1
+let g:csv_autocmd_arrange_size = 1024*1024
+" let g:csv_highlight_column = 'y' " Current cursor's column.
+hi CSVColumnEven ctermbg=Gray guibg=LightGray
+" let g:csv_no_column_highlight = 1
+" hi CSVColumnOdd
 Plug 'nathanaelkane/vim-indent-guides'
 " For switching between header and alt files
 Plug 'vim-scripts/a.vim'

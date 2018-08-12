@@ -142,6 +142,7 @@ Plug 'https://github.com/jacquesbh/vim-showmarks.git' " TODO fix
 " Adds a bunch of unix-mapped filesystem ops from vim
 Plug 'https://github.com/tpope/vim-eunuch'
 Plug 'https://github.com/simnalamburt/vim-mundo'
+cabbrev undo MundoToggle
 
 " Way better search and replace, also case coersion
 Plug 'https://github.com/tpope/vim-abolish'
