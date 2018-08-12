@@ -58,6 +58,7 @@ command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 call plug#begin(s:pluginPath)
 
 let g:pluginSettingsToExec = []
+let g:customHLGroups = []
 
 " Get light plugin set first
 exec 'source ' . s:scriptpath . "/light_plugins.vim"
@@ -73,8 +74,18 @@ exec 'source ' . s:localPlugins
 
 call plug#end()
 
-
 for item in g:pluginSettingsToExec
-    " echom item
     exec item
 endfor
+
+" HLGroups get cleared by colourschemes when changing. This resets them.
+function! s:reHL()
+    for item in g:customHLGroups
+        exec "highlight! " . item
+    endfor
+endfunction
+call s:reHL()
+augroup highlights
+    au!
+    autocmd ColorScheme * call s:reHL()
+augroup end

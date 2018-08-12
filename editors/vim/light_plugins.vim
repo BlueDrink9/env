@@ -27,6 +27,24 @@ if g:liteMode
     let g:buftabline_numbers=2
 endif
 
+" {[} ---------- Colourschemes ----------
+Plug 'https://github.com/altercation/vim-colors-solarized.git'
+call add (g:pluginSettingsToExec, "colorscheme " . colorSch)
+call add (g:customHLGroups, "MatchParen cterm=bold,underline ctermbg=lightgray")
+call add (g:customHLGroups, "MatchParen gui=bold,underline guibg=gray90")
+if !has("gui_running")
+    " if $TERM contains "-256color"
+    " May be needed if terminal doesn't support.
+    " TODO sort out base16 colours for solarized
+    exec 'let g:' . colorSch . '_termcolors=256'
+    exec 'let g:' . colorSch . '_base16 = 0'
+    let base16colorspace = 256
+    let g:solarized_termtrans = 1
+endif
+" Settings doesn't recommend this...
+let g:solarized_contrast = "high"
+" {]} ---------- Colourschemes ----------
+
 " {[}--- Misc ---
 " Bunch of neat mappings, it's a tpope. Esp [n and ]n, for SCM conflict marks.
 " And [<space> for addign newlines.
@@ -35,9 +53,9 @@ Plug 'https://github.com/chrisbra/csv.vim'
 let g:csv_autocmd_arrange	   = 1
 let g:csv_autocmd_arrange_size = 1024*1024
 " let g:csv_highlight_column = 'y' " Current cursor's column.
-hi CSVColumnEven ctermbg=Gray guibg=LightGray
-" let g:csv_no_column_highlight = 1
-" hi CSVColumnOdd
+" hi CSVColumnEven term=bold ctermbg=Gray guibg=LightGray
+call add (g:customHLGroups, "CSVColumnEven guibg=gray90 ctermbg=lightgray")
+call add (g:pluginSettingsToExec, "highlight clear CSVColumnOdd")
 Plug 'nathanaelkane/vim-indent-guides'
 " For switching between header and alt files
 Plug 'vim-scripts/a.vim'
@@ -47,7 +65,7 @@ Plug 'https://github.com/ntpeters/vim-better-whitespace'
 let g:show_spaces_that_precede_tabs=1
 let g:better_whitespace_skip_empty_lines=1
 let g:better_whitespace_operator='_s'
-highlight ExtraWhitespace ctermbg=Gray guibg=LightGray
+call add (g:customHLGroups, "ExtraWhitespace ctermbg=Gray guibg=LightGray")
 " cx to select an object, then cx again to swap it with first thing.
 Plug 'https://github.com/tommcdo/vim-exchange'
 " if v:version >= 800 || has("patch-7.4.1829")
@@ -97,24 +115,6 @@ if v:version >= 702
     " Trigger a highlight in the appropriate direction when pressing these keys:
     let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 endif
-
-" {[} ---------- Colourschemes ----------
-Plug 'https://github.com/altercation/vim-colors-solarized.git'
-call add (g:pluginSettingsToExec, "colorscheme " . colorSch)
-call add (g:pluginSettingsToExec, "highlight! MatchParen cterm=bold,underline ctermbg=lightgray")
-call add (g:pluginSettingsToExec, "highlight! MatchParen gui=bold,underline guibg=gray90")
-if !has("gui_running")
-    " if $TERM contains "-256color"
-    " May be needed if terminal doesn't support.
-    " TODO sort out base16 colours for solarized
-    exec 'let g:' . colorSch . '_termcolors=256'
-    exec 'let g:' . colorSch . '_base16 = 0'
-    let base16colorspace = 256
-    let g:solarized_termtrans = 1
-endif
-" Settings doesn't recommend this...
-let g:solarized_contrast = "high"
-" {]} ---------- Colourschemes ----------
 
 Plug 'xolox/vim-misc'
 " Map os commands (eg maximise), and open windows commands without shell

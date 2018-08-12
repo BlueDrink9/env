@@ -25,6 +25,8 @@ Plug 'https://github.com/tpope/vim-dispatch'
 if executable("git")
     Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
     Plug 'airblade/vim-gitgutter'
+    " Allows hlcolumn bg to match coloursch
+    call add(g:customHLGroups, "clear SignColumn")
     " gitgutter needs grep to not output escap sequences.
     " let g:gitgutter_grep = ''
     let g:gitgutter_grep = 'grep --color=never'
@@ -408,8 +410,3 @@ augroup myAirline
 augroup end
 " {]} ---------- airline ----------
 
-" We need this for plugins like Syntastic(?) and vim-gitgutter which put symbols
-" in the sign column. Don't know if it should go before plugs or after
-" colorscheme.
-" Allows hlcolumn bg to match coloursch
-highlight clear SignColumn
