@@ -50,7 +50,7 @@ if v:version >= 800
     " Note: usual completion is on <C-n> but more trouble to press all the time.
     " Never type the same word twice and maybe learn a new spellings!
     " Use the Linux dictionary when spelling is in doubt.
-    function! Tab_Or_Complete() abort
+    function! Tab_Or_Completor() abort
         " If completor is already open the `tab` cycles through suggested completions.
         if pumvisible()
             return "\<C-N>"
@@ -178,7 +178,7 @@ let g:startify_lists = [
             \ ]
 " let g:startify_bookmarks = [ {'c': '~/.vimrc'}, '~/.zshrc' ]
 let g:startify_session_sort = 1
-let g:startify_custom_indices = ['a','r','s','t','f','p','d','h','l','n','e','i','o','k','v','c','m']
+let g:startify_custom_indices = ['a','r','s','t','f','p','d','h','l','n','o','k','v','c','m']
 let g:startify_custom_header = 'startify#fortune#boxed()'
 
 " visually show indentation
