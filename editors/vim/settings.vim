@@ -137,11 +137,12 @@ else
 endif
 
 " Use true colors
-if (empty($TMUX))
-    if (has("termguicolors"))
-        set termguicolors
-    endif
-endif
+" Breaks colourscheme...
+" if (empty($TMUX))
+"     if (has("termguicolors"))
+"         set termguicolors
+"     endif
+" endif
 
 set showcmd
 " Show cursor coords
