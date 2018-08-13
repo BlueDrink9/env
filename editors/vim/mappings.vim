@@ -1,4 +1,6 @@
 " vim: set ft=vim:
+" vim: foldmethod=marker
+" vim: foldmarker={[},{]}
 
 inoremap kv <esc>
 inoremap vk <esc>

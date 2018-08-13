@@ -1,4 +1,6 @@
 " vim: set filetype=vim:
+" vim: foldmethod=marker
+" vim: foldmarker={[},{]}
 
 " Pipes the output of shell commands into a new window for viewing.
 function! WindowOutput(cmd)

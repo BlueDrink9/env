@@ -12,6 +12,73 @@
 " Plug "https://github.com/yuttie/comfortable-motion.vim"
 " {]} ---------- Later ----------
 
+" {[} ---------- Misc ----------
+Plug 'https://github.com/metalelf0/supertab' " Fork with a failing feature removed
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabLongestEnhanced = 1
+let g:SuperTabLongestEnhanced = 1
+" List of omni completion option names in the order of precedence that they should be used if available
+" let g:SuperTabContextTextOmniPrecedence = ['&completefunc', '&omnifunc']
+
+" Lighter-weight, native completion engine. TODO sort
+" Plug 'https://github.com/ajh17/VimCompletesMe'
+augroup vcm
+    au!
+    autocmd bufenter * let b:vcm_tab_complete = 'tags'
+    autocmd FileType vim let b:vcm_tab_complete = 'vim'
+    autocmd FileType vim let b:vcm_tab_complete = 'omni'
+augroup end
+
+" Separate buffer lists for differetn windows
+" Plug 'https://github.com/zefei/vim-wintabs'
+Plug 'https://github.com/tomtom/tcomment_vim'
+let g:tcomment_opleader1='<leader>c'
+let g:tcomment#blank_lines=0
+xmap <C-/>  :Tcomment<CR>
+nmap <C-/>  :TcommentBlock<CR>
+omap <C-/>  :Tcomment<CR>
+Plug 'https://github.com/jacquesbh/vim-showmarks.git' " TODO fix
+" Adds a bunch of unix-mapped filesystem ops from vim
+Plug 'https://github.com/tpope/vim-eunuch'
+Plug 'https://github.com/simnalamburt/vim-mundo'
+cabbrev undo MundoToggle
+
+" Way better search and replace, also case coersion
+Plug 'https://github.com/tpope/vim-abolish'
+" Improves incremental search to match everythign that it should.
+Plug 'https://github.com/haya14busa/incsearch.vim'
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+" Autoset Paste/nopaste
+Plug 'https://github.com/ConradIrwin/vim-bracketed-paste'
+" Allows plugin maps to use '.' to repeat
+Plug 'https://github.com/tpope/vim-repeat'
+" Adds indent block as text object. ii , ai or aI
+Plug 'michaeljsmith/vim-indent-object'
+" Additional text objects for next braket, i/a comma, pairs, smarter searching.
+Plug 'wellle/targets.vim'
+Plug 'bkad/camelcasemotion'
+call add(g:pluginSettingsToExec, "call camelcasemotion#CreateMotionMappings('<leader>m')")
+Plug 'https://github.com/tpope/vim-speeddating'
+
+" Align CSV files at commas, align Markdown tables, and more.
+" Could go in prose... but maybe I'll use it more later.
+Plug 'https://github.com/junegunn/vim-easy-align'
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" Let's give it a go then.
+Plug 'https://github.com/easymotion/vim-easymotion'
+map <Leader>l <Plug>(easymotion-lineforward)
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+map <Leader>h <Plug>(easymotion-linebackward)
+let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
+" {]} ---------- Misc----------
+
 " Maybe ide candidates...
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 let g:ctrlp_cmd = 'CtrlPMixed'
@@ -114,73 +181,6 @@ let g:bullets_enabled_file_types = [
             \ 'scratch'
             \]
 " {]} ---------- Prose----------
-
-" {[} ---------- Misc ----------
-Plug 'https://github.com/ervandew/supertab'
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabLongestEnhanced = 1
-let g:SuperTabLongestEnhanced = 1
-" List of omni completion option names in the order of precedence that they should be used if available
-" let g:SuperTabContextTextOmniPrecedence = ['&completefunc', '&omnifunc']
-
-" Lighter-weight, native completion engine. TODO sort
-" Plug 'https://github.com/ajh17/VimCompletesMe'
-augroup vcm
-    au!
-    autocmd bufenter * let b:vcm_tab_complete = 'tags'
-    autocmd FileType vim let b:vcm_tab_complete = 'vim'
-    autocmd FileType vim let b:vcm_tab_complete = 'omni'
-augroup end
-
-" Separate buffer lists for differetn windows
-" Plug 'https://github.com/zefei/vim-wintabs'
-Plug 'https://github.com/tomtom/tcomment_vim'
-let g:tcomment_opleader1='<leader>c'
-let g:tcomment#blank_lines=0
-xmap <C-/>  :Tcomment<CR>
-nmap <C-/>  :TcommentBlock<CR>
-omap <C-/>  :Tcomment<CR>
-Plug 'https://github.com/jacquesbh/vim-showmarks.git' " TODO fix
-" Adds a bunch of unix-mapped filesystem ops from vim
-Plug 'https://github.com/tpope/vim-eunuch'
-Plug 'https://github.com/simnalamburt/vim-mundo'
-cabbrev undo MundoToggle
-
-" Way better search and replace, also case coersion
-Plug 'https://github.com/tpope/vim-abolish'
-" Improves incremental search to match everythign that it should.
-Plug 'https://github.com/haya14busa/incsearch.vim'
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
-" Autoset Paste/nopaste
-Plug 'https://github.com/ConradIrwin/vim-bracketed-paste'
-" Allows plugin maps to use '.' to repeat
-Plug 'https://github.com/tpope/vim-repeat'
-" Adds indent block as text object. ii , ai or aI
-Plug 'michaeljsmith/vim-indent-object'
-" Additional text objects for next braket, i/a comma, pairs, smarter searching.
-Plug 'wellle/targets.vim'
-Plug 'bkad/camelcasemotion'
-call add(g:pluginSettingsToExec, "call camelcasemotion#CreateMotionMappings('<leader>m')")
-Plug 'https://github.com/tpope/vim-speeddating'
-
-" Align CSV files at commas, align Markdown tables, and more.
-" Could go in prose... but maybe I'll use it more later.
-Plug 'https://github.com/junegunn/vim-easy-align'
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
-" Let's give it a go then.
-Plug 'https://github.com/easymotion/vim-easymotion'
-map <Leader>l <Plug>(easymotion-lineforward)
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-map <Leader>h <Plug>(easymotion-linebackward)
-let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
-" {]} ---------- Misc----------
 
 " {[} ---------- NerdTree ----------
 Plug 'https://github.com/scrooloose/nerdtree.git'

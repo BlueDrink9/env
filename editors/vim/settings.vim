@@ -1,4 +1,6 @@
 " vim: set ft=vim:
+" vim: foldmethod=marker
+" vim: foldmarker={[},{]}
 " Set colorScheme variable for use in other settings
 " Doesn't override preset scheme
 " Background should always be set after colorscheme.
@@ -256,9 +258,22 @@ let g:tex_flavor = "latex"
 if v:version >= 703
     set conceallevel=2
 endif
+set foldmethod=syntax
 set foldminlines=6
-set foldmethod=marker
-set foldmarker={[},{]}
+" set foldmethod=marker
+" set foldmarker={[},{]}
+set foldnestmax=3
+" set foldcolumn=5
+set foldminlines=3
+" All/some folds closed on bufopen
+set foldlevelstart=1
+set foldopen+=",insert"
+" Use indent and manual folding
+" augroup fold
+"     au!
+"     au BufReadPre * setlocal foldmethod=indent
+"     au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
+" augroup END
 "Uses dictionary and source files to find matching words to complete.
 "See help completion for source,
 "Note: usual completion is on <C-n> but more trouble to press all the time.
@@ -337,11 +352,11 @@ augroup cursor
     endif
 augroup END
 
+" Auto cd to working dir of this window's file
+" autocmd BufEnter * silent! lcd %:p:h
 set viewoptions-=options
-augroup misc
+augroup view
     autocmd!
-    " Auto cd to working dir of this window's file
-    " autocmd BufEnter * silent! lcd %:p:h
     " save folds
     autocmd BufWinLeave *.* mkview
     autocmd BufWinEnter *.* silent loadview
