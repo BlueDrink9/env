@@ -169,6 +169,18 @@ Plug 'https://github.com/xuhdev/SingleCompile'
 " Customisable start screen, including MRU files
 Plug 'https://github.com/mhinz/vim-startify'
 let g:startify_session_dir = CreateVimDir("vimfiles/sessions/")
+let g:startify_lists = [
+            \ { 'type': 'sessions',  'header': ['   Sessions']       },
+            \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+            \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+            \ { 'type': 'files',     'header': ['   MRU']            },
+            \ { 'type': 'commands',  'header': ['   Commands']       },
+            \ ]
+" let g:startify_bookmarks = [ {'c': '~/.vimrc'}, '~/.zshrc' ]
+let g:startify_session_sort = 1
+let g:startify_custom_indices = ['a','r','s','t','f','p','d','h','l','n','e','i','o','k','v','c','m']
+let g:startify_custom_header = 'startify#fortune#boxed()'
+
 " visually show indentation
 if v:version >= 703
     Plug 'https://github.com/Yggdroot/indentLine'
