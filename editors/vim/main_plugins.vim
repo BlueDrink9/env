@@ -100,8 +100,12 @@ if executable("git")
     Plug 'jreybert/vimagit'
     " Git wrapper
     Plug 'https://github.com/tpope/vim-fugitive'
-    nnoremap <leader>gc :Gwrite <bar> Gcommit<CR>
-    noremap <leader>gs :Gstatus<CR>
+    nnoremap <leader>gs :Gstatus<CR> cabbrev gs Gstatus
+    cabbrev gw Gwrite
+    cabbrev gc Gwrite <bar> Gcommit
+    cabbrev gco Gcommit
+    cabbrev gca Gcommit --amend
+    cabbrev gdf Gdiff
     " Async fugitive
     if g:hasAsyncrun
         call add(g:pluginSettingsToExec, "command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>

@@ -61,6 +61,8 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'vim-scripts/a.vim'
 " Bsgrep for searching in all open buffers. Also Bsreplace, Bstoc.
 Plug 'https://github.com/jeetsukumaran/vim-buffersaurus'
+cabbrev bfind Bsgrep
+let g:buffersaurus_autodismiss_on_select=0
 Plug 'https://github.com/ntpeters/vim-better-whitespace'
 let g:show_spaces_that_precede_tabs=1
 let g:better_whitespace_skip_empty_lines=1
@@ -83,15 +85,13 @@ if has("timers")
     command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
     " Set qf statusbar to status of asyncrun
     let g:asyncrun_status = "stopped"
-    augroup qf
+    augroup qfas
         au!
         autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(8, 1)
-    augroup END
-    augroup QuickfixStatus
-        au! BufWinEnter quickfix setlocal 
+        autocmd BufWinEnter quickfix setlocal 
                     \ statusline=%t\ [%{g:asyncrun_status}]\ %{exists('w:quickfix_title')?\ '\ '.w:quickfix_title\ :\ ''}\ %=%-15(%l,%c%V%)\ %P
-augroup END
-" endif
+    augroup END
+endif
 " {]} Misc
 
 " {[} --- TMUX ---
