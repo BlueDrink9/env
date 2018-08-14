@@ -82,6 +82,12 @@ let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
 " Maybe ide candidates...
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 let g:ctrlp_cmd = 'CtrlPMixed'
+let g:ctrlp_map = '<leader>f'
+let g:ctrlp_cache_dir = CreateVimDir("ctrpCache") " Purge cache with f5 in buffer
+let g:ctrlp_clear_cache_on_exit = 0
+if ideMode == 1
+  let g:ctrlp_extensions = ['tag', 'buffertag', 'rtscript']
+endif
 " Run shell commands async (uses python)
 Plug 'https://github.com/joonty/vim-do'
 Plug 'https://github.com/thinca/vim-quickrun'
