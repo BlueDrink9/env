@@ -96,24 +96,8 @@ Plug 'https://github.com/tpope/vim-dispatch'
 
 " {[} ---------- Git ----------
 if executable("git")
-    Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
-    Plug 'airblade/vim-gitgutter'
-    " Allows hlcolumn bg to match coloursch
-    call add(g:customHLGroups, "clear SignColumn")
-    " gitgutter needs grep to not output escap sequences.
-    " let g:gitgutter_grep = ''
-    let g:gitgutter_grep = 'grep --color=never'
-    let g:gitgutter_override_sign_column_highlight = 0
-    let g:gitgutter_escape_grep = 1
-    " Wait 300 ms safter typing finishes before updating (vim default 4000)
-    set updatetime=300
-    " augroup ggutter
-    "     au!
-    "     au BufWritePost * :GitGutter
-    " augroup end
-    Plug 'https://github.com/christoomey/vim-conflicted'
-    set stl+=%{ConflictedVersion()}
-
+    " :Magit to check all sorts of git stuff. Looks really cool.
+    Plug 'jreybert/vimagit'
     " Git wrapper
     Plug 'https://github.com/tpope/vim-fugitive'
     nnoremap <leader>gc :Gwrite <bar> Gcommit<CR>
@@ -131,6 +115,23 @@ if executable("git")
     endif
     " github wrapper
     Plug 'https://github.com/tpope/vim-rhubarb'
+    Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
+    Plug 'airblade/vim-gitgutter'
+    " Allows hlcolumn bg to match coloursch
+    call add(g:customHLGroups, "clear SignColumn")
+    " gitgutter needs grep to not output escap sequences.
+    " let g:gitgutter_grep = ''
+    let g:gitgutter_grep = 'grep --color=never'
+    let g:gitgutter_override_sign_column_highlight = 0
+    let g:gitgutter_escape_grep = 1
+    " Wait 300 ms safter typing finishes before updating (vim default 4000)
+    set updatetime=300
+    " augroup ggutter
+    "     au!
+    "     au BufWritePost * :GitGutter
+    " augroup end
+    Plug 'https://github.com/christoomey/vim-conflicted'
+    set stl+=%{ConflictedVersion()}
 endif
 " {]} ---------- Git----------
 
