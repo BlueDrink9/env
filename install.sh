@@ -143,7 +143,7 @@ uninstall() {
             git config --global --unset-all credential.https://github.com.username
             git config --global --unset-all user.email
         fi
-        git config --global --unset core.ignoreFile
+        git config --global --unset core.excludesFile
         git config --global --unset core.attributesFile
         git config --global --unset include.path
 
