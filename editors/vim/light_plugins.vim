@@ -69,6 +69,7 @@ call add (g:customHLGroups, "ExtraWhitespace ctermbg=Gray guibg=LightGray")
 " cx to select an object, then cx again to swap it with first thing.
 Plug 'https://github.com/tommcdo/vim-exchange'
 " if v:version >= 800 || has("patch-7.4.1829")
+if has("timers")
     " Commands sent to shell with AsyncRun appear in qf window.
     " use AsyncRun! to prevent autoscroll.
     Plug 'https://github.com/skywind3000/asyncrun.vim'

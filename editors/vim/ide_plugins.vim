@@ -2,7 +2,8 @@
 " vim: foldmarker={[},{]}
 
 " {[} ---------- Linting ----------
-if v:version >= 800
+" if v:version >= 800
+if has("timers")
     " Async linting
     Plug 'https://github.com/w0rp/ale'
 else
@@ -41,7 +42,8 @@ endif
 " Awesome code completion, but requires specific installations
 " Plug 'https://github.com/Valloric/YouCompleteMe'
 " Plug 'jerrymarino/icompleteme'
-if v:version >= 800
+" if v:version >= 800
+if has("timers")
     " Async completion engine, doesn't need extra installation.
     Plug 'maralla/completor.vim'
     " Use TAB to complete when typing words, else inserts TABs as usual.  Uses
