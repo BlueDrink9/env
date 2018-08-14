@@ -18,3 +18,5 @@
   wdiff = diff --word-diff=color --unified=1
 [merge]
   conflictstyle = diff3
+[rerere]
+  enabled = 1
