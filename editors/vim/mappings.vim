@@ -174,3 +174,13 @@ nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v
 " Quicker access to system register
 " (`"` is default register anyway, so never need `""`)
 nnoremap "" "+
+vnoremap "" "+
+" These apply only in vimdiff mode.
+" nnoremap <expr> <C-J> &diff ? ']c' : '<C-W>j'
+if &diff
+    nnoremap <Leader>1 :diffget LOCAL<CR>
+    nnoremap <Leader>2 :diffget BASE<CR>
+    nnoremap <Leader>3 :diffget REMOTE<CR>
+    nnoremap du :diffupdate<CR>
+    cabbrev refresh diffupdate
+endif
