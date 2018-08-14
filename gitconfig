@@ -1,4 +1,4 @@
-# vim: ft=cfg ts=2 sw=2
+# vim: ft=cfg ts=2 sw=2 ai
 [user]
 [credential]
   helper = cache --timeout=3600
@@ -18,5 +18,8 @@
   wdiff = diff --word-diff=color --unified=1
 [merge]
   conflictstyle = diff3
+  tool = vimdiff
+[mergetool]
+  prompt = false
 [rerere]
   enabled = 1
