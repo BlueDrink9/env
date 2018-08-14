@@ -1,13 +1,13 @@
-# vim: ft=cfg
+# vim: ft=cfg ts=2 sw=2
 [user]
 [credential]
-    helper = cache --timeout=3600
+  helper = cache --timeout=3600
 [core]
 	editor = vim --cmd \"let g:liteMode=1\"
-    # autocrlf = input
-    autocrlf = false
-    safecrlf = true
-    eol      = lf
+  # autocrlf = input
+  autocrlf = false
+  safecrlf = true
+  eol      = lf
 
 # diffs for word files use pandoc
 [diff "pandoc"]
@@ -16,3 +16,5 @@
 [alias]
   diff = diff --ignore-space-change
   wdiff = diff --word-diff=color --unified=1
+[merge]
+  conflictstyle = diff3
