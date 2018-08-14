@@ -174,4 +174,3 @@ nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v
 " Quicker access to system register
 " (`"` is default register anyway, so never need `""`)
 nnoremap "" "+
-inoremap "" "+
