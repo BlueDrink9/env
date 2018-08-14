@@ -84,7 +84,8 @@ if executable('ctags-exuberant') || executable('ctags')
     Plug 'xolox/vim-easytags'
     let g:easytags_async=1
     Plug 'majutsushi/tagbar'
-    nmap <silent> <leader>tb :TagbarToggle<CR>
+    " nmap <silent> <leader>tb :TagbarToggle<CR>
+    cabbrev tb TagbarToggle
     augroup tag
         au!
         " Uncomment to open tagbar automatically whenever possible
