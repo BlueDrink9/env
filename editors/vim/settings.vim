@@ -54,7 +54,6 @@ if has("gui_running")
     if !exists('g:ideMode')
         let g:ideMode = 1
     endif
-    set guioptions-=e
     if g:ideMode
         set guioptions+=ciagmrLtT!
         " Larger gvim window
@@ -68,6 +67,7 @@ if has("gui_running")
         " Larger gvim window
         set lines=40 columns=120
     endif
+    set guioptions-=e
     " Default fallback for gui bg colour
     if !exists ('g:backgroundColour')
         let g:backgroundColour=s:defaultBGGUI
