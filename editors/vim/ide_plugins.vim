@@ -6,6 +6,8 @@
 if has("timers")
     " Async linting
     Plug 'https://github.com/w0rp/ale'
+    let g:ale_sign_error = 'X'
+    let g:ale_sign_warning = '!'
 else
     " ----- syntastic -----
     Plug 'https://github.com/vim-syntastic/syntastic.git'
@@ -181,7 +183,8 @@ let g:startify_lists = [
             \ ]
 " let g:startify_bookmarks = [ {'c': '~/.vimrc'}, '~/.zshrc' ]
 let g:startify_session_sort = 1
-let g:startify_custom_indices = ['a','r','s','t','f','p','d','h','l','n','o','k','v','c','m']
+let g:startify_custom_indices = ['a','r','s','t','f','p','d','h','l','o','v','c','m']
+let g:startify_custom_indices += ['A','R','S','T','F','P','D','H','L','O','V','C','M']
 let g:startify_custom_header = 'startify#fortune#boxed()'
 
 " visually show indentation

@@ -184,3 +184,4 @@ if &diff
     nnoremap du :diffupdate<CR>
     cabbrev refresh diffupdate
 endif
+cabbrev profile profile start resultfile <bar> profile func *
