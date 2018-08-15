@@ -5,6 +5,8 @@
 if v:version >= 800
     " Async linting
     Plug 'https://github.com/w0rp/ale'
+    let g:ale_sign_error = 'X'
+    let g:ale_sign_warning = '!'
 else
     " ----- syntastic -----
     Plug 'https://github.com/vim-syntastic/syntastic.git'
