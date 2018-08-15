@@ -22,6 +22,7 @@ syntax on
 
 let s:defaultBGGUI="light"
 let s:defaultBGConsole="light"
+"{[} GUI
 if has("gui_running")
     " {[} ----------- Shell ----------
     " if has("win32") || has("win64")
@@ -92,10 +93,9 @@ if has("gui_running")
         autocmd BufEnter * if &filetype == "" | let &titlestring = 'Vim - New Buffer' | endif
         set title
     augroup END
-
+    "{]}
 else
-
-    " XXX Console Vim settings XXX 
+    "{[} Console
 
     if !has("clipboard")
         " Without clipboard, need mouse to select stuff sorry.
@@ -146,6 +146,7 @@ else
         set title
     augroup END
 endif
+"{]}
 
 set showcmd
 " Show cursor coords
