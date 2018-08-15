@@ -175,3 +175,4 @@ nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v
 " (`"` is default register anyway, so never need `""`)
 nnoremap "" "+
 inoremap "" "+
+cabbrev profile profile start result <bar> profile func *
