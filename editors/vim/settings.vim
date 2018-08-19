@@ -26,10 +26,10 @@ if has("gui_running")
     " {[} ----------- Shell ----------
     " if has("win32") || has("win64")
     "     let b:hasBash=0
-    "     if executable('bash -c')
+    "     if executable('wsl')
     "         echom "here"
     "         let b:hasBash=1
-    "         set shell=C:\Windows\System32\bash.exe
+    "         set shell=wsl
     "         " Syntastic uses PATH to determine available checkers
     "         " let $PATH .= ';C:\cygwin64\bin'"
     "     elseif executable('C:\Program Files\Git\git-bash.exe')
@@ -49,7 +49,8 @@ if has("gui_running")
     "         set shellslash
     "     endif
     " endif
-    " {]} ----------- Shell ----------
+    " " {]} ----------- Shell ----------
+
     " GUI is running or is about to start.
     if !exists('g:ideMode')
         let g:ideMode = 1
@@ -137,12 +138,11 @@ else
 endif
 
 " Use true colors
-" Breaks colourscheme...
-" if (empty($TMUX))
-"     if (has("termguicolors"))
-"         set termguicolors
-"     endif
-" endif
+if (has("termguicolors"))
+    if exists($COLORTERM) && ($COLORTERM =~ "truecolor" || $COLORTERM =~ "24bit")
+        set termguicolors
+    endif
+endif
 
 set showcmd
 " Show cursor coords
