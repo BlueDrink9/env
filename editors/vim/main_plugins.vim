@@ -241,7 +241,7 @@ let g:airline#extensions#wordcount#enabled = 1
 let g:airline_solarized_normal_green = 1
 let g:airline_solarized_dark_inactive_border = 1
 " exec 'let g:airline_base16_' . colorSch . '= 0'
-" {[} ---------- Nerd/pl fonts ----------
+" {[} ---------- Nerd/pl fonts and symbols ----------
 " let g:airline_symbols_ascii=1
 " If ssh, don't assume font avail? Or should we...?
 if g:remoteSession
@@ -345,27 +345,6 @@ if !exists('g:airline_powerline_fonts') || !exists('g:webdevicons_enable')
         endif
     endif
 endif
-" {]} ---------- Nerd/pl fonts----------
-
-let g:airline#extensions#syntastic#stl_format_err="%E{Err: #%e L%fe}"
-let g:airline#extensions#syntastic#stl_format_warn='%W{Warn: #%w L%fw}'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#tabline#show_buffers = 1
-let g:airline#extensions#tabline#show_tabs = 0
-" let g:airline#extensions#tabline#buffer_min_count = 0
-" let g:airline#extensions#tabline#tab_min_count = 0
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#tabline#show_tab_type = 0
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline#extensions#tabline#show_close_button = 0
-let g:airline#extensions#tabline#buffers_label = 'B'
-let g:airline#extensions#whitespace#mixed_indent_algo = 1
-" Alt sep gives b<c>b instead of b>c>b
-let g:airline#extensions#tabline#alt_sep = 1
-let g:airline#extensions#tabline# = 1
-" let g:airline#extensions#tabline#show_tabs = 0
-call add (g:pluginSettingsToExec, "let g:airline_section_tabline = airline#section#create(['%{getcwd()}'])")
 
 if g:airline_powerline_fonts == 0
     if !exists('g:airline_symbols')
@@ -402,6 +381,28 @@ else
                 \ 'linenr', 'maxlinenr',' ', '%c'])")
 endif
 
+" {]} ---------- Nerd/pl fonts----------
+
+let g:airline#extensions#syntastic#stl_format_err="%E{Err: #%e L%fe}"
+let g:airline#extensions#syntastic#stl_format_warn='%W{Warn: #%w L%fw}'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#show_tabs = 0
+" let g:airline#extensions#tabline#buffer_min_count = 0
+" let g:airline#extensions#tabline#tab_min_count = 0
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#show_close_button = 0
+let g:airline#extensions#tabline#buffers_label = 'B'
+let g:airline#extensions#whitespace#mixed_indent_algo = 1
+" Alt sep gives b<c>b instead of b>c>b
+let g:airline#extensions#tabline#alt_sep = 1
+let g:airline#extensions#tabline# = 1
+" let g:airline#extensions#tabline#show_tabs = 0
+call add (g:pluginSettingsToExec, "let g:airline_section_tabline = airline#section#create(['%{getcwd()}'])")
+
 let g:airline#extensions#hunks#non_zero_only = 1
 let g:airline#extensions#whitespace#checks = []
 " Disable mode shown in cmdline
@@ -410,14 +411,14 @@ set noshowmode
 set ttimeoutlen=50
 " AirlineRefresh
 
+if winheight(0) < 20
+    " Hides airline/any other status bar.
+    let g:loaded_airline = 1
+endif
 augroup myAirline
     autocmd!
     autocmd optionset background exec 'let g:airline_' . colorSch . '_bg="' . &background . '"' | AirlineRefresh
-    if winheight(0) < 20
-        " Hides airline/any other status bar.
-        set laststatus=0
-        au bufenter * set laststatus=0
-    endif
+    autocmd colorscheme let g:airline_theme=&colorscheme | AirlineRefresh
 augroup end
 " {]} ---------- airline ----------
 
