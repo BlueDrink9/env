@@ -102,6 +102,8 @@ else
         " Allow mouse in help files (for clicking).
         set mouse=h
     endif
+
+    " {[} Colours
     " If the current iTerm tab has been
     " created using the **dark** profile:
     if $ITERM_PROFILE == 'Solarized Dark'
@@ -120,14 +122,20 @@ else
     endif
     exec "set background=".g:backgroundColour
 
-    exec "let g:".colorSch . "_termcolors=&t_Co"
-    exec "let g:".colorSch . "_termtrans=1"
-    " if exists("+lines")
-    " set lines=30
-    " endif
-    " if exists("+columns")
-    " set columns=100
-    " endif
+    " Use true colors
+    if has("termguicolors") && exists("$COLORTERM") &&
+                \ ($COLORTERM =~ "truecolor" || $COLORTERM =~ "24bit")
+        set termguicolors
+    else
+        if $TERM =~ "-256color" && !exists("g:termColors")
+            let g:termColors=256
+        else
+            " 16 should be default, or settable.
+            let g:termColors=16
+        endif
+    endif
+    " {]}
+
     " Put buffer name in window title
     augroup title
         autocmd!
@@ -135,13 +143,6 @@ else
         autocmd BufEnter * if &filetype == "" | let &titlestring = 'Vim - New Buffer' | endif
         set title
     augroup END
-endif
-
-" Use true colors
-if (has("termguicolors"))
-    if exists($COLORTERM) && ($COLORTERM =~ "truecolor" || $COLORTERM =~ "24bit")
-        set termguicolors
-    endif
 endif
 
 set showcmd

@@ -28,21 +28,33 @@ if g:liteMode
 endif
 
 " {[} ---------- Colourschemes ----------
-Plug 'https://github.com/altercation/vim-colors-solarized.git'
+" {[} ---------- Solarized ----------
+if v:version >= 704 && &termguicolors
+    Plug 'https://github.com/lifepillar/vim-solarized8'
+    if colorSch =~ "solarized"
+        let colorSch = "solarized8"
+        let colorSch = colorSch . "_high" " High contrast
+    endif
+    let g:solarized_old_cursor_style=1
+    if g:termColors == 16
+        let g:solarized_use16 = 1
+    endif
+else
+    Plug 'https://github.com/altercation/vim-colors-solarized.git'
+    " Settings doesn't recommend this...
+    let g:solarized_contrast = "high"
+    if g:termColors == 16
+        let g:solarized_base16 = 1
+    elseif g:termColors == 256
+        let g:solarized_termcolors=256
+    endif
+endif
+" {]}
+
 call add (g:pluginSettingsToExec, "colorscheme " . colorSch)
 call add (g:customHLGroups, "MatchParen cterm=bold,underline ctermbg=lightgray")
 call add (g:customHLGroups, "MatchParen gui=bold,underline guibg=gray90")
-if !has("gui_running")
-    " if $TERM contains "-256color"
-    " May be needed if terminal doesn't support.
-    " TODO sort out base16 colours for solarized
-    exec 'let g:' . colorSch . '_termcolors=256'
-    exec 'let g:' . colorSch . '_base16 = 0'
-    let base16colorspace = 256
-    let g:solarized_termtrans = 1
-endif
-" Settings doesn't recommend this...
-let g:solarized_contrast = "high"
+
 " {]} ---------- Colourschemes ----------
 
 " {[}--- Misc ---
