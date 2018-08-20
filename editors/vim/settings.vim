@@ -131,6 +131,8 @@ else
     else
         if $TERM =~ "-256color" && !exists("g:termColors")
             let g:termColors=256
+            " This wasn't being set by default under TMUX!
+            set t_Co=256
         else
             " 16 should be default, or settable.
             let g:termColors=16
