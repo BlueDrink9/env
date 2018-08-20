@@ -126,6 +126,8 @@ else
     if has("termguicolors") && exists("$COLORTERM") &&
                 \ ($COLORTERM =~ "truecolor" || $COLORTERM =~ "24bit")
         set termguicolors
+        let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+        let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
     else
         if $TERM =~ "-256color" && !exists("g:termColors")
             let g:termColors=256
