@@ -31,14 +31,11 @@ endif
 " {[} ---------- Solarized ----------
 if v:version >= 704 && &termguicolors
     Plug 'https://github.com/lifepillar/vim-solarized8'
-    if colorSch =~ "solarized"
-        let colorSch = "solarized8"
-        let colorSch = colorSch . "_high" " High contrast
-    endif
     let g:solarized_old_cursor_style=1
     if g:termColors == 16
         let g:solarized_use16 = 1
     endif
+    call add (g:pluginSettingsToExec, "colorscheme solarized8_high")
 else
     Plug 'https://github.com/altercation/vim-colors-solarized.git'
     " Settings doesn't recommend this...
@@ -48,10 +45,11 @@ else
     elseif g:termColors == 256
         let g:solarized_termcolors=256
     endif
+    call add (g:pluginSettingsToExec, "colorscheme " . colorSch)
 endif
 " {]}
 
-call add (g:pluginSettingsToExec, "colorscheme " . colorSch)
+" call add (g:pluginSettingsToExec, "colorscheme " . colorSch)
 call add (g:customHLGroups, "MatchParen cterm=bold,underline ctermbg=lightgray")
 call add (g:customHLGroups, "MatchParen gui=bold,underline guibg=gray90")
 
