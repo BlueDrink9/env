@@ -59,20 +59,20 @@ alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%
 
 # Try to set vim to xvim (has x11 clipboard support)
 if [ -e /usr/bin/vimx ]; then
-    alias vim='/usr/bin/vimx'
-elif [ command -v mvim 2>/dev/null ]; then
+    alias vim="/usr/bin/vimx"
+elif [ `command -v mvim 2>/dev/null` ]; then
     # Prefer macvim to gvim.
-    alias vim='mvim -v'
-elif [ command -v gvim 2>/dev/null ]; then
-    alias vim='gvim -v'
+    alias vim="mvim -v"
+elif [ `command -v gvim 2>/dev/null` ]; then
+    alias vim="gvim -v"
 elif [ -e /usr/bin/gvim ]; then
-    alias vim='/usr/bin/gvim -v'
+    alias vim="/usr/bin/gvim -v"
 fi
 
 alias idevim="vim --cmd \"let g:ideMode=1\""
 # Much faster startup for vim without plugins.
-alias qvim="vim --cmd \"let g:liteMode=1\""
-alias vi="vim --noplugin --cmd \"let g:noPlugins=1\""
+alias vi="vim --cmd \"let g:liteMode=1\""
+alias lvi="vim --noplugin --cmd \"let g:noPlugins=1\""
 
 # Prevent files from being overwritten by redirection.
 set -o noclobber
