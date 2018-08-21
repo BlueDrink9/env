@@ -184,8 +184,8 @@ set wildmode=list:longest,full
 set scrolloff=5
 if v:version >= 703
     set listchars=tab:>-,trail:·,eol:¬,precedes:←,extends:→,nbsp:·
-    set showbreak="↳"
-    " put likebreak in number column
+    let &showbreak='↳ '
+    " put linebreak in number column? Doesn't seem to work...
     set cpoptions+=n
 endif
 if exists("g:ideMode") && g:ideMode == 1
