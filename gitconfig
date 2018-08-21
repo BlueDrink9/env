@@ -1,5 +1,9 @@
 # vim: ft=cfg ts=2 sw=2 ai
-[user]
+[alias]
+  diff = diff --ignore-space-change
+  # For doc files using pandoc?
+  wdiff = diff --word-diff=color --unified=1
+  unstage = 'reset HEAD --'
 [credential]
   helper = cache --timeout=3600
 [core]
@@ -9,17 +13,15 @@
   safecrlf = true
   eol      = lf
 
-# diffs for word files use pandoc
-[diff "pandoc"]
-  textconv=pandoc --to=markdown
-  prompt = false
-[alias]
-  diff = diff --ignore-space-change
-  wdiff = diff --word-diff=color --unified=1
 [merge]
   conflictstyle = diff3
   tool = vimdiff
 [mergetool]
   prompt = false
+# Record resolutions of merges to apply automatically if they occur again.
 [rerere]
   enabled = 1
+# diffs for word files use pandoc
+[diff "pandoc"]
+  textconv=pandoc --to=markdown
+  prompt = false
