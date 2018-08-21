@@ -40,8 +40,13 @@ else
     Plug 'https://github.com/altercation/vim-colors-solarized.git'
     " Settings doesn't recommend this...
     let g:solarized_contrast = "high"
+    let g:solarized_termtrans = 0 " 1 displays default term bg instead.
+    let g:solarized_menu = 0
     if g:termColors == 16
-        let g:solarized_base16 = 1
+        " According to solarized help, 16 is default anyway, so shouldn't need
+        " these set if not using 256.
+        " let g:solarized_base16 = 1
+        let g:solarized_termcolors=16
     elseif g:termColors == 256
         let g:solarized_termcolors=256
     endif
