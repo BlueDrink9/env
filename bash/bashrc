@@ -12,6 +12,7 @@
 # esac
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export DOTFILES_DIR=$(cd "${SCRIPT_DIR}/.." && pwd)
 
 # Reload/source inputrc
 # bind -f ${SCRIPT_DIR}/inputrc.sh
@@ -28,6 +29,7 @@ source ${SCRIPT_DIR}/prompt.sh
 # test if this is an ssh shell
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
     SESSION_TYPE=remote/ssh
+    export SSHSESSION=1
     # many other tests omitted
 else
     case $(ps -o comm= -p $PPID) in
