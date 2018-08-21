@@ -162,8 +162,7 @@ set ruler
 " Highligh search as you go
 set incsearch
 " Ignore case in searches excepted if an uppercase letter is used
-set ignorecase
-set smartcase
+set ignorecase smartcase
 
 " Highlight search results. Use :noh to undo
 " set hlsearch
@@ -185,6 +184,9 @@ set wildmode=list:longest,full
 set scrolloff=5
 if v:version >= 703
     set listchars=tab:>-,trail:·,eol:¬,precedes:←,extends:→,nbsp:·
+    set showbreak="↳"
+    " put likebreak in number column
+    set cpoptions+=n
 endif
 if exists("g:ideMode") && g:ideMode == 1
     " Include tags and includes in completion.
