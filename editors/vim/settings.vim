@@ -24,6 +24,7 @@ let s:defaultBGGUI="light"
 let s:defaultBGConsole="light"
 "{[} GUI
 if has("gui_running")
+    " GUI is running or is about to start.
     " {[} ----------- Shell ----------
     " if has("win32") || has("win64")
     "     let b:hasBash=0
@@ -52,10 +53,10 @@ if has("gui_running")
     " endif
     " " {]} ----------- Shell ----------
 
-    " GUI is running or is about to start.
-    if !exists('g:ideMode')
-        let g:ideMode = 1
-    endif
+    " Gui defaults to idevim
+    " if !exists('g:ideMode')
+    "     let g:ideMode = 1
+    " endif
     if g:ideMode
         set guioptions+=ciagmrLtT!
         " Larger gvim window
@@ -71,6 +72,7 @@ if has("gui_running")
     endif
     set guioptions-=e
     " Default fallback for gui bg colour
+    let g:termColors="24bit"
     if !exists ('g:backgroundColour')
         let g:backgroundColour=s:defaultBGGUI
     endif
