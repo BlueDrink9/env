@@ -192,6 +192,9 @@ if v:version >= 703
     Plug 'https://github.com/Yggdroot/indentLine'
 endif
 
+" Highlight colors when used eg in css
+Plug 'https://github.com/chrisbra/Colorizer'
+
 " {[} ---------- Neosettings ----------
 " https://github.com/kepbod/ivim/blob/master/vimrc
   " if g:ivim_autocomplete=='NEO'

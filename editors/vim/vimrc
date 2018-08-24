@@ -5,6 +5,8 @@ let g:remoteSession = ($SSH_CLIENT != "")
 
 function! CreateVimDir(dir)
     " Version 7.1 doesn't support fnameescape. Used on iOS.
+    " Besides, if you're using 7.1, it's because it's a pre-installed default,
+    " meaning it's unix, meaning "/" is the right path separator anyway.
     if v:version >= 703
         let l:dir = fnameescape(expand('/' . a:dir))
     else
