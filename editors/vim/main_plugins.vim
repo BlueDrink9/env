@@ -128,12 +128,13 @@ if executable("git")
     let g:gitgutter_grep = 'grep --color=never'
     let g:gitgutter_override_sign_column_highlight = 0
     let g:gitgutter_escape_grep = 1
-    " Wait 300 ms safter typing finishes before updating (vim default 4000)
-    set updatetime=300
+    " Wait 2000 ms after typing finishes before updating (vim default 4000)
+    set updatetime=2000
     " augroup ggutter
     "     au!
     "     au BufWritePost * :GitGutter
     " augroup end
+
     Plug 'https://github.com/christoomey/vim-conflicted'
     set stl+=%{ConflictedVersion()}
 endif
