@@ -17,6 +17,7 @@ map <SPACE> <leader>
 
 " leader w opens new vert window, switches to it
 nnoremap <leader>w <C-w>v<C-w>l
+nnoremap <silent> <S-t> :tabnew<CR>
 " Easier way to move between windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
@@ -185,3 +186,5 @@ if &diff
     cabbrev refresh diffupdate
 endif
 cabbrev profile profile start resultfile <bar> profile func *
+"" Opens an edit command with the path of the currently edited file filled in
+cabbrev le e <C-R>=expand("%:p:h") . "/" <CR>
