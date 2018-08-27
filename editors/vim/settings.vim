@@ -54,9 +54,9 @@ if has("gui_running")
     " " {]} ----------- Shell ----------
 
     " Gui defaults to idevim
-    " if !exists('g:ideMode')
-    "     let g:ideMode = 1
-    " endif
+    if !exists('g:ideMode')
+        let g:ideMode = 0
+    endif
     if g:ideMode
         set guioptions+=ciagmrLtT!
         " Larger gvim window
@@ -188,10 +188,12 @@ set scrolloff=5
 if v:version >= 703
     set listchars=tab:>-,trail:·,eol:¬,precedes:←,extends:→,nbsp:·
 endif
+set completeopt=longest,menu,preview
 if exists("g:ideMode") && g:ideMode == 1
     " Include tags and includes in completion.
     set complete+=i
     set complete+=t
+    " set completeopt+=noselect
 else
     set complete-=i     " Searching includes can be slow
 endif
@@ -376,3 +378,5 @@ augroup view
     autocmd BufWinLeave *.* mkview
     autocmd BufWinEnter *.* silent loadview
 augroup END
+" Cursorhold autocmds fire after 1s (default 4)
+set updatetime=1000
