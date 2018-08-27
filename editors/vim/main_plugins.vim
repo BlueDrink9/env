@@ -120,6 +120,9 @@ if executable("git")
     " github wrapper
     Plug 'https://github.com/tpope/vim-rhubarb'
     Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
+
+    " Actually this one might be better...
+    " Plug 'https://github.com/mhinz/vim-signify'
     Plug 'airblade/vim-gitgutter'
     " Allows hlcolumn bg to match coloursch
     call add(g:customHLGroups, "clear SignColumn")
@@ -128,12 +131,18 @@ if executable("git")
     let g:gitgutter_grep = 'grep --color=never'
     let g:gitgutter_override_sign_column_highlight = 0
     let g:gitgutter_escape_grep = 1
-    " Wait 2000 ms after typing finishes before updating (vim default 4000)
-    set updatetime=2000
-    " augroup ggutter
-    "     au!
-    "     au BufWritePost * :GitGutter
-    " augroup end
+    " Disable automatic update
+    autocmd! gitgutter CursorHold,CursorHoldI
+    " " Wait 2000 ms after typing finishes before updating (vim default 4000)
+    " set updatetime=2000
+    augroup ggutter
+        au!
+        au BufWritePost * :GitGutter
+    augroup end
+    " Speed issues
+    " plugin only runs on BufRead, BufWritePost and FileChangedShellPost, i.e. when you open or save a file.
+    let g:gitgutter_realtime = 0
+    let g:gitgutter_eager = 0
 
     Plug 'https://github.com/christoomey/vim-conflicted'
     set stl+=%{ConflictedVersion()}
