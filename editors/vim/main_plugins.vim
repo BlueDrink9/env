@@ -121,28 +121,34 @@ if executable("git")
     Plug 'https://github.com/tpope/vim-rhubarb'
     Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
 
-    " Actually this one might be better...
-    " Plug 'https://github.com/mhinz/vim-signify'
-    Plug 'airblade/vim-gitgutter'
-    " Allows hlcolumn bg to match coloursch
-    call add(g:customHLGroups, "clear SignColumn")
-    " gitgutter needs grep to not output escap sequences.
-    " let g:gitgutter_grep = ''
-    let g:gitgutter_grep = 'grep --color=never'
-    let g:gitgutter_override_sign_column_highlight = 0
-    let g:gitgutter_escape_grep = 1
-    " Disable automatic update
-    autocmd! gitgutter CursorHold,CursorHoldI
-    " " Wait 2000 ms after typing finishes before updating (vim default 4000)
-    " set updatetime=2000
-    augroup ggutter
-        au!
-        au BufWritePost * :GitGutter
-    augroup end
-    " Speed issues
-    " plugin only runs on BufRead, BufWritePost and FileChangedShellPost, i.e. when you open or save a file.
-    let g:gitgutter_realtime = 0
-    let g:gitgutter_eager = 0
+    " VCS changes shown in sign column.
+    Plug 'https://github.com/mhinz/vim-signify'
+    " Add VCS systems to this when needed. More will slow buffer loading.
+    let g:signify_vcs_list = [ 'git' ]
+    " Async, so shouldn't be too bad. Ignored if not async.
+    let g:signify_realtime = 0
+    let g:signify_sign_change = '~'
+
+    " Plug 'airblade/vim-gitgutter'
+    " " Allows hlcolumn bg to match coloursch
+    " call add(g:customHLGroups, "clear SignColumn")
+    " " gitgutter needs grep to not output escap sequences.
+    " " let g:gitgutter_grep = ''
+    " let g:gitgutter_grep = 'grep --color=never'
+    " let g:gitgutter_override_sign_column_highlight = 0
+    " let g:gitgutter_escape_grep = 1
+    " " Disable automatic update
+    " autocmd! gitgutter CursorHold,CursorHoldI
+    " " " Wait 2000 ms after typing finishes before updating (vim default 4000)
+    " " set updatetime=2000
+    " augroup ggutter
+    "     au!
+    "     au BufWritePost * :GitGutter
+    " augroup end
+    " " Speed issues
+    " " plugin only runs on BufRead, BufWritePost and FileChangedShellPost, i.e. when you open or save a file.
+    " let g:gitgutter_realtime = 0
+    " let g:gitgutter_eager = 0
 
     Plug 'https://github.com/christoomey/vim-conflicted'
     set stl+=%{ConflictedVersion()}
