@@ -29,8 +29,10 @@ else
     let s:localPlugins = expand(s:lpluginpathS)
 endif
 
-let vimplug_file=expand('~/vimfiles/autoload/plug.vim')
-if !filereadable(vimplug_file)
+" let vimplug_file=expand(s:vimfilesDir . "/autoload/plug.vim")
+" if !filereadable(vimplug_file)
+" if !exists('*plug#end')
+if !&rtp =~ 'vim-plug'
     echoerr "vim-plug not installed. No plugins will be loaded."
     if !executable("curl")
         echoerr "You have to install curl or first install vim-plug yourself!"
@@ -39,7 +41,8 @@ if !filereadable(vimplug_file)
     finish
   "   echo "Installing Vim-Plug..."
   "   echo ""
-  "   silent !\curl -fLo ~/vimfiles/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  " This sin't the right directory...
+  "   exec "silent !\curl -fLo" . s:vimfilesDir . "/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
   "   let g:not_finish_vimplug = "yes"
 
   " autocmd VimEnter * PlugInstall
