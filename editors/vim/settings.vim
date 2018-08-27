@@ -209,12 +209,20 @@ endif
 
 exec 'set backupdir=' . CreateVimDir("vimfiles/backup") . expand('/')
 exec 'set directory=' . CreateVimDir("vimfiles/swap") . expand('/')
+exec 'set viewdir=' . CreateVimDir("vimfiles/views") . expand('/')
 if v:version >= 703
     exec 'set undodir=' . CreateVimDir("vimfiles/undo") . expand('/')
     " Create undo file for inter-session undo
     " Extra slash means files will have unique names
     set undofile
 endif
+set viewoptions-=options
+augroup view
+    autocmd!
+    " save folds
+    autocmd BufWinLeave *.* mkview
+    autocmd BufWinEnter *.* silent loadview
+augroup END
 augroup autowrite
     autocmd!
     " Don't autosave if there is no buffer name.
@@ -371,12 +379,5 @@ augroup END
 
 " Auto cd to working dir of this window's file
 " autocmd BufEnter * silent! lcd %:p:h
-set viewoptions-=options
-augroup view
-    autocmd!
-    " save folds
-    autocmd BufWinLeave *.* mkview
-    autocmd BufWinEnter *.* silent loadview
-augroup END
 " Cursorhold autocmds fire after 1s (default 4)
 set updatetime=1000
