@@ -23,6 +23,12 @@ elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
     alias egrep='egrep --color=auto'
 fi
 
+# ls defined by os-specific stuff above.
+alias l='ls -C'
+alias lsa="ls -a"
+alias ll="ls -al"
+alias lss="ls -ls"
+
 # Keyboard setup stuff
 capsToBS="-option caps:backspace"
 altWinSwap="-option altwin:swap_alt_win"
@@ -32,11 +38,10 @@ colemak="-layout 'us, us' -variant 'colemak,'"
 alias wwkb="setxkbmap $colemak $capsToBS $altWinSwap $altShiftToggle $capsLed"
 
 alias ..="cd .. && ls"
-alias cd..="cd .. && ls"
-alias l='ls -C'
-alias lsa="ls -a"
-alias ll="ls -al"
-alias lss="ls -ls"
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias cd..="cd .."
 # alias ls="ls -CF --color=auto"
 alias :q="exit"
 alias :e="vim"
