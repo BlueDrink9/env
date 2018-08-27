@@ -78,11 +78,13 @@ Plug 'vim-scripts/a.vim'
 Plug 'https://github.com/jeetsukumaran/vim-buffersaurus'
 cabbrev bfind Bsgrep
 let g:buffersaurus_autodismiss_on_select=0
-Plug 'https://github.com/ntpeters/vim-better-whitespace'
-let g:show_spaces_that_precede_tabs=1
-let g:better_whitespace_skip_empty_lines=1
-let g:better_whitespace_operator='_s'
-call add (g:customHLGroups, "ExtraWhitespace ctermbg=Gray guibg=LightGray")
+if v:version >= 703
+    Plug 'https://github.com/ntpeters/vim-better-whitespace'
+    let g:show_spaces_that_precede_tabs=1
+    let g:better_whitespace_skip_empty_lines=1
+    let g:better_whitespace_operator='_s'
+    call add (g:customHLGroups, "ExtraWhitespace ctermbg=Gray guibg=LightGray")
+endif
 " cx to select an object, then cx again to swap it with first thing.
 Plug 'https://github.com/tommcdo/vim-exchange'
 " if v:version >= 800 || has("patch-7.4.1829")

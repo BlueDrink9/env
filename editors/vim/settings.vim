@@ -164,8 +164,7 @@ set ruler
 " Highligh search as you go
 set incsearch
 " Ignore case in searches excepted if an uppercase letter is used
-set ignorecase
-set smartcase
+set ignorecase smartcase
 
 " Highlight search results. Use :noh to undo
 " set hlsearch
@@ -187,6 +186,9 @@ set wildmode=list:longest,full
 set scrolloff=5
 if v:version >= 703
     set listchars=tab:>-,trail:·,eol:¬,precedes:←,extends:→,nbsp:·
+    let &showbreak='↳ '
+    " put linebreak in number column? Doesn't seem to work...
+    set cpoptions+=n
 endif
 set completeopt=longest,menu,preview
 if exists("g:ideMode") && g:ideMode == 1
