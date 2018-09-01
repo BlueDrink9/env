@@ -128,7 +128,7 @@ else
     if has("termguicolors") && exists("$COLORTERM") &&
                 \ ($COLORTERM =~ "truecolor" || $COLORTERM =~ "24bit")
         set termguicolors
-        " set Vim-specific sequences for RGB colors
+        " set Vim-specific sequences for RGB colors in tmux
         let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
         let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
         let g:termColors="24bit"
@@ -348,7 +348,7 @@ augroup END
 
 " Set cursor based on mode.
 " block cursor in normal mode, line in other.
-if &term =~ "xterm\\|rxvt"
+if &term =~ "xterm\\|rxvt" || $TERM_PROGRAM =~ "mintty\\|xterm"
     let s:iCursor = "\<Esc>[5 q"
     let s:nCursor = "\<Esc>[1 q"
     let s:rCursor = "\<Esc>[3 q"
@@ -380,14 +380,15 @@ endif
 if exists('s:iCursor')
     if exists('$TMUX')
         let s:iCursor = "\<Esc>Ptmux;\<Esc>" . s:iCursor . "\<Esc>\\"
+        let &t_SI = "\<Esc>Ptmux;\<Esc>\e[4 q\<Esc>\\"
         let s:nCursor = "\<Esc>Ptmux;\<Esc>" . s:nCursor . "\<Esc>\\"
         let s:rCursor = "\<Esc>Ptmux;\<Esc>" . s:rCursor . "\<Esc>\\"
         let s:vCursor = "\<Esc>Ptmux;\<Esc>" . s:vCursor . "\<Esc>\\"
     endif
-    exec 'let &t_SI = "' . s:iCursor . '"'
-    exec 'let &t_EI = "' . s:nCursor . '"'
-    exec 'let &t_VS = "' . s:vCursor . '"'
-    exec 'let &t_SR = "' . s:rCursor . '"'
+    exec 'let &t_SI = "' . s:iCursor . '\""'
+    exec 'let &t_EI = "' . s:nCursor . '\""'
+    " exec 'let &t_VS = "' . s:vCursor . '\""'
+    exec 'let &t_SR = "' . s:rCursor . '\""'
     augroup cursor
         au!
         " reset cursor when vim exits
