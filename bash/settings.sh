@@ -23,7 +23,7 @@ for option in ${TERMOPTIONS[*]}; do
 done
 sshn(){
     host=$1
-    ssh -t $host "${EXPORT_TERMOPTIONS} bash -l"
+    ssh -t $host "${EXPORT_TERMOPTIONS} `finger $USER|grep -oP 'Shell: \K.*'` -l"
 }
 alias ssh="sshn"
 # {]} Terminal settings
