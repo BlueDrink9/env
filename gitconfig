@@ -1,9 +1,16 @@
 # vim: ft=cfg ts=2 sw=2 ai
 [alias]
-  diff = diff --ignore-space-change
+  diff = 'diff --ignore-space-change'
   # For doc files using pandoc?
-  wdiff = diff --word-diff=color --unified=1
+  wdiff = 'diff --word-diff=color --unified=1'
   unstage = 'reset HEAD --'
+  reload = 'checkout --'
+  ps = 'push &'
+  pl = 'pull &'
+  # Way nicer and more compact way to view logs. Pass -p to see line differences.
+  plog = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+  ls = 'branch'
+
 [credential]
   helper = cache --timeout=3600
 [core]
@@ -21,7 +28,11 @@
 # Record resolutions of merges to apply automatically if they occur again.
 [rerere]
   enabled = 1
+[diff]
+  colorMoved = zebra
+
 # diffs for word files use pandoc
 [diff "pandoc"]
   textconv=pandoc --to=markdown
   prompt = false
+

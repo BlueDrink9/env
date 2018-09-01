@@ -51,7 +51,6 @@ alias gup="git commit --amend --no-edit"
 alias gupa="git commit -a --amend --no-edit"
 alias gs="git status"
 alias dif="git diff"
-alias greset="git checkout --"
 # Custom function with logic for different address formats
 alias gc="git_clone"
 # Way nicer and more compact way to view logs. Pass -p to see line differences.
