@@ -1,5 +1,5 @@
 # -*-  mode: shell-script; -*-
-# vim: set ft=sh:
+# vim: ft=sh:fdm=marker:fmr={[},{]}
 
 # Enable smart completion in bash
 if [ -f /etc/bash_completion ]; then
@@ -10,6 +10,23 @@ fi
 export EDITOR="vim --noplugin --cmd \"let g:noPlugins=1\""
 export VISUAL="vim --cmd \"let g:liteMode=1\""
 export GIT_EDITOR="vim --cmd \"let g:liteMode=1\""
+
+# {[} Terminal settings
+USENF=${NERDFONT-0}
+USEPF=${POWERLINE-0}
+COLORTERM=${COLORTERM-16}
+TERM_PROGRAM=${TERM_PROGRAM-}
+TERMOPTIONS=(USENF USEPF COLORTERM TERM_PROGRAM)
+EXPORT_TERMOPTIONS=""
+for option in ${TERMOPTIONS[*]}; do
+    EXPORT_TERMOPTIONS="${EXPORT_TERMOPTIONS} export ${option}=${!option};"
+done
+sshn(){
+    host=$1
+    ssh -t $host "${EXPORT_TERMOPTIONS} bash -l"
+}
+alias ssh="sshn"
+# {]} Terminal settings
 
 # Source .dir_colours
 if [ -x /usr/bin/dircolors ]; then
