@@ -54,9 +54,9 @@ if has("gui_running")
     " " {]} ----------- Shell ----------
 
     " Gui defaults to idevim
-    " if !exists('g:ideMode')
-    "     let g:ideMode = 1
-    " endif
+    if !exists('g:ideMode')
+        let g:ideMode = 0
+    endif
     if g:ideMode
         set guioptions+=ciagmrLtT!
         " Larger gvim window
@@ -186,14 +186,16 @@ set wildmode=list:longest,full
 set scrolloff=5
 if v:version >= 703
     set listchars=tab:>-,trail:·,eol:¬,precedes:←,extends:→,nbsp:·
-    let &showbreak='↳ '
+    let &showbreak='→ '
     " put linebreak in number column? Doesn't seem to work...
     set cpoptions+=n
 endif
+set completeopt=longest,menu,preview
 if exists("g:ideMode") && g:ideMode == 1
     " Include tags and includes in completion.
     set complete+=i
     set complete+=t
+    " set completeopt+=noselect
 else
     set complete-=i     " Searching includes can be slow
 endif
@@ -209,12 +211,20 @@ endif
 
 exec 'set backupdir=' . CreateVimDir("vimfiles/backup") . expand('/')
 exec 'set directory=' . CreateVimDir("vimfiles/swap") . expand('/')
+exec 'set viewdir=' . CreateVimDir("vimfiles/views") . expand('/')
 if v:version >= 703
     exec 'set undodir=' . CreateVimDir("vimfiles/undo") . expand('/')
     " Create undo file for inter-session undo
     " Extra slash means files will have unique names
     set undofile
 endif
+set viewoptions-=options
+augroup view
+    autocmd!
+    " save folds
+    autocmd BufWinLeave *.* mkview
+    autocmd BufWinEnter *.* silent loadview
+augroup END
 augroup autowrite
     autocmd!
     " Don't autosave if there is no buffer name.
@@ -336,45 +346,57 @@ augroup END
 " Set spellfile to location that is guaranteed to exist, can be symlinked to Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
 " set spellfile=$HOME/.vim-spell-en.utf-8.add
 
-augroup cursor
-    au!
-    " Set cursor based on mode. Designed for iTerm, may be different for others.
-    if &term =~ "xterm\\|rxvt"
-        let s:iCursor = "\<Esc>[6 q"
-        let s:nCursor = "\<Esc>[2 q"
-        " 1 or 0 -> blinking block
-        " 2 solid block
-        " 3 -> blinking underscore
-        " 4 solid underscore
-        " Recent versions of xterm (282 or above) also support
-        " 5 -> blinking vertical bar
-        " 6 -> solid vertical bar
+" Set cursor based on mode.
+" block cursor in normal mode, line in other.
+if &term =~ "xterm\\|rxvt"
+    let s:iCursor = "\<Esc>[5 q"
+    let s:nCursor = "\<Esc>[1 q"
+    let s:rCursor = "\<Esc>[3 q"
+    let s:vCursor = "\<Esc>[2 q"
+    " 1 or 0 -> blinking block
+    " 2 solid block
+    " 3 -> blinking underscore
+    " 4 solid underscore
+    " Recent versions of xterm (282 or above) also support
+    " 5 -> blinking vertical bar
+    " 6 -> solid vertical bar
+elseif $TERM_PROGRAM =~ "iTerm" || &term =~ "konsole"
+    let s:iCursor = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
+    let s:nCursor = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
+    let s:rCursor = "\<Esc>]50;CursorShape=2\x7" " Underline in replace mode
+    let s:vCursor = "\<Esc>]50;CursorShape=0\x7"
+endif
+" if $TERMTYPE =~ "mintty"
+    " Requires mintty terminal.
+    " let &t_ti.="\e[1 q" " termcap mode, for terminfo
+    " let &t_SI.="\<Esc>[5 q"
+    " let &t_EI.="\e[1 q"
+    " let &t_te.="\e[0 q" " end termcap
+    " let s:iCursor = "\e[5 q"
+    " let s:nCursor = "\e[1 q"
+    " let s:rCursor = "\e[1 q"
+    " elseif $TERMTYPE ~= "xterm"
+
+if exists('s:iCursor')
+    if exists('$TMUX')
+        let s:iCursor = "\<Esc>Ptmux;\<Esc>" . s:iCursor . "\<Esc>\\"
+        let s:nCursor = "\<Esc>Ptmux;\<Esc>" . s:nCursor . "\<Esc>\\"
+        let s:rCursor = "\<Esc>Ptmux;\<Esc>" . s:rCursor . "\<Esc>\\"
+        let s:vCursor = "\<Esc>Ptmux;\<Esc>" . s:vCursor . "\<Esc>\\"
+    endif
+    exec 'let &t_SI = "' . s:iCursor . '"'
+    exec 'let &t_EI = "' . s:nCursor . '"'
+    exec 'let &t_VS = "' . s:vCursor . '"'
+    exec 'let &t_SR = "' . s:rCursor . '"'
+    augroup cursor
+        au!
         " reset cursor when vim exits
         autocmd VimLeave * silent !echo -ne "\033]112\007"
         " use \003]12;gray\007 for gnome-terminal and rxvt up to version 9.21
-    endif
-    if exists('$TMUX')
-        let s:iCursor = "\<Esc>[5 q"
-        let s:nCursor = "\<Esc>[2 q"
-        " let s:iCursor = "\<Esc>Ptmux;\<Esc>\<Esc>[5 q\<Esc>\\"
-        " let s:nCursor = "\<Esc>Ptmux;\<Esc>\<Esc>[2 q\<Esc>\\"
-        " iTerm2?
-        " let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-        " let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-        " let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
-    endif
-    if exists('&s.iCursor')
-        exec 'let &t_SI = "' . s:iCursor . '"'
-        exec 'let &t_EI = "' . s:nCursor . '"'
-    endif
-augroup END
+    augroup end
+endif
 
 " Auto cd to working dir of this window's file
 " autocmd BufEnter * silent! lcd %:p:h
-set viewoptions-=options
-augroup view
-    autocmd!
-    " save folds
-    autocmd BufWinLeave *.* mkview
-    autocmd BufWinEnter *.* silent loadview
-augroup END
+" Cursorhold autocmds fire after 1s (default 4)
+set updatetime=1000

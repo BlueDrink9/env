@@ -29,6 +29,25 @@ else
     let s:localPlugins = expand(s:lpluginpathS)
 endif
 
+" let vimplug_file=expand(s:vimfilesDir . "/autoload/plug.vim")
+" if !filereadable(vimplug_file)
+" if !exists('*plug#end')
+if !&rtp =~ 'vim-plug'
+    echoerr "vim-plug not installed. No plugins will be loaded."
+    if !executable("curl")
+        echoerr "You have to install curl or first install vim-plug yourself!"
+        " execute "q!"
+    endif
+    finish
+  "   echo "Installing Vim-Plug..."
+  "   echo ""
+  " This sin't the right directory...
+  "   exec "silent !\curl -fLo" . s:vimfilesDir . "/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  "   let g:not_finish_vimplug = "yes"
+
+  " autocmd VimEnter * PlugInstall
+endif
+
 "
 let g:proseFileTypes = "'latex,context,plaintex,tex,
             \markdown,mkd,

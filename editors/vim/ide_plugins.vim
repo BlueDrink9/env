@@ -43,7 +43,6 @@ endif
 " {[} ---------- Completion ----------
 " Awesome code completion, but requires specific installations
 " Plug 'https://github.com/Valloric/YouCompleteMe'
-" Plug 'jerrymarino/icompleteme'
 " if v:version >= 800
 if has("timers")
     " Async completion engine, doesn't need extra installation.
@@ -76,7 +75,14 @@ if has("timers")
     " Use tab to trigger auto completion.  Default suggests completions as you type.
     let g:completor_auto_trigger = 0
     inoremap <expr> <Tab> Tab_Or_Complete()
+else
+    Plug 'https://github.com/lifepillar/vim-mucomplete'
+    let g:mucomplete#enable_auto_at_startup = 1
+    " Only pause after no tyging for [updatetime]
+    let g:mucomplete#delayed_completion = 1
+    set completeopt+=menuone,noselect
 endif
+
 " Python completion, plus some refactor, goto def and usage features.
 Plug 'https://github.com/davidhalter/jedi-vim', { 'do' : 'AsyncRun pip install jedi' }
 let g:jedi#use_splits_not_buffers = "right"
