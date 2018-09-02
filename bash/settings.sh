@@ -19,11 +19,23 @@ TERM_PROGRAM=${TERM_PROGRAM-}
 TERMOPTIONS=(USENF USEPF COLORTERM TERM_PROGRAM)
 EXPORT_TERMOPTIONS=""
 for option in ${TERMOPTIONS[*]}; do
-    EXPORT_TERMOPTIONS="${EXPORT_TERMOPTIONS} export ${option}=${!option};"
+    # The E in front of the option is to let it be set without overriding.
+    EXPORT_TERMOPTIONS="${EXPORT_TERMOPTIONS} env E${option}=${!option} "
+    # This part is used for ssh, and sets the option from the exported var.
+    if [[ "$SESSION_TYPE" = "remote/ssh" ]]; then
+        eopt=E${option}
+        export ${option}=${!eopt}
+    fi
 done
 sshn(){
+set -x
     host=$1
-    ssh -t $host "${EXPORT_TERMOPTIONS} bash -l"
+    echo $EXPORT_TERMOPTIONS
+    \ssh -t $host "${EXPORT_TERMOPTIONS} " '${0} -l -s'
+    # \ssh -t $host "${EXPORT_TERMOPTIONS} " 'echo ${USENF}'
+    # \ssh -t $host 'export USENF=hello && bash -l -s'
+    # \ssh -t $host 'export USENF=hello && echo $HOST'
+set +x
 }
 alias ssh="sshn"
 # {]} Terminal settings
