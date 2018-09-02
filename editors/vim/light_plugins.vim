@@ -57,6 +57,8 @@ endif
 " call add (g:pluginSettingsToExec, "colorscheme " . colorSch)
 call add (g:customHLGroups, "MatchParen cterm=bold,underline ctermbg=lightgray")
 call add (g:customHLGroups, "MatchParen gui=bold,underline guibg=gray90")
+call add (g:customHLGroups, "clear SignColumn")
+call add (g:customHLGroups, "link SignColumn LineNr")
 
 " {]} ---------- Colourschemes ----------
 

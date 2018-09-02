@@ -425,7 +425,6 @@ let g:airline#extensions#whitespace#checks = []
 set noshowmode
 "  reduce delay on insert leaave?
 set ttimeoutlen=50
-" AirlineRefresh
 
 if winheight(0) < 20
     " Hides airline/any other status bar.

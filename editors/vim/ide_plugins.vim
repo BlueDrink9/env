@@ -94,6 +94,8 @@ if executable('ctags-exuberant') || executable('ctags')
     Plug 'xolox/vim-easytags'
     let g:easytags_async=1
     Plug 'majutsushi/tagbar'
+    " Shows the current function in statusline
+    let g:airline#extensions#tagbar#enabled = 1
     " nmap <silent> <leader>tb :TagbarToggle<CR>
     cabbrev tb TagbarToggle
     augroup tag
