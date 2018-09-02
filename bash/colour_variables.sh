@@ -1,4 +1,9 @@
 # vim: set ft=bash:
+# # If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
 
 # Normal Colors
 Black='\e[0;30m'        # Black

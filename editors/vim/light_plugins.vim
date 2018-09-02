@@ -32,6 +32,11 @@ endif
 if v:version >= 704 && &termguicolors
     Plug 'https://github.com/lifepillar/vim-solarized8'
     let g:solarized_old_cursor_style=1
+    if $TERM =~ "screen" " Tmux doesn't handle termguicols properly
+        let g:termColors = 16
+        set t_Co=16
+        set notermguicolors
+    endif
     if g:termColors == 16
         let g:solarized_use16 = 1
     endif

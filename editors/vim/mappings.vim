@@ -188,3 +188,5 @@ endif
 cabbrev profile profile start resultfile <bar> profile func *
 "" Opens an edit command with the path of the currently edited file filled in
 cabbrev le e <C-R>=expand("%:p:h") . "/" <CR>
+" Switch between the last two files
+nnoremap <Leader><Leader>a <C-^>

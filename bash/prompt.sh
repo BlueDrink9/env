@@ -1,8 +1,14 @@
 # vim: set ft=sh:
 # vim:ts=2:sw=2
 #
-# pblueDrink9 custom bash prompt. Relies on 2 other files.
+# blueDrink9 custom bash prompt. Relies on 2 other files.
 # Assumes a solarised terminal, with 16 colours.
+
+# # If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 

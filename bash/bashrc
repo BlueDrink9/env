@@ -28,7 +28,7 @@ source ${SCRIPT_DIR}/prompt.sh
 # fi
 # test if this is an ssh shell
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-    SESSION_TYPE=remote/ssh
+    export SESSION_TYPE=remote/ssh
     export SSHSESSION=1
     # many other tests omitted
 else
