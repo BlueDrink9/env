@@ -55,6 +55,8 @@ alias gco="git commit"
 alias gup="git commit --amend --no-edit"
 alias gupa="git commit -a --amend --no-edit"
 alias gs="git status"
+alias gpl="git pull &"
+alias gsh="git push &"
 alias dif="git diff"
 # Custom function with logic for different address formats
 alias gc="git_clone"
