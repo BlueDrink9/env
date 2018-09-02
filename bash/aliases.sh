@@ -55,6 +55,8 @@ alias gco="git commit"
 alias gup="git commit --amend --no-edit"
 alias gupa="git commit -a --amend --no-edit"
 alias gs="git status"
+alias gpl="git pull &"
+alias gsh="git push &"
 alias dif="git diff"
 # Custom function with logic for different address formats
 alias gc="git_clone"
@@ -90,3 +92,6 @@ alias sagi="sudo apt install"
 alias sag="sudo apt"
 alias sagu="sudo apt update && sudo apt upgrade"
 
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'

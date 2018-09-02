@@ -29,8 +29,8 @@ for option in ${TERMOPTIONS[*]}; do
 done
 sshn(){
     host=$1
-    echo $EXPORT_TERMOPTIONS
-    \ssh -t $host "${EXPORT_TERMOPTIONS} " '${0} -l -s'
+    # Calls default shell, stripping leading '-'
+    \ssh -t $host "${EXPORT_TERMOPTIONS} " '${0#-} -l -s'
     # \ssh -t $host "${EXPORT_TERMOPTIONS} " 'echo ${USENF}'
     # \ssh -t $host 'export USENF=hello && bash -l -s'
     # \ssh -t $host 'export USENF=hello && echo $HOST'
@@ -101,9 +101,6 @@ export XDG_DATA_DIRS="/$HOMEBREW_PREFIX/share:$XDG_DATA_DIRS"
 export MANPATH="$HOMEBREW_PREFIX/share/man:$MANPATH"
 export INFOPATH="$HOMEBREW_PREFIX/share/info:$INFOPATH"
 
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
