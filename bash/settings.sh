@@ -28,14 +28,12 @@ for option in ${TERMOPTIONS[*]}; do
     fi
 done
 sshn(){
-set -x
     host=$1
     echo $EXPORT_TERMOPTIONS
     \ssh -t $host "${EXPORT_TERMOPTIONS} " '${0} -l -s'
     # \ssh -t $host "${EXPORT_TERMOPTIONS} " 'echo ${USENF}'
     # \ssh -t $host 'export USENF=hello && bash -l -s'
     # \ssh -t $host 'export USENF=hello && echo $HOST'
-set +x
 }
 alias ssh="sshn"
 # {]} Terminal settings
