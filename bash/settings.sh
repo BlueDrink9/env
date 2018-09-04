@@ -122,7 +122,7 @@ fi
 
 BASH_VERSION_CLEAN="${BASH_VERSION//[^0-9.]*/}"
 
-if [ `compareVersionNum  ${BASH_VERSION_CLEAN} '<' 4.3` ]; then
+if compareVersionNum ${BASH_VERSION_CLEAN} '<' 4.3; then
     # Remove tab menu completion cycling.
     # Will just complete to common subsequence instead.
     bind 'Tab: complete'
