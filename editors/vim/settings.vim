@@ -71,6 +71,9 @@ if has("gui_running")
         set lines=40 columns=120
     endif
     set guioptions-=e
+    " Enables some basic mouse input
+    set mouse=a
+    set mousemodel="popup_setpos"
     " Default fallback for gui bg colour
     let g:termColors="24bit"
     if !exists ('g:backgroundColour')
@@ -99,8 +102,8 @@ if has("gui_running")
 else
     "{[} Console
 
-    if !has("clipboard")
-        " Without clipboard, need mouse to select stuff sorry.
+    if !has("clipboard") || $SSHSESSION
+        " Without clipboard or over ssh, need mouse to select stuff sorry.
         " Allow mouse in help files (for clicking).
         set mouse=h
     endif
@@ -168,9 +171,6 @@ set ignorecase smartcase
 
 " Highlight search results. Use :noh to undo
 " set hlsearch
-" Enables some basic mouse input
-set mouse=a
-set mousemodel="popup_setpos"
 " Show line numbers
 set number
 if v:version >= 703
@@ -379,10 +379,10 @@ endif
 
 if exists('s:iCursor')
     if exists('$TMUX')
-        let s:iCursor = "\<Esc>Ptmux;\<Esc>" . s:iCursor . "\<Esc>\\"
-        let s:nCursor = "\<Esc>Ptmux;\<Esc>" . s:nCursor . "\<Esc>\\"
-        let s:rCursor = "\<Esc>Ptmux;\<Esc>" . s:rCursor . "\<Esc>\\"
-        let s:vCursor = "\<Esc>Ptmux;\<Esc>" . s:vCursor . "\<Esc>\\"
+        " let s:iCursor = "\<Esc>Ptmux;\<Esc>" . s:iCursor . "\<Esc>\\"
+        " let s:nCursor = "\<Esc>Ptmux;\<Esc>" . s:nCursor . "\<Esc>\\"
+        " let s:rCursor = "\<Esc>Ptmux;\<Esc>" . s:rCursor . "\<Esc>\\"
+        " let s:vCursor = "\<Esc>Ptmux;\<Esc>" . s:vCursor . "\<Esc>\\"
     endif
     exec 'let &t_SI = "' . s:iCursor . '""'
     exec 'let &t_EI = "' . s:nCursor . '""'
