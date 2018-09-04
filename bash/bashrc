@@ -14,6 +14,25 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export DOTFILES_DIR=$(cd "${SCRIPT_DIR}/.." && pwd)
 
+
+if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
+    if [ -z $HOMEBREW_PREFIX ]; then
+        export HOMEBREW_PREFIX="$HOME/homebrew"
+    fi
+elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
+   # Linuxbrew paths
+    if [ -z $HOMEBREW_PREFIX ]; then
+        export HOMEBREW_PREFIX="$HOME/.linuxbrew"
+    fi
+fi
+brewbash="$HOMEBREW_PREFIX/bin/bash"
+# If available, replace bash with brew version. (More up-to-date than system.)
+if [ -f $brewbash ] && [ "$BASH" != "$brewbash" ] && [ -z $HAVE_LOADED_BASH ]
+    then export HAVE_LOADED_BASH=1
+    $HOMEBREW_PREFIX/bin/bash; exit
+fi
+
+
 # Reload/source inputrc
 # bind -f ${SCRIPT_DIR}/inputrc.sh
 INPUTRC="${SCRIPT_DIR}/inputrc.sh"

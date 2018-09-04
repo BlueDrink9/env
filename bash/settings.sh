@@ -93,18 +93,9 @@ if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
     # export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
     # Custom, created from comparing website and ls man
     export LSCOLORS=exgxbAbAcxbhxbhBhDhcea
-    if [ -z $HOMEBREW_PREFIX ]; then
-        export HOMEBREW_PREFIX="$HOME/homebrew"
-    fi
-    # Make esc act as backspace in terminal
-    # todo
 elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
-   # Linuxbrew paths
-    if [ -z $HOMEBREW_PREFIX ]; then
-        export HOMEBREW_PREFIX="$HOME/.linuxbrew"
-    fi
+    nop
 fi
-
 
 # brew paths
 export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
