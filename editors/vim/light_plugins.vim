@@ -29,7 +29,7 @@ endif
 
 " {[} ---------- Colourschemes ----------
 " {[} ---------- Solarized ----------
-if v:version >= 704 && &termguicolors
+if v:version >= 704 && exists('termguicolors') && &termguicolors == 1
     Plug 'https://github.com/lifepillar/vim-solarized8'
     let g:solarized_old_cursor_style=1
     if $TERM =~ "screen" " Tmux doesn't handle termguicols properly
@@ -115,6 +115,8 @@ if has("timers")
         autocmd BufWinEnter quickfix setlocal 
                     \ statusline=%t\ [%{g:asyncrun_status}]\ %{exists('w:quickfix_title')?\ '\ '.w:quickfix_title\ :\ ''}\ %=%-15(%l,%c%V%)\ %P
     augroup END
+else
+    let g:hasAsyncrun = 0
 endif
 " {]} Misc
 
