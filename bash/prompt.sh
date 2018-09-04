@@ -21,6 +21,26 @@ prompt_escape(){
   echo "\\[$1\\]"
 }
 
+# Used for set -o, shows a symbol at start of prompt for bash vi mode
+# RLVersion=`readline --version`
+if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.2 ; then
+  # Introduced in readline 6.3, bash 4.3
+  bind 'set show-mode-in-prompt on'
+  if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.3 ; then
+    # Introduced in readline 7, bash 4.4
+    if [[ $TERM = *"xterm"* ]]; then
+      bar_cursor="\e[6 q"
+      block_cursor="\e[1 q"
+    fi
+    bind "set vi-ins-mode-string \"\1${bar_cursor}\2\""
+    bind "set vi-cmd-mode-string \"\1${block_cursor}\2\""
+#   # Same as airline colours (solarized).
+#   # bind "set vi-ins-mode-string \"\1${bg_Yellow}${White}\2++\1${NC}\2\""
+#   # bind "set vi-cmd-mode-string \"\1${bg_Green}${White}\2::\1${NC}\2\""
+  fi
+fi
+
+
 # colourVars="
 # Blue
 # Yellow
@@ -224,5 +244,3 @@ parse_git_branch() {
     GIT_PROMPT=""
   fi
 }
-
-

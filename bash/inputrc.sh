@@ -6,17 +6,6 @@ include /etc/inputrc
 # Can use `set -o vi` for short version
 set editing-mode vi
 
-# Used for set -o, shows a symbol at start of prompt for bash vi mode
-set show-mode-in-prompt on
-# Doesn't seem to expand env variables.
-# Readline prompt-escape is \1\2 instead of \[\].
-# Yellow for ins, green for norm. Same as vim CS.
-# set vi-ins-mode-string "\1\e[0;33m\2++\1\e[m\2"
-# set vi-cmd-mode-string "\1\e[0;32m\2::\1\e[m\2"
-# As backgrounds this time: Yellow for ins, green for norm. Same as vim CS.
-set vi-ins-mode-string "\1\e[43m\2+\1\e[m\2"
-set vi-cmd-mode-string "\1\e[42m\2:\1\e[m\2"
-
 # Completions with no shared prefix will be listed.
 set show-all-if-unmodified on
 # Ignore case
@@ -31,6 +20,9 @@ set show-all-if-ambiguous on
 # on menu-complete, first display the common prefix, then cycle through the
 # options when hitting TAB
 set menu-complete-display-prefix on
+# set show-mode-in-prompt on
+# set vi-cmd-mode-string "\1\e[2 q\2"
+# set vi-ins-mode-string "\1\e[6 q\2"
 
 # Colour common prefixes of tab-completion (bash 4.4 only)
 set colored-completion-prefix on
