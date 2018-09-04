@@ -17,9 +17,9 @@ export DOTFILES_DIR=$(cd "${SCRIPT_DIR}/.." && pwd)
 # Reload/source inputrc
 # bind -f ${SCRIPT_DIR}/inputrc.sh
 INPUTRC="${SCRIPT_DIR}/inputrc.sh"
-BASH_ENV="${SCRIPT_DIR}/aliases.sh" # Aliases are used for all readline apps.
-source ${SCRIPT_DIR}/settings.sh
 source ${SCRIPT_DIR}/functions.sh
+source ${SCRIPT_DIR}/settings.sh
+BASH_ENV="${SCRIPT_DIR}/aliases.sh" # Aliases are used for all readline apps.
 source ${SCRIPT_DIR}/aliases.sh
 source ${SCRIPT_DIR}/prompt.sh
 

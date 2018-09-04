@@ -245,3 +245,45 @@ man() {
 		LESS_TERMCAP_us="$(printf '\e[1;32m')" \
 		man "$@"
 }
+
+# Compare two dot-separated version numbers.
+# Usage: compareVersionNum num1 '>=' num2, eg:
+# if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.2 ; then
+compareVersionNum () {
+  op=$2
+  num1=$1
+  num2=$3
+  if [[ $num1 == $num2 ]]
+  then
+    res="="
+    return [[ $res =~ $op ]]
+  fi
+
+  local IFS=.
+  local i ver1=($num1) ver2=($num2)
+  # fill empty fields in ver1 with zeros
+  for ((i=${#ver1[@]}; i<${#ver2[@]}; i++)); do
+    ver1[i]=0
+  done
+  for ((i=0; i<${#ver1[@]}; i++)); do
+    if [[ -z ${ver2[i]} ]]; then
+      # fill empty fields in ver2 with zeros
+      ver2[i]=0
+    fi
+    if ((10#${ver1[i]} > 10#${ver2[i]})); then
+      res=">"
+      break
+    fi
+    if ((10#${ver1[i]} < 10#${ver2[i]})); then
+      res="<"
+      break
+    fi
+  done
+
+  # Check if result is in op (for >=). Poisix-compat.
+  if [ -z "${op##*$res*}" ]; then
+    return 0
+  else
+    return 1
+  fi
+}
