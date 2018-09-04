@@ -93,15 +93,13 @@ if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
     fi
     # Make esc act as backspace in terminal
     # todo
-    # Remove tab menu completion :( (Doesn't work on OSX).
-    bind 'Tab: complete'
-
 elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
    # Linuxbrew paths
     if [ -z $HOMEBREW_PREFIX ]; then
         export HOMEBREW_PREFIX="$HOME/.linuxbrew"
     fi
 fi
+
 
 # brew paths
 export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
@@ -121,6 +119,15 @@ if ! shopt -oq posix; then
       . $HOMEBREW_PREFIX/etc/bash_completion
   fi
 fi
+
+BASH_VERSION_CLEAN="${BASH_VERSION//[^0-9.]*/}"
+
+if [ `compareVersionNum  ${BASH_VERSION_CLEAN} '<' 4.3` ]; then
+    # Remove tab menu completion cycling.
+    # Will just complete to common subsequence instead.
+    bind 'Tab: complete'
+fi
+
 # TODO Maybe bad... should you mess with $TERM?
 # [[ -n "$DISPLAY" && "$TERM" = "xterm" ]] && export TERM=xterm-256color
 
