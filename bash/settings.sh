@@ -12,11 +12,15 @@ export VISUAL="vim --cmd \"let g:liteMode=1\""
 export GIT_EDITOR="vim --cmd \"let g:liteMode=1\""
 
 # {[} Terminal settings
+if substrInStr "Apple" $TERM_PROGRAM; then
+    export COLORTERM=16
+fi
 USENF=${NERDFONT-0}
 USEPF=${POWERLINE-0}
 COLORTERM=${COLORTERM-16}
 TERM_PROGRAM=${TERM_PROGRAM-}
 TERMOPTIONS=(USENF USEPF COLORTERM TERM_PROGRAM)
+# {[} Exporting for ssh
 EXPORT_TERMOPTIONS=""
 for option in ${TERMOPTIONS[*]}; do
     # The E in front of the option is to let it be set without overriding.
@@ -40,6 +44,7 @@ sshn(){
     # \ssh -t $host 'export USENF=hello && echo $HOST'
 }
 alias ssh="sshn"
+# {]} Exporting for ssh
 # {]} Terminal settings
 
 # Source .dir_colours
