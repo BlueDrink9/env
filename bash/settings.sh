@@ -24,6 +24,10 @@ for option in ${TERMOPTIONS[*]}; do
     # This part is used for ssh, and sets the option from the exported var.
     if [[ "$SESSION_TYPE" = "remote/ssh" ]]; then
         eopt=E${option}
+        # Maybe this should go after attaching tmux? Or before???
+        if [ -z $TMUX ]; then
+            tmux setenv E${option} ${!eopt}
+        fi
         export ${option}=${!eopt}
     fi
 done
@@ -84,7 +88,9 @@ if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
     # export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
     # Custom, created from comparing website and ls man
     export LSCOLORS=exgxbAbAcxbhxbhBhDhcea
-    export HOMEBREW_PREFIX="$HOME/homebrew"
+    if [ -z $HOMEBREW_PREFIX ]; then
+        export HOMEBREW_PREFIX="$HOME/homebrew"
+    fi
     # Make esc act as backspace in terminal
     # todo
     # Remove tab menu completion :( (Doesn't work on OSX).
@@ -92,7 +98,9 @@ if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
 
 elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
    # Linuxbrew paths
-   export HOMEBREW_PREFIX="$HOME/.linuxbrew"
+    if [ -z $HOMEBREW_PREFIX ]; then
+        export HOMEBREW_PREFIX="$HOME/.linuxbrew"
+    fi
 fi
 
 # brew paths
