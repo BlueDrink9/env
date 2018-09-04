@@ -246,6 +246,16 @@ man() {
 		man "$@"
 }
 
+substrInStr(){
+  substring=$1
+  string=$2
+  if [ -z "${string##*$substring*}" ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
 # Compare two dot-separated version numbers.
 # Usage: compareVersionNum num1 '>=' num2, eg:
 # if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.2 ; then
@@ -281,7 +291,7 @@ compareVersionNum () {
   done
 
   # Check if result is in op (for >=). Poisix-compat.
-  if [ -z "${op##*$res*}" ]; then
+  if substrInStr $res $op; then
     return 0
   else
     return 1
