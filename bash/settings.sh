@@ -94,7 +94,7 @@ if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
     # Custom, created from comparing website and ls man
     export LSCOLORS=exgxbAbAcxbhxbhBhDhcea
 elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
-    nop
+    true
 fi
 
 # brew paths
