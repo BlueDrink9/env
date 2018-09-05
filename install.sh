@@ -467,42 +467,42 @@ readSettings() {
 
 main() {
 
-    if [ !$ALL == 1 ]; then
+    if [ ! $ALL = 1 ]; then
         readSettings
     fi
 
-    if [ $IS_SHAW == 1 && [ $doVS == 1 || $ALL == 1 ] ]; then
+    if [[ $IS_SHAW == 1 && ( $doVS == 1 ||  $ALL == 1 ) ]]; then
         printErr ""
         printErr '------------------- VSCODE EXTENSIONS'
         vscodeExtensions
     fi
 
-    if [ $ALL == 1 || $doGit == 1 ]; then
+    if [ $ALL = 1 ] || [ $doGit = 1 ]; then
         printErr ""
         printErr "------------------- GIT"
         gitUser ${1:-}
         gitCredentialCache
     fi
 
-    if [ "$IS_SHAW" == 0 ] ; then
+    if [ "$IS_SHAW" = 0 ] ; then
         printErr ""
         printErr "------------------- LOCAL TIME"
         dualBootLocalTime
     fi
 
-    if [ $ALL == 1 || $doShell == 1 ]; then
+    if [ "$ALL" = 1 ] || [ "$doShell" = 1 ]; then
         printErr ""
         printErr "------------------- SHELL"
         setupShell
     fi
 
-    if [ $ALL == 1 || $doFonts == 1 ]; then
+    if [ "$ALL" = 1 ] || [ "$doFonts" = 1 ]; then
         printErr ""
         printErr "------------------- FONTS"
         installFonts
     fi
 
-    if [ $ALL == 1 || $doVim == 1 ]; then
+    if [ "$ALL" = 1 ] || [ "$doVim" = 1 ]; then
         printErr ""
         printErr "------------------- VIM"
         setupVim
