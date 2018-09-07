@@ -15,6 +15,11 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source ${SCRIPT_DIR}/colour_variables.sh
 # source ${SCRIPT_DIR}/functions.sh
 
+# Used when waiting for user input with "select"
+export PS3="Select: "
+# Used with -x for debugging bash
+export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+
 FLASHING="\[\E[5m\]"
 
 prompt_escape(){
