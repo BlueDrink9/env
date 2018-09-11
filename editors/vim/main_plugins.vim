@@ -432,8 +432,8 @@ if winheight(0) < 20
 endif
 augroup myAirline
     autocmd!
+    autocmd colorscheme let g:airline_theme=colorSch | AirlineRefresh
     autocmd optionset background exec 'let g:airline_' . colorSch . '_bg="' . &background . '"' | AirlineRefresh
-    autocmd colorscheme let g:airline_theme=&colorscheme | AirlineRefresh
 augroup end
 " {]} ---------- airline ----------
 

@@ -1,5 +1,9 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
+augroup colourschemes
+    autocmd!
+    autocmd colorscheme let colorSch = get(g:, 'colors_name', 'default')
+augroup end
 " {[} ---------- Solarized ----------
 if v:version >= 704 && has('termguicolors') && &termguicolors == 1
     Plug 'https://github.com/lifepillar/vim-solarized8'
@@ -31,8 +35,18 @@ else
 endif
 " {]}
 
+Plug 'https://github.com/vim-scripts/oceanlight'
+Plug 'https://github.com/vim-scripts/oceandeep'
+Plug 'https://github.com/vim-scripts/oceanlight'
+Plug 'https://github.com/vim-scripts/Relaxed-Green'
+Plug 'https://github.com/morhetz/gruvbox'
+Plug 'https://github.com/tomasr/molokai'
+
 " call add (g:pluginSettingsToExec, "colorscheme " . colorSch)
 call add (g:customHLGroups, "MatchParen cterm=bold,underline ctermbg=lightgray")
 call add (g:customHLGroups, "MatchParen gui=bold,underline guibg=gray90")
+" call add (g:customHLGroups, "link MatchParen CursorColumn")
 call add (g:customHLGroups, "clear SignColumn")
 call add (g:customHLGroups, "link SignColumn LineNr")
+
+

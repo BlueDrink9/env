@@ -51,6 +51,7 @@ if v:version >= 703
     let g:better_whitespace_skip_empty_lines=1
     let g:better_whitespace_operator='_s'
     call add (g:customHLGroups, "ExtraWhitespace ctermbg=Gray guibg=LightGray")
+    " call add (g:customHLGroups, "link ExtraWhitespace CursorColumn")
 endif
 " cx to select an object, then cx again to swap it with first thing.
 Plug 'https://github.com/tommcdo/vim-exchange'
