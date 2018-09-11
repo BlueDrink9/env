@@ -35,10 +35,7 @@ else
 endif
 " {]}
 
-Plug 'https://github.com/vim-scripts/oceanlight'
 Plug 'https://github.com/vim-scripts/oceandeep'
-Plug 'https://github.com/vim-scripts/oceanlight'
-Plug 'https://github.com/vim-scripts/Relaxed-Green'
 Plug 'https://github.com/morhetz/gruvbox'
 Plug 'https://github.com/tomasr/molokai'
 
