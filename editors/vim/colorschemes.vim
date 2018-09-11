@@ -2,7 +2,7 @@
 " vim: foldmarker={[},{]}
 augroup colourschemes
     autocmd!
-    autocmd colorscheme let colorSch = get(g:, 'colors_name', 'default')
+    autocmd colorscheme * let colorSch = get(g:, 'colors_name', 'default')
 augroup end
 " {[} ---------- Solarized ----------
 if v:version >= 704 && has('termguicolors') && &termguicolors == 1
