@@ -7,13 +7,8 @@
 if exists('&g:colors_name')
     let colorSch = g:colors_name
 endif
-if !exists ('colorSch')
-    let colorSch="solarized"
-endif
-" if exists ('&background')
-"     echom &background
-"     let g:backgroundColour = &background
-" endif
+" Only used if colorSch not set (plugins didn't get loaded)
+let g:defaultColorSch="morning"
 
 set encoding=utf-8
 filetype plugin indent on

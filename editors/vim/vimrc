@@ -43,3 +43,6 @@ if exists("g:ideMode") && g:ideMode==1
 endif
 
 exec SourceCustoms("functions.vim", "settings.vim", "plugins.vim", "mappings.vim")
+if !exists('colorSch')
+    exec 'colorscheme ' . g:defaultColorSch
+endif
