@@ -246,6 +246,7 @@ man() {
 		man "$@"
 }
 
+# Checks if the first arg is a substring of the second.
 substrInStr(){
   substring=$1
   string=$2
