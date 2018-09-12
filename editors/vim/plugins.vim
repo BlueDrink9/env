@@ -80,6 +80,7 @@ let g:pluginSettingsToExec = []
 let g:customHLGroups = []
 
 " Get light plugin set first
+exec 'source ' . s:scriptpath . "/colorschemes.vim"
 exec 'source ' . s:scriptpath . "/light_plugins.vim"
 if !g:liteMode
     exec 'source ' . s:scriptpath . "/main_plugins.vim"

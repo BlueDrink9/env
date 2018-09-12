@@ -251,8 +251,17 @@ if g:hasAsyncrun
     call add (g:pluginSettingsToExec, "let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])")
 endif
 
-exec 'let g:airline_' . colorSch . '_bg="' . &background . '"'
-let g:airline_theme=colorSch
+function! s:AirlineColorVarUpdate()
+    let s:restoreCS = g:colorSch
+    if g:colorSch =~ "solarized8"
+        let g:colorSch = "solarized"
+    endif
+    let g:airline_theme=g:colorSch
+    exec 'let g:airline_' . g:colorSch . '_bg="' . &background . '"'
+    let g:colorSch=s:restoreCS
+endfunction
+
+call s:AirlineColorVarUpdate()
 let g:airline#extensions#wordcount#enabled = 1
 let g:airline_solarized_normal_green = 1
 let g:airline_solarized_dark_inactive_border = 1
@@ -434,8 +443,14 @@ if winheight(0) < 20
 endif
 augroup myAirline
     autocmd!
-    autocmd optionset background exec 'let g:airline_' . colorSch . '_bg="' . &background . '"' | AirlineRefresh
-    autocmd colorscheme let g:airline_theme=&colorscheme | AirlineRefresh
+    autocmd colorscheme * call s:AirlineColorVarUpdate()
+    autocmd optionset background call s:AirlineColorVarUpdate()
 augroup end
+" augroup myAirline
+"     autocmd!
+"     autocmd colorscheme let g:airline_theme=colorSch | AirlineRefresh
+"     autocmd optionset background exec 'let g:airline_' . colorSch . '_bg="' . &background . '"' | AirlineRefresh
+" augroup end
+
 " {]} ---------- airline ----------
 
