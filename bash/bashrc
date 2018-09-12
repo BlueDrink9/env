@@ -27,7 +27,8 @@ elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
 fi
 brewbash="$HOMEBREW_PREFIX/bin/bash"
 # If available, replace bash with brew version. (More up-to-date than system.)
-if [ -f $brewbash ] && [ "$BASH" != "$brewbash" ] && [ -z $HAVE_LOADED_BASH ]
+# Only if running interactively.
+if [ -f $brewbash ] && [ "$BASH" != "$brewbash" ] && [ -z $HAVE_LOADED_BASH ] && [[ $- == *i* ]]
     then export HAVE_LOADED_BASH=1
     $HOMEBREW_PREFIX/bin/bash; exit
 fi
@@ -42,9 +43,6 @@ BASH_ENV="${SCRIPT_DIR}/aliases.sh" # Aliases are used for all readline apps.
 source ${SCRIPT_DIR}/aliases.sh
 source ${SCRIPT_DIR}/prompt.sh
 
-# # Run TMUX, close on exit.
-#     { tmux attach || exec tmux new-session && exit;}
-# fi
 # test if this is an ssh shell
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
     export SESSION_TYPE=remote/ssh
@@ -56,26 +54,34 @@ else
     esac
 fi
 
+# # Run TMUX, close on exit.
+#     { tmux attach || exec tmux new-session && exit;}
+# fi
+
 # Run tmux on ssh connect
 
 # Check if interactive is part of shell options (running interactively)
 case $- in
     *i*)
-
-    if command -v tmux>/dev/null; then
-        if [[ ! $TERM =~ screen ]] && [[ -z $TMUX ]]; then
-            PNAME="$(ps -o comm= $PPID)";
-            # useTmuxFor="login sshd gnome-terminal init wslbridge-backe"
-            useTmuxFor="sshd"
-            # if contains "$useTmuxFor" "$PNAME"; then
-            if [[ "$SESSION_TYPE" = "remote/ssh" ]]; then
-                if tmux ls 2> /dev/null | grep -q -v attached; then
-                    exec tmux attach -t $(tmux ls 2> /dev/null | grep -v attached | head -1 | cut -d : -f 1)
-                else
-                    exec tmux
+        if substrInStr "256" "$TERM" ; then
+            TMUX_256_arg="-2"
+        else
+            TMUX_256_arg=""
+        fi
+        if command -v tmux>/dev/null; then
+            if [[ ! $TERM =~ screen ]] && [[ -z $TMUX ]]; then
+                PNAME="$(ps -o comm= $PPID)";
+                # useTmuxFor="login sshd gnome-terminal init wslbridge-backe"
+                useTmuxFor="sshd"
+                # if contains "$useTmuxFor" "$PNAME"; then
+                if [[ "$SESSION_TYPE" = "remote/ssh" ]]; then
+                    if tmux ls 2> /dev/null | grep -q -v attached; then
+                        exec tmux $TMUX_256_arg attach -t $(tmux ls 2> /dev/null | grep -v attached | head -1 | cut -d : -f 1)
+                    else
+                        exec tmux $TMUX_256_arg
+                    fi
                 fi
             fi
         fi
-    fi
-    ;;
+        ;;
 esac
