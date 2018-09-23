@@ -1,5 +1,10 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
+"
+if !exists ('colorSch')
+    let colorSch="solarized"
+endif
+
 augroup colourschemes
     autocmd!
     autocmd colorscheme * let colorSch = get(g:, 'colors_name', 'default')
@@ -9,14 +14,18 @@ if v:version >= 704 && has('termguicolors') && &termguicolors == 1
     Plug 'https://github.com/lifepillar/vim-solarized8'
     let g:solarized_old_cursor_style=1
     if $TERM =~ "screen" " Tmux doesn't handle termguicols properly
-        let g:termColors = 16
-        set t_Co=16
+        if g:colorSch =~ "solarized"
+            let g:termColors = 16
+            set t_Co=16
+        endif
         set notermguicolors
     endif
     if g:termColors == 16
         let g:solarized_use16 = 1
     endif
-    call add (g:pluginSettingsToExec, "colorscheme solarized8_high")
+    if g:colorSch =~ "solarized"
+        call add (g:pluginSettingsToExec, "colorscheme solarized8_high")
+    endif
 else
     Plug 'https://github.com/altercation/vim-colors-solarized.git'
     " Settings doesn't recommend this...
@@ -45,5 +54,3 @@ call add (g:customHLGroups, "MatchParen gui=bold,underline guibg=gray90")
 " call add (g:customHLGroups, "link MatchParen CursorColumn")
 call add (g:customHLGroups, "clear SignColumn")
 call add (g:customHLGroups, "link SignColumn LineNr")
-
-

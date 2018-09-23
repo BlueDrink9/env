@@ -189,14 +189,6 @@ function! SetProseOptions()
     setl ai
 endfunction
 
-augroup prose
-    autocmd!
-    exec 'autocmd Filetype ' . g:proseFileTypes . ' call SetProseOptions()'
-    " Override default prose settings for some files:
-    " autocmd Filetype git,gitsendemail,*commit*,*COMMIT*
-    "\ call pencil#init({'wrap': 'hard', 'textwidth': 72})
-    autocmd BufEnter * if &filetype == "" || &filetype == "scratch" | call pencil#init()
-augroup END
 " if &filetype == "" || &filetype == "scratch"
 "     call pencil#init()
 " endif

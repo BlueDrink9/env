@@ -173,4 +173,23 @@ let g:pencil#autoformat_blacklist = [
             \ 'txtCode',
             \ 'texMath',
             \ ]
+
+function! SetProseOptions()
+    " Default spelling lang is En, I want en_nz.
+    if &spelllang == "en"
+        " Custom lang not set.
+        setl spell spl=en_nz
+    endif
+    call add (g:pluginSettingsToExec, "call pencil#init()")
+    setl ai
+endfunction
+
+augroup prose
+    autocmd!
+    exec 'autocmd Filetype ' . g:proseFileTypes . ' call SetProseOptions()'
+    " Override default prose settings for some files:
+    " autocmd Filetype git,gitsendemail,*commit*,*COMMIT*
+    "\ call pencil#init({'wrap': 'hard', 'textwidth': 72})
+    autocmd BufEnter * if &filetype == "" || &filetype == "scratch" | call pencil#init()
+augroup END
 " {]} ---------- Prose----------
