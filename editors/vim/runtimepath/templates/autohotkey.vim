@@ -1,0 +1,1 @@
+#sendmode input
