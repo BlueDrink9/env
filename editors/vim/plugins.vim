@@ -94,6 +94,10 @@ exec 'source ' . s:localPlugins
 
 call plug#end()
 
+if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+    echom "Some plugins defined in config are uninstalled"
+endif
+
 for item in g:pluginSettingsToExec
     exec item
 endfor
