@@ -43,7 +43,6 @@ if exists("g:ideMode") && g:ideMode==1
 endif
 
 " For custom snippets, templates, ftplugins etc kept under VCS.
-" exe 'set runtimepath^=' . s:scriptpath . expand('/runtimepath')
 let &runtimepath.=',' . s:scriptpath . expand('/runtimepath')
 
 exec SourceCustoms("functions.vim", "settings.vim", "plugins.vim", "mappings.vim")
