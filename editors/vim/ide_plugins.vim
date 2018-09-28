@@ -8,6 +8,7 @@ if has("timers")
     Plug 'https://github.com/w0rp/ale'
     let g:ale_sign_error = 'X'
     let g:ale_sign_warning = '!'
+    let g:airline#extensions#ale#enabled = 1
 else
     " ----- syntastic -----
     Plug 'https://github.com/vim-syntastic/syntastic.git'
@@ -44,7 +45,18 @@ endif
 " Awesome code completion, but requires specific installations
 " Plug 'https://github.com/Valloric/YouCompleteMe'
 " if v:version >= 800
+"{[} Async completion
 if has("timers")
+    " deoplete
+    " if has('nvim')
+    "     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    " else
+    "     Plug 'Shougo/deoplete.nvim'
+    "     Plug 'roxma/nvim-yarp'
+    "     Plug 'roxma/vim-hug-neovim-rpc'
+    " endif
+    " let g:deoplete#enable_at_startup = 1
+
     " Async completion engine, doesn't need extra installation.
     Plug 'maralla/completor.vim'
     " Use TAB to complete when typing words, else inserts TABs as usual.  Uses
@@ -67,11 +79,9 @@ if has("timers")
             return "\<Tab>"
         endif
     endfunction
-
     " Use `tab` key to select completions.  Default is arrow keys.
     inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
     inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
     " Use tab to trigger auto completion.  Default suggests completions as you type.
     let g:completor_auto_trigger = 0
     inoremap <expr> <Tab> Tab_Or_Complete()
@@ -82,7 +92,7 @@ else
     let g:mucomplete#delayed_completion = 1
     set completeopt+=menuone,noselect
 endif
-
+"{]}
 " Python completion, plus some refactor, goto def and usage features.
 Plug 'https://github.com/davidhalter/jedi-vim', { 'do' : 'AsyncRun pip install jedi' }
 let g:jedi#use_splits_not_buffers = "right"
@@ -98,21 +108,23 @@ if executable('ctags-exuberant') || executable('ctags')
     let g:airline#extensions#tagbar#enabled = 1
     " nmap <silent> <leader>tb :TagbarToggle<CR>
     cabbrev tb TagbarToggle
-    augroup tag
-        au!
-        " Uncomment to open tagbar automatically whenever possible
-        autocmd BufEnter * nested :call tagbar#autoopen(0)
-    augroup end
+    " augroup tag
+    "     au!
+    "     " Uncomment to open tagbar automatically whenever possible
+    "     autocmd BufEnter * nested :call tagbar#autoopen(0)
+    " augroup end
 endif
 " {]} ---------- Tags----------
 
 " {[} ---------- Snippits ----------
 Plug 'https://github.com/honza/vim-snippets' " Library of snippets
-if (has("python") || has("python3")) && v:version >= 704
+if !(has("python") || has("python3")) && v:version >= 704
     Plug 'https://github.com/SirVer/ultisnips' " Snippit engine
-    let g:UltiSnipsExpandTrigger="<c-n>"
-    let g:UltiSnipsJumpForwardTrigger="<c-n>"
-    let g:UltiSnipsJumpBackwardTrigger="<c-p>"
+    let g:UltiSnipsExpandTrigger="<c-e>"
+    " let g:UltiSnipsJumpForwardTrigger="<c-n>"
+    " let g:UltiSnipsJumpBackwardTrigger="<c-p>"
+    let g:UltiSnipsJumpForwardTrigger="Tab"
+    let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
     " Maybe use these to map <CR> to trigger in future?
    " autocmd! User UltiSnipsEnterFirstSnippet
    " autocmd User UltiSnipsEnterFirstSnippet call CustomInnerKeyMapper()

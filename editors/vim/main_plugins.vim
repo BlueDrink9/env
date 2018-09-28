@@ -80,14 +80,47 @@ let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
 " {]} ---------- Misc----------
 
 " Maybe ide candidates...
-Plug 'https://github.com/ctrlpvim/ctrlp.vim'
-let g:ctrlp_cmd = 'CtrlPMixed'
-let g:ctrlp_map = '<leader>f'
-let g:ctrlp_cache_dir = CreateVimDir("ctrpCache") " Purge cache with f5 in buffer
-let g:ctrlp_clear_cache_on_exit = 0
-if ideMode == 1
-  let g:ctrlp_extensions = ['tag', 'buffertag', 'rtscript']
+if has("python3") && has("timers")
+    Plug 'https://github.com/Shougo/denite.nvim'
+else
+    Plug 'https://github.com/Shougo/unite.vim'
+    " nnoremap <leader>f :<C-u>Unite file<CR>
+    let g:unite_source_history_yank_enable = 1
+    nnoremap <m-p> :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
+    call add(g:pluginSettingsToExec, "call unite#filters#matcher_default#use(['matcher_fuzzy'])")
+    nnoremap <leader>f :<C-u>Unite file<cr>
+    " nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
+    cabbrev find Unite -no-split -buffer-name=bufgrep grep:.
+    " --auto-preview is also an option available.
+    " cabbrev b Unite -quick-match buffer
+    " nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
+    " nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
+    " nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
+    " nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
+
+    " Custom mappings for the unite buffer
+    augroup unite
+        au!
+        autocmd FileType unite call s:unite_settings()
+    augroup end
+    function! s:unite_settings()
+        " Play nice with supertab
+        let b:SuperTabDisabled=1
+        " Enable navigation with control-j and control-k in insert mode
+        " imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+        " imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+    endfunction
 endif
+Plug 'https://github.com/Shougo/neomru.vim'
+" Plug 'https://github.com/ctrlpvim/ctrlp.vim'
+" let g:ctrlp_cmd = 'CtrlPMixed'
+" let g:ctrlp_map = '<leader>f'
+" let g:ctrlp_cache_dir = CreateVimDir("ctrpCache") " Purge cache with f5 in buffer
+" let g:ctrlp_clear_cache_on_exit = 0
+" if ideMode == 1
+"     let g:ctrlp_extensions = ['tag', 'buffertag', 'rtscript']
+" endif
+
 " Run shell commands async (uses python)
 Plug 'https://github.com/joonty/vim-do'
 Plug 'https://github.com/thinca/vim-quickrun'
@@ -120,36 +153,20 @@ if executable("git")
     " github wrapper
     Plug 'https://github.com/tpope/vim-rhubarb'
     Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
-
-    " VCS changes shown in sign column.
-    Plug 'https://github.com/mhinz/vim-signify'
-    " Add VCS systems to this when needed. More will slow buffer loading.
-    let g:signify_vcs_list = [ 'git' ]
-    " Async, so shouldn't be too bad. Ignored if not async.
-    let g:signify_realtime = 0
-    let g:signify_sign_change = '~'
-
-    " Plug 'airblade/vim-gitgutter'
-    " " Allows hlcolumn bg to match coloursch
-    " call add(g:customHLGroups, "clear SignColumn")
-    " " gitgutter needs grep to not output escap sequences.
-    " " let g:gitgutter_grep = ''
-    " let g:gitgutter_grep = 'grep --color=never'
-    " let g:gitgutter_override_sign_column_highlight = 0
-    " let g:gitgutter_escape_grep = 1
-    " " Disable automatic update
-    " autocmd! gitgutter CursorHold,CursorHoldI
-    " " " Wait 2000 ms after typing finishes before updating (vim default 4000)
-    " " set updatetime=2000
+    Plug 'airblade/vim-gitgutter'
+    " Allows hlcolumn bg to match coloursch
+    call add(g:customHLGroups, "clear SignColumn")
+    " gitgutter needs grep to not output escap sequences.
+    " let g:gitgutter_grep = ''
+    let g:gitgutter_grep = 'grep --color=never'
+    let g:gitgutter_override_sign_column_highlight = 0
+    let g:gitgutter_escape_grep = 1
+    " Wait 300 ms safter typing finishes before updating (vim default 4000)
+    set updatetime=800
     " augroup ggutter
     "     au!
     "     au BufWritePost * :GitGutter
     " augroup end
-    " " Speed issues
-    " " plugin only runs on BufRead, BufWritePost and FileChangedShellPost, i.e. when you open or save a file.
-    " let g:gitgutter_realtime = 0
-    " let g:gitgutter_eager = 0
-
     Plug 'https://github.com/christoomey/vim-conflicted'
     set stl+=%{ConflictedVersion()}
 endif
