@@ -269,7 +269,7 @@ endif
 if $USENF==1
     let g:airline_powerline_fonts=1
     let g:webdevicons_enable=1
-elseif $USEPOWERLINE==1
+elseif $USEPF==1
     let g:airline_powerline_fonts=1
 endif
 " Check if either of these have been specifically disabled or enabled.
@@ -295,7 +295,7 @@ if !exists('g:airline_powerline_fonts') || !exists('g:webdevicons_enable')
 
         if has("unix")
             let s:uname = system("uname")
-            if s:uname == "Darwin\n"
+            if s:uname =~ "Darwin"
                 " OSX
                 exec "let s:fontdir = expand('" . $HOME . "/Library/Fonts')"
             else
@@ -363,7 +363,9 @@ if !exists('g:airline_powerline_fonts') || !exists('g:webdevicons_enable')
     endif
 endif
 
-if g:airline_powerline_fonts == 0
+" if exists('g:airline_powerline_fonts') && g:airline_powerline_fonts == 0
+" Should always exist, because if it doesn't it's created above.
+if g:airline_powerline_fonts == 0 
     if !exists('g:airline_symbols')
         let g:airline_symbols = {}
     endif

@@ -42,6 +42,9 @@ if exists("g:ideMode") && g:ideMode==1
     let g:liteMode=0
 endif
 
+" For custom snippets, templates, ftplugins etc kept under VCS.
+let &runtimepath.=',' . s:scriptpath . expand('/runtimepath')
+
 exec SourceCustoms("functions.vim", "settings.vim", "plugins.vim", "mappings.vim")
 if !exists('colorSch')
     exec 'colorscheme ' . g:defaultColorSch

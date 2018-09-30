@@ -40,10 +40,10 @@ nnoremap Y y$
 command! -bang -nargs=* SudoSave w !sudo tee % > /dev/null
 cmap W! SudoSave
 
-nnoremap <c-.> 5<C-W>>
-nnoremap <c-,> 5<C-W><
-nnoremap <c-=> 5<C-W>+
-nnoremap <c--> 5<C-W>-
+nnoremap <c-.> <C-W>5>
+nnoremap <c-,> <C-W>5<
+nnoremap <c-=> <C-W>5+
+nnoremap <c--> <C-W>5-
 nnoremap <c-Right> 5<C-W>>
 nnoremap <c-Left> 5<C-W><
 nnoremap <c-Up> 5<C-W>+
@@ -190,3 +190,4 @@ cabbrev profile profile start resultfile <bar> profile func *
 cabbrev le e <C-R>=expand("%:p:h") . "/" <CR>
 " Switch between the last two files
 nnoremap <Leader><Leader>a <C-^>
+cabbrev ide let g:ideMode=1 <bar> so $MYVIMRC

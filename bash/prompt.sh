@@ -15,6 +15,11 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source ${SCRIPT_DIR}/colour_variables.sh
 # source ${SCRIPT_DIR}/functions.sh
 
+# Used when waiting for user input with "select"
+export PS3="Select: "
+# Used with -x for debugging bash
+export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+
 FLASHING="\[\E[5m\]"
 
 prompt_escape(){
@@ -28,15 +33,18 @@ if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.2 ; then
   bind 'set show-mode-in-prompt on'
   if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.3 ; then
     # Introduced in readline 7, bash 4.4
-    if [[ $TERM = *"xterm"* ]]; then
+    if substrInStr "xterm" "$TERM" || [ "$TERM_PROGRAM" == "mintty" ]; then
       bar_cursor="\e[6 q"
       block_cursor="\e[1 q"
     fi
-    bind "set vi-ins-mode-string \"\1${bar_cursor}\2\""
-    bind "set vi-cmd-mode-string \"\1${block_cursor}\2\""
-#   # Same as airline colours (solarized).
-#   # bind "set vi-ins-mode-string \"\1${bg_Yellow}${White}\2++\1${NC}\2\""
-#   # bind "set vi-cmd-mode-string \"\1${bg_Green}${White}\2::\1${NC}\2\""
+    if [ ! -z "$bar_cursor" ]; then
+      bind "set vi-ins-mode-string \"\1${bar_cursor}\2\""
+      bind "set vi-cmd-mode-string \"\1${block_cursor}\2\""
+    else
+      # Same as airline colours (solarized).
+      bind "set vi-ins-mode-string \"\1${White}${bg_Yellow}\2++\1${NC}\2\""
+      bind "set vi-cmd-mode-string \"\1${White}${bg_Green}\2::\1${NC}\2\""
+    fi
   fi
 fi
 
