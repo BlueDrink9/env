@@ -126,7 +126,7 @@ if executable("git")
     " Add VCS systems to this when needed. More will slow buffer loading.
     let g:signify_vcs_list = [ 'git' ]
     " Async, so shouldn't be too bad. Ignored if not async.
-    let g:signify_realtime = 0
+    let g:signify_realtime = 1
     let g:signify_sign_change = '~'
 
     " Plug 'airblade/vim-gitgutter'
