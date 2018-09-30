@@ -231,8 +231,8 @@ set modeline
 set modelines=5
 set expandtab
 set tabstop=4
-let shiftwidth=&tabstop
-let softtabstop=&shiftwidth
+let &shiftwidth=&tabstop
+let &softtabstop=&shiftwidth
 set smarttab
 " formatoptins: See :h fo-table.
 " Don't format on wrap.
