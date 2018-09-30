@@ -126,7 +126,14 @@ if executable("git")
     " Add VCS systems to this when needed. More will slow buffer loading.
     let g:signify_vcs_list = [ 'git' ]
     " Async, so shouldn't be too bad. Ignored if not async.
-    let g:signify_realtime = 1
+    " let g:signify_realtime = 1
+    " Causes a write on cursorhold. PITA, so let's replace it.
+    " call add(g:pluginSettingsToExec, "autocmd! signify CursorHold,CursorHoldI")
+    if has('timers')
+        augroup mysignify
+            autocmd CursorHold,CursorHoldI,BufEnter,FocusGained call sy#start()
+        augroup end
+    endif
     let g:signify_sign_change = '~'
 
     " Plug 'airblade/vim-gitgutter'
