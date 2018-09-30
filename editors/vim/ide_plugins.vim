@@ -8,6 +8,11 @@ if has("timers")
     Plug 'https://github.com/w0rp/ale'
     let g:ale_sign_error = 'X'
     let g:ale_sign_warning = '!'
+    nmap <silent> ]e :ALENext<cr>
+    nmap <silent> [e :ALEPrevious<cr>
+    " Because ]e clobbers this
+    nmap <silent> ]m <Plug>unimpairedMoveDown
+    nmap <silent> [m <Plug>unimpairedMoveUp
 else
     " ----- syntastic -----
     Plug 'https://github.com/vim-syntastic/syntastic.git'
