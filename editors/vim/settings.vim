@@ -179,12 +179,6 @@ set wildmenu
 " Complete longest common string, list options. Then cycle each full match
 set wildmode=list:longest,full
 set scrolloff=5
-if v:version >= 703
-    set listchars=tab:>-,trail:·,eol:¬,precedes:←,extends:→,nbsp:·
-    let &showbreak='→ '
-    " put linebreak in number column? Doesn't seem to work...
-    set cpoptions+=n
-endif
 set completeopt=longest,menu,preview
 if exists("g:ideMode") && g:ideMode == 1
     " Include tags and includes in completion.
@@ -233,10 +227,12 @@ augroup autowrite
     endif
 augroup END
 
+set modeline
+set modelines=5
 set expandtab
-set shiftwidth=4
 set tabstop=4
-set softtabstop=4
+let shiftwidth=&tabstop
+let softtabstop=&shiftwidth
 set smarttab
 " formatoptins: See :h fo-table.
 " Don't format on wrap.
@@ -245,18 +241,26 @@ if v:version >= 704
     " Remove comment leader on join.
     set formatoptions +=j
 endif
-
-set modeline
-set modelines=5
 set wrap
+if v:version >= 703
+    set listchars=tab:>-,trail:·,eol:¬,precedes:←,extends:→,nbsp:·
+    augroup showbreak
+        au!
+        autocmd optionset wrap let &showbreak=''
+        autocmd optionset nowrap let &showbreak='→ '
+    augroup end
+    let &showbreak='→ '
+    " put linebreak in number column? Doesn't seem to work...
+    set cpoptions+=n
+endif
+" backspace and cursor keys wrap to previous/next line
+set backspace=indent,eol,start whichwrap+=<,>,[,]
 if v:version >= 703
     " Colour the 80th column
     set colorcolumn=80
 endif
 " Linebreak relates to when a line wraps (ie not in a word)
 set linebreak
-" backspace and cursor keys wrap to previous/next line
-set backspace=indent,eol,start whichwrap+=<,>,[,]
 " Vertical window splits open on right side, horizontal below
 set splitright
 set splitbelow
