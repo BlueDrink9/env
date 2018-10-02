@@ -1,6 +1,8 @@
 # -*-  mode: shell-script; -*-
 # vim: ft=sh:fdm=marker:fmr={[},{]}
 
+BASH_VERSION_CLEAN="${BASH_VERSION//[^0-9.]*/}"
+
 # Enable smart completion in bash
 if [ -f /etc/bash_completion ]; then
  . /etc/bash_completion
@@ -62,6 +64,8 @@ export HISTFILESIZE=2000
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 export HISTCONTROL=ignoredups:erasedups
+# Don't record some commands
+export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
 if [ ! -d "${HOME}/.logs" ] ; then
    mkdir ${HOME}/.logs
 fi
@@ -72,6 +76,8 @@ PROMPT_COMMAND="${PROMPT_COMMAND} && log_command"
 PROMPT_COMMAND="${PROMPT_COMMAND} && _bash_history_sync"
 # append to the history file, don't overwrite it
 shopt -s histappend
+# Save multi-line commands as one command
+shopt -s cmdhist
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -116,8 +122,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-BASH_VERSION_CLEAN="${BASH_VERSION//[^0-9.]*/}"
-
 if compareVersionNum ${BASH_VERSION_CLEAN} '<' 4.3; then
     # Remove tab menu completion cycling.
     # Will just complete to common subsequence instead.
@@ -129,3 +133,14 @@ fi
 
 # make less more friendly for non-text input files, see lesspipe(0)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# Prepend cd to directory names automatically
+shopt -s autocd 2> /dev/null
+# Correct spelling errors during tab-completion
+# shopt -s dirspell 2> /dev/null
+# Correct spelling errors in arguments supplied to cd
+# shopt -s cdspell 2> /dev/null
+
+# This allows you to bookmark your favorite places across the file system
+# Define a variable containing a path and you will be able to cd into it regardless of the directory you're in
+shopt -s cdable_vars
