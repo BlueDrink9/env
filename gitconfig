@@ -28,6 +28,10 @@
   enabled = 1
 [diff]
   colorMoved = zebra
+[pull]
+  rebase = true
+[rebase]
+  autoStash = true
 
 # diffs for word files use pandoc
 [diff "pandoc"]
