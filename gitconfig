@@ -8,6 +8,11 @@
   # Way nicer and more compact way to view logs. Pass -p to see line differences.
   plog = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
   ls = 'branch'
+  # for docx (word) files
+  wdiff = diff --word-diff=color --unified=1
+  rc = rebase --continue
+  reab = rebase --abort
+  resk = rebase --skip
 
 [credential]
   helper = cache --timeout=3600
