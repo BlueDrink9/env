@@ -25,6 +25,9 @@ FLASHING="\[\E[5m\]"
 prompt_escape(){
   echo "\\[$1\\]"
 }
+# Truncate paths with '...', leaving only the last n folders in prompt
+# Not actually desirable, since I only store the full path in the window bar
+# PROMPT_DIRTRIM=5
 
 # Used for set -o, shows a symbol at start of prompt for bash vi mode
 # RLVersion=`readline --version`

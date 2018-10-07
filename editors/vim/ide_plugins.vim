@@ -174,6 +174,7 @@ Plug 'https://github.com/dragfire/Improved-Syntax-Highlighting-Vim'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Multi-lang support
 Plug 'https://github.com/sheerun/vim-polyglot'
+let g:polyglot_disabled = ['latex']
 " {]} ---------- Syntax----------
 
 " {[} ---------- Git ----------
