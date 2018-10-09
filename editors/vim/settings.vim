@@ -340,6 +340,10 @@ augroup scratch
     autocmd!
     autocmd BufEnter * if &filetype == "" | setlocal ft=scratch |
                 \  setlocal spell | setl ai| endif
+    " Automatically detect the changed filetype on write. Currently only doing
+    " it if the previous buftype was scratch (ie unnamed, which in default vim
+    " would have done this anyway)
+    autocmd BufWrite * if &filetype == "scratch" | filetype detect | endif
 augroup END
 
 " Set spellfile to location that is guaranteed to exist, can be symlinked to Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
