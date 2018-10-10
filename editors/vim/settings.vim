@@ -1,6 +1,14 @@
 " vim: set ft=vim:
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
+
+" Folder in which current script resides:
+if v:version >= 703
+    let s:scriptpath = fnameescape(expand('<sfile>:p:h'))
+else
+    let s:scriptpath = expand('<sfile>:p:h')
+endif
+
 " Set colorScheme variable for use in other settings
 " Doesn't override preset scheme
 " Background should always be set after colorscheme.
@@ -352,10 +360,10 @@ augroup scratch
     " would have done this anyway)
     autocmd BufWrite * if &filetype == "scratch" | filetype detect | endif
 augroup END
-" Set spellfile to location that is guaranteed to exist, can be symlinked to Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
 " set spellfile=$HOME/.vim-spell-en.utf-8.add
+exec 'let &spellfile="' . s:scriptpath . '/spellfile-en.utf-8.add"'
 
-" Set cursor based on mode.
+" {[} Set cursor based on mode.
 " block cursor in normal mode, line in other.
 if &term =~ "xterm\\|rxvt" || $TERM_PROGRAM =~ "mintty\\|xterm"
     let s:iCursor = "\<Esc>[5 q"
@@ -404,6 +412,7 @@ if exists('s:iCursor')
         " use \003]12;gray\007 for gnome-terminal and rxvt up to version 9.21
     augroup end
 endif
+" Cursor {]}
 
 " Auto cd to working dir of this window's file
 " autocmd BufEnter * silent! lcd %:p:h
