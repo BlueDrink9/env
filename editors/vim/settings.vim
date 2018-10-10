@@ -86,13 +86,6 @@ if has("gui_running")
             exec 'set guifont=' . s:useFont . '\ 11'
         endif
     endif
-    " Put buffer name in window title, without "Vim" (because it'll have a logo)
-    augroup title
-        autocmd!
-        autocmd BufEnter * let &titlestring = '' . expand("%:t") . ' [' . expand("%:p") . ']'
-        autocmd BufEnter * if &filetype == "" | let &titlestring = 'Vim - New Buffer' | endif
-        set title
-    augroup END
     "{]}
 else
     "{[} Console
@@ -145,14 +138,6 @@ else
 
 
     " {]}
-
-    " Put buffer name in window title
-    augroup title
-        autocmd!
-        autocmd BufEnter * let &titlestring = '|Vim| ' . expand("%:t") . ' [' . expand("%:p") . ']'
-        autocmd BufEnter * if &filetype == "" | let &titlestring = 'Vim - New Buffer' | endif
-        set title
-    augroup END
 endif
 "{]}
 
@@ -335,6 +320,28 @@ let g:netrw_winsize = 25
 " autocmd InsertLeave * syn clear EOLWS | syn match EOLWS excludenl /\s\+$/
 " highlight EOLWS ctermbg=red guibg=red
 
+" Put buffer name in window title
+function s:SetTitle()
+    if has("gui_running")
+        " Exclude "Vim" for guivim (because it'll have a logo)
+        let l:preTitle = ""
+    else
+        let l:preTitle = "|Vim| "
+    endif
+    let l:filename = expand("%:t")
+    if l:filename == ""
+        let &titlestring = 'Vim - New Buffer'
+    else
+        let &titlestring = l:preTitle . l:filename . ' [' . expand("%:p") . ']'
+    endif
+    set title
+endfunction
+
+augroup title
+    autocmd!
+    autocmd BufEnter,Bufwrite * call s:SetTitle()
+augroup END
+
 " Autoset new buffers to scratch
 augroup scratch
     autocmd!
@@ -345,7 +352,6 @@ augroup scratch
     " would have done this anyway)
     autocmd BufWrite * if &filetype == "scratch" | filetype detect | endif
 augroup END
-
 " Set spellfile to location that is guaranteed to exist, can be symlinked to Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
 " set spellfile=$HOME/.vim-spell-en.utf-8.add
 
