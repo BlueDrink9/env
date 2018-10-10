@@ -100,7 +100,8 @@ if executable("git")
     Plug 'jreybert/vimagit'
     " Git wrapper
     Plug 'https://github.com/tpope/vim-fugitive'
-    nnoremap <leader>gs :Gstatus<CR> cabbrev gs Gstatus
+    " nnoremap <leader>gs :Gstatus<CR> cabbrev gs Gstatus
+    cabbrev gs Gstatus
     cabbrev gw Gwrite
     cabbrev gc Gwrite <bar> Gcommit
     cabbrev gco Gcommit
