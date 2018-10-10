@@ -100,9 +100,11 @@ else
 
     if !has("clipboard") || $SSHSESSION
         " Without clipboard or over ssh, need mouse to select stuff sorry.
-        " Allow mouse in help files (for clicking).
-        set mouse=h
+        " Allow mouse for everything except in visualmode
+        set mouse=hnic
     endif
+    " AAH, but shift or opt +click may overcome this?
+    " set mouse=a
 
     " {[} Colours
     " If the current iTerm tab has been
