@@ -363,7 +363,19 @@ augroup scratch
     autocmd BufWrite * if &filetype == "scratch" | filetype detect | endif
 augroup END
 " set spellfile=$HOME/.vim-spell-en.utf-8.add
-exec 'let &spellfile="' . s:scriptpath . '/spellfile-en.utf-8.add"'
+exec 'let &spellfile=expand("' . s:scriptpath . '/spellfile-en.utf-8.add")'
+
+function s:ReadTemplate()
+    filetype detect
+    let l:templatePath = PathExpand(s:scriptpath . '/templates/' . &filetype . '.vim')
+    if filereadable(l:templatePath)
+        exec 'read ' . l:templatePath
+    endif
+endfunction
+augroup template
+    autocmd!
+    autocmd BufNewFile * call s:ReadTemplate()
+augroup end
 
 " {[} Set cursor based on mode.
 " block cursor in normal mode, line in other.
