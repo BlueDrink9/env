@@ -528,7 +528,7 @@ if [ ! -z $arg1 ]; then
     fi
 fi
 
-if [[ $OSTYPE == 'linux-gnu' ]]; then
+if [[ $OSTYPE =~ 'linux' ]]; then
 
     printErr "[$Green Linux ${NC}]"
     main ${1:-}
