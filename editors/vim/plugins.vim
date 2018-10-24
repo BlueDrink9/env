@@ -29,23 +29,37 @@ else
     let s:localPlugins = expand(s:lpluginpathS)
 endif
 
-" let vimplug_file=expand(s:vimfilesDir . "/autoload/plug.vim")
-" if !filereadable(vimplug_file)
-" if !exists('*plug#end')
-if !&rtp =~ 'vim-plug'
-    echoerr "vim-plug not installed. No plugins will be loaded."
-    if !executable("curl")
-        echoerr "You have to install curl or first install vim-plug yourself!"
-        " execute "q!"
+if has('win32') || has ('win64')
+    let $VIMHOME = $VIM."/vimfiles"
+else
+    let $VIMHOME = $HOME."/.vim"
+endif
+let s:autoloadDir=expand($VIMHOME . "/autoload")
+let s:vimplug_file=expand(s:autoloadDir . "/plug.vim")
+if !filereadable(s:vimplug_file)
+    if executable("curl")
+        let s:downloader = "!curl -fLo "
+    elseif executable("wget")
+        let s:downloader = "!wget --no-check-certificate -O "
+    else
+        echoerr "You have to install curl or wget, or install vim-plug yourself!"
+        echoerr "vim-plug not installed. No plugins will be loaded."
+        finish
     endif
-    finish
-  "   echo "Installing Vim-Plug..."
-  "   echo ""
-  " This sin't the right directory...
-  "   exec "silent !\curl -fLo" . s:vimfilesDir . "/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-  "   let g:not_finish_vimplug = "yes"
-
-  " autocmd VimEnter * PlugInstall
+    " Continue installing...
+    exec "silent !mkdir -p " . s:autoloadDir
+    echom "Installing Vim-Plug..."
+    echo ""
+    exec s:downloader . s:vimplug_file . " https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    if !filereadable(s:vimplug_file)
+        echoerr "vim-plug failed to install. No plugins will be loaded."
+        finish
+    endif
+    "   let g:not_finish_vimplug = "yes"
+    augroup pluginstall
+        au!
+        autocmd VimEnter * PlugInstall
+    augroup end
 endif
 
 "
