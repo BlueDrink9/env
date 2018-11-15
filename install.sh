@@ -329,6 +329,16 @@ setupVim(){
 }
 # {]} Shaw
 
+setupBrew() {
+	if [[ $OSTYPE =~ 'darwin' ]]; then
+		cd $HOME && mkdir -p homebrew && curl --insecure -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew
+        $HOME/homebrew/bin/brew update
+	else
+		sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+        $HOME/.linuxbrew/bin/brew update
+	fi
+}
+
 dualBootLocalTime() {
     if askQuestionYN "${Yellow}Interpret hardware clock as local time? ${NC}"; then
         timedatectl set-local-rtc 1 && \
@@ -453,6 +463,9 @@ readSettings() {
         if askQuestionYN "Set up git?" ; then
             doGit=1
         fi
+        if askQuestionYN "Install brew?" ; then
+            doBrew=1
+        fi
         if askQuestionYN "Set up vim?" ; then
             doVim=1
         fi
@@ -506,6 +519,11 @@ main() {
         printErr ""
         printErr "------------------- VIM"
         setupVim
+    fi
+    if [ $ALL = 1 ] || [ $doBrew = 1 ]; then
+        printErr ""
+        printErr "------------------- BREW"
+        setupBrew
     fi
 
     printErr "${Green} Install Complete${NC}"
