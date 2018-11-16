@@ -135,6 +135,9 @@ else
         let g:termColors="24bit"
         set t_Co=256
     else
+        if !exists("g:termColors") && exists("$COLORTERM")
+            let g:termColors=$COLORTERM
+        endif
         if $TERM =~ "-256color" && !exists("g:termColors")
             let g:termColors=256
             " This wasn't being set by default under TMUX!
