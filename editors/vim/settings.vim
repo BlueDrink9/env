@@ -240,7 +240,7 @@ if v:version >= 704
     set formatoptions +=j
 endif
 set wrap
-if v:version >= 703
+if v:version >= 800
     set listchars=tab:>-,trail:·,eol:¬,precedes:←,extends:→,nbsp:·
     augroup showbreak
         au!

@@ -447,7 +447,9 @@ endif
 augroup myAirline
     autocmd!
     autocmd colorscheme * call s:AirlineColorVarUpdate()
-    autocmd optionset background call s:AirlineColorVarUpdate()
+    if v:version >= 800
+        autocmd optionset background call s:AirlineColorVarUpdate()
+    endif
 augroup end
 " augroup myAirline
 "     autocmd!
