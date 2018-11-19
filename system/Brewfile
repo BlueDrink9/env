@@ -1,0 +1,10 @@
+bash
+bash-completion
+curl
+rsync
+vim
+tmux
+ranger
+ctags
+python
+rlwrap
