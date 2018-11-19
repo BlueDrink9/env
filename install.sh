@@ -329,14 +329,18 @@ setupVim(){
 }
 # {]} Shaw
 
-setupBrew() {
+installBrew() {
 	if [[ $OSTYPE =~ 'darwin' ]]; then
 		cd $HOME && mkdir -p homebrew && curl --insecure -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew
-        $HOME/homebrew/bin/brew update
+        HOMEBREW_PREFIX=$HOME/homebrew
 	else
 		sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-        $HOME/.linuxbrew/bin/brew update
+        HOMEBREW_PREFIX=$HOME/.linuxbrew
 	fi
+}
+
+updateBrew() {
+    $HOMEBREW_PREFIX/bin/brew update
 }
 
 dualBootLocalTime() {
@@ -463,9 +467,6 @@ readSettings() {
         if askQuestionYN "Set up git?" ; then
             doGit=1
         fi
-        if askQuestionYN "Install brew?" ; then
-            doBrew=1
-        fi
         if askQuestionYN "Set up vim?" ; then
             doVim=1
         fi
@@ -474,6 +475,12 @@ readSettings() {
         fi
         if askQuestionYN "Install fonts?" ; then
             doFonts=1
+        fi
+        if askQuestionYN "Install brew?" ; then
+            installBrew=1
+        fi
+        if askQuestionYN "Update brew? (This usually downloads and compiles a few packages, and can take a very long time)" ; then
+            updateBrew=1
         fi
     fi
 }
@@ -520,10 +527,17 @@ main() {
         printErr "------------------- VIM"
         setupVim
     fi
-    if [ $ALL = 1 ] || [ $doBrew = 1 ]; then
+
+    if [ $ALL = 1 ] || [ $installBrew = 1 ]; then
         printErr ""
-        printErr "------------------- BREW"
-        setupBrew
+        printErr "------------------- BREW INSTALL"
+        installBrew
+    fi
+
+    if [ $ALL = 1 ] || [ $updateBrew = 1 ]; then
+        printErr ""
+        printErr "------------------- BREW UPDATE"
+        updateBrew
     fi
 
     printErr "${Green} Install Complete${NC}"
