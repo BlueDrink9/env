@@ -3,11 +3,6 @@
 
 BASH_VERSION_CLEAN="${BASH_VERSION//[^0-9.]*/}"
 
-# Enable smart completion in bash
-if [ -f /etc/bash_completion ]; then
- . /etc/bash_completion
-fi
-
 # You know it, baby. Shouldn't need to use nano ever
 export EDITOR="vim --noplugin --cmd \"let g:noPlugins=1\""
 export VISUAL="vim --cmd \"let g:liteMode=1\""
@@ -109,16 +104,14 @@ export XDG_DATA_DIRS="/$HOMEBREW_PREFIX/share:$XDG_DATA_DIRS"
 export MANPATH="$HOMEBREW_PREFIX/share/man:$MANPATH"
 export INFOPATH="$HOMEBREW_PREFIX/share/info:$INFOPATH"
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
+# enable programmable smart completion features
 if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
+  if [ -f $HOMEBREW_PREFIX/etc/bash_completion ]; then
+      . $HOMEBREW_PREFIX/etc/bash_completion
+  elif [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
-  elif [ -f $HOMEBREW_PREFIX/etc/bash_completion ]; then
-      . $HOMEBREW_PREFIX/etc/bash_completion
   fi
 fi
 
