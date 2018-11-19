@@ -414,6 +414,7 @@ gitSettings() {
 # {]} Git
 
 setupShell() {
+    addTextIfAbsent ". $HOME/.bashrc" ${HOME}/.bash_profile
     if [ "$IS_SHAW" == 0 ] ; then
         printErr "Copying custom bash files..."
         if [[ -d "${BASH_CUSTOM}" ]] && [[ ! $SKIP == 1 ]]; then
