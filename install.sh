@@ -332,15 +332,17 @@ setupVim(){
 installBrew() {
 	if [[ $OSTYPE =~ 'darwin' ]]; then
 		cd $HOME && mkdir -p homebrew && curl --insecure -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew
-        HOMEBREW_PREFIX=$HOME/homebrew
+        HOMEBREW_PREFIX="$HOME/homebrew"
 	else
 		sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-        HOMEBREW_PREFIX=$HOME/.linuxbrew
+        HOMEBREW_PREFIX="$HOME/.linuxbrew"
 	fi
 }
 
 updateBrew() {
-    $HOMEBREW_PREFIX/bin/brew update
+    brew="$HOMEBREW_PREFIX/bin/brew"
+    "$brew" update
+    for i in $(cat "$SCRIPTDIR/system/Brewfile"); do; "$brew" install "$i"; done
 }
 
 dualBootLocalTime() {
@@ -479,7 +481,7 @@ readSettings() {
         if askQuestionYN "Install brew?" ; then
             installBrew=1
         fi
-        if askQuestionYN "Update brew? (This usually downloads and compiles a few packages, and can take a very long time)" ; then
+        if askQuestionYN "Update brew and install Brewfile packages? (This can take a very long time)" ; then
             updateBrew=1
         fi
     fi
