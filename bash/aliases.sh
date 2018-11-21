@@ -7,6 +7,7 @@ shopt -s expand_aliases
 # ctrl + L often does this anyway though...
 alias cl="clear"
 alias rl="rlwrap"
+alias untar="tar -zxvf"
 
 if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
     alias setssdir="defaults write com.apple.screencapture location"
