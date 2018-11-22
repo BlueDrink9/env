@@ -382,7 +382,7 @@ augroup end
 
 " {[} Set cursor based on mode.
 " block cursor in normal mode, line in other.
-if &term =~ "xterm\\|rxvt" || $TERM_PROGRAM =~ "mintty\\|xterm"
+if &term =~ "xterm\\|rxvt" || $TERM_PROGRAM =~ "mintty\\|xterm" || exists('$TMUX')
     let s:iCursor = "\<Esc>[5 q"
     let s:nCursor = "\<Esc>[1 q"
     let s:rCursor = "\<Esc>[3 q"
@@ -412,12 +412,12 @@ endif
     " elseif $TERMTYPE ~= "xterm"
 
 if exists('s:iCursor')
-    if exists('$TMUX')
-        " let s:iCursor = "\<Esc>Ptmux;\<Esc>" . s:iCursor . "\<Esc>\\"
-        " let s:nCursor = "\<Esc>Ptmux;\<Esc>" . s:nCursor . "\<Esc>\\"
-        " let s:rCursor = "\<Esc>Ptmux;\<Esc>" . s:rCursor . "\<Esc>\\"
-        " let s:vCursor = "\<Esc>Ptmux;\<Esc>" . s:vCursor . "\<Esc>\\"
-    endif
+    " if exists('$TMUX')
+    "     let s:iCursor = "\<Esc>Ptmux;\<Esc>" . s:iCursor . "\<Esc>\\"
+    "     let s:nCursor = "\<Esc>Ptmux;\<Esc>" . s:nCursor . "\<Esc>\\"
+    "     let s:rCursor = "\<Esc>Ptmux;\<Esc>" . s:rCursor . "\<Esc>\\"
+    "     let s:vCursor = "\<Esc>Ptmux;\<Esc>" . s:vCursor . "\<Esc>\\"
+    " endif
     exec 'let &t_SI = "' . s:iCursor . '""'
     exec 'let &t_EI = "' . s:nCursor . '""'
     " exec 'let &t_VS = "' . s:vCursor . '""'
