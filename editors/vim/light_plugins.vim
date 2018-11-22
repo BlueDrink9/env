@@ -113,10 +113,11 @@ if v:version >= 704
     let g:session_persist_globals = ['&spelllang', '&autoread', '&spell']
     let g:session_persist_colors = 0
     let g:session_persist_font = 0
+    " Open recent session instead of default
     let g:session_default_to_last = 'yes'
     let g:session_autosave_periodic = 10
     let g:session_autosave = 'yes'
-    let g:session_autoload = 'yes'
+    let g:session_autoload = 'no' " Could also be 'prompt'
     let g:session_directory = CreateVimDir("vimfiles/sessions/")
     cabbrev cs CloseSession
     cabbrev os OpenSession
