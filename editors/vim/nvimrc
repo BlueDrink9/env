@@ -1,0 +1,14 @@
+
+" set the cursor style when vim exits
+" au VimLeave * set guicursor=a:block-blinkon0
+if has('win32') || has ('win64')
+    let $VIMHOME = $VIM."/vimfiles"
+else
+    let $VIMHOME = $HOME."/.vim"
+endif
+" let &runtimepath+=expand($VIMHOME)
+" let &runtimepath+=expand($VIMHOME . "/after")
+" let &runtimepath+=expand($VIMHOME . "/autoload")
+set runtimepath^=~/.vim runtimepath+=~/.vim/after
+let &packpath=&runtimepath
+source ~/.vimrc

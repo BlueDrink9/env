@@ -317,8 +317,8 @@ setupVim(){
 
     else
         printErr "Using WW's vimrc"
-        addTextIfAbsent "so $SCRIPTDIR/editors/vim/vimrc" ${HOME}/.vimrc
-        addTextIfAbsent "so $HOME/.vimrc" ${HOME}/config/nvim/init.vim
+        addTextIfAbsent "so $SCRIPTDIR/editors/vim/vimrc" "${HOME}/.vimrc"
+        addTextIfAbsent "so $SCRIPTDIR/editors/vim/nvimrc" "${HOME}/config/nvim/init.vim"
         printErr "Installing vim plugins..."
         # Install Plug (plugin manager)
         downloadURLtoFile https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "${HOME}/.vim/autoload/plug.vim"
