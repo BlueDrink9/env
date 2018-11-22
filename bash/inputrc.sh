@@ -20,6 +20,7 @@ set show-all-if-ambiguous on
 # on menu-complete, first display the common prefix, then cycle through the
 # options when hitting TAB
 set menu-complete-display-prefix on
+# Set in bash/prompt.sh to allow variables and check bash version
 # set show-mode-in-prompt on
 # set vi-cmd-mode-string "\1\e[2 q\2"
 # set vi-ins-mode-string "\1\e[6 q\2"
