@@ -65,9 +65,9 @@ alias gc="git_clone"
 # Way nicer and more compact way to view logs. Pass -p to see line differences.
 alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
-# Try to set vim to xvim (has x11 clipboard support)
-if [ -e /usr/bin/vimx ]; then
-    alias vim="/usr/bin/vimx"
+# Try to set vim to better versions...
+if [ `command -v nvim 2>/dev/null` ]; then
+    alias vim="nvim"
 elif [ `command -v mvim 2>/dev/null` ]; then
     # Prefer macvim to gvim.
     alias vim="mvim -v"
@@ -75,6 +75,9 @@ elif [ `command -v gvim 2>/dev/null` ]; then
     alias vim="gvim -v"
 elif [ -e /usr/bin/gvim ]; then
     alias vim="/usr/bin/gvim -v"
+# xvim (has x11 clipboard support)
+elif [ -e /usr/bin/vimx ]; then
+    alias vim="/usr/bin/vimx"
 fi
 
 alias idevim="vim --cmd \"let g:ideMode=1\""
