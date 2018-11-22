@@ -12,10 +12,9 @@ BAKDIR=$HOME/.env_backup    # Directory to store config backups.
 BASH_CUSTOM=$HOME/.bash_custom # Directory to store custom bash includes.
 VIMDIR=$HOME/.vim_runtime   # Directory containing Vim extras.
 # SCRIPT COLORS are kept in this file
-source $SCRIPTDIR/bash/colour_variables.sh
+source "$SCRIPTDIR/bash/colour_variables.sh"
 OK="[ ${Green}OK${NC} ]"
 Error="[ ${Red}ERROR${NC} ]"
-TAB="\e[1A\e[2L"
 SKIP=0
 ALL=0
 if [[ $OSTYPE == 'linux-gnu' ]]; then
@@ -31,7 +30,7 @@ VSCODE_APP_DATA="${HOME}/AppData/Roaming/Code"
 
 # {[} Utility functions
 printLine() {
-    printf -- "$@\n" 
+    printf -- "%s\n" "$@"
 }
 printErr() {
     >&2 printLine "$@"
@@ -57,9 +56,9 @@ getWebItem() {
     # OSX has curl by default, linux has wget by default
     # if [[ $OSTYPE =~ 'darwin' ]]; then
     if hash curl 2> /dev/null; then
-        curl -fL $url 2> /dev/null
+        curl -fL "$url" 2> /dev/null
     else
-        wget -qO- $url 2> /dev/null
+        wget -qO- "$url" 2> /dev/null
     fi
     printErr "Done"
 }
@@ -75,7 +74,7 @@ downloadURLtoFile() {
     if [ ! -d "$downloadDirectory" ]; then
         mkdir -p "$downloadDirectory"
     fi
-    getWebItem $url >| $filename
+    getWebItem "$url" >| "$filename"
 }
 
 getLatestReleaseFileURL() {
@@ -89,7 +88,7 @@ getLatestReleaseFileURL() {
     repoapi=`getWebItem "https://api.github.com/repos/${repo}/releases/latest"`
     searchTemplate=https://github.com/${repo}/releases/download/[^/]*/${file}
     fileLatestURL=`echo $repoapi | sed -n -e "s,^.*\(${searchTemplate}\).*$,\1,p"`
-    echo $fileLatestURL
+    echo "$fileLatestURL"
 }
 
 downloadURLAndExtractZipTo() {
@@ -111,8 +110,9 @@ downloadURLAndExtractZipTo() {
 
 addTextIfAbsent() {
     default="invalid text or filename"
-    text=${1:-default}
-    file=${2:-default}
+    text=${1:-$default}
+    file=${2:-$default}
+    mkdir -p `dirname "$file"`
     # Check if text exists in file, otherwise append.
     grep -q -F "$text" "$file" || echo "$text" >> "$file"
 }
@@ -120,13 +120,13 @@ addTextIfAbsent() {
 # {]} Utility functions
 
 # {[} Uninstall
-# Currently only removes vim configs and any bash customisation, as well as this script.
 uninstall() {
     if askQuestionYN "Really uninstall?"; then
         printf "\nUninstalling...\n"
 
         # The sed commands replace source lines with blanks
         rm -rf "${BASH_CUSTOM}"
+        rm -rf "${HOME}/.config/nvim"
         rm -rf "${HOME}/.vim_runtime"
         sed -in "s|.*vim_runtime.*||g" ${HOME}/.vimrc
 
@@ -318,6 +318,7 @@ setupVim(){
     else
         printErr "Using WW's vimrc"
         addTextIfAbsent "so $SCRIPTDIR/editors/vim/vimrc" ${HOME}/.vimrc
+        addTextIfAbsent "so $HOME/.vimrc" ${HOME}/config/nvim/init.vim
         printErr "Installing vim plugins..."
         # Install Plug (plugin manager)
         downloadURLtoFile https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "${HOME}/.vim/autoload/plug.vim"
@@ -342,7 +343,8 @@ installBrew() {
 updateBrew() {
     brew="$HOMEBREW_PREFIX/bin/brew"
     "$brew" update
-    for i in $(cat "$SCRIPTDIR/system/Brewfile"); do; "$brew" install "$i"; done
+    # This reads words. Currently ok, but should be updated.
+    for i in $(cat "$SCRIPTDIR/system/Brewfile"); do "$brew" install "$i"; done
 }
 
 dualBootLocalTime() {
@@ -393,7 +395,7 @@ gitCredentialCache() {
         printErr "${Green}How long should Git store your credentials? (minutes)${NC} "
         while [ 1 ]; do
             read REPLY
-            if [[ $REPLY =~ ^[0-9]+$ ]] && [[ $REPLY > 0 ]]; then
+            if [[ $REPLY =~ ^[0-9]+$ ]] && [[ $REPLY -gt 0 ]]; then
                 break
             else
                 printErr "${Red}Invalid input${NC}"
@@ -446,7 +448,7 @@ setupShell() {
 
 readSettings() {
     echo -ne "Are you WS or WW? "
-    while [ 1 ] ; do
+    while true ; do
         read -n 2 U
         printErr ""
         # Convert to upper case
@@ -531,13 +533,13 @@ main() {
         setupVim
     fi
 
-    if [ $ALL = 1 ] || [ $installBrew = 1 ]; then
+    if [ "$ALL" = 1 ] || [ "$installBrew" = 1 ]; then
         printErr ""
         printErr "------------------- BREW INSTALL"
         installBrew
     fi
 
-    if [ $ALL = 1 ] || [ $updateBrew = 1 ]; then
+    if [ "$ALL" = 1 ] || [ "$updateBrew" = 1 ]; then
         printErr ""
         printErr "------------------- BREW UPDATE"
         updateBrew
