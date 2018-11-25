@@ -16,6 +16,10 @@ mkcd() {
   mkdir -p $1 && cd $1
 }
 
+sshraw() {
+  ssh $@ -t '/bin/bash --norc'
+}
+
 del() {
   fileToDel=$1
   fileDir=$(dirname ${fileToDel})
