@@ -36,7 +36,7 @@ if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.2 ; then
   bind 'set show-mode-in-prompt on'
   if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.3 ; then
     # Introduced in readline 7, bash 4.4
-    if substrInStr "xterm" "$TERM" || [ "$TERM" == "screen-256color" ] || [ "$TERM_PROGRAM" == "mintty" ]; then
+    if substrInStr "xterm" "$TERM" || [ "$TERM" =~ "tmux" ] || [ "$TERM_PROGRAM" == "mintty" ]; then
       bar_cursor="\e[6 q"
       block_cursor="\e[1 q"
     fi
