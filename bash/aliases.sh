@@ -8,6 +8,7 @@ shopt -s expand_aliases
 alias cl="clear"
 alias rl="rlwrap"
 alias untar="tar -zxvf"
+alias sshraw="\\ssh cs -t '/bin/bash --norc'"
 
 if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
     alias setssdir="defaults write com.apple.screencapture location"
