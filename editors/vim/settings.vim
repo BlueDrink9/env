@@ -210,7 +210,7 @@ augroup view
     autocmd!
     " save folds
     autocmd BufWinLeave *.* mkview
-    autocmd BufWinEnter *.* silent loadview
+    autocmd BufWinEnter *.* silent! loadview
 augroup END
 augroup autowrite
     autocmd!
