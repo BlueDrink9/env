@@ -131,7 +131,7 @@ uninstall() {
         sed -in "s|.*vim_runtime.*||g" ${HOME}/.vimrc
 
         sed -in "s|.*[^.]bashrc.*||g" ${HOME}/.bashrc
-        sed -in "s|.*${SCRIPTDIR}/terminal/tmux\.conf.*||g" ${HOME}/.tmux.conf
+        sed -in "s|.*${SCRIPTDIR}/terminal/tmux/tmux\.conf.*||g" ${HOME}/.tmux.conf
         rm -rf "${HOME}/.dircolours_solarized"
         sed -in "s|.*${SCRIPTDIR}/editors/vim/vimrc.*||g" ${HOME}/.vimrc
         sed -in "s|.*${SCRIPTDIR}/bash/inputrc.sh.*||g" ${HOME}/.inputrc
@@ -436,14 +436,18 @@ setupShell() {
         # https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-universal \
 
             printErr "Enabling custom tmux setup..."
-        addTextIfAbsent "source-file $SCRIPTDIR/terminal/tmux.conf" ${HOME}/.tmux.conf
+        addTextIfAbsent "source-file $SCRIPTDIR/terminal/tmux/tmux.conf" ${HOME}/.tmux.conf
         printErr "Enabling custom readline (inputrc) setup..."
-        addTextIfAbsent "\$include $SCRIPTDIR/bash/inputrc.sh" ${HOME}/.inputrc
+        addTextIfAbsent "\$include $SCRIPTDIR/bash/inputrc.sh" "${HOME}/.inputrc"
     fi
     # {]} WW
     if [[ $OSTYPE =~ 'darwin' ]]; then
-        addTextIfAbsent "source .bashrc" ${HOME}/.bash_profile
+        addTextIfAbsent "source .bashrc" "${HOME}/.bash_profile"
     fi
+}
+
+setupKitty() {
+    addTextIfAbsent "include $SCRIPTDIR/terminal/kitty/kitty.conf" "${HOME}/.config/kitty/kitty.conf"
 }
 
 readSettings() {
@@ -477,6 +481,9 @@ readSettings() {
         fi
         if askQuestionYN "Set up shell?" ; then
             doShell=1
+        fi
+        if askQuestionYN "Set up kitty?" ; then
+            doKitty=1
         fi
         if askQuestionYN "Install fonts?" ; then
             doFonts=1
@@ -519,6 +526,12 @@ main() {
         printErr ""
         printErr "------------------- SHELL"
         setupShell
+    fi
+
+    if [ "$ALL" = 1 ] || [ "$doKitty" = 1 ]; then
+        printErr ""
+        printErr "------------------- Kitty"
+        setupKitty
     fi
 
     if [ "$ALL" = 1 ] || [ "$doFonts" = 1 ]; then
