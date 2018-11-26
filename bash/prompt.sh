@@ -187,9 +187,10 @@ set_prompt_symbol () {
 
 # Tell bash to execute this function just before displaying its prompt.
 PROMPT_COMMAND=set_bash_prompt
-if hash tmux > /dev/null 2>&1 && tmux info > /dev/null 2>&1; then
-  PROMPT_COMMAND=$PROMPT_COMMAND && tmux rename-window "$WINDOW_TITLE_BASH_PATH"
-fi
+
+# if hash tmux > /dev/null 2>&1 && tmux info > /dev/null 2>&1; then
+#   PROMPT_COMMAND=$PROMPT_COMMAND && tmux rename-window "$WINDOW_TITLE_BASH_PATH"
+# fi
 
 # get current branch in git repo
 # Check status of branch
