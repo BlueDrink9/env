@@ -107,8 +107,10 @@ export INFOPATH="$HOMEBREW_PREFIX/share/info:$INFOPATH"
 
 # enable programmable smart completion features
 if ! shopt -oq posix; then
-  if [ -f $HOMEBREW_PREFIX/etc/bash_completion ]; then
-      . $HOMEBREW_PREFIX/etc/bash_completion
+  if [ -f $HOMEBREW_PREFIX/share/bash_completion ]; then
+      . $HOMEBREW_PREFIX/share/bash_completion # version 2
+  elif [ -f $HOMEBREW_PREFIX/etc/bash_completion ]; then
+      . $HOMEBREW_PREFIX/etc/bash_completion # version 1
   elif [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
   elif [ -f /etc/bash_completion ]; then
