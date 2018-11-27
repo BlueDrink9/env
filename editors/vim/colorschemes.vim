@@ -13,7 +13,7 @@ augroup end
 if v:version >= 704 && has('termguicolors') && &termguicolors == 1
     Plug 'https://github.com/lifepillar/vim-solarized8'
     let g:solarized_old_cursor_style=1
-    if $TERM =~ "screen" " Tmux doesn't handle termguicols properly
+    if $TERM =~ "screen" || $TERM =~ "tmux" " Tmux doesn't handle termguicols properly
         if g:colorSch =~ "solarized"
             let g:termColors = 16
             set t_Co=16
