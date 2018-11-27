@@ -27,10 +27,10 @@ for option in ${TERMOPTIONS[*]}; do
     if [[ "$SESSION_TYPE" = "remote/ssh" ]]; then
         eopt=E${option}
         # Maybe this should go after attaching tmux? Or before???
-        if [ -z $TMUX ]; then
-            tmux setenv E${option} ${!eopt}
+        if [ ! -z "$TMUX" ]; then
+            tmux setenv ${option} ${!eopt}
         fi
-        export ${option}=${!eopt}
+        # export ${option}=${!eopt}
     fi
 done
 sshn(){
