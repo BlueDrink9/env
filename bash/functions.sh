@@ -17,7 +17,7 @@ mkcd() {
 }
 
 sshraw() {
-  ssh $@ -t '/bin/bash --norc'
+  ssh "$@" -t '/bin/bash --norc'
 }
 
 del() {
@@ -254,12 +254,35 @@ man() {
 substrInStr(){
   substring=$1
   string=$2
+  if [ "$substring" = "" ]; then
+    echo "substring is blank!"
+    return 255
+  fi
+  # if [ "$substring" = "$string" ]; then return 0; fi
+  if [ "$string" = "" ]; then
+    return 1 # false
+  fi
   if [ -z "${string##*$substring*}" ]; then
-    return 0
+    return 0 # true
   else
     return 1
   fi
 }
+substrTest(){
+  failed=0
+  if ! substrInStr "positive-middle" " this is positive-middlely the middle "; then failed=1; fi
+  if ! substrInStr "positive-left" "positive-leftly this is left"; then failed=2; fi
+  if ! substrInStr "positive-right" "this is right, positive-right"; then failed=3; fi
+  if substrInStr "blank" ""; then failed=4; fi
+  if substrInStr "negative" "a random string without the word"; then failed=5; fi
+  # if ! substrInStr "" ""; then failed=6; fi
+
+  if [[ "${failed}" != "0" ]]; then
+    echo "substrInStr failed test $failed!"
+  fi
+}
+# substrTest
+
 
 # Compare two dot-separated version numbers.
 # Usage: compareVersionNum num1 '>=' num2, eg:
