@@ -329,28 +329,34 @@ compareVersionNum () {
 # {[} Exporting for ssh
 
 export_termoptions(){
-    EXPORT_TERMOPTIONS_CMD=""
-    for option in ${TERMOPTIONS[*]}; do
-        # The E in front of the option is to let it be set without overriding.
-        # EXPORT_TERMOPTIONS="${EXPORT_TERMOPTIONS} env E${option}=${!option} "
-        EXPORT_TERMOPTIONS_CMD="${EXPORT_TERMOPTIONS_CMD} export ${option}=${!option}; "
-        # This part is used for ssh, and sets the option from the exported var.
-        if [[ "$SESSION_TYPE" = "remote/ssh" ]]; then
-            eopt="E${option}"
-            # Maybe this should go after attaching tmux? Or before???
-            if [ ! -z "$TMUX" ]; then
-                tmux setenv "${option}" "${!eopt}"
-                unset "${eopt}"
-            fi
-            # export ${option}=${!eopt}
-        fi
-    done
+  EXPORT_TERMOPTIONS_CMD=""
+  for option in ${TERMOPTIONS[*]}; do
+    # The E in front of the option is to let it be set without overriding.
+    # EXPORT_TERMOPTIONS="${EXPORT_TERMOPTIONS} env E${option}=${!option} "
+    EXPORT_TERMOPTIONS_CMD="${EXPORT_TERMOPTIONS_CMD} export E${option}=${!option}; "
+  done
 }
 sshn(){
-    host=$1
-    export_termoptions
-    # Calls default shell, stripping leading '-'
-    \ssh -t $host "${EXPORT_TERMOPTIONS_CMD} " '${0#-} -l -s'
+  host=$1
+  export_termoptions
+  # Calls default shell, stripping leading '-'
+  \ssh -t "$host" "${EXPORT_TERMOPTIONS_CMD} " '${0#-} -l -s'
+  unset EXPORT_TERMOPTIONS_CMD
 }
 alias ssh="sshn"
+load_termoptions(){
+  # This part is used for ssh, and sets the option from the exported var.
+  if "$SSHSESSION"; then
+    # Tmux will only import environment variables that weren't already set.
+    # This means we use E-options in the old shell, that then get brought into tmux
+    # and unset.
+    eopt="E${option}"
+    export ${option}=${!eopt}
+    # Should this go after attaching tmux or before???
+    if [ ! -z "$TMUX" ]; then
+      tmux setenv "${option}" "${!eopt}"
+    fi
+    unset "${eopt}"
+  fi
+}
 # {]} Exporting for ssh
