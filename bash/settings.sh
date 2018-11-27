@@ -9,40 +9,20 @@ export VISUAL="vim --cmd \"let g:liteMode=1\""
 export GIT_EDITOR="vim --cmd \"let g:liteMode=1\""
 
 # {[} Terminal settings
+# Set defaults here for various terms
 if substrInStr "Apple" "$TERM_PROGRAM"; then
     export COLORTERM=16
+fi
+if substrInStr "kitty" "$TERM"; then
+    COLORTERM="truecolor"
 fi
 USENF=${USENF-0}
 USEPF=${USEPF-0}
 COLORTERM=${COLORTERM-16}
 TERM_PROGRAM=${TERM_PROGRAM-}
-TERMOPTIONS=(USENF USEPF COLORTERM TERM_PROGRAM)
-# {[} Exporting for ssh
-EXPORT_TERMOPTIONS=""
-for option in ${TERMOPTIONS[*]}; do
-    # The E in front of the option is to let it be set without overriding.
-    # EXPORT_TERMOPTIONS="${EXPORT_TERMOPTIONS} env E${option}=${!option} "
-    EXPORT_TERMOPTIONS="${EXPORT_TERMOPTIONS} export ${option}=${!option}; "
-    # This part is used for ssh, and sets the option from the exported var.
-    if [[ "$SESSION_TYPE" = "remote/ssh" ]]; then
-        eopt=E${option}
-        # Maybe this should go after attaching tmux? Or before???
-        if [ ! -z "$TMUX" ]; then
-            tmux setenv ${option} ${!eopt}
-        fi
-        # export ${option}=${!eopt}
-    fi
-done
-sshn(){
-    host=$1
-    # Calls default shell, stripping leading '-'
-    \ssh -t $host "${EXPORT_TERMOPTIONS} " '${0#-} -l -s'
-    # \ssh -t $host "${EXPORT_TERMOPTIONS} " 'echo ${USENF}'
-    # \ssh -t $host 'export USENF=hello && bash -l -s'
-    # \ssh -t $host 'export USENF=hello && echo $HOST'
-}
-alias ssh="sshn"
-# {]} Exporting for ssh
+# Will get exported to ssh servers (see functions->export_termoptions
+export TERMOPTIONS=(USENF USEPF COLORTERM TERM_PROGRAM)
+
 # {]} Terminal settings
 
 # Source .dir_colours

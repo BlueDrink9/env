@@ -325,3 +325,32 @@ compareVersionNum () {
     return 1
   fi
 }
+
+# {[} Exporting for ssh
+
+export_termoptions(){
+    EXPORT_TERMOPTIONS_CMD=""
+    for option in ${TERMOPTIONS[*]}; do
+        # The E in front of the option is to let it be set without overriding.
+        # EXPORT_TERMOPTIONS="${EXPORT_TERMOPTIONS} env E${option}=${!option} "
+        EXPORT_TERMOPTIONS_CMD="${EXPORT_TERMOPTIONS_CMD} export ${option}=${!option}; "
+        # This part is used for ssh, and sets the option from the exported var.
+        if [[ "$SESSION_TYPE" = "remote/ssh" ]]; then
+            eopt="E${option}"
+            # Maybe this should go after attaching tmux? Or before???
+            if [ ! -z "$TMUX" ]; then
+                tmux setenv "${option}" "${!eopt}"
+                unset "${eopt}"
+            fi
+            # export ${option}=${!eopt}
+        fi
+    done
+}
+sshn(){
+    host=$1
+    export_termoptions
+    # Calls default shell, stripping leading '-'
+    \ssh -t $host "${EXPORT_TERMOPTIONS_CMD} " '${0#-} -l -s'
+}
+alias ssh="sshn"
+# {]} Exporting for ssh
