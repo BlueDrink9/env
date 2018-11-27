@@ -70,9 +70,9 @@ case $- in
         fi
         if command -v tmux>/dev/null; then
             if [[ ! $TERM =~ screen ]] && [[ -z $TMUX ]]; then
-                PNAME="$(ps -o comm= $PPID)";
+                # PNAME="$(ps -o comm= $PPID)";
                 # useTmuxFor="login sshd gnome-terminal init wslbridge-backe"
-                useTmuxFor="sshd"
+                # useTmuxFor="sshd"
                 # if contains "$useTmuxFor" "$PNAME"; then
                 if [[ "$SESSION_TYPE" = "remote/ssh" ]]; then
                     if tmux ls 2> /dev/null | grep -q -v attached; then
