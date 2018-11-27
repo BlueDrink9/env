@@ -336,27 +336,44 @@ export_termoptions(){
     EXPORT_TERMOPTIONS_CMD="${EXPORT_TERMOPTIONS_CMD} export E${option}=${!option}; "
   done
 }
-sshn(){
+
+ssh_with_options(){
   host=$1
   export_termoptions
   # Calls default shell, stripping leading '-'
   \ssh -t "$host" "${EXPORT_TERMOPTIONS_CMD} " '${0#-} -l -s'
   unset EXPORT_TERMOPTIONS_CMD
 }
-alias ssh="sshn"
+alias ssh="ssh_with_options"
+
 load_termoptions(){
   # This part is used for ssh, and sets the option from the exported var.
   if [ "$SSHSESSION" ]; then
-    # Tmux will only import environment variables that weren't already set.
-    # This means we use E-options in the old shell, that then get brought into tmux
-    # and unset.
-    eopt="E${option}"
-    export ${option}=${!eopt}
-    # Should this go after attaching tmux or before???
-    if [ ! -z "$TMUX" ]; then
-      tmux setenv "${option}" "${!eopt}"
-    fi
-    unset "${eopt}"
+    for option in ${TERMOPTIONS[*]}; do
+      # Tmux will only import environment variables that weren't already set.
+      # This means we use E-options in the old shell, that then get brought into tmux
+      # and unset.
+      eopt="E${option}"
+      echo "${option}=${!option}"
+      # Only replace opt if Eopt is set
+      if [ ! -z "${!eopt}" ]; then
+        export "${option}"="${!eopt}"
+        # Should this go after attaching tmux or before???
+        if [ ! -z "$TMUX" ]; then
+          tmux setenv "${option}" "${!eopt}"
+          echo "E${option}=${!eopt}"
+        fi
+        unset "${eopt}"
+      fi
+      echo "${option}=${!option}"
+    done
   fi
 }
+
+tmux_with_options(){
+  export_termoptions
+  \tmux "$@"
+  unset EXPORT_TERMOPTIONS_CMD
+}
+alias tmux="tmux_with_options"
 # {]} Exporting for ssh
