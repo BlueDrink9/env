@@ -346,7 +346,7 @@ sshn(){
 alias ssh="sshn"
 load_termoptions(){
   # This part is used for ssh, and sets the option from the exported var.
-  if "$SSHSESSION"; then
+  if [ "$SSHSESSION" ]; then
     # Tmux will only import environment variables that weren't already set.
     # This means we use E-options in the old shell, that then get brought into tmux
     # and unset.
