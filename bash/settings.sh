@@ -22,10 +22,10 @@ COLORTERM=${COLORTERM-16}
 TERM_PROGRAM=${TERM_PROGRAM-}
 # Will get exported to ssh servers (see functions->export_termoptions)
 export TERMOPTIONS=(USENF USEPF COLORTERM TERM_PROGRAM)
-# Technically a redundant guard, seeing as it appears in the function as well.
-# Here for readability/clarity.
-if [ "$SSHSESSION" ]; then
-    load_termoptions
+
+if [ ! -z "$TMUX" ]; then
+    # In a tmux session
+    set_tmux_termoptions
 fi
 
 # {]} Terminal settings

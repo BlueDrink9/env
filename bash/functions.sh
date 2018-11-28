@@ -344,23 +344,29 @@ ssh_with_options(){
 }
 alias ssh="ssh_with_options"
 
-load_termoptions(){
-  # This part is used for ssh, and sets the option from the exported var.
-  if [ "$SSHSESSION" ]; then
-    for option in ${TERMOPTIONS[*]}; do
-      # If attaching to a running tmux
-      # session, we set a variable in tmux's global environment from
-      # the containing shell. (This must be done before attaching to work!)
-      # We then attach, and bash runs the refresh function.
+set_tmux_termoptions(){
+  for option in ${TERMOPTIONS[*]}; do
+    # If attaching to a running tmux
+    # session, we set a variable in tmux's global environment from
+    # the containing shell. (This must be done before attaching to work!)
+    # We then attach, and bash runs the refresh function.
 
       ## Set tmux environment
       if is_tmux_running; then
-        # Should this go after attaching tmux or before???
-        tmux setenv -g "${option}" "${!option}"
+        # Check that we're in a session
+        if [ ! -z "$TMUX" ]; then
+          for option in ${TERMOPTIONS[*]}; do
+            # Refresh termoption shell variables by parsing tmux's global environment
+            local optval="$(\tmux show-environment -g ${option} 2>/dev/null)"
+            export "${option}"="${optval##*=}"
+            unset optval
+          done
+        else
+          # Should this go after attaching tmux or before???
+          tmux setenv -g "${option}" "${!option}"
+        fi
       fi
-      refresh_tmux_termoptions_from_env
     done
-  fi
 }
 
 is_tmux_running(){
@@ -374,26 +380,9 @@ is_tmux_running(){
   return 1 # false
 }
 
-refresh_tmux_termoptions_from_env(){
-  ## Refresh termoption shell variables by parsing tmux's global environment
-  ## (Where these should have been set by load_termoptions().
-  if is_tmux_running; then
-    # Check that we're in a session
-    if [ ! -z "$TMUX" ]; then
-      for option in ${TERMOPTIONS[*]}; do
-        optval="$(\tmux show-environment -g ${option} 2>/dev/null)"
-        export "${option}"="${optval##*=}"
-        unset optval
-      done
-    fi
-  fi
-}
-
 tmux_with_options(){
-  # export EXPORT_TERMOPTIONS_CMD=`generate_export_termoptions_cmd`
-  refresh_tmux_termoptions_from_env
+  set_tmux_termoptions
   \tmux "$@"
-  # unset EXPORT_TERMOPTIONS_CMD
 }
 alias tmux="tmux_with_options"
 # {]} Exporting for ssh
