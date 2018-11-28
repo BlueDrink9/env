@@ -66,12 +66,22 @@ shopt -s checkwinsize
 # # If set, the pattern "**" used in a pathname expansion context will
 # # match all files and zero or more directories and subdirectories.
 #shopt -s globstar
+
 # No init prevents screen being cleared on enter/exit.
 # Window=4 is scrolling buffer.
 # export LESS='--quit-if-one-screen --ignore-case --status-column --HILITE-UNREAD --tabs=4 --window=-4'
 export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --HILITE-UNREAD --tabs=4 --no-init --window=-4 --RAW-CONTROL-CHARS'
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+# make less more friendly for non-text input files (eg .gz). See lesspipe(1)
+# Different lesspipe scripts, like GNU source-highlight, give syntax highlighting
+if type code2color >/dev/null 2>&1; then
+  # This variable only works with https://github.com/wofr06/lesspipe
+  # c2c is the default. Change to set to something else, eg pygmentizer (slow)
+  # export LESSCOLORIZER='code2color'
+fi
+# Debian's way of doing it...
+[ -x lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+# Brew's way of doing it...
+[ -x lesspipe.sh ] && export LESSOPEN="|lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
 
 if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
     # Solarized ls dircolours (sort of)
