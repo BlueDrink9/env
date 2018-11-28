@@ -360,53 +360,43 @@ load_termoptions(){
       # the containing shell. (This must be done before attaching to work!)
       # We then attach, and bash runs the refresh function.
 
-      # mkdir -p "$TMP/shellvars"
-      # optfile="$TMP/shellvars/${option}"
-      # if [ -z "$TMUX" ]; then
-      #   echo "${!eopt}" >| "${optfile}"
-      # else
-      #   if [ -e "${optfile}" ]; then
-      #     export "${option}"="$(cat "${optfile}")"
-      #     rm "${optfile}"
-      #   fi
-      # fi
-      # unset "${eopt}"
-
       # Only replace opt if Eopt is set
       if [ ! -z "${!eopt}" ]; then
         export "${option}"="${!eopt}"
         ## Set tmux environment
-        # Check tmux is installed
-        if command -v tmux>/dev/null; then
-          # Check tmux has a session running
-          if ! tmux ls 2>&1 | grep -q "no server running"; then
-            # Should this go after attaching tmux or before???
-            tmux setenv -g "${option}" "${!option}"
-          fi
-          unset "${eopt}"
+        if is_tmux_running; then
+          # Should this go after attaching tmux or before???
+          tmux setenv -g "${option}" "${!option}"
         fi
+        unset "${eopt}"
       fi
       refresh_tmux_termoptions_from_env
     done
   fi
 }
 
-refresh_tmux_termoptions_from_env(){
-  ## Refresh termoption shell variables by parsing tmux's global environment
-  ## (Where these should have been set by load_termoptions().
-
+is_tmux_running(){
   # Check tmux is installed
   if command -v tmux>/dev/null; then
     # Check tmux has a session running
     if ! tmux ls 2>&1 | grep -q "no server running"; then
-      # And that we're one such session
-      if [ ! -z "$TMUX" ]; then
-        for option in ${TERMOPTIONS[*]}; do
-          optval="$(tmux show-environment -g ${option} 2>/dev/null)"
-          export "${option}"="${optval##*=}"
-          unset optval
-        done
-      fi
+      return 0 # true
+    fi
+  fi
+  return 1 # false
+}
+
+refresh_tmux_termoptions_from_env(){
+  ## Refresh termoption shell variables by parsing tmux's global environment
+  ## (Where these should have been set by load_termoptions().
+  if is_tmux_running; then
+    # Check that we're in a session
+    if [ ! -z "$TMUX" ]; then
+      for option in ${TERMOPTIONS[*]}; do
+        optval="$(tmux show-environment -g ${option} 2>/dev/null)"
+        export "${option}"="${optval##*=}"
+        unset optval
+      done
     fi
   fi
 }
