@@ -1,5 +1,5 @@
-# -*-  mode: shell-script; -*-
-# vim: set ft=sh:
+# vim:ft=sh:tw=78:ts=4
+# vim:foldmethod=marker:foldmarker={[},{]}
 
 # XXX For debugging, call `bash_debug_log` with optional logfile param
 # to show all bash commands run. Default logfile is ${HOME}/.debug_log_bashsetx.
@@ -54,12 +54,8 @@ else
     esac
 fi
 
-# # Run TMUX, close on exit.
-#     { tmux attach || exec tmux new-session && exit;}
-# fi
-
+#{[} tmux
 # Run tmux on ssh connect
-
 # Check if interactive is part of shell options (running interactively)
 case $- in
     *i*)
@@ -74,7 +70,7 @@ case $- in
                 # useTmuxFor="login sshd gnome-terminal init wslbridge-backe"
                 # useTmuxFor="sshd"
                 # if contains "$useTmuxFor" "$PNAME"; then
-                if [[ "$SESSION_TYPE" = "remote/ssh" ]]; then
+                if [ "$SSHSESSION" ]; then
                     if tmux ls 2> /dev/null | grep -q -v attached; then
                         exec tmux $TMUX_256_arg attach -t $(tmux ls 2> /dev/null | grep -v attached | head -1 | cut -d : -f 1)
                     else
@@ -85,3 +81,4 @@ case $- in
         fi
         ;;
 esac
+# {]} tmux
