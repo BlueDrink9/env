@@ -328,21 +328,19 @@ compareVersionNum () {
 
 # {[} Exporting for ssh
 
-export_termoptions(){
-  EXPORT_TERMOPTIONS_CMD=""
+export_termoptions_cmd(){
+  out=""
   for option in ${TERMOPTIONS[*]}; do
-    # The E in front of the option is to let it be set without overriding.
-    # EXPORT_TERMOPTIONS="${EXPORT_TERMOPTIONS} env E${option}=${!option} "
-    EXPORT_TERMOPTIONS_CMD="${EXPORT_TERMOPTIONS_CMD} export E${option}=${!option}; "
+    out="${out} export ${option}=${!option}; "
   done
+  echo out
 }
 
 ssh_with_options(){
   host=$1
-  export_termoptions
+  local EXPORT_TERMOPTIONS_CMD=`export_termoptions`
   # Calls default shell, stripping leading '-'
   \ssh -t "$host" "${EXPORT_TERMOPTIONS_CMD} " '${0#-} -l -s'
-  unset EXPORT_TERMOPTIONS_CMD
 }
 alias ssh="ssh_with_options"
 
@@ -350,25 +348,15 @@ load_termoptions(){
   # This part is used for ssh, and sets the option from the exported var.
   if [ "$SSHSESSION" ]; then
     for option in ${TERMOPTIONS[*]}; do
-      # Tmux will only import environment variables that weren't already set.
-      # This means we use E-options in the old shell, that then get brought into tmux
-      # and unset.
-
-      eopt="E${option}"
-      # This only happens when first starting tmux. If attaching to a running
-      # session, instead we set a variable in tmux's global environment from
+      # If attaching to a running tmux
+      # session, we set a variable in tmux's global environment from
       # the containing shell. (This must be done before attaching to work!)
       # We then attach, and bash runs the refresh function.
 
-      # Only replace opt if Eopt is set
-      if [ ! -z "${!eopt}" ]; then
-        export "${option}"="${!eopt}"
-        ## Set tmux environment
-        if is_tmux_running; then
-          # Should this go after attaching tmux or before???
-          tmux setenv -g "${option}" "${!option}"
-        fi
-        unset "${eopt}"
+      ## Set tmux environment
+      if is_tmux_running; then
+        # Should this go after attaching tmux or before???
+        tmux setenv -g "${option}" "${!option}"
       fi
       refresh_tmux_termoptions_from_env
     done
