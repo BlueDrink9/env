@@ -390,10 +390,8 @@ refresh_tmux_termoptions_from_env(){
 }
 
 tmux_with_options(){
-  # export EXPORT_TERMOPTIONS_CMD=`generate_export_termoptions_cmd`
   refresh_tmux_termoptions_from_env
   \tmux "$@"
-  # unset EXPORT_TERMOPTIONS_CMD
 }
 alias tmux="tmux_with_options"
 # {]} Exporting for ssh
