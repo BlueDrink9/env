@@ -337,9 +337,22 @@ let g:netrw_winsize = 25
 function s:SetTitle()
     if has("gui_running")
         " Exclude "Vim" for guivim (because it'll have a logo)
-        let l:preTitle = ""
+        let l:app = ""
+    elseif has("nvim")
+        let l:app = "NVim"
     else
-        let l:preTitle = "|Vim| "
+        let l:app = "Vim"
+    endif
+    if g:ideMode == 1
+        let l:preTitle = "|ide" . l:app . "| "
+    elseif g:liteMode == 1
+        let l:preTitle = "|lite" . l:app . "| "
+    else
+        if l:app == ""
+            let l:preTitle = ""
+        else
+            let l:preTitle = "|" . l:app . "| "
+        endif
     endif
     let l:filename = expand("%:t")
     if l:filename == ""
