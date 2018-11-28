@@ -328,17 +328,17 @@ compareVersionNum () {
 
 # {[} Exporting for ssh
 
-export_termoptions_cmd(){
+generate_export_termoptions_cmd(){
   out=""
   for option in ${TERMOPTIONS[*]}; do
     out="${out} export ${option}=${!option}; "
   done
-  echo out
+  echo "${out}"
 }
 
 ssh_with_options(){
   host=$1
-  local EXPORT_TERMOPTIONS_CMD=`export_termoptions`
+  local EXPORT_TERMOPTIONS_CMD=`generate_export_termoptions_cmd`
   # Calls default shell, stripping leading '-'
   \ssh -t "$host" "${EXPORT_TERMOPTIONS_CMD} " '${0#-} -l -s'
 }
@@ -381,7 +381,7 @@ refresh_tmux_termoptions_from_env(){
     # Check that we're in a session
     if [ ! -z "$TMUX" ]; then
       for option in ${TERMOPTIONS[*]}; do
-        optval="$(tmux show-environment -g ${option} 2>/dev/null)"
+        optval="$(\tmux show-environment -g ${option} 2>/dev/null)"
         export "${option}"="${optval##*=}"
         unset optval
       done
@@ -390,9 +390,10 @@ refresh_tmux_termoptions_from_env(){
 }
 
 tmux_with_options(){
-  export_termoptions
+  # export EXPORT_TERMOPTIONS_CMD=`generate_export_termoptions_cmd`
+  refresh_tmux_termoptions_from_env
   \tmux "$@"
-  unset EXPORT_TERMOPTIONS_CMD
+  # unset EXPORT_TERMOPTIONS_CMD
 }
 alias tmux="tmux_with_options"
 # {]} Exporting for ssh
