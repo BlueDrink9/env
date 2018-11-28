@@ -355,24 +355,34 @@ load_termoptions(){
       # and unset.
       eopt="E${option}"
 
-      mkdir -p "$TMP/shellvars"
-      optfile="$TMP/shellvars/${option}"
-      if [ -z "$TMUX" ]; then
-        echo "${!eopt}" >| "${optfile}"
-      else
-        if [ -e "${optfile}" ]; then
-          export "${option}"="$(cat "${optfile}")"
-          rm "${optfile}"
-        fi
-      fi
-      unset "${eopt}"
+      # mkdir -p "$TMP/shellvars"
+      # optfile="$TMP/shellvars/${option}"
+      # if [ -z "$TMUX" ]; then
+      #   echo "${!eopt}" >| "${optfile}"
+      # else
+      #   if [ -e "${optfile}" ]; then
+      #     export "${option}"="$(cat "${optfile}")"
+      #     rm "${optfile}"
+      #   fi
+      # fi
+      # unset "${eopt}"
 
       # Only replace opt if Eopt is set
       if [ ! -z "${!eopt}" ]; then
         export "${option}"="${!eopt}"
-        # Should this go after attaching tmux or before???
-        if [ ! -z "$TMUX" ]; then
-          tmux setenv -g "${option}" "${!eopt}"
+
+        # Check tmux is installed
+        if command -v tmux>/dev/null; then
+          # Check tmux has a session running
+          if ! tmux ls 2>&1 | grep -q "no server running"; then
+            # Should this go after attaching tmux or before???
+            tmux setenv -g "${option}" "${!eopt}"
+            if [ ! -z "$TMUX" ]; then
+              optval="$(tmux show-environment -g ${option})"
+              export "${option}" "${optval##*=}"
+              unset optval
+            fi
+          fi
         fi
         unset "${eopt}"
       fi
