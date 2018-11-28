@@ -62,6 +62,23 @@ if !filereadable(s:vimplug_file)
     augroup end
 endif
 
+if has('nvim')
+    if !has("python")
+        if executable('pip2')
+            exec "!pip2 install --user --upgrade neovim"
+        elseif executable('pip')
+            exec "!pip install --upgrade --user neovim"
+        endif
+    endif
+    if !has("python3")
+        if executable('pip3')
+            exec "!pip3 install --user --upgrade neovim"
+        elseif executable('pip')
+            exec "!pip install --upgrade --user neovim"
+        endif
+    endif
+endif
+
 "
 let g:proseFileTypes = "'latex,context,plaintex,tex,
             \markdown,mkd,
