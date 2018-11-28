@@ -353,7 +353,12 @@ load_termoptions(){
       # Tmux will only import environment variables that weren't already set.
       # This means we use E-options in the old shell, that then get brought into tmux
       # and unset.
+
       eopt="E${option}"
+      # This only happens when first starting tmux. If attaching to a running
+      # session, instead we set a variable in tmux's global environment from
+      # the containing shell. (This must be done before attaching to work!)
+      # We then attach, and bash runs the refresh function.
 
       # mkdir -p "$TMP/shellvars"
       # optfile="$TMP/shellvars/${option}"
@@ -370,23 +375,39 @@ load_termoptions(){
       # Only replace opt if Eopt is set
       if [ ! -z "${!eopt}" ]; then
         export "${option}"="${!eopt}"
-
+        ## Set tmux environment
         # Check tmux is installed
         if command -v tmux>/dev/null; then
           # Check tmux has a session running
           if ! tmux ls 2>&1 | grep -q "no server running"; then
             # Should this go after attaching tmux or before???
-            tmux setenv -g "${option}" "${!eopt}"
-            if [ ! -z "$TMUX" ]; then
-              optval="$(tmux show-environment -g ${option})"
-              export "${option}" "${optval##*=}"
-              unset optval
-            fi
+            tmux setenv -g "${option}" "${!option}"
           fi
+          unset "${eopt}"
         fi
-        unset "${eopt}"
       fi
+      refresh_tmux_termoptions_from_env
     done
+  fi
+}
+
+refresh_tmux_termoptions_from_env(){
+  ## Refresh termoption shell variables by parsing tmux's global environment
+  ## (Where these should have been set by load_termoptions().
+
+  # Check tmux is installed
+  if command -v tmux>/dev/null; then
+    # Check tmux has a session running
+    if ! tmux ls 2>&1 | grep -q "no server running"; then
+      # And that we're one such session
+      if [ ! -z "$TMUX" ]; then
+        for option in ${TERMOPTIONS[*]}; do
+          optval="$(tmux show-environment -g ${option} 2>/dev/null)"
+          export "${option}"="${optval##*=}"
+          unset optval
+        done
+      fi
+    fi
   fi
 }
 
