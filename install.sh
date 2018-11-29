@@ -444,6 +444,7 @@ setupShell() {
     if [[ $OSTYPE =~ 'darwin' ]]; then
         addTextIfAbsent "source .bashrc" "${HOME}/.bash_profile"
     fi
+    gitSettings
 }
 
 setupKitty() {
@@ -473,7 +474,7 @@ readSettings() {
         if askQuestionYN "Install VSCode extensions?" ; then
             doVS=1
         fi
-        if askQuestionYN "Set up git?" ; then
+        if askQuestionYN "Set up git credentials?" ; then
             doGit=1
         fi
         if askQuestionYN "Set up vim?" ; then
