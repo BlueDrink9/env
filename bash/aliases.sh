@@ -1,5 +1,6 @@
-# -*-  mode: shell-script; -*-
 # vim: set ft=sh:
+# vim: set tw=78 ts=4 sw=4
+# vim: foldmethod=marker foldmarker={[},{]}
 
 # Always used
 shopt -s expand_aliases
@@ -50,6 +51,7 @@ alias :e="vim"
 alias e="vim"
 # alias :Q="exit"
 # alias ZZ="exit"
+alias svi="sudoedit"
 
 alias g="git"
 alias gca="git commit -a"
@@ -92,10 +94,27 @@ set -o noclobber
 # alias mv="mv -i"
 
 
-alias svi="sudoedit"
-alias sagi="sudo apt install"
-alias sag="sudo apt"
-alias sagu="sudo apt update && sudo apt upgrade"
+# {[} Package manager
+if [ `command -v brew 2>/dev/null` ]; then
+    alias pacman="brew"
+elif [ `command -v pacman 2>/dev/null` ]; then
+    true # Turns out the arch pacman is pacman. Best name, really.
+elif [ `command -v pkg 2>/dev/null` ]; then
+    # Probably termux, may be freeBSD.
+    alias pacman="pkg"
+elif [ `command -v apt 2>/dev/null` ]; then
+    alias pacman="sudo apt"
+elif [ `command -v yum 2>/dev/null` ]; then
+    alias pacman="sudo yum"
+fi
+alias sagi="pacman install"
+alias pinstall="pacman install"
+alias sag="pacman"
+alias pupdate="pacman update"
+alias pupgrade="pacman update && pacman upgrade"
+alias sagu="pacman update && pacman upgrade"
+
+# {]} Package manager
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
