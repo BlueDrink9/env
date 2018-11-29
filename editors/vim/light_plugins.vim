@@ -128,6 +128,8 @@ Plug 'https://github.com/tpope/vim-surround.git'
 Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
 let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
 call add(g:pluginSettingsToExec, "call yankstack#setup()")
+nmap <leader>p <Plug>yankstack_substitute_older_paste
+nmap <leader>P <Plug>yankstack_substitute_newer_paste
 if v:version >= 704
     Plug 'https://github.com/jlanzarotta/bufexplorer.git'
 endif
