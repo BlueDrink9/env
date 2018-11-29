@@ -373,7 +373,7 @@ is_tmux_running(){
   # Check tmux is installed
   if command -v tmux>/dev/null; then
     # Check tmux has a session running
-    if ! tmux ls 2>&1 | grep -q "no server running"; then
+    if ! \tmux ls 2>&1 | grep -q "no server running"; then
       return 0 # true
     fi
   fi
