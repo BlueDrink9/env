@@ -334,7 +334,7 @@ let g:netrw_winsize = 25
 " highlight EOLWS ctermbg=red guibg=red
 
 " Put buffer name in window title
-function s:SetTitle()
+function! s:SetTitle()
     if has("gui_running")
         " Exclude "Vim" for guivim (because it'll have a logo)
         let l:app = ""
@@ -381,7 +381,7 @@ augroup END
 " set spellfile=$HOME/.vim-spell-en.utf-8.add
 exec 'let &spellfile=expand("' . s:scriptpath . '/spellfile-en.utf-8.add")'
 
-function s:ReadTemplate()
+function! s:ReadTemplate()
     filetype detect
     let l:templatePath = PathExpand(s:scriptpath . '/templates/' . &filetype . '.vim')
     if filereadable(l:templatePath)
