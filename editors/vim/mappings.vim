@@ -64,7 +64,10 @@ if has("clipboard")
     nnoremap <C-q> "+P
 else
     " Replace with writing/reading from system commands in console vim.
-    if has("win32")
+    if exists('$CLIP_PROGRAM_COPY')
+        let s:copy=$CLIP_PROGRAM_COPY
+        let s:paste=$CLIP_PROGRAM_PASTE
+    elseif has("win32")
         let s:paste = paste.exe
         let s:copy = clip.exe
 
