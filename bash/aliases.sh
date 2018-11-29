@@ -97,7 +97,7 @@ set -o noclobber
 # {[} Package manager
 if [ `command -v brew 2>/dev/null` ]; then
     alias pacman="brew"
-elif [ `command -v pacman 2>/dev/null` ]; then
+elif [ `command -v \pacman 2>/dev/null` ]; then
     true # Turns out the arch pacman is pacman. Best name, really.
 elif [ `command -v pkg 2>/dev/null` ]; then
     # Probably termux, may be freeBSD.
