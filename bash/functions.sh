@@ -386,3 +386,13 @@ tmux_with_options(){
 }
 alias tmux="tmux_with_options"
 # {]} Exporting for ssh
+
+reset_ssh_permissions(){
+  chmod 700 $HOME/.ssh
+  chmod 644 $HOME/.ssh/*
+  chmod 600 $HOME/.ssh/*_rsa
+  chmod 644 $HOME/.ssh/*.pub
+  chmod go-w $HOME
+  chown $USER $HOME/.ssh
+  chown $USER $HOME/.ssh/*
+}
