@@ -84,8 +84,12 @@ else
             let s:copy = "pbcopy"
         elseif system('uname -a') =~ "Android"
             " Assume termux
-            let s:paste = "termux-get-clipboard"
-            let s:copy = "termux-set-clipboard"
+            if executable('termux-get-clipboard')
+                let s:paste = "termux-get-clipboard"
+                let s:copy = "termux-set-clipboard"
+            else
+                echom "Termux-api not installed."
+            endif
         else
             " Linux
             let s:paste = "xclip -o"
