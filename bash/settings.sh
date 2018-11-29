@@ -73,11 +73,11 @@ shopt -s checkwinsize
 export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --HILITE-UNREAD --tabs=4 --no-init --window=-4 --RAW-CONTROL-CHARS'
 # make less more friendly for non-text input files (eg .gz). See lesspipe(1)
 # Different lesspipe scripts, like GNU source-highlight, give syntax highlighting
-if type code2color >/dev/null 2>&1; then
+# if type code2color >/dev/null 2>&1; then
   # This variable only works with https://github.com/wofr06/lesspipe
   # c2c is the default. Change to set to something else, eg pygmentizer (slow)
   # export LESSCOLORIZER='code2color'
-fi
+# fi
 # Debian's way of doing it...
 [ -x lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 # Brew's way of doing it...
