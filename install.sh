@@ -407,6 +407,7 @@ gitCredentialCache() {
 }
 
 gitSettings() {
+    printErr "Enabling custom git setup..."
     # Include is only supported on git versions > 1.7.10 
     # (but 2.0 is quite standard anyway).
     git config --global include.path ${SCRIPTDIR}/gitconfig
@@ -433,18 +434,18 @@ setupShell() {
         downloadURLtoFile  \
             https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.256dark  \
             "${HOME}/.dircolours_solarized"
-        # https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-universal \
+        # https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-universal
 
-            printErr "Enabling custom tmux setup..."
+        printErr "Enabling custom tmux setup..."
         addTextIfAbsent "source-file $SCRIPTDIR/terminal/tmux/tmux.conf" ${HOME}/.tmux.conf
         printErr "Enabling custom readline (inputrc) setup..."
         addTextIfAbsent "\$include $SCRIPTDIR/bash/inputrc.sh" "${HOME}/.inputrc"
+        gitSettings
     fi
     # {]} WW
     if [[ $OSTYPE =~ 'darwin' ]]; then
         addTextIfAbsent "source .bashrc" "${HOME}/.bash_profile"
     fi
-    gitSettings
 }
 
 setupKitty() {
