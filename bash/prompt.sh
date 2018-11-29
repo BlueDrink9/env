@@ -20,11 +20,11 @@ export PS3="Select: "
 # Used with -x for debugging bash
 export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
 
-FLASHING="\[\E[5m\]"
+# FLASHING="\[\E[5m\]"
 
-prompt_escape(){
-  echo "\\[$1\\]"
-}
+# prompt_escape(){
+#   echo "\\[$1\\]"
+# }
 # Truncate paths with '...', leaving only the last n folders in prompt
 # Not actually desirable, since I only store the full path in the window bar
 # PROMPT_DIRTRIM=5
@@ -78,46 +78,45 @@ set_bash_prompt () {
 
   # if git exists (it doesn't on iOS).
   if hash git 2>/dev/null; then
-    local GIT_BRANCH="`get_git_branch`"
+    GIT_BRANCH="`get_git_branch`"
     if [ ! "${GIT_BRANCH}" == "" ]
     then
-      local GIT_STATUS_PROMPT="`parse_git_branch`"
-      unset GIT_PROMPT
+      GIT_STATUS_PROMPT="`parse_git_branch`"
     else
-      local GIT_STATUS_PROMPT=""
+      GIT_STATUS_PROMPT=""
     fi
   fi
 
   #set_git_prompt
   #GIT_STATUS_PROMPT="${BRANCH}"
   # \e]0 escapes to window title, \a ends it.
-  local WINDOW_TITLE_BASH_PATH="\[\e]2;[\W] \u@\h: [\w] ${GIT_BRANCH} – Bash\a\]"
+  WINDOW_TITLE_BASH_PATH="\[\e]2;[\W] \u@\h: [\w] ${GIT_BRANCH} – Bash\a\]"
 
   if [ -z ${USER} ] ; then
-    local USER=`id -u -n`
+    export USER=`id -u -n`
   fi
-  local USER_AT_HOST="${pblue}\u${pNC}@${pyellow}\h${pNC}"
-  local USER_COLOURED="${pblue}\u${pNC}"
-  local USER_INITIAL_COLOURED="${pblue}${USER:0:1}${pNC}"
+  USER_AT_HOST="${pblue}\u${pNC}@${pyellow}\h${pNC}"
+  USER_COLOURED="${pblue}\u${pNC}"
+  USER_INITIAL_COLOURED="${pblue}${USER:0:1}${pNC}"
 
-  local HOST=`uname -n | cut -d"." -f1`
+  export HOST=`uname -n | cut -d"." -f1`
 
   if (( ${#HOST}  > 12 )); then
     # Truncate hostname if it is too long.
-    local HOST=${HOST:0:12}
-    local HOST_COLOURED="${pyellow}${HOST}${pNC}"
+    HOST=${HOST:0:12}
+    HOST_COLOURED="${pyellow}${HOST}${pNC}"
   else
-    local HOST_COLOURED="${pyellow}\h${pNC}"
+    HOST_COLOURED="${pyellow}\h${pNC}"
   fi
 
-  local CURR_FULL_PATH="\w"
-  local CURR_DIR="\W"
-  local CURR_DIR_COLOURED="${PREV_COMMAND_COLOUR}[${CURR_DIR}]${pNC}"
-  local TIME_PROMPT="\t"
-  local TIME_PROMPT_COLOURED="${pwhite}${pbg_Black}${TIME_PROMPT}${pNC}"
+  CURR_FULL_PATH="\w"
+  CURR_DIR="\W"
+  CURR_DIR_COLOURED="${PREV_COMMAND_COLOUR}[${CURR_DIR}]${pNC}"
+  TIME_PROMPT="\t"
+  TIME_PROMPT_COLOURED="${pwhite}${pbg_Black}${TIME_PROMPT}${pNC}"
   # VI_MODE is empty var, but is here to remind you that it will exist
   # in the actual prompt because of inputrc settings.
-  local VI_MODE=""
+  VI_MODE=""
 
   # declare -a PROMPT_STRING=(\ "${TIME_PROMPT_COLOURED}: "\ "${USER_AT_HOST}: "\ "${PREV_COMMAND_COLOUR}[${CURR_DIR}]${pNC}"\ "${GIT_STATUS_PROMPT} "\ "${PROMPT_SYMBOL}"\)
 
@@ -126,50 +125,56 @@ set_bash_prompt () {
 
   # Dynamically build prompt based on the screen size and size of prompt.
 
-  local DESIRED_COMMAND_SPACE=40
-  local curr_dir=result=${PWD##*/}
+  DESIRED_COMMAND_SPACE=40
+  curr_dir=result=${PWD##*/}
   if [ ! -z "$GIT_STATUS_PROMPT" ]; then
     # Contains roughly 20 escape chars.
-    local git_len=$((${#GIT_STATUS_PROMPT} - 20))
+    git_len=$((${#GIT_STATUS_PROMPT} - 20))
   else
-    local git_len=0
+    git_len=0
   fi
   # + 9 is for the extra few symbols that make up the prompt.
-  local prompt_len_no_time_host_user=$(( ${#curr_dir} + ${git_len} + 7 ))
-  local prompt_len_no_time_host=$(($prompt_len_no_time_host_user + 1 + ${#USER}))
-  local prompt_len_no_time_user=$(($prompt_len_no_time_host_user + 1 + ${#HOST}))
+  prompt_len_no_time_host_user=$(( ${#curr_dir} + ${git_len} + 7 ))
+  prompt_len_no_time_host=$(($prompt_len_no_time_host_user + 1 + ${#USER}))
+  prompt_len_no_time_user=$(($prompt_len_no_time_host_user + 1 + ${#HOST}))
   # prompt_len_no_time=$(( $prompt_len_no_time_host + ${#HOST} + 1 ))
-  local prompt_len_no_time=$(( $prompt_len_no_time_user + ${#USER} + 1 ))
+  prompt_len_no_time=$(( $prompt_len_no_time_user + ${#USER} + 1 ))
   # + 8 is number of chars in the time_prompt
-  local prompt_len=$(( $prompt_len_no_time + 8 ))
+  prompt_len=$(( $prompt_len_no_time + 8 ))
 
-  local VAR_PROMPT=""
+  VAR_PROMPT=""
 
   if (( $((${COLUMNS} - $prompt_len)) > ${DESIRED_COMMAND_SPACE})); then
-    local VAR_PROMPT="${TIME_PROMPT_COLOURED} ${USER_COLOURED}@${HOST_COLOURED}:"
+    VAR_PROMPT="${TIME_PROMPT_COLOURED} ${USER_COLOURED}@${HOST_COLOURED}:"
   elif (( $((${COLUMNS} - $prompt_len_no_time)) > ${DESIRED_COMMAND_SPACE})); then
-    local VAR_PROMPT="${USER_COLOURED}@${HOST_COLOURED}:"
+    VAR_PROMPT="${USER_COLOURED}@${HOST_COLOURED}:"
   elif (( $((${COLUMNS} - $prompt_len_no_time_host)) > ${DESIRED_COMMAND_SPACE})); then
-    local VAR_PROMPT="${USER_INITIAL_COLOURED}@${HOST_COLOURED}:"
+    VAR_PROMPT="${USER_INITIAL_COLOURED}@${HOST_COLOURED}:"
   # elif (( $((${COLUMNS} - $prompt_len_no_time_host)) > ${DESIRED_COMMAND_SPACE})); then
   #   VAR_PROMPT="${USER_COLOURED}: "
     # let "remaining_space= ${COLUMNS} - $prompt_len_no_time_host_user"
   else
-    local VAR_PROMPT=""
+    VAR_PROMPT=""
   fi
 
   # number of bg jobs, or "" if 0.
-  local JOBS=`if [ -n "$(jobs -p)" ]; then echo "\j"; fi`
+  JOBS=`if [ -n "$(jobs -p)" ]; then echo "\j"; fi`
 
   # PROMPT_STATICLEN="${VI_MODE} ${TIME_PROMPT_COLOURED}: ${USER_AT_HOST}: ${CURR_DIR_COLOURED}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL}"
-  local PROMPT="${VI_MODE} ${VAR_PROMPT} ${CURR_DIR_COLOURED}${GIT_STATUS_PROMPT} ${JOBS}${PROMPT_SYMBOL}"
+  PROMPT="${VI_MODE} ${VAR_PROMPT} ${CURR_DIR_COLOURED}${GIT_STATUS_PROMPT} ${JOBS}${PROMPT_SYMBOL}"
 
   # Ensures you won't have prompt displaced by previous line's input (eg ^C)
-  local cursorToBoL="\[\033[G\]"
+  cursorToBoL="\[\033[G\]"
   # Set the bash prompt variable.
   # PS1="${WINDOW_TITLE_BASH_PATH}${cursorToBoL}${PROMPT}"
   PS1="${WINDOW_TITLE_BASH_PATH}${PROMPT}"
   # PS1="${WINDOW_TITLE_BASH_PATH}${PROMPT_STATICLEN}"
+  unset GIT_BRANCH GIT_STATUS_PROMPT WINDOW_TITLE_BASH_PATH USER_AT_HOST \
+    USER_COLOURED USER_INITIAL_COLOURED HOST_COLOURED CURR_FULL_PATH CURR_DIR \
+    CURR_DIR_COLOURED TIME_PROMPT TIME_PROMPT_COLOURED VI_MODE \
+    DESIRED_COMMAND_SPACE git_len CURR_DIR prompt_len_no_time_host_user \
+    prompt_len_no_time_host prompt_len_no_time_user prompt_len_no_time \
+    prompt_len VAR_PROMPT JOBS PROMPT cursorToBoL 
 }
 
 # Return the prompt symbol ($) to use, colorized based on the return value of the
@@ -195,64 +200,66 @@ PROMPT_COMMAND=set_bash_prompt
 # Check status of branch
 # pgreen if no changes, yellow if modified. Cyan if there are misc changes to files.
 parse_git_branch() {
-  local STATUS_COLOUR=${pNC}
-  local BRANCH=`get_git_branch`
+  STATUS_COLOUR=${pNC}
+  BRANCH=`get_git_branch`
   if [ ! "${BRANCH}" == "" ]
   then
-    local status=`git status 2>&1 | tee`
-    local dirty=`echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?"`
-    local clean=`echo -n "${status}" 2> /dev/null | grep "clean" &> /dev/null; echo "$?"`
-    local untracked=`echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?"`
-    local ahead=`echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?"`
-    local behind=`echo -n "${status}" 2> /dev/null | grep "Your branch is behind" &> /dev/null; echo "$?"`
-    local diverged=`echo -n "${status}" 2> /dev/null | grep "diverged" &> /dev/null; echo "$?"`
-    local newfile=`echo -n "${status}" 2> /dev/null | grep "new file:" &> /dev/null; echo "$?"`
-    local renamed=`echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?"`
-    local deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`
-    local bits=''
+    status=`git status 2>&1 | tee`
+    dirty=`echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?"`
+    clean=`echo -n "${status}" 2> /dev/null | grep "clean" &> /dev/null; echo "$?"`
+    untracked=`echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?"`
+    ahead=`echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?"`
+    behind=`echo -n "${status}" 2> /dev/null | grep "Your branch is behind" &> /dev/null; echo "$?"`
+    diverged=`echo -n "${status}" 2> /dev/null | grep "diverged" &> /dev/null; echo "$?"`
+    newfile=`echo -n "${status}" 2> /dev/null | grep "new file:" &> /dev/null; echo "$?"`
+    renamed=`echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?"`
+    deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`
+    bits=''
     if [ "${clean}" == "0" ]; then
-      local STATUS_COLOUR=${pgreen}
-      local bits=""
+      STATUS_COLOUR=${pgreen}
+      bits=""
     fi
     if [ "${ahead}" == "0" ]; then
-      local STATUS_COLOUR=${pcyan}
-      local bits="^${bits}"
+      STATUS_COLOUR=${pcyan}
+      bits="^${bits}"
     fi
     if [ "${behind}" == "0" ]; then
-      local STATUS_COLOUR=${pcyan}
-      local bits="v${bits}"
+      STATUS_COLOUR=${pcyan}
+      bits="v${bits}"
     fi
     if [ "${diverged}" == "0" ]; then
-      local STATUS_COLOUR=${pcyan}
-      local bits="^v${bits}"
+      STATUS_COLOUR=${pcyan}
+      bits="^v${bits}"
       # optional: use several other possible unicode symbols.
     fi
     if [ "${untracked}" == "0" ]; then
-      local bits="?${bits}"
+      bits="?${bits}"
     fi
     if [ "${renamed}" == "0" ]; then
-      local bits=">${bits}"
+      bits=">${bits}"
     fi
     if [ "${deleted}" == "0" ]; then
-      local bits="X${bits}"
+      bits="X${bits}"
     fi
     if [ "${newfile}" == "0" ]; then
-      local bits="+${bits}"
+      bits="+${bits}"
     fi
     if [ "${dirty}" == "0" ]; then
-      local STATUS_COLOUR=${pyellow}
-      local bits="*${bits}"
+      STATUS_COLOUR=${pyellow}
+      bits="*${bits}"
     fi
     if [ ! "${bits}" == "" ] || [ "${clean}" == "0" ]; then
-      local STATUS="${bits}"
+      STATUS="${bits}"
     else
-      local STATUS="!"
+      STATUS="!"
     fi
 
     # Sometimes status can be slow. Consider removing.
-    local GIT_PROMPT="${STATUS_COLOUR}{${BRANCH}${STATUS}}${pNC}"
+    GIT_PROMPT="${STATUS_COLOUR}{${BRANCH}${STATUS}}${pNC}"
   else
-    local GIT_PROMPT=""
+    GIT_PROMPT=""
   fi
   echo "${GIT_PROMPT}"
+  unset GIT_PROMPT STATUS_COLOUR BRANCH bits deleted renamed newfile \
+    diverged behind ahead untracked clean dirty status STATUS
 }
