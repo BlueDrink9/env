@@ -15,8 +15,9 @@ if has("timers")
     Plug 'https://github.com/w0rp/ale'
     let g:ale_sign_error = 'X'
     let g:ale_sign_warning = '!'
-    nmap <silent> ]e :ALENext<cr>
-    nmap <silent> [e :ALEPrevious<cr>
+    " let g:ale_open_list=1 " Auto-open error lsit
+    call add('g:pluginSettingsToExec', 'nmap <silent> ]e <Plug>(ale_next_wrap)')
+    call add('g:pluginSettingsToExec', 'nmap <silent> ]e <Plug>(ale_next_wrap)')
     " Because ]e clobbers this
     nmap <silent> ]m <Plug>unimpairedMoveDown
     nmap <silent> [m <Plug>unimpairedMoveUp
