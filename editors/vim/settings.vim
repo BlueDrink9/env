@@ -344,7 +344,11 @@ function! s:SetTitle()
     elseif has("nvim")
         let l:app = "NVim"
     else
-        let l:app = "Vim"
+        if exists("g:noPlugin")
+            let l:app = "Vi"
+        else
+            let l:app = "Vim"
+        endif
     endif
     if g:ideMode == 1
         let l:preTitle = "|ide" . l:app . "| "
