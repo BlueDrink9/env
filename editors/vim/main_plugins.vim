@@ -13,18 +13,20 @@
 " {]} ---------- Later ----------
 
 if has('nvim')
-    if !has("python")
-        if executable('pip2')
-            exec "!pip2 install --user --upgrade neovim"
-        elseif executable('pip')
-            exec "!pip install --upgrade --user neovim"
+    if !exists('g:skipPipInstall')
+        if !has("python")
+            if executable('pip2')
+                exec "!pip2 install --user --upgrade neovim"
+            elseif executable('pip')
+                exec "!pip install --upgrade --user neovim"
+            endif
         endif
-    endif
-    if !has("python3")
-        if executable('pip3')
-            exec "!pip3 install --user --upgrade neovim"
-        elseif executable('pip')
-            exec "!pip install --upgrade --user neovim"
+        if !has("python3")
+            if executable('pip3')
+                exec "!pip3 install --user --upgrade neovim"
+            elseif executable('pip')
+                exec "!pip install --upgrade --user neovim"
+            endif
         endif
     endif
 endif
