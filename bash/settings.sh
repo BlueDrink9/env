@@ -39,6 +39,12 @@ export LC_CTYPE="en_US.UTF-8"
 # Allow sending ctrl+S to applications in terminal (prev stops scrolling)
 stty -ixon
 
+if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+    export XKB_DEFAULT_LAYOUT="us,us"
+    export XKB_DEFAULT_VARIANT="colemak,"
+    export XKB_DEFAULT_OPTIONS="grp:alt_shift_toggle,caps:backspace,grp_led:caps,altwin:swap_alt_win"
+fi
+
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 export HISTSIZE=1000
 export HISTFILESIZE=2000
