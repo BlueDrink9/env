@@ -95,25 +95,39 @@ set -o noclobber
 
 
 # {[} Package manager
-# unalias pacman
+installcmd="install"
+refreshcmd="update"
+upgradecmd="upgrade"
+searchcmd="search"
+removecmd="remove"
 if [ `command -v brew 2>/dev/null` ]; then
-    alias pacman="brew"
-elif [ `command -v \\\pacman 2>/dev/null` ]; then
-    true # Turns out the arch pacman is pacman. Best name, really.
+    alias pack="brew"
+    removecmd="uninstall"
+elif [ `command -v pacman 2>/dev/null` ]; then
+    if [ `command -v yay 2>/dev/null` ]; then
+        alias pack="yay"
+    else
+        alias pack="pacman"
+    fi
+    installcmd="-S"
+    refreshcmd="-S"
+    upgradecmd="-U"
+    searchcmd="-Ss"
+    removecmd="-R"
 elif [ `command -v pkg 2>/dev/null` ]; then
     # Probably termux, may be freeBSD.
-    alias pacman="pkg"
+    alias pack="pkg"
 elif [ `command -v apt 2>/dev/null` ]; then
-    alias pacman="sudo apt"
+    alias pack="sudo apt"
 elif [ `command -v yum 2>/dev/null` ]; then
-    alias pacman="sudo yum"
+    alias pack="sudo yum"
 fi
-alias sagi="pacman install"
-alias pinstall="pacman install"
-alias sag="pacman"
-alias pupdate="pacman update"
-alias pupgrade="pacman update && pacman upgrade"
-alias sagu="pacman update && pacman upgrade"
+alias packi="pack $installcmd"
+alias packr="pack $refreshcmd"
+alias packu="pack $refreshcmd && pack $upgradecmd"
+alias packs="pack $searchcmd"
+alias packrm="pack $removecmd"
+unset installcmd refreshcmd upgradecmd searchcmd removecmd
 
 # {]} Package manager
 
