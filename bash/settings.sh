@@ -118,11 +118,12 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-
-if compareVersionNum ${BASH_VERSION_CLEAN} '<' 4.3; then
-    # Remove tab menu completion cycling.
-    # Will just complete to common subsequence instead.
-    bind 'Tab: complete'
+if [[ $- == *i* ]]; then
+    if compareVersionNum ${BASH_VERSION_CLEAN} '<' 4.3; then
+        # Remove tab menu completion cycling.
+        # Will just complete to common subsequence instead.
+        bind 'Tab: complete'
+    fi
 fi
 
 # TODO Maybe bad... should you mess with $TERM?
