@@ -13,6 +13,7 @@ BASH_CUSTOM=$HOME/.bash_custom # Directory to store custom bash includes.
 VIMDIR=$HOME/.vim_runtime   # Directory containing Vim extras.
 # SCRIPT COLORS are kept in this file
 source "$SCRIPTDIR/bash/colour_variables.sh"
+source "$SCRIPTDIR/bash/functions.sh"
 OK="[ ${Green}OK${NC} ]"
 Error="[ ${Red}ERROR${NC} ]"
 SKIP=0
@@ -453,6 +454,11 @@ setupShell() {
 setupKitty() {
     addTextIfAbsent "include $SCRIPTDIR/terminal/kitty/kitty.conf" "${HOME}/.config/kitty/kitty.conf"
 }
+setupTermux() {
+    mkdir -p "$HOME/.termux"
+    downloadURLAndExtractZipTo "https://github.com/adi1090x/termux-style/raw/master/data.tar.gz" "$HOME/.termux/termux-style"
+    cp "$HOME/.termux/termux-style/solarized-light.properties" "$HOME/.termux/"
+}
 
 readSettings() {
     echo -ne "Are you WS or WW? "
@@ -486,17 +492,17 @@ readSettings() {
         if askQuestionYN "Set up shell?" ; then
             doShell=1
         fi
-        if askQuestionYN "Set up kitty?" ; then
-            doKitty=1
+        if askQuestionYN "Set up terminal?" ; then
+            doTerm=1
         fi
         if askQuestionYN "Install fonts?" ; then
             doFonts=1
         fi
         if askQuestionYN "Install brew?" ; then
             installBrew=1
-        fi
-        if askQuestionYN "Update brew and install Brewfile packages? (This can take a very long time)" ; then
-            updateBrew=1
+            if askQuestionYN "Update brew and install Brewfile packages? (This can take a very long time)" ; then
+                updateBrew=1
+            fi
         fi
     fi
 }
@@ -532,10 +538,16 @@ main() {
         setupShell
     fi
 
-    if [ "$ALL" = 1 ] || [ "$doKitty" = 1 ]; then
-        printErr ""
-        printErr "------------------- Kitty"
-        setupKitty
+    if [ "$ALL" = 1 ] || [ "$doTerm" = 1 ]; then
+        if substrInStr "kitty" "$TERM"; then
+            printErr ""
+            printErr "------------------- Kitty"
+            setupKitty
+        elif substrInStr "Android" "`uname -a`";  then
+            printErr ""
+            printErr "------------------- Termux"
+            setupTermux
+        fi
     fi
 
     if [ "$ALL" = 1 ] || [ "$doFonts" = 1 ]; then
