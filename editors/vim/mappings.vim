@@ -15,14 +15,66 @@ vnoremap : ;
 " nnoremap <SPACE> <Nop>
 map <SPACE> <leader>
 
+"{[} Windows
 " leader w opens new vert window, switches to it
 nnoremap <leader>w <C-w>v<C-w>l
-nnoremap <silent> <A-t> :tabnew<CR>
+nnoremap <C-w>t :tabnew<CR>
 " Easier way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+nnoremap <C-j> <C-W>j
+nnoremap <C-k> <C-W>k
+nnoremap <C-h> <C-W>h
+nnoremap <C-l> <C-W>l
+" {[} Open windows to the left, right, up, down, like in tmux
+function! s:SaveSplitSide()
+    let s:splitSideH=&splitbelow
+    let s:splitSideV=&splitright
+endfunction
+function! s:RestoreSplitSide()
+    let &splitbelow=s:splitSideH
+    let &splitright=s:splitSideV
+endfunction
+function! s:SplitLeft()
+    call s:SaveSplitSide()
+    set nosplitright
+    vsplit
+    call s:RestoreSplitSide()
+endfunction
+function! s:SplitRight()
+    call s:SaveSplitSide()
+    set splitright
+    vsplit
+    call s:RestoreSplitSide()
+endfunction
+function! s:SplitUp()
+    call s:SaveSplitSide()
+    set nosplitbelow
+    split
+    call s:RestoreSplitSide()
+endfunction
+function! s:SplitDown()
+    call s:SaveSplitSide()
+    set splitbelow
+    split
+    call s:RestoreSplitSide()
+endfunction
+nnoremap <C-w><left> :call <SID>SplitLeft()<CR>
+nnoremap <C-w><right> :call <SID>SplitRight()<CR>
+nnoremap <C-w><up> :call <SID>SplitUp()<CR>
+nnoremap <C-w><down> :call <SID>SplitDown()<CR>
+" {]} Open windows to the left, right, up, down.
+
+" Easy resize
+nnoremap <S-Right> 5<C-W>>
+nnoremap <S-Left> 5<C-W><
+nnoremap <S-Up> 5<C-W>+
+nnoremap <S-Down> 5<C-W>-
+" Zoom a window into its own tab.
+noremap <silent> <C-w>z :tab split<CR>
+" if has("gui")
+"     " If window id of last window is 1, assume only one window present
+"     if winnr($) == 1
+" {]} Window
+
 
 "Faster scrolling
 nnoremap <C-e> 3<C-e>
@@ -39,18 +91,6 @@ nnoremap Y y$
 " File needs to already exist.
 command! -bang -nargs=* SudoSave w !sudo tee % > /dev/null
 cmap W! SudoSave
-
-nnoremap <c-.> <C-W>5>
-nnoremap <c-,> <C-W>5<
-nnoremap <c-=> <C-W>5+
-nnoremap <c--> <C-W>5-
-nnoremap <c-Right> 5<C-W>>
-nnoremap <c-Left> 5<C-W><
-nnoremap <c-Up> 5<C-W>+
-nnoremap <c-Down> 5<C-W>-
-" if has("gui")
-"     " If window id of last window is 1, assume only one window present
-"     if winnr($) == 1
 
 
 if has("clipboard")
@@ -142,8 +182,6 @@ nnoremap <expr> N  'nN'[v:searchforward]
 " Don't lose selection on < or >
 xnoremap <  <gv
 xnoremap >  >gv
-" Zoom a window into its own tab.
-noremap <silent> <C-w>z :tab split<CR>
 " Cd to current file
 nnoremap <leader>cd :lcd %:p:h<CR>:pwd<CR>
 " Rm spellcheck
