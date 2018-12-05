@@ -57,10 +57,11 @@ function! s:SplitDown()
     split
     call s:RestoreSplitSide()
 endfunction
-nnoremap <C-w><left> :call <SID>SplitLeft()<CR>
-nnoremap <C-w><right> :call <SID>SplitRight()<CR>
-nnoremap <C-w><up> :call <SID>SplitUp()<CR>
-nnoremap <C-w><down> :call <SID>SplitDown()<CR>
+
+nnoremap <C-w>h :call <SID>SplitLeft()<CR>
+nnoremap <C-w>l :call <SID>SplitRight()<CR>
+nnoremap <C-w>k :call <SID>SplitUp()<CR>
+nnoremap <C-w>j :call <SID>SplitDown()<CR>
 " {]} Open windows to the left, right, up, down.
 
 " Easy resize
