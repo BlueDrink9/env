@@ -17,6 +17,7 @@ Plug 'https://github.com/tomasr/molokai'
 " If using a Base16 terminal theme designed to keep the 16 ANSI colors intact (a "256" variation) and have sucessfully modified your 256 colorspace with base16-shell you'll need to add the following to your ~/.vimrc before the colorsheme declaration.
 " let base16colorspace=256  " Access colors present in 256 colorspace
 Plug 'https://github.com/chriskempson/base16-vim'
+" {]} ---------- Base16 ----------
 
 " {[} ---------- Solarized ----------
 if v:version >= 704 && has('termguicolors') && &termguicolors == 1
@@ -36,7 +37,12 @@ if v:version >= 704 && has('termguicolors') && &termguicolors == 1
         call add (g:pluginSettingsToExec, "colorscheme solarized8_high")
     endif
 else
-    Plug 'https://github.com/altercation/vim-colors-solarized.git'
+    if $ISTERMUX
+        " Replaces solarized for termux solarized theme
+        https://github.com/Breta01/Termux-Themes
+    else
+        Plug 'https://github.com/altercation/vim-colors-solarized.git'
+    endif
     " Settings doesn't recommend this...
     let g:solarized_contrast = "high"
     let g:solarized_termtrans = 0 " 1 displays default term bg instead.
