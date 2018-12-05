@@ -16,7 +16,7 @@ fi
 if substrInStr "kitty" "$TERM"; then
     COLORTERM="truecolor"
 fi
-if substrInStr "Android" "`uname -a`";  then
+if substrInStr "Android" "`uname -a`" && [ ! "$SSHSESSION" = 1 ];  then
     export ISTERMUX=1
     COLORTERM="truecolor"
 fi
