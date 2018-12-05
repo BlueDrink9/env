@@ -16,6 +16,11 @@ fi
 if substrInStr "kitty" "$TERM"; then
     COLORTERM="truecolor"
 fi
+if substrInStr "Android" "`uname -a`";  then
+    export ISTERMUX=1
+    COLORTERM="truecolor"
+fi
+
 USENF=${USENF-0}
 USEPF=${USEPF-0}
 COLORTERM=${COLORTERM-16}
