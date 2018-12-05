@@ -122,7 +122,7 @@ else
         elseif s:uname =~ "Darwin"
             let s:paste = "pbpaste"
             let s:copy = "pbcopy"
-        elseif system('uname -a') =~ "Android"
+        elseif $ISTERMUX " set in bash settings
             " Assume termux
             if executable('termux-get-clipboard')
                 let s:paste = "termux-get-clipboard"
