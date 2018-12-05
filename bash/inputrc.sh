@@ -1,8 +1,8 @@
 # vim: set tw=78 ts=4 sw=4
 # vim: foldmethod=marker foldmarker={[},{]}
 # Readline settings
-
 include /etc/inputrc
+#{[} settings
 # Set bash movement keys to be more vi-like
 # Can use `set -o vi` for short version
 set editing-mode vi
@@ -56,6 +56,9 @@ set enable-bracketed-paste on
 # Disable bell on error
 set bell-style none
 
+#{]} settings
+
+#{[} command-mode mappings
 ###########################################################
 # Keymaps for when we're in command mode (e.g., after hitting ESC)
 set keymap vi-command
@@ -72,9 +75,14 @@ set keymap vi-command
 "k":history-search-backward
 
 # modified vim-style quit.
-# ";q":"ccexit\"
 ";q":"ccexit"
 
+"\b":"cccd .."
+
+
+#{]} command-mode mappings
+
+#{[} insert-mode mappings
 ###########################################################
 # Keymaps for when we're in insert (i.e., typing stuff in) mode
 set keymap vi-insert
@@ -108,3 +116,5 @@ Tab: menu-complete
 # ctrl + backspace deletes word
 # Doesn't work on all systems, needs looking at.
 # "\C-?":"\C-W"
+
+#{]} insert-mode mappings
