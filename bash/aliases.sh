@@ -9,6 +9,7 @@ shopt -s expand_aliases
 alias cl="clear"
 alias rl="rlwrap"
 alias untar="tar -zxvf"
+alias envupd="git -C \"$DOTFILES_DIR\" pull && . ~/.bashrc"
 
 if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
     alias setssdir="defaults write com.apple.screencapture location"
