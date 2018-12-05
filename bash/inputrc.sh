@@ -1,4 +1,5 @@
-# vim: set ft=sh:
+# vim: set tw=78 ts=4 sw=4
+# vim: foldmethod=marker foldmarker={[},{]}
 # Readline settings
 
 include /etc/inputrc
