@@ -1,0 +1,2 @@
+
+xrdb -merge "$DOTFILES_DIR/terminal/x/solarized-light"

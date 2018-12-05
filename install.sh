@@ -440,6 +440,8 @@ setupShell() {
         addTextIfAbsent "source-file $SCRIPTDIR/terminal/tmux/tmux.conf" ${HOME}/.tmux.conf
         printErr "Enabling custom readline (inputrc) setup..."
         addTextIfAbsent "\$include $SCRIPTDIR/bash/inputrc.sh" "${HOME}/.inputrc"
+        printErr "Enabling custom X setup..."
+        addTextIfAbsent "xrdb -merge \"$SCRIPTDIR/terminal/x/Xresources\"" "${HOME}/.Xresources"
         gitSettings
     fi
     # {]} WW
