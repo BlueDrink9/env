@@ -44,6 +44,8 @@ set completion-query-items 70
 # ~/src/mozillail", but to "cd ~/src/mozilla". (This is supported by the
 # Readline used by Bash 4.)
 set skip-completed-text on
+# Don't get "---more---" when completing.
+set page-completions Off
 
 # Expand history automatically on !!
 $if Bash
