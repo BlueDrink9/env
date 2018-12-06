@@ -174,9 +174,9 @@ bash_debug_log() {
   else
     logfile="$1"
   fi
-  exec   >| >(tee -ia .debug_log_bashsetx)
-  exec  2>| >(tee -ia .debug_log_bashsetx >& 2)
-  exec 19>| .debug_log_bashsetx
+  exec   >| >(tee -ia $logfile)
+  exec  2>| >(tee -ia $logfile >& 2)
+  exec 19>| $logfile
 
   export BASH_XTRACEFD="19"
 
