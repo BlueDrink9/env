@@ -411,9 +411,9 @@ gitSettings() {
     printErr "Enabling custom git setup..."
     # Include is only supported on git versions > 1.7.10 
     # (but 2.0 is quite standard anyway).
-    git config --global include.path ${SCRIPTDIR}/gitconfig
-    git config --global core.excludesfile ${SCRIPTDIR}/gitignore
-    git config --global core.attributesfile ${SCRIPTDIR}/gitattributes
+    git config --global include.path ${SCRIPTDIR}/git/gitconfig
+    git config --global core.excludesfile ${SCRIPTDIR}/git/gitignore
+    git config --global core.attributesfile ${SCRIPTDIR}/git/gitattributes
 }
 # {]} Git
 
