@@ -113,7 +113,11 @@ Plug 'https://github.com/tpope/vim-dispatch'
 
 " {[} ---------- Git ----------
 if executable("git")
-    " :Magit to check all sorts of git stuff. Looks really cool.
+    augroup myGit
+        autocmd User Fugitive SignifyRefresh
+    augroup end
+    " :Magit to check all sorts of git stuff. Looks really cool. Capitals for 
+    " commands, eg [S]tage-toggle, [CC]ommit.
     Plug 'jreybert/vimagit'
     " Git wrapper
     Plug 'https://github.com/tpope/vim-fugitive'
