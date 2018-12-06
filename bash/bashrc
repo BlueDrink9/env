@@ -28,7 +28,8 @@ if [ -z $HOMEBREW_PREFIX ]; then
     if [ -f $brewbash ] && [ "$BASH" != "$brewbash" ] && \
         [ -z $HAVE_LOADED_BASH ] && [[ $- == *i* ]]; then
         export HAVE_LOADED_BASH=1
-        $HOMEBREW_PREFIX/bin/bash; exit
+        # Exec replaces the shell with the specified process.
+        exec $HOMEBREW_PREFIX/bin/bash -l
     fi
 fi
 
