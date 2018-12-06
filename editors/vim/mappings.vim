@@ -67,8 +67,8 @@ nnoremap <C-w>j :call <SID>SplitDown()<CR>
 " Easy resize
 nnoremap <S-Right> 5<C-W>>
 nnoremap <S-Left> 5<C-W><
-nnoremap <S-Up> 5<C-W>+
-nnoremap <S-Down> 5<C-W>-
+nnoremap <S-Up> 3<C-W>+
+nnoremap <S-Down> 3<C-W>-
 " Zoom a window into its own tab.
 noremap <silent> <C-w>z :tab split<CR>
 " if has("gui")
