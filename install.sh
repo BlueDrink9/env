@@ -407,6 +407,12 @@ gitCredentialCache() {
     fi
 }
 
+setupSSH() {
+    printErr "Enabling SSH config..."
+    # Note: Includes only added since 7.3p1
+    addTextIfAbsent "Include $DOTFILES_DIR/system/ssh/ssh_config" ${HOME}/.ssh/ssh_config
+}
+
 gitSettings() {
     printErr "Enabling custom git setup..."
     # Include is only supported on git versions > 1.7.10 
@@ -492,6 +498,9 @@ readSettings() {
         if askQuestionYN "Set up shell?" ; then
             doShell=1
         fi
+        if askQuestionYN "Set up SSH?" ; then
+            doSSSH=1
+        fi
         if askQuestionYN "Set up terminal?" ; then
             doTerm=1
         fi
@@ -508,6 +517,7 @@ readSettings() {
 }
 
 main() {
+     #TODO: Make All an initial check, then case/if-nots for the rest.
 
     if [ ! $ALL = 1 ]; then
         readSettings
@@ -548,6 +558,12 @@ main() {
             printErr "------------------- Termux"
             setupTermux
         fi
+    fi
+
+    if [ "$ALL" = 1 ] || [ "$doSSH" = 1 ]; then
+        printErr ""
+        printErr "------------------- SSH"
+        setupSSH
     fi
 
     if [ "$ALL" = 1 ] || [ "$doFonts" = 1 ]; then
