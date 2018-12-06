@@ -1,5 +1,6 @@
 # vim:ft=sh:tw=78:ts=4
 # vim:foldmethod=marker:foldmarker={[},{]}
+# Contains bash and cli bootstrapping code
 
 # XXX For debugging, call `bash_debug_log` with optional logfile param
 # to show all bash commands run. Default logfile is ${HOME}/.debug_log_bashsetx.
@@ -33,6 +34,10 @@ if [ -z $HOMEBREW_PREFIX ]; then
     fi
 fi
 
+if [ -z "$SSH_AUTH_SOCK" ]; then
+    eval `ssh-agent`
+    ssh-add
+fi
 
 # Reload/source inputrc
 # bind -f ${SCRIPT_DIR}/inputrc.sh
