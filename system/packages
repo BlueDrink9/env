@@ -2,9 +2,11 @@ bash
 bash-completion
 curl
 rsync
-vim
+nvim
 tmux
 ranger
 ctags
 python
 rlwrap
+ssh-agent
+ssh-pass
