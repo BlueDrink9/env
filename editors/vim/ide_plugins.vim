@@ -1,6 +1,11 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
 
+" {[} ---------- Misc ----------
+" Brilliant for projects with lots of similar files. Check out config
+Plug 'https://github.com/tpope/vim-projectionist'
+" {]} ---------- Misc ----------
+
 " {[} ---------- Linting ----------
 " if v:version >= 800
 if has("timers")
