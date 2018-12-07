@@ -15,15 +15,18 @@ vnoremap : ;
 " nnoremap <SPACE> <Nop>
 map <SPACE> <leader>
 
+
 "{[} Windows
 " leader w opens new vert window, switches to it
 nnoremap <leader>w <C-w>v<C-w>l
 nnoremap <C-w>t :tabnew<CR>
+nnoremap <C-w><S-R> <W-w> <C-r>
 " Easier way to move between windows
 nnoremap <C-j> <C-W>j
 nnoremap <C-k> <C-W>k
 nnoremap <C-h> <C-W>h
 nnoremap <C-l> <C-W>l
+
 " {[} Open windows to the left, right, up, down, like in tmux
 function! s:SaveSplitSide()
     let s:splitSideH=&splitbelow
