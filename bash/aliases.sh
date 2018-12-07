@@ -46,13 +46,6 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias cd..="cd .."
-# alias ls="ls -CF --color=auto"
-alias :q="exit"
-alias :e="vim"
-alias e="vim"
-# alias :Q="exit"
-# alias ZZ="exit"
-alias svi="sudoedit"
 
 alias g="git"
 alias gca="git commit -a"
@@ -87,13 +80,19 @@ alias idevim="vim --cmd \"let g:ideMode=1\""
 # Much faster startup for vim without plugins.
 alias vi="vim --cmd \"let g:liteMode=1\""
 alias lvi="vim --noplugin --cmd \"let g:noPlugins=1\""
+alias view="vi -R"
 
-# Prevent files from being overwritten by redirection.
-set -o noclobber
+# alias ls="ls -CF --color=auto"
+alias :q="exit"
+alias :e="vim"
+alias e="vim"
+# alias :Q="exit"
+# alias ZZ="exit"
+alias svi="sudoedit"
+
 # Don't accidentally remove or overwrite files.
 # alias cp="cp -i"
 # alias mv="mv -i"
-
 
 # {[} Package manager
 installcmd="install"
