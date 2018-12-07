@@ -218,7 +218,7 @@ augroup END
 augroup autowrite
     autocmd!
     " Don't autosave if there is no buffer name.
-    if bufname('%') != ''
+    if bufname('%') != '' && &ro != 1 && &modifiable != 1
         " Automatically save before commands like :next and :make
         set autowrite
         " Save on focus loss
