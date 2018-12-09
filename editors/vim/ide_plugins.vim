@@ -161,6 +161,8 @@ endif
 
 " {[} ---------- Syntax ----------
 Plug 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
+Plug 'https://github.com/tmhedberg/SimpylFold'
+let g:SimpylFold_docstring_preview = 1
 Plug 'octol/vim-cpp-enhanced-highlight'
 let g:cpp_class_decl_highlight = 1
 let g:cpp_member_variable_highlight = 1
@@ -229,6 +231,17 @@ endif
 " Highlight colors when used eg in css
 Plug 'https://github.com/chrisbra/Colorizer'
 
+" Test running
+Plug 'janko-m/vim-test'
+" make test commands execute using dispatch.vim
+let test#strategy = "dispatch"
+
+" Prettifier. Can be passed a filetype with a bang and selection to just
+" do that part of the file!
+" Doesn't state any requirements in readme...
+Plug 'https://github.com/sbdchd/neoformat'
+nnoremap g= :Neoformat<CR>
+
 " {[} ---------- Neosettings ----------
 " https://github.com/kepbod/ivim/blob/master/vimrc
   " if g:ivim_autocomplete=='NEO'
@@ -236,7 +249,7 @@ Plug 'https://github.com/chrisbra/Colorizer'
   "           let g:ivim_completion_engine='neocomplete'
   "           Plug 'Shougo/neocomplete.vim' " Auto completion framework
    " let g:neocomplete#enable_at_startup=1
-   "          let g:neocomplete#data_directory=$HOME . '/.vim/cache/neocomplete'
+   "          let g:neocomplete#data_directory=CreateVimDir('neocache')
    "          let g:neocomplete#enable_auto_delimiter=1
    "          " Use <C-E> to close popup
    "          inoremap <expr><C-E> neocomplete#cancel_popup()
