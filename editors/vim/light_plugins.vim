@@ -38,7 +38,6 @@ let g:csv_autocmd_arrange_size = 1024*1024
 " hi CSVColumnEven term=bold ctermbg=Gray guibg=LightGray
 call add (g:customHLGroups, "CSVColumnEven guibg=gray90 ctermbg=lightgray")
 call add (g:pluginSettingsToExec, "highlight clear CSVColumnOdd")
-Plug 'nathanaelkane/vim-indent-guides'
 " For switching between header and alt files
 Plug 'vim-scripts/a.vim'
 if has('timers')
