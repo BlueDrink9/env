@@ -30,6 +30,11 @@ if has('nvim')
 endif
 
 " {[} ---------- Misc ----------
+" visually show indentation
+if v:version >= 702
+    Plug 'nathanaelkane/vim-indent-guides'
+    let g:indent_guides_enable_on_vim_startup = 1
+endif
 Plug 'https://github.com/metalelf0/supertab' " Fork with a failing feature removed
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabLongestEnhanced = 1
