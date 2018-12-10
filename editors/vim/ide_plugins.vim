@@ -195,7 +195,12 @@ endif
 " {]} ---------- Snippits----------
 
 " {[} ---------- Syntax ----------
-Plug 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
+if has('python')
+    Plug 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
+    if has('python3')
+        let g:pymode_python = 'python3'
+    endif
+endif
 Plug 'https://github.com/tmhedberg/SimpylFold'
 let g:SimpylFold_docstring_preview = 1
 Plug 'octol/vim-cpp-enhanced-highlight'
