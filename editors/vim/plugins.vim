@@ -125,5 +125,5 @@ endfunction
 call s:reHL()
 augroup highlights
     au!
-    autocmd ColorScheme * call s:reHL()
+    autocmd VimEnter,ColorScheme * call s:reHL()
 augroup end
