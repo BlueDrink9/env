@@ -4,6 +4,8 @@
 " {[} ---------- Misc ----------
 " Brilliant for projects with lots of similar files. Check out config
 Plug 'https://github.com/tpope/vim-projectionist'
+" Autoclose brackets, etc. Aims to mimic eclipse.
+Plug 'https://github.com/Townk/vim-autoclose'
 " {]} ---------- Misc ----------
 
 " {[} ---------- Linting ----------
@@ -117,7 +119,7 @@ endif
 " {]} ---------- Tags----------
 
 " {[} ---------- Snippits ----------
-" Plug 'https://github.com/honza/vim-snippets' " Library of snippets
+Plug 'https://github.com/honza/vim-snippets' " Library of snippets
 if (has("python") || has("python3")) && v:version >= 704
     Plug 'https://github.com/SirVer/ultisnips' " Snippit engine
     let g:UltiSnipsExpandTrigger="<c-e>"
@@ -199,12 +201,17 @@ let &errorformat="%f:%l:%c: %t%*[^:]:%m,%f:%l: %t%*[^:]:%m," . &errorformat
 let errormarker_disablemappings = 1
 cabbrev er ErrorAtCursor
 Plug 'ryanoasis/vim-devicons'
+" Vdebug for python, pyhp, perl, ruby
 if has("python3")
     Plug 'https://github.com/vim-vdebug/vdebug'
+elseif has("python2")
+    Plug 'https://github.com/vim-vdebug/vdebug', {'tag': 'v1.5.2'}
 endif
+" vebugger for gdb, lldb, jdb, pdb, rubydebug, node inspect.
+Plug 'https://github.com/idanarye/vim-vebugger'
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 " Look up documtenation for word under cursor with gk
 Plug 'https://github.com/keith/investigate.vim'
-" {]} ---------- IDE----------
 " Quickly compile small files with :SCCompile
 Plug 'https://github.com/xuhdev/SingleCompile'
 " Customisable start screen, including MRU files
