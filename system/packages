@@ -10,3 +10,5 @@ python
 rlwrap
 ssh-agent
 ssh-pass
+
+# proselint # wooah cool. Pip module
