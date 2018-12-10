@@ -78,6 +78,8 @@ Plug 'https://github.com/ConradIrwin/vim-bracketed-paste'
 Plug 'https://github.com/tpope/vim-repeat'
 " Adds indent block as text object. ii , ai or aI
 Plug 'michaeljsmith/vim-indent-object'
+" Adds [ ] mappins for -=+% indentation objects
+Plug 'https://github.com/jeetsukumaran/vim-indentwise'
 " Additional text objects for next braket, i/a comma, pairs, smarter searching.
 Plug 'wellle/targets.vim'
 Plug 'bkad/camelcasemotion'
