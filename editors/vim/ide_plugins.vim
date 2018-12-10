@@ -164,13 +164,13 @@ if (has("python") || has("python3")) && v:version >= 704
     "     autocmd BufEnter * UltiSnipsAddFiletypes alltypes
     " augroup end
     " Maybe use these to map <CR> to trigger in future?
-   " autocmd! User UltiSnipsEnterFirstSnippet
-   " autocmd User UltiSnipsEnterFirstSnippet call CustomInnerKeyMapper()
-   " autocmd! User UltiSnipsExitLastSnippet
-   " autocmd User UltiSnipsExitLastSnippet call CustomInnerKeyUnmapper()
-   "
+    " autocmd! User UltiSnipsEnterFirstSnippet
+    " autocmd User UltiSnipsEnterFirstSnippet call CustomInnerKeyMapper()
+    " autocmd! User UltiSnipsExitLastSnippet
+    " autocmd User UltiSnipsExitLastSnippet call CustomInnerKeyUnmapper()
+    "
 else
-" {[} ---------- Snipmate ----------
+    " {[} ---------- Snipmate ----------
     Plug 'https://github.com/tomtom/tlib_vim.git'
     Plug 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
     Plug 'https://github.com/garbas/vim-snipmate'
@@ -188,7 +188,7 @@ else
     smap <C-E> <Plug>snipMateTrigger
     imap <C-P> <Plug>snipMateBack
     smap <C-P> <Plug>snipMateBack
-" {]} ---------- Snipmate ----------
+    " {]} ---------- Snipmate ----------
 endif
 " way smaller engine than ultisnips, not really much func. Can't use snip libs.
 " Plug 'https://github.com/joereynolds/vim-minisnip'
@@ -276,57 +276,41 @@ let test#strategy = "dispatch"
 " Doesn't state any requirements in readme...
 Plug 'https://github.com/sbdchd/neoformat'
 nnoremap g= :Neoformat<CR>
+" {]} ---------- IDE----------
 
 " {[} ---------- Neosettings ----------
-" https://github.com/kepbod/ivim/blob/master/vimrc
-  " if g:ivim_autocomplete=='NEO'
-  "       if has('lua')
-  "           let g:ivim_completion_engine='neocomplete'
-  "           Plug 'Shougo/neocomplete.vim' " Auto completion framework
-   " let g:neocomplete#enable_at_startup=1
-   "          let g:neocomplete#data_directory=CreateVimDir('neocache')
-   "          let g:neocomplete#enable_auto_delimiter=1
-   "          " Use <C-E> to close popup
-   "          inoremap <expr><C-E> neocomplete#cancel_popup()
-   "          inoremap <expr><CR> delimitMate#WithinEmptyPair() ?
-   "                      \ "\<C-R>=delimitMate#ExpandReturn()\<CR>" :
-   "                      \ pumvisible() ? neocomplete#close_popup() : "\<CR>""
-" if !exists('g:neocomplete#force_omni_input_patterns')
-"                 let g:neocomplete#force_omni_input_patterns={}
-"             endif
-"             let g:neocomplete#force_omni_input_patterns.python=
-"             \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
-  "       else
-  "           let g:ivim_completion_engine='neocomplcache'
-  "           Plug 'Shougo/neocomplcache.vim' " Auto completion framework
-  " let g:neocomplcache_enable_at_startup=1
-  "           let g:neocomplcache_temporary_dir=$HOME . '/.vim/cache/neocomplcache'
-  "           let g:neocomplcache_enable_auto_delimiter=1
-  "           let g:neocomplcache_enable_fuzzy_completion=1
-  "           " Use <C-E> to close popup
-  "           inoremap <expr><C-E> neocomplcache#cancel_popup()
-  "           inoremap <expr><CR> delimitMate#WithinEmptyPair() ?
-  "                       \ "\<C-R>=delimitMate#ExpandReturn()\<CR>" :
-  "                       \ pumvisible() ? neocomplcache#close_popup() : "\<CR>""
-" if !exists('g:neocomplcache_force_omni_patterns')
-"                 let g:neocomplcache_force_omni_patterns={}
-"             endif
-"             let g:neocomplcache_force_omni_patterns.python=
-"             \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
-  " "       endif
-  "       Plug 'Shougo/neosnippet.vim' " Snippet engine
-  "       Plug 'Shougo/neosnippet-snippets' " Snippets
-  "       Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-  "       Plug 'wellle/tmux-complete.vim' " Completion for tmux panes
-    " " -> Neocomplete & Neocomplcache
-    "     " Use Tab and S-Tab to select candidate
-    "     inoremap <expr><Tab>  pumvisible() ? "\<C-N>" : "\<Tab>"
-    "     inoremap <expr><S-Tab> pumvisible() ? "\<C-P>" : "\<S-Tab>""
-  "   else
-  "       " Auto completion framework
-  "       let g:ivim_completion_engine='YouCompleteMe'
-  "       Plug 'Valloric/YouCompleteMe', { 'do': './install.py' } "Auto completion framework
-  "       Plug 'honza/vim-snippets' " Snippets
-  "       Plug 'sirver/ultisnips' " Snippet engine
-  "   endif
+" " https://github.com/kepbod/ivim/blob/master/vimrc
+" if has('lua') && v:version > 703
+"     Plug 'Shougo/neocomplete.vim' " Auto completion framework
+"     let g:neocomplete#enable_at_startup=1
+"     let g:neocomplete#data_directory=CreateVimDir('neocache')
+"     let g:neocomplete#enable_auto_delimiter=1
+"     " Use <C-E> to close popup
+"     inoremap <expr><C-E> neocomplete#cancel_popup()
+"     inoremap <expr><CR> delimitMate#WithinEmptyPair() ?
+"                 \ "\<C-R>=delimitMate#ExpandReturn()\<CR>" :
+"                 \ pumvisible() ? neocomplete#close_popup() : "\<CR>""
+"     if !exists('g:neocomplete#force_omni_input_patterns')
+"         let g:neocomplete#force_omni_input_patterns={}
+"     endif
+"     let g:neocomplete#force_omni_input_patterns.python=
+"                 \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+" else
+"     Plug 'Shougo/neosnippet.vim' " Snippet engine
+"     Plug 'Shougo/neosnippet-snippets' " Snippets
+"     Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+"     " Plug 'wellle/tmux-complete.vim' " Completion for tmux panes
+"     " -> Neocomplete & Neocomplcache
+"     " Use Tab and S-Tab to select candidate
+"     inoremap <expr><Tab>  pumvisible() ? "\<C-N>" : "\<Tab>"
+"     inoremap <expr><S-Tab> pumvisible() ? "\<C-P>" : "\<S-Tab>""
+"     let g:neosnippet#enable_snipmate_compatibility = 1
+"     " Use honza snippets instead of these defaults
+"     let g:neosnippet#snippets_directory=CreateVimDir('Plugins/vim-snippets')
+        " imap <expr><TAB> pumvisible() ? "\<C-n>" :
+        "             \ neosnippet#expandable_or_jumpable() ?
+        "             \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+        " imap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+        " inoremap <expr><CR> pumvisible() ? deoplete#mappings#close_popup() : "\<CR>"
+" endif
 " {]} ---------- Neosettings----------
