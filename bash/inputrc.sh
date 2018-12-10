@@ -77,9 +77,9 @@ set keymap vi-command
 "k":history-search-backward
 
 # modified vim-style quit.
-";q":"ccexit"
+";q":"ddiexit"
 
-"\b":"cccd .."
+"\b":"ddicd .."
 
 
 #{]} command-mode mappings
@@ -95,7 +95,7 @@ set keymap vi-insert
 
 # modified vim-style quit.
 # ";q":"ccexit\"
-";q":"ccexit"
+";q":"ddiexit"
 ";e":"Ivim "
 
 # Pressing tab will list all completions & select the first one. Pressing it
