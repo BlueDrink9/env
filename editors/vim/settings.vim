@@ -94,6 +94,9 @@ if has("gui_running")
             exec 'set guifont=' . s:useFont . '\ 11'
         endif
     endif
+    if has("termguicolors")
+        set termguicolors
+    endif
     "{]}
 else
     "{[} Console
