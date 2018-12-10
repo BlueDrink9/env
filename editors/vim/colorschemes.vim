@@ -13,6 +13,7 @@ augroup end
 Plug 'https://github.com/vim-scripts/oceandeep'
 Plug 'https://github.com/morhetz/gruvbox'
 Plug 'https://github.com/tomasr/molokai'
+Plug 'dracula/vim', { 'as': 'dracula' }
 " {[} ---------- Base16 ----------
 " If using a Base16 terminal theme designed to keep the 16 ANSI colors intact (a "256" variation) and have sucessfully modified your 256 colorspace with base16-shell you'll need to add the following to your ~/.vimrc before the colorsheme declaration.
 " let base16colorspace=256  " Access colors present in 256 colorspace
