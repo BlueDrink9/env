@@ -118,6 +118,19 @@ endif
 " Python completion, plus some refactor, goto def and usage features.
 Plug 'https://github.com/davidhalter/jedi-vim', { 'do' : 'AsyncRun pip install jedi' }
 let g:jedi#use_splits_not_buffers = "right"
+" Using deoplete
+if has_key(g:plugs, 'Shougo/deoplete.nvim')
+    Plug 'https://github.com/zchee/deoplete-jedi'
+    let g:jedi#completions_enabled = 0
+endif
+let g:jedi#goto_command = "gpc"
+let g:jedi#goto_assignments_command = "gpa"
+let g:jedi#goto_definitions_command = "gpd"
+let g:jedi#documentation_command = "K"
+let g:jedi#usages_command = "gpu"
+let g:jedi#completions_command = "<C-Space>"
+let g:jedi#rename_command = "gpr"
+
 " {]} ---------- Completion----------
 
 " {[} ---------- Tags ----------
