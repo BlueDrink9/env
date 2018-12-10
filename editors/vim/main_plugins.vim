@@ -97,17 +97,49 @@ let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
 " {]} ---------- Misc----------
 
 " Maybe ide candidates...
-Plug 'https://github.com/ctrlpvim/ctrlp.vim'
-let g:ctrlp_cmd = 'CtrlPMixed'
-let g:ctrlp_map = '<leader>f'
-let g:ctrlp_cache_dir = CreateVimDir("ctrpCache") " Purge cache with f5 in buffer
-let g:ctrlp_clear_cache_on_exit = 0
-if ideMode == 1
-  let g:ctrlp_extensions = ['tag', 'buffertag', 'rtscript']
+" Fuzzy finder
+" fzf only works in terminal, use ctrlp otherwise
+if has('gui_running') && !has('terminal')
+    Plug 'https://github.com/ctrlpvim/ctrlp.vim'
+    let g:ctrlp_cmd = 'CtrlPMixed'
+    let g:ctrlp_map = '<leader>f'
+    let g:ctrlp_cache_dir = CreateVimDir("ctrpCache") " Purge cache with f5 in buffer
+    let g:ctrlp_clear_cache_on_exit = 0
+    if ideMode == 1
+        let g:ctrlp_extensions = ['tag', 'buffertag', 'rtscript']
+    endif
+else
+    " PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run the install
+    " script
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+      " Both options are optional. You don't have to install fzf in ~/.fzf
+      " and you don't have to run the install script if you use fzf only in
+      " Vim.
+    nnoremap <leader>f :FZF<CR>
+    " {[} Use proper fzf colours in gvim
+    if has('gui_running')
+        let g:fzf_colors =
+                    \ { 'fg':      ['fg', 'Normal'],
+                    \ 'bg':      ['bg', 'Normal'],
+                    \ 'hl':      ['fg', 'Comment'],
+                    \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+                    \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+                    \ 'hl+':     ['fg', 'Statement'],
+                    \ 'info':    ['fg', 'PreProc'],
+                    \ 'border':  ['fg', 'Ignore'],
+                    \ 'prompt':  ['fg', 'Conditional'],
+                    \ 'pointer': ['fg', 'Exception'],
+                    \ 'marker':  ['fg', 'Keyword'],
+                    \ 'spinner': ['fg', 'Label'],
+                    \ 'header':  ['fg', 'Comment'] }
+    endif
+    " {]}
 endif
 " Run shell commands async (uses python)
 Plug 'https://github.com/joonty/vim-do'
 Plug 'https://github.com/thinca/vim-quickrun'
+" Select code to execute.
+Plug 'https://github.com/JarrodCTaylor/vim-shell-executor'
 " Make is run async (view quickfix with :COpen)
 Plug 'https://github.com/tpope/vim-dispatch'
 
