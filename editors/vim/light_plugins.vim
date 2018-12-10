@@ -41,10 +41,16 @@ call add (g:pluginSettingsToExec, "highlight clear CSVColumnOdd")
 Plug 'nathanaelkane/vim-indent-guides'
 " For switching between header and alt files
 Plug 'vim-scripts/a.vim'
-" Bsgrep for searching in all open buffers. Also Bsreplace, Bstoc.
-Plug 'https://github.com/jeetsukumaran/vim-buffersaurus'
-cabbrev bfind Bsgrep
-let g:buffersaurus_autodismiss_on_select=0
+if has('timers')
+    " Async, uses better grep tools like ack or ag
+    Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
+    cabbrev bfind Grepper -query
+else
+    " Bsgrep for searching in all open buffers. Also Bsreplace, Bstoc.
+    Plug 'https://github.com/jeetsukumaran/vim-buffersaurus'
+    cabbrev bfind Bsgrep
+    let g:buffersaurus_autodismiss_on_select=0
+endif
 if v:version >= 703
     Plug 'https://github.com/ntpeters/vim-better-whitespace'
     let g:show_spaces_that_precede_tabs=1
