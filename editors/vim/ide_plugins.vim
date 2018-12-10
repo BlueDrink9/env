@@ -224,8 +224,8 @@ let g:startify_custom_indices += ['A','R','S','T','F','P','D','H','L','O','V','C
 let g:startify_custom_header = 'startify#fortune#boxed()'
 
 " visually show indentation
-if v:version >= 703
-    Plug 'https://github.com/Yggdroot/indentLine'
+if v:version >= 702
+    Plug 'nathanaelkane/vim-indent-guides'
 endif
 
 " Highlight colors when used eg in css
