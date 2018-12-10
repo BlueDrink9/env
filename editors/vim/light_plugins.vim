@@ -27,6 +27,8 @@ if g:liteMode
     let g:buftabline_numbers=2
 endif
 
+" Confirms opening empty file on tabcomplete
+Plug 'https://github.com/EinfachToll/DidYouMean'
 " {[}--- Misc ---
 " Bunch of neat mappings, it's a tpope. Esp [n and ]n, for SCM conflict marks.
 " And [<space> for addign newlines.
