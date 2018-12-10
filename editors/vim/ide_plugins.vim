@@ -55,38 +55,58 @@ endif
 " {[} ---------- Completion ----------
 " Awesome code completion, but requires specific installations
 " Plug 'https://github.com/Valloric/YouCompleteMe'
-" if v:version >= 800
 if has("timers")
-    " Async completion engine, doesn't need extra installation.
-    Plug 'maralla/completor.vim'
-    " Use TAB to complete when typing words, else inserts TABs as usual.  Uses
-    " dictionary, source files, and completor to find matching words to complete.
-
-    " Note: usual completion is on <C-n> but more trouble to press all the time.
-    " Never type the same word twice and maybe learn a new spellings!
-    " Use the Linux dictionary when spelling is in doubt.
-    function! Tab_Or_Completor() abort
-        " If completor is already open the `tab` cycles through suggested completions.
-        if pumvisible()
-            return "\<C-N>"
-            " If completor is not open and we are in the middle of typing a word then
-            " `tab` opens completor menu.
-        elseif col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
-            return "\<C-R>=completor#do('complete')\<CR>"
+    Plug 'autozimu/LanguageClient-neovim', {
+                \ 'branch': 'next',
+                \ 'do': 'bash install.sh',
+                \ }
+    if has("python3")
+        if has("nvim")
+            Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
         else
-            " If we aren't typing a word and we press `tab` simply do the normal `tab`
-            " action.
-            return "\<Tab>"
+            Plug 'Shougo/deoplete.nvim'
+            Plug 'roxma/nvim-yarp'
+            Plug 'roxma/vim-hug-neovim-rpc'
         endif
-    endfunction
+        Plug 'Shougo/denite.nvim'
+        " deoplete tab-complete
+        inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+        let g:deoplete#enable_at_startup = 1
+        call add(g:pluginSettingsToExec, "call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])")
+        let g:deoplete#enable_smart_case = 1
 
-    " Use `tab` key to select completions.  Default is arrow keys.
-    inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+    else
+        " Async completion engine, doesn't need extra installation.
+        Plug 'maralla/completor.vim'
+        " Use TAB to complete when typing words, else inserts TABs as usual.  Uses
+        " dictionary, source files, and completor to find matching words to complete.
 
-    " Use tab to trigger auto completion.  Default suggests completions as you type.
-    let g:completor_auto_trigger = 0
-    inoremap <expr> <Tab> Tab_Or_Complete()
+        " Note: usual completion is on <C-n> but more trouble to press all the time.
+        " Never type the same word twice and maybe learn a new spellings!
+        " Use the Linux dictionary when spelling is in doubt.
+        function! Tab_Or_Completor() abort
+            " If completor is already open the `tab` cycles through suggested completions.
+            if pumvisible()
+                return "\<C-N>"
+                " If completor is not open and we are in the middle of typing a word then
+                " `tab` opens completor menu.
+            elseif col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+                return "\<C-R>=completor#do('complete')\<CR>"
+            else
+                " If we aren't typing a word and we press `tab` simply do the normal `tab`
+                " action.
+                return "\<Tab>"
+            endif
+        endfunction
+
+        " Use `tab` key to select completions.  Default is arrow keys.
+        inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+        inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+        " Use tab to trigger auto completion.  Default suggests completions as you type.
+        let g:completor_auto_trigger = 0
+        inoremap <expr> <Tab> Tab_Or_Complete()
+    endif
 else
     Plug 'https://github.com/lifepillar/vim-mucomplete'
     let g:mucomplete#enable_auto_at_startup = 1
