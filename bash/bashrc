@@ -87,3 +87,7 @@ case $- in
         ;;
 esac
 # {]} tmux
+
+# {[] fzf
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# {]] fzf
