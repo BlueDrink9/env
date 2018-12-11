@@ -22,5 +22,5 @@ undoSSH(){
 
 # If directly run instead of sourced, do all
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
-    setupSSH
+    doSSH
 fi
