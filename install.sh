@@ -23,6 +23,7 @@ source "$DOTFILES_DIR/terminal/install.sh"
 source "$DOTFILES_DIR/editors/vim/install.sh"
 source "$DOTFILES_DIR/editors/vscode/install.sh"
 source "$DOTFILES_DIR/system/install-brew.sh"
+source "$DOTFILES_DIR/font_install.sh"
 source "$DOTFILES_DIR/system/ssh/install.sh"
 
 # {]} Setup and variables
