@@ -8,7 +8,7 @@ doVimPlugins(){
     # This has the problem of making the caret disappear in WSL...
     vim -E +PlugInstall +qall
     # Recover missing cursor due to previous command
-    reset
+    # reset
 }
 
 undoVimPlugins(){
@@ -32,7 +32,7 @@ undoVim(){
     undoVimPlugins
 }
 
-# If interactive, do all
-if [[ $- == *i* ]]; then
-    setupVim
+# If directly run instead of sourced, do all
+if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
+    doVim
 fi

@@ -2,7 +2,7 @@
 
 # {[} Setup and variables
 # For debugging use
-set -eEuxo pipefail
+# set -eEuxo pipefail
 # set -uxo pipefail
 # set -i
 SCRIPTDIR_CMD='eval echo $(cd $( dirname "${BASH_SOURCE[0]}" ) && pwd)'
@@ -10,9 +10,10 @@ SCRIPTDIR="$($SCRIPTDIR_CMD)"
 # SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export DOTFILES_DIR="$SCRIPTDIR"
 # SCRIPT COLORS are kept in this file
-source "$SCRIPTDIR/bash/colour_variables.sh"
 source "$SCRIPTDIR/bash/functions.sh"
 source "$SCRIPTDIR/bash/script_functions.sh"
+# if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.2 ; then
+source "$SCRIPTDIR/bash/colour_variables.sh"
 OK="[ ${Green}OK${NC} ]"
 Error="[ ${Red}ERROR${NC} ]"
 ALL=0
@@ -111,7 +112,7 @@ main() {
 
 # set default arg to avoid warnings
 arg1=${1:-}
-echo 'arg' $arg1
+# echo 'arg' $arg1
 
 if [[ $arg1 = "-u" ]]; then
     uninstall

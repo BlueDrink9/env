@@ -26,7 +26,7 @@ undoShell(){
 }
 
 
-# If interactive, do all
-if [[ $- == *i* ]]; then
+# If directly run instead of sourced, do all
+if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
     setupShell
 fi

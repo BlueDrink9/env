@@ -13,6 +13,14 @@ SCRIPTDIR_CMD='eval echo $(cd $( dirname "${BASH_SOURCE[0]}" ) && pwd)'
 # Usage:
 # SCRIPTDIR="$($SCRIPTDIR_CMD)"
 
+printLine() {
+  # Replacing %s with %b seems to allow the escape sequences to pass on OSX...
+    printf -- "%b\n" "$@"
+}
+printErr() {
+    >&2 printLine "$@"
+}
+
 getWebItem() {
     default="no-url-given"
     url=${1:-default}
@@ -80,13 +88,6 @@ addTextIfAbsent() {
     mkdir -p "$(dirname "$file")"
     # Check if text exists in file, otherwise append.
     grep -q -F "$text" "$file" || echo "$text" >> "$file"
-}
-
-printLine() {
-    printf -- "%s\n" "$@"
-}
-printErr() {
-    >&2 printLine "$@"
 }
 
 askQuestionYN() {

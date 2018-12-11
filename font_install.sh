@@ -41,8 +41,8 @@ installFonts() {
         printErr "${Error} ${Red}Failed to update fontcache${NC}"
 }
 
-# If interactive, do all
-if [[ $- == *i* ]]; then
+# If directly run instead of sourced, do all
+if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
     source "$DOTFILES_DIR/bash/script_functions.sh"
     source "$DOTFILES_DIR/bash/colour_variables.sh"
     installFonts

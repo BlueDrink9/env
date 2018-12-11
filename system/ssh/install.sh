@@ -20,7 +20,7 @@ undoSSH(){
     sed -in "s|.*$($SCRIPTDIR_CMD)/ssh_config.*||g" "${HOME}/.ssh/ssh_config"
 }
 
-# If interactive, do all
-if [[ $- == *i* ]]; then
+# If directly run instead of sourced, do all
+if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
     setupSSH
 fi

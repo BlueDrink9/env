@@ -23,8 +23,8 @@ undoBrew(){
     true #TODO
 }
 
-# If interactive, do both
-if [[ $- == *i* ]]; then
+# If directly run instead of sourced, do all
+if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
     installBrew
     updateBrew
 fi

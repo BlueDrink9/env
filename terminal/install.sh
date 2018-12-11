@@ -36,8 +36,8 @@ undoKitty(){
     sed -in "s|.*$($SCRIPTDIR_CMD)/kitty/kitty.conf.*||g" "${HOME}/.config/kitty/kitty.conf"
 }
 
-# If interactive, do all
-if [[ $- == *i* ]]; then
+# If directly run instead of sourced, do all
+if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
     setupTmux
     if substrInStr "kitty" "$TERM"; then
         setupKitty
