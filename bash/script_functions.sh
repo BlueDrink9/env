@@ -3,7 +3,7 @@
 # vim: foldmarker={[},{]}
 # This file holds functions for use in scripting
 
-[ ! -z ${SCRIPT_FUNCTIONS_LOADED+x} ] && return || export SCRIPT_FUNCTIONS_LOADED=1
+[ ! -z ${SCRIPT_FUNCTIONS_LOADED+} ] && return || export SCRIPT_FUNCTIONS_LOADED=1
 
 # For debugging use
 # set -eEuxo pipefail
@@ -73,12 +73,13 @@ downloadURLAndExtractZipTo() {
         printErr "Error: Invalid url or dest"
     fi
     if [ ! -d "$destDir" ]; then
-        mkdir -p $destDir
+        mkdir -p "$destDir"
     fi
-    tmpzipfile=$(mktemp)
-    downloadURLtoFile $url $tmpzipfile.zip
-    unzip -o $tmpzipfile.zip -d "$destDir" # > /dev/null
-    rm -f $tmpzipfile.zip
+    tmpzipfile="$(mktemp)"
+    downloadURLtoFile "$url" "$tmpzipfile.zip"
+    unzip -o "$tmpzipfile.zip" -d "$destDir" # > /dev/null
+    printErr "${Red}unzipped${NC}"
+    rm -f "$tmpzipfile.zip"
 }
 
 addTextIfAbsent() {
@@ -87,7 +88,7 @@ addTextIfAbsent() {
     file=${2:-$default}
     mkdir -p "$(dirname "$file")"
     # Check if text exists in file, otherwise append.
-    grep -q -F "$text" "$file" || echo "$text" >> "$file"
+    grep -q -F "$text" "$file" > /dev/null 2>&1 || echo "$text" >> "$file"
 }
 
 askQuestionYN() {
