@@ -36,8 +36,8 @@ del() {
 # Delete and reclone current git directory
 reclone() {
   if is_git_repository ; then
-    remoteUrl=`git config --get remote.origin.url`
-    repoFolder=`pwd`
+    remoteUrl=$(git config --get remote.origin.url)
+    repoFolder=$(pwd)
     cd .. && rm -rf ${repoFolder} && git clone ${remoteUrl} && cd ${repoFolder}
   else
     echo "Error: not a git repository ${remoteUrl}"
@@ -131,7 +131,7 @@ is_git_repository() {
 }
 
 get_git_branch() {
-  BRANCH=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
+  BRANCH=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
   echo "${BRANCH}"
 }
 
@@ -339,7 +339,7 @@ generate_export_termoptions_cmd(){
 
 ssh_with_options(){
   host=$1
-  local EXPORT_TERMOPTIONS_CMD=`generate_export_termoptions_cmd`
+  local EXPORT_TERMOPTIONS_CMD=$(generate_export_termoptions_cmd)
   # Calls default shell, stripping leading '-'
   \ssh -t "$host" "${EXPORT_TERMOPTIONS_CMD} " '${0#-} -l -s'
 }

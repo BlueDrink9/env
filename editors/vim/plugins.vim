@@ -1,7 +1,7 @@
 " vim: set ft=vim:
 " This file will source from light, main and ide plugin files, depending on
 " the value of 2 variables. These should be set from command line via the
-" --cmd option, eg `vim --cmd "let g:liteMode=1" [file]`
+" --cmd option, eg $(vim --cmd "let g:liteMode=1" [file])
 
 " {[} Settings and dir creation
 " Skip loading this file entirely.

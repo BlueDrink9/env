@@ -38,15 +38,15 @@ downloadURLtoFile() {
 getLatestReleaseFileURL() {
     # Takes argument 1 of form user/repo, eg will-shaw/env.
     # Gets the URL of the latest-released version of the specified filename arg 2.
-    # example: saucecodeproURL=`getLatestReleaseFileURL "ryanoasis/nerd-fonts" "SourceCodePro\.zip"`
+    # example: saucecodeproURL=$(getLatestReleaseFileURL "ryanoasis/nerd-fonts" "SourceCodePro\.zip")
     default="invalid url or filename"
     repo=${1:-default}
     file=${2:-default}
     repo=$1
     file=$2
-    repoapi=`getWebItem "https://api.github.com/repos/${repo}/releases/latest"`
+    repoapi=$(getWebItem "https://api.github.com/repos/${repo}/releases/latest")
     searchTemplate=https://github.com/${repo}/releases/download/[^/]*/${file}
-    fileLatestURL=`echo $repoapi | sed -n -e "s,^.*\(${searchTemplate}\).*$,\1,p"`
+    fileLatestURL=$(echo $repoapi | sed -n -e "s,^.*\(${searchTemplate}\).*$,\1,p")
     echo "$fileLatestURL"
 }
 
@@ -71,7 +71,7 @@ addTextIfAbsent() {
     default="invalid text or filename"
     text=${1:-$default}
     file=${2:-$default}
-    mkdir -p "`dirname "$file"`"
+    mkdir -p "$(dirname "$file")"
     # Check if text exists in file, otherwise append.
     grep -q -F "$text" "$file" || echo "$text" >> "$file"
 }

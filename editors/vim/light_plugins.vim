@@ -33,6 +33,9 @@ Plug 'https://github.com/EinfachToll/DidYouMean'
 " Bunch of neat mappings, it's a tpope. Esp [n and ]n, for SCM conflict marks.
 " And [<space> for addign newlines.
 Plug 'https://github.com/tpope/vim-unimpaired'
+" Because ]e for ale_next clobbers this
+nmap <silent> ]m <Plug>unimpairedMoveDown
+nmap <silent> [m <Plug>unimpairedMoveUp
 Plug 'https://github.com/chrisbra/csv.vim'
 let g:csv_autocmd_arrange	   = 1
 let g:csv_autocmd_arrange_size = 1024*1024

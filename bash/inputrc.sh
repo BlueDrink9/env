@@ -4,7 +4,7 @@
 include /etc/inputrc
 #{[} settings
 # Set bash movement keys to be more vi-like
-# Can use `set -o vi` for short version
+# Can use $(set -o vi) for short version
 set editing-mode vi
 
 # Completions with no shared prefix will be listed.

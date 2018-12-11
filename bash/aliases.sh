@@ -62,12 +62,12 @@ alias gc="git_clone"
 alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
 # Try to set vim to better versions...
-if [ `command -v nvim 2>/dev/null` ]; then
+if [ $(command -v nvim 2>/dev/null) ]; then
     alias vim="nvim"
-elif [ `command -v mvim 2>/dev/null` ]; then
+elif [ $(command -v mvim 2>/dev/null) ]; then
     # Prefer macvim to gvim.
     alias vim="mvim -v"
-elif [ `command -v gvim 2>/dev/null` ]; then
+elif [ $(command -v gvim 2>/dev/null) ]; then
     alias vim="gvim -v"
 elif [ -e /usr/bin/gvim ]; then
     alias vim="/usr/bin/gvim -v"
@@ -100,11 +100,11 @@ refreshcmd="update"
 upgradecmd="upgrade"
 searchcmd="search"
 removecmd="remove"
-if [ `command -v brew 2>/dev/null` ]; then
+if [ $(command -v brew 2>/dev/null) ]; then
     alias pack="brew"
     removecmd="uninstall"
-elif [ `command -v pacman 2>/dev/null` ]; then
-    if [ `command -v yay 2>/dev/null` ]; then
+elif [ $(command -v pacman 2>/dev/null) ]; then
+    if [ $(command -v yay 2>/dev/null) ]; then
         alias pack="yay"
     else
         alias pack="pacman"
@@ -114,12 +114,12 @@ elif [ `command -v pacman 2>/dev/null` ]; then
     upgradecmd="-U"
     searchcmd="-Ss"
     removecmd="-R"
-elif [ `command -v pkg 2>/dev/null` ]; then
+elif [ $(command -v pkg 2>/dev/null) ]; then
     # Probably termux, may be freeBSD.
     alias pack="pkg"
-elif [ `command -v apt 2>/dev/null` ]; then
+elif [ $(command -v apt 2>/dev/null) ]; then
     alias pack="sudo apt"
-elif [ `command -v yum 2>/dev/null` ]; then
+elif [ $(command -v yum 2>/dev/null) ]; then
     alias pack="sudo yum"
 fi
 alias packi="pack $installcmd"

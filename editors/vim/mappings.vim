@@ -168,15 +168,8 @@ vnoremap s <esc>gg<S-V>G
 " Spellcheck with completion list
 nnoremap <leader>s ea<C-X><C-S>
 " Remember cursor location and reformat file
-nnoremap g= gg=G``
-nnoremap gQ gggqG``
-" Commented because vim-unimpaired gives similar mappings (=ol and h). yo
-" enters PASTE mode.
-" " Quick entry into paste
-" nnoremap <leader>p :set paste!<CR>
-" nnoremap <F1> :set hlsearch!<CR>
-" nnoremap <leader>lc :set list!<CR>
-
+nnoremap g= gg=G$()
+nnoremap gQ gggqG$()
 " n and N always go the same direction regardless of whether / or ? was used.
 nnoremap <expr> n  'Nn'[v:searchforward]
 nnoremap <expr> N  'nN'[v:searchforward]
@@ -225,7 +218,7 @@ nnoremap <leader>cl :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l
 " Quickly edit macros
 nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 " Quicker access to system register
-" (`"` is default register anyway, so never need `""`)
+" ($(") is default register anyway, so never need $(""))
 nnoremap "" "+
 vnoremap "" "+
 " These apply only in vimdiff mode.
@@ -240,7 +233,7 @@ endif
 cabbrev profile profile start resultfile <bar> profile func *
 "" Opens an edit command with the path of the currently edited file filled in
 cabbrev le e <C-R>=expand("%:p:h") . "/" <CR>
-" Switch between the last two files
+" Switch between the last two files. Not working..
 nnoremap <Leader><Leader>a <C-^>
 cabbrev ide let g:ideMode=1 <bar> so $MYVIMRC
 " Toggle folds with backspace

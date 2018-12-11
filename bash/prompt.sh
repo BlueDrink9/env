@@ -30,7 +30,7 @@ export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
 # PROMPT_DIRTRIM=5
 
 # Used for set -o, shows a symbol at start of prompt for bash vi mode
-# RLVersion=`readline --version`
+# RLVersion=$(readline --version)
 if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.2 ; then
   # Introduced in readline 6.3, bash 4.3
   bind 'set show-mode-in-prompt on'
@@ -66,7 +66,7 @@ fi
 #   # Replace colour sequence with its escaped cousin.
 #   colarray=($colourVars)
 #   for colour in "${colarray[@]}" ; do
-#     printf -v $colour `prompt_escape ${!colour}`
+#     printf -v $colour $(prompt_escape ${!colour})
 #   done
 # }
 
@@ -78,10 +78,10 @@ set_bash_prompt () {
 
   # if git exists (it doesn't on iOS).
   if hash git 2>/dev/null; then
-    GIT_BRANCH="`get_git_branch`"
+    GIT_BRANCH="$(get_git_branch)"
     if [ ! "${GIT_BRANCH}" == "" ]
     then
-      GIT_STATUS_PROMPT="`parse_git_branch`"
+      GIT_STATUS_PROMPT="$(parse_git_branch)"
     else
       GIT_STATUS_PROMPT=""
     fi
@@ -93,13 +93,13 @@ set_bash_prompt () {
   WINDOW_TITLE_BASH_PATH="\[\e]2;[\W] \u@\h: [\w] ${GIT_BRANCH} – Bash\a\]"
 
   if [ -z ${USER} ] ; then
-    export USER=`id -u -n`
+    export USER=$(id -u -n)
   fi
   USER_AT_HOST="${pblue}\u${pNC}@${pyellow}\h${pNC}"
   USER_COLOURED="${pblue}\u${pNC}"
   USER_INITIAL_COLOURED="${pblue}${USER:0:1}${pNC}"
 
-  export HOST=`uname -n | cut -d"." -f1`
+  export HOST=$(uname -n | cut -d"." -f1)
 
   if (( ${#HOST}  > 12 )); then
     # Truncate hostname if it is too long.
@@ -158,7 +158,7 @@ set_bash_prompt () {
   fi
 
   # number of bg jobs, or "" if 0.
-  JOBS=`if [ -n "$(jobs -p)" ]; then echo "\j"; fi`
+  JOBS=$(if [ -n "$(jobs -p)" ]; then echo "\j"; fi)
 
   # PROMPT_STATICLEN="${VI_MODE} ${TIME_PROMPT_COLOURED}: ${USER_AT_HOST}: ${CURR_DIR_COLOURED}${GIT_STATUS_PROMPT} ${PROMPT_SYMBOL}"
   PROMPT="${VI_MODE} ${VAR_PROMPT} ${CURR_DIR_COLOURED}${GIT_STATUS_PROMPT} ${JOBS}${PROMPT_SYMBOL}"
@@ -201,19 +201,19 @@ PROMPT_COMMAND=set_bash_prompt
 # pgreen if no changes, yellow if modified. Cyan if there are misc changes to files.
 parse_git_branch() {
   STATUS_COLOUR=${pNC}
-  BRANCH=`get_git_branch`
+  BRANCH=$(get_git_branch)
   if [ ! "${BRANCH}" == "" ]
   then
-    status=`git status 2>&1 | tee`
-    dirty=`echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?"`
-    clean=`echo -n "${status}" 2> /dev/null | grep "clean" &> /dev/null; echo "$?"`
-    untracked=`echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?"`
-    ahead=`echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?"`
-    behind=`echo -n "${status}" 2> /dev/null | grep "Your branch is behind" &> /dev/null; echo "$?"`
-    diverged=`echo -n "${status}" 2> /dev/null | grep "diverged" &> /dev/null; echo "$?"`
-    newfile=`echo -n "${status}" 2> /dev/null | grep "new file:" &> /dev/null; echo "$?"`
-    renamed=`echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?"`
-    deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`
+    status=$(git status 2>&1 | tee)
+    dirty=$(echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?")
+    clean=$(echo -n "${status}" 2> /dev/null | grep "clean" &> /dev/null; echo "$?")
+    untracked=$(echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?")
+    ahead=$(echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?")
+    behind=$(echo -n "${status}" 2> /dev/null | grep "Your branch is behind" &> /dev/null; echo "$?")
+    diverged=$(echo -n "${status}" 2> /dev/null | grep "diverged" &> /dev/null; echo "$?")
+    newfile=$(echo -n "${status}" 2> /dev/null | grep "new file:" &> /dev/null; echo "$?")
+    renamed=$(echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?")
+    deleted=$(echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?")
     bits=''
     if [ "${clean}" == "0" ]; then
       STATUS_COLOUR=${pgreen}

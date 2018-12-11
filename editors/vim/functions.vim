@@ -53,7 +53,7 @@ function! ExecuteMacroOverVisualRange()
   execute ":'<,'>normal @".nr2char(getchar())
 endfunction
 
-" Search in all currently opened buffers. `SearchAll [pattern]`
+" Search in all currently opened buffers. $(SearchAll [pattern])
 " Populates quicklist
 function! ClearQuickfixList()
   call setqflist([])

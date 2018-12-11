@@ -16,11 +16,8 @@ if has("timers")
     let g:ale_sign_error = 'X'
     let g:ale_sign_warning = '!'
     " let g:ale_open_list=1 " Auto-open error lsit
-    call add('g:pluginSettingsToExec', 'nmap <silent> ]e <Plug>(ale_next_wrap)')
-    call add('g:pluginSettingsToExec', 'nmap <silent> ]e <Plug>(ale_next_wrap)')
-    " Because ]e clobbers this
-    nmap <silent> ]m <Plug>unimpairedMoveDown
-    nmap <silent> [m <Plug>unimpairedMoveUp
+    call add(g:pluginSettingsToExec, 'nmap <silent> ]e <Plug>(ale_next_wrap)')
+    call add(g:pluginSettingsToExec, 'nmap <silent> [e <Plug>(ale_previous_wrap)')
 else
     " ----- syntastic -----
     Plug 'https://github.com/vim-syntastic/syntastic.git'
@@ -86,21 +83,21 @@ if has("timers")
         " Never type the same word twice and maybe learn a new spellings!
         " Use the Linux dictionary when spelling is in doubt.
         function! Tab_Or_Completor() abort
-            " If completor is already open the `tab` cycles through suggested completions.
+            " If completor is already open the $(tab) cycles through suggested completions.
             if pumvisible()
                 return "\<C-N>"
                 " If completor is not open and we are in the middle of typing a word then
-                " `tab` opens completor menu.
+                " $(tab) opens completor menu.
             elseif col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
                 return "\<C-R>=completor#do('complete')\<CR>"
             else
-                " If we aren't typing a word and we press `tab` simply do the normal `tab`
+                " If we aren't typing a word and we press $(tab) simply do the normal $(tab)
                 " action.
                 return "\<Tab>"
             endif
         endfunction
 
-        " Use `tab` key to select completions.  Default is arrow keys.
+        " Use $(tab) key to select completions.  Default is arrow keys.
         inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
         inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
