@@ -6,7 +6,7 @@ doSSH() {
     # Note: Includes only added since 7.3p1
     addTextIfAbsent "Include \"$($SCRIPTDIR_CMD)/ssh_config\"" "${HOME}/.ssh/ssh_config"
 
-    for key in $($SCRIPTDIR_CMD)/authorized_keys; do
+    for key in $($SCRIPTDIR_CMD)/authorized_keys/*; do
         key="$(cat \"$key\")"
         addTextIfAbsent "$key" "${HOME}/.ssh/authorized_keys"
     done
