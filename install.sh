@@ -11,7 +11,7 @@ SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # SCRIPT COLORS are kept in this file
 source "$SCRIPTDIR/bash/colour_variables.sh"
 source "$SCRIPTDIR/bash/functions.sh"
-source "$SCRIPTDIR/functions_for_install.sh"
+source "$SCRIPTDIR/bash/script_functions.sh"
 OK="[ ${Green}OK${NC} ]"
 Error="[ ${Red}ERROR${NC} ]"
 SKIP=0
