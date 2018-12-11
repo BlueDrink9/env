@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-# vim: foldmethod=marker
-# vim: foldmarker={[},{]}
 
 # {[} Setup and variables
 # For debugging use
@@ -109,7 +107,7 @@ vscodeExtensions() {
             ${VSCODE_VERSION} --install-extension $LINE
         done < "${SCRIPTDIR}/editors/.vscode/extensions"
 
-        j            cp "${SCRIPTDIR}/editors/settings.json" "${VSCODE_APP_DATA}/User"
+        cp "${SCRIPTDIR}/editors/settings.json" "${VSCODE_APP_DATA}/User"
 
     elif [[ $REPLY =~ ^[cC]$ ]]; then # Load VSCode which detects recommendations.json
         $VSCODE_VERSION ./editors
@@ -117,7 +115,6 @@ vscodeExtensions() {
     return 0
 }
 # {]} VSCode
-
 installFonts() {
     mkdir -p "$FONTDIR"
     if [[ ! -d "${FONTDIR}/truetype/custom" ]]; then
@@ -126,12 +123,12 @@ installFonts() {
 
     printErr "Downloading fonts..."
 
-    # Get latest Iosevka font release.
-    fontUrl=`getLatestReleaseFileURL "be5invis/Iosevka" "iosevka-pack-[^z]*zip"`
-    fontdir="${FONTDIR}/Iosevka"
-    downloadURLAndExtractZipTo $fontUrl $fontdir && \
-        printErr "${OK} Fonts installed to ${Yellow}${fontdir}${NC}" || \
-        printErr "${Error} ${Red}Fonts failed to install to ${Yellow}${fontdir}${NC}"
+    # # Get latest Iosevka font release.
+    # fontUrl=`getLatestReleaseFileURL "be5invis/Iosevka" "iosevka-pack-[^z]*zip"`
+    # fontdir="${FONTDIR}/Iosevka"
+    # downloadURLAndExtractZipTo $fontUrl $fontdir && \
+    #     printErr "${OK} Fonts installed to ${Yellow}${fontdir}${NC}" || \
+    #     printErr "${Error} ${Red}Fonts failed to install to ${Yellow}${fontdir}${NC}"
 
     SCPUrl=`getLatestReleaseFileURL "ryanoasis/nerd-fonts" "SourceCodePro\.zip"`
     SCPdir="${FONTDIR}/SauceCodeProNF"
@@ -150,94 +147,21 @@ installFonts() {
     fc-cache && printErr "${OK} Fontcache updated" || \
         printErr "${Error} ${Red}Failed to update fontcache${NC}"
 }
+#{]}
 
 # {[} Vim
-# {[} Vim finer settings (Shaw)
-setVimColorscheme() {
-    if [ ! -d "$HOME/.vim/colors" ] || [ ! $SKIP == 2 ]; then
-        printErr "Downloading Vim colorschemes."
-        git clone --depth=1 https://github.com/flazz/vim-colorschemes.git 2> /dev/null
-        if [[ ! -d "$HOME/.vim" ]]; then
-            mkdir -p "$HOME/.vim/colors"
-        fi
-        printErr "Placing color schemes..."
-        cp ./vim-colorschemes/colors/*.vim "$HOME/.vim/colors" && \
-            printErr "$OK Placing color schemes... Done." || \
-            printErr "${Error}${Red}Failed previous command${NC}"
-
-        rm -rf "./vim-colorschemes"
-    fi
-
-    echo -ne "${Yellow}Enter chosen color scheme name: $NC"
-    read COLORSCHEME
-
-    printErr "$OK Color scheme = $COLORSCHEME"
-
-    sed 's/${VIM_COLORSCHEME}/'$COLORSCHEME'/g' ./editors/vim/extended.vim > ./extended.vim
-
-    setVimLineNumbers
-}
-
-setVimLineNumbers() {
-    if [  $ALL == 1 ] || askQuestionYN "${Yellow}Do you want to enable line numbers?${NC}"; then
-        sed -i 's/${NUMBER}/ /g' ./extended.vim && \
-            printErr "$OK Vim line numbers disabled." || \
-            printErr "${Error}${Red}Failed previous command${NC}"
-
-    else
-        sed -i 's/${NUMBER}/set number/g' ./extended.vim && \
-            printErr "$OK Vim line numbers enabled." || \
-            printErr "${Error}${Red}Failed previous command${NC}"
-
-    fi
-    cp ./extended.vim $VIMDIR/vimrcs/extended.vim
-    rm ./extended.vim
-}
-# {]} Vim finer settings (Shaw)
-
 setupVim(){
-    # {[} Shaw
-    if [ "$IS_SHAW" == 0 ] ; then
-
-        printErr "Checking Vim..."
-
-        if [[ -d "${VIMDIR}" ]]; then
-            printErr "found custom Vim.\nUpdating => "
-
-            cd "${VIMDIR}"
-            git stash | xargs echo > /dev/null
-            git rebase origin master | xargs echo -n
-            git stash pop | xargs echo > /dev/null
-            cd "${WD}"
-            printErr "${OK} Vim configuration is up to date."
-        else
-            printErr "Installing Amix's Awesome Vim config"
-            git clone --depth=1 https://github.com/amix/vimrc.git "$VIMDIR" && \
-                printErr "${OK} Installed Amix's Awesome Vim config." || \
-                printErr "${Error}${Red}Failed previous command${NC}"
-
-        fi
-        sh "${VIMDIR}/install_awesome_vimrc.sh" | xargs echo > /dev/null
-
-        printErr ""
-        printErr "------------------- VIM COLOR SCHEME"
-        setVimColorscheme
-    # {]} Shaw
-
-    else
-        printErr "Using WW's vimrc"
-        addTextIfAbsent "so $SCRIPTDIR/editors/vim/vimrc" "${HOME}/.vimrc"
-        addTextIfAbsent "so $SCRIPTDIR/editors/vim/nvimrc" "${HOME}/config/nvim/init.vim"
-        printErr "Installing vim plugins..."
-        # Install Plug (plugin manager)
-        downloadURLtoFile https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "${HOME}/.vim/autoload/plug.vim"
-        # This has the problem of making the caret disappear in WSL...
-        vim -E +PlugInstall +qall
-        # Recover missing cursor due to previous command
-        reset
-    fi
+    addTextIfAbsent "so $SCRIPTDIR/editors/vim/vimrc" "${HOME}/.vimrc"
+    addTextIfAbsent "so $SCRIPTDIR/editors/vim/nvimrc" "${HOME}/config/nvim/init.vim"
+    printErr "Installing vim plugins..."
+    # Install Plug (plugin manager)
+    downloadURLtoFile https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "${HOME}/.vim/autoload/plug.vim"
+    # This has the problem of making the caret disappear in WSL...
+    vim -E +PlugInstall +qall
+    # TODO: Saw this replicated elsewhere, but possibly without the -E. Hmmm...
+    # Recover missing cursor due to previous command
+    reset
 }
-# {]} Shaw
 
 installBrew() {
 	if [[ $OSTYPE =~ 'darwin' ]]; then
@@ -252,19 +176,8 @@ installBrew() {
 updateBrew() {
     brew="$HOMEBREW_PREFIX/bin/brew"
     "$brew" update
-    # This reads words. Currently ok, but should be updated.
+    # This reads words. Currently ok, but should be updated. TODO
     for i in $(cat "$SCRIPTDIR/system/Brewfile"); do "$brew" install "$i"; done
-}
-
-dualBootLocalTime() {
-    if askQuestionYN "${Yellow}Interpret hardware clock as local time? ${NC}"; then
-        timedatectl set-local-rtc 1 && \
-            printErr "\r$OK Linux using local time." || \
-            printErr "${Error}${Red}Failed previous command${NC}"
-
-    else
-        printErr ''
-    fi
 }
 
 # {[} Git
@@ -323,8 +236,9 @@ setupSSH() {
 
 gitSettings() {
     printErr "Enabling custom git setup..."
-    # Include is only supported on git versions > 1.7.10 
+    # Include is only supported on git versions > 1.7.10
     # (but 2.0 is quite standard anyway).
+    # TODO check this, and also append contents if not.
     git config --global include.path ${SCRIPTDIR}/git/gitconfig
     git config --global core.excludesfile ${SCRIPTDIR}/git/gitignore
     git config --global core.attributesfile ${SCRIPTDIR}/git/gitattributes
@@ -333,36 +247,20 @@ gitSettings() {
 
 setupShell() {
     addTextIfAbsent ". $HOME/.bashrc" ${HOME}/.bash_profile
-    if [ "$IS_SHAW" == 0 ] ; then
-        printErr "Copying custom bash files..."
-        if [[ -d "${BASH_CUSTOM}" ]] && [[ ! $SKIP == 1 ]]; then
-            printErr "${OK} ${BASH_CUSTOM} directory exists."
-        else
-            mkdir -p ${BASH_CUSTOM}
-            cp -r $SCRIPTDIR/bash/* ${BASH_CUSTOM}/
-            addTextIfAbsent "source $BASH_CUSTOM/bashrc" ${HOME}/.bashrc
-        fi
-    else
-        # {[} WW
-        printErr "Enabling custom bash setup..."
-        addTextIfAbsent "source $SCRIPTDIR/bash/bashrc" ${HOME}/.bashrc
-        downloadURLtoFile  \
-            https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.256dark  \
-            "${HOME}/.dircolours_solarized"
-        # https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-universal
+    printErr "Enabling custom bash setup..."
+    addTextIfAbsent "source $SCRIPTDIR/bash/bashrc" ${HOME}/.bashrc
+    downloadURLtoFile  \
+        https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.256dark  \
+        "${HOME}/.dircolours_solarized"
+    # https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-universal
 
-        printErr "Enabling custom tmux setup..."
-        addTextIfAbsent "source-file $SCRIPTDIR/terminal/tmux/tmux.conf" ${HOME}/.tmux.conf
-        printErr "Enabling custom readline (inputrc) setup..."
-        addTextIfAbsent "\$include $SCRIPTDIR/bash/inputrc.sh" "${HOME}/.inputrc"
-        printErr "Enabling custom X setup..."
-        addTextIfAbsent "xrdb -merge \"$SCRIPTDIR/terminal/x/Xresources\"" "${HOME}/.Xresources"
-        gitSettings
-    fi
-    # {]} WW
-    if [[ $OSTYPE =~ 'darwin' ]]; then
-        addTextIfAbsent "source .bashrc" "${HOME}/.bash_profile"
-    fi
+    printErr "Enabling custom tmux setup..."
+    addTextIfAbsent "source-file $SCRIPTDIR/terminal/tmux/tmux.conf" ${HOME}/.tmux.conf
+    printErr "Enabling custom readline (inputrc) setup..."
+    addTextIfAbsent "\$include $SCRIPTDIR/bash/inputrc.sh" "${HOME}/.inputrc"
+    printErr "Enabling custom X setup..."
+    addTextIfAbsent "xrdb -merge \"$SCRIPTDIR/terminal/x/Xresources\"" "${HOME}/.Xresources"
+    gitSettings
 }
 
 setupKitty() {
@@ -375,24 +273,6 @@ setupTermux() {
 }
 
 readSettings() {
-    echo -ne "Are you WS or WW? "
-    while true ; do
-        read -n 2 U
-        printErr ""
-        # Convert to upper case
-        U=`echo "$U" | tr '[:lower:]' '[:upper:]'`
-        if [ $U == "WS" ] || [ $U == "WW" ] ; then
-            break
-        else
-            printErr "Who now? Are you sure?"
-        fi
-    done
-    if [ $U == "WS" ] ; then
-        IS_SHAW=0
-    else
-        IS_SHAW=1
-    fi
-
     if [ $ALL != 1 ]; then
         if askQuestionYN "Install VSCode extensions?" ; then
             doVS=1
@@ -431,7 +311,7 @@ main() {
         readSettings
     fi
 
-    if [[ $IS_SHAW == 1 && ( $doVS == 1 ||  $ALL == 1 ) ]]; then
+    if [[ $doVS == 1 ]] || [[ $ALL == 1 ]]; then
         printErr ""
         printErr '------------------- VSCODE EXTENSIONS'
         vscodeExtensions
@@ -442,12 +322,6 @@ main() {
         printErr "------------------- GIT"
         gitUser ${1:-}
         gitCredentialCache
-    fi
-
-    if [ "$IS_SHAW" = 0 ] ; then
-        printErr ""
-        printErr "------------------- LOCAL TIME"
-        dualBootLocalTime
     fi
 
     if [ "$ALL" = 1 ] || [ "$doShell" = 1 ]; then
