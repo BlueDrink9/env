@@ -1,7 +1,7 @@
 # vim:ts=2:sw=2
 # vim:foldmarker={[},{]}:foldmethod=marker
 # This file holds reusable functions
-[ ! -z ${BASH_FUNCTIONS_LOADED+x} ] && return || export BASH_FUNCTIONS_LOADED=1
+[ ! -z ${BASH_FUNCTIONS_LOADED+} ] && return || export BASH_FUNCTIONS_LOADED=1
 
 # Removes carriage return characters from argument file.
 rmcr() {
