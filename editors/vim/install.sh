@@ -29,6 +29,8 @@ undoVim(){
     rm -rf "${HOME}/.config/nvim"
     sed -in "s|.*$($SCRIPTDIR_CMD)/vimrc.*||g" "${HOME}/.vimrc"
     sed -in "s|.*$($SCRIPTDIR_CMD)/nvimrc.*||g" "${HOME}/.config/nvim/init.vim"
+    for i in ~/fzf*; do rm -rf "${HOME:?}/$i"; done
+    rm -rf ~/ctrlpCache
     undoVimPlugins
 }
 
