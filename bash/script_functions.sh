@@ -38,6 +38,7 @@ downloadURLtoFile() {
 getLatestReleaseFileURL() {
     # Takes argument 1 of form user/repo, eg will-shaw/env.
     # Gets the URL of the latest-released version of the specified filename arg 2.
+    # example: saucecodeproURL=`getLatestReleaseFileURL "ryanoasis/nerd-fonts" "SourceCodePro\.zip"`
     default="invalid url or filename"
     repo=${1:-default}
     file=${2:-default}
