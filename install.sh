@@ -25,8 +25,6 @@ VSCODE_APP_DATA="${HOME}/AppData/Roaming/Code"
 
 # {]} Setup and variables
 
-
-# {[} Uninstall
 uninstall() {
     if askQuestionYN "Really uninstall?"; then
         printf "\nUninstalling...\n"
@@ -62,9 +60,7 @@ uninstall() {
     fi
 }
 
-# {]} Uninstall
 
-# {[} VSCode
 vscodeExtensions() {
     if hash code-insiders 2> /dev/null; then # Maybe insider version is being used.
         VSCODE_VERSION=code-insiders
@@ -114,7 +110,7 @@ vscodeExtensions() {
     fi
     return 0
 }
-# {]} VSCode
+
 installFonts() {
     mkdir -p "$FONTDIR"
     if [[ ! -d "${FONTDIR}/truetype/custom" ]]; then
@@ -147,9 +143,7 @@ installFonts() {
     fc-cache && printErr "${OK} Fontcache updated" || \
         printErr "${Error} ${Red}Failed to update fontcache${NC}"
 }
-#{]}
 
-# {[} Vim
 setupVim(){
     addTextIfAbsent "so $SCRIPTDIR/editors/vim/vimrc" "${HOME}/.vimrc"
     addTextIfAbsent "so $SCRIPTDIR/editors/vim/nvimrc" "${HOME}/config/nvim/init.vim"
@@ -180,7 +174,6 @@ updateBrew() {
     for i in $(cat "$SCRIPTDIR/system/Brewfile"); do "$brew" install "$i"; done
 }
 
-# {[} Git
 gitUser() {
     if [[ ${1:-} =~ ^--?[gG](it)?-?[cC](redentials)? ]]; then
         printErr "Forcing git update."
@@ -243,7 +236,6 @@ gitSettings() {
     git config --global core.excludesfile ${SCRIPTDIR}/git/gitignore
     git config --global core.attributesfile ${SCRIPTDIR}/git/gitattributes
 }
-# {]} Git
 
 setupShell() {
     addTextIfAbsent ". $HOME/.bashrc" ${HOME}/.bash_profile
