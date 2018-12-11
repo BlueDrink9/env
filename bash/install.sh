@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo $SCRIPTDIR
 
 doShell() {
     printErr "Enabling custom bash setup..."
-    addTextIfAbsent "source $HOME/.bashrc" ${HOME}/.bash_profile
-    addTextIfAbsent "source $SCRIPTDIR/bashrc" ${HOME}/.bashrc
+    addTextIfAbsent "source $HOME/.bashrc" "${HOME}/.bash_profile"
+    addTextIfAbsent "source $SCRIPTDIR/bashrc" "${HOME}/.bashrc"
 
     printErr "Downloading dircolours_solarized..."
     downloadURLtoFile  \

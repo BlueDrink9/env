@@ -4,7 +4,7 @@ SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 doSSH() {
     printErr "Enabling SSH config..."
     # Note: Includes only added since 7.3p1
-    addTextIfAbsent "Include \"$SCRIPTDIR/ssh_config\"" ${HOME}/.ssh/ssh_config
+    addTextIfAbsent "Include \"$SCRIPTDIR/ssh_config\"" "${HOME}/.ssh/ssh_config"
 
     for key in ${SCRIPTDIR}/authorized_keys; do
         key="$(cat \"$key\")"

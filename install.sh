@@ -4,7 +4,6 @@
 # For debugging use
 # set -eEuxo pipefail
 # set -uxo pipefail
-WD="$PWD"                   # Save working dir to return after navigation.
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export DOTFILES_DIR="$SCRIPTDIR"
 # SCRIPT COLORS are kept in this file
@@ -13,13 +12,7 @@ source "$SCRIPTDIR/bash/functions.sh"
 source "$SCRIPTDIR/bash/script_functions.sh"
 OK="[ ${Green}OK${NC} ]"
 Error="[ ${Red}ERROR${NC} ]"
-SKIP=0
 ALL=0
-if [[ $OSTYPE == 'linux-gnu' ]]; then
-    FONTDIR=$HOME/.fonts
-elif [[ $OSTYPE =~ 'darwin' ]]; then
-    FONTDIR=$HOME/Library/Fonts
-fi
 
 source "$DOTFILES_DIR/bash/install.sh"
 source "$DOTFILES_DIR/git/install.sh"
@@ -52,8 +45,8 @@ installers=""
 
 readSettings() {
     # May be set to "uninstall" rather than defaults set here.
-    set_up=${"Set up":-}
-    installStr=${"Install":-}
+    set_up="${set_up:-Set up}"
+    installStr="${installStr:-Install}"
     # Order is designed so that things that may prompt for input
     # within installer are done first, and within those, the ones that may
     # take a while (eg downloading things) are last.

@@ -27,7 +27,7 @@ undoTermux(){
     rm -rf "$HOME/.termux"
 }
 undoTmux(){
-    sed -in "s|.*${SCRIPTDIR}/tmux/tmux\.conf.*||g" "${HOME}/.tmux.conf"
+    sed -in "s|.*${SCRIPTDIR}/tmux/tmux\\.conf.*||g" "${HOME}/.tmux.conf"
 }
 undoX(){
     sed -in "s|.*${SCRIPTDIR}/x/Xresources.*||g" "${HOME}/.Xresources"

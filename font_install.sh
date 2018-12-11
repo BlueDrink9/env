@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+if [[ "$OSTYPE" == 'linux-gnu' ]]; then
+    FONTDIR="$HOME/.fonts"
+elif [[ "$OSTYPE" =~ 'darwin' ]]; then
+    FONTDIR="$HOME/Library/Fonts"
+fi
+
 installFonts() {
     mkdir -p "$FONTDIR"
     if [[ ! -d "${FONTDIR}/truetype/custom" ]]; then
@@ -19,7 +25,7 @@ installFonts() {
     printErr "Downloading Sauce Code Pro..."
     SCPUrl=$(getLatestReleaseFileURL "ryanoasis/nerd-fonts" "SourceCodePro\.zip")
     SCPdir="${FONTDIR}/SauceCodeProNF"
-    downloadURLAndExtractZipTo $SCPUrl $SCPdir && \
+    downloadURLAndExtractZipTo "$SCPUrl" "$SCPdir" && \
         printErr "${OK} Fonts installed to ${Yellow}${SCPdir}${NC}" || \
         printErr "${Error} ${Red}Fonts failed to install to ${Yellow}${SCPdir}${NC}"
 

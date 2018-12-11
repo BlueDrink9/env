@@ -43,7 +43,7 @@ gitUser() {
 }
 
 gitCredentialCache() {
-    if [ $ALL == 1 ] || askQuestionYN "${Yellow}Want Git to store your credentials for a while?${NC}"; then
+    if [ "$ALL" == 1 ] || askQuestionYN "${Yellow}Want Git to store your credentials for a while?${NC}"; then
 
         if [[ ! "$(git config --global user.name)" =~ .+ ]] || [[ ! $(git config --global user.email) =~ .+ ]]; then
             printErr "$OK Git global user is not setup correctly."
@@ -78,5 +78,5 @@ gitSettings() {
 # If interactive, do all
 if [[ $- == *i* ]]; then
     source "$DOTFILES_DIR/bash/colour_variables.sh"
-    doGit
+    doGit "$@"
 fi
