@@ -7,14 +7,14 @@ doSSH() {
     addTextIfAbsent "Include \"$($SCRIPTDIR_CMD)/ssh_config\"" "${HOME}/.ssh/ssh_config"
 
     for key in $($SCRIPTDIR_CMD)/authorized_keys/*; do
-        key="$(cat \"$key\")"
+        key="$(cat $key)"
         addTextIfAbsent "$key" "${HOME}/.ssh/authorized_keys"
     done
 }
 
 undoSSH(){
     for key in $($SCRIPTDIR_CMD)/authorized_keys/*; do
-        key="$(cat \"$key\")"
+        key="$(cat $key)"
         sed -in "s|$key||g" "${HOME}/.ssh/authorized_keys"
     done
     sed -in "s|.*$($SCRIPTDIR_CMD)/ssh_config.*||g" "${HOME}/.ssh/ssh_config"
