@@ -13,7 +13,7 @@ doSSH() {
 }
 
 undoSSH(){
-    for key in $($SCRIPTDIR_CMD)/authorized_keys; do
+    for key in $($SCRIPTDIR_CMD)/authorized_keys/*; do
         key="$(cat \"$key\")"
         sed -in "s|$key||g" "${HOME}/.ssh/authorized_keys"
     done
