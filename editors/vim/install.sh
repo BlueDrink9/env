@@ -19,7 +19,7 @@ undoVimPlugins(){
 doVim(){
     printErr "Enabling vim setup..."
     addTextIfAbsent "so $($SCRIPTDIR_CMD)/vimrc" "${HOME}/.vimrc"
-    addTextIfAbsent "so $($SCRIPTDIR_CMD)/nvimrc" "${HOME}/config/nvim/init.vim"
+    addTextIfAbsent "so $($SCRIPTDIR_CMD)/nvimrc" "${HOME}/.config/nvim/init.vim"
     doVimPlugins
     printErr "Done setting up vim"
 }
