@@ -1,3 +1,7 @@
 #: Forwards X and ssh-agent passwords.
 #: Increases risk of an attack spreading from a compromised server to user's desktop
 # ForwardAgent yes
+Host *
+  UseKeychain yes
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/id_rsa
