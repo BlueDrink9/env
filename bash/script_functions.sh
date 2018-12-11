@@ -3,7 +3,7 @@
 # vim: foldmarker={[},{]}
 # This file holds functions for use in scripting
 
-if [ -n "$SCRIPT_FUNCTIONS_LOADED" ]; then exit; fi
+[ -n "$SCRIPT_FUNCTIONS_LOADED" ] && return || readonly SCRIPT_FUNCTIONS_LOADED=1
 
 # For debugging use
 # set -eEuxo pipefail
@@ -101,5 +101,3 @@ askQuestionYN() {
         return 1
     fi
 }
-
-export SCRIPT_FUNCTIONS_LOADED=1
