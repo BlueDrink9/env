@@ -48,6 +48,9 @@ BASH_ENV="${SCRIPT_DIR}/aliases.sh" # Aliases are used for all readline apps.
 source ${SCRIPT_DIR}/aliases.sh
 source ${SCRIPT_DIR}/prompt.sh
 
+# Unset include guards to allow refreshing
+unset BASH_FUNCTIONS_LOADED SCRIPT_FUNCTIONS_LOADED
+
 # test if this is an ssh shell
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
     export SESSION_TYPE=remote/ssh
