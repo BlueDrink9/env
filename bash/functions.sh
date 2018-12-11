@@ -1,4 +1,5 @@
 # vim:ts=2:sw=2
+# vim:foldmarker={[},{]}:foldmethod=marker
 # This file holds reusable functions
 
 # Removes carriage return characters from argument file.
@@ -60,6 +61,7 @@ git_clone() {
 #TODO rceate function to try a range of terms...
 term() {
   terminals="
+  kitty
   gnome-terminal
   xfce4-terminal
   terminal
