@@ -2,9 +2,12 @@
 
 # {[} Setup and variables
 # For debugging use
-# set -eEuxo pipefail
+set -eEuxo pipefail
 # set -uxo pipefail
-SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# set -i
+SCRIPTDIR_CMD='eval echo $(cd $( dirname "${BASH_SOURCE[0]}" ) && pwd)'
+SCRIPTDIR="$($SCRIPTDIR_CMD)"
+# SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export DOTFILES_DIR="$SCRIPTDIR"
 # SCRIPT COLORS are kept in this file
 source "$SCRIPTDIR/bash/colour_variables.sh"
@@ -34,7 +37,7 @@ uninstall() {
 
         # Remove self
         if askQuestionYN "Delete repo directory?"; then
-            rm -rf "${SCRIPTDIR}"
+            rm -rf "$($SCRIPTDIR_CMD)"
         fi
         # Reset bash
         exec bash
@@ -108,6 +111,7 @@ main() {
 
 # set default arg to avoid warnings
 arg1=${1:-}
+echo 'arg' $arg1
 
 if [[ $arg1 = "-u" ]]; then
     uninstall

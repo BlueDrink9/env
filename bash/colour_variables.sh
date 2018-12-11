@@ -1,9 +1,5 @@
-# vim: set ft=bash:
-# # If not running interactively, don't do anything
-case $- in
-    *i*) ;;
-      *) return;;
-esac
+# # If not running interactively outside a script, don't do anything
+if [ ! -t 0 ]; then return; fi
 
 # Normal Colors
 Black='\e[0;30m'        # Black

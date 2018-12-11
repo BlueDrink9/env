@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$DOTFILES_DIR/bash/script_functions.sh"
 
 doGit() {
     gitSettings
@@ -70,9 +70,9 @@ gitSettings() {
     # Include is only supported on git versions > 1.7.10
     # (but 2.0 is quite standard anyway).
     # TODO check this, and also append contents if not.
-    git config --global include.path "${SCRIPTDIR}/gitconfig"
-    git config --global core.excludesfile "${SCRIPTDIR}/gitignore"
-    git config --global core.attributesfile "${SCRIPTDIR}/gitattributes"
+    git config --global include.path "$($SCRIPTDIR_CMD)/gitconfig"
+    git config --global core.excludesfile "$($SCRIPTDIR_CMD)/gitignore"
+    git config --global core.attributesfile "$($SCRIPTDIR_CMD)/gitattributes"
 }
 
 # If interactive, do all

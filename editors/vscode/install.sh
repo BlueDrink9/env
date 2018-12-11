@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
+source "$DOTFILES_DIR/bash/script_functions.sh"
 
-SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 VSCODE_EXTENSIONS_DIR="${HOME}/.vscode/extensions"
 VSCODE_VERSION=code
 VSCODE_APP_DATA="${HOME}/AppData/Roaming/Code"
@@ -17,7 +17,7 @@ vscodeExtensions() {
         mkdir -p "$VSCODE_EXTENSIONS_DIR"
         while IFS='' read -r LINE || [[ -n "$LINE" ]]; do
             code --install-extension "$LINE"
-        done < "${SCRIPTDIR}/extensions"
+        done < "$($SCRIPTDIR_CMD)/extensions"
 
         # elif [[ $REPLY =~ ^[cC]$ ]]; then # Load VSCode which detects recommendations.json
         #     #TODO Where is this meant to be CDed to?
@@ -40,9 +40,9 @@ vscodeExtensions() {
 
         while IFS='' read -r LINE || [[ -n "$LINE" ]]; do
             "${VSCODE_VERSION}" --install-extension "$LINE"
-        done < "${SCRIPTDIR}/extensions"
+        done < "$($SCRIPTDIR_CMD)/extensions"
 
-        cp "${SCRIPTDIR}/settings.json" "${VSCODE_APP_DATA}/User"
+        cp "$($SCRIPTDIR_CMD)/settings.json" "${VSCODE_APP_DATA}/User"
 
     elif [[ $REPLY =~ ^[cC]$ ]]; then # Load VSCode which detects recommendations.json
         $VSCODE_VERSION ./editors

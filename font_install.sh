@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$DOTFILES_DIR/bash/script_functions.sh"
 
 if [[ "$OSTYPE" == 'linux-gnu' ]]; then
     FONTDIR="$HOME/.fonts"

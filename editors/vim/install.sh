@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$DOTFILES_DIR/bash/script_functions.sh"
 
 doVimPlugins(){
     printErr "Installing vim plugins..."
@@ -18,8 +18,8 @@ undoVimPlugins(){
 
 doVim(){
     printErr "Enabling vim setup..."
-    addTextIfAbsent "so $SCRIPTDIR/vimrc" "${HOME}/.vimrc"
-    addTextIfAbsent "so $SCRIPTDIR/nvimrc" "${HOME}/config/nvim/init.vim"
+    addTextIfAbsent "so $($SCRIPTDIR_CMD)/vimrc" "${HOME}/.vimrc"
+    addTextIfAbsent "so $($SCRIPTDIR_CMD)/nvimrc" "${HOME}/config/nvim/init.vim"
     doVimPlugins
     printErr "Done setting up vim"
 }
@@ -27,8 +27,8 @@ doVim(){
 undoVim(){
     # The sed commands replace source lines with blanks
     rm -rf "${HOME}/.config/nvim"
-    sed -in "s|.*${SCRIPTDIR}/vimrc.*||g" "${HOME}/.vimrc"
-    sed -in "s|.*${SCRIPTDIR}/nvimrc.*||g" "${HOME}/.config/nvim/init.vim"
+    sed -in "s|.*$($SCRIPTDIR_CMD)/vimrc.*||g" "${HOME}/.vimrc"
+    sed -in "s|.*$($SCRIPTDIR_CMD)/nvimrc.*||g" "${HOME}/.config/nvim/init.vim"
     undoVimPlugins
 }
 

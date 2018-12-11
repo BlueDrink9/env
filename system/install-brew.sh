@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$DOTFILES_DIR/bash/script_functions.sh"
 
 installBrew() {
 	if [[ $OSTYPE =~ 'darwin' ]]; then
@@ -15,7 +15,7 @@ updateBrew() {
     brew="$HOMEBREW_PREFIX/bin/brew"
     "$brew" update
     # This reads words. Currently ok, but should be updated. TODO
-    for i in $(cat "$SCRIPTDIR/Brewfile"); do "$brew" install "$i"; done
+    for i in $(cat "$($SCRIPTDIR_CMD)/Brewfile"); do "$brew" install "$i"; done
 }
 
 undoBrew(){

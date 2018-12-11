@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$DOTFILES_DIR/bash/script_functions.sh"
 
 doTmux(){
     printErr "Enabling custom tmux setup..."
-    addTextIfAbsent "source-file $SCRIPTDIR/tmux/tmux.conf" ${HOME}/.tmux.conf
+    addTextIfAbsent "source-file $($SCRIPTDIR_CMD)/tmux/tmux.conf" ${HOME}/.tmux.conf
 }
 
 doKitty() {
     printErr "Enabling Kitty setup..."
-    addTextIfAbsent "include $SCRIPTDIR/kitty/kitty.conf" "${HOME}/.config/kitty/kitty.conf"
+    addTextIfAbsent "include $($SCRIPTDIR_CMD)/kitty/kitty.conf" "${HOME}/.config/kitty/kitty.conf"
 }
 
 doTermux() {
@@ -20,20 +20,20 @@ doTermux() {
 
 doX() {
     printErr "Enabling custom X setup..."
-    addTextIfAbsent "xrdb -merge \"$SCRIPTDIR/x/Xresources\"" "${HOME}/.Xresources"
+    addTextIfAbsent "xrdb -merge \"$($SCRIPTDIR_CMD)/x/Xresources\"" "${HOME}/.Xresources"
 }
 
 undoTermux(){
     rm -rf "$HOME/.termux"
 }
 undoTmux(){
-    sed -in "s|.*${SCRIPTDIR}/tmux/tmux\\.conf.*||g" "${HOME}/.tmux.conf"
+    sed -in "s|.*$($SCRIPTDIR_CMD)/tmux/tmux\\.conf.*||g" "${HOME}/.tmux.conf"
 }
 undoX(){
-    sed -in "s|.*${SCRIPTDIR}/x/Xresources.*||g" "${HOME}/.Xresources"
+    sed -in "s|.*$($SCRIPTDIR_CMD)/x/Xresources.*||g" "${HOME}/.Xresources"
 }
 undoKitty(){
-    sed -in "s|.*${SCRIPTDIR}/kitty/kitty.conf.*||g" "${HOME}/.config/kitty/kitty.conf"
+    sed -in "s|.*$($SCRIPTDIR_CMD)/kitty/kitty.conf.*||g" "${HOME}/.config/kitty/kitty.conf"
 }
 
 # If interactive, do all
