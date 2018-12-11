@@ -42,8 +42,9 @@ fi
 source "$DOTFILES_DIR/terminal/x/linuxterm.sh"
 
 export LC_CTYPE="en_US.UTF-8"
-# Allow sending ctrl+S to applications in terminal (prev stops scrolling)
-stty -ixon
+# Allow sending ctrl+S to applications in terminal (prev stops scrolling).
+# Only when interactive.
+if [[ $- == *i* ]]; then stty -ixon; fi
 
 if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
     export XKB_DEFAULT_LAYOUT="us,us"
