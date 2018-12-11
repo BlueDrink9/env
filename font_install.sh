@@ -49,5 +49,5 @@ undoFonts(){
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
     source "$DOTFILES_DIR/bash/script_functions.sh"
     source "$DOTFILES_DIR/bash/colour_variables.sh"
-    installFonts
+    doFonts
 fi
