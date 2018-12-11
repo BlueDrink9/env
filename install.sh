@@ -4,7 +4,6 @@
 # For debugging use
 # set -eEuxo pipefail
 # set -uxo pipefail
-# set -i
 SCRIPTDIR_CMD='eval echo $(cd $( dirname "${BASH_SOURCE[0]}" ) && pwd)'
 SCRIPTDIR="$($SCRIPTDIR_CMD)"
 # SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -24,6 +23,7 @@ source "$DOTFILES_DIR/terminal/install.sh"
 source "$DOTFILES_DIR/editors/vim/install.sh"
 source "$DOTFILES_DIR/editors/vscode/install.sh"
 source "$DOTFILES_DIR/system/install-brew.sh"
+source "$DOTFILES_DIR/system/ssh/install.sh"
 
 # {]} Setup and variables
 
