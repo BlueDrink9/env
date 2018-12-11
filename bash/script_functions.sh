@@ -3,9 +3,15 @@
 # vim: foldmarker={[},{]}
 # This file holds functions for use in scripting
 
+if [ -n "$SCRIPT_FUNCTIONS_LOADED" ]; then exit; fi
+
 # For debugging use
 # set -eEuxo pipefail
 # set -uxo pipefail
+
+SCRIPTDIR_CMD='eval echo $(cd $( dirname "${BASH_SOURCE[0]}" ) && pwd)'
+# Usage:
+# SCRIPTDIR="$($SCRIPTDIR_CMD)"
 
 getWebItem() {
     default="no-url-given"
@@ -95,3 +101,5 @@ askQuestionYN() {
         return 1
     fi
 }
+
+export SCRIPT_FUNCTIONS_LOADED=1
