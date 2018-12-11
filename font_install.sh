@@ -7,7 +7,7 @@ elif [[ "$OSTYPE" =~ 'darwin' ]]; then
     FONTDIR="$HOME/Library/Fonts"
 fi
 
-installFonts() {
+doFonts() {
     mkdir -p "$FONTDIR"
     if [[ ! -d "${FONTDIR}/truetype/custom" ]]; then
         mkdir -p "${FONTDIR}/truetype/custom"
@@ -39,6 +39,10 @@ installFonts() {
 
     fc-cache && printErr "${OK} Fontcache updated" || \
         printErr "${Error} ${Red}Failed to update fontcache${NC}"
+}
+
+undoFonts(){
+    rm -rf "${FONTDIR}/SauceCodeProNF"
 }
 
 # If directly run instead of sourced, do all
