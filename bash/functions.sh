@@ -401,19 +401,24 @@ reset_ssh_permissions(){
 
 # Adds an ssh key to agent, using the passphrase in lastpass.
 # Uses the extra note at the end of the .pub as the key name in lastpass.
+# If no key files are given as arguments, all keys in ~/.ssh are added.
 lastpass_ssh_key_add(){
   if ! command -v lpass > /dev/null; then
     echo "lastpass-cli not installed"
     return
   fi
-  for keyfile in $HOME/.ssh/*.pub; do
+  pubkeys=$(ls $HOME/.ssh/*.pub)
+  files="${*-$pubkeys}"
+  for keyfile in $files; do
+    # Strip .pub from public keys...
     keyfile="${keyfile%.*}"
     # Extract the comment at the end of the pub file
     keyname=$(sed -e 's/[^=]*== //g' < "${keyfile}.pub")
     if ! lpass status; then
       echo "Lastpass is not logged in."
-      echo "Use lpass login [email]"
-      return 1
+      echo "Enter lastpass username:"
+      READ LPUSERNAME
+      lpass login "$LPUSERNAME"
     fi
     # Note: Indent END with tabs, not spaces, or this won't work.
     expect <<- END
