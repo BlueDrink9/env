@@ -398,3 +398,23 @@ reset_ssh_permissions(){
   chown $USER $HOME/.ssh
   chown $USER $HOME/.ssh/*
 }
+
+# Adds an ssh key to agent, using the passphrase in lastpass.
+# Uses the extra note at the end of the .pub as the key name in lastpass.
+lastpass_ssh_key_add(){
+  if ! command -v lpass > /dev/null; then
+    echo "lastpass-cli not installed"
+    return
+  fi
+  for keyfile in $HOME/.ssh/*.pub; do
+    keyfile="${keyfile%.*}"
+    # Extract the comment at the end of the pub file
+    keyname=$(sed -e 's/[^=]*== //g' < "${keyfile}.pub")
+    expect <<- END
+      spawn ssh-add ${keyfile}
+      expect "Enter passphrase"
+      send "$(lpass show --field=Passphrase SSH/${keyname})\r"
+      expect eof
+			END
+  done
+}
