@@ -62,7 +62,7 @@ git_clone() {
 #TODO rceate function to try a range of terms...
 term() {
   terminals="
-  kitty
+  kitty --single-instance -d $(pwd)
   gnome-terminal
   xfce4-terminal
   terminal
@@ -73,9 +73,9 @@ term() {
   for term in "${tarray[@]}" ; do
     # if [ $(function_exists "$browser") ]; then
     function_exists "$term"
-    command -v $term >/dev/null 2>&1
+    command -v $term >/dev/null 2>&1 # deliberately only get first word of cmd
     if [ "$?" -eq 0 ]; then
-      $term "$1"
+      "$term" "$1"
       break
     fi
   done || echo "Terminal emulator unknown" >&2
