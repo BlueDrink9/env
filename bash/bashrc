@@ -35,8 +35,8 @@ if [ -z $HOMEBREW_PREFIX ]; then
 fi
 
 if [ -z "$SSH_AUTH_SOCK" ]; then
-    eval $(ssh-agent)
-    ssh-add
+    eval $(ssh-agent) > /dev/null # 2>&1
+    ssh-add > /dev/null # 2>&1
 fi
 
 # Reload/source inputrc
