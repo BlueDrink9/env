@@ -18,6 +18,8 @@ if has("timers")
     " let g:ale_open_list=1 " Auto-open error lsit
     call add(g:pluginSettingsToExec, 'nmap <silent> ]e <Plug>(ale_next_wrap)')
     call add(g:pluginSettingsToExec, 'nmap <silent> [e <Plug>(ale_previous_wrap)')
+    " Unimpaired makes remapping tricky.
+    let g:nremap = {"]e": "<Plug>(ale_next_wrap)","[e": "<Plug>(ale_previous_wrap)" }
 else
     " ----- syntastic -----
     Plug 'https://github.com/vim-syntastic/syntastic.git'
