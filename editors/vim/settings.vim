@@ -464,13 +464,11 @@ set updatetime=1000
 " Disable status bar too
 augroup quickfixloclist
     autocmd!
-    if exists('##QuitPre')
-        autocmd QuitPre * if &filetype != 'qf' | silent! lclose | endif
-    endif
+    autocmd WinEnter * if winnr('$') == 1 && &buftype == "quickfix" | quit | endif
     autocmd Filetype qf setlocal laststatus=0
     autocmd Filetype qf setlocal nonu
     autocmd Filetype qf setlocal norelativenumber
     if v:version >= 703
-        autocmd Filetype qf setlocal colorcolumn
+        autocmd Filetype qf setlocal colorcolumn=0
     endif
 augroup END
