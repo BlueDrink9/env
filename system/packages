@@ -12,3 +12,8 @@ ssh-agent
 ssh-pass
 
 # proselint # wooah cool. Pip module
+
+# OSX only
+# Needs xcode-8 cmd tools
+# brew install koekeishiya/formulae/skhd
+# brew services start skhd
