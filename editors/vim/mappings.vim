@@ -4,6 +4,8 @@
 
 inoremap kv <esc>
 inoremap vk <esc>
+cnoremap kv <c-f>
+cnoremap vk <c-f>
 
 " Don't have to hold shift for commands. So nice
 nnoremap ; :
