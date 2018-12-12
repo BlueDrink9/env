@@ -161,6 +161,7 @@ Plug 'https://github.com/tpope/vim-dispatch'
 " {[} ---------- Git ----------
 if executable("git")
     augroup myGit
+        au!
         autocmd User Fugitive SignifyRefresh
     augroup end
     " :Magit to check all sorts of git stuff. Looks really cool. Capitals for 
@@ -200,6 +201,7 @@ if executable("git")
     " call add(g:pluginSettingsToExec, "autocmd! signify CursorHold,CursorHoldI")
     if has('timers')
         augroup mysignify
+            au!
             autocmd CursorHold,CursorHoldI,BufEnter,FocusGained call silent! sy#start()
             autocmd User Fugitive silent! SignifyRefresh
         augroup end
