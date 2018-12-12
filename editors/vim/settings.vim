@@ -22,6 +22,10 @@ set encoding=utf-8
 filetype plugin indent on
 " For highlighting, and color schemes
 syntax on
+augroup my_syntax
+    autocmd!
+    autocmd BufWinEnter,Syntax * syn sync minlines=100
+augroup END
 
 let s:defaultBGGUI="light"
 let s:defaultBGConsole="light"
