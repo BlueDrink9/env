@@ -461,9 +461,16 @@ endif
 set updatetime=1000
 
 " Close quickfix or location list if it's the last remaining window in the tab
-augroup qfClose
+" Disable status bar too
+augroup quickfixloclist
     autocmd!
     if exists('##QuitPre')
         autocmd QuitPre * if &filetype != 'qf' | silent! lclose | endif
+    endif
+    autocmd Filetype qf setlocal laststatus=0
+    autocmd Filetype qf setlocal nonu
+    autocmd Filetype qf setlocal norelativenumber
+    if v:version >= 703
+        autocmd Filetype qf setlocal colorcolumn
     endif
 augroup END
