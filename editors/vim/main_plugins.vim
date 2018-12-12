@@ -199,13 +199,12 @@ if executable("git")
     " let g:signify_realtime = 1
     " Causes a write on cursorhold. PITA, so let's replace it.
     " call add(g:pluginSettingsToExec, "autocmd! signify CursorHold,CursorHoldI")
-    if has('timers')
-        augroup mysignify
-            au!
-            autocmd CursorHold,CursorHoldI,BufEnter,FocusGained call silent! sy#start()
-            autocmd User Fugitive silent! SignifyRefresh
-        augroup end
-    endif
+    " if has('timers')
+    "     augroup mysignify
+    "         au!
+    "         autocmd CursorHold,CursorHoldI,BufEnter,FocusGained call silent! sy#start()
+    "     augroup end
+    " endif
     let g:signify_sign_change = '~'
 
     " Plug 'airblade/vim-gitgutter'
