@@ -200,7 +200,8 @@ if executable("git")
     " call add(g:pluginSettingsToExec, "autocmd! signify CursorHold,CursorHoldI")
     if has('timers')
         augroup mysignify
-            autocmd CursorHold,CursorHoldI,BufEnter,FocusGained call sy#start()
+            autocmd CursorHold,CursorHoldI,BufEnter,FocusGained call silent! sy#start()
+            autocmd User Fugitive silent! SignifyRefresh
         augroup end
     endif
     let g:signify_sign_change = '~'
