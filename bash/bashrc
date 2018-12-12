@@ -34,11 +34,6 @@ if [ -z $HOMEBREW_PREFIX ]; then
     fi
 fi
 
-if [ -z "$SSH_AUTH_SOCK" ]; then
-    eval $(ssh-agent) > /dev/null # 2>&1
-    ssh-add > /dev/null # 2>&1
-fi
-
 # Reload/source inputrc
 # bind -f ${SCRIPT_DIR}/inputrc.sh
 INPUTRC="${SCRIPT_DIR}/inputrc.sh"
@@ -47,6 +42,12 @@ source ${SCRIPT_DIR}/settings.sh
 BASH_ENV="${SCRIPT_DIR}/aliases.sh" # Aliases are used for all readline apps.
 source ${SCRIPT_DIR}/aliases.sh
 source ${SCRIPT_DIR}/prompt.sh
+
+if [ -z "$SSH_AUTH_SOCK" ]; then
+    # Decay after 120 mins
+    eval $(ssh-agent -t 120m) > /dev/null # 2>&1
+    lastpass_ssh_key_add
+fi
 
 # Unset include guards to allow refreshing
 unset BASH_FUNCTIONS_LOADED SCRIPT_FUNCTIONS_LOADED

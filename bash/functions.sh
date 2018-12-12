@@ -416,8 +416,7 @@ lastpass_ssh_key_add(){
     keyname=$(sed -e 's/[^=]*== //g' < "${keyfile}.pub")
     if ! lpass status; then
       echo "Lastpass is not logged in."
-      echo "Enter lastpass username:"
-      READ LPUSERNAME
+      read -r -p "Enter lastpass username: " LPUSERNAME
       lpass login "$LPUSERNAME"
     fi
     # Note: Indent END with tabs, not spaces, or this won't work.
