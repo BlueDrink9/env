@@ -459,3 +459,11 @@ endif
 " autocmd BufEnter * silent! lcd %:p:h
 " Cursorhold autocmds fire after 1s (default 4)
 set updatetime=1000
+
+" Close quickfix or location list if it's the last remaining window in the tab
+augroup qfClose
+    autocmd!
+    if exists('##QuitPre')
+        autocmd QuitPre * if &filetype != 'qf' | silent! lclose | endif
+    endif
+augroup END
