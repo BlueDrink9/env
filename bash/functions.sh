@@ -404,7 +404,7 @@ reset_ssh_permissions(){
 # If no key files are given as arguments, all keys in ~/.ssh are added.
 lastpass_ssh_key_add(){
   if ! command -v lpass > /dev/null; then
-    echo "lastpass-cli not installed"
+    echo "lastpass-cli not installed. No keys added."
     return
   fi
   pubkeys=$(ls $HOME/.ssh/*.pub)
