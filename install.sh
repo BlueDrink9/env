@@ -75,6 +75,9 @@ readSettings() {
             elif substrInStr "Android" "$(uname -a)";  then
                 installers="$installers doTermux"
             fi
+            installers="$installers doTmux"
+            installers="$installers doX"
+
         fi
 
         if [ "$ALL" == 1 ] || askQuestionYN "$installStr fonts?" ; then

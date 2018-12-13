@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 source "$DOTFILES_DIR/bash/script_functions.sh"
+source "$DOTFILES_DIR/bash/functions.sh"
 
 doTmux(){
     printErr "Enabling custom tmux setup..."
@@ -38,11 +39,11 @@ undoKitty(){
 
 # If directly run instead of sourced, do all
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
-    setupTmux
+    doTmux
     if substrInStr "kitty" "$TERM"; then
-        setupKitty
+        doKitty
     elif substrInStr "Android" "$(uname -a)"; then
-        setupTermux
+        doTermux
     fi
-    setupX
+    doX
 fi
