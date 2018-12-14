@@ -67,6 +67,10 @@ case $- in
         else
             TMUX_256_arg=""
         fi
+        if [ -z "$TMUX_ALLOW_DETACH" ]; then
+            execCmd="exec"
+            # Else nothing
+        fi
         if command -v tmux>/dev/null; then
             if [[ ! $TERM =~ screen ]] && [[ -z $TMUX ]]; then
                 # PNAME="$(ps -o comm= $PPID)";
@@ -75,9 +79,9 @@ case $- in
                 # if contains "$useTmuxFor" "$PNAME"; then
                 if [ "$SSHSESSION" ] || [ -z "$DISPLAY" ]; then
                     if tmux ls 2> /dev/null | grep -q -v attached; then
-                        exec tmux $TMUX_256_arg attach -t $(tmux ls 2> /dev/null | grep -v attached | head -1 | cut -d : -f 1)
+                        $execCmd tmux $TMUX_256_arg attach -t $(tmux ls 2> /dev/null | grep -v attached | head -1 | cut -d : -f 1)
                     else
-                        exec tmux $TMUX_256_arg
+                        $execCmd tmux $TMUX_256_arg
                     fi
                 fi
             fi
@@ -92,6 +96,11 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
     eval $(ssh-agent -t 120m) > /dev/null # 2>&1
     lastpass_ssh_key_add
 fi
+
+# Virtual console
+if [ "$TERM" = "Linux" ]; then
+    source "${DOTFILES_DIR}/terminal/virtual_console/reuse_X_colors.sh" "${DOTFILES_DIR}/terminal/x/solarized_light"
+fei
 
 
 # {[] fzf
