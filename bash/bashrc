@@ -57,6 +57,12 @@ else
     esac
 fi
 
+# Virtual console
+if [ "$TERM" = "Linux" ]; then
+    # source "${DOTFILES_DIR}/terminal/virtual_console/reuse_X_colors.sh" "${DOTFILES_DIR}/terminal/x/solarized_light"
+    source "${DOTFILES_DIR}/terminal/virtual_console/solarized.sh"
+fi
+
 #{[} tmux
 # Run tmux on ssh connect
 # Check if interactive is part of shell options (running interactively)
@@ -96,11 +102,6 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
     eval $(ssh-agent -t 120m) > /dev/null # 2>&1
     lastpass_ssh_key_add
 fi
-
-# Virtual console
-if [ "$TERM" = "Linux" ]; then
-    source "${DOTFILES_DIR}/terminal/virtual_console/reuse_X_colors.sh" "${DOTFILES_DIR}/terminal/x/solarized_light"
-fei
 
 
 # {[] fzf
