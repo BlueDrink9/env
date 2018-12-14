@@ -43,12 +43,6 @@ BASH_ENV="${SCRIPT_DIR}/aliases.sh" # Aliases are used for all readline apps.
 source ${SCRIPT_DIR}/aliases.sh
 source ${SCRIPT_DIR}/prompt.sh
 
-if [ -z "$SSH_AUTH_SOCK" ]; then
-    # Decay after 120 mins
-    eval $(ssh-agent -t 120m) > /dev/null # 2>&1
-    lastpass_ssh_key_add
-fi
-
 # Unset include guards to allow refreshing
 unset BASH_FUNCTIONS_LOADED SCRIPT_FUNCTIONS_LOADED
 
@@ -91,6 +85,14 @@ case $- in
         ;;
 esac
 # {]} tmux
+
+# Register keys
+if [ -z "$SSH_AUTH_SOCK" ]; then
+    # Decay after 120 mins
+    eval $(ssh-agent -t 120m) > /dev/null # 2>&1
+    lastpass_ssh_key_add
+fi
+
 
 # {[] fzf
 if [ -f ~/.fzf.bash ]; then
