@@ -46,6 +46,12 @@ source ${SCRIPT_DIR}/prompt.sh
 # Unset include guards to allow refreshing
 unset BASH_FUNCTIONS_LOADED SCRIPT_FUNCTIONS_LOADED
 
+# Virtual console
+if [ "$TERM" = "linux" ]; then
+    # source "${DOTFILES_DIR}/terminal/virtual_console/reuse_X_colors.sh" "${DOTFILES_DIR}/terminal/x/solarized_light"
+    source "${DOTFILES_DIR}/terminal/virtual_console/solarized.sh"
+fi
+
 # test if this is an ssh shell
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
     export SESSION_TYPE=remote/ssh
@@ -55,12 +61,6 @@ else
     case $(ps -o comm= -p $PPID) in
         sshd|*/sshd) SESSION_TYPE=remote/ssh;;
     esac
-fi
-
-# Virtual console
-if [ "$TERM" = "Linux" ]; then
-    # source "${DOTFILES_DIR}/terminal/virtual_console/reuse_X_colors.sh" "${DOTFILES_DIR}/terminal/x/solarized_light"
-    source "${DOTFILES_DIR}/terminal/virtual_console/solarized.sh"
 fi
 
 #{[} tmux
