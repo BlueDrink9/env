@@ -105,7 +105,7 @@ if [ $(command -v brew 2>/dev/null) ]; then
     removecmd="uninstall"
 elif [ $(command -v pacman 2>/dev/null) ]; then
     if [ $(command -v yay 2>/dev/null) ]; then
-        alias pack="sudo yay"
+        alias pack="yay"
     else
         alias pack="sudo pacman"
     fi
