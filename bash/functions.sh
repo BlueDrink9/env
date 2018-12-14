@@ -407,7 +407,7 @@ lastpass_ssh_key_add(){
     echo "lastpass-cli not installed. No keys added."
     return
   fi
-  pubkeys=$(ls $HOME/.ssh/*.pub)
+  pubkeys=$(ls $HOME/.ssh/*.pub 2> /dev/null)
   files="${*-$pubkeys}"
   for keyfile in $files; do
     # Strip .pub from public keys...
