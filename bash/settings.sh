@@ -6,7 +6,7 @@ BASH_VERSION_CLEAN="${BASH_VERSION//[^0-9.]*/}"
 # You know it, baby. Shouldn't need to use nano ever
 export EDITOR="vim --noplugin --cmd \"let g:noPlugins=1\""
 export VISUAL="vim --cmd \"let g:liteMode=1\""
-export GIT_EDITOR="vim --cmd \"let g:liteMode=1\""
+export GIT_EDITOR="$VISUAL"
 
 # {[} Terminal settings
 # Set defaults here for various terms
@@ -151,3 +151,9 @@ shopt -s autocd 2> /dev/null
 shopt -s cdable_vars
 # Prevent files from being overwritten by redirection.
 set -o noclobber
+
+if [ -n "$DISPLAY" ]; then
+    setxkbmap -layout 'us, us' -variant 'colemak,' -option caps:backspace -option altwin:swap_alt_win -option grp:alt_shift_toggle -option grp_led:caps
+elif [ $(command -v loadkeys 2>/dev/null) ]; then
+    loadkeys colemak
+fi
