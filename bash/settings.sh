@@ -11,20 +11,22 @@ export GIT_EDITOR="$VISUAL"
 # {[} Terminal settings
 # Set defaults here for various terms
 if substrInStr "Apple" "$TERM_PROGRAM"; then
-    export COLORTERM=16
+    COLORTERM=16
 fi
 if substrInStr "kitty" "$TERM"; then
     COLORTERM="truecolor"
+    USENF=${USENF:-1}
 fi
 if substrInStr "Android" "$(uname -a)" && [ ! "$SSHSESSION" = 1 ];  then
     export ISTERMUX=1
     COLORTERM="truecolor"
 fi
+export COLORTERM USENF
 
-USENF=${USENF-0}
-USEPF=${USEPF-0}
-COLORTERM=${COLORTERM-16}
-TERM_PROGRAM=${TERM_PROGRAM-}
+USENF=${USENF:-0}
+USEPF=${USEPF:-0}
+COLORTERM=${COLORTERM:-16}
+TERM_PROGRAM=${TERM_PROGRAM:-}
 # Will get exported to ssh servers (see functions->export_termoptions)
 export TERMOPTIONS=(USENF USEPF COLORTERM TERM_PROGRAM)
 
