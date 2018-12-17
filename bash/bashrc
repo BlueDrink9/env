@@ -83,7 +83,8 @@ case $- in
                 # useTmuxFor="login sshd gnome-terminal init wslbridge-backe"
                 # useTmuxFor="sshd"
                 # if contains "$useTmuxFor" "$PNAME"; then
-                if [ "$SSHSESSION" ] || [ -z "$DISPLAY" ]; then
+                if [ -z
+                    "$NOTMUX" ] && { [ "$SSHSESSION" ] || [ -z "$DISPLAY" ]; }; then
                     if tmux ls 2> /dev/null | grep -q -v attached; then
                         $execCmd tmux $TMUX_256_arg attach -t $(tmux ls 2> /dev/null | grep -v attached | head -1 | cut -d : -f 1)
                     else
