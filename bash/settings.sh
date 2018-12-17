@@ -156,6 +156,6 @@ set -o noclobber
 
 if [ -n "$DISPLAY" ]; then
     setxkbmap -layout 'us, us' -variant 'colemak,' -option caps:backspace -option altwin:swap_alt_win -option grp:alt_shift_toggle -option grp_led:caps
-elif [ $(command -v loadkeys 2>/dev/null) ]; then
+elif [ $(command -v loadkeys 2>/dev/null) ] && [ "$TERM" = linux ]; then
     loadkeys colemak
 fi
