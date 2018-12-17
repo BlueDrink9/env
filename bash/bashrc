@@ -15,7 +15,7 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export DOTFILES_DIR=$(cd "${SCRIPT_DIR}/.." && pwd)
 
-if [ -n "$HOMEBREW_PREFIX" ]; then
+if [ -n "$BASH" ] && [ -n "$HOMEBREW_PREFIX" ]; then
     if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
         export HOMEBREW_PREFIX="$HOME/homebrew"
     elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
