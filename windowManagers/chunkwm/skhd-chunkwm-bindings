@@ -18,6 +18,7 @@ shift + cmd - n : chunkc tiling::desktop --create;\
 # cmd - w enters window management mode
 alt - w ; chunkwmMode
 chunkwmMode < alt - w ; default
+chunkwmMode < esc ; default
 
 # focus window
 alt - h : chunkc tiling::window --focus west
@@ -120,9 +121,9 @@ chunkwmMode < ctrl + alt - k : chunkc tiling::window --use-insertion-point north
 chunkwmMode < ctrl + alt - l : chunkc tiling::window --use-insertion-point east
 
 # send window to desktop
-chunkwmMode < x : chunkc tiling::window --send-to-desktop $(chunkc get _last_active_desktop)
-chunkwmMode < z : chunkc tiling::window --send-to-desktop prev
-chunkwmMode < c : chunkc tiling::window --send-to-desktop next
+chunkwmMode < shift - x : chunkc tiling::window --send-to-desktop $(chunkc get _last_active_desktop)
+chunkwmMode < shift - z : chunkc tiling::window --send-to-desktop prev
+chunkwmMode < shift - c : chunkc tiling::window --send-to-desktop next
 chunkwmMode < 1 : chunkc tiling::window --send-to-desktop 1
 chunkwmMode < 2 : chunkc tiling::window --send-to-desktop 2
 chunkwmMode < 3 : chunkc tiling::window --send-to-desktop 3
