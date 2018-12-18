@@ -472,3 +472,7 @@ augroup quickfixloclist
         autocmd Filetype qf setlocal colorcolumn=0
     endif
 augroup END
+
+if $TERM =~ 'kitty'
+    let &t_ut=''
+endif
