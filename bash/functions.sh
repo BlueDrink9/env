@@ -427,4 +427,5 @@ lastpass_ssh_key_add(){
       expect eof
 			END
   done
+  export SSH_KEYS_ADDED=1
 }

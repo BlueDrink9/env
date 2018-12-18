@@ -1,6 +1,6 @@
 # vim:ft=sh:tw=78:ts=4
 # vim:foldmethod=marker:foldmarker={[},{]}
-# Contains bash and cli bootstrapping code
+# Contains bash and cli bootstrapping/init code
 
 # XXX For debugging, call $(bash_debug_log) with optional logfile param
 # to show all bash commands run. Default logfile is ${HOME}/.debug_log_bashsetx.
@@ -101,6 +101,8 @@ esac
 if [ -z "$SSH_AUTH_SOCK" ]; then
     # Decay after 120 mins
     eval $(ssh-agent -t 120m) > /dev/null # 2>&1
+fi
+if [ -z "$SSH_KEYS_ADDED" ]; then
     lastpass_ssh_key_add
 fi
 
