@@ -407,7 +407,11 @@ lastpass_ssh_key_add(){
     echo "lastpass-cli not installed. No keys added."
     return
   fi
-  if [ -z "$SSH_KEYS_ADDED" ]; then
+  if ! command -v ssh > /dev/null; then
+    echo "openssh not installed."
+    return
+  fi
+  # if [ -z "$SSH_KEYS_ADDED" ]; then
     pubkeys=$(ls $HOME/.ssh/*.pub 2> /dev/null)
     files="${*-$pubkeys}"
     for keyfile in $files; do
@@ -431,6 +435,6 @@ lastpass_ssh_key_add(){
 				END
     fi
   done
-fi
-export SSH_KEYS_ADDED=1
+# fi
+# export SSH_KEYS_ADDED=1
 }
