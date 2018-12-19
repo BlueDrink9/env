@@ -236,5 +236,6 @@ cabbrev le e <C-R>=expand("%:p:h") . "/" <CR>
 " Switch between the last two files. Not working..
 nnoremap <Leader><Leader>a <C-^>
 cabbrev ide let g:ideMode=1 <bar> so $MYVIMRC
-" Toggle folds with backspace
+" Toggle/create folds with backspace.
 nnoremap <backspace> za
+vnoremap <backspace> zf
