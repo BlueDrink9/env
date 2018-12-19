@@ -174,7 +174,7 @@ if executable("git")
     cabbrev gw Gwrite
     cabbrev gc Gwrite <bar> Gcommit
     cabbrev gco Gcommit
-    cabbrev gca Gcommit --amend
+    cabbrev gup Gcommit --amend --no-edit
     cabbrev gdf Gdiff
     " Async fugitive
     if g:hasAsyncrun
