@@ -102,9 +102,7 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
     # Decay after 120 mins
     eval $(ssh-agent -t 120m) > /dev/null # 2>&1
 fi
-if [ -z "$SSH_KEYS_ADDED" ]; then
-    lastpass_ssh_key_add
-fi
+lastpass_ssh_key_add
 
 
 # {[] fzf

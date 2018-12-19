@@ -418,7 +418,7 @@ lastpass_ssh_key_add(){
       # Strip .pub from public keys...
       keyfile="${keyfile%.*}"
       # Backup check to see if key already loaded.
-      if ssh-add -L | grep ${keyfile} > /dev/null 2>&1; then
+      if ! ssh-add -L | grep ${keyfile} > /dev/null 2>&1; then
         # Extract the comment at the end of the pub file
         keyname=$(sed -e 's/[^=]*== //g' < "${keyfile}.pub")
         if ! lpass status; then
