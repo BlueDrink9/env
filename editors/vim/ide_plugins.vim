@@ -195,14 +195,17 @@ endif
 " {]} ---------- Snippits----------
 
 " {[} ---------- Syntax ----------
+" {[} ------ Python ------
 if has('python')
     Plug 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
     if has('python3')
         let g:pymode_python = 'python3'
     endif
+    Plug 'https://github.com/tmhedberg/SimpylFold'
+    let g:SimpylFold_docstring_preview = 1
 endif
-Plug 'https://github.com/tmhedberg/SimpylFold'
-let g:SimpylFold_docstring_preview = 1
+" {]} ------ Python ------
+" {]} ------ C ------
 Plug 'octol/vim-cpp-enhanced-highlight'
 let g:cpp_class_decl_highlight = 1
 let g:cpp_member_variable_highlight = 1
@@ -217,6 +220,7 @@ Plug 'https://github.com/dragfire/Improved-Syntax-Highlighting-Vim'
 " Plug 'https://github.com/LucHermitte/lh-brackets' " Ooooh boy this one's problematic.
 " Plug 'https://github.com/LucHermitte/lh-vim-lib'
 " Plug 'luchermitte/lh-cpp'
+" {]} ------ C ------
 " May cause lag on scrolling.
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Multi-lang support
