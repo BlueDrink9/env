@@ -407,25 +407,30 @@ lastpass_ssh_key_add(){
     echo "lastpass-cli not installed. No keys added."
     return
   fi
-  pubkeys=$(ls $HOME/.ssh/*.pub 2> /dev/null)
-  files="${*-$pubkeys}"
-  for keyfile in $files; do
-    # Strip .pub from public keys...
-    keyfile="${keyfile%.*}"
-    # Extract the comment at the end of the pub file
-    keyname=$(sed -e 's/[^=]*== //g' < "${keyfile}.pub")
-    if ! lpass status; then
-      echo "Lastpass is not logged in."
-      read -r -p "Enter lastpass username: " LPUSERNAME
-      lpass login "$LPUSERNAME"
+  if [ -z "$SSH_KEYS_ADDED" ]; then
+    pubkeys=$(ls $HOME/.ssh/*.pub 2> /dev/null)
+    files="${*-$pubkeys}"
+    for keyfile in $files; do
+      # Strip .pub from public keys...
+      keyfile="${keyfile%.*}"
+      # Backup check to see if key already loaded.
+      if ssh-add -L | grep ${keyfile} > /dev/null 2>&1; then
+        # Extract the comment at the end of the pub file
+        keyname=$(sed -e 's/[^=]*== //g' < "${keyfile}.pub")
+        if ! lpass status; then
+          echo "Lastpass is not logged in."
+          read -r -p "Enter lastpass username: " LPUSERNAME
+          lpass login "$LPUSERNAME"
+        fi
+        # Note: Indent END with tabs, not spaces, or this won't work.
+        expect <<- END
+          spawn ssh-add ${keyfile}
+          expect "Enter passphrase"
+          send "$(lpass show --field=Passphrase SSH/${keyname})\r"
+          expect eof
+				END
     fi
-    # Note: Indent END with tabs, not spaces, or this won't work.
-    expect <<- END
-      spawn ssh-add ${keyfile}
-      expect "Enter passphrase"
-      send "$(lpass show --field=Passphrase SSH/${keyname})\r"
-      expect eof
-			END
   done
-  export SSH_KEYS_ADDED=1
+fi
+export SSH_KEYS_ADDED=1
 }
