@@ -213,12 +213,13 @@ if v:version >= 703
     set undofile
 endif
 set viewoptions-=options
-augroup view
-    autocmd!
-    " save folds
-    autocmd BufWinLeave *.* mkview
-    autocmd BufWinEnter *.* silent! loadview
-augroup END
+" Superceded by light plugi 'vim-stay'.
+" augroup view
+"     autocmd!
+"     " save folds
+"     autocmd BufWinLeave *.* mkview
+"     autocmd BufWinEnter *.* silent! loadview
+" augroup END
 augroup autowrite
     autocmd!
     " Don't autosave if there is no buffer name.

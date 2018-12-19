@@ -27,9 +27,12 @@ if g:liteMode
     let g:buftabline_numbers=2
 endif
 
+" {[}--- Misc ---
 " Confirms opening empty file on tabcomplete
 Plug 'https://github.com/EinfachToll/DidYouMean'
-" {[}--- Misc ---
+Plug 'https://github.com/Konfekt/FastFold'
+Plug 'https://github.com/Konfekt/FoldText'
+Plug 'https://github.com/wsdjeg/vim-fetch'
 " Bunch of neat mappings, it's a tpope. Esp [n and ]n, for SCM conflict marks.
 " And [<space> for addign newlines.
 Plug 'https://github.com/tpope/vim-unimpaired'
@@ -114,6 +117,8 @@ if v:version >= 702
     let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 endif
 
+Plug 'https://github.com/zhimsel/vim-stay'
+set viewoptions=cursor,folds,slash,unix
 Plug 'xolox/vim-misc'
 " Map os commands (eg maximise), and open windows commands without shell
 " popup.
