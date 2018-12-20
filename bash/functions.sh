@@ -5,16 +5,20 @@
 
 # Removes carriage return characters from argument file.
 rmcr() {
-  sed -i 's/\r$//' $1
+  sed -i 's/\r$//' "$1"
+}
+
+mkbak() {
+  cp "$1" "$1.bak"
 }
 
 # Replaces a file with the .bak version of itself.
-mkbak() {
-  cp $1 $1.bak
+disable() {
+  mv "$1" "$1.bak"
 }
 
 mkcd() {
-  mkdir -p $1 && cd $1
+  mkdir -p "$1" && cd "$1"
 }
 
 sshraw() {
@@ -22,8 +26,8 @@ sshraw() {
 }
 
 del() {
-  fileToDel=$1
-  fileDir=$(dirname ${fileToDel})
+  fileToDel="$1"
+  fileDir="$(dirname ${fileToDel})"
   if [[ $OSTYPE == 'linux-gnu' ]]; then
     TRASHDIR=${HOME}/.local/share/Trash/files
   elif [[ $OSTYPE =~ 'darwin' ]]; then
