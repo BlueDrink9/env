@@ -28,10 +28,11 @@ fi
 if [ -n "$BASH" ] && [[ $- == *i* ]]; then
     brewbash="$HOMEBREW_PREFIX/bin/bash"
     if [ -f $brewbash ] && [ "$BASH" != "$brewbash" ] && \
-        [ -z $HAVE_LOADED_BASH ]; then
-    export HAVE_LOADED_BASH=1
-    # Exec replaces the shell with the specified process.
-    exec $HOMEBREW_PREFIX/bin/bash -l
+            [ -z $HAVE_LOADED_BASH ]; then
+        export HAVE_LOADED_BASH=1
+        # Exec replaces the shell with the specified process.
+        exec $HOMEBREW_PREFIX/bin/bash -l
+    fi
 fi
 
 # Reload/source inputrc
@@ -111,6 +112,5 @@ case $- in
         fi
         # {]} fzf
         ;;
+    *) return;;
 esac
-
-
