@@ -25,15 +25,18 @@ if [ -z "$HOMEBREW_PREFIX" ]; then
 fi
 # If available, replace bash with brew version. (More up-to-date than system.)
 # Only if running interactively.
-if [ -n "$BASH" ] && [[ $- == *i* ]]; then
-    brewbash="$HOMEBREW_PREFIX/bin/bash"
-    if [ -f $brewbash ] && [ "$BASH" != "$brewbash" ] && \
-            [ -z $HAVE_LOADED_BASH ]; then
-        export HAVE_LOADED_BASH=1
-        # Exec replaces the shell with the specified process.
-        exec $HOMEBREW_PREFIX/bin/bash -l
+case $- in
+    *i*)
+        if [ -n "$BASH" ]; then
+            brewbash="$HOMEBREW_PREFIX/bin/bash"
+            if [ -f "$brewbash" ] && [ "$BASH" != "$brewbash" ] && \
+                [ -z "$HAVE_LOADED_BASH" ]; then
+            export HAVE_LOADED_BASH=1
+            # Exec replaces the shell with the specified process.
+            exec "$HOMEBREW_PREFIX/bin/bash" -l
+        fi
     fi
-fi
+esac
 
 # Reload/source inputrc
 # bind -f "${SCRIPT_DIR}/inputrc.sh"
