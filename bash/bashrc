@@ -28,7 +28,9 @@ fi
 case $- in
     *i*)
         if [ -n "$BASH" ]; then
-            brewbash="$HOMEBREW_PREFIX/bin/bash"
+            if [ -n "$HOMEBREW_PREFIX" ]; then
+                brewbash="$HOMEBREW_PREFIX/bin/bash"
+            fi
             if [ -f "$brewbash" ] && [ "$BASH" != "$brewbash" ] && \
                 [ -z "$HAVE_LOADED_BASH" ]; then
             export HAVE_LOADED_BASH=1
