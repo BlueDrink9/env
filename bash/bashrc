@@ -15,24 +15,23 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export DOTFILES_DIR=$(cd "${SCRIPT_DIR}/.." && pwd)
 
-if [ -n "$BASH" ]; then
-    if [ -z "$HOMEBREW_PREFIX" ]; then
-        if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
-            export HOMEBREW_PREFIX="$HOME/homebrew"
-        elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
-            # Linuxbrew paths
-            export HOMEBREW_PREFIX="$HOME/.linuxbrew"
-        fi
+if [ -z "$HOMEBREW_PREFIX" ]; then
+    if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
+        export HOMEBREW_PREFIX="$HOME/homebrew"
+    elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
+        # Linuxbrew paths
+        export HOMEBREW_PREFIX="$HOME/.linuxbrew"
     fi
+fi
+# If available, replace bash with brew version. (More up-to-date than system.)
+# Only if running interactively.
+if [ -n "$BASH" ] && [[ $- == *i* ]]; then
     brewbash="$HOMEBREW_PREFIX/bin/bash"
-    # If available, replace bash with brew version. (More up-to-date than system.)
-    # Only if running interactively.
     if [ -f $brewbash ] && [ "$BASH" != "$brewbash" ] && \
-        [ -z $HAVE_LOADED_BASH ] && [[ $- == *i* ]]; then
-        export HAVE_LOADED_BASH=1
-        # Exec replaces the shell with the specified process.
-        exec $HOMEBREW_PREFIX/bin/bash -l
-    fi
+        [ -z $HAVE_LOADED_BASH ]; then
+    export HAVE_LOADED_BASH=1
+    # Exec replaces the shell with the specified process.
+    exec $HOMEBREW_PREFIX/bin/bash -l
 fi
 
 # Reload/source inputrc
@@ -64,11 +63,11 @@ else
     esac
 fi
 
-#{[} tmux
-# Run tmux on ssh connect
 # Check if interactive is part of shell options (running interactively)
 case $- in
     *i*)
+        #{[} tmux
+        # Run tmux on ssh connect
         if substrInStr "256" "$TERM" ; then
             TMUX_256_arg="-2"
         else
@@ -93,24 +92,25 @@ case $- in
                 fi
             fi
         fi
+        # {]} tmux
+
+        # Register keys
+        if [ -z "$SSH_AUTH_SOCK" ]; then
+            # Decay after 120 mins
+            eval $(ssh-agent -t 120m) > /dev/null # 2>&1
+        fi
+        lastpass_ssh_key_add
+
+        # {[} fzf
+        if [ -f ~/.fzf.bash ]; then
+            source ~/.fzf.bash
+            export FZF_CTRL_R_OPTS='--sort'
+            # Disable alt-c mapping to allow ;q to keep working.
+            # Nah, just change ;q binding to ddi instead of cc
+            # bind '"c":"c"
+        fi
+        # {]} fzf
         ;;
 esac
-# {]} tmux
-
-# Register keys
-if [ -z "$SSH_AUTH_SOCK" ]; then
-    # Decay after 120 mins
-    eval $(ssh-agent -t 120m) > /dev/null # 2>&1
-fi
-lastpass_ssh_key_add
 
 
-# {[] fzf
-if [ -f ~/.fzf.bash ]; then
-    source ~/.fzf.bash
-    export FZF_CTRL_R_OPTS='--sort'
-    # Disable alt-c mapping to allow ;q to keep working.
-    # Nah, just change ;q binding to ddi instead of cc
-    # bind '"c":"c"
-fi
-# {]] fzf
