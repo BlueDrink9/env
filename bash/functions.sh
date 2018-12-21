@@ -332,6 +332,10 @@ compareVersionNum () {
   fi
 }
 
+ssh_copy_terminfo (){
+  infocmp | \ssh "$@" tic -x -o \~/.terminfo /dev/stdin
+}
+
 # {[} Exporting for ssh
 
 generate_export_termoptions_cmd(){
