@@ -1,26 +1,37 @@
 #!/usr/bin/env bash
 source "$DOTFILES_DIR/bash/script_functions.sh"
+installID="SSH"
+installText="Include \"$($SCRIPTDIR_CMD)/ssh_config\""
+baseRC="${HOME}/.ssh/ssh_config"
 
-doSSH() {
+eval "$(cat <<END
+do${installID}() {
     printErr "Enabling SSH config..."
     # Note: Includes only added since 7.3p1
-    addTextIfAbsent "Include \"$($SCRIPTDIR_CMD)/ssh_config\"" "${HOME}/.ssh/ssh_config"
 
+    addTextIfAbsent "${installText}" "${baseRC}"
     for key in $($SCRIPTDIR_CMD)/authorized_keys/*; do
         key="$(cat $key)"
         addTextIfAbsent "$key" "${HOME}/.ssh/authorized_keys"
     done
-}
 
-undoSSH(){
+}
+END
+)"
+
+eval "$(cat <<END
+undo${installID}(){
+    sed -in "s|.*${installText}.*||g" "${baseRC}"
+
     for key in $($SCRIPTDIR_CMD)/authorized_keys/*; do
         key="$(cat $key)"
         sed -in "s|$key||g" "${HOME}/.ssh/authorized_keys"
     done
-    sed -in "s|.*$($SCRIPTDIR_CMD)/ssh_config.*||g" "${HOME}/.ssh/ssh_config"
 }
+END
+)"
 
 # If directly run instead of sourced, do all
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
-    doSSH
+    do${installID}
 fi

@@ -2,40 +2,79 @@
 source "$DOTFILES_DIR/bash/script_functions.sh"
 source "$DOTFILES_DIR/bash/functions.sh"
 
-doTmux(){
+installID="Tmux"
+installText="source-file $($SCRIPTDIR_CMD)/tmux/tmux.conf"
+baseRC="${HOME}/.tmux.conf"
+
+eval "$(cat <<END
+do${installID}() {
     printErr "Enabling custom tmux setup..."
-    addTextIfAbsent "source-file $($SCRIPTDIR_CMD)/tmux/tmux.conf" ${HOME}/.tmux.conf
+    addTextIfAbsent "${installText}" "${baseRC}"
 }
+END
+)"
 
-doKitty() {
+eval "$(cat <<END
+undo${installID}(){
+    sed -in "s|.*${installText}.*||g" "${baseRC}"
+}
+END
+)"
+
+installID="Kitty"
+installText="include $($SCRIPTDIR_CMD)/kitty/kitty.conf"
+baseRC="${HOME}/.config/kitty/kitty.conf"
+
+eval "$(cat <<END
+do${installID}() {
     printErr "Enabling Kitty setup..."
-    addTextIfAbsent "include $($SCRIPTDIR_CMD)/kitty/kitty.conf" "${HOME}/.config/kitty/kitty.conf"
+    addTextIfAbsent "${installText}" "${baseRC}"
 }
+END
+)"
 
-doTermux() {
+eval "$(cat <<END
+undo${installID}(){
+    sed -in "s|.*${installText}.*||g" "${baseRC}"
+}
+END
+)"
+
+installID="Termux"
+eval "$(cat <<END
+do${installID}() {
     printErr "Enabling Termux setup..."
     mkdir -p "$HOME/.termux"
     downloadURLAndExtractZipTo "https://github.com/adi1090x/termux-style/raw/master/data.tar.gz" "$HOME/.termux/termux-style"
     cp "$HOME/.termux/termux-style/solarized-light.properties" "$HOME/.termux/"
 }
-
-doX() {
-    printErr "Enabling custom X setup..."
-    addTextIfAbsent "xrdb -merge \"$($SCRIPTDIR_CMD)/x/Xresources\"" "${HOME}/.Xresources"
-}
-
-undoTermux(){
+END
+)"
+eval "$(cat <<END
+undo${installID}(){
     rm -rf "$HOME/.termux"
 }
-undoTmux(){
-    sed -in "s|.*$($SCRIPTDIR_CMD)/tmux/tmux\\.conf.*||g" "${HOME}/.tmux.conf"
+END
+)"
+
+installID="Xresources"
+installText="xrdb -merge \"$($SCRIPTDIR_CMD)/x/Xresources\""
+baseRC="${HOME}/.Xresources"
+
+eval "$(cat <<END
+do${installID}() {
+    printErr "Enabling custom Xresoruces setup..."
+    addTextIfAbsent "${installText}" "${baseRC}"
 }
-undoX(){
-    sed -in "s|.*$($SCRIPTDIR_CMD)/x/Xresources.*||g" "${HOME}/.Xresources"
+END
+)"
+
+eval "$(cat <<END
+undo${installID}(){
+    sed -in "s|.*${installText}.*||g" "${baseRC}"
 }
-undoKitty(){
-    sed -in "s|.*$($SCRIPTDIR_CMD)/kitty/kitty.conf.*||g" "${HOME}/.config/kitty/kitty.conf"
-}
+END
+)"
 
 # If directly run instead of sourced, do all
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
