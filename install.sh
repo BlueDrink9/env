@@ -76,7 +76,7 @@ readSettings() {
                 installers="$installers doTermux"
             fi
             installers="$installers doTmux"
-            installers="$installers doX"
+            installers="$installers doXresources"
 
         fi
 
@@ -86,6 +86,9 @@ readSettings() {
         # if [ "$ALL" == 1 ] || askQuestionYN "Install VSCode extensions?" ; then
         #     installers="$installers vscodeExtensions"
         # fi
+        if [ "$ALL" == 1 ] || askQuestionYN "$set_up X?" ; then
+            installers="$installers doX"
+        fi
 
         if [ "$ALL" == 1 ] || askQuestionYN "$installStr brew?" ; then
             installers="$installers installBrew"
