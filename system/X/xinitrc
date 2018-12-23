@@ -37,4 +37,5 @@ fi
 
 # start some nice programs
 i3 &
+xterm -geometry +1+1 -n login -display :0
 kitty
