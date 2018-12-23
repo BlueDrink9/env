@@ -12,18 +12,16 @@
 " Plug "https://github.com/yuttie/comfortable-motion.vim"
 " {]} ---------- Later ----------
 
-if has('nvim')
-    if !exists('g:skipPipInstall')
-        if !has("python")
+if !exists('g:skipPipInstall') && has('nvim')
+    if !has("python3")
+        if executable('pip3')
+            exec "!pip3 install --user --upgrade neovim"
+        elseif executable('pip') && system('pip --version') =~ '3'
+            exec "!pip install --upgrade --user neovim"
+        " Fallback - install python 2
+        elseif !has("python")
             if executable('pip2')
                 exec "!pip2 install --user --upgrade neovim"
-            elseif executable('pip')
-                exec "!pip install --upgrade --user neovim"
-            endif
-        endif
-        if !has("python3")
-            if executable('pip3')
-                exec "!pip3 install --user --upgrade neovim"
             elseif executable('pip')
                 exec "!pip install --upgrade --user neovim"
             endif
