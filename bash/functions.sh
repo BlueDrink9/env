@@ -406,6 +406,16 @@ reset_ssh_permissions(){
   chown $USER $HOME/.ssh/*
 }
 
+lastpass_login(){
+  if ! lpass status; then
+    echo "Lastpass is not logged in."
+    if [ -n "${LPUSERNAME}" ]; then
+      read -r -p "Enter lastpass username: " LPUSERNAME
+    fi
+    lpass login "$LPUSERNAME"
+  fi
+}
+
 # Adds an ssh key to agent, using the passphrase in lastpass.
 # Uses the extra note at the end of the .pub as the key name in lastpass.
 # If no key files are given as arguments, all keys in ~/.ssh are added.
@@ -428,11 +438,7 @@ lastpass_ssh_key_add(){
       if ! ssh-add -L | grep -q ${keyfile}; then
         # Extract the comment at the end of the pub file
         keyname=$(sed -e 's/[^=]*== //g' < "${keyfile}.pub")
-        if ! lpass status; then
-          echo "Lastpass is not logged in."
-          read -r -p "Enter lastpass username: " LPUSERNAME
-          lpass login "$LPUSERNAME"
-        fi
+        lastpass_login
         # Note: Indent END with tabs, not spaces, or this won't work.
         expect <<- END
           spawn ssh-add ${keyfile}
