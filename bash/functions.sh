@@ -428,14 +428,15 @@ lastpass_ssh_key_add(){
     echo "openssh not installed."
     return
   fi
-  # if [ -z "$SSH_KEYS_ADDED" ]; then
+  if [ -z "$SSH_KEYS_ADDED" ]; then
     pubkeys=$(ls $HOME/.ssh/*.pub 2> /dev/null)
     files="${*-$pubkeys}"
     for keyfile in $files; do
       # Strip .pub from public keys...
       keyfile="${keyfile%.*}"
       # Backup check to see if key already loaded.
-      if ! ssh-add -L | grep -q ${keyfile}; then
+      key="$(cat ${keyfile})"
+      if ! ssh-add -L | grep -q -- "${key}"; then
         # Extract the comment at the end of the pub file
         keyname=$(sed -e 's/[^=]*== //g' < "${keyfile}.pub")
         lastpass_login
@@ -446,8 +447,8 @@ lastpass_ssh_key_add(){
           send "$(lpass show --field=Passphrase SSH/${keyname})\r"
           expect eof
 				END
-    fi
-  done
-# fi
-# export SSH_KEYS_ADDED=1
+        export SSH_KEYS_ADDED=1
+      fi
+    done
+  fi
 }
