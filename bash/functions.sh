@@ -409,7 +409,7 @@ reset_ssh_permissions(){
 lastpass_login(){
   if ! lpass status; then
     echo "Lastpass is not logged in."
-    if [ -n "${LPUSERNAME}" ]; then
+    if [ -z "${LPUSERNAME}" ]; then
       read -r -p "Enter lastpass username: " LPUSERNAME
     fi
     lpass login "$LPUSERNAME"
