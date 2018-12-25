@@ -88,6 +88,12 @@ readSettings() {
         # fi
         if [ "$ALL" == 1 ] || askQuestionYN "$set_up X?" ; then
             installers="$installers doX"
+
+            if [ "$ALL" == 1 ] || askQuestionYN "$installStr window manager?" ; then
+                if [ "$OSTYPE" == "linux-gnu" ]; then
+                    installers="$installers doi3"
+                fi
+            fi
         fi
 
         if [ "$ALL" == 1 ] || askQuestionYN "$installStr brew?" ; then
@@ -130,7 +136,7 @@ if [[ $arg1 =~ ^--?[aA][lL]{2}?$ ]]; then
     ALL=1
 fi
 
-if [[ $OSTYPE =~ 'linux' ]]; then
+if [ $OSTYPE == 'linux-gnu' ]; then
 
     printErr "[$Green Linux ${NC}]"
     main ${1:-}
