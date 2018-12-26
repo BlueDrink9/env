@@ -10,9 +10,13 @@ do${installID}() {
     printErr "Enabling i3 config..."
     if [ ! -f "${baseRC}.pre-env" ]; then
         mv "${baseRC}" "${baseRC}.pre-env"
+    else
+        rm "${baseRC}"
     fi
-    rm "${baseRC}"
-    cat "${DOTFILES_DIR}/*" "${configDir}/local_config" > "${baseRC}"
+    if [ ! -f "${configDir}/local_config" ]; then
+        touch "${configDir}/local_config"
+    fi
+    cat "${DOTFILES_DIR}"/windowManagers/i3/*.conf "${configDir}/local_config" > "${baseRC}"
 }
 END
 )"
