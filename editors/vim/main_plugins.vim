@@ -326,6 +326,8 @@ function! s:AirlineColorVarUpdate()
     let s:restoreCS = g:colorSch
     if g:colorSch =~ "solarized8"
         let g:colorSch = "solarized"
+    elseif g:colorSch == "default"
+        let g:colorSch = &background
     endif
     let g:airline_theme=g:colorSch
     exec 'let g:airline_' . g:colorSch . '_bg="' . &background . '"'
