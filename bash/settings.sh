@@ -30,7 +30,7 @@ TERM_PROGRAM=${TERM_PROGRAM:-}
 # Will get exported to ssh servers (see functions->export_termoptions)
 export TERMOPTIONS=(USENF USEPF COLORTERM TERM_PROGRAM)
 
-if [ ! -z "$TMUX" ]; then
+if [ -n "$TMUX" ]; then
     # In a tmux session
     set_tmux_termoptions
 fi
@@ -110,10 +110,14 @@ elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
 fi
 
 # brew paths
-export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
-export XDG_DATA_DIRS="/$HOMEBREW_PREFIX/share:$XDG_DATA_DIRS"
-export MANPATH="$HOMEBREW_PREFIX/share/man:$MANPATH"
-export INFOPATH="$HOMEBREW_PREFIX/share/info:$INFOPATH"
+if [ -n "$HOMEBREW_PREFIX" ]; then
+    true
+    export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
+    export XDG_DATA_DIRS="/$HOMEBREW_PREFIX/share:$XDG_DATA_DIRS"
+    export MANPATH="$HOMEBREW_PREFIX/share/man:$MANPATH"
+    export INFOPATH="$HOMEBREW_PREFIX/share/info:$INFOPATH"
+fi
+return
 
 # enable programmable smart completion features
 if ! shopt -oq posix; then
