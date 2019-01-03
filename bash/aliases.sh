@@ -110,8 +110,8 @@ elif [ $(command -v pacman 2>/dev/null) ]; then
         alias pack="sudo pacman"
     fi
     installcmd="-S"
-    refreshcmd="-S"
-    upgradecmd="-U"
+    refreshcmd="-Syy"
+    upgradecmd="-Syu"
     searchcmd="-Ss"
     removecmd="-R"
 elif [ $(command -v pkg 2>/dev/null) ]; then
