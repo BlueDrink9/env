@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 source "$DOTFILES_DIR/bash/script_functions.sh"
 
-installID="shell"
+installID="Shell"
 installText="source $($SCRIPTDIR_CMD)/bashrc"
 baseRC="${HOME}/.bashrc"
 

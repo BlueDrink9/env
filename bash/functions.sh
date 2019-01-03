@@ -410,7 +410,8 @@ lastpass_login(){
   if ! lpass status; then
     echo "Lastpass is not logged in."
     if [ -z "${LPUSERNAME}" ]; then
-      read -r -p "Enter lastpass username: " LPUSERNAME
+      read -r -p "Enter lastpass username \
+        (set LPUSERNAME to skip prompt): " LPUSERNAME
     fi
     lpass login "$LPUSERNAME"
   fi
