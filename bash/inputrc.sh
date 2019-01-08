@@ -60,6 +60,8 @@ set bell-style none
 
 #{]} settings
 
+# "'^h':'^h'"
+
 #{[} command-mode mappings
 ###########################################################
 # Keymaps for when we're in command mode (e.g., after hitting ESC)

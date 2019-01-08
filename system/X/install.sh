@@ -2,7 +2,7 @@
 source "$DOTFILES_DIR/bash/script_functions.sh"
 
 installID="X"
-installText="xrdb -merge \"$($SCRIPTDIR_CMD)/xinitrc\""
+installText="xrdb -merge -I\"$($SCRIPTDIR_CMD)\" \"$($SCRIPTDIR_CMD)/xinitrc\""
 baseRC="${HOME}/.xinitrc"
 
 eval "$(cat <<END

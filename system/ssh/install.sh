@@ -17,7 +17,6 @@ END
 modify_SSH_env_keys(){
     if [ "$1" == "-u" ]; then
         local remove=1
-        echo "yup"
     fi
     scriptdir="$($SCRIPTDIR_CMD)"
     currDir="$(pwd)"
@@ -46,3 +45,4 @@ END
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
     do${installID}
 fi
+set +x
