@@ -10,23 +10,34 @@ do${installID}() {
     # Note: Includes only added since 7.3p1
 
     addTextIfAbsent "${installText}" "${baseRC}"
-    for key in $($SCRIPTDIR_CMD)/authorized_keys/*; do
-        key="$(cat $key)"
-        addTextIfAbsent "$key" "${HOME}/.ssh/authorized_keys"
-    done
-
+    modify_SSH_env_keys
 }
 END
 )"
+modify_SSH_env_keys(){
+    if [ "$1" == "-u" ]; then
+        local remove=1
+        echo "yup"
+    fi
+    scriptdir="$($SCRIPTDIR_CMD)"
+    currDir="$(pwd)"
+    cd ${scriptdir}/authorized_keys/
+    for keyfile in *; do
+        key="$(cat $keyfile)"
+        if [ -z "$remove" ]; then
+            addTextIfAbsent "$key" "${HOME}/.ssh/authorized_keys"
+        else
+            sed -in "s|$key||g" "${HOME}/.ssh/authorized_keys"
+        fi
+    done
+    cd "${currDir}"
+}
+
 
 eval "$(cat <<END
 undo${installID}(){
     sed -in "s|.*${installText}.*||g" "${baseRC}"
-
-    for key in $($SCRIPTDIR_CMD)/authorized_keys/*; do
-        key="$(cat $key)"
-        sed -in "s|$key||g" "${HOME}/.ssh/authorized_keys"
-    done
+    modify_SSH_env_keys -u
 }
 END
 )"
