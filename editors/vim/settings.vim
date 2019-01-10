@@ -203,11 +203,14 @@ if v:version >= 703
     exec 'set viminfo+=n' . fnameescape(s:viminfoPath)
 endif
 
-exec 'set backupdir=' . CreateVimDir("vimfiles/backup") . expand('/')
-exec 'set directory=' . CreateVimDir("vimfiles/swap") . expand('/')
-exec 'set viewdir=' . CreateVimDir("vimfiles/views") . expand('/')
+" Backupdir possibly doesn't allow // on older versions
+exec 'set backupdir=' . CreateVimDir("vimfiles/backup") . expand('//')
+" au BufWritePre * let &bex = '-' . strftime("%Y%b%d%X") . '.vimbackup'
+set backupext=.vimbackup
+exec 'set directory=' . CreateVimDir("vimfiles/swap") . expand('//')
+exec 'set viewdir=' . CreateVimDir("vimfiles/views") . expand('//')
 if v:version >= 703
-    exec 'set undodir=' . CreateVimDir("vimfiles/undo") . expand('/')
+    exec 'set undodir=' . CreateVimDir("vimfiles/undo") . expand('//')
     " Create undo file for inter-session undo
     " Extra slash means files will have unique names
     set undofile
