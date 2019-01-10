@@ -8,6 +8,11 @@ baseRC="${configDir}/config"
 eval "$(cat <<END
 do${installID}() {
     printErr "Enabling i3 config..."
+    i3_CombineConf
+}
+END
+)"
+i3_CombineConf(){
     if [ ! -f "${baseRC}.pre-env" ]; then
         mv "${baseRC}" "${baseRC}.pre-env"
     else
@@ -16,10 +21,8 @@ do${installID}() {
     if [ ! -f "${configDir}/local_config" ]; then
         touch "${configDir}/local_config"
     fi
-    cat "${DOTFILES_DIR}"/windowManagers/i3/*.conf "${configDir}/local_config" > "${baseRC}"
+    cat "$($SCRIPTDIR_CMD)"/*.conf "${configDir}/local_config" > "${baseRC}"
 }
-END
-)"
 
 eval "$(cat <<END
 undo${installID}(){
