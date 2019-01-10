@@ -1,5 +1,6 @@
 # vim:ft=sh
 ctrl - alt - t : kitty --single-instance
+alt - return : kitty --single-instance
 # No idea which of these might work
 # source skhd-chunkwm-bindings
 # include skhd-chunkwm-bindings

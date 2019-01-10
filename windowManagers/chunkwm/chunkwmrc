@@ -3,7 +3,6 @@ chunkc tiling::rule --owner workrave --state float &
 chunkc tiling::rule --owner Finder --name Copy --state float &
 chunkc tiling::rule --owner \"App Store\" --state float &
 
-chunkc core::plugin_dir /Users/***REMOVED***/homebrew/opt/chunkwm/share/chunkwm/plugins
 # NOTE: if enabled, chunkwm will monitor the specified plugin_dir
 #       and automatically reload any '.so' file that is changed.
 chunkc core::hotload 0
