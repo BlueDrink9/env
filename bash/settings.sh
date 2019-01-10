@@ -65,7 +65,7 @@ export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
 if [ ! -d "${HOME}/.logs" ] ; then
    mkdir ${HOME}/.logs
 fi
-PROMPT_COMMAND="${PROMPT_COMMAND} && log_command"
+PROMPT_COMMAND="log_command"
 # Save to history when command is executed, rather than when terminal is closed.
 # Then reread it.
 # PROMPT_COMMAND="${PROMPT_COMMAND} && history -a; history -c; history -r"
