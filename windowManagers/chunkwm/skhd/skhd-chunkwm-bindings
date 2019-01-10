@@ -1,4 +1,9 @@
 # vim:ft=sh
+
+# --------------------
+# skhdrc-chunkwm-bindings
+# --------------------
+
 # Set up chunkwm with a modal entry, and using the same shortcuts as I
 # use for vim, tmux, etc.
 # The metaphores are:
