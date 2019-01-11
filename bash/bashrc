@@ -66,10 +66,11 @@ if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
 else
     # case $(ps -o comm= -p $PPID) in
     # case $(cat /proc/$PPID/comm) in
-    if substrInStr "sshd" "$(pstree -p | grep $PPID)"; then
-        SESSION_TYPE=remote/ssh;;
-    fi
+        # SESSION_TYPE=remote/ssh;;
     # esac
+    if substrInStr "sshd" "$(pstree -p | grep $PPID)"; then
+        SESSION_TYPE=remote/ssh
+    fi
 fi
 
 # Check if interactive is part of shell options (running interactively)
