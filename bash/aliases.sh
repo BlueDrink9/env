@@ -11,7 +11,7 @@ alias rl="rlwrap"
 alias untar="tar -zxvf"
 alias envupd="git -C \"$DOTFILES_DIR\" pull && . ~/.bashrc"
 
-if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
+if [[ "$OSTYPE" =~ "darwin" ]]; then  # OSX specific stuff
     alias setssdir="defaults write com.apple.screencapture location"
     alias ls="ls -Fh -G"
     alias grep="grep --color=auto"
@@ -19,7 +19,7 @@ if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
     # Apparently though, don't!
     # Make esc act as backspace in terminal
 
-elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
+elif [[ "$OSTYPE" =~ "linux" ]]; then  # Linux specific stuff
     alias ls="ls -Fh --color=auto"
     # enable color support of ls and also add handy aliases
     alias dir='dir --color=auto'
@@ -27,6 +27,10 @@ elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
+fi
+if [ -n "$ISTERMUX" ]; then
+    alias sudo="tsudo"
+    alias su="tsu"
 fi
 
 # ls defined by os-specific stuff above.
