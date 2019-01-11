@@ -17,9 +17,15 @@ if substrInStr "kitty" "$TERM"; then
     COLORTERM="truecolor"
     USENF=${USENF:-1}
 fi
-if substrInStr "Android" "$(uname -a)" && [ ! "$SSHSESSION" = 1 ];  then
-    export ISTERMUX=1
-    COLORTERM="truecolor"
+# Termux
+if substrInStr "Android" "$(uname -a)";  then
+    export CLIP_PROGRAM_COPY="termux-clipboard-set"
+    export CLIP_PROGRAM_PASTE="termux-clipboard-get"
+    if [ ! "$SSHSESSION" = 1 ]; then
+        export ISTERMUX=1
+        export NOTMUX=1
+        COLORTERM="truecolor"
+    fi
 fi
 export COLORTERM USENF
 
