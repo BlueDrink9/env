@@ -1,0 +1,6 @@
+termux-api && termux-setup-api
+tsu
+openssh
+wget
+grep
+root-repo

@@ -22,7 +22,7 @@ source "$DOTFILES_DIR/git/install.sh"
 source "$DOTFILES_DIR/terminal/install.sh"
 source "$DOTFILES_DIR/editors/vim/install.sh"
 source "$DOTFILES_DIR/editors/vscode/install.sh"
-source "$DOTFILES_DIR/system/install-brew.sh"
+source "$DOTFILES_DIR/system/packages/install.sh"
 source "$DOTFILES_DIR/font_install.sh"
 # source "$DOTFILES_DIR/system/ssh/install.sh"
 
@@ -98,11 +98,13 @@ readSettings() {
             fi
         fi
 
+        # TODO make it automatic whether brew or another packagae manager is
+        # installed. Check for sudo access.
         if [ "$ALL" == 1 ] || askQuestionYN "$installStr brew?" ; then
             installers="$installers installBrew"
             if [ "$ALL" == 1 ] || askQuestionYN "Update brew and install \
                 Brewfile packages? (This can take a very long time)" ; then
-                installers="$installers updateBrew"
+                installers="$installers doPackages"
             fi
         elif [ "$ALL" == 1 ] || askQuestionYN "$installStr packages? (May require sudo)?" ; then
                 installers="doPackages $installers"
