@@ -19,10 +19,10 @@ if substrInStr "kitty" "$TERM"; then
 fi
 # Termux
 if substrInStr "Android" "$(uname -a)";  then
+    export ISTERMUX=1
     export CLIP_PROGRAM_COPY="termux-clipboard-set"
     export CLIP_PROGRAM_PASTE="termux-clipboard-get"
-    if [ ! "$SSHSESSION" = 1 ]; then
-        export ISTERMUX=1
+    if [ -z "$SSHSESSION" ]; then
         export NOTMUX=1
         COLORTERM="truecolor"
     fi
