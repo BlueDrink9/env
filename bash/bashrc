@@ -40,6 +40,14 @@ case $- in
     fi
 esac
 
+# brew paths
+if [ -n "$HOMEBREW_PREFIX" ]; then
+    export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
+    export XDG_DATA_DIRS="/$HOMEBREW_PREFIX/share:$XDG_DATA_DIRS"
+    export MANPATH="$HOMEBREW_PREFIX/share/man:$MANPATH"
+    export INFOPATH="$HOMEBREW_PREFIX/share/info:$INFOPATH"
+fi
+
 # Reload/source inputrc
 # bind -f "${SCRIPT_DIR}/inputrc.sh"
 INPUTRC="${SCRIPT_DIR}/inputrc.sh"
@@ -56,21 +64,6 @@ unset BASH_FUNCTIONS_LOADED SCRIPT_FUNCTIONS_LOADED
 if [ "$TERM" = "linux" ]; then
     # source "${DOTFILES_DIR}/terminal/virtual_console/reuse_X_colors.sh" "${DOTFILES_DIR}/terminal/x/solarized_light"
     source "${DOTFILES_DIR}/terminal/virtual_console/solarized.sh"
-fi
-
-# test if this is an ssh shell
-if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-    export SESSION_TYPE=remote/ssh
-    export SSHSESSION=1
-    # many other tests omitted
-else
-    # case $(ps -o comm= -p $PPID) in
-    # case $(cat /proc/$PPID/comm) in
-        # SESSION_TYPE=remote/ssh;;
-    # esac
-    if substrInStr "sshd" "$(pstree -p | grep $PPID)"; then
-        SESSION_TYPE=remote/ssh
-    fi
 fi
 
 # Check if interactive is part of shell options (running interactively)
