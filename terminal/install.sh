@@ -44,9 +44,7 @@ installID="Termux"
 eval "$(cat <<END
 do${installID}() {
     printErr "Enabling Termux setup..."
-    mkdir -p "$HOME/.termux"
-    downloadURLAndExtractZipTo "https://github.com/adi1090x/termux-style/raw/master/data.tar.gz" "$HOME/.termux/termux-style"
-    cp "$HOME/.termux/termux-style/solarized-light.properties" "$HOME/.termux/"
+    . "$($SCRIPTDIR_CMD)/termux/setup.sh"
 }
 END
 )"
