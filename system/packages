@@ -17,3 +17,6 @@ ssh-pass
 # Needs xcode-8 cmd tools
 # brew install koekeishiya/formulae/skhd
 # brew services start skhd
+# while read -r pkg; do
+    # pack install $pkg
+# done < "$($SCRIPTDIR_CMD)/packages"
