@@ -3,6 +3,26 @@
 
 BASH_VERSION_CLEAN="${BASH_VERSION//[^0-9.]*/}"
 
+# test if this is an ssh shell
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    export SESSION_TYPE=remote/ssh
+    export SSHSESSION=1
+    # many other tests omitted
+else
+    # case $(ps -o comm= -p $PPID) in
+    # case $(cat /proc/$PPID/comm) in
+        # SESSION_TYPE=remote/ssh;;
+    # esac
+    if substrInStr "darwin1" "$OSTYPE"; then
+        parent="$(ps -o ppid,comm | grep $PPID)"
+    else
+        parents="$(pstree -p | grep $PPID)"
+    fi
+    if substrInStr "sshd" "$parents"; then
+        SESSION_TYPE=remote/ssh
+    fi
+fi
+
 # You know it, baby. Shouldn't need to use nano ever
 export EDITOR="vim --noplugin --cmd \"let g:noPlugins=1\""
 export VISUAL="vim --cmd \"let g:liteMode=1\""
@@ -22,6 +42,8 @@ if substrInStr "Android" "$(uname -a)";  then
     export ISTERMUX=1
     export CLIP_PROGRAM_COPY="termux-clipboard-set"
     export CLIP_PROGRAM_PASTE="termux-clipboard-get"
+    export HOSTNAME="$(getprop net.hostname)"
+    export HOST="${HOSTNAME}"
     if [ -z "$SSHSESSION" ]; then
         export NOTMUX=1
         COLORTERM="truecolor"
@@ -114,16 +136,6 @@ if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
 elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
     true
 fi
-
-# brew paths
-if [ -n "$HOMEBREW_PREFIX" ]; then
-    true
-    export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
-    export XDG_DATA_DIRS="/$HOMEBREW_PREFIX/share:$XDG_DATA_DIRS"
-    export MANPATH="$HOMEBREW_PREFIX/share/man:$MANPATH"
-    export INFOPATH="$HOMEBREW_PREFIX/share/info:$INFOPATH"
-fi
-return
 
 # enable programmable smart completion features
 if ! shopt -oq posix; then
