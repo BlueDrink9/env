@@ -453,3 +453,56 @@ lastpass_ssh_key_add(){
     done
   fi
 }
+
+pack(){
+  cmd="$1"
+  shift
+  args="$@"
+  installcmd="install"
+  refreshcmd="update"
+  upgradecmd="upgrade"
+  searchcmd="search"
+  removecmd="remove"
+  if [ $(command -v brew 2>/dev/null) ]; then
+    packcmd="brew"
+    removecmd="uninstall"
+  elif [ $(command -v pacman 2>/dev/null) ]; then
+    if [ $(command -v yay 2>/dev/null) ]; then
+      packcmd="yay"
+    else
+      packcmd="sudo pacman"
+    fi
+    installcmd="-S"
+    refreshcmd="-Syy"
+    upgradecmd="-Syu"
+    searchcmd="-Ss"
+    removecmd="-R"
+  elif [ $(command -v pkg 2>/dev/null) ]; then
+    # Probably termux, may be freeBSD.
+    packcmd="pkg"
+  elif [ $(command -v apt 2>/dev/null) ]; then
+    packcmd="sudo apt"
+  elif [ $(command -v yum 2>/dev/null) ]; then
+    packcmd="sudo yum"
+  fi
+
+  case "$cmd" in
+    install | refresh | upgrade | search | remove)
+      cmd="${cmd}cmd"
+      # Not posix :(
+      $packcmd ${!cmd} $@
+      ;;
+    "")
+      $packcmd
+      ;;
+    *)
+      $packcmd $cmd
+  esac
+
+  unset packcmd cmd installcmd refreshcmd upgradecmd searchcmd removecmd
+}
+alias packi="pack install"
+alias packr="pack refresh"
+alias packu="pack refresh && pack upgrade"
+alias packs="pack search"
+alias packrm="pack remove"

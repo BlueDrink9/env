@@ -24,8 +24,9 @@ else
 fi
 
 # You know it, baby. Shouldn't need to use nano ever
-export EDITOR="vim --noplugin --cmd \"let g:noPlugins=1\""
-export VISUAL="vim --cmd \"let g:liteMode=1\""
+# export EDITOR="vim --noplugin --cmd \"let g:noPlugins=1\""
+# export VISUAL="vim --cmd \"let g:liteMode=1\""
+export VISUAL="vi"
 export GIT_EDITOR="$VISUAL"
 
 # {[} Terminal settings

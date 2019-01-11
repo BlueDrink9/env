@@ -100,43 +100,6 @@ alias svi="sudoedit"
 # alias cp="cp -i"
 # alias mv="mv -i"
 
-# {[} Package manager
-installcmd="install"
-refreshcmd="update"
-upgradecmd="upgrade"
-searchcmd="search"
-removecmd="remove"
-if [ $(command -v brew 2>/dev/null) ]; then
-    alias pack="brew"
-    removecmd="uninstall"
-elif [ $(command -v pacman 2>/dev/null) ]; then
-    if [ $(command -v yay 2>/dev/null) ]; then
-        alias pack="yay"
-    else
-        alias pack="sudo pacman"
-    fi
-    installcmd="-S"
-    refreshcmd="-Syy"
-    upgradecmd="-Syu"
-    searchcmd="-Ss"
-    removecmd="-R"
-elif [ $(command -v pkg 2>/dev/null) ]; then
-    # Probably termux, may be freeBSD.
-    alias pack="pkg"
-elif [ $(command -v apt 2>/dev/null) ]; then
-    alias pack="sudo apt"
-elif [ $(command -v yum 2>/dev/null) ]; then
-    alias pack="sudo yum"
-fi
-alias packi="pack $installcmd"
-alias packr="pack $refreshcmd"
-alias packu="pack $refreshcmd && pack $upgradecmd"
-alias packs="pack $searchcmd"
-alias packrm="pack $removecmd"
-unset installcmd refreshcmd upgradecmd searchcmd removecmd
-
-# {]} Package manager
-
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
