@@ -14,3 +14,5 @@ done < "$($SCRIPTDIR_CMD)/packages"
 termux-setup-api
 # Disable openssh password auth. Only allow public key.
 sed -i 's/#PasswordAuthentication.*/PasswordAuthentication no/' $PREFIX/etc/ssh/sshd_config
+
+echo Check https://android.stackexchange.com/questions/37/how-do-i-change-the-name-of-my-android-device to alter the hostname
