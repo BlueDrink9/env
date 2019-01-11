@@ -1,4 +1,4 @@
-termux-api && termux-setup-api
+termux-api
 tsu
 openssh
 wget

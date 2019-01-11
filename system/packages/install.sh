@@ -40,6 +40,7 @@ installPackages(){
     fi
     if [[ "$(uname -a)" =~ "Android" ]]; then
         installList "$($SCRIPTDIR_CMD)/termux"
+         termux-setup-api
     fi
 }
 
