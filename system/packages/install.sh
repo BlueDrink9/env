@@ -68,6 +68,8 @@ undoBrew(){
 
 # If directly run instead of sourced, do all
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
-    installBrew
+    if askQuestionYN "Install and use brew for packages?"; then
+        installBrew
+    fi
     do${installID}
 fi
