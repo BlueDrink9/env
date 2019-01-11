@@ -14,7 +14,9 @@ alias envupd="git -C \"$DOTFILES_DIR\" pull && . ~/.bashrc"
 if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
     alias setssdir="defaults write com.apple.screencapture location"
     alias ls="ls -Fh -G"
+    alias grep="grep --color=auto"
     # ls and grep should use colours automatically because CLICOLOR is set.
+    # Apparently though, don't!
     # Make esc act as backspace in terminal
 
 elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
