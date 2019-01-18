@@ -1,0 +1,52 @@
+# === OPTIONS ===
+# character
+# names
+OPTIONS=horsename:Noble Steed,fruit:Diningroom food,name:BlueDrink9
+# appearance
+OPTIONS=color,hilite_pet,hilite_pile,lit_corridor,menucolors,DECgraphics,boulder:8,dark_room,hitpointbar,runmode:walk,standout,hilite_hidden_stairs,hilite_obj_pile,
+OPTIONS=showborn,showexp,showscore,showrace,time,!implicit_uncursed
+OPTIONS=menustyle:full,msghistory:400,msg_window:full
+OPTIONS=sortloot:loot,disclose:+i+a+v+g+c+o
+
+OPTIONS=autodig,autodescribe,autoopen,autoquiver,number_pad,paranoid_confirmation:pray attack quit Were-change,pushweapon,quiver_fired
+OPTIONS=autopickup,pickup_burden:B,pickup_thrown
+OPTIONS=pickup_types:?!/
+
+OPTIONS=bones
+OPTIONS=quicklook,force_invmenu,herecmdmenu
+
+# delayed instadeaths
+MSGTYPE=stop "The .* (grabs|swings itself around) you!"
+MSGTYPE=stop "You don't feel very well."
+MSGTYPE=stop "You are turning a little green."
+MSGTYPE=stop "Your limbs are getting oozy."
+MSGTYPE=stop "Your skin begins to peel away."
+MSGTYPE=stop "You are turning into a green slime."
+MSGTYPE=stop "You are slowing down."
+MSGTYPE=stop "Your limbs are stiffening."
+MSGTYPE=stop "It constricts your throat!"
+MSGTYPE=stop "You find it hard to breathe."
+MSGTYPE=stop "You're gasping for air."
+MSGTYPE=stop "Your blood is having trouble reaching your brain."
+MSGTYPE=stop "You can no longer breathe."
+MSGTYPE=stop "You're turning blue."
+MSGTYPE=stop "Your consciousness is fading."
+MSGTYPE=stop "You feel deathly sick."
+MSGTYPE=stop "You feel (much|even) worse."
+
+# Things that aren't dangerous by themselves but could kill you if you don't notice.
+MSGTYPE=stop "You fail to cast the spell correctly."
+MSGTYPE=stop "You see here a c(hi|o)ckatrice corpse." 
+MSGTYPE=stop "You are beginning to feel weak."
+
+# Don't speed past wrest message when wresting
+MSGTYPE=stop "You wrest .*"
+
+# Don't miss the vibrating square
+MSGTYPE=stop "You feel a strange vibration under your *."
+MSGTYPE=stop "You feel a strange vibration beneath you."
+# Unnethack
+MSGTYPE=stop "you feel a faint trembling under your *."
+MSGTYPE=stop "you feel a weak trembling under your *."
+
+
