@@ -2,18 +2,55 @@
 # character
 # names
 OPTIONS=horsename:Noble Steed,fruit:Diningroom food,name:BlueDrink9
+
+OPTIONS=bones
+
 # appearance
 OPTIONS=color,hilite_pet,hilite_pile,lit_corridor,menucolors,DECgraphics,boulder:8,dark_room,hitpointbar,runmode:walk,standout,hilite_hidden_stairs,hilite_obj_pile,
 OPTIONS=showborn,showexp,showscore,showrace,time,!implicit_uncursed
 OPTIONS=menustyle:full,msghistory:400,msg_window:full
 OPTIONS=sortloot:loot,disclose:+i+a+v+g+c+o
 
+# controls
+OPTIONS=quicklook,force_invmenu,herecmdmenu
 OPTIONS=autodig,autodescribe,autoopen,autoquiver,number_pad,paranoid_confirmation:pray attack quit Were-change,pushweapon,quiver_fired
 OPTIONS=autopickup,pickup_burden:B,pickup_thrown
-OPTIONS=pickup_types:?!/
+OPTIONS=pickup_types:?!/="$
+AUTOPICKUP_EXCEPTION=">Amulet of Yendor$"
+AUTOPICKUP_EXCEPTION="<Amulet of Vendor named"
+AUTOPICKUP_EXCEPTION=">scroll of scare monster"
+AUTOPICKUP_EXCEPTION=">scroll called scare monster"
+#Walk in peace over empty wands:
+autopickup_exception=":0¥)"
+AUTOPICKUP_EXCEPTION="> named empty"
+AUTOPICKUP_EXCEPTION="<wand of wishing"
+AUTOPICKUP_EXCEPTION="<wand called wish"
+AUTOPICKUP_EXCEPTION="<wand of create monster"
+AUTOPICKUP_EXCEPTION="<wand of teleportation"
+AUTOPICKUP_EXCEPTION="<wand called tele"
+# AUTOPICKUP_EXCEPTION="<wand of polymorph"
+# AUTOPICKUP_EXCEPTION="<wand called poly"
+AUTOPICKUP_EXCEPTION="<wand of fire"
+AUTOPICKUP_EXCEPTION="<wand of lightning"
+AUTOPICKUP_EXCEPTION="<wand of death"
+# # Cold is used for Juiblex swamp, etc.
+# AUTOPICKUP_EXCEPTION=">wand of cold[^<]*$"
+AUTOPICKUP_EXCEPTION="<magic marker"
+AUTOPICKUP_EXCEPTION="< lamp"
+AUTOPICKUP_EXCEPTION="> oil lamp [^<]*$"
+AUTOPICKUP_EXCEPTION="> lamp called oil[^<]*$"
+AUTOPICKUP_EXCEPTION="<amulet of life saving"
+AUTOPICKUP_EXCEPTION="<amulet called life"
+AUTOPICKUP_EXCEPTION="<athame"
+AUTOPICKUP_EXCEPTION="> loadstone[^<]*$"
+AUTOPICKUP_EXCEPTION="<stone called luck"
+AUTOPICKUP_EXCEPTION="< luckstone"
+# AUTOPICKUP_EXCEPTION="< touchstone"
+AUTOPICKUP_EXCEPTION="> rock[^<]*$"
 
-OPTIONS=bones
-OPTIONS=quicklook,force_invmenu,herecmdmenu
+# #blind: glass/gems show up as gem, all else as stone.
+AUTOPICKUP_EXCEPTION="> stone[^<]*$"
+
 
 # delayed instadeaths
 MSGTYPE=stop "The .* (grabs|swings itself around) you!"
