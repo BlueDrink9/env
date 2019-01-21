@@ -82,5 +82,5 @@ if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
     elif substrInStr "Android" "$(uname -a)"; then
         doTermux
     fi
-    doX
+    doXresources
 fi
