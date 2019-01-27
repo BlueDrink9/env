@@ -153,9 +153,9 @@ contains() {
 }
 
 function_exists() {
-  FUNCTION_NAME=$1
-  declare -F "$FUNCTION_NAME" > /dev/null 2>&1
-  return $?
+    FUNCTION_NAME=$1
+    declare -F "$FUNCTION_NAME" > /dev/null 2>&1
+    return $?
 }
 
 
@@ -194,67 +194,67 @@ bash_debug_log() {
 # Call from a local repo to open the repository on github/bitbucket in browser
 # Modified version of https://github.com/zeke/ghwd
 repo() {
-  # Figure out github repo base URL
-  local base_url
-  base_url=$(git config --get remote.origin.url)
-  base_url=${base_url%\.git} # remove .git from end of string
+	# Figure out github repo base URL
+	local base_url
+	base_url=$(git config --get remote.origin.url)
+	base_url=${base_url%\.git} # remove .git from end of string
 
-  # Fix git@github.com: URLs
-  base_url=${base_url//git@github\.com:/https:\/\/github\.com\/}
+	# Fix git@github.com: URLs
+	base_url=${base_url//git@github\.com:/https:\/\/github\.com\/}
 
-  # Fix git://github.com URLS
-  base_url=${base_url//git:\/\/github\.com/https:\/\/github\.com\/}
+	# Fix git://github.com URLS
+	base_url=${base_url//git:\/\/github\.com/https:\/\/github\.com\/}
 
-  # Fix git@bitbucket.org: URLs
-  base_url=${base_url//git@bitbucket.org:/https:\/\/bitbucket\.org\/}
+	# Fix git@bitbucket.org: URLs
+	base_url=${base_url//git@bitbucket.org:/https:\/\/bitbucket\.org\/}
 
-  # Fix git@gitlab.com: URLs
-  base_url=${base_url//git@gitlab\.com:/https:\/\/gitlab\.com\/}
+	# Fix git@gitlab.com: URLs
+	base_url=${base_url//git@gitlab\.com:/https:\/\/gitlab\.com\/}
 
-  # Validate that this folder is a git folder
-  if ! git branch 2>/dev/null 1>&2 ; then
-    echo "Not a git repo!"
-    exit $?
-  fi
+	# Validate that this folder is a git folder
+	if ! git branch 2>/dev/null 1>&2 ; then
+		echo "Not a git repo!"
+		exit $?
+	fi
 
-  # Find current directory relative to .git parent
-  full_path=$(pwd)
-  git_base_path=$(cd "./$(git rev-parse --show-cdup)" || exit 1; pwd)
-  relative_path=${full_path#$git_base_path} # remove leading git_base_path from working directory
+	# Find current directory relative to .git parent
+	full_path=$(pwd)
+	git_base_path=$(cd "./$(git rev-parse --show-cdup)" || exit 1; pwd)
+	relative_path=${full_path#$git_base_path} # remove leading git_base_path from working directory
 
-  # If filename argument is present, append it
-  if [ "$1" ]; then
-    relative_path="$relative_path/$1"
-  fi
+	# If filename argument is present, append it
+	if [ "$1" ]; then
+		relative_path="$relative_path/$1"
+	fi
 
-  # Figure out current git branch
-  # git_where=$(command git symbolic-ref -q HEAD || command git name-rev --name-only --no-undefined --always HEAD) 2>/dev/null
-  git_where=$(command git name-rev --name-only --no-undefined --always HEAD) 2>/dev/null
+	# Figure out current git branch
+	# git_where=$(command git symbolic-ref -q HEAD || command git name-rev --name-only --no-undefined --always HEAD) 2>/dev/null
+	git_where=$(command git name-rev --name-only --no-undefined --always HEAD) 2>/dev/null
 
-  # Remove cruft from branchname
-  branch=${git_where#refs\/heads\/}
+	# Remove cruft from branchname
+	branch=${git_where#refs\/heads\/}
 
-  [[ $base_url == *bitbucket* ]] && tree="src" || tree="tree"
-  url="$base_url/$tree/$branch$relative_path"
+	[[ $base_url == *bitbucket* ]] && tree="src" || tree="tree"
+	url="$base_url/$tree/$branch$relative_path"
 
 
-  echo "Calling $(type open) for $url"
+	echo "Calling $(type open) for $url"
 
-  open "$url" &> /dev/null || (echo "Using $(type open) to open URL failed." && exit 1);
+	open "$url" &> /dev/null || (echo "Using $(type open) to open URL failed." && exit 1);
 }
 
 # Get colors in manual pages
 man() {
-  env \
-    LESS_TERMCAP_mb="$(printf '\e[1;31m')" \
-    LESS_TERMCAP_md="$(printf '\e[1;31m')" \
-    LESS_TERMCAP_me="$(printf '\e[0m')" \
-    LESS_TERMCAP_se="$(printf '\e[0m')" \
-    LESS_TERMCAP_so="$(printf '\e[1;44;33m')" \
-    LESS_TERMCAP_ue="$(printf '\e[0m')" \
-    LESS_TERMCAP_us="$(printf '\e[1;32m')" \
-    man "$@"
-  }
+	env \
+		LESS_TERMCAP_mb="$(printf '\e[1;31m')" \
+		LESS_TERMCAP_md="$(printf '\e[1;31m')" \
+		LESS_TERMCAP_me="$(printf '\e[0m')" \
+		LESS_TERMCAP_se="$(printf '\e[0m')" \
+		LESS_TERMCAP_so="$(printf '\e[1;44;33m')" \
+		LESS_TERMCAP_ue="$(printf '\e[0m')" \
+		LESS_TERMCAP_us="$(printf '\e[1;32m')" \
+		man "$@"
+}
 
 # Checks if the first arg is a substring of the second.
 substrInStr(){
@@ -376,7 +376,7 @@ set_tmux_termoptions(){
         fi
       fi
     done
-  }
+}
 
 is_tmux_running(){
   # Check tmux is installed
@@ -412,10 +412,10 @@ lastpass_login(){
     if [ -z "${LPUSERNAME}" ]; then
       read -r -p "Enter lastpass username \
         (set LPUSERNAME to skip prompt): " LPUSERNAME
-            fi
-            lpass login "$LPUSERNAME"
-          fi
-        }
+    fi
+    lpass login "$LPUSERNAME"
+  fi
+}
 
 # Adds an ssh key to agent, using the passphrase in lastpass.
 # Uses the extra note at the end of the .pub as the key name in lastpass.
@@ -447,7 +447,7 @@ lastpass_ssh_key_add(){
           expect "Enter passphrase"
           send "$(lpass show --field=Passphrase SSH/${keyname})\r"
           expect eof
-        END
+END
         export SSH_KEYS_ADDED=1
       fi
     done
