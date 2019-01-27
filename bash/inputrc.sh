@@ -1,4 +1,3 @@
-# vim: set tw=78 ts=4 sw=4
 # vim: foldmethod=marker foldmarker={[},{]}
 # Readline settings
 include /etc/inputrc
@@ -49,7 +48,7 @@ set page-completions Off
 
 # Expand history automatically on !!
 $if Bash
-  Space: magic-space
+Space: magic-space
 $endif
 
 # Neat feature that detects pasted chars without running them.

@@ -6,8 +6,8 @@
 
 # # If not running interactively, don't do anything
 case $- in
-    *i*) ;;
-      *) return;;
+  *i*) ;;
+  *) return;;
 esac
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -150,8 +150,8 @@ set_bash_prompt () {
     VAR_PROMPT="${USER_COLOURED}@${HOST_COLOURED}:"
   elif (( $((${COLUMNS} - $prompt_len_no_time_host)) > ${DESIRED_COMMAND_SPACE})); then
     VAR_PROMPT="${USER_INITIAL_COLOURED}@${HOST_COLOURED}:"
-  # elif (( $((${COLUMNS} - $prompt_len_no_time_host)) > ${DESIRED_COMMAND_SPACE})); then
-  #   VAR_PROMPT="${USER_COLOURED}: "
+    # elif (( $((${COLUMNS} - $prompt_len_no_time_host)) > ${DESIRED_COMMAND_SPACE})); then
+    #   VAR_PROMPT="${USER_COLOURED}: "
     # let "remaining_space= ${COLUMNS} - $prompt_len_no_time_host_user"
   else
     VAR_PROMPT=""
@@ -175,7 +175,7 @@ set_bash_prompt () {
     DESIRED_COMMAND_SPACE git_len CURR_DIR prompt_len_no_time_host_user \
     prompt_len_no_time_host prompt_len_no_time_user prompt_len_no_time \
     prompt_len VAR_PROMPT JOBS PROMPT cursorToBoL 
-}
+  }
 
 # Return the prompt symbol ($) to use, colorized based on the return value of the
 # previous command.
@@ -262,4 +262,4 @@ parse_git_branch() {
   echo "${GIT_PROMPT}"
   unset GIT_PROMPT STATUS_COLOUR BRANCH bits deleted renamed newfile \
     diverged behind ahead untracked clean dirty status STATUS
-}
+  }

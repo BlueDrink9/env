@@ -29,26 +29,26 @@ source "$DOTFILES_DIR/font_install.sh"
 # {]} Setup and variables
 
 uninstall() {
-    if askQuestionYN "Really uninstall?"; then
-        set_up="Remove custom"
-        installStr="Uninstall"
-        readSettings
-        for installer in $installers; do
-            un$installer
-        done
+  if askQuestionYN "Really uninstall?"; then
+    set_up="Remove custom"
+    installStr="Uninstall"
+    readSettings
+    for installer in $installers; do
+      un$installer
+    done
 
         # Remove self
         if askQuestionYN "Delete repo directory?"; then
-            rm -rf "$($SCRIPTDIR_CMD)"
+          rm -rf "$($SCRIPTDIR_CMD)"
         fi
         # Reset bash
         exec bash
-    fi
-}
+      fi
+    }
 
-installers=""
+  installers=""
 
-readSettings() {
+  readSettings() {
     # May be set to "uninstall" rather than defaults set here.
     set_up="${set_up:-Set up}"
     installStr="${installStr:-Install}"
@@ -59,107 +59,107 @@ readSettings() {
 
     # Functions must be called "do[X]", with a corresponding "undo[X]" to uninstall.
     if [ $ALL != 1 ]; then
-        if [ "$ALL" == 1 ] || askQuestionYN "$set_up shell?" ; then
-            installers="$installers doShell"
-        fi
-        if [ "$ALL" == 1 ] || askQuestionYN "$set_up SSH?" ; then
-            installers="$installers doSSH"
-        fi
-        if [ "$ALL" == 1 ] || askQuestionYN "$set_up vim?" ; then
-            installers="$installers doVim"
-        fi
+      if [ "$ALL" == 1 ] || askQuestionYN "$set_up shell?" ; then
+        installers="$installers doShell"
+      fi
+      if [ "$ALL" == 1 ] || askQuestionYN "$set_up SSH?" ; then
+        installers="$installers doSSH"
+      fi
+      if [ "$ALL" == 1 ] || askQuestionYN "$set_up vim?" ; then
+        installers="$installers doVim"
+      fi
 
-        if [ "$ALL" == 1 ] || askQuestionYN "$set_up terminal?" ; then
-            if substrInStr "kitty" "$TERM"; then
-                installers="$installers doKitty"
-            elif substrInStr "Android" "$(uname -a)";  then
-                installers="$installers doTermux"
-            fi
-            installers="$installers doTmux"
-            installers="$installers doXresources"
-
+      if [ "$ALL" == 1 ] || askQuestionYN "$set_up terminal?" ; then
+        if substrInStr "kitty" "$TERM"; then
+          installers="$installers doKitty"
+        elif substrInStr "Android" "$(uname -a)";  then
+          installers="$installers doTermux"
         fi
+        installers="$installers doTmux"
+        installers="$installers doXresources"
 
-        if [ "$ALL" == 1 ] || askQuestionYN "$installStr fonts?" ; then
-            installers="$installers doFonts"
-        fi
-        # if [ "$ALL" == 1 ] || askQuestionYN "Install VSCode extensions?" ; then
-        #     installers="$installers vscodeExtensions"
-        # fi
-        if [ "$ALL" == 1 ] || askQuestionYN "$set_up X?" ; then
-            installers="$installers doX"
+      fi
 
-            if [ "$ALL" == 1 ] || askQuestionYN "$installStr window manager?" ; then
-                if [ "$OSTYPE" == "linux-gnu" ]; then
-                    installers="$installers doi3"
-                elif [[ $OSTYPE =~ 'darwin' ]]; then
-                    installers="$installers doChunkwm"
-                fi
-            fi
+      if [ "$ALL" == 1 ] || askQuestionYN "$installStr fonts?" ; then
+        installers="$installers doFonts"
+      fi
+      # if [ "$ALL" == 1 ] || askQuestionYN "Install VSCode extensions?" ; then
+      #     installers="$installers vscodeExtensions"
+      # fi
+      if [ "$ALL" == 1 ] || askQuestionYN "$set_up X?" ; then
+        installers="$installers doX"
+
+        if [ "$ALL" == 1 ] || askQuestionYN "$installStr window manager?" ; then
+          if [ "$OSTYPE" == "linux-gnu" ]; then
+            installers="$installers doi3"
+          elif [[ $OSTYPE =~ 'darwin' ]]; then
+            installers="$installers doChunkwm"
+          fi
         fi
+      fi
 
         # TODO make it automatic whether brew or another packagae manager is
         # installed. Check for sudo access.
         if [ "$ALL" == 1 ] || askQuestionYN "$installStr brew?" ; then
-            installers="$installers installBrew"
-            if [ "$ALL" == 1 ] || askQuestionYN "Update brew and install \
-                Brewfile packages? (This can take a very long time)" ; then
-                installers="$installers doPackages"
-            fi
-        elif [ "$ALL" == 1 ] || askQuestionYN "$installStr packages? (May require sudo)?" ; then
-                installers="doPackages $installers"
-        fi
+          installers="$installers installBrew"
+          if [ "$ALL" == 1 ] || askQuestionYN "Update brew and install \
+            Brewfile packages? (This can take a very long time)" ; then
+                      installers="$installers doPackages"
+                    fi
+                  elif [ "$ALL" == 1 ] || askQuestionYN "$installStr packages? (May require sudo)?" ; then
+                    installers="doPackages $installers"
+                  fi
 
-        if [ "$ALL" == 1 ] || askQuestionYN "$set_up git credentials?" ; then
-            installers="doGit $installers"
-        fi
-    fi
-}
+                  if [ "$ALL" == 1 ] || askQuestionYN "$set_up git credentials?" ; then
+                    installers="doGit $installers"
+                  fi
+                fi
+              }
 
-main() {
-    readSettings
-    for installer in $installers; do
-        $installer ${1:-}
-    done
-    printErr "${Green} Install Complete${NC}"
+            main() {
+              readSettings
+              for installer in $installers; do
+                $installer ${1:-}
+              done
+              printErr "${Green} Install Complete${NC}"
 
     # Restart bash
     exec bash
-}
+  }
 
 # set default arg to avoid warnings
 arg1=${1:-}
 # echo 'arg' $arg1
 
 if [[ $arg1 = "-u" ]]; then
-    uninstall
-    exit
+  uninstall
+  exit
 fi
 
 if [[ $arg1 =~ ^--?[aA][lL]{2}?$ ]]; then
-    ALL=1
+  ALL=1
 fi
 
 if [ $OSTYPE == 'linux-gnu' ]; then
 
-    printErr "[$Green Linux ${NC}]"
-    main ${1:-}
+  printErr "[$Green Linux ${NC}]"
+  main ${1:-}
 
 elif [[ $OSTYPE =~ 'darwin' ]]; then
-    printErr "[$Green OSX ${NC}]"
-    main ${1:-}
+  printErr "[$Green OSX ${NC}]"
+  main ${1:-}
 
 elif [[ $OSTYPE == 'msys' ]]; then
-    printErr "${Red}Git Bash not supported."
-    if askQuestionYN "Continue anyway?" ; then
-        printLine "${Red}Attempting install on Git Bash."
-        main ${1:-}
-    fi
+  printErr "${Red}Git Bash not supported."
+  if askQuestionYN "Continue anyway?" ; then
+    printLine "${Red}Attempting install on Git Bash."
+    main ${1:-}
+  fi
 else
-    printErr "OS not detected..."
-    if askQuestionYN "Continue anyway?" ; then
-        main ${1:-}
-    else
-        printErr "Exiting without change."
-    fi
+  printErr "OS not detected..."
+  if askQuestionYN "Continue anyway?" ; then
+    main ${1:-}
+  else
+    printErr "Exiting without change."
+  fi
 fi

@@ -1,5 +1,3 @@
-# vim: set ft=sh:
-# vim: set tw=78 ts=4 sw=4
 # vim: foldmethod=marker foldmarker={[},{]}
 
 # Always used
@@ -12,25 +10,25 @@ alias untar="tar -zxvf"
 alias envupd="git -C \"$DOTFILES_DIR\" pull && . ~/.bashrc"
 
 if [[ "$OSTYPE" =~ "darwin" ]]; then  # OSX specific stuff
-    alias setssdir="defaults write com.apple.screencapture location"
-    alias ls="ls -Fh -G"
-    alias grep="grep --color=auto"
-    # ls and grep should use colours automatically because CLICOLOR is set.
-    # Apparently though, don't!
-    # Make esc act as backspace in terminal
+  alias setssdir="defaults write com.apple.screencapture location"
+  alias ls="ls -Fh -G"
+  alias grep="grep --color=auto"
+  # ls and grep should use colours automatically because CLICOLOR is set.
+  # Apparently though, don't!
+  # Make esc act as backspace in terminal
 
 elif [[ "$OSTYPE" =~ "linux" ]]; then  # Linux specific stuff
-    alias ls="ls -Fh --color=auto"
-    # enable color support of ls and also add handy aliases
-    alias dir='dir --color=auto'
-    alias vdir='vdir --color=auto'
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+  alias ls="ls -Fh --color=auto"
+  # enable color support of ls and also add handy aliases
+  alias dir='dir --color=auto'
+  alias vdir='vdir --color=auto'
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
 fi
 if [ -n "$ISTERMUX" ]; then
-    alias sudo="tsudo"
-    alias su="tsu"
+  alias sudo="tsudo"
+  alias su="tsu"
 fi
 
 # ls defined by os-specific stuff above.
@@ -69,17 +67,17 @@ alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%
 
 # Try to set vim to better versions...
 if [ $(command -v nvim 2>/dev/null) ]; then
-    alias vim="nvim"
+  alias vim="nvim"
 elif [ $(command -v mvim 2>/dev/null) ]; then
-    # Prefer macvim to gvim.
-    alias vim="mvim -v"
+  # Prefer macvim to gvim.
+  alias vim="mvim -v"
 elif [ $(command -v gvim 2>/dev/null) ]; then
-    alias vim="gvim -v"
+  alias vim="gvim -v"
 elif [ -e /usr/bin/gvim ]; then
-    alias vim="/usr/bin/gvim -v"
-# xvim (has x11 clipboard support)
+  alias vim="/usr/bin/gvim -v"
+  # xvim (has x11 clipboard support)
 elif [ -e /usr/bin/vimx ]; then
-    alias vim="/usr/bin/vimx"
+  alias vim="/usr/bin/vimx"
 fi
 
 alias idevim="vim --cmd \"let g:ideMode=1\""

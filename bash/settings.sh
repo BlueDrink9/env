@@ -5,22 +5,22 @@ BASH_VERSION_CLEAN="${BASH_VERSION//[^0-9.]*/}"
 
 # test if this is an ssh shell
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-    export SESSION_TYPE=remote/ssh
-    export SSHSESSION=1
-    # many other tests omitted
+  export SESSION_TYPE=remote/ssh
+  export SSHSESSION=1
+  # many other tests omitted
 else
-    # case $(ps -o comm= -p $PPID) in
-    # case $(cat /proc/$PPID/comm) in
-        # SESSION_TYPE=remote/ssh;;
-    # esac
-    if substrInStr "darwin1" "$OSTYPE"; then
-        parent="$(ps -o ppid,comm | grep $PPID)"
-    else
-        parents="$(pstree -p | grep $PPID)"
-    fi
-    if substrInStr "sshd" "$parents"; then
-        SESSION_TYPE=remote/ssh
-    fi
+  # case $(ps -o comm= -p $PPID) in
+  # case $(cat /proc/$PPID/comm) in
+  # SESSION_TYPE=remote/ssh;;
+  # esac
+  if substrInStr "darwin1" "$OSTYPE"; then
+    parent="$(ps -o ppid,comm | grep $PPID)"
+  else
+    parents="$(pstree -p | grep $PPID)"
+  fi
+  if substrInStr "sshd" "$parents"; then
+    SESSION_TYPE=remote/ssh
+  fi
 fi
 
 # You know it, baby. Shouldn't need to use nano ever
@@ -32,23 +32,23 @@ export GIT_EDITOR="$VISUAL"
 # {[} Terminal settings
 # Set defaults here for various terms
 if substrInStr "Apple" "$TERM_PROGRAM"; then
-    COLORTERM=16
+  COLORTERM=16
 fi
 if substrInStr "kitty" "$TERM"; then
-    COLORTERM="truecolor"
-    USENF=${USENF:-1}
+  COLORTERM="truecolor"
+  USENF=${USENF:-1}
 fi
 # Termux
 if substrInStr "Android" "$(uname -a)";  then
-    export ISTERMUX=1
-    export CLIP_PROGRAM_COPY="termux-clipboard-set"
-    export CLIP_PROGRAM_PASTE="termux-clipboard-get"
-    export HOSTNAME="$(getprop net.hostname)"
-    export HOST="${HOSTNAME}"
-    if [ -z "$SSHSESSION" ]; then
-        export NOTMUX=1
-        COLORTERM="truecolor"
-    fi
+  export ISTERMUX=1
+  export CLIP_PROGRAM_COPY="termux-clipboard-set"
+  export CLIP_PROGRAM_PASTE="termux-clipboard-get"
+  export HOSTNAME="$(getprop net.hostname)"
+  export HOST="${HOSTNAME}"
+  if [ -z "$SSHSESSION" ]; then
+    export NOTMUX=1
+    COLORTERM="truecolor"
+  fi
 fi
 export COLORTERM USENF
 
@@ -60,15 +60,15 @@ TERM_PROGRAM=${TERM_PROGRAM:-}
 export TERMOPTIONS=(USENF USEPF COLORTERM TERM_PROGRAM)
 
 if [ -n "$TMUX" ]; then
-    # In a tmux session
-    set_tmux_termoptions
+  # In a tmux session
+  set_tmux_termoptions
 fi
 
 # {]} Terminal settings
 
 # Source .dir_colours
 if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolours_solarized && eval "$(dircolors -b ~/.dircolours_solarized)" || eval "$(dircolors -b)"
+  test -r ~/.dircolours_solarized && eval "$(dircolors -b ~/.dircolours_solarized)" || eval "$(dircolors -b)"
 fi
 source "$DOTFILES_DIR/terminal/x/linuxterm.sh"
 
@@ -78,9 +78,9 @@ export LC_CTYPE="en_US.UTF-8"
 if [[ $- == *i* ]]; then stty -ixon; fi
 
 if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
-    export XKB_DEFAULT_LAYOUT="us,us"
-    export XKB_DEFAULT_VARIANT="colemak,"
-    export XKB_DEFAULT_OPTIONS="grp:alt_shift_toggle,caps:backspace,grp_led:caps,altwin:swap_alt_win"
+  export XKB_DEFAULT_LAYOUT="us,us"
+  export XKB_DEFAULT_VARIANT="colemak,"
+  export XKB_DEFAULT_OPTIONS="grp:alt_shift_toggle,caps:backspace,grp_led:caps,altwin:swap_alt_win"
 fi
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
@@ -92,7 +92,7 @@ export HISTCONTROL=ignoredups:erasedups
 # Don't record some commands
 export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
 if [ ! -d "${HOME}/.logs" ] ; then
-   mkdir ${HOME}/.logs
+  mkdir ${HOME}/.logs
 fi
 PROMPT_COMMAND="log_command"
 # Save to history when command is executed, rather than when terminal is closed.
@@ -118,9 +118,9 @@ export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --
 # make less more friendly for non-text input files (eg .gz). See lesspipe(1)
 # Different lesspipe scripts, like GNU source-highlight, give syntax highlighting
 # if type code2color >/dev/null 2>&1; then
-  # This variable only works with https://github.com/wofr06/lesspipe
-  # c2c is the default. Change to set to something else, eg pygmentizer (slow)
-  # export LESSCOLORIZER='code2color'
+# This variable only works with https://github.com/wofr06/lesspipe
+# c2c is the default. Change to set to something else, eg pygmentizer (slow)
+# export LESSCOLORIZER='code2color'
 # fi
 # Debian's way of doing it...
 [ -x lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -128,22 +128,22 @@ export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --
 [ -x lesspipe.sh ] && export LESSOPEN="|lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
 
 if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
-    # Solarized ls dircolours (sort of)
-    export CLICOLOR=1
-    # Recommended... but wrong?
-    # export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
-    # Custom, created from comparing website and ls man
-    export LSCOLORS=exgxbAbAcxbhxbhBhDhcea
+  # Solarized ls dircolours (sort of)
+  export CLICOLOR=1
+  # Recommended... but wrong?
+  # export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
+  # Custom, created from comparing website and ls man
+  export LSCOLORS=exgxbAbAcxbhxbhBhDhcea
 elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
-    true
+  true
 fi
 
 # enable programmable smart completion features
 if ! shopt -oq posix; then
   if [ -f $HOMEBREW_PREFIX/share/bash_completion ]; then
-      . $HOMEBREW_PREFIX/share/bash_completion # version 2
+    . $HOMEBREW_PREFIX/share/bash_completion # version 2
   elif [ -f $HOMEBREW_PREFIX/etc/bash_completion ]; then
-      . $HOMEBREW_PREFIX/etc/bash_completion # version 1
+    . $HOMEBREW_PREFIX/etc/bash_completion # version 1
   elif [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
   elif [ -f /etc/bash_completion ]; then
@@ -151,11 +151,11 @@ if ! shopt -oq posix; then
   fi
 fi
 if [[ $- == *i* ]]; then
-    if compareVersionNum ${BASH_VERSION_CLEAN} '<' 4.3; then
-        # Remove tab menu completion cycling.
-        # Will just complete to common subsequence instead.
-        bind 'Tab: complete'
-    fi
+  if compareVersionNum ${BASH_VERSION_CLEAN} '<' 4.3; then
+    # Remove tab menu completion cycling.
+    # Will just complete to common subsequence instead.
+    bind 'Tab: complete'
+  fi
 fi
 
 # TODO Maybe bad... should you mess with $TERM?
@@ -178,9 +178,9 @@ shopt -s cdable_vars
 set -o noclobber
 
 if [ -n "$DISPLAY" ]; then
-    if [ "$OSTYPE" = "linux-gnu" ] && [ $(command -v xorg 2>/dev/null) ]; then
-        setxkbmap -layout 'us, us' -variant 'colemak,' -option caps:backspace -option altwin:swap_alt_win -option grp:alt_shift_toggle -option grp_led:caps
-    fi
+  if [ "$OSTYPE" = "linux-gnu" ] && [ $(command -v xorg 2>/dev/null) ]; then
+    setxkbmap -layout 'us, us' -variant 'colemak,' -option caps:backspace -option altwin:swap_alt_win -option grp:alt_shift_toggle -option grp_led:caps
+  fi
 elif [ $(command -v loadkeys 2>/dev/null) ] && [ "$TERM" = linux ]; then
-    loadkeys colemak
+  loadkeys colemak
 fi
