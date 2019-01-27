@@ -15,8 +15,8 @@ chmod +x /usr/bin/launch
 sed -i 's/#PasswordAuthentication.*/PasswordAuthentication no/' $PREFIX/etc/ssh/sshd_config
 
 mkdir -p $HOME/.shortcuts
-ln "$HOME/.shortcuts/vim" "$($SCRIPTDIR_CMD)/vim"
+ln "$($SCRIPTDIR_CMD)/vim" "$HOME/.shortcuts/vim"
 mkdir -p $HOME/bin
-ln "$HOME/termux-file-editor" "$HOME/.shortcuts/vim"
+ln "$HOME/.shortcuts/vim" "$HOME/bin/termux-file-editor"
 
 echo Check https://android.stackexchange.com/questions/37/how-do-i-change-the-name-of-my-android-device to alter the hostname
