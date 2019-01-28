@@ -441,6 +441,10 @@ lastpass_ssh_key_add(){
         # Extract the comment at the end of the pub file
         keyname=$(sed -e 's/[^=]*== //g' < "${keyfile}.pub")
         lastpass_login
+        if ! lpass status; then
+          echo "Lastpass not logged in. No keys added."
+          return
+        fi
         # Note: Indent END with tabs, not spaces, or this won't work.
         expect <<- END
           spawn ssh-add ${keyfile}
