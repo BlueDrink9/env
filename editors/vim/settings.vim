@@ -105,13 +105,13 @@ if has("gui_running")
 else
     "{[} Console
 
-    if !has("clipboard") || $SSHSESSION
+    " if !has("clipboard") || $SSHSESSION
         " Without clipboard or over ssh, need mouse to select stuff sorry.
         " Allow mouse for everything except in visualmode
-        set mouse=hnic
-    endif
-    " AAH, but shift or opt +click may overcome this?
-    " set mouse=a
+        " set mouse=hnic
+    " endif
+    " AAH, but shift/opt + click overcomes this on my terminal emulaters
+    set mouse=a
 
     " {[} Colours
     " If the current iTerm tab has been
