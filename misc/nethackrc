@@ -78,6 +78,8 @@ MSGTYPE=stop "You are beginning to feel weak."
 
 # Don't speed past wrest message when wresting
 MSGTYPE=stop "You wrest .*"
+# If you have teleportitis, interrupt when asked.
+MSGTYPE=stop ".*want to be teleported?"
 
 # Don't miss the vibrating square
 MSGTYPE=stop "You feel a strange vibration under your *."
