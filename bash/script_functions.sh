@@ -65,21 +65,38 @@ getLatestReleaseFileURL() {
 }
 
 downloadURLAndExtractZipTo() {
+  downloadURLAndExtractTo zip "$@"
+}
+downloadURLAndExtractGzTo() {
+  downloadURLAndExtractTo Gz "$@"
+}
+
+downloadURLAndExtractTo() {
   # Two arguments: url, and destination folder.
   default="invalid url or filename"
-  url=${1:-default}
-  destDir=${2:-default}
+  extension=${1:-default}
+  url=${2:-default}
+  destDir=${3:-default}
   if [ "$url" = "default" ] || [ "$destDir" = "default" ]; then
     printErr "Error: Invalid url or dest"
   fi
   if [ ! -d "$destDir" ]; then
     mkdir -p "$destDir"
   fi
-  tmpzipfile="$(mktemp)"
-  downloadURLtoFile "$url" "$tmpzipfile.zip"
-  unzip -o "$tmpzipfile.zip" -d "$destDir" # > /dev/null
+  tmpfile="$(mktemp).$extension"
+  downloadURLtoFile "$url" "$tmpfile"
+  case "$extension" in
+    zip)
+      unzip -o "$tmpfile" -d "$destDir" # > /dev/null
+      ;;
+    *.gz)
+      tar -xzf "$tmpfile" -C "$destDir"
+      ;;
+    *)
+      printErr "Invalid extension: \"$extension\""
+  esac
   printErr "${Red}unzipped${NC}"
-  rm -f "$tmpzipfile.zip"
+  rm -f "$tmpfile"
 }
 
 addTextIfAbsent() {
