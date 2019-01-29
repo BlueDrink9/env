@@ -2,7 +2,7 @@
 source "$DOTFILES_DIR/bash/script_functions.sh"
 
 mkdir -p "$HOME/.termux"
-downloadURLAndExtractZipTo "https://github.com/adi1090x/termux-style/raw/master/data.tar.gz" \
+downloadURLAndExtractGzTo "https://github.com/adi1090x/termux-style/raw/master/data.tar.gz" \
     "$HOME/.termux/termux-style" && \
     cp "$HOME/.termux/termux-style/solarized-light.properties" "$HOME/.termux/"
 
