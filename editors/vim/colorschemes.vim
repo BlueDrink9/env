@@ -12,6 +12,7 @@ augroup end
 
 Plug 'https://github.com/vim-scripts/oceandeep'
 Plug 'https://github.com/morhetz/gruvbox'
+Plug 'https://github.com/jnurmine/Zenburn'
 Plug 'https://github.com/tomasr/molokai'
 Plug 'dracula/vim', { 'as': 'dracula' }
 " {[} ---------- Base16 ----------
