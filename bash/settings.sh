@@ -50,7 +50,7 @@ if substrInStr "Android" "$(uname -a)";  then
     COLORTERM="truecolor"
   fi
 fi
-export COLORTERM USENF
+# export COLORTERM USENF USEPF
 
 USENF=${USENF:-0}
 USEPF=${USEPF:-0}
