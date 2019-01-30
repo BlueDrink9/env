@@ -2,7 +2,11 @@
 " vim: foldmarker={[},{]}
 "
 if !exists ('colorSch')
+  if exists("$COLOURSCHEME")
+    let colorSch=$COLOURSCHEME
+  else
     let colorSch="solarized"
+  endif
 endif
 
 augroup colourschemes
