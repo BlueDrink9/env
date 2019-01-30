@@ -97,7 +97,7 @@ set keymap vi-insert
 # modified vim-style quit.
 # ";q":"ccexit\"
 ";q":"ddiexit"
-";e":"Ivim "
+";e":"Ivim"
 
 # Pressing tab will list all completions & select the first one. Pressing it
 # again will cycle through available completions.
