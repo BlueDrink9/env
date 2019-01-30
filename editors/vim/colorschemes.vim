@@ -22,13 +22,8 @@ Plug 'https://github.com/chriskempson/base16-vim'
 " {]} ---------- Base16 ----------
 
 " {[} ---------- Solarized ----------
-if $ISTERMUX
-    " Replaces solarized for termux solarized theme
-    Plug 'https://github.com/Breta01/Termux-Themes'
-else
-    " Altercation's version doesn't set gui colors in terminal (no termguicolours)
-    Plug 'nisavid/vim-colors-solarized'
-endif
+" Altercation's version doesn't set gui colors in terminal (no termguicolours)
+Plug 'nisavid/vim-colors-solarized'
 " Settings doesn't recommend this...
 let g:solarized_contrast = "high"
 let g:solarized_termtrans = 0 " 1 displays default term bg instead.
