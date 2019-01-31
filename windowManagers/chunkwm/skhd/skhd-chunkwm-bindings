@@ -23,7 +23,8 @@ shift + cmd - n : chunkc tiling::desktop --create;\
 # cmd - w enters window management mode
 alt - w ; chunkwmMode
 chunkwmMode < alt - w ; default
-# chunkwmMode < esc ; default
+chunkwmMode < escape ; default
+chunkwmMode < return ; default
 
 # focus window
 alt - h : chunkc tiling::window --focus west
