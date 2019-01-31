@@ -31,12 +31,72 @@ Some of these are set automatically, but if set manually, should override the de
 
 Edit `TERMOPTIONS` and append any env variables you want to be passed through SSH.
 
-## Possible points of interest
+## Viewports
+
+All systems for arranging views should behave in as similar a fashion as possible, with similar bindings. Tmux is the base analogy, and the associated view metaphors are summarized in this table:
+
+| Tmux term   | Window manager/desktop metaphor term   | Vim term        |
+| ----------- | -------------------------------------- | ----------      |
+| Pane        | Window                                 | Split           |
+| Window*     | Tab within tabbed window               | unlisted buffer |
+| Session     | Desktop/workspace                      | Tab             |
+
+`*` Windows and sessions behave very similarly in tmux, so this doesn't quite work perfectly.
+
+Mappings for manipulating/moving between these 3 should be as similar as possible, just with a different prefix/modifier key, with some exceptions.
+Operations that are often repeated several times, like resizing or rearranging views, should use a different mode if possible.
+Operations that occur rarely can be on prefixes, or use modes if need be. Modes should create a visual change when active, and be exitable with `esc` or pressing the mode key again.
+
+Operations that change state are usually modified with `shift`
+
+#### Bindings
+
+Table shows bindings for the different modes, with `#` representing the modifier, `%` representing the prefix/mode change.
+
+`*` indicates it is repeatable/becomes a mode. `!` indicates it is only available within a mode/after prefix.
+
+Window manager prefix is `winkey/super/option` prefix is modifier + `w`, vim mode change/prefix is `<C-w>`, tmux prefix is `<C-s>` (`C-b` is awkward, and `C-a` overrides increment in vim).
+
+Actions with arrow keys don't use the prefix in vim (Resizing, moving to next).
+
+Not everything works in every context.
+
+| Action |Binding |
+|--------|--------|
+| Move to [left, right, above, below] pane<sup>1</sup> | `<#-[hlkj]>` |
+| Move to [next, previous] window | `*<#-[right,left]>` |
+| Move to [next, previous] session | `*<#-[up,down]>` |
+| `!`Expand current pane (Behaviour differs between programmes here) | `*%<S-[down,right]>` |
+| `!`Contract current pane | `*%<S-[up,left]>` |
+| `!`Contract/expand pane in other direction (if permitted) | `*%<S-C-[up,down,left,right]>` |
+| `!`Swap pane with next container | `%<S-[hjkl]>` |
+| `!`Push pane into next container | `%<S-#-[hjkl]>` |
+| `!`Zoom/fullscreen pane | `%z` |
+| `!`Rotate tree | `r` |
+| Close pane (not vim) | `!x`/`#x` |
+
+| Windowm manager only Action |Binding |
+|--------|--------|
+| Float pane | `%f` |
+| Float next pane created | `%<C-f>` |
+| Pin/make sticky | `%p` |
+| Use binary layout | `%<S-b>` |
+| Use floating layout | `%<S-f>` |
+| Use monocle/tabbed layout | `%<S-t>` |
+| Focus [next,prev] desktop | `<C-A-[right,left]>` |
+| Move pane to [next,prev] desktop | `%<S-[n,p]>` |
+| Move pane to desktop [num] | `%[num]` |
+| jump to desktop [num] | `<#-[num]>` |
+
+<sup>1</sup> Vim and tmux share `ctrl` as the modifier here. Tmux also allows this after prefix, just in case the vim plugin isn't working.
+
+
+## Possible points of interest to others
 
 The install system, starting with `Install.sh`, and the nature of the files in the directories, which are kept separate to stop them getting too big, and to an extent keep them modular.
 Main way `install.sh` works is that it adds a line to the relevant dotfile in your home dir, and that line sources the primary dotfile in the repo. That then sources all further files. This obviously requires the system to support includign other dotfiles. In particular, window managers never seem to like that, so orthogonal setup scripts are included for these.
 
-The ssh system, that sets several options relating to your current term capabilities, and passes them to your ssh system (including tmux!)
+The ssh system, that sets several options relating to your current term capabilities, and passes them to your ssh system (including tmux!). Tell the server that you have a `truecolor` terminal!
 
 A system for adding ssh keys and unlocking them from the lastpass password manager
 
