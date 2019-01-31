@@ -32,6 +32,10 @@ alt - j : chunkc tiling::window --focus south
 alt - k : chunkc tiling::window --focus north
 alt - l : chunkc tiling::window --focus east
 
+# close focused window
+alt - x : chunkc tiling::window --close
+chunkwmMode < x : chunkc tiling::window --close
+
 # swap window
 chunkwmMode < shift - h : chunkc tiling::window --swap west
 chunkwmMode < shift - j : chunkc tiling::window --swap south
@@ -64,9 +68,6 @@ chunkwmMode < shift + alt - down : chunkc tiling::window --use-temporary-ratio 0
 chunkwmMode < shift + alt - right : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge west
 chunkwmMode < shift + alt - left : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge west
 chunkwmMode < shift + alt - up : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge north
-
-# close focused window
-chunkwmMode < alt - x : chunkc tiling::window --close
 
 # chunkwmMode < cmd - j : chunkc tiling::window --focus prev
 # chunkwmMode < cmd - k : chunkc tiling::window --focus next
