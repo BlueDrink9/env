@@ -4,9 +4,11 @@
 # skhdrc
 # --------------------
 
-# ctrl + alt - t : kitty --single-instance
-ctrl + cmd - t : kitty --single-instance
-alt - return : kitty --single-instance
+ctrl + cmd - t : $HOME/Applications/kitty.app/Contents/MacOS/kitty --single-instance || /Applications/kitty.app/Contents/MacOS/kitty --single-instance
+alt - return : $HOME/Applications/kitty.app/Contents/MacOS/kitty --single-instance || /Applications/kitty.app/Contents/MacOS/kitty --single-instance
+ctrl + cmd - t : $HOME/Applications/kitty.app/Contents/MacOS/kitty --single-instance || /Applications/kitty.app/Contents/MacOS/kitty --single-instance
+alt - b : $HOME/Applications/Google Chrome.app || /Applications/Google Chrome.app
+alt - e : open -n $HOME
 # No idea which of these might work
 # source skhd-chunkwm-bindings
 # include skhd-chunkwm-bindings
