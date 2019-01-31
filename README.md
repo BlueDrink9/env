@@ -78,6 +78,9 @@ Not everything works in every context.
 | Windowm manager only Action |Binding |
 |--------|--------|
 | Float pane | `%f` |
+| Open browser | `#b` |
+| Open file explorer | `#e` |
+| Open terminal | `<C-A-t>` and `<#-return>`|
 | Float next pane created | `%<C-f>` |
 | Pin/make sticky | `%p` |
 | Use binary layout | `%<S-b>` |
