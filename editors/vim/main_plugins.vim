@@ -31,17 +31,6 @@ if !exists('g:skipPipInstall') && has('nvim')
 endif
 
 " {[} ---------- Misc ----------
-" visually show indentation
-if v:version >= 703
-    " Plug 'https://github.com/Yggdroot/indentLine'
-" if v:version >= 702
-    " Too hard to get working with terminal. Looks crap.
-    " Plug 'nathanaelkane/vim-indent-guides'
-    " let g:indent_guides_auto_colors = 1
-    " let g:indent_guides_enable_on_vim_startup = 1
-    " call add (g:customHLGroups, "clear IndentGuidesOdd")
-    " " call add (g:customHLGroups, "IndentGuidesOdd ")
-endif
 Plug 'https://github.com/metalelf0/supertab' " Fork with a failing feature removed
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabLongestEnhanced = 1
@@ -159,10 +148,9 @@ Plug 'https://github.com/tpope/vim-dispatch'
 
 " {[} ---------- Git ----------
 if executable("git")
-    augroup myGit
-        au!
-        autocmd User Fugitive SignifyRefresh
-    augroup end
+    " augroup myGit
+    "     au!
+    " augroup end
     " :Magit to check all sorts of git stuff. Looks really cool. Capitals for 
     " commands, eg [S]tage-toggle, [CC]ommit.
     Plug 'jreybert/vimagit'
@@ -203,7 +191,8 @@ if executable("git")
             au!
             " This seems to be causing an annoying error :/
             " autocmd CursorHold,CursorHoldI,BufEnter,FocusGained call silent! sy#start()
-            autocmd WinEnter call silent! sy#start()
+            " autocmd WinEnter call silent! sy#start()
+            autocmd User Fugitive SignifyRefresh
         augroup end
     endif
     let g:signify_update_on_focusgained = 1
