@@ -2,6 +2,7 @@
 " vim: foldmarker={[},{]}
 " Maybe later, once I want them.
 " {[} ---------- Later ----------
+" Plug 'https://github.com/dhruvasagar/vim-table-mode'
 " Scrollwheel on mouse moves screen with cursor (more natural)
 " https://github.com/reedes/vim-wheel
 " Function argument movements
