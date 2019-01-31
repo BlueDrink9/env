@@ -10,8 +10,8 @@
 # Declare mode. Use green border when in mode, blue otherwise.
 :: chunkwmMode @ : chunkc set focused_border_color 0xff00bc00; \
   chunkc border::color 0xff00bc00
-:: default : chunkc set focused_border_color 0xff0f6288; \
-  chunkc border::color 0xff0f6288
+:: default : chunkc set focused_border_color 0xff247dcc; \
+  chunkc border::color 0xff247dcc
 
 # cmd - w enters window management mode
 alt - w ; chunkwmMode
