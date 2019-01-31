@@ -26,8 +26,9 @@ fi
 # You know it, baby. Shouldn't need to use nano ever
 # export EDITOR="vim --noplugin --cmd \"let g:noPlugins=1\""
 # export VISUAL="vim --cmd \"let g:liteMode=1\""
-export VISUAL="vi"
+export VISUAL="vim"
 export GIT_EDITOR="$VISUAL"
+export XDG_CONFIG_HOME="$HOME/.config"
 
 # {[} Terminal settings
 # Set defaults here for various terms
