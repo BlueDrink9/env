@@ -54,22 +54,22 @@ chunkwmMode < alt - left   : chunkc tiling::window --grid-layout 1:2:0:0:1:1
 chunkwmMode < alt - right  : chunkc tiling::window --grid-layout 1:2:1:0:1:1
 
 # increase region size
-chunkwmMode < shift - left : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge west
 chunkwmMode < shift - down : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge south
-chunkwmMode < shift - up : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge north
 chunkwmMode < shift - right : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge east
+chunkwmMode < shift - left : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge east
+chunkwmMode < shift - up : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge south
 
 # decrease region size
+chunkwmMode < shift + alt - down : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge north
+chunkwmMode < shift + alt - right : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge west
 chunkwmMode < shift + alt - left : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge west
-chunkwmMode < shift + alt - down : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge south
 chunkwmMode < shift + alt - up : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge north
-chunkwmMode < shift + alt - right : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge east
 
 # close focused window
-chunkwmMode < alt - w : chunkc tiling::window --close
+chunkwmMode < alt - x : chunkc tiling::window --close
 
-chunkwmMode < cmd - j : chunkc tiling::window --focus prev
-chunkwmMode < cmd - k : chunkc tiling::window --focus next
+# chunkwmMode < cmd - j : chunkc tiling::window --focus prev
+# chunkwmMode < cmd - k : chunkc tiling::window --focus next
 
 # rotate tree
 chunkwmMode < r : chunkc tiling::desktop --rotate 90
@@ -80,7 +80,7 @@ chunkwmMode < s : chunkc tiling::desktop --mirror vertical
 # mirror tree x-axis
 chunkwmMode < v : chunkc tiling::desktop --mirror horizontal
 
-# toggle desktop offset
+# toggle desktop offset XXX
 chunkwmMode < o : chunkc tiling::desktop --toggle offset
 
 # toggle window fullscreen
@@ -103,7 +103,7 @@ chunkwmMode < f : chunkc tiling::window --toggle float;\
           chunkc tiling::window --grid-layout 4:4:1:1:2:2
 
 # toggle sticky
-chunkwmMode < s : chunkc tiling::window --toggle sticky
+chunkwmMode < p : chunkc tiling::window --toggle sticky
 
 # toggle sticky, float and resize to picture-in-picture size
 chunkwmMode < alt - p : chunkc tiling::window --toggle sticky;\
@@ -139,8 +139,8 @@ chunkwmMode < 6 : chunkc tiling::window --send-to-desktop 6
 
 # fast focus desktop. Requires extra hack.
 chunkwmMode < cmd + alt - x : chunkc tiling::desktop --focus $(chunkc get _last_active_desktop)
-chunkwmMode < cmd + alt - z : chunkc tiling::desktop --focus prev
-chunkwmMode < cmd + alt - c : chunkc tiling::desktop --focus next
+chunkwmMode < shift - n : chunkc tiling::desktop --focus next
+chunkwmMode < shift - p : chunkc tiling::desktop --focus prev
 chunkwmMode < cmd + alt - 1 : chunkc tiling::desktop --focus 1
 chunkwmMode < cmd + alt - 2 : chunkc tiling::desktop --focus 2
 chunkwmMode < cmd + alt - 3 : chunkc tiling::desktop --focus 3
