@@ -94,4 +94,4 @@ case $- in
   *) return;;
 esac
 
-source "${DOTFILES_DIR}/bashrc"
+export PROFILE_LOADED=1
