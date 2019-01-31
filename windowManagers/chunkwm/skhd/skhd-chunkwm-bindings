@@ -6,11 +6,18 @@
 
 # Set up chunkwm with a modal entry, and using the same shortcuts as I
 # use for vim, tmux, etc.
-# The metaphores are:
-# window = tmux pane (but using alt instead of ctrl) (alt + hjkl move),
-# mode-shift+arrow to grow, mode-alt+shift+arrow to shrink
-# desktop = tmux window (mode-left/right)
-# no metaphore for tmux sessions
+
+# Declare mode. Use green border when in mode, blue otherwise.
+:: chunkwmMode @ : chunkc set focused_border_color 0xff00bc00; \
+  chunkc border::color 0xff00bc00
+:: default : chunkc set focused_border_color 0xff0f6288; \
+  chunkc border::color 0xff0f6288
+
+# cmd - w enters window management mode
+alt - w ; chunkwmMode
+chunkwmMode < alt - w ; default
+chunkwmMode < escape ; default
+chunkwmMode < return ; default
 
 # create desktop, move window and follow focus
 shift + cmd - n : chunkc tiling::desktop --create;\
@@ -18,13 +25,6 @@ shift + cmd - n : chunkc tiling::desktop --create;\
                   chunkc tiling::window --send-to-desktop $(echo ${ids##* });\
                   chunkc tiling::desktop --focus $(echo ${ids##* })
 
-# Declare mode
-:: chunkwmMode @ :
-# cmd - w enters window management mode
-alt - w ; chunkwmMode
-chunkwmMode < alt - w ; default
-chunkwmMode < escape ; default
-chunkwmMode < return ; default
 
 # focus window
 alt - h : chunkc tiling::window --focus west
