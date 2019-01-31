@@ -1,0 +1,45 @@
+#! /bin/sh
+
+sxhkd -c $XDG_CONFIG_HOME/sxhkd/sxhkdrc $DOTFILES_DIR/windowManagers/bspwm/*.sxhkdrc &
+
+#  if [[ $(hostname) == 'myhost' ]]; then
+bspc monitor -d I II III IV V VI VII VIII IX X
+
+bspc config border_width         2
+bspc config window_gap          12
+
+bspc config split_ratio          0.52
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+bspc rule -a Gimp desktop='^8' state=floating follow=on
+bspc rule -a Chromium desktop='^2'
+bspc rule -a mplayer2 state=floating
+bspc rule -a Kupfer.py focus=on
+bspc rule -a Screenkey manage=off
+
+
+# cratchpd
+# You can emulate a dropdown terminal (like i3's scratchpad feature if you put a terminal in it) using bspwm's window flags. Append the following to the end of the bspwm config file (adapt to your own terminal emulator):
+
+# bspc rule -a scratchpad sticky=on state=floating hidden=on
+# st -c scratchpad -e ~/bin/scratch &
+# The sticky flag ensures that the window is always present on the current desktop. And ~/bin/scratch is:
+
+# #!/usr/bin/sh
+# bspc query -N -n .floating > /tmp/scratchid
+# $SHELL
+# The hotkey for toggling the scratchpad should be bound to:
+
+# id=$(cat /tmp/scratchid);\
+# bspc node $id --flag hidden;bspc node -f $id
+
+### Desktop where all windows are floating
+ # change the desktop number here
+ FLOATING_DESKTOP_ID=$(bspc query -D -d '^5')
+
+ bspc subscribe node_manage | while read -a msg ; do
+    desk_id=${msg[2]}
+    wid=${msg[3]}
+    [ "$FLOATING_DESKTOP_ID" = "$desk_id" ] && bspc node "$wid" -t floating
+ done
