@@ -6,6 +6,18 @@
 Plug 'https://github.com/tpope/vim-projectionist'
 " Autoclose brackets, etc. Aims to mimic eclipse.
 Plug 'https://github.com/Townk/vim-autoclose'
+
+if v:version >= 703
+    " visually show indentation
+    Plug 'https://github.com/Yggdroot/indentLine'
+" if v:version >= 702
+    " Too hard to get working with terminal. Looks crap.
+    " Plug 'nathanaelkane/vim-indent-guides'
+    " let g:indent_guides_auto_colors = 1
+    " let g:indent_guides_enable_on_vim_startup = 1
+    " call add (g:customHLGroups, "clear IndentGuidesOdd")
+    " " call add (g:customHLGroups, "IndentGuidesOdd ")
+endif
 " {]} ---------- Misc ----------
 
 " {[} ---------- Linting ----------
