@@ -4,6 +4,11 @@
 # skhdrc-chunkwm-bindings
 # --------------------
 
+# Create a prefix mode that times out after 5 seconds. Qes synthesises a keypress?
+#default < shift + cmd - o ; prefix
+# prefix < escape ; default
+# :: prefix @   : chunkc border::color 0xFFFAC863; sleep 5; qes -k "escape"
+
 # Set up chunkwm with a modal entry, and using the same shortcuts as I
 # use for vim, tmux, etc.
 
