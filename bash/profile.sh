@@ -6,6 +6,7 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export DOTFILES_DIR=$(cd "${SCRIPT_DIR}/.." && pwd)
 
+source "${SCRIPT_DIR}/functions.sh"
 
 if [ -z "$HOMEBREW_PREFIX" ]; then
   if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
@@ -16,23 +17,6 @@ if [ -z "$HOMEBREW_PREFIX" ]; then
     export HOMEBREW_REPOSITORY="$HOMEBREW_PREFIX/Homebrew"
   fi
 fi
-# If available, replace bash with brew version. (More up-to-date than system.)
-# Only if running interactively.
-case $- in
-  *i*)
-    if [ -n "$BASH" ] && [ -z "$HAVE_LOADED_BASH" ]; then
-      if [ -n "$HOMEBREW_PREFIX" ]; then
-        brewbash="$HOMEBREW_PREFIX/bin/bash"
-        if [ -f "$brewbash" ] && [ "$BASH" != "$brewbash" ]; then
-          export HAVE_LOADED_BASH=1
-          # Exec replaces the shell with the specified process.
-          exec "$brewbash" -l
-        fi
-      fi
-    fi
-esac
-
-source "${SCRIPT_DIR}/functions.sh"
 
 # brew paths
 if [ -n "$HOMEBREW_PREFIX" ]; then
@@ -57,13 +41,15 @@ case $- in
       execCmd="exec"
       # Else nothing
     fi
-    if command -v tmux>/dev/null; then
+    if command -v tmux>/dev/null && [ -z "$NOTMUX" ]; then
       if [[ ! $TERM =~ screen ]] && [[ -z $TMUX ]]; then
         # PNAME="$(ps -o comm= $PPID)";
         # useTmuxFor="login sshd gnome-terminal init wslbridge-backe"
         # useTmuxFor="sshd"
         # if contains "$useTmuxFor" "$PNAME"; then
-        if [ -z "$NOTMUX" ] && { [ "$SSHSESSION" ] || [ -z "$DISPLAY" ]; }; then
+        if { [ -n "$SSHSESSION" ] || [ -z "$DISPLAY" ]; }; then
+          # unset HAVE_LOADED_BASH PROFILE_LOADED
+          # echo LOADING tmux $HAVE_LOADED_BASH
           if tmux ls 2> /dev/null | grep -q -v attached; then
             $execCmd tmux $TMUX_256_arg attach -t $(tmux ls 2> /dev/null | grep -v attached | head -1 | cut -d : -f 1)
           else
@@ -73,6 +59,21 @@ case $- in
       fi
     fi
     # {]} tmux
+
+  # If available, replace bash with brew version. (More up-to-date than system.)
+  # Only if running interactively.
+    if [ -n "$BASH" ] && [ -z "$HAVE_LOADED_BASH" ]; then
+      if [ -n "$HOMEBREW_PREFIX" ]; then
+        brewbash="$HOMEBREW_PREFIX/bin/bash"
+        if [ -f "$brewbash" ] && [ "$BASH" != "$brewbash" ]; then
+          export HAVE_LOADED_BASH=1
+          export SHELL="$brewbash"
+          # Exec replaces the shell with the specified process.
+          exec "$brewbash" -l
+        fi
+      fi
+    fi
+
 
     # Register keys
     if [ -z "$SSH_AUTH_SOCK" ]; then
@@ -93,5 +94,3 @@ case $- in
     ;;
   *) return;;
 esac
-
-export PROFILE_LOADED=1
