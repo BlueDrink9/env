@@ -40,11 +40,14 @@ END
 
 installID="Readline"
 installText="\\\$include $($SCRIPTDIR_CMD)/inputrc"
+installText="${installText}
+\\\$include $HOME/.readline-surround"
 baseRC="${HOME}/.inputrc"
 
 eval "$(cat <<END
 do${installID}() {
   printErr "Enabling custom readline (inputrc) setup..."
+  downloadURLtoFile https://raw.githubusercontent.com/liloman/bash-surround/master/inputrc-surround $HOME/.readline-surround
   addTextIfAbsent "${installText}" "${baseRC}"
 }
 END
@@ -52,6 +55,6 @@ END
 
 # If directly run instead of sourced, do all
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
-  # doShell
-doReadline
+  doShell
+  # doReadline
 fi
