@@ -16,6 +16,9 @@ if [ -z "$HOMEBREW_PREFIX" ]; then
     export HOMEBREW_PREFIX="$HOME/.linuxbrew"
     export HOMEBREW_REPOSITORY="$HOMEBREW_PREFIX/Homebrew"
   fi
+  if [ ! -d "$HOMEBREW_PREFIX" ]; then
+    unset HOMEBREW_PREFIX
+  fi
 fi
 
 # brew paths. Only before load to avoid loading twice.
