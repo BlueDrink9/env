@@ -1,6 +1,7 @@
 # vim: foldmethod=marker foldmarker={[},{]}
+# vim: ft=readline
 # Readline settings
-include /etc/inputrc
+$include /etc/inputrc
 #{[} settings
 # Set bash movement keys to be more vi-like
 # Can use $(set -o vi) for short version
