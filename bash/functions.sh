@@ -348,8 +348,10 @@ generate_export_termoptions_cmd(){
 
 ssh_with_options(){
   local EXPORT_TERMOPTIONS_CMD=$(generate_export_termoptions_cmd)
-  # Calls default shell, stripping leading '-'
-  \ssh -t "$@" "${EXPORT_TERMOPTIONS_CMD} " '${0#-} -l -s'
+  # Calls default shell, stripping leading '-' and directory
+  shell_base="${0##*/}"
+  shell_base="${shell_base#-}"
+  \ssh -t "$@" "${EXPORT_TERMOPTIONS_CMD} " '${shell_base} -l -s'
 }
 alias ssh="ssh_with_options"
 
