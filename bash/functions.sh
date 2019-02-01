@@ -352,7 +352,7 @@ ssh_with_options(){
   shell_base="${0##*/}"
   shell_base="${shell_base#-}"
   # \ssh -t "$@" "${EXPORT_TERMOPTIONS_CMD} " '${0#-} -l -s'
-  \ssh -t "$@" "${EXPORT_TERMOPTIONS_CMD} " '${shell_base} -l -s'
+  \ssh -t "$@" "${EXPORT_TERMOPTIONS_CMD} ${shell_base} -l -s"
 }
 alias ssh="ssh_with_options"
 
