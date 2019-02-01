@@ -18,8 +18,8 @@ if [ -z "$HOMEBREW_PREFIX" ]; then
   fi
 fi
 
-# brew paths
-if [ -n "$HOMEBREW_PREFIX" ]; then
+# brew paths. Only before load to avoid loading twice.
+if [ -n "$HOMEBREW_PREFIX" ] && [ -z "$HAVE_LOADED_BASH" ]; then
   export HOMEBREW_CELLAR="$HOMEBREW_PREFIX/Cellar"
   export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
   export XDG_DATA_DIRS="/$HOMEBREW_PREFIX/share:$XDG_DATA_DIRS"
