@@ -68,7 +68,10 @@ set bell-style none
 set keymap vi-command
 
 # Insert the arguments from the last command as if from register @a.
-"\"ap": "i !!*\r"
+"\"ap": "i !!*s" + magic-space
+
+# Jump to the target folder of the last command and run ls with g!
+"g!": 'cccd !$ && ls\C-m'
 
 # When hitting up/down, cycle through the previous commands
 # which start with the prefix you've entered, rather than just cycling through
@@ -115,7 +118,7 @@ Tab: menu-complete
 
 # Needed because binding 'p' in command mode above wipes its insert mode
 # function, too. This fixes that, and will insert 'p' when you type 'p'.
-"P": self-insert
+# "P": self-insert
 
 # ctrl + backspace deletes word
 # Doesn't work on all systems, needs looking at.
