@@ -11,18 +11,21 @@ do${installID}() {
   addTextIfAbsent "source $HOME/.bashrc" "${HOME}/.bash_profile"
   addTextIfAbsent "${installText}" "${baseRC}"
 
+  installDircolours
+  doReadline
+  gitSettings
+}
+END
+)"
+
+installDircolours(){
   printErr "Downloading dircolours_solarized..."
   downloadURLtoFile  \
       https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.256dark  \
       "${HOME}/.dircolours_solarized"
   # https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-universal
-
-  printErr "Enabling custom readline (inputrc) setup..."
-  addTextIfAbsent "\$include $($SCRIPTDIR_CMD)/inputrc.sh" "${HOME}/.inputrc"
-  gitSettings
 }
-END
-)"
+
 
 eval "$(cat <<END
 undo${installID}(){
@@ -35,7 +38,20 @@ undo${installID}(){
 END
 )"
 
+installID="Readline"
+installText="\\\$include $($SCRIPTDIR_CMD)/inputrc"
+baseRC="${HOME}/.inputrc"
+
+eval "$(cat <<END
+do${installID}() {
+  printErr "Enabling custom readline (inputrc) setup..."
+  addTextIfAbsent "${installText}" "${baseRC}"
+}
+END
+)"
+
 # If directly run instead of sourced, do all
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
-do${installID}
+  # doShell
+doReadline
 fi
