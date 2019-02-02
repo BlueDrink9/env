@@ -39,6 +39,9 @@ if substrInStr "kitty" "$TERM"; then
   COLORTERM="truecolor"
   USENF=${USENF:-1}
 fi
+if substrInStr "screen" "$TERM"; then
+  unset COLORTERM
+fi
 # Termux
 if substrInStr "Android" "$(uname -a)";  then
   export ISTERMUX=1

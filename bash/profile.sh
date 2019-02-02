@@ -22,7 +22,7 @@ if [ -z "$HOMEBREW_PREFIX" ]; then
 fi
 
 # brew paths. Only before load to avoid loading twice.
-if [ -n "$HOMEBREW_PREFIX" ] && [ -z "$HAVE_LOADED_BASH" ]; then
+if [ -n "$HOMEBREW_PREFIX" ] && ! substrInStr "$HOMEBREW_PREFIX" "$PATH" ; then
   export HOMEBREW_CELLAR="$HOMEBREW_PREFIX/Cellar"
   export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
   export XDG_DATA_DIRS="/$HOMEBREW_PREFIX/share:$XDG_DATA_DIRS"
@@ -45,7 +45,8 @@ case $- in
       # Else nothing
     fi
     if command -v tmux>/dev/null && [ -z "$NOTMUX" ]; then
-      if [[ ! $TERM =~ screen ]] && [[ -z $TMUX ]]; then
+      if [[ ! $TERM =~ screen ]] && [ -z "$TMUX" ] && \
+        [ -z "$HAVE_LOADED_BASH" ]; then
         # PNAME="$(ps -o comm= $PPID)";
         # useTmuxFor="login sshd gnome-terminal init wslbridge-backe"
         # useTmuxFor="sshd"
