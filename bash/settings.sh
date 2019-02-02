@@ -3,6 +3,9 @@
 
 BASH_VERSION_CLEAN="${BASH_VERSION//[^0-9.]*/}"
 
+# Prevent duplicating
+PROMPT_COMMAND=""
+
 # test if this is an ssh shell
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
   export SESSION_TYPE=remote/ssh
@@ -104,7 +107,7 @@ export PROMPT_COMMAND="bash_history_sync; ${PROMPT_COMMAND}"
 if [ ! -d "${HOME}/.logs" ] ; then
   mkdir ${HOME}/.logs
 fi
-PROMPT_COMMAND="${PROMPT_COMMAND}; log_command"
+export PROMPT_COMMAND="log_command; ${PROMPT_COMMAND}"
 # Save multi-line commands as one command
 shopt -s cmdhist
 
