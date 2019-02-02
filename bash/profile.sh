@@ -99,3 +99,4 @@ case $- in
     ;;
   *) return;;
 esac
+export PROFILE_LOADED=1
