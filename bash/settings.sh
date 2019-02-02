@@ -74,7 +74,9 @@ fi
 if [ -x /usr/bin/dircolors ]; then
   test -r ~/.dircolours_solarized && eval "$(dircolors -b ~/.dircolours_solarized)" || eval "$(dircolors -b)"
 fi
-source "$DOTFILES_DIR/terminal/x/linuxterm.sh"
+if [ "$TERM" = "linux" ]; then
+  source "$DOTFILES_DIR/terminal/x/linuxterm.sh"
+fi
 
 export LC_CTYPE="en_US.UTF-8"
 # Allow sending ctrl+S to applications in terminal (prev stops scrolling).
