@@ -186,7 +186,7 @@ if [ -n "$DISPLAY" ]; then
     # Keyboard setup stuff
     capsToBS="-option caps:backspace"
     altWinSwap="-option altwin:swap_alt_win"
-    altShiftToggle="-option grp:ralt_rshift_toggle"
+    altShiftToggle="-option grp:lctrl_rctrl_switch"
     capsLed="-option grp_led:caps"
     colemak="-layout 'us, us' -variant 'colemak,'"
     setxkbmap $colemak $capsToBS $altWinSwap $altShiftToggle $capsLed
