@@ -37,14 +37,6 @@ alias lsa="ls -a"
 alias ll="ls -al"
 alias lss="ls -ls"
 
-# Keyboard setup stuff
-capsToBS="-option caps:backspace"
-altWinSwap="-option altwin:swap_alt_win"
-altShiftToggle="-option grp:alt_shift_toggle"
-capsLed="-option grp_led:caps"
-colemak="-layout 'us, us' -variant 'colemak,'"
-alias wwkb="setxkbmap $colemak $capsToBS $altWinSwap $altShiftToggle $capsLed"
-
 alias ..="cd .. && ls"
 alias ...="cd ../.."
 alias ....="cd ../../.."

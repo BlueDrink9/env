@@ -180,7 +180,14 @@ set -o noclobber
 
 if [ -n "$DISPLAY" ]; then
   if [ "$OSTYPE" = "linux-gnu" ] && [ $(command -v xorg 2>/dev/null) ]; then
-    setxkbmap -layout 'us, us' -variant 'colemak,' -option caps:backspace -option altwin:swap_alt_win -option grp:alt_shift_toggle -option grp_led:caps
+    # Keyboard setup stuff
+    capsToBS="-option caps:backspace"
+    altWinSwap="-option altwin:swap_alt_win"
+    altShiftToggle="-option grp:ralt_rshift_toggle"
+    capsLed="-option grp_led:caps"
+    colemak="-layout 'us, us' -variant 'colemak,'"
+    setxkbmap $colemak $capsToBS $altWinSwap $altShiftToggle $capsLed
+    unset colemak capsToBS altWinSwap altShiftToggle capsLed
   fi
 elif [ $(command -v loadkeys 2>/dev/null) ] && [ "$TERM" = linux ]; then
   loadkeys colemak
