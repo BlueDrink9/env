@@ -92,19 +92,17 @@ export HISTSIZE=1000
 export HISTFILESIZE=2000
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
-export HISTCONTROL=ignoredups:erasedups
+# export HISTCONTROL=ignoreboth:erasedups
 # Don't record some commands
 export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
+export HISTCONTROL=ignoredups:erasedups
+# append to the history file, don't overwrite it
+shopt -s histappend
+export PROMPT_COMMAND="bash_history_sync; ${PROMPT_COMMAND}"
 if [ ! -d "${HOME}/.logs" ] ; then
   mkdir ${HOME}/.logs
 fi
-PROMPT_COMMAND="log_command"
-# Save to history when command is executed, rather than when terminal is closed.
-# Then reread it.
-# PROMPT_COMMAND="${PROMPT_COMMAND} && history -a; history -c; history -r"
-PROMPT_COMMAND="${PROMPT_COMMAND} && _bash_history_sync"
-# append to the history file, don't overwrite it
-shopt -s histappend
+PROMPT_COMMAND="${PROMPT_COMMAND}; log_command"
 # Save multi-line commands as one command
 shopt -s cmdhist
 

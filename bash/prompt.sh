@@ -190,7 +190,7 @@ set_prompt_symbol () {
 }
 
 # Tell bash to execute this function just before displaying its prompt.
-PROMPT_COMMAND="set_bash_prompt && ${PROMPT_COMMAND}"
+PROMPT_COMMAND="set_bash_prompt; ${PROMPT_COMMAND}"
 
 # if hash tmux > /dev/null 2>&1 && tmux info > /dev/null 2>&1; then
 #   PROMPT_COMMAND=$PROMPT_COMMAND && tmux rename-window "$WINDOW_TITLE_BASH_PATH"

@@ -160,18 +160,25 @@ function_exists() {
 
 
 # https://unix.stackexchange.com/a/48116
-_bash_history_sync() {
+# Save to history when command is executed, rather than when terminal is closed.
+# Then reread it.
+bash_history_sync() {
   # Consider using just -a if you want commands to only be available to new shells,
   # so currently running shells have their commands listed more recently.
-  builtin history -a         #1
-  HISTFILESIZE=$HISTSIZE     #2
-  builtin history -c         #3
-  builtin history -r         #4
+  # builtin history -a         #1
+  # HISTFILESIZE=$HISTSIZE     #2
+  # builtin history -c         #3
+  # builtin history -r         #4
+  builtin history -n
+  builtin history -w
+  builtin history -c
+  builtin history -r
 }
-history() {                  #5
-  _bash_history_sync
-  builtin history "$@"
-}
+# return
+# history() {                  #5
+#   _bash_history_sync
+#   builtin history "$@"
+# }
 
 # Log bash output into log given by argument (or into default log).
 bash_debug_log() {
