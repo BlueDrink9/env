@@ -37,5 +37,5 @@ fi
 
 # start some nice programs
 # xterm -geometry +1+1 -n login -display :0 &
-# kitty &
-# bspwm
+bspwm
+kitty &
