@@ -364,33 +364,33 @@ ssh_with_options(){
 alias ssh="ssh_with_options"
 
 set_tmux_termoptions(){
-  for option in ${TERMOPTIONS[*]}; do
-    # If attaching to a running tmux
-    # session, we set a variable in tmux's global environment from
-    # the containing shell. (This must be done before attaching to work!)
-    # We then attach, and bash runs the refresh function.
+  if is_tmux_running; then
+    for option in ${TERMOPTIONS[*]}; do
+      # If attaching to a running tmux
+      # session, we set a variable in tmux's global environment from
+      # the containing shell. (This must be done before attaching to work!)
+      # We then attach, and bash runs the refresh function.
 
       ## Set tmux environment
-      if is_tmux_running; then
-        # Check that we're in a session
-        if [ ! -z "$TMUX" ]; then
-          for option in ${TERMOPTIONS[*]}; do
-            # Refresh termoption shell variables by parsing tmux's global environment
-            local optval="$(\tmux show-environment -g ${option} 2>/dev/null)"
-            export "${option}"="${optval##*=}"
-            unset optval
-          done
-        else
-          # Should this go after attaching tmux or before???
-          tmux setenv -g "${option}" "${!option}"
-        fi
+      # Check that we're in a session
+      if [ ! -z "$TMUX" ]; then
+        for option in ${TERMOPTIONS[*]}; do
+          # Refresh termoption shell variables by parsing tmux's global environment
+          local optval="$(\tmux show-environment -g ${option} 2>/dev/null)"
+          export "${option}"="${optval##*=}"
+          unset optval
+        done
+      else
+        # Should this go after attaching tmux or before???
+        \tmux setenv -g "${option}" "${!option}"
       fi
     done
+  fi
 }
 
 is_tmux_running(){
   # Check tmux is installed
-  if command -v tmux>/dev/null; then
+  if command -v \tmux>/dev/null; then
     # Check tmux has a session running
     if ! \tmux ls 2>&1 | grep -q "no server running"; then
       return 0 # true
