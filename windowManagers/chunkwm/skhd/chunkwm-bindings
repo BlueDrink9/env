@@ -54,7 +54,7 @@ chunkwmMode < shift + alt - k : chunkc tiling::window --warp north
 chunkwmMode < shift + alt - l : chunkc tiling::window --warp east
 
 # make floating window fill screen
-chunkwmMode < z     : chunkc tiling::window --grid-layout 1:1:0:0:1:1
+# chunkwmMode < z     : chunkc tiling::window --grid-layout 1:1:0:0:1:1
 
 # make floating window fill left-half of screen
 chunkwmMode < alt - left   : chunkc tiling::window --grid-layout 1:2:0:0:1:1
@@ -91,6 +91,7 @@ chunkwmMode < o : chunkc tiling::desktop --toggle offset
 
 # toggle window fullscreen
 chunkwmMode < cmd - f : chunkc tiling::window --toggle fullscreen
+chunkwmMode < z : chunkc tiling::window --toggle fullscreen
 
 # toggle window native fullscreen
 chunkwmMode < shift + cmd - f : chunkc tiling::window --toggle native-fullscreen
@@ -123,7 +124,8 @@ chunkwmMode < shift - b : chunkc tiling::desktop --layout bsp
 chunkwmMode < shift - t : chunkc tiling::desktop --layout monocle
 chunkwmMode < shift - f : chunkc tiling::desktop --layout float
 
-chunkwmMode < shift - d : chunkc tiling::desktop --deserialize ~/.chunkwm_layouts/dev_1
+chunkwmMode < ctrl - e : chunkc tiling::desktop --deserialize ~/.chunkwm_layouts/dev_1
+chunkwmMode < ctrl - w : chunkc tiling::desktop --serialize ~/.chunkwm_layouts/dev_1
 
 # set insertion point for focused container
 chunkwmMode < ctrl + alt - f : chunkc tiling::window --use-insertion-point cancel
