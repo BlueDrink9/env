@@ -192,10 +192,10 @@ if executable("git")
             " This seems to be causing an annoying error :/
             " autocmd CursorHold,CursorHoldI,BufEnter,FocusGained call silent! sy#start()
             " autocmd WinEnter call silent! sy#start()
-            autocmd User Fugitive SignifyRefresh
+            autocmd User Fugitive silent! SignifyRefresh
         augroup end
     endif
-    let g:signify_update_on_focusgained = 1
+    " let g:signify_update_on_focusgained = 1
     let g:signify_sign_change = '~'
 
     " Plug 'airblade/vim-gitgutter'
