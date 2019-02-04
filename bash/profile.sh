@@ -8,6 +8,26 @@ export DOTFILES_DIR=$(cd "${SCRIPT_DIR}/.." && pwd)
 
 source "${SCRIPT_DIR}/functions.sh"
 
+# test if this is an ssh shell
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+  export SESSION_TYPE=remote/ssh
+  export SSHSESSION=1
+  # many other tests omitted
+else
+  # case $(ps -o comm= -p $PPID) in
+  # case $(cat /proc/$PPID/comm) in
+  # SESSION_TYPE=remote/ssh;;
+  # esac
+  if substrInStr "darwin1" "$OSTYPE"; then
+    parent="$(ps -o ppid,comm | grep $PPID)"
+  else
+    parents="$(pstree -p | grep $PPID)"
+  fi
+  if substrInStr "sshd" "$parents"; then
+    SESSION_TYPE=remote/ssh
+  fi
+fi
+
 if [ -z "$HOMEBREW_PREFIX" ]; then
   if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
     export HOMEBREW_PREFIX="$HOME/homebrew"
@@ -20,6 +40,30 @@ if [ -z "$HOMEBREW_PREFIX" ]; then
     unset HOMEBREW_PREFIX
   fi
 fi
+
+# {[} Terminal-specific settings
+# TODO use case
+# Set defaults here for various terms
+if substrInStr "kitty" "$TERM"; then
+  COLORTERM="truecolor"
+  USENF=${USENF:-1}
+elif substrInStr "Android" "$(uname -a)";  then
+  # Termux
+  export ISTERMUX=1
+  export CLIP_PROGRAM_COPY="termux-clipboard-set"
+  export CLIP_PROGRAM_PASTE="termux-clipboard-get"
+  export HOSTNAME="$(getprop net.hostname)"
+  export HOST="${HOSTNAME}"
+  if [ -z "$SSHSESSION" ]; then
+    export NOTMUX=1
+    COLORTERM="truecolor"
+  fi
+elif substrInStr "Apple" "$TERM_PROGRAM"; then
+  COLORTERM=16
+elif substrInStr "screen" "$TERM"; then
+  unset COLORTERM
+fi
+# {]} Terminal-specific settings
 
 # brew paths. Only before load to avoid loading twice.
 if [ -n "$HOMEBREW_PREFIX" ] && ! substrInStr "$HOMEBREW_PREFIX" "${PATH%%:*}" ; then
