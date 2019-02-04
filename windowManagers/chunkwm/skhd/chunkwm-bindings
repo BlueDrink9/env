@@ -78,6 +78,12 @@ chunkwmMode < shift + alt - right : chunkc tiling::window --use-temporary-ratio 
 chunkwmMode < shift + alt - left : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge west
 chunkwmMode < shift + alt - up : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge north
 
+# Move floating windows. Uses a hack script.
+chunkwmMode < left	: ~/.config/scripts/chunk_float.sh move -x
+chunkwmMode < right	: ~/.config/scripts/chunk_float.sh move +x
+chunkwmMode < up	: ~/.config/scripts/chunk_float.sh move -y
+chunkwmMode < down	: ~/.config/scripts/chunk_float.sh move +y
+
 # chunkwmMode < cmd - j : chunkc tiling::window --focus prev
 # chunkwmMode < cmd - k : chunkc tiling::window --focus next
 

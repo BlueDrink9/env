@@ -10,6 +10,7 @@ do${installID}() {
     printErr "Enabling chunkwm & skhd config..."
     addTextIfAbsent "${installText}" "${baseRC}"
     skhd_CombineConf
+    getFloatScripts
 }
 END
 )"
@@ -24,6 +25,10 @@ skhd_CombineConf(){
         touch "${configDir}/local_config"
     fi
     cat "$($SCRIPTDIR_CMD)"/skhd/* "${configDir}/local_config" > "${baseRC}"
+}
+getFloatScripts() {
+  downloadURLtoFile https://raw.githubusercontent.com/Amar1729/dotfiles/407803a1de201dc63c57a9d4ee5bc23c09bcdb20/.config/scripts/chunk_float.sh ~/.config/scripts/chunk_float.sh
+  # downloadURLtoFile https://github.com/Amar1729/dotfiles/blob/407803a1de201dc63c57a9d4ee5bc23c09bcdb20/.config/scripts/chunk_resize_mgr.sh chunk_resize_mgr.sh
 }
 
 eval "$(cat <<END
