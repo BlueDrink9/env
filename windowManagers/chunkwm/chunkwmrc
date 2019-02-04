@@ -1,8 +1,12 @@
 #!/bin/bash
 
 chunkc tiling::rule --owner workrave --state float &
+chunkc tiling::rule --owner \"System Preferences\" --subrole AXStandardWindow --state tile
 chunkc tiling::rule --owner Finder --name Copy --state float &
+chunkc tiling::rule --owner Finder --name Move --state float &
+chunkc tiling::rule --owner Archiver --state float &
 chunkc tiling::rule --owner \"App Store\" --state float &
+# chunkc tiling::rule --owner kitty --alpha 0.9 &
 
 # NOTE: if enabled, chunkwm will monitor the specified plugin_dir
 #       and automatically reload any '.so' file that is changed.
@@ -57,11 +61,10 @@ chunkc set mouse_resize_window           \"alt shift 1\"
 
 chunkc set mouse_motion_interval         35
 
-chunkc set preselect_border_color        0xffd75f5f
-chunkc set preselect_border_width        5
-chunkc set preselect_border_radius       0
-chunkc set preselect_border_outline      0
-
+# Unload to allow reloading by sourcing. Serialise layout first!
+chunkc core::unload border.so
+chunkc core::unload tiling.so
+chunkc core::unload ffm.so
 chunkc core::load border.so
 chunkc core::load tiling.so
 chunkc core::load ffm.so
@@ -73,17 +76,24 @@ chunkc core::log_file stdout
 #       - none, debug, profile, warn, error
 chunkc core::log_level warn
 
+#
 # NOTE: specify the absolutepath to the directory to use when loading a plugin.
 # NOTE: the following are config variables for the chunkwm-border plugin.
+
+chunkc set preselect_border_color        0xffd75f5f
+chunkc set preselect_border_width        7
+chunkc set preselect_border_radius       7
+chunkc set preselect_border_outline      1
+
 #
 # NOTE: syntax for `focused_border_outline` setting
 #       0 = false, inline border
 #       1 = true, outline border
 chunkc set focused_border_color          0xff247dcc
 chunkc border::color                     0xff247dcc
-chunkc set focused_border_width          5
-chunkc set focused_border_radius         0
-chunkc set focused_border_outline        0
+chunkc set focused_border_width          7
+chunkc set focused_border_radius         7
+chunkc set focused_border_outline        1
 chunkc set focused_border_skip_floating  0
 chunkc set focused_border_skip_monocle   0
 
@@ -94,7 +104,7 @@ chunkc set ffm_standby_on_float          1
 # NOTE: these settings require chwm-sa.
 #       (https://github.com/koekeishiya/chwm-sa)
 chunkc set window_float_topmost          0
-chunkc set window_fade_inactive          0
+chunkc set window_fade_inactive          1
 chunkc set window_fade_alpha             0.85
 chunkc set window_fade_duration          0.25
 chunkc set window_use_cgs_move           0
