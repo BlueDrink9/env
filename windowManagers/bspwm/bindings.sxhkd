@@ -1,5 +1,4 @@
-#
-# wm independent hotkeys
+# vim:ft=sxhkd
 #
 
 # terminal emulator
@@ -8,6 +7,8 @@ ctrl + alt + t
 
 # program launcher
 super + @space
+	dmenu_run
+super + r
 	dmenu_run
 
 # make sxhkd reload its configuration files:
