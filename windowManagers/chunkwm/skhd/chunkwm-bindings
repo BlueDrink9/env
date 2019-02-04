@@ -36,6 +36,10 @@ alt - h : chunkc tiling::window --focus west
 alt - j : chunkc tiling::window --focus south
 alt - k : chunkc tiling::window --focus north
 alt - l : chunkc tiling::window --focus east
+chunkwmMode < alt - h : chunkc tiling::window --focus west
+chunkwmMode < alt - j : chunkc tiling::window --focus south
+chunkwmMode < alt - k : chunkc tiling::window --focus north
+chunkwmMode < alt - l : chunkc tiling::window --focus east
 
 # close focused window
 alt - x : chunkc tiling::window --close
