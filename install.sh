@@ -8,6 +8,7 @@ SCRIPTDIR_CMD='eval echo $(cd $( dirname "${BASH_SOURCE[0]}" ) && pwd)'
 SCRIPTDIR="$($SCRIPTDIR_CMD)"
 # SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export DOTFILES_DIR="$SCRIPTDIR"
+echo $DOTFILES_DIR > $XDG_CONFIG_HOME/.dotfiles_dir
 # SCRIPT COLORS are kept in this file
 source "$SCRIPTDIR/bash/functions.sh"
 source "$SCRIPTDIR/bash/script_functions.sh"
@@ -37,14 +38,15 @@ uninstall() {
       un$installer
     done
 
-        # Remove self
-        if askQuestionYN "Delete repo directory?"; then
-          rm -rf "$($SCRIPTDIR_CMD)"
-        fi
-        # Reset bash
-        exec bash
-      fi
-    }
+    rm -f $XDG_CONFIG_HOME/.dotfiles_dir
+    # Remove self
+    if askQuestionYN "Delete repo directory?"; then
+      rm -rf "$($SCRIPTDIR_CMD)"
+    fi
+    # Reset bash
+    exec bash
+  fi
+}
 
   installers=""
 
