@@ -238,6 +238,7 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Multi-lang support
 Plug 'https://github.com/sheerun/vim-polyglot'
 let g:polyglot_disabled = ['latex']
+Plug 'kovetskyi/sxhkd-vim', {'for': '.sxhkdrc' }
 " {]} ---------- Syntax----------
 
 " {[} ---------- Git ----------
