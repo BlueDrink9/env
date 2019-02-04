@@ -1,4 +1,5 @@
 #!/bin/bash
+
 chunkc tiling::rule --owner workrave --state float &
 chunkc tiling::rule --owner Finder --name Copy --state float &
 chunkc tiling::rule --owner \"App Store\" --state float &
@@ -37,7 +38,7 @@ chunkc set global_desktop_offset_gap     15
 chunkc set desktop_padding_step_size     10.0
 chunkc set desktop_gap_step_size         5.0
 
-chunkc set bsp_spawn_left                1
+chunkc set bsp_spawn_left                0
 chunkc set bsp_optimal_ratio             1.618
 chunkc set bsp_split_mode                optimal
 chunkc set bsp_split_ratio               0.5
@@ -49,8 +50,9 @@ chunkc set mouse_follows_focus           intrinsic
 chunkc set window_float_next             0
 chunkc set window_region_locked          1
 
-chunkc set mouse_move_window             \"fn 1\"
-chunkc set mouse_resize_window           \"fn 2\"
+chunkc set mouse_move_window             \"alt 1\"
+chunkc set mouse_resize_window           \"alt shift 1\"
+
 chunkc set mouse_motion_interval         35
 
 chunkc set preselect_border_color        0xffd75f5f
