@@ -48,16 +48,16 @@ uninstall() {
   fi
 }
 
-  installers=""
+installers=""
 
-  readSettings() {
-    # May be set to "uninstall" rather than defaults set here.
-    set_up="${set_up:-Set up}"
-    installStr="${installStr:-Install}"
-    # Order is designed so that things that may prompt for input
-    # within installer are done first, and within those, the ones that may
-    # take a while (eg downloading things) are last.
-    # Put $installers after to bump something to the front of the queue.
+readSettings() {
+  # May be set to "uninstall" rather than defaults set here.
+  set_up="${set_up:-Set up}"
+  installStr="${installStr:-Install}"
+  # Order is designed so that things that may prompt for input
+  # within installer are done first, and within those, the ones that may
+  # take a while (eg downloading things) are last.
+  # Put $installers after to bump something to the front of the queue.
 
     # Functions must be called "do[X]", with a corresponding "undo[X]" to uninstall.
     if [ $ALL != 1 ]; then
