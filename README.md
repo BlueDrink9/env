@@ -86,6 +86,7 @@ Not everything works in every context.
 | Use binary layout | `%<S-b>` |
 | Use floating layout | `%<S-f>` |
 | Use monocle/tabbed layout | `%<S-t>` |
+| Float next window | `%<c-f>` |
 | Focus [next,prev] desktop | `<C-A-[right,left]>` |
 | Move pane to [next,prev] desktop | `%<S-[n,p]>` |
 | Move pane to desktop [num] | `%[num]` |

@@ -116,7 +116,7 @@ chunkwmMode < alt - p : chunkc tiling::window --toggle sticky;\
           chunkc tiling::window --grid-layout 5:5:4:0:1:1
 
 # float next window to be tiled
-chunkwmMode < shift - f : chunkc set window_float_next 1
+chunkwmMode < ctrl - f : chunkc set window_float_next 1
 
 # change layout of desktop
 chunkwmMode < shift - b : chunkc tiling::desktop --layout bsp
