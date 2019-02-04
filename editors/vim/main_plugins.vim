@@ -340,11 +340,11 @@ if $USENF==1
     let g:webdevicons_enable=1
 elseif $USEPF==1
     let g:airline_powerline_fonts=1
+elseif $USEPF==0
+    let g:airline_powerline_fonts=0
 elseif $USENF==0
     let g:airline_powerline_fonts=0
     let g:webdevicons_enable=0
-elseif $USEPF==0
-    let g:airline_powerline_fonts=0
 endif
 " Check if either of these have been specifically disabled or enabled.
 if !exists('g:airline_powerline_fonts') || !exists('g:webdevicons_enable')
