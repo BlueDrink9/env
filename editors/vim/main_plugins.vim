@@ -468,6 +468,9 @@ if g:airline_powerline_fonts == 0
                 \ 'linenr', 'maxlinenr',' ', 'columnnr'])")
 else
     " Using predefined symbols
+    if !exists('g:airline_symbols')
+        let g:airline_symbols = {}
+    endif
     call add (g:pluginSettingsToExec, "let g:airline_symbols.columnnr = '∥'")
     call add (g:pluginSettingsToExec,
                 \ "call airline#parts#define_raw('columnnr', g:airline_symbols.columnnr . '%c')")
