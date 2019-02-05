@@ -6,6 +6,8 @@
 Plug 'https://github.com/tpope/vim-projectionist'
 " Autoclose brackets, etc. Aims to mimic eclipse.
 Plug 'https://github.com/Townk/vim-autoclose'
+" Autocomplete from other tmux panes' text
+Plug 'https://github.com/wellle/tmux-complete.vim'
 
 if v:version >= 703
     " visually show indentation
