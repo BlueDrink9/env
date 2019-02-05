@@ -471,6 +471,9 @@ else
     " Skip gap between col symbol and number (custom section)
     call add (g:pluginSettingsToExec, "call airline#parts#define_raw('linenr', g:airline_symbols.linenr . '%l')")
     call add (g:pluginSettingsToExec, "let g:airline_symbols.columnnr = '∥'")
+    if !exists('g:airline_symbols.columnnr')
+        let g:airline_symbols = {}
+    endif
     call add (g:pluginSettingsToExec,
                 \ "call airline#parts#define_raw('columnnr', g:airline_symbols.columnnr . '%c')")
     call add (g:pluginSettingsToExec, "let g:airline_section_z = airline#section#create([
