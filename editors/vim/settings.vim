@@ -449,7 +449,9 @@ if exists('s:iCursor')
     exec 'let &t_SI = "' . s:iCursor . '""'
     exec 'let &t_EI = "' . s:nCursor . '""'
     " exec 'let &t_VS = "' . s:vCursor . '""'
-    exec 'let &t_SR = "' . s:rCursor . '""'
+    if v:version >= 800
+        exec 'let &t_SR = "' . s:rCursor . '""'
+    endif
     augroup cursor
         au!
         " reset cursor when vim exits
