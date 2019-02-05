@@ -19,8 +19,6 @@ USENF=${USENF:-}
 USEPF=${USEPF:-}
 COLORTERM=${COLORTERM:-16}
 TERM_PROGRAM=${TERM_PROGRAM:-}
-# Will get exported to ssh servers (see functions->export_termoptions)
-export TERMOPTIONS=(USENF USEPF COLORTERM TERM_PROGRAM)
 export $TERMOPTIONS
 
 if [ -n "$TMUX" ]; then
