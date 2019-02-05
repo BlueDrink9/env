@@ -468,13 +468,19 @@ if g:airline_powerline_fonts == 0
                 \ 'linenr', 'maxlinenr',' ', 'columnnr'])")
 else
     " Using predefined symbols
-    if !exists('g:airline_symbols')
-        let g:airline_symbols = {}
-    endif
+    " This causes linenr to be blank. But without it, symbols don't exist!
+    " There's no winning some times.
+    " if !exists('g:airline_symbols')
+    "     let g:airline_symbols = {}
+    "     let g:airline_symbols.linenr = '∥'
+    " endif
     call add (g:pluginSettingsToExec, "let g:airline_symbols.columnnr = '∥'")
+    call add (g:pluginSettingsToExec, "let g:airline_symbols.maxlinenr = ''")
     call add (g:pluginSettingsToExec,
                 \ "call airline#parts#define_raw('columnnr', g:airline_symbols.columnnr . '%c')")
     call add (g:pluginSettingsToExec, "call airline#parts#define_raw('linenr', g:airline_symbols.linenr . '%l')")
+    " call add (g:pluginSettingsToExec, "call airline#parts#define_raw('maxlinenr', '/%L' . g:airline_symbols.maxlinenr)")
+    call add (g:pluginSettingsToExec, "call airline#parts#define_raw('maxlinenr', '/%L')")
     " Skip gap between col symbol and number (custom section)
     call add (g:pluginSettingsToExec, "let g:airline_section_z = airline#section#create([
                 \ 'linenr', 'maxlinenr',' ', 'columnnr'])")
