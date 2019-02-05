@@ -15,8 +15,8 @@ export XDG_CONFIG_HOME="$HOME/.config"
 
 # {[} Terminal settings
 
-USENF=${USENF:-0}
-USEPF=${USEPF:-0}
+USENF=${USENF:-}
+USEPF=${USEPF:-}
 COLORTERM=${COLORTERM:-16}
 TERM_PROGRAM=${TERM_PROGRAM:-}
 # Will get exported to ssh servers (see functions->export_termoptions)
