@@ -417,6 +417,11 @@ ssh_reset_permissions(){
   chown $USER $HOME/.ssh/*
 }
 
+ssh_keygen(){
+  read -p "What should this key be called in the comment? " name
+  ssh-keygen -t rsa -b 4096 -C "$name"
+}
+
 lastpass_login(){
   if ! lpass status > /dev/null; then
     echo "Lastpass is not logged in."
