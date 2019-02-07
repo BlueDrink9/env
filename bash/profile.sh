@@ -79,6 +79,7 @@ case $- in
   *i*)
     #{[} tmux
     # Run tmux on ssh connect
+    # Source functions before this, so tmux is defined to pull options.
     if substrInStr "256" "$TERM" ; then
       TMUX_256_arg="-2"
     else
@@ -89,7 +90,9 @@ case $- in
       # Else nothing
     fi
     if command -v tmux>/dev/null && [ -z "$NOTMUX" ]; then
-      if [[ ! $TERM =~ screen ]] && [ -z "$TMUX" ] && \
+      # Check HAVE_LOADED_BASH so that if you detach and bash gets upgraded,
+      # you don't jump straight back into tmux.
+      if [ -z "$TMUX" ] && [[ ! $TERM =~ screen ]] && \
         [ -z "$HAVE_LOADED_BASH" ]; then
         # PNAME="$(ps -o comm= $PPID)";
         # useTmuxFor="login sshd gnome-terminal init wslbridge-backe"
@@ -97,7 +100,6 @@ case $- in
         # if contains "$useTmuxFor" "$PNAME"; then
         if { [ -n "$SSHSESSION" ] || [ -z "$DISPLAY" ]; }; then
           # unset HAVE_LOADED_BASH PROFILE_LOADED
-          # echo LOADING tmux $HAVE_LOADED_BASH
           if tmux ls 2> /dev/null | grep -q -v attached; then
             $execCmd tmux $TMUX_256_arg attach -t $(tmux ls 2> /dev/null | grep -v attached | head -1 | cut -d : -f 1)
           else
