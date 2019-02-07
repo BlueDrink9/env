@@ -433,7 +433,8 @@ lastpass_login(){
 # If no key files are given as arguments, all keys in ~/.ssh are added.
 lastpass_ssh_key_add(){
   if ! command -v lpass > /dev/null; then
-    echo "lastpass-cli not installed. No keys added."
+    echo "lastpass-cli not installed."
+    ssh-add
     return
   fi
   if ! command -v ssh > /dev/null; then
