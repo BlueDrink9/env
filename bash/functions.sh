@@ -401,6 +401,7 @@ is_tmux_running(){
 
 tmux_with_options(){
   set_tmux_termoptions
+  unset PROFILE_LOADED HAVE_LOADED_BASH
   \tmux "$@"
 }
 alias tmux="tmux_with_options"
