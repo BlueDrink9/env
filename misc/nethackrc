@@ -7,7 +7,7 @@ OPTIONS=bones
 
 # appearance
 OPTIONS=color,hilite_pet,hilite_pile,lit_corridor,menucolors,DECgraphics,boulder:8,dark_room,hitpointbar,runmode:walk,standout,hilite_hidden_stairs,hilite_obj_pile,
-OPTIONS=showborn,showexp,showscore,showrace,time,!implicit_uncursed
+OPTIONS=showborn,showexp,showscore,showrace,time,!implicit_uncursed,showweight
 OPTIONS=menustyle:full,msghistory:400,msg_window:full
 OPTIONS=sortloot:loot,disclose:+i+a+v+g+c+o
 
