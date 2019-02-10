@@ -6,7 +6,9 @@ chunkc tiling::rule --owner Finder --name Copy --state float &
 chunkc tiling::rule --owner Finder --name Move --state float &
 chunkc tiling::rule --owner Archive Utility --state float &
 chunkc tiling::rule --owner \"App Store\" --state float &
-# chunkc tiling::rule --owner kitty --alpha 0.9 &
+chunkc tiling::rule --owner \"Word*\" --state tile &
+chunkc tiling::rule --owner \"Excel*\" --state tile &
+chunkc tiling::rule --owner kitty --alpha 0.9 &
 
 # NOTE: if enabled, chunkwm will monitor the specified plugin_dir
 #       and automatically reload any '.so' file that is changed.
@@ -61,17 +63,9 @@ chunkc set mouse_resize_window           \"alt shift 1\"
 
 chunkc set mouse_motion_interval         35
 
-# Unload to allow reloading by sourcing. Serialise layout first!
-chunkc core::unload border.so
-chunkc core::unload tiling.so
-chunkc core::unload ffm.so
-chunkc core::load border.so
-chunkc core::load tiling.so
-chunkc core::load ffm.so
-
 # NOTE: specify the absolutepath of the file to use for logging.
 #       'stdout' or 'stderr' can be used instead of an actual filepath.
-chunkc core::log_file stdout
+chunkc core::log_file $HOME/.logs/chunkwm.log
 # NOTE: specify the desired level of logging.
 #       - none, debug, profile, warn, error
 chunkc core::log_level warn
@@ -90,7 +84,6 @@ chunkc set preselect_border_outline      1
 #       0 = false, inline border
 #       1 = true, outline border
 chunkc set focused_border_color          0xff247dcc
-chunkc border::color                     0xff247dcc
 chunkc set focused_border_width          7
 chunkc set focused_border_radius         7
 chunkc set focused_border_outline        1
@@ -114,3 +107,11 @@ chunkc set window_use_cgs_move           0
 #
 #       e.g:
 #       chunkc tiling::rule --owner Finder --name Copy --state float &
+
+# Unload to allow reloading by sourcing. Serialise layout first!
+chunkc core::unload border.so
+chunkc core::unload tiling.so
+chunkc core::unload ffm.so
+chunkc core::load border.so
+chunkc core::load tiling.so
+chunkc core::load ffm.so
