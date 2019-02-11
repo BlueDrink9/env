@@ -31,6 +31,8 @@ if !exists('g:skipPipInstall') && has('nvim')
 endif
 
 " {[} ---------- Misc ----------
+" ga on char shows all representations, not just dec oct hex.
+Plug 'https://github.com/tpope/vim-characterize'
 Plug 'https://github.com/metalelf0/supertab' " Fork with a failing feature removed
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabLongestEnhanced = 1
@@ -176,6 +178,8 @@ if executable("git")
     endif
     " github wrapper
     Plug 'https://github.com/tpope/vim-rhubarb'
+    " Commit browser. :GV
+    Plug 'junegunn/gv.vim'
     Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
 
     " VCS changes shown in sign column.

@@ -11,4 +11,11 @@ endif
 " let &runtimepath+=expand($VIMHOME . "/autoload")
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath=&runtimepath
+
+" let g:loaded_python_provider = 1
+" let g:python_host_skip_check=1
+" let g:python_host_prog = system('which python')
+" let g:python3_host_skip_check=1
+" let g:python3_host_prog = system('which python3')
+
 source ~/.vimrc
