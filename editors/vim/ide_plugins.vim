@@ -257,6 +257,7 @@ endif
 " {]} ---------- Git----------
 
 " {[} ---------- IDE ----------
+Plug 'https://github.com/janko/vim-test'
 Plug 'https://github.com/mh21/errormarker.vim'
 let &errorformat="%f:%l:%c: %t%*[^:]:%m,%f:%l: %t%*[^:]:%m," . &errorformat
 let errormarker_disablemappings = 1

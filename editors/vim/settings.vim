@@ -24,7 +24,8 @@ filetype plugin indent on
 syntax on
 augroup my_syntax
     autocmd!
-    autocmd BufWinEnter,Syntax * syn sync minlines=100
+    " :h syn-sync. Complicated stuff, can't figure it out really.
+    autocmd BufWinEnter,Syntax * syn sync minlines=100 | syn sync maxlines=200
 augroup END
 
 let s:defaultBGGUI="light"
