@@ -2,6 +2,7 @@
 " vim: foldmarker={[},{]}
 
 " {[} ---------- Misc ----------
+exec "Plug 'rhysd/vim-grammarous', { 'for': " . g:proseFileTypes . " }"
 " Brilliant for projects with lots of similar files. Check out config
 Plug 'https://github.com/tpope/vim-projectionist'
 " Autoclose brackets, etc. Aims to mimic eclipse.
@@ -74,6 +75,9 @@ if has("timers")
                 \ 'branch': 'next',
                 \ 'do': 'bash install.sh',
                 \ }
+    " let g:LanguageClient_serverCommands = {
+    " \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    " \ }
     if has("python3")
         if has("nvim")
             Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
