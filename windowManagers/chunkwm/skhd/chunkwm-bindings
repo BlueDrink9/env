@@ -24,13 +24,6 @@ chunkwmMode < alt - w ; default
 chunkwmMode < escape ; default
 chunkwmMode < return ; default
 
-# create desktop, move window and follow focus
-shift + cmd - n : chunkc tiling::desktop --create;\
-                  ids=$(chunkc tiling::query --desktops-for-monitor $(chunkc tiling::query --monitor-for-desktop $(chunkc tiling::query --desktop id)));\
-                  chunkc tiling::window --send-to-desktop $(echo ${ids##* });\
-                  chunkc tiling::desktop --focus $(echo ${ids##* })
-
-
 # focus window
 alt - h : chunkc tiling::window --focus west
 alt - j : chunkc tiling::window --focus south
