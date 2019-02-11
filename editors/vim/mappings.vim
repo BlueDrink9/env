@@ -251,3 +251,12 @@ cabbrev ide let g:ideMode=1 <bar> so $MYVIMRC
 " Toggle/create folds with backspace.
 nnoremap <backspace> za
 vnoremap <backspace> zf
+
+" Autoexpand brackets when creating functions etc.
+inoremap (<CR> (<CR>)<Esc>O
+inoremap {<CR> {<CR>}<Esc>O
+inoremap {; {<CR>};<Esc>O
+inoremap {, {<CR>},<Esc>O
+inoremap [<CR> [<CR>]<Esc>O
+inoremap [; [<CR>];<Esc>O
+inoremap [, [<CR>],<Esc>O

@@ -6,7 +6,7 @@
 " Brilliant for projects with lots of similar files. Check out config
 Plug 'https://github.com/tpope/vim-projectionist'
 " Autoclose brackets, etc. Aims to mimic eclipse.
-Plug 'https://github.com/Townk/vim-autoclose'
+" Plug 'https://github.com/Townk/vim-autoclose'
 " Autocomplete from other tmux panes' text
 Plug 'https://github.com/wellle/tmux-complete.vim'
 
@@ -30,6 +30,10 @@ if has("timers")
     Plug 'https://github.com/w0rp/ale'
     let g:ale_sign_error = 'X'
     let g:ale_sign_warning = '!'
+    let g:ale_max_signs = 50
+    let g:ale_echo_delay = 50
+    " Downside is having to restart vim if you install a new linter.
+    g:ale_cache_executable_check_failures = 1
     " let g:ale_open_list=1 " Auto-open error lsit
     call add(g:pluginSettingsToExec, 'nmap <silent> ]e <Plug>(ale_next_wrap)')
     call add(g:pluginSettingsToExec, 'nmap <silent> [e <Plug>(ale_previous_wrap)')
@@ -154,8 +158,11 @@ let g:jedi#rename_command = "gpr"
 " {[} ---------- Tags ----------
 Plug 'xolox/vim-misc'
 if executable('ctags-exuberant') || executable('ctags')
-    Plug 'xolox/vim-easytags'
-    let g:easytags_async=1
+    if has("python3") && has("nvim")
+        Plug 'c0r73x/neotags.nvim'
+    else
+        Plug 'ludovicchabant/vim-gutentags'
+    endif
     Plug 'majutsushi/tagbar'
     " Shows the current function in statusline
     let g:airline#extensions#tagbar#enabled = 1
