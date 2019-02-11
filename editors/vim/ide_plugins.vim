@@ -2,7 +2,7 @@
 " vim: foldmarker={[},{]}
 
 " {[} ---------- Misc ----------
-exec "Plug 'rhysd/vim-grammarous', { 'for': " . g:proseFileTypes . " }"
+" exec "Plug 'rhysd/vim-grammarous', { 'for': " . g:proseFileTypes . " }"
 " Brilliant for projects with lots of similar files. Check out config
 Plug 'https://github.com/tpope/vim-projectionist'
 " Autoclose brackets, etc. Aims to mimic eclipse.
