@@ -161,6 +161,9 @@ if executable('ctags-exuberant') || executable('ctags')
     if has("python3") && has("nvim")
         Plug 'c0r73x/neotags.nvim'
     else
+        " Async (7.4+), only vimL...
+        " Plug 'LucHermitte/lh-vim-lib'
+        " Plug 'https://github.com/LucHermitte/lh-tags/'
         Plug 'ludovicchabant/vim-gutentags'
     endif
     Plug 'majutsushi/tagbar'
