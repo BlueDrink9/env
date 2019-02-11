@@ -37,9 +37,11 @@
   rebase = true
 [rebase]
   autoStash = true
+# Gives diffs in commit message
+[commit]
+  verbose = true
 
 # diffs for word files use pandoc
 [diff "pandoc"]
   textconv=pandoc --to=markdown
   prompt = false
-
