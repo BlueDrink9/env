@@ -93,7 +93,7 @@ readSettings() {
 
         if [ "$ALL" == 1 ] || askQuestionYN "$installStr window manager?" ; then
           if [ "$OSTYPE" == "linux-gnu" ]; then
-            installers="$installers doi3"
+            installers="$installers doBspwm"
           elif [[ $OSTYPE =~ 'darwin' ]]; then
             installers="$installers doChunkwm"
           fi
