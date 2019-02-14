@@ -71,28 +71,36 @@ Not everything works in every context.
 | `!`Contract/expand pane in other direction (if permitted) | `*%<S-C-[up,down,left,right]>` |
 | `!`Swap pane with next container | `%<S-[hjkl]>` |
 | `!`Push pane into next container | `%<S-#-[hjkl]>` |
-| `!`Zoom/fullscreen pane | `%z` |
+| `!`Zoom/fullscreen pane | `%f` |
+| `!`Minimize/pause/hide | `%z` |
 | `!`Rotate tree | `r` |
 | Close pane (not vim) | `!x`/`#x` |
 
 | Windowm manager only Action |Binding |
 |--------|--------|
-| Float pane | `%f` |
+| Float pane | `%h` |
 | Open browser | `#b` |
 | Open file explorer | `#e` |
 | Open terminal | `<C-A-t>` and `<#-return>`|
-| Float next pane created | `%<C-f>` |
-| Pin/make sticky | `%p` |
-| Use binary layout | `%<S-b>` |
-| Use floating layout | `%<S-f>` |
-| Use monocle/tabbed layout | `%<S-t>` |
-| Float next window | `%<c-f>` |
+| Float next pane created | `%<C-h>` |
+| Pin pane | `%p` |
+| Use tiling layout | `%<S-t>` |
+| Use floating layout | `%<S-h>` |
+| Use monocle/tabbed layout | `%<S-m>` |
+| Float next window | `%<c-h>` |
 | Focus [next,prev] desktop | `<C-A-[right,left]>` |
 | Move pane to [next,prev] desktop | `%<S-[n,p]>` |
 | Move pane to desktop [num] | `%[num]` |
 | jump to desktop [num] | `<#-[num]>` |
 
 <sup>1</sup> Vim and tmux share `ctrl` as the modifier here. Tmux also allows this after prefix, just in case the vim plugin isn't working.
+
+#### Window manager terms/abbreviations used for keys:
+
+* One window fullscreen (ie i3's 'tabbed' mode): Monacle (m)
+* Tiling/binary layout: Tiling (t)
+* Floating: Hovered (h)
+* Pin/make sticky/keep on top: Pin (p)
 
 
 ## Possible points of interest to others
