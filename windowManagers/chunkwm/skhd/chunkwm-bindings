@@ -37,6 +37,8 @@ chunkwmMode < alt - l : chunkc tiling::window --focus east
 # close focused window
 alt - x : chunkc tiling::window --close
 chunkwmMode < x : chunkc tiling::window --close
+# Minimize
+alt - m : osascript -e 'tell application "System Events" to keystroke "m" using {command down}'
 
 # swap window
 chunkwmMode < shift - h : chunkc tiling::window --swap west
