@@ -233,7 +233,7 @@ if has('python')
     let g:SimpylFold_docstring_preview = 1
 endif
 " {]} ------ Python ------
-" {]} ------ C ------
+" {[} ------ C ------
 Plug 'octol/vim-cpp-enhanced-highlight'
 let g:cpp_class_decl_highlight = 1
 let g:cpp_member_variable_highlight = 1
@@ -255,6 +255,9 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'https://github.com/sheerun/vim-polyglot'
 let g:polyglot_disabled = ['latex']
 Plug 'kovetskiy/sxhkd-vim', {'for': 'sxhkd' }
+" Syntax highlight ranges with a different filetype to the rest of the doc.
+Plug 'https://github.com/inkarkat/vim-ingo-library'
+Plug 'https://github.com/inkarkat/vim-SyntaxRange'
 " {]} ---------- Syntax----------
 
 " {[} ---------- Git ----------
