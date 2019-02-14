@@ -251,6 +251,9 @@ exec "Plug 'junegunn/limelight.vim', { 'for': " . g:proseFileTypes . " }"
 function! SetProseOptions()
     " Add dictionary completion. Requires setting 'dictionary' option.
     setlocal complete+=k
+    " Is this actually running these functions though?
+    " call AutoCorrect()
+    " call textobj#sentence#init()
     call add (g:pluginSettingsToExec, "call AutoCorrect()")
     call add (g:pluginSettingsToExec, "call textobj#sentence#init()")
     " Default spelling lang is En, I want en_nz.
@@ -258,7 +261,7 @@ function! SetProseOptions()
         " Custom lang not set.
         setl spell spl=en_nz
     endif
-    call add (g:pluginSettingsToExec, "call pencil#init()")
+    call pencil#init()
     setl ai
 endfunction
 

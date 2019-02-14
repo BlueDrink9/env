@@ -198,7 +198,7 @@ function! SetProseOptions()
         " Custom lang not set.
         setl spell spl=en_nz
     endif
-    call add (g:pluginSettingsToExec, "call pencil#init()")
+    call pencil#init()
     setl ai
 endfunction
 
