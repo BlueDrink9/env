@@ -6,14 +6,17 @@ skhd_CombineConf(){
   combinedRC="$configDir/combined.skhdrc"
   baseRCDir="$HOME"
 
-  baseRC="${baseRCDir}/${baseRC}"
+  baseRC="${baseRCDir}/${baseRCName}"
   mkdir -p "$configDir"
   cat "$DOTFILES_DIR/windowManagers/chunkwm"/skhd/* "$baseRC" >| "${combinedRC}"
   unset baseRC backup baseRCName baseRCDir configDir localRC
 }
-export DOTFILES_DIR="$(cat $XDG_CONFIG_HOME/.dotfiles_dir)" && skhd_CombineConf && \
-if ! pgrep skhd; then skhd -c "$XDG_CONFIG_HOME/skhd/combined.skhdrc" > \
-  $HOME/.logs/skhd.log 2> $HOME/.logs/skhd.err &; fi
+export DOTFILES_DIR="$(cat $XDG_CONFIG_HOME/.dotfiles_dir)"
+skhd_CombineConf
+if ! pgrep skhd; then
+  skhd -c "$XDG_CONFIG_HOME/skhd/combined.skhdrc" > \
+    $HOME/.logs/skhd.log 2> $HOME/.logs/skhd.err &
+    fi
 
 chunkc tiling::rule --owner workrave --state float &
 chunkc tiling::rule --owner \"System Preferences\" --subrole AXStandardWindow --state tile
