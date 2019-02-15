@@ -354,7 +354,9 @@ elseif $USENF==0
     let g:webdevicons_enable=0
 endif
 " Check if either of these have been specifically disabled or enabled.
-if !exists('g:airline_powerline_fonts') || !exists('g:webdevicons_enable')
+" airline_powerline gets set by default.
+if !exists('g:webdevicons_enable')
+" if !exists('g:airline_powerline_fonts') || !exists('g:webdevicons_enable')
     " Automatically check for powerline compatible font installed locally
     " (unix) or to system (windows)
     " If we are (probably) using a powerline compatible font, set it so.
@@ -425,13 +427,15 @@ if !exists('g:airline_powerline_fonts') || !exists('g:webdevicons_enable')
         let s:useNerdFont = s:nerdFontExists
     endif
 
-    if !exists('g:airline_powerline_fonts')
-        if s:usePLFont
-            let g:airline_powerline_fonts = 1
-        else
-            let g:airline_powerline_fonts = 0
-        endif
+    let s:usePLFont = s:useNerdFont || s:usePLFont
+    " Exists by default :/
+    " if !exists('g:airline_powerline_fonts')
+    if s:usePLFont
+        let g:airline_powerline_fonts = 1
+    else
+        let g:airline_powerline_fonts = 0
     endif
+    " endif
 
     if s:useNerdFont == 0
         if !exists('g:webdevicons_enable')
