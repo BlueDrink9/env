@@ -152,6 +152,8 @@ chunkwmMode < 6 : chunkc tiling::window --send-to-desktop 6
 
 # fast focus desktop. Requires extra hack.
 chunkwmMode < cmd + alt - x : chunkc tiling::desktop --focus $(chunkc get _last_active_desktop)
+alt - [  : chunkc tiling::desktop --focus prev
+alt - ]  : chunkc tiling::desktop --focus next
 chunkwmMode < shift - n : chunkc tiling::desktop --focus next
 chunkwmMode < shift - p : chunkc tiling::desktop --focus prev
 chunkwmMode < cmd + alt - 1 : chunkc tiling::desktop --focus 1
@@ -176,8 +178,8 @@ chunkwmMode < shift + cmd - 6 : chunkc tiling::window --send-to-desktop 6; chunk
 # shift + cmd - 7 : chunkc tiling::window --send-to-desktop 7; chunkc tiling::desktop --focus 7
 
 # focus monitor
-chunkwmMode < ctrl + alt - z  : chunkc tiling::monitor -f prev
-chunkwmMode < ctrl + alt - c  : chunkc tiling::monitor -f next
+ctrl + alt - [  : chunkc tiling::monitor -f prev
+ctrl + alt - ]  : chunkc tiling::monitor -f next
 chunkwmMode < ctrl + alt - 1  : chunkc tiling::monitor -f 1
 chunkwmMode < ctrl + alt - 2  : chunkc tiling::monitor -f 2
 chunkwmMode < ctrl + alt - 3  : chunkc tiling::monitor -f 3
