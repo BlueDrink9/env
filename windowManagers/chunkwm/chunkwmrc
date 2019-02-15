@@ -12,7 +12,8 @@ skhd_CombineConf(){
   unset baseRC backup baseRCName baseRCDir configDir localRC
 }
 export DOTFILES_DIR="$(cat $XDG_CONFIG_HOME/.dotfiles_dir)" && skhd_CombineConf && \
-skhd -c "$XDG_CONFIG_HOME/skhd/combined.skhdrc" > $HOME/.logs/skhd.log 2> $HOME/.logs/skhd.err &
+if ! pgrep skhd; then skhd -c "$XDG_CONFIG_HOME/skhd/combined.skhdrc" > \
+  $HOME/.logs/skhd.log 2> $HOME/.logs/skhd.err &; fi
 
 chunkc tiling::rule --owner workrave --state float &
 chunkc tiling::rule --owner \"System Preferences\" --subrole AXStandardWindow --state tile
