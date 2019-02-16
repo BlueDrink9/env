@@ -1,9 +1,15 @@
-# vim:ft=sxhkd
+# vim:ft=sxhkdrc
 #
 
 # terminal emulator
 ctrl + alt + t
 	kitty
+
+ctrl + alt + b
+	google-chrome-stable
+
+ctrl + alt + e
+	dolphin
 
 # program launcher
 super + @space
@@ -44,8 +50,8 @@ super + g
 #
 
 # set the window state
-super + {t,shift + t,h,f}
-	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+super + w; {t,h,f,shift + t}
+	bspc node -t {tiled,floating,fullscreen,pseudo_tiled}
 
 # set the node flags
 super + ctrl + {m,x,y,z}
@@ -72,6 +78,8 @@ super + bracket{left,right}
 	bspc desktop -f {prev,next}.local
 ctrl + alt + {Left,Right}
 	bspc desktop -f {prev,next}.local
+super + bracket{left,right}
+	bspc node -d {prev,next}
 
 # focus the last node/desktop
 super + {grave,Tab}
@@ -86,6 +94,9 @@ super + {o,i}
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
+
+super + n
+    bspc monitor --add-desktops D
 
 #
 # preselect
