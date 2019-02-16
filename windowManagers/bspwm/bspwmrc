@@ -1,13 +1,17 @@
 #! /bin/sh
 
 export DOTFILES_DIR="$(cat $HOME/.config/.dotfiles_dir)" && \
-pgrep sxhkd || sxhkd -c "$HOME/.config/sxhkd/sxhkdrc" "$DOTFILES_DIR"/windowManagers/bspwm/*.sxhkd &
+pgrep sxhkd || sxhkd -m -1 -c "$HOME/.config/sxhkd/sxhkdrc" "$DOTFILES_DIR"/windowManagers/bspwm/*.sxhkd &
 
 #  if [[ $(hostname) == 'myhost' ]]; then
 # bspc monitor -d I II III IV V VI VII VIII IX X
-bspc monitor -d I II III IV
+bspc monitor -d I
 
-bspc config border_width         2
+bspc_desktop(){
+  i=2
+  bspc monitor --add-desktops $i
+}
+
 gap=10
 
 #This creates negative padding eaual to window gap so that gaps are shown only between windows and not on desktop edges.
@@ -28,12 +32,13 @@ bspc config gapless_monocle     false #Default setup uses negative padding, and 
 # bspc config apply_floating_atom    true
 # bspc config history_aware_focus    true
 
+bspc config border_width         7
 bspc config normal_border_color "#332d29"
 bspc config active_border_color "#817267"
 bspc config focused_border_color "#504339"
-# bspc config presel_border_color "#9a875f"
-# bspc config urgent_border_color "#9f7155"
-# bspc config focused_locked_border_color "#9a875f"
+bspc config presel_border_color "#9a875f"
+bspc config urgent_border_color "#9f7155"
+bspc config focused_locked_border_color "#9a875f"
 # bspc config normal_frame_opacity 0.0
 # bspc config focused_frame_opacity 0.1
 
