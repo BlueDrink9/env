@@ -50,8 +50,8 @@ super + g
 #
 
 # set the window state
-super + w; {t,h,f,shift + t}
-	bspc node -t {tiled,floating,fullscreen,pseudo_tiled}
+super + {t,shift + t,s,f}
+	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
 super + ctrl + {m,x,y,z}
