@@ -177,7 +177,9 @@ if executable("git")
                     \endif")
     endif
     " github wrapper
-    Plug 'https://github.com/tpope/vim-rhubarb'
+    if v:version > 701
+        Plug 'https://github.com/tpope/vim-rhubarb'
+    endif
     " Commit browser. :GV
     Plug 'junegunn/gv.vim'
     Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
