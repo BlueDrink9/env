@@ -33,7 +33,7 @@ if has("timers")
     let g:ale_max_signs = 50
     let g:ale_echo_delay = 50
     " Downside is having to restart vim if you install a new linter.
-    g:ale_cache_executable_check_failures = 1
+    let g:ale_cache_executable_check_failures = 1
     " let g:ale_open_list=1 " Auto-open error lsit
     call add(g:pluginSettingsToExec, 'nmap <silent> ]e <Plug>(ale_next_wrap)')
     call add(g:pluginSettingsToExec, 'nmap <silent> [e <Plug>(ale_previous_wrap)')
