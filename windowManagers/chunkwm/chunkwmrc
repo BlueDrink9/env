@@ -16,7 +16,7 @@ skhd_CombineConf
 if ! pgrep skhd; then
   skhd -c "$XDG_CONFIG_HOME/skhd/combined.skhdrc" > \
     $HOME/.logs/skhd.log 2> $HOME/.logs/skhd.err &
-    fi
+fi
 
 chunkc tiling::rule --owner workrave --state float &
 chunkc tiling::rule --owner \"System Preferences\" --subrole AXStandardWindow --state tile
