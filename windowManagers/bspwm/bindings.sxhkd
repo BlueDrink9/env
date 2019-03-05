@@ -11,6 +11,9 @@ ctrl + alt + b
 ctrl + alt + e
 	dolphin
 
+super + v
+    gvim
+
 # program launcher
 super + @space
 	dmenu_run
