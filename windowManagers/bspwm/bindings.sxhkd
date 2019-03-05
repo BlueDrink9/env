@@ -72,6 +72,8 @@ super + w: shift + {t,ctrl + t,h,m}
 # set the node flags
 super + ctrl + {m,x,y,z}
 	bspc node -g {marked,locked,sticky,private}
+super + w: p
+	bspc node -g sticky
 
 #----------------------------------------
 # focus/swap
