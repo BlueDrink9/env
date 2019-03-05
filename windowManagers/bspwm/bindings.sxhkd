@@ -1,4 +1,4 @@
-# vim:ft=sxhkdrc
+# vim:ft=sxhkd
 #
 
 # terminal emulator
@@ -27,6 +27,16 @@ super + w; super + c
 #
 # bspwm hotkeys
 #
+
+# Mouse bindings
+~button1
+    bspc pointer -g focus
+super + button{1-3}
+    bspc pointer -g {move,resize_side,resize_corner}
+# super + !button{1-3}
+#     bspc pointer -t %i %i
+# super + @button{1-3}
+#     bspc pointer -u
 
 # quit bspwm normally
 super + alt + Escape
@@ -84,11 +94,12 @@ super + {_,shift + }tab
   node -f {next,prev}.local
 
 # focus the next/previous desktop in the current monitor
-super + bracket{left,right}
+# Destroys the old one if it is empty first.
+# See https://blog.codezen.org/2015/03/13/on-bspwm-tweaking/ #Named Desktops to see how to create if no new one found.
+{super + bracket{left,right},ctrl + alt + {Left,Right},
+  bspc desktop focused -r
 	bspc desktop -f {prev,next}.local
-ctrl + alt + {Left,Right}
-	bspc desktop -f {prev,next}.local
-super + bracket{left,right}
+super + shift + bracket{left,right}
 	bspc node -d {prev,next}
 
 # focus the last node/desktop
@@ -144,3 +155,22 @@ super + w: ctrl + shift + {Left,Down,Up,Right}
 # move a floating window
 super + w; {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+# Pseudo-minimize (to desktop "O")
+super + z
+  D=$(bspc query –desktops –desktop focused); 
+  W=$(bspc query –windows –window focused); 
+  bspc query –desktops | grep -q “‘$D” || bspc monitor –add-desktops '$D; 
+  bspc window $W --to-desktop \'$D
+
+# Restore all minimized windows from this desktop
+super + shift + z
+  D=$(bspc query –desktops –desktop focused); 
+  if bspc query –desktops | grep -q “‘$D”; then 
+    for i in $(bspc query –windows –desktop '$D); do 
+      bspc window $i –to-desktop $D; 
+      bspc window $i –focus; 
+      bspc window –swap biggest; 
+    done; 
+    bspc desktop '$D –remove; 
+  fi
