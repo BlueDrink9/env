@@ -1,21 +1,7 @@
 #!/bin/bash
 XDG_CONFIG_HOME="$HOME/.config"
-skhd_CombineConf(){
-  configDir="$XDG_CONFIG_HOME/skhd"
-  baseRCName=".skhdrc"
-  combinedRC="$configDir/combined.skhdrc"
-  baseRCDir="$HOME"
-
-  baseRC="${baseRCDir}/${baseRCName}"
-  mkdir -p "$configDir"
-  cat "$DOTFILES_DIR/windowManagers/chunkwm"/skhd/* "$baseRC" >| "${combinedRC}"
-  unset baseRC backup baseRCName baseRCDir configDir localRC
-}
-export DOTFILES_DIR="$(cat $XDG_CONFIG_HOME/.dotfiles_dir)"
-skhd_CombineConf
 if ! pgrep skhd; then
-  skhd -c "$XDG_CONFIG_HOME/skhd/combined.skhdrc" > \
-    $HOME/.logs/skhd.log 2> $HOME/.logs/skhd.err &
+  skhd > $HOME/.logs/skhd.log 2> $HOME/.logs/skhd.err &
 fi
 
 chunkc tiling::rule --owner workrave --state float &

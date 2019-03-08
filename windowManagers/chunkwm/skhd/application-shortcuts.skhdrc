@@ -1,0 +1,7 @@
+# vim:ft=sh
+
+ctrl + cmd - t : $HOME/Applications/kitty.app/Contents/MacOS/kitty --single-instance || /Applications/kitty.app/Contents/MacOS/kitty --single-instance
+alt - return : $HOME/Applications/kitty.app/Contents/MacOS/kitty --single-instance || /Applications/kitty.app/Contents/MacOS/kitty --single-instance
+ctrl + cmd - t : $HOME/Applications/kitty.app/Contents/MacOS/kitty --single-instance || /Applications/kitty.app/Contents/MacOS/kitty --single-instance
+alt - b : $HOME/Applications/Google Chrome.app || /Applications/Google Chrome.app
+alt - e : open -n $HOME
