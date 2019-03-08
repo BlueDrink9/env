@@ -2,7 +2,8 @@
 source "$DOTFILES_DIR/bash/script_functions.sh"
 installID="Chunkwm"
 configDir="${HOME}"
-installText="chunkc core::plugin_dir $HOMEBREW_PREFIX/opt/chunkwm/share/chunkwm/plugins; source \"$($SCRIPTDIR_CMD)/chunkwmrc\""
+# installText="chunkc core::plugin_dir $HOMEBREW_PREFIX/opt/chunkwm/share/chunkwm/plugins; source \"$($SCRIPTDIR_CMD)/chunkwmrc\""
+installText="chunkc core::plugin_dir $(dirname $(which chunkwm))/../share/chunkwm/plugins; source \"$($SCRIPTDIR_CMD)/chunkwmrc\""
 baseRC="${configDir}/.chunkwmrc"
 
 eval "$(cat <<END
