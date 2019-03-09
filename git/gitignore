@@ -1,5 +1,7 @@
 # vim: ft=cfg
 
+latexbuild/
+
 # Ignore tags created by etags, ctags, gtags (GNU global) and cscope
 TAGS
 .TAGS
