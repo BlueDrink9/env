@@ -313,7 +313,7 @@ set foldopen+=",insert"
 
 function! s:SetSpellFile()
   let b:spellfilename=PathExpand(expand('%:p:h') . '/custom-spellings-vim.'
-        \ . &spelllang . '.' . &encoding . '.add')
+        \ . &encoding . '.add')
   " Check if directory is writable. Can't check b:spellfilename directly on
   " windows because of backslashs.
   if filewritable(expand("%:p:h"))
