@@ -33,6 +33,8 @@ cscope.po.outags
 [._]*.sw[a-p]
 [._]s[a-v][a-z]
 [._]sw[a-p]
+# Spellfile binary
+*.spl
 
 # Session
 Session.vim
