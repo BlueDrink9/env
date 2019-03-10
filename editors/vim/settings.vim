@@ -310,16 +310,32 @@ set foldopen+=",insert"
 "     au BufReadPre * setlocal foldmethod=indent
 "     au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
 " augroup END
+
+function! s:SetSpellFile()
+  let b:spellfilename=PathExpand(expand('%:p:h') . '/custom-spellings-vim.'
+        \ . &spelllang . '.' . &encoding . '.add')
+  " Check if directory is writable. Can't check b:spellfilename directly on
+  " windows because of backslashs.
+  if filewritable(expand("%:p:h"))
+    let &l:spellfile=b:spellfilename
+  else
+    setl spf=
+  endif
+endfunction
+" set spellfile=$HOME/.vim-spell-en.utf-8.add
+augroup spellfile
+  au!
+  au BufEnter * call s:SetSpellFile()
+augroup end
 "Uses dictionary and source files to find matching words to complete.
 "See help completion for source,
 "Note: usual completion is on <C-n> but more trouble to press all the time.
 "Never type the same word twice and maybe learn a new spellings!
 "Use the Linux dictionary when spelling is in doubt.
 "Window users can copy the file to their machine.
-if has("unix")
-    set dictionary="/usr/dict/words"
+if has("unix") && !exists('&dictionary')
+  set dictionary="/usr/dict/words"
 endif
-
 
 " No annoying sound on errors
 set noerrorbells
@@ -394,8 +410,6 @@ augroup scratch
     " would have done this anyway)
     autocmd BufWrite * if &filetype == "scratch" | filetype detect | endif
 augroup END
-" set spellfile=$HOME/.vim-spell-en.utf-8.add
-exec 'let &spellfile=expand("' . s:scriptpath . '/spellfile-en.utf-8.add")'
 
 function! s:ReadTemplate()
     filetype detect
