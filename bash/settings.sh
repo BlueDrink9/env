@@ -144,11 +144,11 @@ if [ -n "$DISPLAY" ]; then
     # Keyboard setup stuff
     capsToBS="-option caps:backspace"
     altWinSwap="-option altwin:swap_alt_win"
-    altShiftToggle="-option grp:rctrl_rshift_toggle"
+    winSpaceToggle="-option grp:win_space_toggle"
     capsLed="-option grp_led:caps"
     colemak="-layout 'us, us' -variant 'colemak,'"
-    setxkbmap $colemak $capsToBS $altWinSwap $altShiftToggle $capsLed
-    unset colemak capsToBS altWinSwap altShiftToggle capsLed
+    setxkbmap $colemak $capsToBS $altWinSwap $winSpaceToggle $capsLed
+    unset colemak capsToBS altWinSwap winSpaceToggle capsLed
   fi
 elif [ $(command -v loadkeys 2>/dev/null) ] && [ "$TERM" = linux ]; then
   loadkeys colemak
