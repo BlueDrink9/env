@@ -42,7 +42,7 @@ bspc config swallow_first_click
 bspc config pointer_follows_focus
 bspc config pointer_follows_monito
 
-bspc config border_width         7
+bspc config border_width         5
 # Unfocussed window
 # bspc config normal_border_color "#332d29"
 bspc config normal_border_color "#2101ad"
