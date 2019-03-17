@@ -45,45 +45,60 @@ super + g
 # state/flags
 #----------------------------------------
 
+# super + g
+#   bspc config focused_border_color "#ffbc00"; sleep 1; \
+#     bspc config focused_border_color "#00bcff"
+# # super + w: super + w
+# Define the mode. Mode actually sends a key combo we will never otherwise use!
+# super + w
+#   bspc config focused_border_color "#00bc00"; xdotool key super shift Insert
+super + w
+  bspc config focused_border_color "#00bc00"; xdotool key Insert
 
-# alternate between the tiled and monocle layout
-super + shift + m
-	bspc desktop -l next
-# Toggle floating mode for current window
-super + w: u
-	bspc node -t '~floating'
+Insert: super + g
+  bspc config focused_border_color "#247dcc"; xdotool key Escape
 
-# set the window state
-super + w: shift + {t,ctrl + t,u,m}
-	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+super + shift + Insert: super + g
+  bspc config focused_border_color "#247dcc"; xdotool key Escape
 
-# set the node flags
-super + ctrl + {m,x,y,z}
-	bspc node -g {marked,locked,sticky,private}
-super + w: p
-	bspc node -g sticky
+# # alternate between the tiled and monocle layout
+# super + shift + m
+# 	bspc desktop -l next
+# # Toggle floating mode for current window
+# super + shift + Insert: u
+# 	bspc node -t '~floating'
 
-# make sxhkd reload its configuration files:
-super + w; super + c
-	pkill -USR1 -x sxhkd
-  # killall sxhkd && sxhkd -m -1 -c "$HOME/.config/sxhkd/sxhkdrc" "$DOTFILES_DIR"/windowManagers/bspwm/*.sxhkd &
+# # set the window state
+# super + shift + Insert: shift + {t,ctrl + t,u,m}
+# 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
-#
-# move/resize
-#
+# # set the node flags
+# super + ctrl + {m,x,y,z}
+# 	bspc node -g {marked,locked,sticky,private}
+# super + shift + Insert: p
+# 	bspc node -g sticky
 
-# expand a window by moving one of its side outward
-# Semicolon makes this a prefix, colon makes it a mode (leave with esc).
-super + w: shift + {Left,Down,Up,Right}
-	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+# # make sxhkd reload its configuration files:
+# super + shift + Insert; super + c
+# 	pkill -USR1 -x sxhkd
+#   # killall sxhkd && sxhkd -m -1 -c "$HOME/.config/sxhkd/sxhkdrc" "$DOTFILES_DIR"/windowManagers/bspwm/*.sxhkd &
 
-# contract a window by moving one of its side inward
-super + w: ctrl + shift + {Left,Down,Up,Right}
-	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+# #
+# # move/resize
+# #
 
-# move a floating window
-super + w; {Left,Down,Up,Right}
-	bspc node -v {-20 0,0 20,0 -20,20 0}
+# # expand a window by moving one of its side outward
+# # Semicolon makes this a prefix, colon makes it a mode (leave with esc).
+# super + shift + Insert: shift + {Left,Down,Up,Right}
+# 	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# # contract a window by moving one of its side inward
+# super + shift + Insert: ctrl + shift + {Left,Down,Up,Right}
+# 	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# # move a floating window
+# super + shift + Insert; {Left,Down,Up,Right}
+# 	bspc node -v {-20 0,0 20,0 -20,20 0}
 
 #----------------------------------------
 # focus/swap
