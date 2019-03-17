@@ -35,12 +35,19 @@ super + w
 
 # Insert: super + g
 #   bspc config focused_border_color "#247dcc"; xdotool key Escape
+# Works
 ctrl+super+F12
+  echo nice
+# doesn't
+ctrl+super+F12; a
   echo hi
-  # bspc config focused_border_color "#ffffff"
+  # bspc config focused_border_color "#247dcc"
+#worsk
+ctrl+u; a
+  echo hfi
 
-super + shift + Insert: super + g
-  bspc config focused_border_color "#247dcc"; xdotool key Escape
+# super + shift + Insert: super + g
+#   bspc config focused_border_color "#247dcc"; xdotool key Escape
 
 # # alternate between the tiled and monocle layout
 # super + shift + m

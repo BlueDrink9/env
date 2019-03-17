@@ -34,14 +34,14 @@ super + g
 #   bspc config focused_border_color "#00bc00"; xdotool key Super+Shift+Insert
 # super + u
 #   bspc config focused_border_color "#00bc00"; xdotool key Insert
-super + u
-  xdotool keyup super+u && xdotool key --clearmodifiers ctrl+F15
+super + w
+  bspc config focused_border_color "#00bc00"; xdotool keyup super+w && xdotool key --clearmodifiers ctrl+F15
   # xdotool key --clearmodifiers ctrl+u
 
 # Insert: super + g
 #   bspc config focused_border_color "#247dcc"; xdotool key Escape
 ctrl + F15
-  bspc config focused_border_color "#000000"
+  echo hi;sleep 1; bspc config focused_border_color "#000000"
   # bspc config focused_border_color "#ffffff"
 
 super + shift + Insert: super + g
