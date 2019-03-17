@@ -78,16 +78,16 @@ Not everything works in every context.
 
 | Windowm manager only Action |Binding |
 |--------|--------|
-| Float pane | `%h` |
+| Float pane | `%u` |
 | Open browser | `#b` |
 | Open file explorer | `#e` |
 | Open terminal | `<C-A-t>` and `<#-return>`|
-| Float next pane created | `%<C-h>` |
+| Float next pane created | `%<C-u>` |
 | Pin pane | `%p` |
 | Use tiling layout | `%<S-t>` |
-| Use floating layout | `%<S-h>` |
+| Use floating layout | `%<S-u>` |
 | Use monocle/tabbed layout | `%<S-m>` |
-| Float next window | `%<c-h>` |
+| Float next window | `%<c-u>` |
 | Focus [next,prev] desktop | `<C-A-[right,left]>` |
 | Move pane to [next,prev] desktop | `%<S-[n,p]>` |
 | Move pane to desktop [num] | `%[num]` |
@@ -99,7 +99,7 @@ Not everything works in every context.
 
 * One window fullscreen (ie i3's 'tabbed' mode): Monacle (m)
 * Tiling/binary layout: Tiling (t)
-* Floating: Hovered (h)
+* Floating: Untiled (u)
 * Pin/make sticky/keep on top: Pin (p)
 
 

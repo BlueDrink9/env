@@ -53,11 +53,11 @@ super + g
 super + shift + m
 	bspc desktop -l next
 # Toggle floating mode for current window
-super + w: h
+super + w: u
 	bspc node -t '~floating'
 
 # set the window state
-super + w: shift + {t,ctrl + t,h,m}
+super + w: shift + {t,ctrl + t,u,m}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
