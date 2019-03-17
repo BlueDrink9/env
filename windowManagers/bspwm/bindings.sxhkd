@@ -1,4 +1,5 @@
-# vim:ft=sxhkd
+# vim:ft=sxhkdrc
+# vim:ft=sh
 #
 
 # terminal emulator
@@ -88,25 +89,31 @@ super + {p,b,comma,period}
 	bspc node -f @{parent,brother,first,second}
 
 # focus the next/previous node in the current desktop
-/* super + {_,shift + }c */
-/* 	bspc node -f {next,prev}.local */
-alt + {_,shift + }tab
-  node -f {next,prev}.local
-super + {_,shift + }tab
-  node -f {next,prev}.local
+# super + {_,shift + }c
+# 	bspc node -f {next,prev}.local
+alt + {_,shift + }Tab
+  bspc node -f {next,prev}.local
+super + {_,shift + }Tab
+  bspc node -f {next,prev}.local
 
 # focus the next/previous desktop in the current monitor
 # Destroys the old one if it is empty first.
 # See https://blog.codezen.org/2015/03/13/on-bspwm-tweaking/ #Named Desktops to see how to create if no new one found.
-{super + bracket{left,right},ctrl + alt + {Left,Right},
-  bspc desktop focused -r
-	bspc desktop -f {prev,next}.local
+# ctrl + alt + {Left,Right}
+# {super + bracket{left,right},ctrl + alt + {Left,Right}}
+ctrl + alt + {Left,Right}
+  bspc desktop -f {prev,next}.local
+super + bracket{left,right}
+  bspc desktop -f {prev,next}.local
+# super + bracket{left,right}
+  # bspc desktop -f {prev,next}.local
+  # bspc desktop focused -r && \
 super + shift + bracket{left,right}
 	bspc node -d {prev,next}
 
 # focus the last node/desktop
-super + {grave,Tab}
-	bspc {node,desktop} -f last
+# super + {grave,Tab}
+# 	bspc {node,desktop} -f last
 
 # focus the older or newer node in the focus history
 super + {o,i}
