@@ -42,6 +42,11 @@ bspc config swallow_first_click
 bspc config pointer_follows_focus
 bspc config pointer_follows_monito
 
+bspc config pointer_modifier super
+bspc config pointer_action1 move
+bspc config pointer_action2 resize_side
+bspc config pointer_action1 resize_corner
+
 bspc config border_width         5
 # Unfocussed window
 # bspc config normal_border_color "#332d29"

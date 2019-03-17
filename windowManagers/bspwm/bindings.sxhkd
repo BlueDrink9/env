@@ -29,16 +29,6 @@ super + w; super + c
 # bspwm hotkeys
 #
 
-# Mouse bindings
-~button1
-    bspc pointer -g focus
-super + button{1-3}
-    bspc pointer -g {move,resize_side,resize_corner}
-# super + !button{1-3}
-#     bspc pointer -t %i %i
-# super + @button{1-3}
-#     bspc pointer -u
-
 # quit bspwm normally
 super + alt + Escape
 	bspc quit
