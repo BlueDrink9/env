@@ -1,26 +1,6 @@
 # vim:ft=sxhkdrc
 # vim:ft=sh
 #
-
-# terminal emulator
-ctrl + alt + t
-	kitty
-
-ctrl + alt + b
-	google-chrome-stable
-
-ctrl + alt + e
-	dolphin
-
-super + v
-    gvim
-
-# program launcher
-super + @space
-	dmenu_run
-super + r
-	dmenu_run
-
 #
 # bspwm hotkeys
 #
@@ -51,12 +31,18 @@ super + g
 # # super + w: super + w
 # Define the mode. Mode actually sends a key combo we will never otherwise use!
 # super + w
-#   bspc config focused_border_color "#00bc00"; xdotool key super shift Insert
-super + w
-  bspc config focused_border_color "#00bc00"; xdotool key Insert
+#   bspc config focused_border_color "#00bc00"; xdotool key Super+Shift+Insert
+# super + u
+#   bspc config focused_border_color "#00bc00"; xdotool key Insert
+super + u
+  xdotool keyup super+u && xdotool key --clearmodifiers ctrl+F15
+  # xdotool key --clearmodifiers ctrl+u
 
-Insert: super + g
-  bspc config focused_border_color "#247dcc"; xdotool key Escape
+# Insert: super + g
+#   bspc config focused_border_color "#247dcc"; xdotool key Escape
+ctrl + F15
+  bspc config focused_border_color "#000000"
+  # bspc config focused_border_color "#ffffff"
 
 super + shift + Insert: super + g
   bspc config focused_border_color "#247dcc"; xdotool key Escape
