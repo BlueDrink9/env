@@ -30,8 +30,9 @@ super + g
 #     bspc config focused_border_color "#00bcff"
 # # super + w: super + w
 # Define the mode. Mode actually sends a key combo we will never otherwise use!
-super + w
-  bspc config focused_border_color "#00bc00" && xdotool key --clearmodifiers ctrl+super+F12
+super + w: {a,_}
+  {bspc config focused_border_color "#00bcff";, echo ha}
+  # bspc config focused_border_color "#00bc00" && xdotool key --clearmodifiers ctrl+super+F12
 
 # Insert: super + g
 #   bspc config focused_border_color "#247dcc"; xdotool key Escape
