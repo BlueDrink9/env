@@ -26,10 +26,10 @@ super + g
 #----------------------------------------
 
 
-super + w
-  bspc config focused_border_color "$BSPWM_MODE_COLOUR"
 # super + w; super + w
 #   bspc config focused_border_color "#247dcc"; xdotool key Escape
+# super + w; Escape
+#   xdotool key Escape; bsp_border_reset
 
 # # set the window state
 super + w; shift + {t,ctrl + t,u,m}
@@ -46,7 +46,7 @@ super + w; u
 	bspc node -t '~floating'; bsp_border_reset
 # # alternate between the tiled and monocle layout
 super + shift + m
-	bspc desktop -l next; bsp_border_reset
+	bspc desktop -l next
 
 # # make sxhkd reload its configuration files:
 super + w; super + c
@@ -70,6 +70,8 @@ super + w; ctrl + shift + {Left,Down,Up,Right}
 super + w; {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}; bsp_border_reset
 
+super + w
+  bspc config focused_border_color "$BSPWM_MODE_COLOUR"
 #----------------------------------------
 # focus/swap
 #----------------------------------------
