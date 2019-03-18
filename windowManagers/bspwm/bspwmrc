@@ -14,7 +14,7 @@ bspc_desktop(){
 
 gap=10
 BSPWM_FOCUSED_COLOUR="#1cb5db" # Cyan
-BSPWM_MODE_COLOUR="#247dcc"
+BSPWM_MODE_COLOUR="#00bc00" # dark-ish green
 # bspc config focused_border_color "#247dcc" # dark blue
 # bspc config focused_border_color "#00bcff" # simpler cyan
 
