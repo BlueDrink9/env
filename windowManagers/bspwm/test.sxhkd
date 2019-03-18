@@ -4,27 +4,6 @@
 #
 # bspwm hotkeys
 #
-
-# quit bspwm normally
-super + alt + Escape
-	bspc quit
-
-# close and kill
-super + {_,shift + }x
-	bspc node -{c,k}
-
-# send the newest marked node to the newest preselected node
-super + y
-	bspc node newest.marked.local -n newest.!automatic.local
-
-# swap the current node and the biggest node
-super + g
-	bspc node -s biggest
-
-#----------------------------------------
-# state/flags
-#----------------------------------------
-
 # super + g
 #   bspc config focused_border_color "#ffbc00"; sleep 1; \
 #     bspc config focused_border_color "#00bcff"
@@ -34,13 +13,13 @@ super + g
 #   {bspc config focused_border_color "#00bcff";, echo ha}
   # bspc config focused_border_color "#00bc00" && xdotool key --clearmodifiers ctrl+super+F12
 # usually works
-super + w; i
-  echo itime
+super + w; x
+  echo xtime
 # usually works
-super+w; j
-  echo jjjlol
+super+w; z
+  echo zzzlol
 super + w
-  bspc config focused_border_color "#ffbc00"
+  echo nice; bspc config focused_border_color "$BSPWM_FOCUSED_COLOUR"
 
 # Insert: super + g
 #   bspc config focused_border_color "#247dcc"; xdotool key Escape
@@ -57,136 +36,3 @@ ctrl+u; a
 
 # super + shift + Insert: super + g
 #   bspc config focused_border_color "#247dcc"; xdotool key Escape
-
-# # alternate between the tiled and monocle layout
-# super + shift + m
-# 	bspc desktop -l next
-# # Toggle floating mode for current window
-# super + shift + Insert: u
-# 	bspc node -t '~floating'
-
-# # set the window state
-# super + shift + Insert: shift + {t,ctrl + t,u,m}
-# 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
-
-# # set the node flags
-# super + ctrl + {m,x,y,z}
-# 	bspc node -g {marked,locked,sticky,private}
-# super + shift + Insert: p
-# 	bspc node -g sticky
-
-# # make sxhkd reload its configuration files:
-# super + shift + Insert; super + c
-# 	pkill -USR1 -x sxhkd
-#   # killall sxhkd && sxhkd -m -1 -c "$HOME/.config/sxhkd/sxhkdrc" "$DOTFILES_DIR"/windowManagers/bspwm/*.sxhkd &
-
-# #
-# # move/resize
-# #
-
-# # expand a window by moving one of its side outward
-# # Semicolon makes this a prefix, colon makes it a mode (leave with esc).
-# super + shift + Insert: shift + {Left,Down,Up,Right}
-# 	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
-
-# # contract a window by moving one of its side inward
-# super + shift + Insert: ctrl + shift + {Left,Down,Up,Right}
-# 	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
-
-# # move a floating window
-# super + shift + Insert; {Left,Down,Up,Right}
-# 	bspc node -v {-20 0,0 20,0 -20,20 0}
-
-#----------------------------------------
-# focus/swap
-#----------------------------------------
-
-# focus the node in the given direction
-super + {_,shift + }{h,j,k,l}
-	bspc node -{f,s} {west,south,north,east}
-
-# focus the node for the given path jump
-# todo check duplicates
-# super + {p,b,comma,period}
-# 	bspc node -f @{parent,brother,first,second}
-
-# focus the next/previous node in the current desktop
-# super + {_,shift + }c
-# 	bspc node -f {next,prev}.local
-# todo check duplicates
-# alt + {_,shift + }Tab
-#   bspc node -f {next,prev}.local
-# super + {_,shift + }Tab
-#   bspc node -f {next,prev}.local
-
-# focus the next/previous desktop in the current monitor
-# Destroys the old one if it is empty first.
-# See https://blog.codezen.org/2015/03/13/on-bspwm-tweaking/ #Named Desktops to see how to create if no new one found.
-# ctrl + alt + {Left,Right}
-# {super + bracket{left,right},ctrl + alt + {Left,Right}}
-ctrl + alt + {Left,Right}
-  bspc desktop -f {prev,next}.local
-super + bracket{left,right}
-  bspc desktop -f {prev,next}.local
-# super + shift + bracket{left,right}
-# 	bspc node -d {prev,next}
-# super + bracket{left,right}
-  # bspc desktop -f {prev,next}.local
-  # bspc desktop focused -r && \
-
-# focus the last node/desktop
-# super + {grave,Tab}
-# 	bspc {node,desktop} -f last
-
-# focus the older or newer node in the focus history
-super + {o,i}
-	bspc wm -h off; \
-	bspc node {older,newer} -f; \
-	bspc wm -h on
-
-# focus or send to the given desktop
-# todo check duplicates
-# super + {_,shift + }{1-9,0}
-# 	bspc {desktop -f,node -d} '^{1-9,10}'
-
-super + n
-    bspc monitor --add-desktops D
-
-#
-# preselect
-#
-
-# preselect the direction
-super + ctrl + {h,j,k,l}
-	bspc node -p {west,south,north,east}
-
-# preselect the ratio
-super + ctrl + {1-9}
-	bspc node -o 0.{1-9}
-
-# cancel the preselection for the focused node
-super + ctrl + space
-	bspc node -p cancel
-
-# cancel the preselection for the focused desktop
-super + ctrl + shift + space
-	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
-
-# Pseudo-minimize (to desktop "O")
-super + z
-  D=$(bspc query –desktops –desktop focused); 
-  W=$(bspc query –windows –window focused); 
-  bspc query –desktops | grep -q “‘$D” || bspc monitor –add-desktops '$D; 
-  bspc window $W --to-desktop \'$D
-
-# Restore all minimized windows from this desktop
-super + shift + z
-  D=$(bspc query –desktops –desktop focused); 
-  if bspc query –desktops | grep -q “‘$D”; then 
-    for i in $(bspc query –windows –desktop '$D); do 
-      bspc window $i –to-desktop $D; 
-      bspc window $i –focus; 
-      bspc window –swap biggest; 
-    done; 
-    bspc desktop '$D –remove; 
-  fi
