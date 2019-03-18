@@ -88,8 +88,9 @@ Not everything works in every context.
 | Use floating layout | `%<S-u>` |
 | Use monocle/tabbed layout | `%<S-m>` |
 | Float next window | `%<c-u>` |
-| Focus [next,prev] desktop | `<C-A-[right,left]>` |
-| Move pane to [next,prev] desktop | `%<S-[n,p]>` |
+| Focus [next,prev] desktop | `<#-[[,]]>` |
+| Move pane to [next,prev] desktop | `%<S-#-[[,]]>` |
+| Move pane to [next,prev] desktop and focus | `%<C-#-[[,]]>` |
 | Move pane to desktop [num] | `%[num]` |
 | jump to desktop [num] | `<#-[num]>` |
 
