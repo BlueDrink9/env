@@ -34,8 +34,8 @@ super + g
 #   bspc config focused_border_color "#00bc00"; xdotool key Super+Shift+Insert
 # super + u
 #   bspc config focused_border_color "#00bc00"; xdotool key Insert
-super + w
-  bspc config focused_border_color "#00bc00"; xdotool keyup super+w && xdotool key --clearmodifiers ctrl+F15
+# super + w
+#   bspc config focused_border_color "#00bc00"; xdotool keyup super+w && xdotool key --clearmodifiers ctrl+F15
   # xdotool key --clearmodifiers ctrl+u
 
 # Insert: super + g
@@ -95,9 +95,11 @@ super + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
 
 # focus the node for the given path jump
-super + {p,b,comma,period}
-	bspc node -f @{parent,brother,first,second}
+# This has a duplicate with a plasma shortcut, I think
+# super + {p,b,comma,period}
+# 	bspc node -f @{parent,brother,first,second}
 
+# Normally duplicated by window manager
 # focus the next/previous node in the current desktop
 # super + {_,shift + }c
 # 	bspc node -f {next,prev}.local
@@ -115,11 +117,21 @@ ctrl + alt + {Left,Right}
   bspc desktop -f {prev,next}.local
 super + bracket{left,right}
   bspc desktop -f {prev,next}.local
+super + shift + bracket{left,right}
+	bspc node --to-desktop {prev,next}
+# Move to desktop and focus on it
+super + ctrl + bracket{left,right}
+  id=$(bspc query --nodes --node); bspc node --to-desktop {prev,next}; bspc desktop --focus {prev,next}; bspc node --focus ${id}
 # super + bracket{left,right}
   # bspc desktop -f {prev,next}.local
   # bspc desktop focused -r && \
-super + shift + bracket{left,right}
-	bspc node -d {prev,next}
+
+# Just numbers is used to launch taskbar shortcuts.
+# focus or send to the given desktop
+# super + {_,shift + }{1-9,0}
+# 	bspc {desktop -f,node -d} '^{1-9,10}'
+super + shift {1-9,0}
+	bspc node -d '^{1-9,10}'
 
 # focus the last node/desktop
 # super + {grave,Tab}
@@ -130,10 +142,6 @@ super + {o,i}
 	bspc wm -h off; \
 	bspc node {older,newer} -f; \
 	bspc wm -h on
-
-# focus or send to the given desktop
-super + {_,shift + }{1-9,0}
-	bspc {desktop -f,node -d} '^{1-9,10}'
 
 super + n
     bspc monitor --add-desktops D
