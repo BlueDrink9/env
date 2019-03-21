@@ -330,7 +330,8 @@ function! s:AirlineColorVarUpdate()
         " Strips off the 'base16-' bit.
         " let g:colorSch = g:colorSch[7:]
         " Only takes the second bit between hyphens.
-        let g:colorSch = split(g:colorSch,"-")[1]
+        " let g:colorSch = split(g:colorSch,"-")[1]
+        let g:colorSch = "base16"
     endif
     let g:airline_theme=g:colorSch
     exec 'let g:airline_' . g:colorSch . '_bg="' . &background . '"'
