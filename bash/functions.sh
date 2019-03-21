@@ -474,6 +474,7 @@ END
     done
   fi
 }
+alias lpssh="lastpass_ssh_key_add"
 
 pack(){
   cmd="$1"

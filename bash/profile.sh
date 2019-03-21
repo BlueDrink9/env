@@ -132,7 +132,8 @@ case $- in
       # Decay after 120 mins
       eval $(ssh-agent -t 120m) > /dev/null # 2>&1
     fi
-    lastpass_ssh_key_add
+    # Do this manually instead, using keybinding.
+    # lastpass_ssh_key_add
 
     # {[} fzf
     if [ -f ~/.fzf.bash ]; then

@@ -60,7 +60,14 @@ set bell-style none
 
 #{]} settings
 
+#{[} General keybindings
+###########################################################
 # "'^h':'^h'"
+
+# Log in to lastpass/add ssh keys
+"": "ddilastpass_ssh_key_add"
+
+# {]}
 
 #{[} command-mode mappings
 ###########################################################
