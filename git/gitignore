@@ -1,7 +1,6 @@
 # vim: ft=cfg
 
 latexbuild/
-custom-spellings-vim.*
 
 # Ignore tags created by etags, ctags, gtags (GNU global) and cscope
 TAGS
