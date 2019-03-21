@@ -528,3 +528,7 @@ alias packr="pack refresh"
 alias packu="pack refresh && pack upgrade"
 alias packs="pack search"
 alias packrm="pack remove"
+
+kitty_termcopy(){
+  infocmp xterm-kitty | \ssh $1 tic -x -o \~/.terminfo /dev/stdin
+}
