@@ -160,12 +160,15 @@ Plug 'https://github.com/lervag/vimtex'
 " Ensure clean doesn't immediately get overridden...
 nnoremap \lc :VimtexStop<cr>:VimtexClean<cr>
 " call add(g:pluginSettingsToExec, "let g:vimtex_compiler_latexmk.build_dir = 'latexbuild'")
+call add(g:pluginSettingsToExec, "let g:vimtex_compiler_progname = 'nvr'")
 let g:vimtex_fold_enabled = 1
 let g:vimtex_compiler_latexmk = {
     \ 'build_dir' : 'latexbuild',
-    \ 'options' : [
-    \ ],
     \}
+" This prevents errors from showing :/
+    " \ 'options' : [
+    " \ ],
+    " \}
 " Plug 'https://github.com/vim-latex/vim-latex'
 " let g:Tex_DefaultTargetFormat="pdf"
 if has('win32')
