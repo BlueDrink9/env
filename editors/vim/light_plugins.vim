@@ -162,6 +162,11 @@ nnoremap \lc :VimtexStop<cr>:VimtexClean<cr>
 " call add(g:pluginSettingsToExec, "let g:vimtex_compiler_latexmk.build_dir = 'latexbuild'")
 call add(g:pluginSettingsToExec, "let g:vimtex_compiler_progname = 'nvr'")
 let g:vimtex_fold_enabled = 1
+let g:vimtex_fold_manual = 1 " instead of expr folding. Speeds up.
+" augroup my_vimtex
+"     autocmd!
+"     autocmd Filetype *tex set foldmethod=expr
+" augroup END
 let g:vimtex_compiler_latexmk = {
     \ 'build_dir' : 'latexbuild',
     \}
