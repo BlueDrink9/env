@@ -72,6 +72,7 @@ super + w; {Left,Down,Up,Right}
 
 super + w
   bspc config focused_border_color "$BSPWM_MODE_COLOUR"
+
 #----------------------------------------
 # focus/swap
 #----------------------------------------
@@ -129,8 +130,34 @@ super + {o,i}
 	bspc node {older,newer} -f; \
 	bspc wm -h on
 
+#----------------------------------------
+# Manipulations
+#----------------------------------------
+
+# Rotate desktop
+super + {_,shift + }r
+	bspc node @/ --rotate {90,-90}
+
+# Make split ratios equal
+super + equal
+	bspc node @/ --equalize
+
+# Make split ratios balanced
+super + minus
+	bspc node @/ --balance
+
+
+#----------------------------------------
+# Desktop
+#----------------------------------------
+
+
+# Create a new desktop
 super + n
-    bspc monitor --add-desktops D
+    bspc monitor --add-desktops ' '
+# Delete current desktop
+super + shift + n
+    bspc desktop -r -f prev
 
 #
 # preselect
