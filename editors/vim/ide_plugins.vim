@@ -308,6 +308,15 @@ endif
 let g:rout_follow_colorscheme = 1
 " R commands in R output are highlighted
 let g:Rout_more_colors = 1
+let R_esc_term = 0
+let R_assign = 3
+let R_latex_build_dir = 'latexbuild'
+let R_openhtml = 2
+let g:markdown_fenced_languages = ['r', 'python']
+let g:rmd_fenced_languages = ['r', 'python']
+" {[} Mappings
+" let R_user_maps_only = 1
+" {]} Mappings
 " Requires ncm2
 " Plug 'https://github.com/gaalcaras/ncm-R'
 " {]} ---------- R ----------
