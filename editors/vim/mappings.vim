@@ -14,8 +14,12 @@ nnoremap : ;
 vnoremap : ;
 
 " let mapleader = "\<Space>"
+let mapleader = " "
+let maplocalleader = " b"
 " nnoremap <SPACE> <Nop>
 map <SPACE> <leader>
+" This may not work very well...
+map <SPACE>b <localleader>
 
 " {[} Abbreviations
 " Abbreviations are used in insert and command modes unless specified.
