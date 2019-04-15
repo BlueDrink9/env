@@ -6,19 +6,23 @@ ctrl + alt + t
 	kitty
 
 ctrl + alt + b
-	google-chrome-stable
+  gtk-launch google-chrome.desktop || \
+    xdg-open /usr/share/applications/google-chrome-stable || \
+    xdg-open ~/usr/share/applications/google-chrome-stable || \
+    google-chrome-stable
 
 # ctrl + alt + e
 # 	dolphin
 super + e
-	dolphin
+  xdg-open ~ || \
+    dolphin
 
 super + v
     gvim
 
 # program launcher
-super + @space
-	dmenu_run
+# super + @space
+# 	dmenu_run
 # super + r
 # 	dmenu_run
 
