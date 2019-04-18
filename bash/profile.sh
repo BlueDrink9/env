@@ -25,6 +25,7 @@ else
   fi
   if substrInStr "sshd" "$parents"; then
     SESSION_TYPE=remote/ssh
+    export SSHSESSION=1
   fi
 fi
 
@@ -54,16 +55,23 @@ elif substrInStr "Android" "$(uname -a)";  then
   export CLIP_PROGRAM_PASTE="termux-clipboard-get"
   export HOSTNAME="$(getprop net.hostname)"
   export HOST="${HOSTNAME}"
-  if [ -z "$SSHSESSION" ]; then
-    export NOTMUX=1
-    COLORTERM="truecolor"
-  fi
 elif substrInStr "Apple" "$TERM_PROGRAM"; then
   COLORTERM=16
 elif substrInStr "screen" "$TERM"; then
   unset COLORTERM
 fi
 # {]} Terminal-specific settings
+
+# OSX doesn't have a $DISPLAY variable by default.
+if [ -z "$SSHSESSION" ]; then
+  if substrInStr "darwin1" "$OSTYPE"; then
+    true
+  fi
+  if [ -n "$ISTERMUX" ]; then
+    COLORTERM="truecolor"
+  fi
+  export NOTMUX=1
+fi
 
 # brew paths. Only before load to avoid loading twice.
 if [ -n "$HOMEBREW_PREFIX" ] && ! substrInStr "$HOMEBREW_PREFIX" "${PATH%%:*}" ; then
