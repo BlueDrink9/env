@@ -152,8 +152,9 @@ chunkwmMode < 6 : chunkc tiling::window --send-to-desktop 6
 
 # fast focus desktop. Requires extra hack.
 chunkwmMode < cmd + alt - x : chunkc tiling::desktop --focus $(chunkc get _last_active_desktop)
-alt - 0x21  : chunkc tiling::desktop --focus prev
-alt - 0x1E  : chunkc tiling::desktop --focus next
+# Use this one if the hack is installed. Seems to bind better?
+# alt - 0x21  : chunkc tiling::desktop --focus prev
+# alt - 0x1E  : chunkc tiling::desktop --focus next
 # alt - [  : chunkc tiling::desktop --focus prev
 # alt - ]  : chunkc tiling::desktop --focus next
 chunkwmMode < shift - n : chunkc tiling::desktop --focus next
