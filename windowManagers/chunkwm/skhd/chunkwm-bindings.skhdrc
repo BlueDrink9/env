@@ -141,8 +141,10 @@ chunkwmMode < ctrl + alt - l : chunkc tiling::window --use-insertion-point east
 
 # send window to desktop
 chunkwmMode < shift - x : chunkc tiling::window --send-to-desktop $(chunkc get _last_active_desktop)
-chunkwmMode < shift - z : chunkc tiling::window --send-to-desktop prev
-chunkwmMode < shift - c : chunkc tiling::window --send-to-desktop next
+alt + shift - 0x21  : chunkc tiling::window --send-to-desktop prev
+alt + shift - 0x1E  : chunkc tiling::window --send-to-desktop next
+chunkwmMode < shift - 0x21 : chunkc tiling::window --send-to-desktop prev
+chunkwmMode < shift - 0x1E : chunkc tiling::window --send-to-desktop next
 chunkwmMode < 1 : chunkc tiling::window --send-to-desktop 1
 chunkwmMode < 2 : chunkc tiling::window --send-to-desktop 2
 chunkwmMode < 3 : chunkc tiling::window --send-to-desktop 3
@@ -169,6 +171,8 @@ chunkwmMode < cmd + alt - 6 : chunkc tiling::desktop --focus 6
 
 # send window to desktop and follow focus
 chunkwmMode < shift + cmd - x : chunkc tiling::window --send-to-desktop $(chunkc get _last_active_desktop); chunkc tiling::desktop --focus $(chunkc get _last_active_desktop)
+alt + ctrl - 0x21  : chunkc tiling::window --send-to-desktop prev; chunkc tiling::desktop --focus prev
+alt + ctrl - 0x1E  : chunkc tiling::window --send-to-desktop next; chunkc tiling::desktop --focus next
 chunkwmMode < shift + cmd - z : chunkc tiling::window --send-to-desktop prev; chunkc tiling::desktop --focus prev
 chunkwmMode < shift + cmd - c : chunkc tiling::window --send-to-desktop next; chunkc tiling::desktop --focus next
 chunkwmMode < shift + cmd - 1 : chunkc tiling::window --send-to-desktop 1; chunkc tiling::desktop --focus 1
