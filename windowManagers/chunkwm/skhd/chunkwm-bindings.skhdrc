@@ -154,13 +154,13 @@ chunkwmMode < 6 : chunkc tiling::window --send-to-desktop 6
 
 # fast focus desktop. Requires extra hack.
 chunkwmMode < cmd + alt - x : chunkc tiling::desktop --focus $(chunkc get _last_active_desktop)
+alt - 0x21  : skhd -k "ctrl - left"
+alt - 0x1E  : skhd -k "ctrl - right"
 # Use this one if the hack is installed. Seems to bind better?
 # alt - 0x21  : chunkc tiling::desktop --focus prev
 # alt - 0x1E  : chunkc tiling::desktop --focus next
 # alt - [  : chunkc tiling::desktop --focus prev
 # alt - ]  : chunkc tiling::desktop --focus next
-chunkwmMode < shift - n : chunkc tiling::desktop --focus next
-chunkwmMode < shift - p : chunkc tiling::desktop --focus prev
 chunkwmMode < cmd + alt - 1 : chunkc tiling::desktop --focus 1
 chunkwmMode < cmd + alt - 2 : chunkc tiling::desktop --focus 2
 chunkwmMode < cmd + alt - 3 : chunkc tiling::desktop --focus 3
@@ -171,8 +171,10 @@ chunkwmMode < cmd + alt - 6 : chunkc tiling::desktop --focus 6
 
 # send window to desktop and follow focus
 chunkwmMode < shift + cmd - x : chunkc tiling::window --send-to-desktop $(chunkc get _last_active_desktop); chunkc tiling::desktop --focus $(chunkc get _last_active_desktop)
-alt + ctrl - 0x21  : chunkc tiling::window --send-to-desktop prev; chunkc tiling::desktop --focus prev
-alt + ctrl - 0x1E  : chunkc tiling::window --send-to-desktop next; chunkc tiling::desktop --focus next
+# alt + ctrl - 0x21  : chunkc tiling::window --send-to-desktop prev; chunkc tiling::desktop --focus prev
+# alt + ctrl - 0x1E  : chunkc tiling::window --send-to-desktop next; chunkc tiling::desktop --focus next
+alt + ctrl - 0x21  : chunkc tiling::window --send-to-desktop prev; skhd -k "ctrl - left"
+alt + ctrl - 0x1E  : chunkc tiling::window --send-to-desktop next; skhd -k "ctrl - right"
 chunkwmMode < shift + cmd - z : chunkc tiling::window --send-to-desktop prev; chunkc tiling::desktop --focus prev
 chunkwmMode < shift + cmd - c : chunkc tiling::window --send-to-desktop next; chunkc tiling::desktop --focus next
 chunkwmMode < shift + cmd - 1 : chunkc tiling::window --send-to-desktop 1; chunkc tiling::desktop --focus 1
