@@ -85,6 +85,9 @@ chunkwmMode < down	: ~/.config/scripts/chunk_float.sh move +y
 # rotate tree
 chunkwmMode < r : chunkc tiling::desktop --rotate 90
 
+# Re-make binary proportions
+chunkwmMode < shift - 0x18 : chunkc tiling::desktop --equalize  # equals key
+
 # mirror tree y-axis
 chunkwmMode < s : chunkc tiling::desktop --mirror vertical
 
@@ -92,7 +95,7 @@ chunkwmMode < s : chunkc tiling::desktop --mirror vertical
 chunkwmMode < v : chunkc tiling::desktop --mirror horizontal
 
 # toggle desktop offset XXX
-chunkwmMode < o : chunkc tiling::desktop --toggle offset
+chunkwmMode < shift - g : chunkc tiling::desktop --toggle offset
 
 # toggle window fullscreen
 chunkwmMode < cmd - f : chunkc tiling::window --toggle fullscreen
@@ -214,6 +217,6 @@ chunkwmMode < cmd + alt - n : chunkc tiling::desktop --create;\
                 id=$(chunkc tiling::query --desktops-for-monitor $(chunkc tiling::query --monitor-for-desktop $(chunkc tiling::query --desktop id)));\
                 chunkc tiling::desktop --focus $(echo ${id##* })
 # destroy desktop
-chunkwmMode < cmd + alt - w : chunkc tiling::desktop --annihilate
+chunkwmMode < cmd + alt - q : chunkc tiling::desktop --annihilate
 
 # Mouse bindings are set in chunkwm options
