@@ -127,6 +127,10 @@ if has("timers")
 		Plug 'Shougo/neoinclude.vim'
        " autocmd FileType x
        " \ call deoplete#custom#buffer_option('auto_complete', v:false)
+       call add(g:pluginSettingsToExec, "call deoplete#custom#var(
+                   \ 'omni', 'input_patterns', {
+                   \ 'tex': g:vimtex#re#deoplete
+                   \})")
 
         " deoplete usually only completes from other buffers with the same
         " filetype. This is a way of adding additional fts to complete from.

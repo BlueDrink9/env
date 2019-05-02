@@ -177,7 +177,7 @@ let g:vimtex_compiler_latexmk = {
 " Plug 'https://github.com/vim-latex/vim-latex'
 " let g:Tex_DefaultTargetFormat="pdf"
 if has('win32')
-    let g:vimtex_view_general_viewer = 'sumatrapdf'
+    let g:vimtex_view_general_viewer = 'SumatraPDF'
     let g:vimtex_view_general_options
                 \ = '-reuse-instance -forward-search @tex @line @pdf'
     let g:vimtex_view_general_options_latexmk = '-reuse-instance --unique'
