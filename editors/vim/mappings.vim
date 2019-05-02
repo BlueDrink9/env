@@ -17,6 +17,13 @@ vnoremap : ;
 " nnoremap <SPACE> <Nop>
 map <SPACE> <leader>
 
+" {[} Abbreviations
+" Abbreviations are used in insert and command modes unless specified.
+abbrev <expr> [d] strftime("%Y-%m-%d")
+abbrev <expr> [t] strftime("%H:%M")
+cnoreabbrev H helpgrep
+
+" {]} Abbreviations
 
 "{[} Windows
 " leader w opens new vert window, switches to it
