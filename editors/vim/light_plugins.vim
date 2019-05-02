@@ -185,6 +185,8 @@ if has('win32')
     let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
 endif
 
+" Alternative to pencil, but modular if you want it.
+" Plug 'vim-pandoc/vim-pandoc'
 Plug 'https://github.com/reedes/vim-pencil'
 Plug 'https://github.com/dkarter/bullets.vim'
 let g:pencil#wrapModeDefault = 'soft'
