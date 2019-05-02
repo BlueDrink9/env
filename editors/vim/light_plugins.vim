@@ -212,6 +212,8 @@ function! SetProseOptions()
     call pencil#init()
     nnoremap <buffer> gk k
     nnoremap <buffer> gj j
+    vnoremap <buffer> gk k
+    vnoremap <buffer> gj j
     setl ai
 endfunction
 
