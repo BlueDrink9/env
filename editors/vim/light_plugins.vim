@@ -210,6 +210,8 @@ function! SetProseOptions()
         setl spell spl=en_nz
     endif
     call pencil#init()
+    nnoremap <buffer> gk k
+    nnoremap <buffer> gj j
     setl ai
 endfunction
 
