@@ -106,7 +106,7 @@ if has("clipboard")
     cnoremap <C-v> <C-r>+
     vnoremap <C-X> "+d
     vnoremap <C-c> "+y
-    vnoremap <C-v> "+P
+    " vnoremap <C-v> "+P  " Clobbers block visual
     nnoremap <C-q> "+P
 else
     " Replace with writing/reading from system commands in console vim.
@@ -229,10 +229,12 @@ nnoremap X "_X
 nnoremap <leader>cl :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 " Quickly edit macros
 nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
-" Quicker access to system register
+" Quicker access to system and unnamed registers
 " ($(") is default register anyway, so never need $(""))
 nnoremap "" "+
 vnoremap "" "+
+nnoremap """ "-
+vnoremap """ "-
 " These apply only in vimdiff mode.
 " nnoremap <expr> <C-J> &diff ? ']c' : '<C-W>j'
 if &diff

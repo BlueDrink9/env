@@ -317,7 +317,8 @@ function! s:SetSpellFile()
   " Check if directory is writable. Can't check b:spellfilename directly on
   " windows because of backslashs.
   if filewritable(expand("%:p:h"))
-    let &l:spellfile=b:spellfilename
+    " Expand because of backslashes before spaces
+    let &l:spellfile=expand(b:spellfilename)
   else
     setl spf=
   endif

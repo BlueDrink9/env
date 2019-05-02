@@ -21,6 +21,12 @@ if v:version >= 703
     " call add (g:customHLGroups, "clear IndentGuidesOdd")
     " " call add (g:customHLGroups, "IndentGuidesOdd ")
 endif
+if exists("v:completed_item")
+    " Shows function args from completion in cmd line.
+    Plug 'Shougo/echodoc.vim'
+    let g:echodoc#enable_at_startup = 1
+    let g:echodoc#type = 'signature'
+endif
 " {]} ---------- Misc ----------
 
 " {[} ---------- Linting ----------
@@ -75,13 +81,32 @@ endif
 " Awesome code completion, but requires specific installations
 " Plug 'https://github.com/Valloric/YouCompleteMe'
 if has("timers")
+
     Plug 'autozimu/LanguageClient-neovim', {
                 \ 'branch': 'next',
                 \ 'do': 'bash install.sh',
                 \ }
+    function! SetLSPShortcuts()
+        nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
+        nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
+        nnoremap <leader>lf :call LanguageClient#textDocument_formatting()<CR>
+        nnoremap <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
+        nnoremap <leader>lx :call LanguageClient#textDocument_references()<CR>
+        nnoremap <leader>la :call LanguageClient_workspace_applyEdit()<CR>
+        nnoremap <leader>lc :call LanguageClient#textDocument_completion()<CR>
+        nnoremap <leader>lh :call LanguageClient#textDocument_hover()<CR>
+        nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
+        nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
+    endfunction()
+
+    " augroup LSP
+    "   autocmd!
+    "   autocmd FileType cpp,c call SetLSPShortcuts()
+    " augroup END
     " let g:LanguageClient_serverCommands = {
     " \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     " \ }
+
     if has("python3")
         if has("nvim")
             Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -95,7 +120,42 @@ if has("timers")
         inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
         let g:deoplete#enable_at_startup = 1
         call add(g:pluginSettingsToExec, "call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])")
-        let g:deoplete#enable_smart_case = 1
+        " let g:deoplete#enable_smart_case = 1
+        call add(g:pluginSettingsToExec, "call deoplete#custom#option('smart_case', v:true)")
+        " complete from syntax files
+		Plug 'Shougo/neco-syntax'
+		Plug 'Shougo/neoinclude.vim'
+       " autocmd FileType x
+       " \ call deoplete#custom#buffer_option('auto_complete', v:false)
+       call add(g:pluginSettingsToExec, "call deoplete#custom#var(
+                   \ 'omni', 'input_patterns', {
+                   \ 'tex': g:vimtex#re#deoplete
+                   \})")
+
+        " deoplete usually only completes from other buffers with the same
+        " filetype. This is a way of adding additional fts to complete from.
+        " Plug 'Shougo/context_filetype.vim'
+        if !exists('g:context_filetype#same_filetypes')
+		  let g:context_filetype#same_filetypes = {}
+		endif
+        " In tex buffers, completes from .bib.
+		let g:context_filetype#same_filetypes.tex = 'bib'
+        " In gitconfig buffers, completes from all buffers.
+		let g:context_filetype#same_filetypes.gitconfig = '_'
+		" " In default, completes from all buffers.
+		" let g:context_filetype#same_filetypes._ = '_'
+        " Todo: Fix context and LanguageClient interactions. For some reason
+        " don't work properly together, and completion from other buffers with
+        " differetn filetypes fails.
+		call add(g:pluginSettingsToExec, "call deoplete#custom#var('buffer', {'require_same_filetype': v:false})")
+        
+        " Plug 'https://github.com/lionawurscht/deoplete-biblatex'
+        Plug 'deoplete-plugins/deoplete-tag'
+        if executable("clang")
+            Plug 'Shougo/deoplete-clangx', {'for': ['c', 'cpp'] }
+        endif
+        exec "Plug 'deoplete-plugins/deoplete-dictionary', { 'for': " . g:proseFileTypes . " }"
+        call add(g:pluginSettingsToExec, "call deoplete#custom#source('dictionary', 'min_pattern_length', 4)")
 
     else
         " Async completion engine, doesn't need extra installation.
@@ -138,11 +198,11 @@ else
 endif
 
 " Python completion, plus some refactor, goto def and usage features.
-Plug 'https://github.com/davidhalter/jedi-vim', { 'do' : 'AsyncRun pip install jedi' }
+Plug 'https://github.com/davidhalter/jedi-vim', {'for' : 'python', 'do' : 'AsyncRun pip install jedi' }
 let g:jedi#use_splits_not_buffers = "right"
 " Using deoplete
-if has_key(g:plugs, 'Shougo/deoplete.nvim')
-    Plug 'https://github.com/zchee/deoplete-jedi'
+if has_key(g:plugs, 'deoplete.nvim')
+    Plug 'deoplete-plugins/deoplete-jedi', {'for' : 'python', 'do' : 'AsyncRun pip install jedi' }
     let g:jedi#completions_enabled = 0
 endif
 let g:jedi#goto_command = "gpc"
@@ -159,7 +219,7 @@ let g:jedi#rename_command = "gpr"
 Plug 'xolox/vim-misc'
 if executable('ctags-exuberant') || executable('ctags')
     if has("python3") && has("nvim")
-        Plug 'c0r73x/neotags.nvim'
+        Plug 'c0r73x/neotags.nvim', {'do': 'make'}
     else
         " Async (7.4+), only vimL...
         " Plug 'LucHermitte/lh-vim-lib'

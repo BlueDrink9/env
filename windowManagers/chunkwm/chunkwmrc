@@ -1,4 +1,5 @@
 #!/bin/bash
+cd $HOME
 XDG_CONFIG_HOME="$HOME/.config"
 if ! pgrep skhd; then
   skhd > $HOME/.logs/skhd.log 2> $HOME/.logs/skhd.err &

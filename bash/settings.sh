@@ -23,12 +23,12 @@ export $TERMOPTIONS
 
 if [ -n "$TMUX" ]; then
   # In a tmux session
-  if [ "$(echo "$TMUX_VERSION < 2.3" | bc)" = 1 ]; then
+  set_tmux_termoptions
+  if [ "$(echo "$TMUX_VERSION < 2.3" | bc)" == 1 ]; then
     if [ "$COLORTERM" == "truecolor" ] || [ "$COLORTERM" == "24bit" ]; then
       COLORTERM=16
     fi
   fi
-  set_tmux_termoptions
 fi
 
 # {]} Terminal settings

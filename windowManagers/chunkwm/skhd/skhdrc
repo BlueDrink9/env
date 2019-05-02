@@ -1,7 +1,7 @@
 # vim:ft=sh
 
-.load chunkwm-bindings
-.load application-shortcuts.skhdrc
+.load "chunkwm-bindings.skhdrc"
+.load "application-shortcuts.skhdrc"
 
 # --------------------
 # skhdrc

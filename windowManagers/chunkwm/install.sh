@@ -10,6 +10,7 @@ eval "$(cat <<END
 do${installID}() {
     printErr "Enabling chunkwm & skhd config..."
     addTextIfAbsent "${installText}" "${baseRC}"
+    chmod +x "${baseRC}"
     doSkhd
     getFloatScripts
   }
