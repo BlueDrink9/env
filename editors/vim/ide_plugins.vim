@@ -219,7 +219,7 @@ let g:jedi#rename_command = "gpr"
 Plug 'xolox/vim-misc'
 if executable('ctags-exuberant') || executable('ctags')
     if has("python3") && has("nvim")
-        Plug 'c0r73x/neotags.nvim'
+        Plug 'c0r73x/neotags.nvim', {'do': 'make'}
     else
         " Async (7.4+), only vimL...
         " Plug 'LucHermitte/lh-vim-lib'
