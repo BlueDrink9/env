@@ -97,6 +97,21 @@ if has("timers")
         call add(g:pluginSettingsToExec, "call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])")
         let g:deoplete#enable_smart_case = 1
 
+        " deoplete usually only completes from other buffers with the same
+        " filetype. This is a way of adding additional fts to complete from.
+        Plug 'Shougo/context_filetype.vim'
+        if !exists('g:context_filetype#same_filetypes')
+		  let g:context_filetype#same_filetypes = {}
+		endif
+        " In tex buffers, completes from .bib.
+		let g:context_filetype#same_filetypes.tex = 'bib'
+        " In gitconfig buffers, completes from all buffers.
+		let g:context_filetype#same_filetypes.gitconfig = '_'
+		" " In default, completes from all buffers.
+		" let g:context_filetype#same_filetypes._ = '_'
+        
+        " Plug 'https://github.com/lionawurscht/deoplete-biblatex'
+
     else
         " Async completion engine, doesn't need extra installation.
         Plug 'maralla/completor.vim'
