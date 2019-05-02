@@ -90,6 +90,9 @@ command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 " {]}
 call plug#begin(s:pluginPath)
 
+cabbrev packi PlugInstall
+cabbrev packu PlugUpdate <bar> PlugUpgrade
+
 let g:pluginSettingsToExec = []
 let g:customHLGroups = []
 
