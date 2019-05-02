@@ -24,11 +24,14 @@ if has('nvim')
 endif
 " Automatically create vimfile directories in same location as vimrc
 function! CreateVimDir(dir)
-    let l:dir = PathExpand('/' . a:dir)
-    if filewritable(g:vimrcdir) && !isdirectory(g:vimrcdir . l:dir)
-        silent exec "call mkdir(\"" . g:vimrcdir . l:dir . "\")"
+    let l:dir = PathExpand(g:vimrcdir . '/' . a:dir)
+    if has('win32')
+        let l:dir = escape(l:dir, '\')
     endif
-    return g:vimrcdir . l:dir
+    if filewritable(g:vimrcdir) && !isdirectory(l:dir)
+        silent exec "call mkdir(\"" . l:dir . "\")"
+    endif
+    return l:dir
 endfunction
 call CreateVimDir("vimfiles")
 
