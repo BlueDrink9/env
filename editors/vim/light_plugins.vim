@@ -156,6 +156,8 @@ Plug 'https://github.com/junegunn/goyo.vim'
 
 " {[} ---------- Prose ----------
 Plug 'https://github.com/tpope/vim-markdown'
+" Plug 'https://github.com/vim-latex/vim-latex'
+
 Plug 'https://github.com/lervag/vimtex'
 " Ensure clean doesn't immediately get overridden...
 nnoremap \lc :VimtexStop<cr>:VimtexClean<cr>
@@ -174,7 +176,6 @@ let g:vimtex_compiler_latexmk = {
     " \ 'options' : [
     " \ ],
     " \}
-" Plug 'https://github.com/vim-latex/vim-latex'
 " let g:Tex_DefaultTargetFormat="pdf"
 if has('win32')
     let g:vimtex_view_general_viewer = 'SumatraPDF'
@@ -183,6 +184,7 @@ if has('win32')
     let g:vimtex_view_general_options_latexmk = '-reuse-instance --unique'
     let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
 endif
+
 Plug 'https://github.com/reedes/vim-pencil'
 Plug 'https://github.com/dkarter/bullets.vim'
 let g:pencil#wrapModeDefault = 'soft'
