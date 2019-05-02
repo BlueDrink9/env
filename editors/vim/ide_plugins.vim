@@ -21,6 +21,10 @@ if v:version >= 703
     " call add (g:customHLGroups, "clear IndentGuidesOdd")
     " " call add (g:customHLGroups, "IndentGuidesOdd ")
 endif
+if exists("v:completed_item")
+    " Shows function args from completion in cmd line.
+    Plug 'Shougo/echodoc.vim'
+endif
 " {]} ---------- Misc ----------
 
 " {[} ---------- Linting ----------
@@ -96,6 +100,10 @@ if has("timers")
         let g:deoplete#enable_at_startup = 1
         call add(g:pluginSettingsToExec, "call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])")
         let g:deoplete#enable_smart_case = 1
+        " complete from syntax files
+		Plug 'Shougo/neco-syntax'
+       " autocmd FileType x
+       " \ call deoplete#custom#buffer_option('auto_complete', v:false)
 
         " deoplete usually only completes from other buffers with the same
         " filetype. This is a way of adding additional fts to complete from.
@@ -111,6 +119,12 @@ if has("timers")
 		" let g:context_filetype#same_filetypes._ = '_'
         
         " Plug 'https://github.com/lionawurscht/deoplete-biblatex'
+        Plug 'deoplete-plugins/deoplete-tag'
+        if executable("clang")
+            Plug 'Shougo/deoplete-clangx', {'for': ['c', 'cpp'] }
+        endif
+        exec "Plug 'deoplete-plugins/deoplete-dictionary', { 'for': " . g:proseFileTypes . " }"
+        call add(g:pluginSettingsToExec, "call deoplete#custom#source('dictionary', 'min_pattern_length', 4)")
 
     else
         " Async completion engine, doesn't need extra installation.
@@ -153,11 +167,11 @@ else
 endif
 
 " Python completion, plus some refactor, goto def and usage features.
-Plug 'https://github.com/davidhalter/jedi-vim', { 'do' : 'AsyncRun pip install jedi' }
+Plug 'https://github.com/davidhalter/jedi-vim', {'for' : 'python', 'do' : 'AsyncRun pip install jedi' }
 let g:jedi#use_splits_not_buffers = "right"
 " Using deoplete
-if has_key(g:plugs, 'Shougo/deoplete.nvim')
-    Plug 'https://github.com/zchee/deoplete-jedi'
+if has_key(g:plugs, 'deoplete.nvim')
+    Plug 'deoplete-plugins/deoplete-jedi', {'for' : 'python', 'do' : 'AsyncRun pip install jedi' }
     let g:jedi#completions_enabled = 0
 endif
 let g:jedi#goto_command = "gpc"
