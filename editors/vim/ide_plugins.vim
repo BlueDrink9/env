@@ -86,7 +86,7 @@ if has("timers")
                 \ 'branch': 'next',
                 \ 'do': 'bash install.sh',
                 \ }
-    function SetLSPShortcuts()
+    function! SetLSPShortcuts()
         nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
         nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
         nnoremap <leader>lf :call LanguageClient#textDocument_formatting()<CR>
