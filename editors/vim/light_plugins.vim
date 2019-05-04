@@ -159,12 +159,13 @@ Plug 'https://github.com/tpope/vim-markdown'
 " Plug 'https://github.com/vim-latex/vim-latex'
 
 Plug 'https://github.com/lervag/vimtex'
-" Ensure clean doesn't immediately get overridden...
-nnoremap \lc :VimtexStop<cr>:VimtexClean<cr>
 " call add(g:pluginSettingsToExec, "let g:vimtex_compiler_latexmk.build_dir = 'latexbuild'")
 call add(g:pluginSettingsToExec, "let g:vimtex_compiler_progname = 'nvr'")
 let g:vimtex_fold_enabled = 1
 let g:vimtex_fold_manual = 1 " instead of expr folding. Speeds up.
+" Omnifunc complete citations, labels, filenames, glossary
+let g:vimtex_complete_enabled = 1
+let g:vimtex_imaps_disabled = []
 " augroup my_vimtex
 "     autocmd!
 "     autocmd Filetype *tex set foldmethod=expr
@@ -181,9 +182,24 @@ if has('win32')
     let g:vimtex_view_general_viewer = 'SumatraPDF'
     let g:vimtex_view_general_options
                 \ = '-reuse-instance -forward-search @tex @line @pdf'
-    let g:vimtex_view_general_options_latexmk = '-reuse-instance --unique'
-    let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
+    let g:vimtex_view_general_options_latexmk = '-reuse-instance'
+    " let g:vimtex_view_general_viewer = 'SumatraPDF'
+    " let g:vimtex_view_general_options
+    "             \ = '-reuse-instance -forward-search @tex @line @pdf'
+    " let g:vimtex_view_general_options_latexmk = '-reuse-instance --unique'
+    " let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
 endif
+function! SetVimtexMappings()
+    " Ensure clean doesn't immediately get overridden...
+    nnoremap <buffer> <leader>lc :VimtexStop<cr>:VimtexClean<cr>
+    inoremap <buffer> <c-b> \textbf{}<left>
+    inoremap <buffer> <c-i> \textit{}<left>
+    inoremap <buffer> <c-`> \texttt{}<left>
+endfunction
+augroup myVimtex
+    au!
+    autocmd Filetype tex :call SetVimtexMappings()
+augroup end
 
 " Alternative to pencil, but modular if you want it.
 " Plug 'vim-pandoc/vim-pandoc'
