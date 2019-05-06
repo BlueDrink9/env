@@ -107,6 +107,9 @@ if has("timers")
     " \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     " \ }
 
+    let g:LanguageClient_serverCommands = {
+                \ 'r': ['R', '--slave', '-e', 'languageserver::run()'],
+                \ }
     if has("python3")
         if has("nvim")
             Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -123,14 +126,14 @@ if has("timers")
         " let g:deoplete#enable_smart_case = 1
         call add(g:pluginSettingsToExec, "call deoplete#custom#option('smart_case', v:true)")
         " complete from syntax files
-		Plug 'Shougo/neco-syntax'
-		Plug 'Shougo/neoinclude.vim'
-       " autocmd FileType x
-       " \ call deoplete#custom#buffer_option('auto_complete', v:false)
-       call add(g:pluginSettingsToExec, "call deoplete#custom#var(
-                   \ 'omni', 'input_patterns', {
-                   \ 'tex': g:vimtex#re#deoplete
-                   \})")
+        Plug 'Shougo/neco-syntax'
+        Plug 'Shougo/neoinclude.vim'
+        " autocmd FileType x
+        " \ call deoplete#custom#buffer_option('auto_complete', v:false)
+        call add(g:pluginSettingsToExec, "call deoplete#custom#var(
+                    \ 'omni', 'input_patterns', {
+                    \ 'tex': g:vimtex#re#deoplete
+                    \})")
 
         " deoplete usually only completes from other buffers with the same
         " filetype. This is a way of adding additional fts to complete from.
@@ -293,6 +296,22 @@ if has('python')
     let g:SimpylFold_docstring_preview = 1
 endif
 " {]} ------ Python ------
+
+" {[} ---------- R ----------
+if !has('nvim') && !has('job')
+    " Unmaintained version that doesn't need vim 8
+    Plug 'jcfaria/vim-r-plugin'
+else
+    Plug 'jalvesaq/Nvim-R'
+endif
+" R output is highlighted with current colorscheme
+let g:rout_follow_colorscheme = 1
+" R commands in R output are highlighted
+let g:Rout_more_colors = 1
+" Requires ncm2
+" Plug 'https://github.com/gaalcaras/ncm-R'
+" {]} ---------- R ----------
+
 " {[} ------ C ------
 Plug 'octol/vim-cpp-enhanced-highlight'
 let g:cpp_class_decl_highlight = 1
