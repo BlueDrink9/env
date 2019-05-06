@@ -8,6 +8,10 @@ SCRIPTDIR_CMD='eval echo $(cd $( dirname "${BASH_SOURCE[0]}" ) && pwd)'
 SCRIPTDIR="$($SCRIPTDIR_CMD)"
 # SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export DOTFILES_DIR="$SCRIPTDIR"
+
+if [[ $OSTYPE =~ 'darwin' ]]; then
+  export $XDG_CONFIG_HOME="$HOME/.config"
+fi
 echo $DOTFILES_DIR > $XDG_CONFIG_HOME/.dotfiles_dir
 # SCRIPT COLORS are kept in this file
 source "$SCRIPTDIR/bash/functions.sh"

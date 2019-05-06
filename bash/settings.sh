@@ -101,6 +101,7 @@ if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
   # export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
   # Custom, created from comparing website and ls man
   export LSCOLORS=exgxbAbAcxbhxbhBhDhcea
+  export $XDG_CONFIG_HOME="$HOME/.config"
 elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
   true
 fi
