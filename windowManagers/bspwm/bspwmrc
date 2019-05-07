@@ -2,10 +2,24 @@
 
 export DOTFILES_DIR="$(cat $HOME/.config/.dotfiles_dir)" && \
 pgrep sxhkd || sxhkd -m -1 -c "$HOME/.config/sxhkd/sxhkdrc" "$DOTFILES_DIR"/windowManagers/bspwm/*.sxhkd &
+xchainkeys_config(){
+  xchainkeysConfigDir="$HOME/config/xchainkeys"
+  # if [ -f "$xchainkeysConfigDir/local.conf" ]; then
+    rm -f "$xchainkeysConfigDir/xchainkeys.conf"
+    export DOTFILES_DIR="$(cat $HOME/.config/.dotfiles_dir)" && \
+      cat "$xchainkeysConfigDir/local.conf" \
+      "$DOTFILES_DIR"/windowManagers/bspwm/*.xchainkeys > \
+      "$xchainkeysConfigDir/xchainkeys.conf"
+  # else
+  #   cat "$xchainkeysConfigDir/xchainkeys.conf" "$DOTFILES_DIR"/windowManagers/bspwm/*.xchainkeys >| "$xchainkeysConfigDir/xchainkeys.conf"
+  # fi
+  unset xchainkeysConfigDir
+}
+# pgrep xchainkeys || xchainkeys_config && xchainkeys &
 
 #  if [[ $(hostname) == 'myhost' ]]; then
 # bspc monitor -d I II III IV V VI VII VIII IX X
-bspc monitor -d I
+bspc monitor -d " " " " " "
 
 bspc_desktop(){
   i=2
@@ -18,6 +32,9 @@ BSPWM_MODE_COLOUR="#00bc00" # dark-ish green
 # bspc config focused_border_color "#247dcc" # dark blue
 # bspc config focused_border_color "#00bcff" # simpler cyan
 
+bsp_border_mode(){
+  bspc config focused_border_color "$BSPWM_MODE_COLOUR"
+}
 bsp_border_reset(){
   bspc config focused_border_color "$BSPWM_FOCUSED_COLOUR"
 }
@@ -88,6 +105,11 @@ bspc rule -a Chromium desktop='^2'
 bspc rule -a mplayer2 state=floating
 bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
+
+if [ "$XDG_CURRENT_DESKTOP" == "KDE" ]; then
+  export DOTFILES_DIR="$(cat $HOME/.config/.dotfiles_dir)" && \
+    . "$DOTFILES_DIR"/windowManagers/bspwm/desktopRules/kde.sh
+fi
 
 
 # cratchpd

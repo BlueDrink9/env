@@ -1,31 +1,36 @@
-# vim:ft=sxhkdrc
-# vim:ft=sh
+# vim: ft=sh
+timeout 2000
+feedback off
+
 #
 #
 # bspwm hotkeys
 #
 
 # quit bspwm normally
-super + alt + Escape
-	bspc quit
-
+H-A-Escape :exec bspc quit
 # close and kill
-super + {_,shift + }x
-	bspc node -{c,k}
+H-x :exec bspc node -c
+H-S-x :exec bspc node -k
 
 # send the newest marked node to the newest preselected node
-super + y
-	bspc node newest.marked.local -n newest.!automatic.local
+H-y :exec bspc node newest.marked.local -n newest.!automatic.local
 
 # swap the current node and the biggest node
-super + g
-	bspc node -s biggest
+H-g	:exec bspc node -s biggest
 
 #----------------------------------------
 # state/flags
 #----------------------------------------
 
+H-w :group "bspwm" bsp_border_mode
+# H-w :group "bspwm" :abort
 
+
+S-up :group "bspwm" musca -c 'resize down'
+S-down :group "bspwm" musca -c 'resize down'
+S-left :group "bspwm" musca -c 'resize left'
+S-right :group "bspwm" musca -c 'resize right'
 # super + w; super + w
 #   bspc config focused_border_color "#247dcc"; xdotool key Escape
 # super + w; Escape
