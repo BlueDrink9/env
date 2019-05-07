@@ -1,11 +1,12 @@
 #! /bin/sh
 
-export DOTFILES_DIR="$(cat $HOME/.config/.dotfiles_dir)" && \
+export DOTFILES_DIR="$(cat $HOME/.config/.dotfiles_dir)"
+# export DOTFILES_DIR="$(cat $HOME/.config/.dotfiles_dir)" && \
 pgrep sxhkd || sxhkd -m -1 -c "$HOME/.config/sxhkd/sxhkdrc" "$DOTFILES_DIR"/windowManagers/bspwm/*.sxhkd &
 
 #  if [[ $(hostname) == 'myhost' ]]; then
 # bspc monitor -d I II III IV V VI VII VIII IX X
-bspc monitor -d I
+bspc monitor -d " " " " " "
 
 bspc_desktop(){
   i=2
