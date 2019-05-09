@@ -25,14 +25,27 @@
 
 [merge]
   conflictstyle = diff3
-  tool = vimdiff
+  # tool = vimdiff
+  # tool = vimdiff4
+  tool = fugative
 [mergetool]
   prompt = false
+  TrustExitCode = true
+[mergetool "fugative"]
+  cmd = vim -f -c "Gdiff" "$MERGED"
+[mergetool "vimdiff4"]
+  cmd = vim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+  TrustExitCode = true
 # Record resolutions of merges to apply automatically if they occur again.
 [rerere]
   enabled = 1
 [diff]
   colorMoved = zebra
+  # tool = vimdiff2
+[difftool]
+  TrustExitCode = true
+[difftool "vimdiff2"]
+  cmd = vim -d $LOCAL $REMOTE
 [pull]
   rebase = true
 [rebase]
