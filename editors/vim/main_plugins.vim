@@ -165,6 +165,8 @@ if executable("git")
     cabbrev gco Gcommit
     cabbrev gup Gcommit --amend --no-edit
     cabbrev gdf Gdiff
+    Plug 'sodapopcan/vim-twiggy'
+
     " Async fugitive
     if g:hasAsyncrun
         call add(g:pluginSettingsToExec, "command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
