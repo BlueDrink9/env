@@ -47,7 +47,7 @@ let g:csv_autocmd_arrange_size = 1024*1024
 call add (g:customHLGroups, "CSVColumnEven guibg=gray90 ctermbg=lightgray")
 call add (g:pluginSettingsToExec, "highlight clear CSVColumnOdd")
 " For switching between header and alt files
-Plug 'vim-scripts/a.vim'
+" Plug 'vim-scripts/a.vim'
 if has('timers')
     " Async, uses better grep tools like ack or ag
     Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
