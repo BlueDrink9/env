@@ -327,8 +327,10 @@ function! s:AirlineColorVarUpdate()
     let s:restoreCS = g:colorSch
     if g:colorSch == "default"
         let g:colorSch = &background
-    endif
-    if g:colorSch =~ "base16"
+    " endif
+    elseif g:colorSch =~ "solarized8"
+        let g:colorSch = "solarized"
+    elseif g:colorSch =~ "base16"
         " Strips off the 'base16-' bit.
         " let g:colorSch = g:colorSch[7:]
         " Only takes the second bit between hyphens.
