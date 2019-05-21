@@ -245,8 +245,10 @@ let &shiftwidth=&tabstop
 let &softtabstop=&shiftwidth
 set smarttab
 " formatoptins: See :h fo-table.
-" Don't format on wrap.
+" Don't break long lines automatically.
 set formatoptions +=l
+" Continue comments
+set formatoptions +=ro
 if v:version >= 704
     " Remove comment leader on join.
     set formatoptions +=j
