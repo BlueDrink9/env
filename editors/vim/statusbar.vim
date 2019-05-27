@@ -1,5 +1,7 @@
 if exists("g:gui_oni")
-    finish
+    " if OniCommand('Oni.configuration.getValue("oni.statusbar.enabled")') == "true"
+        finish
+    " endif
 endif
 " {[} ---------- Airline ----------
 Plug 'https://github.com/vim-airline/vim-airline-themes'
@@ -17,7 +19,8 @@ function! s:AirlineColorVarUpdate()
     if g:colorSch == "default"
         let g:colorSch = &background
     " endif
-    elseif g:colorSch =~ "solarized8"
+    elseif g:colorSch =~ "solarized"
+        " Covers solarized variants like solarized8, neosolarized, etc.
         let g:colorSch = "solarized"
     elseif g:colorSch =~ "base16"
         " Strips off the 'base16-' bit.

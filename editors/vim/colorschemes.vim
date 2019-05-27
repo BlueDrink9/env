@@ -27,9 +27,22 @@ Plug 'https://github.com/chriskempson/base16-vim'
 
 " {[} ---------- Solarized ----------
 " Altercation's version doesn't set gui colors in terminal (no termguicolours)
-Plug 'bluedrink9/vim-colors-solarized'
-" Settings doesn't recommend this...
-let g:solarized_contrast = "high"
+if has("nvim") && &termguicolors == 1
+    Plug 'iCyMind/NeoSolarized'
+    if colorSch =~ "solarized"
+        let colorSch = "NeoSolarized"
+    endif
+    " Settings doesn't recommend this...
+    let g:neosolarized_contrast = "high"
+    let g:neosolarized_bold = 1
+    let g:neosolarized_underline = 1
+    let g:neosolarized_italic = 1
+    let g:neosolarized_vertSplitBgTrans = 1
+else
+    Plug 'bluedrink9/vim-colors-solarized'
+    " Settings doesn't recommend this...
+    let g:solarized_contrast = "high"
+endif
 let g:solarized_termtrans = 0 " 1 displays default term bg instead.
 let g:solarized_menu = 0
 if g:termColors == 16
@@ -41,6 +54,7 @@ elseif g:termColors == 256
     let g:solarized_termcolors=256
 endif
 call add (g:pluginSettingsToExec, "colorscheme " . colorSch)
+
 " {]}
 
 " call add (g:pluginSettingsToExec, "colorscheme " . colorSch)
