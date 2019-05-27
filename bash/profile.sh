@@ -7,6 +7,9 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export DOTFILES_DIR=$(cd "${SCRIPT_DIR}/.." && pwd)
 
 source "${SCRIPT_DIR}/functions.sh"
+if substrInStr "Microsoft" "$([ -f /proc/version ] && cat /proc/version)"; then
+  export isWSL=1
+fi
 
 # test if this is an ssh shell
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
