@@ -533,3 +533,16 @@ alias packrm="pack remove"
 #   infocmp xterm-kitty | \ssh $1 tic -x -o \~/.terminfo /dev/stdin
 # }
 alias kitty_termcopy="kitty +kitten \ssh"
+
+htmlCopyAsRichText(){
+  if [[ "$OSTYPE" =~ "darwin" ]]; then  # OSX specific stuff
+    textutil -stdin -format html -convert rtf -stdout | pbcopy
+  elif [[ "$OSTYPE" =~ "linux" ]]; then  # Linux specific stuff
+    xclip -t text/html -selection clipboard
+  elif [ "${isWSL}" == 1 ]; then  # WSL specific stuff
+    textutil -stdin -format html -convert rtf -stdout | clip.exe
+  fi
+}
+markdownCopyAsRichText(){
+  pandoc $@ -f markdown-smart -t html | htmlCopyAsRichText
+}
