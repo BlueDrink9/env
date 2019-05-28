@@ -27,7 +27,7 @@ sshraw() {
 
 del() {
   fileToDel="$1"
-  fileDir="$(dirname ${fileToDel})"
+  fileDir="$(dirname \"${fileToDel}\")"
   if [[ $OSTYPE == 'linux-gnu' ]]; then
     TRASHDIR=${HOME}/.local/share/Trash/files
   elif [[ $OSTYPE =~ 'darwin' ]]; then
@@ -43,7 +43,7 @@ reclone() {
   if is_git_repository ; then
     remoteUrl=$(git config --get remote.origin.url)
     repoFolder=$(pwd)
-    cd .. && rm -rf ${repoFolder} && git clone ${remoteUrl} && cd ${repoFolder}
+    cd .. && rm -rf "${repoFolder}" && git clone "${remoteUrl}" && cd "${repoFolder}"
   else
     echo "Error: not a git repository ${remoteUrl}"
     return 1
@@ -52,14 +52,14 @@ reclone() {
 
 # provides shortcuts for git cloning
 git_clone() {
-  if [[  "$1" =~ "https://github.com" ]] ; then
-    git clone $1
-  elif [[  "$1" =~ "@github.com" ]] ; then
-    git clone $1
-  elif [[  "$1" =~ "github.com" ]] ; then
-    git clone https://$1
+  if [[  "$1" =~ https://github.com ]] ; then
+    git clone "$1"
+  elif [[  "$1" =~ @github.com ]] ; then
+    git clone "$1"
+  elif [[  "$1" =~ github.com ]] ; then
+    git clone https://"$1"
   else
-    git clone https://github.com/$1
+    git clone https://github.com/"$1"
   fi
 }
 
@@ -77,7 +77,7 @@ term() {
   for term in "${tarray[@]}" ; do
     # if [ $(function_exists "$browser") ]; then
     function_exists "$term"
-    command -v $term >/dev/null 2>&1 # deliberately only get first word of cmd
+    command -v $term >/dev/null 2>&1 # deliberately only get first word of cmd. Don't quote!
     if [ "$?" -eq 0 ]; then
       "$term" "$1"
       break
@@ -544,5 +544,16 @@ htmlCopyAsRichText(){
   fi
 }
 markdownCopyAsRichText(){
-  pandoc $@ -f markdown-smart -t html | htmlCopyAsRichText
+  pandoc "$@" -f markdown-smart -t html | htmlCopyAsRichText
 }
+
+viewCSV(){
+  # Column by default merges empty columns, so add space before all commas to fix
+  sed 's/,/ ,/g' < "$@" | column -s, -t | less -#2 -N -S
+}
+alias csv="viewCSV"
+headCSV(){
+  # Column by default merges empty columns, so add space before all commas to fix
+  sed 's/,/ ,/g' < "$@" | head | column -s, -t
+}
+alias csvCheck="headCSV"
