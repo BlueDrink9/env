@@ -156,6 +156,7 @@ chunkwmMode < 5 : chunkc tiling::window --send-to-desktop 5
 chunkwmMode < 6 : chunkc tiling::window --send-to-desktop 6
 
 # fast focus desktop. Requires extra hack.
+# Alternative is to set these shortcuts under mission control in sys preferences
 chunkwmMode < cmd + alt - x : chunkc tiling::desktop --focus $(chunkc get _last_active_desktop)
 alt - 0x21  : skhd -k "ctrl - left"
 alt - 0x1E  : skhd -k "ctrl - right"
@@ -164,12 +165,12 @@ alt - 0x1E  : skhd -k "ctrl - right"
 # alt - 0x1E  : chunkc tiling::desktop --focus next
 # alt - [  : chunkc tiling::desktop --focus prev
 # alt - ]  : chunkc tiling::desktop --focus next
-chunkwmMode < cmd + alt - 1 : chunkc tiling::desktop --focus 1
-chunkwmMode < cmd + alt - 2 : chunkc tiling::desktop --focus 2
-chunkwmMode < cmd + alt - 3 : chunkc tiling::desktop --focus 3
-chunkwmMode < cmd + alt - 4 : chunkc tiling::desktop --focus 4
-chunkwmMode < cmd + alt - 5 : chunkc tiling::desktop --focus 5
-chunkwmMode < cmd + alt - 6 : chunkc tiling::desktop --focus 6
+chunkwmMode < alt - 1 : chunkc tiling::desktop --focus 1; default
+chunkwmMode < alt - 2 : chunkc tiling::desktop --focus 2; default
+chunkwmMode < alt - 3 : chunkc tiling::desktop --focus 3; default
+chunkwmMode < alt - 4 : chunkc tiling::desktop --focus 4; default
+chunkwmMode < alt - 5 : chunkc tiling::desktop --focus 5; default
+chunkwmMode < alt - 6 : chunkc tiling::desktop --focus 6; default
 # cmd + alt - 7 : chunkc tiling::desktop --focus 7
 
 # send window to desktop and follow focus
@@ -178,14 +179,14 @@ chunkwmMode < shift + cmd - x : chunkc tiling::window --send-to-desktop $(chunkc
 # alt + ctrl - 0x1E  : chunkc tiling::window --send-to-desktop next; chunkc tiling::desktop --focus next
 alt + ctrl - 0x21  : chunkc tiling::window --send-to-desktop prev; skhd -k "ctrl - left" # left bracket
 alt + ctrl - 0x1E  : chunkc tiling::window --send-to-desktop next; skhd -k "ctrl - right" # right bracket
-chunkwmMode < shift + cmd - 1 : chunkc tiling::window --send-to-desktop 1; chunkc tiling::desktop --focus 1
-chunkwmMode < shift + cmd - 2 : chunkc tiling::window --send-to-desktop 2; chunkc tiling::desktop --focus 2
-# shift + cmd - 3 : chunkc tiling::window --send-to-desktop 3; chunkc tiling::desktop --focus 3
-# shift + cmd - 4 : chunkc tiling::window --send-to-desktop 4; chunkc tiling::desktop --focus 4
-# shift + cmd - 4 : chunkc border::clear
-chunkwmMode < shift + cmd - 5 : chunkc tiling::window --send-to-desktop 5; chunkc tiling::desktop --focus 5
-chunkwmMode < shift + cmd - 6 : chunkc tiling::window --send-to-desktop 6; chunkc tiling::desktop --focus 6
-# shift + cmd - 7 : chunkc tiling::window --send-to-desktop 7; chunkc tiling::desktop --focus 7
+chunkwmMode < shift + ctrl - 1 : chunkc tiling::window --send-to-desktop 1; chunkc tiling::desktop --focus 1; default
+chunkwmMode < shift + ctrl - 2 : chunkc tiling::window --send-to-desktop 2; chunkc tiling::desktop --focus 2; default
+chunkwmMode < shift + ctrl - 3 : chunkc tiling::window --send-to-desktop 3; chunkc tiling::desktop --focus 3; default
+chunkwmMode < shift + ctrl - 4 : chunkc tiling::window --send-to-desktop 4; chunkc tiling::desktop --focus 4; default
+chunkwmMode < shift + ctrl - 5 : chunkc tiling::window --send-to-desktop 5; chunkc tiling::desktop --focus 5; default
+chunkwmMode < shift + ctrl - 6 : chunkc tiling::window --send-to-desktop 6; chunkc tiling::desktop --focus 6; default
+chunkwmMode < shift + ctrl - 7 : chunkc tiling::window --send-to-desktop 7; chunkc tiling::desktop --focus 7; default
+shift + cmd - 4 : chunkc border::clear
 
 # focus monitor
 cmd + alt - 0x21  : chunkc tiling::monitor -f prev # left bracket
