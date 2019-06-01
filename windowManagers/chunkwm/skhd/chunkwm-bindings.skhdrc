@@ -117,10 +117,12 @@ chunkwmMode < alt - q : chunkc tiling::window --toggle fade
 chunkwmMode < u : chunkc tiling::window --toggle float;\
           chunkc tiling::window --grid-layout 4:4:1:1:2:2
 
-# toggle sticky
-chunkwmMode < p : chunkc tiling::window --toggle sticky
+# toggle sticky (appears on all desktops) Needs chwm-sa
+# chunkwmMode < p : chunkc tiling::window --toggle sticky
+# pinned. Needs chwm-sa
+chunkwmMode < p : chunkc set window_float_topmost 1
 
-# toggle sticky, float and resize to picture-in-picture size
+# toggle sticky, float and resize to picture-in-picture size. Needs chwm-sa
 chunkwmMode < alt - p : chunkc tiling::window --toggle sticky;\
           chunkc tiling::window --grid-layout 5:5:4:0:1:1
 
@@ -157,6 +159,7 @@ chunkwmMode < 6 : chunkc tiling::window --send-to-desktop 6
 
 # fast focus desktop. Requires extra hack.
 # Alternative is to set these shortcuts under mission control in sys preferences
+# Done under osx setup script
 chunkwmMode < cmd + alt - x : chunkc tiling::desktop --focus $(chunkc get _last_active_desktop)
 alt - 0x21  : skhd -k "ctrl - left"
 alt - 0x1E  : skhd -k "ctrl - right"
