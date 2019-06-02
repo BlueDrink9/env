@@ -2,6 +2,10 @@
 
 source "$DOTFILES_DIR/bash/script_functions.sh"
 
+# Close any open System Preferences panes, to prevent them from overriding
+# settings we’re about to change
+osascript -e 'tell application "System Preferences" to quit'
+
 setKeyboardShortcuts(){
   # https://ryanmo.co/2017/01/05/setting-keyboard-shortcuts-from-terminal-in-macos/
   # Character         Special Key              Abbreviation
@@ -75,6 +79,64 @@ defaults write com.apple.finder QLEnableTextSelection -bool TRUE
 defaults write com.apple.screencapture location ~/Pictures/Screenshots
 # Always Show the User Library Folder
 chflags nohidden ~/Library/
+# Show the /Volumes folder
+sudo chflags nohidden /Volumes
+
+# System Preferences > General > Click in the scrollbar to: Jump to the spot that's clicked
+defaults write -globalDomain "AppleScrollerPagingBehavior" -bool true
+# System Preferences > Mission Control > Automatically rearrange Spaces based on most recent use (don't)
+defaults write com.apple.dock mru-spaces -bool false
+# System Preferences > Mission Controll > Dashboard
+defaults write com.apple.dock dashboard-in-overlay -bool true
+# Finder > Preferences > Show all filename extensions
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+# Finder > Preferences > Show wraning before changing an extension
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+# Finder > View > Show Path Bar
+defaults write com.apple.finder ShowPathbar -bool true
+# No natural scrolling
+defaults write -g com.apple.swipescrolldirection -bool false
+# Disable press-and-hold for keys in favor of key repeat
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+# Set a blazingly fast keyboard repeat rate
+defaults write NSGlobalDomain KeyRepeat -int 1
+defaults write NSGlobalDomain InitialKeyRepeat -int 10
+# Require password delay after sleep or screen saver begins
+# defaults write com.apple.screensaver askForPassword -int 1
+defaults write com.apple.screensaver askForPasswordDelay -int 5
+
+# Set Home as the default location for new Finder windows
+# For other paths, use `PfLo` and `file:///full/path/here/`
+defaults write com.apple.finder NewWindowTarget -string "PfLo"
+defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/"
+# When performing a search, search the current folder by default
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+# Avoid creating .DS_Store files on network or USB volumes
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+# Automatically open a new Finder window when a volume is mounted
+defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
+defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
+defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
+# Enable snap-to-grid for icons on the desktop and in other icon views
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+# Expand the following File Info panes:
+# “General”, “Open with”, and “Sharing & Permissions”
+defaults write com.apple.finder FXInfoPanesExpanded -dict \
+	General -bool true \
+	OpenWith -bool true \
+	Privileges -bool true
+
+# Chrome: Use the system-native print preview dialog
+defaults write com.google.Chrome DisablePrintPreview -bool true
+defaults write com.google.Chrome.canary DisablePrintPreview -bool true
+# Expand the print dialog by default
+defaults write com.google.Chrome PMPrintingExpandedStateForPrint2 -bool true
+defaults write com.google.Chrome.canary PMPrintingExpandedStateForPrint2 -bool true
+
+
 
 # Add colemak, set as current keyboard.
 defaults write "com.apple.HIToolbox" "AppleCurrentKeyboardLayoutInputSourceID" -string  "com.apple.keylayout.Colemak"
@@ -87,9 +149,9 @@ setKeyboardShortcuts
 
 cp "$($SCRIPTDIR_CMD)"/defaults/* ~/Library/LaunchAgents
 for fil in ~/Library/LaunchAgents/*; do
-  sed -i '' "s,@{HOME},$HOME,g" "~/Library/LaunchAgents/$fil"
-  sed -i '' "s,@{DOTFILES_DIR},$DOTFILES_DIR,g" "~/Library/LaunchAgents/$fil"
+  sed -i '' "s,@{HOME},$HOME,g" "$HOME/Library/LaunchAgents/$fil"
+  sed -i '' "s,@{DOTFILES_DIR},$DOTFILES_DIR/g" "$HOME/Library/LaunchAgents/$fil"
 done
 
 # killall Finder
-echo "Restart is needed for OSX shortcuts and settings to take effect
+echo "Restart is needed for OSX shortcuts and settings to take effect"
