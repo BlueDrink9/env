@@ -273,3 +273,6 @@ inoremap {, {<CR>},<Esc>O
 inoremap [<CR> [<CR>]<Esc>O
 inoremap [; [<CR>];<Esc>O
 inoremap [, [<CR>],<Esc>O
+
+" Autocomplete from tags
+inoremap <c-]> <c-x><c-]>
