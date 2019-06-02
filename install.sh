@@ -29,7 +29,8 @@ source "$DOTFILES_DIR/editors/vim/install.sh"
 source "$DOTFILES_DIR/editors/vscode/install.sh"
 source "$DOTFILES_DIR/system/packages/install.sh"
 source "$DOTFILES_DIR/font_install.sh"
-# source "$DOTFILES_DIR/system/ssh/install.sh"
+source "$DOTFILES_DIR/system/ssh/install.sh"
+source "$DOTFILES_DIR/system/OSX/install.sh"
 
 # {]} Setup and variables
 
@@ -92,15 +93,22 @@ readSettings() {
       # if [ "$ALL" == 1 ] || askQuestionYN "Install VSCode extensions?" ; then
       #     installers="$installers vscodeExtensions"
       # fi
-      if [ "$ALL" == 1 ] || askQuestionYN "$set_up X?" ; then
-        installers="$installers doX"
+      #
+      if [ "$OSTYPE" == "linux-gnu" ]; then
+        if [ "$ALL" == 1 ] || askQuestionYN "$set_up X?" ; then
+          installers="$installers doX"
+        fi
+      elif [[ $OSTYPE =~ 'darwin' ]]; then
+        if [ "$ALL" == 1 ] || askQuestionYN "$set_up OSX?" ; then
+          installers="$installers doOSX"
+        fi
+      fi
 
-        if [ "$ALL" == 1 ] || askQuestionYN "$installStr window manager?" ; then
-          if [ "$OSTYPE" == "linux-gnu" ]; then
-            installers="$installers doBspwm"
-          elif [[ $OSTYPE =~ 'darwin' ]]; then
-            installers="$installers doChunkwm"
-          fi
+      if [ "$ALL" == 1 ] || askQuestionYN "$installStr window manager?" ; then
+        if [ "$OSTYPE" == "linux-gnu" ]; then
+          installers="$installers doBspwm"
+        elif [[ $OSTYPE =~ 'darwin' ]]; then
+          installers="$installers doChunkwm"
         fi
       fi
 
