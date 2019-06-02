@@ -105,37 +105,37 @@ case $- in
       # you don't jump straight back into tmux.
       if [ -z "$TMUX" ] && [[ ! $TERM =~ screen ]] && \
         [ -z "$HAVE_LOADED_BASH" ]; then
-        # PNAME="$(ps -o comm= $PPID)";
-        # useTmuxFor="login sshd gnome-terminal init wslbridge-backe"
-        # useTmuxFor="sshd"
-        # if contains "$useTmuxFor" "$PNAME"; then
-        if { [ -n "$SSHSESSION" ] || [ -z "$DISPLAY" ]; }; then
-          # unset HAVE_LOADED_BASH PROFILE_LOADED
-          if tmux ls 2> /dev/null | grep -q -v attached; then
-            $execCmd tmux $TMUX_256_arg attach -t $(tmux ls 2> /dev/null | grep -v attached | head -1 | cut -d : -f 1)
-          else
-            $execCmd tmux $TMUX_256_arg
+              # PNAME="$(ps -o comm= $PPID)";
+              # useTmuxFor="login sshd gnome-terminal init wslbridge-backe"
+              # useTmuxFor="sshd"
+              # if contains "$useTmuxFor" "$PNAME"; then
+              if { [ -n "$SSHSESSION" ] || [ -z "$DISPLAY" ]; }; then
+                # unset HAVE_LOADED_BASH PROFILE_LOADED
+                if tmux ls 2> /dev/null | grep -q -v attached; then
+                  $execCmd tmux $TMUX_256_arg attach -t $(tmux ls 2> /dev/null | grep -v attached | head -1 | cut -d : -f 1)
+                else
+                  $execCmd tmux $TMUX_256_arg
+                fi
+              fi
+            fi
           fi
-        fi
-      fi
-    fi
-    # {]} tmux
+          # {]} tmux
 
   # If available, replace bash with brew version. (More up-to-date than system.)
   # Only if running interactively.
-    if [ -n "$BASH" ] && [ -z "$HAVE_LOADED_BASH" ]; then
-      if [ -n "$HOMEBREW_PREFIX" ]; then
-        brewbash="$HOMEBREW_PREFIX/bin/bash"
-        if [ "$BASH" == "$brewbash" ]; then
-          export HAVE_LOADED_BASH=1
-        elif [ -f "$brewbash" ]; then
-          export SHELL="$brewbash"
-          export HAVE_LOADED_BASH=1
-          # Exec replaces the shell with the specified process.
-          exec "$brewbash" -l
-        fi
+  if [ -n "$BASH" ] && [ -z "$HAVE_LOADED_BASH" ]; then
+    if [ -n "$HOMEBREW_PREFIX" ]; then
+      brewbash="$HOMEBREW_PREFIX/bin/bash"
+      if [ "$BASH" == "$brewbash" ]; then
+        export HAVE_LOADED_BASH=1
+      elif [ -f "$brewbash" ]; then
+        export SHELL="$brewbash"
+        export HAVE_LOADED_BASH=1
+        # Exec replaces the shell with the specified process.
+        exec "$brewbash" -l
       fi
     fi
+  fi
 
 
     # Register keys
