@@ -326,6 +326,7 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 let g:cpp_class_decl_highlight = 1
 let g:cpp_member_variable_highlight = 1
 Plug 'https://github.com/WolfgangMehner/c-support', {'for': ['c', 'cpp'] }
+let g:C_Ctrl_j = 'off'
 Plug 'https://github.com/dragfire/Improved-Syntax-Highlighting-Vim'
 " For extensive cpp IDE stuff.
 " a.vim incompat with replacement provided here.
