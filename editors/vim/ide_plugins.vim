@@ -240,6 +240,13 @@ if executable('ctags-exuberant') || executable('ctags')
         autocmd BufEnter * nested :call tagbar#autoopen(0)
     augroup end
 endif
+
+if executable('cscope')
+    " Automates the process of creating and connecting to database.
+    Plug 'vim-scripts/cscope.vim'
+    nnoremap <leader>if :call cscope#findInteractive(expand('<cword>'))<CR>
+    " nnoremap <leader>l :call ToggleLocationList()<CR>
+endif
 " {]} ---------- Tags----------
 
 " {[} ---------- Snippits ----------
