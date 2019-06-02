@@ -301,14 +301,46 @@ substrTest(){
 # Usage: compareVersionNum num1 '>=' num2, eg:
 # if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.2 ; then
 compareVersionNum () {
+    op=$2
+    num1=$1
+    num2=$3
+    if [ -z "$num1" ] || [ -z "$num2" ] || [ -z "$op" ] ; then
+        echo "Usage: compareVersionNum num1 '>=' num2, eg:" >&2
+        echo "if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.2 ; then" >&2
+        return 2
+    fi
+    if [ "$op" != "<" ] && [ "$op" != "=" ] && [ "$op" != ">" ]; then
+        echo "Invalid operator: '$op'. Valid operators are <, >, =" >&2
+        return 2
+    fi
+  # Sort -V handles version numbers.
+  # Use that and see what reaches the top of the list!
+  smallestVersion="$(echo "$num1" "$num2" | tr " " "\n" | sort -V | head -n1)"
+  if [ "$num1" == "$num2" ]; then
+    res="="
+  elif [ "$num1" == "smallestVersion" ]; then
+    res="<"
+  else
+    res=">"
+  fi
+
+  [ $res == "$op" ]
+  return  # result of previous comparison.
+}
+
+# Compare two dot-separated version numbers.
+# Usage: compareVersionNum num1 '>=' num2, eg:
+# if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.2 ; then
+compareVersionNumNonPosix () {
   op=$2
   num1=$1
   num2=$3
   if [[ $num1 == $num2 ]]
   then
     res="="
-    return [[ $res =~ $op ]]
-  fi
+    [ $res == "$op" ]
+    return  # result of previous comparison.
+fi
 
   local IFS=.
   local i ver1=($num1) ver2=($num2)
