@@ -86,6 +86,10 @@ defaults write "com.apple.HIToolbox" "AppleSelectedInputSources" -array '({ Inpu
 setKeyboardShortcuts
 
 cp "$($SCRIPTDIR_CMD)"/defaults/* ~/Library/LaunchAgents
+for fil in ~/Library/LaunchAgents/*; do
+  sed -i '' "s,@{HOME},$HOME,g" "~/Library/LaunchAgents/$fil"
+  sed -i '' "s,@{DOTFILES_DIR},$DOTFILES_DIR,g" "~/Library/LaunchAgents/$fil"
+done
 
 # killall Finder
 echo "Restart is needed for OSX shortcuts and settings to take effect
