@@ -169,6 +169,9 @@ set ruler
 set incsearch
 " Ignore case in searches excepted if an uppercase letter is used
 set ignorecase smartcase
+if has('nvim')
+    set inccommand=split
+endif
 
 " Highlight search results. Use :noh to undo
 " set hlsearch
