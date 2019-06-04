@@ -567,12 +567,12 @@ alias packrm="pack remove"
 alias kitty_termcopy="kitty +kitten \ssh"
 
 htmlCopyAsRichText(){
-  if [[ "$OSTYPE" =~ "darwin" ]]; then  # OSX specific stuff
+  if [[ "$OSTYPE" =~ "darwin" ]]; then
     textutil -stdin -format html -convert rtf -stdout | pbcopy
-  elif [[ "$OSTYPE" =~ "linux" ]]; then  # Linux specific stuff
-    xclip -t text/html -selection clipboard
   elif [ "${isWSL}" == 1 ]; then  # WSL specific stuff
-    textutil -stdin -format html -convert rtf -stdout | clip.exe
+    pandoc --standalone --from=html --to=rtf --output=- | clip.exe
+  elif [[ "$OSTYPE" =~ "linux" ]] && command -v xclip > /dev/null 2>&1; then  # Linux specific stuff
+    xclip -t text/html -selection clipboard
   fi
 }
 markdownCopyAsRichText(){
