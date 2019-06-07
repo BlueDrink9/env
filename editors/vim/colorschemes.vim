@@ -28,6 +28,7 @@ Plug 'https://github.com/chriskempson/base16-vim'
 " {[} ---------- Solarized ----------
 " Altercation's version doesn't set gui colors in terminal (no termguicolours)
 if has("nvim") && &termguicolors == 1
+    " Includes a few extra highlightgroups for nvim.
     Plug 'iCyMind/NeoSolarized'
     if colorSch =~ "solarized"
         let colorSch = "NeoSolarized"
@@ -38,6 +39,11 @@ if has("nvim") && &termguicolors == 1
     let g:neosolarized_underline = 1
     let g:neosolarized_italic = 1
     let g:neosolarized_vertSplitBgTrans = 1
+elseif exists("g:gui_oni")
+    if colorSch =~ "solarized"
+        " Comes with oni, includes theme.
+        let colorSch = "solarized8"
+    endif
 else
     Plug 'bluedrink9/vim-colors-solarized'
     " Settings doesn't recommend this...
