@@ -109,6 +109,7 @@ if has("timers")
 
     let g:LanguageClient_serverCommands = {
                 \ 'r': ['R', '--slave', '-e', 'languageserver::run()'],
+                \ 'swift': ['sourcekit-lsp'],
                 \ }
     if has("python3")
         if has("nvim")
