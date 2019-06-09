@@ -23,14 +23,20 @@
 :: passthrough : chunkc set focused_border_color 0x55247dcc; \
   chunkc border::color 0x55247dcc
 
-# cmd - w enters window management mode
+# Using this mode, you will time out after 5 seconds and send escape.
+# Can't return directly to default, see koekeishiya/skhd/issues/37.
+:: prefix @ : chunkc border::color 0xFFFAC863; \
+  chunkc set focused_border_color 0x55247dcc; \
+  sleep 5; \
+  skhd -k "escape"
+
+chunkwmMode,passthrough,prefix < escape ; default
+chunkwmMode,passthrough,prefix < return ; default
+# option - w enters window management mode
 alt - w ; chunkwmMode
 chunkwmMode < alt - w ; default
-chunkwmMode < escape ; default
-chunkwmMode < return ; default
+
 alt - q ; passthrough
-passthrough < escape ; default
-passthrough < return ; default
 
 # focus window
 alt - h : chunkc tiling::window --focus west
@@ -145,12 +151,12 @@ chunkwmMode < shift - u : chunkc tiling::desktop --layout float
 chunkwmMode < ctrl - e : chunkc tiling::desktop --deserialize ~/.chunkwm_layouts/dev_1
 chunkwmMode < ctrl - w : chunkc tiling::desktop --serialize ~/.chunkwm_layouts/dev_1
 
-# set insertion point for focused container
+# set insertion point for focused container. Prefixed, so will auto-exit mode.
 chunkwmMode < ctrl - c : chunkc tiling::window --use-insertion-point cancel
-chunkwmMode < h : chunkc tiling::window --use-insertion-point west
-chunkwmMode < j : chunkc tiling::window --use-insertion-point south
-chunkwmMode < k : chunkc tiling::window --use-insertion-point north
-chunkwmMode < l : chunkc tiling::window --use-insertion-point east
+chunkwmMode < h : chunkc tiling::window --use-insertion-point west; skhd -k "escape"
+chunkwmMode < j : chunkc tiling::window --use-insertion-point south; skhd -k "escape"
+chunkwmMode < k : chunkc tiling::window --use-insertion-point north; skhd -k "escape"
+chunkwmMode < l : chunkc tiling::window --use-insertion-point east; skhd -k "escape"
 
 # send window to desktop
 chunkwmMode < shift - x : chunkc tiling::window --send-to-desktop $(chunkc get _last_active_desktop)
