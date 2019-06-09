@@ -13,16 +13,24 @@
 # use for vim, tmux, etc.
 
 # Declare mode. Use green border when in mode, blue otherwise.
+# @ swallows unassigned keybinds so mis-pressing won't type.
 :: chunkwmMode @ : chunkc set focused_border_color 0xff00bc00; \
   chunkc border::color 0xff00bc00
 :: default : chunkc set focused_border_color 0xff247dcc; \
   chunkc border::color 0xff247dcc
+# Passthrough should have nothing associated with it.
+# Border colour is default but transparent.
+:: passthrough : chunkc set focused_border_color 0x55247dcc; \
+  chunkc border::color 0x55247dcc
 
 # cmd - w enters window management mode
 alt - w ; chunkwmMode
 chunkwmMode < alt - w ; default
 chunkwmMode < escape ; default
 chunkwmMode < return ; default
+alt - q ; passthrough
+passthrough < escape ; default
+passthrough < return ; default
 
 # focus window
 alt - h : chunkc tiling::window --focus west
