@@ -373,9 +373,13 @@ let &errorformat="%f:%l:%c: %t%*[^:]:%m,%f:%l: %t%*[^:]:%m," . &errorformat
 let errormarker_disablemappings = 1
 cabbrev er ErrorAtCursor
 Plug 'ryanoasis/vim-devicons'
-" Vdebug for python, pyhp, perl, ruby
 if has("python3")
-    Plug 'https://github.com/vim-vdebug/vdebug'
+    if has("nvim")
+        Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
+    else
+        " Vdebug for python, pyhp, perl, ruby
+        Plug 'https://github.com/vim-vdebug/vdebug'
+    endif
 elseif has("python2")
     Plug 'https://github.com/vim-vdebug/vdebug', {'tag': 'v1.5.2'}
 endif
