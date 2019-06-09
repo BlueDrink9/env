@@ -162,6 +162,10 @@ else
 endif
 "{]}
 
+" Needs to be set before plugins use it. Set here rather than in mappings.
+let mapleader = " "
+let maplocalleader = " b"
+
 set showcmd
 " Show cursor coords
 set ruler

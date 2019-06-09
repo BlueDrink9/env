@@ -191,7 +191,7 @@ if has('win32')
 endif
 function! SetVimtexMappings()
     " Ensure clean doesn't immediately get overridden...
-    nnoremap <buffer> <leader>lc :VimtexStop<cr>:VimtexClean<cr>
+    nnoremap <buffer> <localleader>lc :VimtexStop<cr>:VimtexClean<cr>
     inoremap <buffer> <c-b> \textbf{}<left>
     inoremap <buffer> <c-i> \textit{}<left>
     inoremap <buffer> <c-`> \texttt{}<left>

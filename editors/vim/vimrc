@@ -54,6 +54,8 @@ endif
 " For custom snippets, templates, ftplugins etc kept under VCS.
 let &runtimepath.=',' . s:scriptpath . expand('/runtimepath')
 
+" Mappings after plugins, to override any plugin clobbers (although really, I
+" should just configure the plugins better).
 exec SourceCustoms("functions.vim", "settings.vim", "plugins.vim", "mappings.vim")
 if !exists('colorSch')
     exec 'colorscheme ' . g:defaultColorSch
