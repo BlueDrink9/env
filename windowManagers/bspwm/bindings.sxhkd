@@ -198,6 +198,12 @@ super + shift + z
     bspc desktop '$D –remove; 
   fi
 
+# tdrop to create easy dropdown windows.
+# The positional argument should be the name of a program in $PATH (as opposed to the full path to a program) and should not contain any flags (see -f if you want to pass additional flags to the program when running it). It should always be the last argument.
+# negative -w arg to account for a border width (default: 100%)
+alt + `
+    tdrop -ma --wm bspwm --width -4 --height 40% -y "$PANEL_HEIGHT" -s dropdown kitty
+
 # # These are no longer recommended in sxhkd. Use bspwm config instead.
 # #
 # # Mouse
