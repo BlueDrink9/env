@@ -82,6 +82,9 @@ readSettings() {
         elif substrInStr "Android" "$(uname -a)";  then
           installers="$installers doTermux"
         fi
+        if [[ $OSTYPE =~ 'darwin' ]]; then
+          installers="$installers doiTerm2"
+        fi
         installers="$installers doTmux"
         installers="$installers doXresources"
 

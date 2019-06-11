@@ -40,6 +40,26 @@ undo${installID}(){
 END
 )"
 
+installID="iTerm2"
+
+eval "$(cat <<END
+do${installID}() {
+    printErr "Enabling iTerm2 setup..."
+    # Specify the preferences directory
+    defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "$($SCRIPTDIR_CMD)/iterm2"
+    # Tell iTerm2 to use the custom preferences in the directory
+    defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+  }
+END
+)"
+
+eval "$(cat <<END
+undo${installID}(){
+    true
+  }
+END
+)"
+
 installID="Termux"
 eval "$(cat <<END
 do${installID}() {

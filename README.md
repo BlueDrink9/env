@@ -19,7 +19,7 @@ Some of these are set automatically, but if set manually, should override the de
 | `.bashrc` | `NOTMUX` | set or unset | Affects whether TMUX will start up automatically if there is no display | Before |
 | `.bashrc` | `TMUX_ALLOW_DETACH` | set or unset | Whether tmux replaces the shell via exec, or starts on top of it. If unset, detaching exits the shell session. Good for debugging. | Before |
 | `.bashrc` | `HOMEBREW_PREFIX` | path to brew folder | . | Before |
-| `.bashrc` | `COLOURSCHEME` | Name of current preferred colourscheme. | UK spelling to avoid possible clobber. | Before |
+| `.bashrc` | `COLOURSCHEME` | Name of current preferred colourscheme. Append `_light` or `_dark` to specify vim background. | UK spelling to avoid possible clobber. | Before |
 | `.bashrc` | `CLIP_PROGRAM_COPY` | a command | Accepts input on stdin and sends it to clipboard. Used for ctrl+c in vim insert if clipboard not enabled. | Before |
 | `.bashrc` | `CLIP_PROGRAM_PASTE` | a command | Outputs clipboard to stdout. Used for ctrl+v in vim insert if clipboard not enabled. | Before |
 | `.vimrc` | `colorSch` | Name of preferred vim colourscheme | Allows overriding from term scheme/default of solarized | Before |

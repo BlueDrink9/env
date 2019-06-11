@@ -51,6 +51,7 @@ fi
 if substrInStr "kitty" "$TERM"; then
   COLORTERM="truecolor"
   USENF=${USENF:-1}
+  TERM_PROGRAM="kitty"
 elif substrInStr "Android" "$(uname -a)";  then
   # Termux
   export ISTERMUX=1
@@ -58,6 +59,11 @@ elif substrInStr "Android" "$(uname -a)";  then
   export CLIP_PROGRAM_PASTE="termux-clipboard-get"
   export HOSTNAME="$(getprop net.hostname)"
   export HOST="${HOSTNAME}"
+  TERM_PROGRAM="termux"
+elif [ -n "$ITERM_SESSION_ID" ]; then
+  # Sets term prog, colourterm itself.
+  USENF=${USENF:-1}
+  COLOURSCHEME=${COLOURSCHEME:-SOLARIZED_DARK}
 elif substrInStr "Apple" "$TERM_PROGRAM"; then
   COLORTERM=16
 elif substrInStr "screen" "$TERM"; then
