@@ -9,15 +9,6 @@ else
     let s:scriptpath = expand('<sfile>:p:h')
 endif
 
-" Set colorScheme variable for use in other settings
-" Doesn't override preset scheme
-" Background should always be set after colorscheme.
-if exists('&g:colors_name')
-    let colorSch = g:colors_name
-endif
-" Only used if colorSch not set (plugins didn't get loaded)
-let g:defaultColorSch="morning"
-
 set encoding=utf-8
 filetype plugin indent on
 " For highlighting, and color schemes
@@ -28,8 +19,50 @@ augroup my_syntax
     autocmd BufWinEnter,Syntax * syn sync minlines=100 | syn sync maxlines=200
 augroup END
 
+" {[} Colours
 let s:defaultBGGUI="light"
 let s:defaultBGConsole="light"
+let s:defaultColorSch="solarized"
+
+" Set colorScheme variable for use in other settings
+" Doesn't override preset scheme
+" Background should always be set after colorscheme.
+" Not sure if this still needs to be here if loaded before plugins...
+if exists('&g:colors_name')
+    let colorSch = g:colors_name
+endif
+" Only used if colorSch not set (plugins didn't get loaded)
+let g:fallbackColorSch="morning"
+
+if !exists ('colorSch')
+    if exists("$COLOURSCHEME")
+        if !exists ('g:backgroundColour')
+            if $COLOURSCHEME=~"light"
+                let g:backgroundColour="light"
+            elseif $COLOURSCHEME=~"dar"
+                let g:backgroundColour="dark"
+            endif
+        endif
+        let colorSch=substitute($COLOURSCHEME, '_dark', '', '')
+        let colorSch=substitute(colorSch, '_light', '', '')
+  else
+    let colorSch=s:defaultColorSch
+  endif
+endif
+" {]} Colours
+
+if !exists ('g:backgroundColour')
+    if has("gui_running")
+        let g:backgroundColour=s:defaultBGGUI
+    else
+        " Default fallback for console bg colour
+        let g:backgroundColour=s:defaultBGConsole
+    endif
+endif
+
+exec 'set background=' . g:backgroundColour
+
+
 "{[} GUI
 if has("gui_running")
     " GUI is running or is about to start.
@@ -61,7 +94,7 @@ if has("gui_running")
     " endif
     " " {]} ----------- Shell ----------
 
-    " Gui defaults to idevim
+    " Gui used to default to idevim
     if !exists('g:ideMode')
         let g:ideMode = 0
     endif
@@ -84,10 +117,6 @@ if has("gui_running")
     set mousemodel="popup_setpos"
     " Default fallback for gui bg colour
     let g:termColors="24bit"
-    if !exists ('g:backgroundColour')
-        let g:backgroundColour=s:defaultBGGUI
-    endif
-    exec 'set background=' . g:backgroundColour
     " if !exists('&guifont')
     if &guifont == ""
         let s:useFont = "Source\\ Code\\ Pro\\ Medium"
@@ -115,24 +144,6 @@ else
     set mouse=a
 
     " {[} Colours
-    " If the current iTerm tab has been
-    " created using the **dark** profile:
-    if $ITERM_PROFILE == 'Solarized Dark'
-        let g:backgroundColour="dark"
-    endif
-    " If the current iTerm tab has been
-    " created using the **light** profile:
-    if $ITERM_PROFILE == 'Solarized Light'
-        let g:backgroundColour="light"
-    endif
-
-    " Default fallback for console bg colour
-    " if !exists ('&background')
-    if !exists ('g:backgroundColour')
-        let g:backgroundColour=s:defaultBGConsole
-    endif
-    exec "set background=".g:backgroundColour
-
     " Use true colors
     if has("termguicolors") && exists("$COLORTERM") &&
                 \ ($COLORTERM =~ "truecolor" || $COLORTERM =~ "24bit")

@@ -1,14 +1,6 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
 "
-if !exists ('colorSch')
-  if exists("$COLOURSCHEME")
-    let colorSch=$COLOURSCHEME
-  else
-    let colorSch="solarized"
-  endif
-endif
-
 augroup colourschemes
     autocmd!
     autocmd colorscheme * let colorSch = get(g:, 'colors_name', 'default')
