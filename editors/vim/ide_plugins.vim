@@ -131,10 +131,11 @@ if has("timers")
         Plug 'Shougo/neoinclude.vim'
         " autocmd FileType x
         " \ call deoplete#custom#buffer_option('auto_complete', v:false)
-        call add(g:pluginSettingsToExec, "call deoplete#custom#var(
-                    \ 'omni', 'input_patterns', {
+        call add(g:pluginSettingsToExec, "
+                    \ call deoplete#custom#var('omni', 'input_patterns', {
                     \ 'tex': g:vimtex#re#deoplete
-                    \})")
+                    \})
+                    \")
 
         " deoplete usually only completes from other buffers with the same
         " filetype. This is a way of adding additional fts to complete from.
@@ -150,8 +151,10 @@ if has("timers")
 		" let g:context_filetype#same_filetypes._ = '_'
         " Todo: Fix context and LanguageClient interactions. For some reason
         " don't work properly together, and completion from other buffers with
-        " differetn filetypes fails.
-		call add(g:pluginSettingsToExec, "call deoplete#custom#var('buffer', {'require_same_filetype': v:false})")
+        " different filetypes fails.
+		call add(g:pluginSettingsToExec, "
+        \ call deoplete#custom#var('buffer', 'require_same_filetype', v:false)
+                    \")
         
         " Plug 'https://github.com/lionawurscht/deoplete-biblatex'
         Plug 'deoplete-plugins/deoplete-tag'
