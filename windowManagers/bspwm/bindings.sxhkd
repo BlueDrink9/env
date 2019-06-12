@@ -32,18 +32,18 @@ super + g
 #   xdotool key Escape; bsp_border_reset
 
 # # set the window state
-super + w; shift + {t,ctrl + t,u,m}
-	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}; bsp_border_reset
+# super + w; shift + {t,ctrl + t,u,m}
+# 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}; bsp_border_reset
 
-super + w; p
-	bspc node -g sticky; bsp_border_reset
+# super + w; p
+# 	bspc node -g sticky; bsp_border_reset
 # # set the node flags
-super + w; ctrl + {m,x,y,z}
-	bspc node -g {marked,locked,sticky,private}; bsp_border_reset
+# super + w; ctrl + {m,x,y,z}
+# 	bspc node -g {marked,locked,sticky,private}; bsp_border_reset
 
 # # Toggle floating mode for current window
-super + w; u
-	bspc node -t '~floating'; bsp_border_reset
+# super + w; u
+# 	bspc node -t '~floating'; bsp_border_reset
 # # alternate between the tiled and monocle layout
 super + shift + m
 	bspc desktop -l next
@@ -52,6 +52,9 @@ super + shift + m
 super + w; super + c
 	pkill -USR1 -x sxhkd; bsp_border_reset
   # killall sxhkd && sxhkd -m -1 -c "$HOME/.config/sxhkd/sxhkdrc" "$DOTFILES_DIR"/windowManagers/bspwm/*.sxhkd &
+
+super + {minus, plus} 
+  bspc node {-g hidden, $(bspc query -N -n .hidden | tail -n1) -g hidden=off}
 
 # #
 # # move/resize
@@ -63,15 +66,15 @@ super + w; r: shift + {Left,Down,Up,Right}
 	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}; bsp_border_reset
 
 # # contract a window by moving one of its side inward
-super + w; ctrl + shift + {Left,Down,Up,Right}
-	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}; bsp_border_reset
+# super + w; ctrl + shift + {Left,Down,Up,Right}
+# 	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}; bsp_border_reset
 
 # # move a floating window
-super + w; {Left,Down,Up,Right}
-	bspc node -v {-20 0,0 20,0 -20,20 0}; bsp_border_reset
+# super + w; {Left,Down,Up,Right}
+# 	bspc node -v {-20 0,0 20,0 -20,20 0}; bsp_border_reset
 
-super + w
-  bspc config focused_border_color "$BSPWM_MODE_COLOUR"
+# super + w
+#   bspc config focused_border_color "$BSPWM_MODE_COLOUR"
 
 #----------------------------------------
 # focus/swap
@@ -181,28 +184,22 @@ super + ctrl + shift + space
 
 # Pseudo-minimize (to desktop "O")
 super + z
-  D=$(bspc query –desktops –desktop focused); 
-  W=$(bspc query –windows –window focused); 
-  bspc query –desktops | grep -q “‘$D” || bspc monitor –add-desktops '$D; 
-  bspc window $W --to-desktop \'$D
+  D=$(bspc query –desktops –desktop focused);
+  W=$(bspc query –windows –window focused);
+  bspc query –desktops | grep -q "$D" || bspc monitor –add-desktops $D;
+  bspc window $W --to-desktop $D
 
 # Restore all minimized windows from this desktop
 super + shift + z
-  D=$(bspc query –desktops –desktop focused); 
-  if bspc query –desktops | grep -q “‘$D”; then 
-    for i in $(bspc query –windows –desktop '$D); do 
-      bspc window $i –to-desktop $D; 
-      bspc window $i –focus; 
-      bspc window –swap biggest; 
-    done; 
-    bspc desktop '$D –remove; 
+  D=$(bspc query –desktops –desktop focused);
+  if bspc query –desktops | grep -q "$D"; then
+    for i in $(bspc query –windows –desktop $D); do
+      bspc window $i –to-desktop $D;
+      bspc window $i –focus;
+      bspc window –swap biggest;
+    done;
+    bspc desktop $D –remove;
   fi
-
-# tdrop to create easy dropdown windows.
-# The positional argument should be the name of a program in $PATH (as opposed to the full path to a program) and should not contain any flags (see -f if you want to pass additional flags to the program when running it). It should always be the last argument.
-# negative -w arg to account for a border width (default: 100%)
-alt + `
-    tdrop -ma --wm bspwm --width -4 --height 40% -y "$PANEL_HEIGHT" -s dropdown kitty
 
 # # These are no longer recommended in sxhkd. Use bspwm config instead.
 # #
