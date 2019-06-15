@@ -148,8 +148,9 @@ chunkwmMode < shift - t : chunkc tiling::desktop --layout bsp
 chunkwmMode < shift - m : chunkc tiling::desktop --layout monocle
 chunkwmMode < shift - u : chunkc tiling::desktop --layout float
 
-chunkwmMode < ctrl - e : chunkc tiling::desktop --deserialize ~/.chunkwm_layouts/dev_1
-chunkwmMode < ctrl - w : chunkc tiling::desktop --serialize ~/.chunkwm_layouts/dev_1
+# Functions specified in chunkwmrc.
+chunkwmMode < ctrl - w : chunkwm_serialize
+chunkwmMode < ctrl - e : chunkwm_deserialize
 
 # set insertion point for focused container. Prefixed, so will auto-exit mode.
 chunkwmMode < ctrl - c : chunkc tiling::window --use-insertion-point cancel
