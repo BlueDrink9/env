@@ -17,11 +17,14 @@
 :: chunkwmMode @ : chunkc set focused_border_color 0xff00bc00; \
   chunkc border::color 0xff00bc00
 :: default : chunkc set focused_border_color 0xff247dcc; \
-  chunkc border::color 0xff247dcc
+  chunkc border::color 0xff247dcc; \
+  chunkc core::load ffm.so
 # Passthrough should have nothing associated with it.
+# Also disable ffm to allow cmd-dragging.
 # Border colour is default but transparent.
 :: passthrough : chunkc set focused_border_color 0x55247dcc; \
-  chunkc border::color 0x55247dcc
+  chunkc border::color 0x55247dcc; \
+  chunkc core::unload ffm.so
 
 # Using this mode, you will time out after 5 seconds and send escape.
 # Can't return directly to default, see koekeishiya/skhd/issues/37.
