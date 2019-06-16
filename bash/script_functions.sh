@@ -68,7 +68,7 @@ downloadURLAndExtractZipTo() {
   downloadURLAndExtractTo zip "$@"
 }
 downloadURLAndExtractGzTo() {
-  downloadURLAndExtractTo Gz "$@"
+  downloadURLAndExtractTo gz "$@"
 }
 
 downloadURLAndExtractTo() {
@@ -89,7 +89,7 @@ downloadURLAndExtractTo() {
     zip)
       unzip -o "$tmpfile" -d "$destDir" # > /dev/null
       ;;
-    *.gz)
+    *gz)
       tar -xzf "$tmpfile" -C "$destDir"
       ;;
     *)
