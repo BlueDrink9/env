@@ -125,6 +125,7 @@ case $- in
               fi
             fi
           fi
+          unset TMUX_256_arg
           # {]} tmux
 
   # If available, replace bash with brew version. (More up-to-date than system.)
