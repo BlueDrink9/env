@@ -1,55 +1,14 @@
 #!/bin/bash
 cd $HOME
 XDG_CONFIG_HOME="$HOME/.config"
+export DOTFILES_DIR=$(cat "${XDG_CONFIG_HOME}/.dotfiles_dir")
+export CHUNKWM_CONFIG_DIR="$DOTFILES_DIR/env/windowManagers/chunkwm"
 if ! pgrep skhd; then
   skhd > $HOME/.logs/skhd.log 2> $HOME/.logs/skhd.err &
 fi
 
-requestUserText(){
-  prompt="${1:-No prompt specified}"
-  default="${2:-default}"
-  echo $(osascript -e "text returned of (display dialog \"$prompt\" default answer \"$default\")")
-  unset prompt
-  unset default
-}
-chunkwm_serialize(){
-  layoutDir="$HOME/.config/chunkwm/layouts/"
-  mkdir -p "$layoutDir"
-  layout=$(requestUserText "Name of layout?" "default")
-  chunkc tiling::desktop --serialize "$layoutDir/$layout"
-  unset layoutDir
-  unset layout
-}
-
-requestFile(){
-  defaultDir="${1:-$HOME}"
-  osascript <<-EndOfScript
-set theFile to choose file with prompt "Please choose a file:" default location "$defaultDir"
-set theFilePosix to (the POSIX path of theFile)
-theFilePosix
-EndOfScript
-unset defaultDir
-}
-chunkwm_deserialize(){
-  layoutDir="$HOME/.config/chunkwm/layouts/"
-  mkdir -p "$layoutDir"
-  layoutFile=$(requestFile "$layoutDir")
-  chunkc tiling::desktop --deserialize "$layoutFile"
-  unset layoutDir
-  unset layoutFile
-}
-
-chunkc tiling::rule --owner workrave --state float &
-chunkc tiling::rule --owner \"System Preferences\" --subrole AXStandardWindow --state tile
-chunkc tiling::rule --owner Finder --name Copy --state float &
-chunkc tiling::rule --owner Finder --name Move --state float &
-chunkc tiling::rule --owner Archive Utility --state float &
-chunkc tiling::rule --owner \"App Store\" --state float &
-chunkc tiling::rule --owner \"Word*\" --state tile &
-chunkc tiling::rule --owner \"OneNote*\" --state tile &
-chunkc tiling::rule --owner \"PowerPoint*\" --state tile &
-chunkc tiling::rule --owner \"Excel*\" --state tile &
-chunkc tiling::rule --owner kitty --alpha 0.9 &
+. "$CHUNKWM_CONFIG_DIR/functions.sh"
+. "$CHUNKWM_CONFIG_DIR/rules.sh"
 
 # NOTE: if enabled, chunkwm will monitor the specified plugin_dir
 #       and automatically reload any '.so' file that is changed.
