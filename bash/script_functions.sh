@@ -77,6 +77,7 @@ downloadURLAndExtractTo() {
   extension=${1:-default}
   url=${2:-default}
   destDir=${3:-default}
+  urlFilename="${url##*/}"
   if [ "$url" = "default" ] || [ "$destDir" = "default" ]; then
     printErr "Error: Invalid url or dest"
   fi
@@ -85,17 +86,31 @@ downloadURLAndExtractTo() {
   fi
   tmpfile="$(mktemp).$extension"
   downloadURLtoFile "$url" "$tmpfile"
+  set -x
   case "$extension" in
     zip)
       unzip -o "$tmpfile" -d "$destDir" # > /dev/null
       ;;
     *gz)
-      tar -xzf "$tmpfile" -C "$destDir"
+      # gzip doesn't have a way to specify the output dir.
+      # Instead, we will name it the end of the url, minus extension.
+      # Destdir includes slash, make note.
+      local gunzipName="${urlFilename%.*}"
+      tar -xkzf "$tmpfile" -C "${destDir}" || \
+        gunzip -ck "$tmpfile" > "${destDir}"/"${gunzipName}"
+      ;;
+    bz2)
+      tar -xkzjf "$tmpfile" -C "$destDir"
       ;;
     *)
       printErr "Invalid extension: \"$extension\""
   esac
-  printErr "${Red}unzipped${NC}"
+  set +x
+  if [ $? -eq 0 ]; then
+    printErr "${Red}unzipped${NC}"
+  else
+    printErr "Error unzipping"
+  fi
   rm -f "$tmpfile"
 }
 
