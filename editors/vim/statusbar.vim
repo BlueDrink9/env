@@ -68,7 +68,7 @@ if !exists('g:webdevicons_enable')
     " If a nerd font is found, assume powerline-compat, as well as devicons.
     "
 
-    if has("gui_running")
+    if g:hasGUI
         let s:guiUsesNerdFont = 
                     \ &guifont =~ "Nerd" ||
                     \ &guifont =~ "Sauce"

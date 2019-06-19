@@ -9,6 +9,23 @@ else
     let s:scriptpath = expand('<sfile>:p:h')
 endif
 
+" Set colorScheme variable for use in other settings
+" Doesn't override preset scheme
+" Background should always be set after colorscheme.
+if exists('&g:colors_name')
+    let colorSch = g:colors_name
+endif
+" Only used if colorSch not set (plugins didn't get loaded)
+let g:defaultColorSch="morning"
+
+
+if has("gui_running") || exists("g:gui_oni")
+    let g:hasGUI=1
+else
+    let g:hasGUI=0
+endif
+
+
 set encoding=utf-8
 filetype plugin indent on
 " For highlighting, and color schemes
@@ -52,7 +69,7 @@ endif
 " {]} Colours
 
 if !exists ('g:backgroundColour')
-    if has("gui_running")
+    if g:hasGUI
         let g:backgroundColour=s:defaultBGGUI
     else
         " Default fallback for console bg colour
@@ -64,7 +81,7 @@ exec 'set background=' . g:backgroundColour
 
 
 "{[} GUI
-if has("gui_running")
+if g:hasGUI
     " GUI is running or is about to start.
     " {[} ----------- Shell ----------
     " if has("win32") || has("win64")
@@ -384,7 +401,7 @@ let g:netrw_winsize = 25
 
 " Put buffer name in window title
 function! s:SetTitle()
-    if has("gui_running")
+    if g:hasGUI
         " Exclude "Vim" for guivim (because it'll have a logo)
         let l:app = ""
     elseif has("nvim")

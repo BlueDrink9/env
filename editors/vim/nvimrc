@@ -2,7 +2,7 @@
 " set the cursor style when vim exits
 " au VimLeave * set guicursor=a:block-blinkon0
 if has('win32') || has ('win64')
-    let $VIMHOME = $VIM."/vimfiles"
+    let $VIMHOME = $VIM."\vimfiles"
 else
     let $VIMHOME = $HOME."/.vim"
 endif
@@ -18,4 +18,8 @@ let &packpath=&runtimepath
 " let g:python3_host_skip_check=1
 " let g:python3_host_prog = system('which python3')
 
-source ~/.vimrc
+if has('win32') || has ('win64')
+    source ~/_vimrc
+else
+    source ~/.vimrc
+endif

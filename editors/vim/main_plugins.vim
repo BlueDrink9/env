@@ -104,7 +104,7 @@ let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
 " Maybe ide candidates...
 " Fuzzy finder
 " fzf only works in terminal, use ctrlp otherwise
-if has('gui_running') && !has('terminal')
+if g:hasGUI && !has('terminal')
     Plug 'https://github.com/ctrlpvim/ctrlp.vim'
     let g:ctrlp_cmd = 'CtrlPMixed'
     let g:ctrlp_map = '<leader>f'
@@ -122,7 +122,7 @@ else
       " Vim.
     nnoremap <leader>f :FZF<CR>
     " {[} Use proper fzf colours in gvim
-    if has('gui_running')
+    if g:hasGUI
         let g:fzf_colors =
                     \ { 'fg':      ['fg', 'Normal'],
                     \ 'bg':      ['bg', 'Normal'],

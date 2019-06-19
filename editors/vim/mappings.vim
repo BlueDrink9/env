@@ -127,8 +127,8 @@ else
         let s:copy=$CLIP_PROGRAM_COPY
         let s:paste=$CLIP_PROGRAM_PASTE
     elseif has("win32")
-        let s:paste = paste.exe
-        let s:copy = clip.exe
+        let s:paste = "paste.exe"
+        let s:copy = "clip.exe"
 
     elseif has("unix")
         let s:uname = system("uname")
@@ -278,3 +278,5 @@ inoremap [, [<CR>],<Esc>O
 
 " Autocomplete from tags
 inoremap <c-]> <c-x><c-]>
+
+cabbrev pathCopy let @+ = expland("%")
