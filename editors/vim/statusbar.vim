@@ -1,5 +1,9 @@
 if exists("g:gui_oni")
     " if OniCommand('Oni.configuration.getValue("oni.statusbar.enabled")') == "true"
+        set noshowmode
+        set noruler
+        set laststatus=0
+        set noshowcmd
         finish
     " endif
 endif
