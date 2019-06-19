@@ -570,7 +570,7 @@ htmlCopyAsRichText(){
   if [[ "$OSTYPE" =~ "darwin" ]]; then
     textutil -stdin -format html -convert rtf -stdout | pbcopy
   elif [ "${isWSL}" == 1 ]; then  # WSL specific stuff
-    pandoc --standalone --from=html --to=rtf --output=- | clip.exe
+    pandoc.exe --standalone --from=html --to=rtf --output=- | clip.exe
   elif [[ "$OSTYPE" =~ "linux" ]] && command -v xclip > /dev/null 2>&1; then  # Linux specific stuff
     xclip -t text/html -selection clipboard
   fi
