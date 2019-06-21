@@ -31,6 +31,13 @@ if !exists('g:skipPipInstall') && has('nvim')
 endif
 
 " {[} ---------- Misc ----------
+" :GhostTextStart/Stop
+if has('nvim')
+    Plug 'raghur/vim-ghost', {'do': ':GhostInstall'}
+elseif has("channel") && has('python')
+    " :GhostStart/Stop
+    Plug 'atkenny15/vim-ghosttext'
+endif
 " ga on char shows all representations, not just dec oct hex.
 Plug 'https://github.com/tpope/vim-characterize'
 Plug 'https://github.com/metalelf0/supertab' " Fork with a failing feature removed
