@@ -11,10 +11,21 @@ Plug 'https://github.com/morhetz/gruvbox'
 Plug 'https://github.com/jnurmine/Zenburn'
 Plug 'https://github.com/tomasr/molokai'
 Plug 'dracula/vim', { 'as': 'dracula' }
+
 " {[} ---------- Base16 ----------
 " If using a Base16 terminal theme designed to keep the 16 ANSI colors intact (a "256" variation) and have sucessfully modified your 256 colorspace with base16-shell you'll need to add the following to your ~/.vimrc before the colorsheme declaration.
+" Should override COLOURSCHEME settings by setting colorSch
 " let base16colorspace=256  " Access colors present in 256 colorspace
-Plug 'https://github.com/chriskempson/base16-vim'
+" if has('nvim')
+"   Plug 'Soares/base16.nvim'
+" else
+  Plug 'https://github.com/chriskempson/base16-vim'
+" endif
+if filereadable(expand("~/.vimrc_background")) && exists($BASE16_THEME)
+  let base16colorspace=256
+  call add(g:pluginSettingsToExec, "source ~/.vimrc_background")
+  call add(g:pluginSettingsToExec, "let colorSch=g:colors_name")
+endif
 " {]} ---------- Base16 ----------
 
 " {[} ---------- Solarized ----------
@@ -51,11 +62,13 @@ if g:termColors == 16
 elseif g:termColors == 256
     let g:solarized_termcolors=256
 endif
-call add (g:pluginSettingsToExec, "colorscheme " . colorSch)
 
 " {]}
 
-" call add (g:pluginSettingsToExec, "colorscheme " . colorSch)
+" Double expansion so variables are set at the right time (after plugin
+" load).
+call add (g:pluginSettingsToExec, "exec 'colorscheme ' . colorSch")
+" call add (g:pluginSettingsToExec, "exec 'echom colorSch'")
 call add (g:customHLGroups, "MatchParen cterm=bold,underline ctermbg=lightgray")
 call add (g:customHLGroups, "MatchParen gui=bold,underline guibg=gray90")
 " call add (g:customHLGroups, "link MatchParen CursorColumn")
