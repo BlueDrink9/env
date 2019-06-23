@@ -34,6 +34,13 @@ fi
 
 # {]} Terminal settings
 
+base16_colourscheme_set(){
+  if [ -n "$BASE16_THEME" ]; then
+    export COLOURSCHEME="base16-${BASE16_THEME}"
+  fi
+}
+export PROMPT_COMMAND="base16_colourscheme_set; ${PROMPT_COMMAND}"
+
 # Source .dir_colours
 if [ -x /usr/bin/dircolors ]; then
   test -r ~/.dircolours_solarized && eval "$(dircolors -b ~/.dircolours_solarized)" || eval "$(dircolors -b)"
