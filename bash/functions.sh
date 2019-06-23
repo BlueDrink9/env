@@ -589,3 +589,11 @@ headCSV(){
   sed 's/,/ ,/g' < "$@" | head | column -s, -t
 }
 alias csvCheck="headCSV"
+
+base16Reset(){
+  unset BASE16_THEME
+  unset COLOURSCHEME
+  rm ~/.vimrc_background
+  rm ~/.base16_theme
+  reset
+}
