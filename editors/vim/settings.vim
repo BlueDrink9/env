@@ -532,6 +532,10 @@ augroup quickfixloclist
     endif
 augroup END
 
+augroup my_paste
+  au InsertLeave * set nopaste
+augroup END
+
 if $TERM =~ 'kitty'
     let &t_ut=''
 endif

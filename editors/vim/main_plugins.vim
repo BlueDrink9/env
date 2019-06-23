@@ -77,8 +77,10 @@ Plug 'https://github.com/haya14busa/incsearch.vim'
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
-" Autoset Paste/nopaste
-Plug 'https://github.com/ConradIrwin/vim-bracketed-paste'
+if v:version < 800 && !has('nvim')
+  " Autoset Paste/nopaste
+  Plug 'https://github.com/ConradIrwin/vim-bracketed-paste'
+endif
 " Allows plugin maps to use '.' to repeat
 Plug 'https://github.com/tpope/vim-repeat'
 " Adds indent block as text object. ii , ai or aI
