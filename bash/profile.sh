@@ -78,8 +78,8 @@ if [ -z "$SSHSESSION" ]; then
   fi
   if [ -n "$ISTERMUX" ]; then
     COLORTERM="truecolor"
+    export NOTMUX=1
   fi
-  export NOTMUX=1
 fi
 
 # brew paths. Only before load to avoid loading twice.
