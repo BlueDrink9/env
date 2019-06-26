@@ -25,8 +25,6 @@ set_bash_prompt () {
 
   #set_git_prompt
   #GIT_STATUS_PROMPT="${BRANCH}"
-  # \e]0 escapes to window title, \a ends it.
-  WINDOW_TITLE_BASH_PATH="\[\e]2;[\W] \u@\h: [\w] ${GIT_BRANCH} – Bash\a\]"
 
   if [ -z ${USER} ] ; then
     export USER=$(id -u -n)
