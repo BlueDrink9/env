@@ -35,6 +35,7 @@ installBase16Shell(){
 installLiquidprompt(){
   printErr "Downloading liquidprompt..."
   git clone https://github.com/nojhan/liquidprompt.git ~/.config/liquidprompt
+  addTextIfAbsent "source \"$($SCRIPTDIR_CMD)/prompt/liquidprompt/liquidpromptrc\"" "${HOME}/.config/liquidpromptrc"
 }
 
 eval "$(cat <<END
