@@ -32,6 +32,10 @@ installBase16Shell(){
   git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
 }
 
+installLiquidprompt(){
+  printErr "Downloading liquidprompt..."
+  git clone https://github.com/nojhan/liquidprompt.git ~/.config/liquidprompt
+}
 
 eval "$(cat <<END
 undo${installID}(){

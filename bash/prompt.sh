@@ -3,6 +3,7 @@
 #
 # blueDrink9 custom bash prompt. Relies on 2 other files.
 # Assumes a solarised terminal, with 16 colours.
+# Don't load normal prompt if liquidprompt installed.
 
 # # If not running interactively, don't do anything
 case $- in
@@ -19,8 +20,6 @@ source ${SCRIPT_DIR}/colour_variables.sh
 export PS3="Select: "
 # Used with -x for debugging bash
 export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
-
-# FLASHING="\[\E[5m\]"
 
 # prompt_escape(){
 #   echo "\\[$1\\]"
@@ -51,6 +50,14 @@ if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.2 ; then
   fi
 fi
 
+if [ -z "${LIQUIDPROMPT_DIR}" ]; then
+  LIQUIDPROMPT_DIR="$HOME/.config/liquidprompt/"
+fi
+if [ -s "${LIQUIDPROMPT_DIR}/liquidprompt" ]; then
+  source "${LIQUIDPROMPT_DIR}/liquidprompt"
+  # Don't load normal prompt if liquidprompt installed.
+  return
+fi
 
 # colourVars="
 # Blue
@@ -81,7 +88,7 @@ set_bash_prompt () {
     GIT_BRANCH="$(get_git_branch)"
     if [ ! "${GIT_BRANCH}" == "" ]
     then
-      GIT_STATUS_PROMPT="$(parse_git_branch)"
+      GIT_STATUS_PROMPT="$(prompt_parse_git_branch)"
     else
       GIT_STATUS_PROMPT=""
     fi
@@ -189,17 +196,10 @@ set_prompt_symbol () {
   fi
 }
 
-# Tell bash to execute this function just before displaying its prompt.
-PROMPT_COMMAND="set_bash_prompt; ${PROMPT_COMMAND}"
-
-# if hash tmux > /dev/null 2>&1 && tmux info > /dev/null 2>&1; then
-#   PROMPT_COMMAND=$PROMPT_COMMAND && tmux rename-window "$WINDOW_TITLE_BASH_PATH"
-# fi
-
 # get current branch in git repo
 # Check status of branch
 # pgreen if no changes, yellow if modified. Cyan if there are misc changes to files.
-parse_git_branch() {
+prompt_parse_git_branch() {
   STATUS_COLOUR=${pNC}
   BRANCH=$(get_git_branch)
   if [ ! "${BRANCH}" == "" ]
@@ -263,3 +263,11 @@ parse_git_branch() {
   unset GIT_PROMPT STATUS_COLOUR BRANCH bits deleted renamed newfile \
     diverged behind ahead untracked clean dirty status STATUS
   }
+
+# Tell bash to execute this function just before displaying its prompt.
+PROMPT_COMMAND="set_bash_prompt; ${PROMPT_COMMAND}"
+
+# if hash tmux > /dev/null 2>&1 && tmux info > /dev/null 2>&1; then
+#   PROMPT_COMMAND=$PROMPT_COMMAND && tmux rename-window "$WINDOW_TITLE_BASH_PATH"
+# fi
+
