@@ -12,6 +12,7 @@ do${installID}() {
   addTextIfAbsent "${installText}" "${baseRC}"
 
   installDircolours
+  installBase16Shell
   doReadline
   gitSettings
 }
@@ -24,6 +25,11 @@ installDircolours(){
       https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.256dark  \
       "${HOME}/.dircolours_solarized"
   # https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-universal
+}
+
+installBase16Shell(){
+  printErr "Downloading base16-shell..."
+  git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
 }
 
 

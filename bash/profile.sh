@@ -129,7 +129,8 @@ case $- in
           # {]} tmux
 
   # If available, replace bash with brew version. (More up-to-date than system.)
-  # Only if running interactively.
+  # # # Only if running interactively. (Done in outer case statement, not
+  # here.)
   if [ -n "$BASH" ] && [ -z "$HAVE_LOADED_BASH" ]; then
     if [ -n "$HOMEBREW_PREFIX" ]; then
       brewbash="$HOMEBREW_PREFIX/bin/bash"
@@ -152,6 +153,16 @@ case $- in
     fi
     # Do this manually instead, using keybinding.
     # lastpass_ssh_key_add
+
+    if [ -z "${BASE16_SHELL}" ]; then
+      BASE16_SHELL="$HOME/.config/base16-shell/"
+    fi
+
+    if [ -d "${BASE16_SHELL}" ]; then
+      [ -n "$PS1" ] && \
+        [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+        eval "$("$BASE16_SHELL/profile_helper.sh")"
+    fi
 
     # {[} fzf
     if [ -f ~/.fzf.bash ]; then
