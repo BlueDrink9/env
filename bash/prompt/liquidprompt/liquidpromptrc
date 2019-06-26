@@ -1,0 +1,7 @@
+# vim: set ft=sh:
+# vim:ts=2:sw=2
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# \e]0 escapes to window title, \a ends it.
+WINDOW_TITLE_BASH_PATH="\[\e]2;[\W] \u@\h: [\w] ${GIT_BRANCH} – Bash\a\]"

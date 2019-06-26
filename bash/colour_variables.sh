@@ -1,6 +1,8 @@
 # # If not running interactively outside a script, don't do anything
 if [ ! -t 0 ]; then return; fi
 
+# FLASHING="\[\E[5m\]"
+
 # Normal Colors
 Black='\e[0;30m'        # Black
 Red='\e[0;31m'          # Red

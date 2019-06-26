@@ -27,7 +27,7 @@ source "${SCRIPT_DIR}/functions.sh"
 source "${SCRIPT_DIR}/settings.sh"
 BASH_ENV="${SCRIPT_DIR}/aliases.sh" # Aliases are used for all readline apps.
 source "${SCRIPT_DIR}/aliases.sh"
-source "${SCRIPT_DIR}/prompt.sh"
+source "${SCRIPT_DIR}/prompt/promptrc.sh"
 
 # Unset include guards to allow refreshing
 unset BASH_FUNCTIONS_LOADED SCRIPT_FUNCTIONS_LOADED

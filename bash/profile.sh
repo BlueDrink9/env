@@ -157,7 +157,6 @@ case $- in
     if [ -z "${BASE16_SHELL}" ]; then
       BASE16_SHELL="$HOME/.config/base16-shell/"
     fi
-
     if [ -d "${BASE16_SHELL}" ]; then
       [ -n "$PS1" ] && \
         [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
