@@ -6,27 +6,6 @@
 
 source ${SCRIPT_DIR}/../colour_variables.sh
 
-# colourVars="
-# Blue
-# Yellow
-# Green
-# On_Black
-# NC
-# White
-# Cyan
-# Red
-# "
-# prompt_escape(){
-#   echo "\\[$1\\]"
-# }
-# escape_colours(){
-#   # Replace colour sequence with its escaped cousin.
-#   colarray=($colourVars)
-#   for colour in "${colarray[@]}" ; do
-#     printf -v $colour $(prompt_escape ${!colour})
-#   done
-# }
-
 # Set the full bash prompt.
 set_bash_prompt () {
   # Set the PROMPT_SYMBOL variable. We do this first so we don't lose the
