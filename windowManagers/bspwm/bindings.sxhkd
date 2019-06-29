@@ -120,6 +120,13 @@ super + {_,shift + }{1-9,0}
   # bspc desktop -f {prev,next}.local
   # bspc desktop focused -r && \
 
+# Swap desktops within current monitor
+super + shift + alt + bracket{left,right}
+  bspc desktop -s {prev,next}
+# Move desktop to different monitor
+super + shift + ctrl + bracket{left,right}
+  bspc desktop -m {prev,next}
+
 # Just numbers is used to launch taskbar shortcuts.
 # focus or send to the given desktop
 # super + shift {1-9,0}
