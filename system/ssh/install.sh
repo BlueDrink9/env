@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
 source "$DOTFILES_DIR/bash/script_functions.sh"
 installID="SSH"
-installText="Include \"$($SCRIPTDIR_CMD)/ssh_config\""
-baseRC="${HOME}/.ssh/ssh_config"
+installText="Include \"$($SCRIPTDIR_CMD)/config\""
+baseRC="${HOME}/.ssh/config"
 
 eval "$(cat <<END
 do${installID}() {
     printErr "Enabling SSH config..."
     # Note: Includes only added since 7.3p1
-
     addTextIfAbsent "${installText}" "${baseRC}"
+
     modify_SSH_env_keys
+    git clone https://gitlab.com/BlueDrink9/shared-ssh-servers.git $HOME/.ssh/shared_servers
 }
 END
 )"
