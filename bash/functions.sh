@@ -323,6 +323,7 @@ compareVersionNum () {
   else
     res=">"
   fi
+  unset op num1 num2 smallestVersion
 
   [ $res == "$op" ]
   return  # result of previous comparison.
