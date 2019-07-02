@@ -4,3 +4,5 @@ openssh
 wget
 grep
 root-repo
+unstable-repo
+lastpass-cli
