@@ -332,7 +332,10 @@ let g:Rout_more_colors = 1
 let R_esc_term = 0
 let R_assign = 3
 let R_latex_build_dir = 'latexbuild'
-let R_openhtml = 2
+" This seems to no longer be permitted, despite still being in the
+" docs...
+" let R_openhtml = 2 " Reload, or open if not.
+let R_openhtml = 1 " Always open
 let g:markdown_fenced_languages = ['r', 'python']
 let g:rmd_fenced_languages = ['r', 'python']
 " {[} Mappings
