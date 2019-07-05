@@ -103,9 +103,12 @@ if has("timers")
     "   autocmd!
     "   autocmd FileType cpp,c call SetLSPShortcuts()
     " augroup END
+    " let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
+    " let g:LanguageClient_settingsPath = '/home/YOUR_USERNAME/.config/nvim/settings.json'
     " let g:LanguageClient_serverCommands = {
     " \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     " \ }
+    let g:LanguageClient_autoStart = 1
 
     let g:LanguageClient_serverCommands = {
                 \ 'r': ['R', '--slave', '-e', 'languageserver::run()'],
@@ -123,7 +126,10 @@ if has("timers")
         " deoplete tab-complete
         inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
         let g:deoplete#enable_at_startup = 1
-        call add(g:pluginSettingsToExec, "call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])")
+        call add(g:pluginSettingsToExec,
+                    \ "call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])")
+        call add(g:pluginSettingsToExec,
+                    \ "call deoplete#custom#source('LanguageClient', 'min_pattern_length', 2)")
         " let g:deoplete#enable_smart_case = 1
         call add(g:pluginSettingsToExec, "call deoplete#custom#option('smart_case', v:true)")
         " complete from syntax files
@@ -131,9 +137,13 @@ if has("timers")
         Plug 'Shougo/neoinclude.vim'
         " autocmd FileType x
         " \ call deoplete#custom#buffer_option('auto_complete', v:false)
+        call add(g:pluginSettingsToExec, "call deoplete#custom#option('omni_patterns', {
+                    \ 'r': '[^. *\t]\.\w*',
+                    \})")
         call add(g:pluginSettingsToExec, "
                     \ call deoplete#custom#var('omni', 'input_patterns', {
-                    \ 'tex': g:vimtex#re#deoplete
+                    \ 'tex': g:vimtex#re#deoplete,
+                    \ 'r': '[^. *\t]\.\w*'
                     \})
                     \")
 
