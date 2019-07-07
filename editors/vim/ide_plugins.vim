@@ -99,6 +99,16 @@ if has("timers")
         nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
     endfunction()
 
+    let g:LanguageClient_diagnosticsDisplay = { 1: { "name": "Error",
+                \ "signText": "X", },
+                \ 2: { "name": "Warning",
+                \ "signText": "!", },
+                \ 3: { "name": "Information",
+                \ "signText": "ℹ" },
+                \ 4: { "name": "Hint",
+                \ "signText": "?" }
+                \ }
+
     " augroup LSP
     "   autocmd!
     "   autocmd FileType cpp,c call SetLSPShortcuts()
@@ -109,8 +119,18 @@ if has("timers")
     " \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     " \ }
     let g:LanguageClient_autoStart = 1
+    let g:LanguageClient_autoStop = 1
+    " Displays all messages at end of line. Way too annoying for anything
+    " other than warnings.
+    let g:LanguageClient_useVirtualText = 0
+    " for documentation. Effective only when the floating window feature is
+    " supported.
+    let g:LanguageClient_useFloatingHover = 1
+    " Always preview with a hover rather than preview buffer.
+    " let g:LanguageClient_hoverPreview = 'never'
 
     let g:LanguageClient_serverCommands = {
+                \ '_': ['ale', ''],
                 \ 'r': ['R', '--slave', '-e', 'languageserver::run()'],
                 \ 'swift': ['sourcekit-lsp'],
                 \ }
@@ -135,17 +155,24 @@ if has("timers")
         " complete from syntax files
         Plug 'Shougo/neco-syntax'
         Plug 'Shougo/neoinclude.vim'
+
+        " Completion sources {[}
+        " Completion sources for vimscript
+        Plug 'Shougo/neco-vim'
+        Plug 'artur-shaik/vim-javacomplete2'
+        " Completion sources {]}
         " autocmd FileType x
         " \ call deoplete#custom#buffer_option('auto_complete', v:false)
         call add(g:pluginSettingsToExec, "call deoplete#custom#option('omni_patterns', {
                     \ 'r': '[^. *\t]\.\w*',
                     \})")
+
         call add(g:pluginSettingsToExec, "
                     \ call deoplete#custom#var('omni', 'input_patterns', {
                     \ 'tex': g:vimtex#re#deoplete,
                     \ 'r': '[^. *\t]\.\w*'
                     \})
-                    \")
+                    \ ")
 
         " deoplete usually only completes from other buffers with the same
         " filetype. This is a way of adding additional fts to complete from.
@@ -171,8 +198,13 @@ if has("timers")
         if executable("clang")
             Plug 'Shougo/deoplete-clangx', {'for': ['c', 'cpp'] }
         endif
-        exec "Plug 'deoplete-plugins/deoplete-dictionary', { 'for': " . g:proseFileTypes . " }"
-        call add(g:pluginSettingsToExec, "call deoplete#custom#source('dictionary', 'min_pattern_length', 4)")
+        Plug 'deoplete-plugins/deoplete-dictionary'
+        " exec "Plug 'deoplete-plugins/deoplete-dictionary',
+        "             \ { 'for': " . g:proseFileTypes . " }"
+        call add(g:pluginSettingsToExec,
+                    \ "call deoplete#custom#source('dictionary', 'min_pattern_length', 4)")
+        call add(g:pluginSettingsToExec,
+                    \ "call deoplete#custom#source('buffer', 'rank', 9999)")
 
     else
         " Async completion engine, doesn't need extra installation.
