@@ -23,6 +23,12 @@ let maplocalleader = " b"
 " This may not work very well...
 " map <SPACE>b <localleader>
 
+if has('nvim') || has('terminal')
+  tnoremap <Esc> <C-\><C-n>
+  tnoremap <C-v><Esc> <Esc>
+  tnoremap <C-q><Esc> <Esc>
+endif
+
 " {[} Abbreviations
 " Abbreviations are used in insert and command modes unless specified.
 abbrev <expr> [d] strftime("%Y-%m-%d")
@@ -41,6 +47,13 @@ nnoremap <C-j> <C-W>j
 nnoremap <C-k> <C-W>k
 nnoremap <C-h> <C-W>h
 nnoremap <C-l> <C-W>l
+
+if has('nvim') || has('terminal')
+  tnoremap <C-h> <c-\><c-n><c-w>h
+  tnoremap <C-j> <c-\><c-n><c-w>j
+  tnoremap <C-k> <c-\><c-n><c-w>k
+  tnoremap <C-l> <c-\><c-n><c-w>l
+endif
 
 " {[} Open windows to the left, right, up, down, like in tmux
 function! s:SaveSplitSide()
