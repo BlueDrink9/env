@@ -10,5 +10,9 @@ chunkc tiling::rule --owner \"Word*\" --state tile &
 chunkc tiling::rule --owner \"OneNote*\" --state tile &
 chunkc tiling::rule --owner \"PowerPoint*\" --state tile &
 chunkc tiling::rule --owner \"Excel*\" --state tile &
+chunkc tiling::rule --owner PowerPoint --state tile &
+chunkc tiling::rule --owner Excel --state tile &
+chunkc tiling::rule --owner Word --state tile &
+chunkc tiling::rule --owner OneNote --state tile &
 chunkc tiling::rule --owner kitty --alpha 0.9 &
 
