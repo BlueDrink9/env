@@ -6,6 +6,9 @@ augroup colourschemes
     autocmd colorscheme * let colorSch = get(g:, 'colors_name', 'default')
 augroup end
 
+Plug 'reedes/vim-colors-pencil'
+let g:pencil_higher_contrast_ui = 0   " 0=low (def), 1=high
+let g:pencil_terminal_italics = 1
 Plug 'https://github.com/vim-scripts/oceandeep'
 Plug 'https://github.com/morhetz/gruvbox'
 Plug 'https://github.com/jnurmine/Zenburn'
