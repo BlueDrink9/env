@@ -8,10 +8,13 @@ eval "$(cat <<END
 do${installID}() {
     printErr "Enabling SSH config..."
     # Note: Includes only added since 7.3p1
-    addTextIfAbsent "${installText}" "${baseRC}"
+    addTextIfAbsent "Host *
+    ${installText}" "${baseRC}"
 
     modify_SSH_env_keys
-    git clone https://gitlab.com/BlueDrink9/shared-ssh-servers.git $HOME/.ssh/shared_servers
+    if [ ! -d "$HOME/.ssh/shared_servers" ]; then
+      git clone https://gitlab.com/BlueDrink9/shared-ssh-servers.git $HOME/.ssh/shared_servers
+    fi
 }
 END
 )"
