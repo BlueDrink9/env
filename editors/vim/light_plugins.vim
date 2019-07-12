@@ -205,7 +205,7 @@ function! SetVimtexMappings()
     " Ensure clean doesn't immediately get overridden...
     nnoremap <buffer> <localleader>lc :VimtexStop<cr>:VimtexClean<cr>
     inoremap <buffer> <c-b> \textbf{}<left>
-    inoremap <buffer> <c-i> \textit{}<left>
+    inoremap <buffer> <c-e> \textit{}<left>
     inoremap <buffer> <c-`> \texttt{}<left>
 endfunction
 augroup myVimtex
