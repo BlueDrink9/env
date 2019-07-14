@@ -318,14 +318,14 @@ compareVersionNum () {
   smallestVersion="$(echo "$num1" "$num2" | tr " " "\n" | sort -V | head -n1)"
   if [ "$num1" == "$num2" ]; then
     res="="
-  elif [ "$num1" == "smallestVersion" ]; then
+  elif [ "$num1" == "$smallestVersion" ]; then
     res="<"
   else
     res=">"
   fi
-  unset op num1 num2 smallestVersion
 
-  [ $res == "$op" ]
+  # Use eval to unset without spoiling return code.
+  eval "unset op num1 num2 smallestVersion res; [ \"$res\" == \"$op\" ]"
   return  # result of previous comparison.
 }
 
