@@ -218,6 +218,8 @@ augroup end
 Plug 'https://github.com/reedes/vim-pencil'
 Plug 'https://github.com/dkarter/bullets.vim'
 let g:pencil#wrapModeDefault = 'soft'
+let g:pencil#conceallevel=2
+let g:pencil#concealcursor=""
 let g:pencil#autoformat_blacklist = [
             \ 'markdownCode',
             \ 'markdownUrl',
