@@ -37,9 +37,13 @@ function! s:AirlineColorVarUpdate()
         let g:colorSch = "default"
     endif
     if g:colorSch == "default"
-        let g:colorSch = &background
-    endif
+        " let g:colorSch = &background
+        " If theme is unset, Airline will pick from theme highlight colours to
+        " get a nice match.
+        unlet g:airline_theme
+    else
     let g:airline_theme=g:colorSch
+    endif
     exec 'let g:airline_' . g:colorSch . '_bg="' . &background . '"'
     let g:colorSch=s:restoreCS
 endfunction
