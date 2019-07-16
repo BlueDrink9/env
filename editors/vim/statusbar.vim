@@ -20,14 +20,7 @@ endif
 
 function! s:AirlineColorVarUpdate()
     let s:restoreCS = g:colorSch
-    " Any schemes not defined for airline
-    if g:colorSch == "morning"
-      let g:colorSch = "default"
-    endif
-    if g:colorSch == "default"
-        let g:colorSch = &background
-    " endif
-    elseif g:colorSch =~ "base16"
+    if g:colorSch =~ "base16"
         " Strips off the 'base16-' bit.
         " let g:colorSch = g:colorSch[7:]
         " Only takes the second bit between hyphens.
@@ -38,12 +31,21 @@ function! s:AirlineColorVarUpdate()
         " After base16 so it doesn't catch base16-solarized-*.
         let g:colorSch = "solarized"
     endif
+    " Any schemes not defined for airline
+    if exists ('*airline#util#themes()') && 
+                \ (index(airline#util#themes(g:colorSch), g:colorSch) == -1)
+        let g:colorSch = "default"
+    endif
+    if g:colorSch == "default"
+        let g:colorSch = &background
+    endif
     let g:airline_theme=g:colorSch
     exec 'let g:airline_' . g:colorSch . '_bg="' . &background . '"'
     let g:colorSch=s:restoreCS
 endfunction
 
 call s:AirlineColorVarUpdate()
+let g:airline_highlighting_cache = 1
 let g:airline#extensions#wordcount#enabled = 1
 let g:airline_solarized_normal_green = 1
 let g:airline_solarized_dark_inactive_border = 1
