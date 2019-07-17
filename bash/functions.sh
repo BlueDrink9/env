@@ -22,7 +22,7 @@ mkcd() {
 }
 
 sshraw() {
-  ssh "$@" -t '/bin/bash --norc'
+  \ssh "$@" -t '/bin/bash --norc'
 }
 
 del() {
