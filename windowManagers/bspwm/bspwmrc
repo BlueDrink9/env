@@ -50,10 +50,10 @@ bspc config apply_floating_atom    true
 bspc config history_aware_focus    true
 
 # Don’t replay the click that makes a window focused.
-bspc config swallow_first_click
+bspc config swallow_first_click true
 # When focusing a window/monitor, put the pointer at its center.
-bspc config pointer_follows_focus
-bspc config pointer_follows_monitor
+bspc config pointer_follows_focus true
+bspc config pointer_follows_monitor true
 
 bspc config pointer_modifier mod4 # super
 bspc config pointer_action1 move
