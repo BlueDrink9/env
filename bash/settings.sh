@@ -6,12 +6,19 @@ BASH_VERSION_CLEAN="${BASH_VERSION//[^0-9.]*/}"
 # Prevent duplicating
 PROMPT_COMMAND=""
 
-# You know it, baby. Shouldn't need to use nano ever
-# export EDITOR="vim --noplugin --cmd \"let g:noPlugins=1\""
-# export VISUAL="vim --cmd \"let g:liteMode=1\""
-export VISUAL="liteVim"
-export GIT_EDITOR="$VISUAL"
 export XDG_CONFIG_HOME="$HOME/.config"
+
+# You know it, baby. Shouldn't need to use nano ever
+visual(){ vim --cmd "let g:liteMode=1"; }
+export VISUAL=visual
+editor(){ vim --noplugin --cmd "let g:noPlugins=1"; }
+export EDITOR=editor
+shelleditor(){ vim --cmd "let g:liteMode=1" +'set ft=sh'; }
+export FCEDIT=shelleditor
+giteditor(){ vim --cmd "let g:liteMode=1" +'set ft=gitcommit'; }
+# The above trick doesn't work with git, but the regular one does.
+# Don't actually need to set ft, but leaving it for specificity.
+export GIT_EDITOR='vim --cmd "let g:liteMode=1" +"set ft=gitcommit"'
 
 # {[} Terminal settings
 

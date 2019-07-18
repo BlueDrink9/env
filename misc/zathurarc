@@ -1,0 +1,50 @@
+set selection-clipboard clipboard
+set window-title-home-tilde true
+set statusbar-basename true
+set statusbar-home-tilde true
+set show-scrollbars true
+
+# :(
+# map ; :
+# map [normal] ; :
+# map [fullscreen] ; :
+
+unmap d
+map [normal] d scroll half-down
+map [fullscreen] d scroll half-down
+map [normal] u scroll half-up
+map [fullscreen] u scroll half-up
+
+map [normal]     <PageUp>   navigate previous
+map [fullscreen] <PageUp>   navigate previous
+map [normal]     <PageDown> navigate next
+map [fullscreen] <PageDown> navigate next
+
+# Why are these only defined for normal mode by default?
+map [fullscreen] a adjust_window best-fit
+map [fullscreen] s adjust_window width
+map [fullscreen] f follow
+map [fullscreen] d toggle_page_mode 2
+map [fullscreen] <Tab> toggle_index
+map [fullscreen] j scroll down
+map [fullscreen] k scroll up
+map [fullscreen] <C-d> scroll half-down
+map [fullscreen] <C-u> scroll half-up
+map [fullscreen] <C-o> jumplist backward
+map [fullscreen] <C-i> jumplist forward
+
+
+
+# colors
+set recolor-darkcolor  "#FFFFFF"
+set recolor-lightcolor "#333333"
+set statusbar-fg "#000000"
+set statusbar-bg "#C2BFA5"
+set inputbar-fg "#FFFFFF"
+set inputbar-bg "#333333"
+set completion-highlight-fg "#F0E68C"
+set completion-highlight-bg "#6B8E23"
+# set highlight-color "#CD853F"
+# set highlight-active-color "#F0E68C"
+set notification-fg "#FFFFFF"
+set notification-bg "#333333"
