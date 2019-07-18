@@ -9,7 +9,7 @@ PROMPT_COMMAND=""
 # You know it, baby. Shouldn't need to use nano ever
 # export EDITOR="vim --noplugin --cmd \"let g:noPlugins=1\""
 # export VISUAL="vim --cmd \"let g:liteMode=1\""
-export VISUAL="vim"
+export VISUAL="liteVim"
 export GIT_EDITOR="$VISUAL"
 export XDG_CONFIG_HOME="$HOME/.config"
 

@@ -3,6 +3,7 @@ tsu
 openssh
 wget
 grep
+expect
 root-repo
 unstable-repo
 lastpass-cli

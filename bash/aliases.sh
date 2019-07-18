@@ -1,4 +1,4 @@
-# vim: foldmethod=marker foldmarker={[},{]}
+# vim: foldmethod=marker foldmarker={[},{]}{[}{]}
 
 # Always used
 shopt -s expand_aliases
@@ -72,9 +72,15 @@ elif [ -e /usr/bin/vimx ]; then
   alias vim="/usr/bin/vimx"
 fi
 
-alias idevim="vim --cmd \"let g:ideMode=1\""
 # Much faster startup for vim without plugins.
-alias vi="vim --cmd \"let g:liteMode=1\""
+IDEVim(){
+  vim --cmd "let g:ideMode=1" "$@"
+}
+alias idevim="IDEVim"
+liteVim(){
+  vim --cmd "let g:liteMode=1" "$@"
+}
+alias vi="liteVim"
 alias lvi="vim --noplugin --cmd \"let g:noPlugins=1\""
 alias view="vi -R"
 
