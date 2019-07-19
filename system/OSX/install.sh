@@ -16,7 +16,7 @@ END
 
 eval "$(cat <<END
 undo${installID}(){
-    echo "No undo avaiable for osx settings. Reset manually or create a new user
+    echo "No undo avaiable for osx settings. Reset manually or create a new user"
   }
 END
 )"

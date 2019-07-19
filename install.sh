@@ -12,6 +12,8 @@ export DOTFILES_DIR="$SCRIPTDIR"
 if [[ $OSTYPE =~ 'darwin' ]]; then
   export $XDG_CONFIG_HOME="$HOME/.config"
 fi
+# $XDG_CONFIG_HOME_DEFAULT="$HOME/.config"
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 echo $DOTFILES_DIR > $XDG_CONFIG_HOME/.dotfiles_dir
 # SCRIPT COLORS are kept in this file
 source "$SCRIPTDIR/bash/functions.sh"
