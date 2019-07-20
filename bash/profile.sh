@@ -148,8 +148,9 @@ case $- in
 
     # Register keys
     if [ -z "$SSH_AUTH_SOCK" ]; then
-      # Decay after 120 mins
-      eval $(ssh-agent -t 120m) > /dev/null # 2>&1
+      # Decay after -t mins, or indefinitely.
+      # eval $(ssh-agent -t 160m) > /dev/null # 2>&1
+      eval $(ssh-agent) > /dev/null # 2>&1
     fi
     # Do this manually instead, using keybinding.
     # lastpass_ssh_key_add
