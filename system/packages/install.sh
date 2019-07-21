@@ -22,6 +22,7 @@ installList(){
     list="$1"
     while read -r package; do
         if [ "${package:0:1}" != "#" ]; then
+            export HOMEBREW_NO_AUTO_UPDATE=1
             pack install $package
         fi
     done < "$list"
