@@ -86,7 +86,7 @@ if has("timers")
                 \ 'branch': 'next',
                 \ 'do': 'bash install.sh',
                 \ }
-    function! SetLSPShortcuts()
+    function! s:SetLSPShortcuts()
         nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
         nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
         nnoremap <leader>lf :call LanguageClient#textDocument_formatting()<CR>
@@ -109,10 +109,6 @@ if has("timers")
                 \ "signText": "?" }
                 \ }
 
-    " augroup LSP
-    "   autocmd!
-    "   autocmd FileType cpp,c call SetLSPShortcuts()
-    " augroup END
     " let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
     " let g:LanguageClient_settingsPath = '/home/YOUR_USERNAME/.config/nvim/settings.json'
     " let g:LanguageClient_serverCommands = {
@@ -129,6 +125,10 @@ if has("timers")
     " Always preview with a hover rather than preview buffer.
     " let g:LanguageClient_hoverPreview = 'never'
 
+    augroup LSP
+      autocmd!
+      autocmd FileType r,swift,cpp,c call <SID>SetLSPShortcuts()
+    augroup END
     let g:LanguageClient_serverCommands = {
                 \ '_': ['ale', ''],
                 \ 'r': ['R', '--slave', '-e', 'languageserver::run()'],
@@ -356,6 +356,20 @@ if !has('nvim') && !has('job')
     Plug 'jcfaria/vim-r-plugin'
 else
     Plug 'jalvesaq/Nvim-R'
+    command! RStart :call StartR("R") | call <SID>SetnvimRShortcuts()
+    function! s:SetnvimRShortcuts()
+        " Rstop is already defined by plugin.
+        command! -buffer RStartCustom :call StartR("custom")
+        command! -buffer RRunFile :call SendFileToR("echo")
+        command! -buffer RRunToHere :execute 'normal Vggo<Esc>' | :call SendSelectionToR("echo", "down")
+        command! -buffer RRunChunk :call SendChunkToR("echo", "down")
+        command! -buffer RRunLine :call SendLineToR("echo", "down")
+        command! -buffer RClearObjects :call RClearAll()
+        command! -buffer RHelpMappings :help Nvim-R-use
+        nnoremap <buffer> <localleader>h :RRunToHere<CR>
+        inoremap <buffer> <C-f> <C-O>:RRunLine<CR>
+        nnoremap <buffer> <C-p> :RRunLine<CR>
+    endfunction
 endif
 " R output is highlighted with current colorscheme
 let g:rout_follow_colorscheme = 1
