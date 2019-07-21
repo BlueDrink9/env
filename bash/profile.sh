@@ -86,7 +86,7 @@ fi
 if [ -n "$HOMEBREW_PREFIX" ] && ! substrInStr "$HOMEBREW_PREFIX" "${PATH%%:*}" ; then
   export HOMEBREW_CELLAR="$HOMEBREW_PREFIX/Cellar"
   export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
-  export XDG_DATA_DIRS="/$HOMEBREW_PREFIX/share:$XDG_DATA_DIRS"
+  export XDG_DATA_DIRS="$HOMEBREW_PREFIX/share:$XDG_DATA_DIRS"
   export MANPATH="$HOMEBREW_PREFIX/share/man:$MANPATH"
   export INFOPATH="$HOMEBREW_PREFIX/share/info:$INFOPATH"
 fi
