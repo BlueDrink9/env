@@ -363,7 +363,7 @@ else
         command! -buffer RRunFile :call SendFileToR("echo")
         command! -buffer RRunToHere :execute 'normal Vggo<Esc>' | :call SendSelectionToR("echo", "down")
         command! -buffer RRunChunk :call SendChunkToR("echo", "down")
-        command! -buffer RRunLine :call SendLineToR("echo", "down")
+        command! -buffer RRunLine :call SendLineToR("down")
         command! -buffer RClearObjects :call RClearAll()
         command! -buffer RHelpMappings :help Nvim-R-use
         nnoremap <buffer> <localleader>h :RRunToHere<CR>
