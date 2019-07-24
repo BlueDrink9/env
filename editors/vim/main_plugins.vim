@@ -32,7 +32,7 @@ endif
 
 " {[} ---------- Misc ----------
 " :GhostTextStart/Stop
-if has('nvim')
+if has('nvim') && has('python3')
     Plug 'raghur/vim-ghost', {'do': ':GhostInstall'}
 elseif has("channel") && has('python')
     " :GhostStart/Stop
