@@ -1,0 +1,52 @@
+" vim:ft=vim
+set nocompatible
+syntax on
+filetype off
+
+function! PathExpand(path)
+    " Version 7.1 doesn't support fnameescape. Used on iOS.
+    " Besides, if you're using 7.1, it's because it's a pre-installed default,
+    " meaning it's unix, meaning "/" is the right path separator anyway.
+    if v:version >= 703
+        return fnameescape(expand(a:path))
+    else
+        return expand(a:path)
+    endif
+endfunction
+
+let s:scriptpath = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+let g:vimrcdir = fnamemodify(expand("$MYVIMRC"), ":p:h")
+if has('nvim')
+    let g:vimrcdir = expand("$HOME", ":p:h")
+endif
+" Automatically create vimfile directories in same location as vimrc
+function! CreateVimDir(dir)
+    let l:dir = PathExpand(g:vimrcdir . '/' . a:dir)
+    if has('win32')
+        let l:dir = escape(l:dir, '\')
+    endif
+    if filewritable(g:vimrcdir) && !isdirectory(l:dir)
+        silent exec "call mkdir(\"" . l:dir . "\")"
+    endif
+    return l:dir
+endfunction
+
+if has('win32') || has ('win64')
+    let $VIMHOME = $VIM."/vimfiles"
+else
+    let $VIMHOME = $HOME."/.vim"
+endif
+set runtimepath^=~/.vim runtimepath+=~/.vim/after
+let &packpath=&runtimepath
+
+let s:vimfilesDir = CreateVimDir("vimfiles")
+let s:pluginPath = CreateVimDir("vimfiles/plugins")
+
+let s:autoloadDir=expand($VIMHOME . "/autoload")
+let s:vimplug_file=expand(s:autoloadDir . "/plug.vim")
+
+call plug#begin(s:pluginPath)
+
+
+call plug#end()
+filetype plugin indent on

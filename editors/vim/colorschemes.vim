@@ -13,6 +13,12 @@ Plug 'https://github.com/vim-scripts/oceandeep'
 Plug 'https://github.com/morhetz/gruvbox'
 Plug 'https://github.com/jnurmine/Zenburn'
 Plug 'https://github.com/tomasr/molokai'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'ashfinal/vim-colors-violet'
+" High contrast themes.
+" Mainly for rift (dark green) and maybe day (sol-style), summer (dark
+" purple). Past (pale light)
+Plug 'https://gitlab.com/protesilaos/tempus-themes-vim'
 Plug 'dracula/vim', { 'as': 'dracula' }
 
 " {[} ---------- Base16 ----------

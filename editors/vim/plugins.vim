@@ -84,17 +84,17 @@ function! s:deregister(repo)
 endfunction
 command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 
-" Reset plugins entirely
-" let g:plugs={}
-" let g:plugs_order=[]
-" {]}
-call plug#begin(s:pluginPath)
-
 cabbrev packi PlugInstall
 cabbrev packu PlugUpdate <bar> PlugUpgrade
 
 let g:pluginSettingsToExec = []
 let g:customHLGroups = []
+
+" Reset plugins entirely
+" let g:plugs={}
+" let g:plugs_order=[]
+" {]}
+call plug#begin(s:pluginPath)
 
 " Get light plugin set first
 exec 'source ' . s:scriptpath . "/colorschemes.vim"
@@ -112,12 +112,6 @@ exec 'source ' . s:localPlugins
 
 call plug#end()
 
-if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-    if !g:hasGUI
-        echom "Some plugins defined in config are uninstalled"
-    endif
-endif
-
 for item in g:pluginSettingsToExec
     exec item
 endfor
@@ -133,3 +127,9 @@ augroup highlights
     au!
     autocmd VimEnter,ColorScheme * call s:reHL()
 augroup end
+
+if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+    if !g:hasGUI
+        echom "Some plugins defined in config are uninstalled"
+    endif
+endif
