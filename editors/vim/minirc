@@ -47,6 +47,5 @@ let s:vimplug_file=expand(s:autoloadDir . "/plug.vim")
 
 call plug#begin(s:pluginPath)
 
-
 call plug#end()
 filetype plugin indent on
