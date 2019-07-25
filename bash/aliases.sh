@@ -57,32 +57,59 @@ alias gc="git_clone"
 # Way nicer and more compact way to view logs. Pass -p to see line differences.
 alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
-# Try to set vim to better versions...
+# Try to set vim to better versions.
+# Will be expanded by functions, but not variables.
 if [ $(command -v nvim 2>/dev/null) ]; then
-  alias vim="nvim"
+  alias myVim="nvim"
 elif [ $(command -v mvim 2>/dev/null) ]; then
   # Prefer macvim to gvim.
-  alias vim="mvim -v"
+  alias myVim="mvim -v"
 elif [ $(command -v gvim 2>/dev/null) ]; then
-  alias vim="gvim -v"
+  alias myVim="gvim -v"
 elif [ -e /usr/bin/gvim ]; then
-  alias vim="/usr/bin/gvim -v"
+  alias myVim="/usr/bin/gvim -v"
   # xvim (has x11 clipboard support)
 elif [ -e /usr/bin/vimx ]; then
-  alias vim="/usr/bin/vimx"
+  alias myVim="/usr/bin/vimx"
 fi
+# Aliases aren't expanded in variables, eg $SUDO_EDITOR
+vim(){
+  myVim "$@"
+}
+vimAlias="$(alias myVim)"
+# Extract between quotes.
+vimTmp="${vimAlias#*\'}"
+MYVIM="${vimTmp%\'*}"
+unset vimAlias vimTmp
 
-# Much faster startup for vim without plugins.
-IDEVim(){
-  vim --cmd "let g:ideMode=1" "$@"
-}
+# Much faster startup for vim without plugins, or ide if I need it.
+IDEVim(){ vim --cmd "let g:ideMode=1" "$@"; }
 alias idevim="IDEVim"
-liteVim(){
-  vim --cmd "let g:liteMode=1" "$@"
-}
+liteVim(){ vim --cmd "let g:liteMode=1" "$@"; }
 alias vi="liteVim"
-alias lvi="vim --noplugin --cmd \"let g:noPlugins=1\""
+nopluginVim(){ vim --noplugin --cmd "let g:noPlugins=1" "$@"; }
 alias view="vi -R"
+shelleditor(){ vim --cmd "let g:liteMode=1" +'set ft=sh' "$@"; }
+
+# You know it, baby. Shouldn't need to use nano ever.
+# Should also be getting a nice lite nvim where needed.
+export VISUAL=liteVim
+export EDITOR=nopluginVim
+# export EDITOR=liteVim
+# Calling edit-and-execute-command in readline to open the editor actually
+# uses `fc` anyway
+export FCEDIT=shelleditor
+giteditor(){ vim --cmd "let g:liteMode=1" +'set ft=gitcommit'; }
+# The function trick doesn't work with git, but regular arguments do. Means
+# we don't get the best vim version from the alias though.
+# Don't actually need to set ft (git does this for us),
+# but leaving it for specificity.
+export GIT_EDITOR_CMD="${MYVIM}"' --cmd "let g:liteMode=1" +"set ft=gitcommit"'
+# export GIT_EDITOR_CMD=$(type liteVim | head -n4 | tail -n1)
+export GIT_EDITOR="$GIT_EDITOR_CMD"
+# May need to run `sudo update-alternatives --config editor` if this is not
+# working.
+export SUDO_EDITOR=vim
 
 # alias ls="ls -CF --color=auto"
 alias :q="exit"
