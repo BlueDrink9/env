@@ -1,16 +1,17 @@
 bash
-bash-completion
-curl
-rsync
 neovim
+syncthing
+bash-completion
 tmux
-ranger
 ctags
 python
+curl
+rsync
+ranger
 rlwrap
 ssh-agent
 ssh-pass
-syncthing
+workrave
 
 # proselint # wooah cool. Pip module
 
