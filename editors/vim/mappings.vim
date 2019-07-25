@@ -240,8 +240,9 @@ nnoremap <silent> <Up> :tabnext<CR>
 nnoremap <silent> <Down> :tabprevious<CR>
 " Delete word under cursor, replace with pasted.
 nnoremap <leader># "_diwP
-" fix typo I alwayr mmake
+" fix typos I often make
 nnoremap zQ ZQ
+nnoremap q; :q
 " TODO make this ft-specific or check for existign func in plugin.
 " Shift+enter is soft new line in markdown.
 inoremap <S-CR>   <CR>
