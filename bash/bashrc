@@ -35,5 +35,5 @@ unset BASH_FUNCTIONS_LOADED SCRIPT_FUNCTIONS_LOADED
 # Virtual console
 if [ "$TERM" = "linux" ]; then
   # source "${DOTFILES_DIR}/terminal/virtual_console/reuse_X_colors.sh" "${DOTFILES_DIR}/terminal/x/solarized_light"
-  source "${DOTFILES_DIR}/terminal/virtual_console/solarized.sh"
+  source "${DOTFILES_DIR}/terminal/virtual_console/solarized_dark.sh"
 fi
