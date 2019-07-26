@@ -63,7 +63,8 @@ elif substrInStr "Android" "$(uname -a)";  then
 elif [ -n "$ITERM_SESSION_ID" ]; then
   # Sets term prog, colourterm itself.
   USENF=${USENF:-1}
-  COLOURSCHEME=${COLOURSCHEME:-SOLARIZED_DARK}
+  # Default to dark, for dropdown (which is all I use iTerm for).
+  COLOURSCHEME=${COLOURSCHEME:-solarized_dark}
 elif substrInStr "Apple" "$TERM_PROGRAM"; then
   COLORTERM=16
 elif substrInStr "screen" "$TERM"; then
