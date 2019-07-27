@@ -109,6 +109,9 @@ set keymap vi-insert
 "kv":vi-movement-mode
 "vk":vi-movement-mode
 
+# ^L isn't bound in vi insert mode.
+"\C-l":clear-screen
+
 # modified vim-style quit.
 # ";q":"ccexit\"
 ";q":"ddiexit"
