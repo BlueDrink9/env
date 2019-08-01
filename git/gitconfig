@@ -2,14 +2,15 @@
 [alias]
   diff = diff --ignore-space-change
   # For doc files using pandoc?
+  # for docx (word) files
   wdiff = diff --word-diff=color --unified=1
   unstage = reset HEAD
   reload = checkout --
   # Way nicer and more compact way to view logs. Pass -p to see line differences.
   plog = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
   ls = 'branch'
-  # for docx (word) files
-  wdiff = diff --word-diff=color --unified=1
+  br = branch
+  ch = checkout
   rc = rebase --continue
   reab = rebase --abort
   resk = rebase --skip
@@ -17,7 +18,7 @@
 [credential]
   helper = cache --timeout=3600
 [core]
-	editor = vim --cmd \"let g:liteMode=1\"
+	# editor = vim --cmd \"let g:liteMode=1\"
   # autocrlf = input
   autocrlf = false
   safecrlf = true
