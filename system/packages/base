@@ -1,7 +1,9 @@
 bash
 neovim
 syncthing
-bash-completion
+git
+bash-completion@2
+bash-completion # Only if 2 not a thing (ie not homebrewing).
 tmux
 ctags
 python
