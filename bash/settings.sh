@@ -111,14 +111,26 @@ fi
 
 # enable programmable smart completion features
 if ! shopt -oq posix; then
-  if [ -f $HOMEBREW_PREFIX/share/bash_completion ]; then
-    . $HOMEBREW_PREFIX/share/bash_completion # version 2
-  elif [ -f $HOMEBREW_PREFIX/etc/bash_completion ]; then
-    . $HOMEBREW_PREFIX/etc/bash_completion # version 1
-  elif [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
+  sourceIfReadable(){
+    local sIRPath="$1"
+    [ -r "${sIRPath}" ] && . "${sIRPath}"
+    # unset sIRPath
+  }
+  # On OSX, bash_completion v2 needs to have the backwards compat directory specified.
+  # Tries sourcing completion version 2 (for bash > 4).
+  # If it isn't installed, try v1, then try looking for system versions (ie for 
+  # non-brewed systems.
+  if sourceIfReadable "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"; then
+    export readonly BASH_COMPLETION_COMPAT_DIR="$HOMEBREW_PREFIX/etc/bash_completion.d"
+    # These always need to be sourced if using v2. V1 apparently does them
+    # itself. See https://github.com/Homebrew/homebrew-core/issues/36377.
+    for f in "$HOMEBREW_PREFIX/etc/bash_completion.d/"*; do
+      sourceIfReadable "$f"
+    done
+  else
+    sourceIfReadable "$HOMEBREW_PREFIX/etc/bash_completion" || \
+    sourceIfReadable "/usr/share/bash-completion/bash_completion" || \
+    sourceIfReadable "/etc/bash_completion"
   fi
 fi
 if [[ $- == *i* ]]; then
