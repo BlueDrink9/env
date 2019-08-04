@@ -349,8 +349,10 @@ if has('python')
     let g:SimpylFold_docstring_preview = 1
 
 endif
-if has('python3')
-    if v:version > 800
+if v:version > 800 || has('nvim')
+    Plug 'szymonmaszke/vimpyter', {'do': 'pip install --user notedown'}
+    let g:vimpyter_color=1
+    if has('python3')
         Plug 'jupyter-vim/jupyter-vim'
         let g:jupyter_mapkeys = 0
         function! JupyterMapKeys()
