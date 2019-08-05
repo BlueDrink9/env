@@ -12,7 +12,7 @@ alias envupd="git -C \"$DOTFILES_DIR\" pull && . ~/.bashrc"
 if [[ "$OSTYPE" =~ "darwin" ]]; then  # OSX specific stuff
   alias setssdir="defaults write com.apple.screencapture location"
   notify(){
-    osascript -e 'display notification "$1" with title "Custom notification"'
+    osascript -e 'display notification '"$1"' with title "Custom notification"'
   }
   alias ls="ls -Fh -G"
   alias grep="grep --color=auto"
