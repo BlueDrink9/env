@@ -13,21 +13,34 @@
 " Plug "https://github.com/yuttie/comfortable-motion.vim"
 " {]} ---------- Later ----------
 
-if !exists('g:skipPipInstall') && has('nvim')
-    if !has("python3")
-        if executable('pip3')
-            exec "!pip3 install --user --upgrade neovim"
-        elseif executable('pip') && system('pip --version') =~ '3'
-            exec "!pip install --upgrade --user neovim"
-        " Fallback - install python 2
-        elseif !has("python")
-            if executable('pip2')
-                exec "!pip2 install --user --upgrade neovim"
+" Install python module, preferably for py3.
+function! PythonInstallModule(module)
+    if exists('g:skipPythonInstall')
+        return
+    endif
+    if !exists('g:pyInstaller')
+        if executable('conda')
+            let g:pyInstaller="conda install -yc conda-forge "
+        else
+            if executable('pip3')
+                let l:pipVersion="pip3"
             elseif executable('pip')
-                exec "!pip install --upgrade --user neovim"
+            " elseif executable('pip') && system('pip --version') =~ '3'
+                let g:pyInstaller="pip"
+                " Fallback - python 2
+            elseif executable('pip2')
+                let g:pyInstaller="pip2"
             endif
+            let g:pyInstaller=l:pipVersion . " install --user --upgrade "
         endif
     endif
+    exec "!" . g:pyInstaller . a:module
+endfunction
+
+" Should pick up from either python types.
+if has('nvim') && !(has("python") || has("python3"))
+    " Needed for neovim python support.
+    call PythonInstallModule('neovim')
 endif
 
 " {[} ---------- Misc ----------
@@ -242,6 +255,60 @@ endif
 " {]} ---------- Git----------
 
 " {[} ---------- Prose ----------
+
+" {[} ---------- Vimtex ----------
+Plug 'https://github.com/lervag/vimtex'
+" call add(g:pluginSettingsToExec, "let g:vimtex_compiler_latexmk.build_dir = 'latexbuild'")
+call add(g:pluginSettingsToExec, "let g:vimtex_compiler_progname = 'nvr'")
+let g:vimtex_fold_enabled = 1
+let g:vimtex_fold_manual = 1 " instead of expr folding. Speeds up.
+" Omnifunc complete citations, labels, filenames, glossary
+let g:vimtex_complete_enabled = 1
+let g:vimtex_imaps_disabled = []
+" augroup my_vimtex
+"     autocmd!
+"     autocmd Filetype *tex set foldmethod=expr
+" augroup END
+let g:vimtex_compiler_latexmk = {
+    \ 'build_dir' : 'latexbuild',
+    \}
+" This prevents errors from showing :/
+    " \ 'options' : [
+    " \ ],
+    " \}
+" let g:Tex_DefaultTargetFormat="pdf"
+if has('win32')
+    let g:vimtex_view_general_viewer = 'SumatraPDF'
+    let g:vimtex_view_general_options
+                \ = '-reuse-instance -forward-search @tex @line @pdf'
+    let g:vimtex_view_general_options_latexmk = '-reuse-instance'
+endif
+if has('python3')
+    let s:pythonUserBase = system("python3 -c 'import site; print(site.USER_BASE, end=\"\")'")
+    let $PATH=$PATH . ":" . PathExpand(s:pythonUserBase . "/bin")
+    if has('nvim') && !has('clientserver')
+        if !executable('nvr')
+            PythonInstallModule("neovim-remote")
+        endif
+        if executable('nvr')
+            let g:vimtex_compiler_progname="nvr"
+        endif
+    endif
+endif
+
+function! SetVimtexMappings()
+    " Ensure clean doesn't immediately get overridden...
+    nnoremap <buffer> <localleader>lc :VimtexStop<cr>:VimtexClean<cr>
+    inoremap <buffer> <c-b> \textbf{}<left>
+    inoremap <buffer> <c-e> \textit{}<left>
+    inoremap <buffer> <c-`> \texttt{}<left>
+endfunction
+augroup myVimtex
+    au!
+    autocmd Filetype tex :call SetVimtexMappings()
+augroup end
+" {]} ---------- Vimtex ----------
+
 " Plug 'https://github.com/plasticboy/vim-markdown'
 " Better prose spellchecking
 exec "Plug 'https://github.com/reedes/vim-lexical', { 'for': " . g:proseFileTypes . " }"
