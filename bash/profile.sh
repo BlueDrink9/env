@@ -91,6 +91,12 @@ if [ -n "$HOMEBREW_PREFIX" ] && ! substrInStr "$HOMEBREW_PREFIX" "${PATH%%:*}" ;
   export MANPATH="$HOMEBREW_PREFIX/share/man:$MANPATH"
   export INFOPATH="$HOMEBREW_PREFIX/share/info:$INFOPATH"
 fi
+if ! substrInStr "$HOME/.local" "${PATH}" ; then
+  export PATH="$HOME/.local/bin:$HOME/.local/sbin:$PATH"
+  export XDG_DATA_DIRS="$$HOME/.local/share:$XDG_DATA_DIRS"
+  export MANPATH="$$HOME/.local/share/man:$MANPATH"
+  export INFOPATH="$$HOME/.local/share/info:$INFOPATH"
+fi
 
 # Check if interactive is part of shell options (running interactively)
 case $- in
