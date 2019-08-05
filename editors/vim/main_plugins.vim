@@ -288,7 +288,10 @@ if has('python3')
     let $PATH=$PATH . ":" . PathExpand(s:pythonUserBase . "/bin")
     if has('nvim') && !has('clientserver')
         if !executable('nvr')
-            call PythonInstallModule("neovim-remote")
+            " Currently won't download with conda. Doesn't support 3.7.
+            if exists('g:pyInstaller') && !g:pyInstaller =~ "conda"
+                call PythonInstallModule("neovim-remote")
+            endif
         endif
         if executable('nvr')
             let g:vimtex_compiler_progname="nvr"
