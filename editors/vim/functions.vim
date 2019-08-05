@@ -27,7 +27,7 @@ function! Tab_Or_Complete()
         return "\<Tab>"
     endif
 endfunction
-inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
+inoremap <silent> <Tab> <C-R>=Tab_Or_Complete()<CR>
 inoremap <S-Tab> <C-P>
 
 " Allow insertion of single character in normal mode.
