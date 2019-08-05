@@ -20,7 +20,7 @@ function! PythonInstallModule(module)
     endif
     if !exists('g:pyInstaller')
         if executable('conda')
-            let g:pyInstaller="conda install -yc conda-forge "
+            let g:pyInstaller="conda install -y -c conda-forge -c malramsay "
         else
             if executable('pip3')
                 let l:pipVersion="pip3"
@@ -288,7 +288,7 @@ if has('python3')
     let $PATH=$PATH . ":" . PathExpand(s:pythonUserBase . "/bin")
     if has('nvim') && !has('clientserver')
         if !executable('nvr')
-            PythonInstallModule("neovim-remote")
+            call PythonInstallModule("neovim-remote")
         endif
         if executable('nvr')
             let g:vimtex_compiler_progname="nvr"
