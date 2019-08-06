@@ -36,12 +36,11 @@ installPackages(){
     installList "$($SCRIPTDIR_CMD)/base"
     if [[ $OSTYPE =~ "darwin1" ]]; then
         installList "$($SCRIPTDIR_CMD)/osx"
-    elif [[ $OSTYPE =~ "linux" ]]; then
-        installList "$($SCRIPTDIR_CMD)/linux"
-    fi
-    if [[ "$(uname -a)" =~ "Android" ]]; then
+    elif [[ "$(uname -a)" =~ "Android" ]]; then
         installList "$($SCRIPTDIR_CMD)/termux"
          termux-setup-api
+    elif [[ $OSTYPE =~ "linux" ]]; then
+        installList "$($SCRIPTDIR_CMD)/linux"
     fi
 }
 
