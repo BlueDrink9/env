@@ -4,6 +4,7 @@ openssh
 wget
 grep
 expect
+ncurses-utils
 root-repo
 unstable-repo
 lastpass-cli
