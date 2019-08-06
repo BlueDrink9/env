@@ -9,17 +9,32 @@ augroup end
 Plug 'reedes/vim-colors-pencil'
 let g:pencil_higher_contrast_ui = 0   " 0=low (def), 1=high
 let g:pencil_terminal_italics = 1
-Plug 'https://github.com/vim-scripts/oceandeep'
 Plug 'https://github.com/morhetz/gruvbox'
 Plug 'https://github.com/jnurmine/Zenburn'
 Plug 'https://github.com/tomasr/molokai'
+Plug 'aonemd/kuroi.vim'
 Plug 'NLKNguyen/papercolor-theme'
-Plug 'ashfinal/vim-colors-violet'
+Plug 'liuchengxu/space-vim-dark'
 " High contrast themes.
 " Mainly for rift (dark green) and maybe day (sol-style), summer (dark
 " purple). Past (pale light)
 Plug 'https://gitlab.com/protesilaos/tempus-themes-vim'
+" Green-ish?
+Plug 'https://github.com/vim-scripts/oceandeep'
+" Purple can be quite fun.
+Plug 'ashfinal/vim-colors-violet'
 Plug 'dracula/vim', { 'as': 'dracula' }
+" Has light and dark, but light may need dark as airline theme?
+Plug 'sonph/onehalf', { 'rtp' : 'vim' }
+" Black backgrounds
+Plug 'fcpg/vim-fahrenheit'
+Plug 'vim-scripts/Luinnar'
+Plug 'nanotech/jellybeans.vim'
+let g:jellybeans_use_term_italics = 1
+let g:jellybeans_overrides = {
+\    'background': { 'guibg': '000000' },
+\}
+
 
 " {[} ---------- Base16 ----------
 " If using a Base16 terminal theme designed to keep the 16 ANSI colors intact (a "256" variation) and have sucessfully modified your 256 colorspace with base16-shell you'll need to add the following to your ~/.vimrc before the colorsheme declaration.
