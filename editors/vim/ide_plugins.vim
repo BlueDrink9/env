@@ -440,7 +440,7 @@ Plug 'https://github.com/dragfire/Improved-Syntax-Highlighting-Vim'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Multi-lang support
 Plug 'https://github.com/sheerun/vim-polyglot'
-let g:polyglot_disabled = ['latex', markdown]
+let g:polyglot_disabled = ['latex', 'markdown' ]
 Plug 'kovetskiy/sxhkd-vim', {'for': 'sxhkd' }
 
 " Advanced markdown formatting. Lots of features.
@@ -448,8 +448,8 @@ Plug 'SidOfc/mkdx'
 let g:mkdx#settings = {
       \ 'enter':          { 'shift': 1 },
       \ 'map':            { 'prefix': '<localleader>', 'enable': 1 },
-      \ 'toc':            { 'text': 'Table of Contents', 'update_on_write': 1 }
-      \ 'fragment':       { 'complete': 0 }
+      \ 'toc':            { 'text': 'Table of Contents', 'update_on_write': 1 },
+      \ 'fragment':       { 'complete': 0 },
       \ 'highlight':      { 'enable': 1 },
       \ 'fold':           { 'enable': 1 },
       \ 'auto_update':    { 'enable': 1 }
