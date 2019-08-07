@@ -13,11 +13,13 @@ Plug 'https://github.com/morhetz/gruvbox'
 Plug 'https://github.com/jnurmine/Zenburn'
 Plug 'https://github.com/tomasr/molokai'
 Plug 'aonemd/kuroi.vim'
-Plug 'NLKNguyen/papercolor-theme'
+" Very Similar to the pencil theme, except no airline theme or italics, but
+" support for underline squiggle in kitty.
+" Plug 'NLKNguyen/papercolor-theme'
 Plug 'liuchengxu/space-vim-dark'
 " High contrast themes.
 " Mainly for rift (dark green) and maybe day (sol-style), summer (dark
-" purple). Past (pale light)
+" purple). Past (pale light). Spring is also green.
 Plug 'https://gitlab.com/protesilaos/tempus-themes-vim'
 " Green-ish?
 Plug 'https://github.com/vim-scripts/oceandeep'
