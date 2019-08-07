@@ -14,7 +14,7 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Will get exported to ssh servers (see functions->export_termoptions)
-export TERMOPTIONS=(USENF USEPF COLORTERM TERM_PROGRAM)
+export TERMOPTIONS=(USENF USEPF COLORTERM TERM_PROGRAM COLOURSCHEME)
 
 if [ -z "$PROFILE_LOADED" ]; then
   source "${SCRIPT_DIR}/profile.sh"
