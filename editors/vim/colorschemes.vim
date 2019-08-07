@@ -6,16 +6,33 @@ augroup colourschemes
     autocmd colorscheme * let colorSch = get(g:, 'colors_name', 'default')
 augroup end
 
+function! GetBackground()
+    return synIDattr(synIDtrans(hlID('SignColumn')), 'bg')
+endfunction
+
 Plug 'reedes/vim-colors-pencil'
 let g:pencil_higher_contrast_ui = 0   " 0=low (def), 1=high
 let g:pencil_terminal_italics = 1
+let g:pencil_spell_undercurl = 1
+" Very similar to the pencil theme. Pencil doesn't support terminal
+" undercurl.
+Plug 'NLKNguyen/papercolor-theme'
+let g:PaperColor_Theme_Options = {
+  \   'theme': {
+  \     'default': {
+  \       'allow_bold': '1',
+  \       'allow_italic': '1',
+  \     }
+  \   }
+  \ }
+  " \       'override' : {
+  " \         'SpellBad' : [GetBackground(), '232'],
+  " \         'SpellCap' : [GetBackground(), '232']
+  " \       }
 Plug 'https://github.com/morhetz/gruvbox'
 Plug 'https://github.com/jnurmine/Zenburn'
 Plug 'https://github.com/tomasr/molokai'
 Plug 'aonemd/kuroi.vim'
-" Very Similar to the pencil theme, except no airline theme or italics, but
-" support for underline squiggle in kitty.
-" Plug 'NLKNguyen/papercolor-theme'
 Plug 'liuchengxu/space-vim-dark'
 " High contrast themes.
 " Mainly for rift (dark green) and maybe day (sol-style), summer (dark
