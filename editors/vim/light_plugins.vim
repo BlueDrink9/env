@@ -150,16 +150,18 @@ endif
 " Persistent highlight until edit or new yank.
 let g:highlightedyank_highlight_duration = -1
 
-if exists('##TextYankPost')
-    Plug 'Shougo/neoyank.vim'
-    let g:neoyank#file = &directory . 'yankring.txt'
-else
-    Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
-    let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
-    call add(g:pluginSettingsToExec, "call yankstack#setup()")
-    nmap <leader>p <Plug>yankstack_substitute_older_paste
-    nmap <leader>P <Plug>yankstack_substitute_newer_paste
-endif
+" Needs unite/denite, no mappings by default.
+" Maybe later on, put in ide and don't load yankring if idemode.
+" if exists('##TextYankPost')
+"     Plug 'Shougo/neoyank.vim'
+"     let g:neoyank#file = &directory . 'yankring.txt'
+" nmap <leader>p :unite history/yank
+" else
+Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
+let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
+call add(g:pluginSettingsToExec, "call yankstack#setup()")
+nmap <leader>p <Plug>yankstack_substitute_older_paste
+nmap <leader>P <Plug>yankstack_substitute_newer_paste
 if v:version >= 704
     Plug 'https://github.com/jlanzarotta/bufexplorer.git'
 endif
