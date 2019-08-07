@@ -173,14 +173,24 @@ Plug 'https://github.com/junegunn/goyo.vim'
 
 " {[} ---------- Prose ----------
 Plug 'https://github.com/tpope/vim-markdown'
-if has('nvim')
-    " Needs node, yarn.
-    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
-    let g:mkdp_auto_start = 0
-    let g:mkdp_auto_close = 0
-    " On save, insertleave
-    " let g:mkdp_refresh_slow = 0
+" if has('nvim')
+"     " Needs node, yarn.
+"     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+"     let g:mkdp_auto_start = 0
+"     let g:mkdp_auto_close = 0
+"     " On save, insertleave
+"     " let g:mkdp_refresh_slow = 0
+" else
+if executable('pandoc')
+    " Actually works, fewer dependencies (pandoc, not node or yarn). Doesn't
+    " have synced scrolling, hard to change browser.
+    Plug 'JamshedVesuna/vim-markdown-preview'
+    let vim_markdown_preview_toggle=2
+    let vim_markdown_preview_hotkey='<localleader>r'
+    command! MarkdownPreview :call Vim_Markdown_Preview()<CR>
+    let vim_markdown_preview_pandoc=1
 endif
+" endif
 " Plug 'https://github.com/vim-latex/vim-latex'
 
 
