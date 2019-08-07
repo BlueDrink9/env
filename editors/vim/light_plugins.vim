@@ -52,6 +52,9 @@ if has('timers')
     " Async, uses better grep tools like ack or ag
     Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
     cabbrev bfind Grepper -query
+
+    " Multi-file find and replace with a nice interface. May be useful, idk.
+    Plug 'brooth/far.vim'
 else
     " Bsgrep for searching in all open buffers. Also Bsreplace, Bstoc.
     Plug 'https://github.com/jeetsukumaran/vim-buffersaurus'
@@ -140,11 +143,23 @@ if v:version >= 704
 endif
 
 Plug 'https://github.com/tpope/vim-surround.git'
-Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
-let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
-call add(g:pluginSettingsToExec, "call yankstack#setup()")
-nmap <leader>p <Plug>yankstack_substitute_older_paste
-nmap <leader>P <Plug>yankstack_substitute_newer_paste
+Plug 'machakann/vim-highlightedyank'
+if !exists('##TextYankPost')
+    map y <Plug>(highlightedyank)
+endif
+" Persistent highlight until edit or new yank.
+let g:highlightedyank_highlight_duration = -1
+
+if exists('##TextYankPost')
+    Plug 'Shougo/neoyank.vim'
+    let g:neoyank#file = &directory . 'yankring.txt'
+else
+    Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
+    let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
+    call add(g:pluginSettingsToExec, "call yankstack#setup()")
+    nmap <leader>p <Plug>yankstack_substitute_older_paste
+    nmap <leader>P <Plug>yankstack_substitute_newer_paste
+endif
 if v:version >= 704
     Plug 'https://github.com/jlanzarotta/bufexplorer.git'
 endif
