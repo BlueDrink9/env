@@ -20,6 +20,9 @@ endif
 
 function! s:AirlineColorVarUpdate()
     let s:restoreCS = g:colorSch
+    " All airline themes are lowercase, but not all theme names are. For
+    " example, PaperColor.
+    let g:colorSch= tolower(g:colorSch)
     if g:colorSch =~ "base16"
         " Strips off the 'base16-' bit.
         " let g:colorSch = g:colorSch[7:]
