@@ -173,6 +173,14 @@ Plug 'https://github.com/junegunn/goyo.vim'
 
 " {[} ---------- Prose ----------
 Plug 'https://github.com/tpope/vim-markdown'
+if has('nvim')
+    " Needs node, yarn.
+    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+    let g:mkdp_auto_start = 0
+    let g:mkdp_auto_close = 0
+    " On save, insertleave
+    " let g:mkdp_refresh_slow = 0
+endif
 " Plug 'https://github.com/vim-latex/vim-latex'
 
 
