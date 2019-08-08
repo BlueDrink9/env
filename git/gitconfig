@@ -2,7 +2,8 @@
 [alias]
   diff = diff --ignore-space-change
   # For doc files using pandoc?
-  # for docx (word) files
+  # for docx (word) filesa
+  # Or for word-by-word diffs?
   wdiff = diff --word-diff=color --unified=1
   unstage = reset HEAD
   reload = checkout --
@@ -61,15 +62,25 @@
   prompt = false
 
 [color]
-  branch = auto
-  diff = auto
-  status = auto
+  ui = auto
+  # branch = auto
+  # diff = auto
+  # status = auto
+  # advice = auto
+  # push = always
+# [color "diff"]
+#   commit = green
+#   meta = yellow
+#   frag = cyan
+#   old = red
+#   new = green
+#   whitespace = red reverse
 # [color "branch"]
 #   current = yellow reverse
 #   local = yellow
 #   remote = green
-# [color "diff"]
-#   meta = yellow bold
-#   frag = magenta bold
-#   old = red bold
-#   new = green bold
+# [color "remote"]
+#   error = red bold
+#   warning = yellow bold
+#   hint = yellow
+#   success = green
