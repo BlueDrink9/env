@@ -25,6 +25,12 @@ sshraw() {
   \ssh "$@" -t '/bin/bash --norc'
 }
 
+findText(){
+  text="$1"
+  dir="${2:-.}"
+  grep --color=auto -rn "$text" "${dir}" "${@:3}"
+}
+
 del() {
   fileToDel="$1"
   fileDir="$(dirname \"${fileToDel}\")"
@@ -519,7 +525,7 @@ pack(){
   searchcmd="search"
   removecmd="remove"
   if [ $(command -v brew 2>/dev/null) ]; then
-    packcmd="brew"
+    alias packcmd="brew"
     removecmd="uninstall"
   elif [ $(command -v pacman 2>/dev/null) ]; then
     if [ $(command -v yay 2>/dev/null) ]; then
