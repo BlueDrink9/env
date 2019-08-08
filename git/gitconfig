@@ -1,6 +1,9 @@
 # vim: ft=cfg ts=2 sw=2 ai
 [alias]
-  diff = diff --ignore-space-change
+  # diff = diff --ignore-space-change
+  # Word=- and character-level diffs.
+  diffw = diff --ignore-space-change --color-words
+  diffc = diff --ignore-space-change --color-words=.
   # For doc files using pandoc?
   # for docx (word) filesa
   # Or for word-by-word diffs?
@@ -10,6 +13,7 @@
   # Way nicer and more compact way to view logs. Pass -p to see line differences.
   plog = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
   ls = 'branch'
+  newbranch = checkout -b
   br = branch
   ch = checkout
   rc = rebase --continue
