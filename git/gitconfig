@@ -61,8 +61,10 @@
   textconv=pandoc --to=markdown
   prompt = false
 
-[color]
-  ui = auto
+# Default colours are consistently sensible. Never really seem to need to
+# change anything.
+# [color]
+  # ui = auto
   # branch = auto
   # diff = auto
   # status = auto
@@ -84,3 +86,5 @@
 #   warning = yellow bold
 #   hint = yellow
 #   success = green
+# [color "status"]
+#   unmerged = red
