@@ -124,7 +124,7 @@ case $- in
               # if contains "$useTmuxFor" "$PNAME"; then
               if { [ -n "$SSHSESSION" ] || [ -z "$DISPLAY" ]; }; then
                 # unset HAVE_LOADED_BASH PROFILE_LOADED
-                export TMUX_VERSION="$(tmux -V | cut -f2 -d' ')"
+                [ -z "$TMUX_VERSION" ] && export TMUX_VERSION="$(tmux -V | cut -f2 -d' ')"
                 if tmux ls 2> /dev/null | grep -q -v attached; then
                   $execCmd tmux $TMUX_256_arg attach -t $(tmux ls 2> /dev/null | grep -v attached | head -1 | cut -d : -f 1)
                 else

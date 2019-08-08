@@ -5,6 +5,7 @@ chunkc tiling::rule --owner \"System Preferences\" --subrole AXStandardWindow --
 chunkc tiling::rule --owner Finder --name Copy --state float &
 chunkc tiling::rule --owner Finder --name Move --state float &
 chunkc tiling::rule --owner \"Archive Utility\" --state float &
+chunkc tiling::rule --owner Archive Utility --state float &
 chunkc tiling::rule --owner \"App Store\" --state float &
 chunkc tiling::rule --owner \"Word*\" --state tile &
 chunkc tiling::rule --owner \"OneNote*\" --state tile &

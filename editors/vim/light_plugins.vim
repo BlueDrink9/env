@@ -172,7 +172,6 @@ Plug 'https://github.com/junegunn/goyo.vim'
 
 
 " {[} ---------- Prose ----------
-Plug 'https://github.com/tpope/vim-markdown'
 " if has('nvim')
 "     " Needs node, yarn.
 "     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
@@ -181,6 +180,11 @@ Plug 'https://github.com/tpope/vim-markdown'
 "     " On save, insertleave
 "     " let g:mkdp_refresh_slow = 0
 " else
+" if has('python')
+" Requires manually setting open cmd, requires py2.
+"     Plug 'previm/previm'
+"     let g:previm_open_cmd="fopen"
+" endif
 if executable('pandoc')
     " Actually works, fewer dependencies (pandoc, not node or yarn). Doesn't
     " have synced scrolling, hard to change browser.

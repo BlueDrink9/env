@@ -132,3 +132,5 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias reloadConfig="pkill -USR1"
 alias darkColours="base16_onedark"
 alias lightColours="base16Reset"
+# Preview images in terminal, even over ssh.
+alias icat="kitty +kitten icat"

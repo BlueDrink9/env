@@ -45,6 +45,8 @@ if has("timers")
     call add(g:pluginSettingsToExec, 'nmap <silent> [e <Plug>(ale_previous_wrap)')
     " Unimpaired makes remapping tricky.
     let g:nremap = {"]e": "<Plug>(ale_next_wrap)","[e": "<Plug>(ale_previous_wrap)" }
+    " Disabled in favour of LSP from LanguageClient-neovim.
+    let g:ale_linters = {'r': []}
 else
     " ----- syntastic -----
     Plug 'https://github.com/vim-syntastic/syntastic.git'

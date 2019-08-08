@@ -2,6 +2,5 @@
 
 ctrl + cmd - t : $HOME/Applications/kitty.app/Contents/MacOS/kitty --single-instance || /Applications/kitty.app/Contents/MacOS/kitty --single-instance
 alt - return : $HOME/Applications/kitty.app/Contents/MacOS/kitty --single-instance || /Applications/kitty.app/Contents/MacOS/kitty --single-instance
-ctrl + cmd - t : $HOME/Applications/kitty.app/Contents/MacOS/kitty --single-instance || /Applications/kitty.app/Contents/MacOS/kitty --single-instance
 ctrl + cmd - b : "$HOME/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" || "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 alt - e : open -n $HOME
