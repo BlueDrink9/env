@@ -127,13 +127,23 @@ if has("timers")
     " Always preview with a hover rather than preview buffer.
     " let g:LanguageClient_hoverPreview = 'never'
 
+    let g:LanguageClient_loggingFile = expand('~/.vim/LanguageClient.log')
     augroup LSP
       autocmd!
       autocmd FileType r,swift,cpp,c call <SID>SetLSPShortcuts()
     augroup END
+    " Install langserver with:
+    let b:cmdInstallRLSP ='if( !is.element("languageserver",
+                \  .packages(all.available = TRUE))){
+                \ install.packages("languageserver",repos="http://cran.us.r-project.org")}'
+    " Run and install with:
+    " R --slave -e 'b:cmdInstallRLSP; languageserver::run()'
+    let b:RLSPArray=['R', '--slave', '-e',
+                \ b:cmdInstallRLSP . "; languageserver::run()"]
+
     let g:LanguageClient_serverCommands = {
                 \ '_': ['ale', ''],
-                \ 'r': ['R', '--slave', '-e', 'languageserver::run()'],
+                \ 'r': b:RLSPArray,
                 \ 'swift': ['sourcekit-lsp'],
                 \ }
     if has("python3")
@@ -403,6 +413,9 @@ else
 endif
 " R output is highlighted with current colorscheme
 let g:rout_follow_colorscheme = 1
+" Increase chance of a vertical split rather than horizontal for console.
+let R_rconsole_width = 57
+let R_min_editor_width = 18
 " R commands in R output are highlighted
 let g:Rout_more_colors = 1
 let R_esc_term = 0
