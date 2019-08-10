@@ -219,6 +219,8 @@ set sessionoptions-=blank
 set wildmenu
 " Complete longest common string, list options. Then cycle each full match
 set wildmode=list:longest,full
+" Allows opening files in case insensitive way.
+set wildignorecase
 set scrolloff=5
 set completeopt=longest,menu,preview
 if exists("g:ideMode") && g:ideMode == 1
