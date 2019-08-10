@@ -46,7 +46,7 @@ if has("timers")
     " Unimpaired makes remapping tricky.
     let g:nremap = {"]e": "<Plug>(ale_next_wrap)","[e": "<Plug>(ale_previous_wrap)" }
     " Disabled in favour of LSP from LanguageClient-neovim.
-    let g:ale_linters = {'r': []}
+    " let g:ale_linters = {'r': []}
 else
     " ----- syntastic -----
     Plug 'https://github.com/vim-syntastic/syntastic.git'
@@ -84,6 +84,7 @@ endif
 " Plug 'https://github.com/Valloric/YouCompleteMe'
 if has("timers")
 
+" {[} ---------- LSP ----------
     Plug 'autozimu/LanguageClient-neovim', {
                 \ 'branch': 'next',
                 \ 'do': 'bash install.sh',
@@ -146,7 +147,10 @@ if has("timers")
                 \ 'r': b:RLSPArray,
                 \ 'swift': ['sourcekit-lsp'],
                 \ }
+" {]} ---------- LSP ----------
+
     if has("python3")
+    " {[} ---------- Deoplete ----------
         if has("nvim")
             Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
         else
@@ -158,21 +162,7 @@ if has("timers")
         " deoplete tab-complete
         inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
         let g:deoplete#enable_at_startup = 1
-        call add(g:pluginSettingsToExec,
-                    \ "call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])")
-        call add(g:pluginSettingsToExec,
-                    \ "call deoplete#custom#source('LanguageClient', 'min_pattern_length', 2)")
-        " let g:deoplete#enable_smart_case = 1
-        call add(g:pluginSettingsToExec, "call deoplete#custom#option('smart_case', v:true)")
-        " complete from syntax files
-        Plug 'Shougo/neco-syntax'
-        Plug 'Shougo/neoinclude.vim'
 
-        " Completion sources {[}
-        " Completion sources for vimscript
-        Plug 'Shougo/neco-vim'
-        Plug 'artur-shaik/vim-javacomplete2'
-        " Completion sources {]}
         " autocmd FileType x
         " \ call deoplete#custom#buffer_option('auto_complete', v:false)
         call add(g:pluginSettingsToExec, "call deoplete#custom#option('omni_patterns', {
@@ -185,6 +175,35 @@ if has("timers")
                     \ 'r': '[^. *\t]\.\w*'
                     \})
                     \ ")
+
+        " Completion sources {[}
+        call add(g:pluginSettingsToExec,
+                    \ "call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])")
+        call add(g:pluginSettingsToExec,
+                    \ "call deoplete#custom#source('LanguageClient', 'min_pattern_length', 2)")
+        " let g:deoplete#enable_smart_case = 1
+        call add(g:pluginSettingsToExec, "call deoplete#custom#option('smart_case', v:true)")
+        " complete from syntax files
+        Plug 'Shougo/neco-syntax'
+        Plug 'Shougo/neoinclude.vim'
+        " Completion sources for vimscript
+        Plug 'Shougo/neco-vim'
+        Plug 'artur-shaik/vim-javacomplete2'
+
+        " Plug 'https://github.com/lionawurscht/deoplete-biblatex'
+        Plug 'deoplete-plugins/deoplete-tag'
+        if executable("clang")
+            Plug 'Shougo/deoplete-clangx', {'for': ['c', 'cpp'] }
+        endif
+        Plug 'deoplete-plugins/deoplete-dictionary'
+        " exec "Plug 'deoplete-plugins/deoplete-dictionary',
+        "             \ { 'for': " . g:proseFileTypes . " }"
+        call add(g:pluginSettingsToExec,
+                    \ "call deoplete#custom#source('dictionary', 'min_pattern_length', 4)")
+        call add(g:pluginSettingsToExec,
+                    \ "call deoplete#custom#source('buffer', 'rank', 9999)")
+
+        " Completion sources {]}
 
         " deoplete usually only completes from other buffers with the same
         " filetype. This is a way of adding additional fts to complete from.
@@ -205,18 +224,80 @@ if has("timers")
         \ call deoplete#custom#var('buffer', 'require_same_filetype', v:false)
                     \")
         
-        " Plug 'https://github.com/lionawurscht/deoplete-biblatex'
-        Plug 'deoplete-plugins/deoplete-tag'
-        if executable("clang")
-            Plug 'Shougo/deoplete-clangx', {'for': ['c', 'cpp'] }
-        endif
-        Plug 'deoplete-plugins/deoplete-dictionary'
-        " exec "Plug 'deoplete-plugins/deoplete-dictionary',
-        "             \ { 'for': " . g:proseFileTypes . " }"
-        call add(g:pluginSettingsToExec,
-                    \ "call deoplete#custom#source('dictionary', 'min_pattern_length', 4)")
-        call add(g:pluginSettingsToExec,
-                    \ "call deoplete#custom#source('buffer', 'rank', 9999)")
+        " {[} ---------- Denite ----------
+        " From https://github.com/ctaylo21/jarvis/blob/master/config/nvim/init.vim#L58
+        " Wrap in try/catch to avoid errors on initial install before plugin is available
+        try
+            " === Denite setup ==="
+            " Use ripgrep for searching current directory for files
+            " By default, ripgrep will respect rules in .gitignore
+            "   --files: Print each file that would be searched (but don't search)
+            "   --glob:  Include or exclues files for searching that match the given glob
+            "            (aka ignore .git files)
+            "
+            call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git'])
+
+            " Use ripgrep in place of "grep"
+            call denite#custom#var('grep', 'command', ['rg'])
+
+            " Custom options for ripgrep
+            "   --vimgrep:  Show results with every match on it's own line
+            "   --hidden:   Search hidden directories and files
+            "   --heading:  Show the file name above clusters of matches from each file
+            "   --S:        Search case insensitively if the pattern is all lowercase
+            call denite#custom#var('grep', 'default_opts', ['--hidden', '--vimgrep', '--heading', '-S'])
+
+            " Recommended defaults for ripgrep via Denite docs
+            call denite#custom#var('grep', 'recursive_opts', [])
+            call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+            call denite#custom#var('grep', 'separator', ['--'])
+            call denite#custom#var('grep', 'final_opts', [])
+
+            " Remove date from buffer list
+            call denite#custom#var('buffer', 'date_format', '')
+
+            " Open file commands
+            call denite#custom#map('normal', "<leader>f", '<denite:do_action:split>')
+            " call denite#custom#map('insert,normal', "<C-t>", '<denite:do_action:tabopen>')
+            " call denite#custom#map('insert,normal', "<C-v>", '<denite:do_action:vsplit>')
+            " call denite#custom#map('insert,normal', "<C-h>", '<denite:do_action:split>')
+
+            " Custom options for Denite
+            "   auto_resize             - Auto resize the Denite window height automatically.
+            "   prompt                  - Customize denite prompt
+            "   direction               - Specify Denite window direction as directly below current pane
+            "   winminheight            - Specify min height for Denite window
+            "   highlight_mode_insert   - Specify h1-CursorLine in insert mode
+            "   prompt_highlight        - Specify color of prompt
+            "   highlight_matched_char  - Matched characters highlight
+            "   highlight_matched_range - matched range highlight
+            let s:denite_options = {'default' : {
+                        \ 'auto_resize': 1,
+                        \ 'prompt': 'λ:',
+                        \ 'direction': 'rightbelow',
+                        \ 'winminheight': '10',
+                        \ 'highlight_mode_insert': 'Visual',
+                        \ 'highlight_mode_normal': 'Visual',
+                        \ 'prompt_highlight': 'Function',
+                        \ 'highlight_matched_char': 'Function',
+                        \ 'highlight_matched_range': 'Normal'
+                        \ }}
+
+            " Loop through denite options and enable them
+            function! s:profile(opts) abort
+                for l:fname in keys(a:opts)
+                    for l:dopt in keys(a:opts[l:fname])
+                        call denite#custom#option(l:fname, l:dopt, a:opts[l:fname][l:dopt])
+                    endfor
+                endfor
+            endfunction
+
+            call s:profile(s:denite_options)
+        catch
+            echo 'Denite not installed. It should work after running :PlugInstall'
+        endtry
+        " {]} ---------- Denite ----------
+    " {]} ---------- Deoplete ----------
 
     else
         " Async completion engine, doesn't need extra installation.
@@ -413,9 +494,11 @@ else
 endif
 " R output is highlighted with current colorscheme
 let g:rout_follow_colorscheme = 1
-" Increase chance of a vertical split rather than horizontal for console.
-let R_rconsole_width = 57
-let R_min_editor_width = 18
+" Always split horizontally.
+let R_rconsole_width = 0
+let R_rconsole_height = 15
+
+" let R_min_editor_width = 99
 " R commands in R output are highlighted
 let g:Rout_more_colors = 1
 let R_esc_term = 0
