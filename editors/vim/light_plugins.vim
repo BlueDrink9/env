@@ -1,5 +1,6 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
+" {[} Litemode only / replacements.
 if g:liteMode
 " Superlight airline (no plugins)
     " Plug 'https://github.com/itchyny/lightline.vim'
@@ -26,51 +27,17 @@ if g:liteMode
     let g:buftabline_show=1
     let g:buftabline_numbers=2
 endif
+" {]} Litemode only
 
 " {[}--- Misc ---
-" Confirms opening empty file on tabcomplete
-Plug 'https://github.com/EinfachToll/DidYouMean'
+" Needed, really, because vim folding sucks otherwise.
 Plug 'https://github.com/Konfekt/FastFold'
 Plug 'https://github.com/Konfekt/FoldText'
+
+" Jump to specified place in file with file(L:C)
 Plug 'https://github.com/wsdjeg/vim-fetch'
-" Bunch of neat mappings, it's a tpope. Esp [n and ]n, for SCM conflict marks.
-" And [<space> for addign newlines.
-Plug 'https://github.com/tpope/vim-unimpaired'
-" Because ]e for ale_next clobbers this
-nmap <silent> ]m <Plug>unimpairedMoveDown
-nmap <silent> [m <Plug>unimpairedMoveUp
-Plug 'https://github.com/chrisbra/csv.vim'
-let g:csv_autocmd_arrange	   = 1
-let g:csv_autocmd_arrange_size = 1024*1024
-" let g:csv_highlight_column = 'y' " Current cursor's column.
-" hi CSVColumnEven term=bold ctermbg=Gray guibg=LightGray
-call add (g:customHLGroups, "CSVColumnEven guibg=gray90 ctermbg=lightgray")
-call add (g:pluginSettingsToExec, "highlight clear CSVColumnOdd")
 " For switching between header and alt files
 " Plug 'vim-scripts/a.vim'
-if has('timers')
-    " Async, uses better grep tools like ack or ag
-    Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
-    cabbrev bfind Grepper -query
-
-    " Multi-file find and replace with a nice interface. May be useful, idk.
-    Plug 'brooth/far.vim'
-else
-    " Bsgrep for searching in all open buffers. Also Bsreplace, Bstoc.
-    Plug 'https://github.com/jeetsukumaran/vim-buffersaurus'
-    cabbrev bfind Bsgrep
-    let g:buffersaurus_autodismiss_on_select=0
-endif
-if v:version >= 703
-    Plug 'https://github.com/ntpeters/vim-better-whitespace'
-    let g:show_spaces_that_precede_tabs=1
-    let g:better_whitespace_skip_empty_lines=1
-    let g:better_whitespace_operator='_s'
-    call add (g:customHLGroups, "ExtraWhitespace ctermbg=Gray guibg=LightGray")
-    " call add (g:customHLGroups, "link ExtraWhitespace CursorColumn")
-endif
-" cx to select an object, then cx again to swap it with first thing.
-Plug 'https://github.com/tommcdo/vim-exchange'
 " if v:version >= 800 || has("patch-7.4.1829")
 if has("timers")
     " Commands sent to shell with AsyncRun appear in qf window.
@@ -95,13 +62,107 @@ if has("timers")
 else
     let g:hasAsyncrun = 0
 endif
+" Confirms opening empty file on tabcomplete
+Plug 'https://github.com/EinfachToll/DidYouMean'
+" Close buffers without changing window
+Plug 'https://github.com/moll/vim-bbye'
+cabbrev bd Bdelete
+
+" {[}--- Yanks ---
+Plug 'machakann/vim-highlightedyank'
+if !exists('##TextYankPost')
+    map y <Plug>(highlightedyank)
+endif
+" -1 gives persistent highlight until edit or new yank.
+let g:highlightedyank_highlight_duration = 5000
+" Needs unite/denite, no mappings by default.
+" Maybe later on, put in ide and don't load yankring if idemode.
+" if exists('##TextYankPost')
+"     Plug 'Shougo/neoyank.vim'
+"     let g:neoyank#file = &directory . 'yankring.txt'
+" nmap <leader>p :unite history/yank
+" else
+Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
+let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
+call add(g:pluginSettingsToExec, "call yankstack#setup()")
+nmap <leader>p <Plug>yankstack_substitute_older_paste
+nmap <leader>P <Plug>yankstack_substitute_newer_paste
+" {]}--- Yanks ---
+
+Plug 'https://github.com/chrisbra/csv.vim'
+let g:csv_autocmd_arrange	   = 1
+let g:csv_autocmd_arrange_size = 1024*1024
+" let g:csv_highlight_column = 'y' " Current cursor's column.
+" hi CSVColumnEven term=bold ctermbg=Gray guibg=LightGray
+" TODO link to something so this doesn't look awful outside solarized light.
+call add (g:customHLGroups, "CSVColumnEven guibg=gray90 ctermbg=lightgray")
+call add (g:pluginSettingsToExec, "highlight clear CSVColumnOdd")
 " {]} Misc
 
+" {[}--- Operators ---
 " Replacement for surround, with more features.
 Plug 'machakann/vim-sandwich'
 " Gives it tpope-surround mappings.
 call add(pluginSettingsToExec, "runtime macros/sandwich/keymap/surround.vim")
 " Plug 'https://github.com/tpope/vim-surround.git'
+" Bunch of neat mappings, it's a tpope. Esp [n and ]n, for SCM conflict marks.
+" And [<space> for addign newlines.
+Plug 'https://github.com/tpope/vim-unimpaired'
+" Because ]e for ale_next clobbers this
+nmap <silent> ]m <Plug>unimpairedMoveDown
+nmap <silent> [m <Plug>unimpairedMoveUp
+" cx to select an object, then cx again to swap it with first thing.
+Plug 'https://github.com/tommcdo/vim-exchange'
+" {]}--- Operators ---
+
+" {[}--- Visual ---
+if v:version >= 702
+    " Highlight f and t chars to get where you want.
+    " TODO monitor progress of this branch. May be updated soon.
+    " Plug 'unblevable/quick-scope'
+    Plug 'https://github.com/bradford-smith94/quick-scope'
+    " Trigger a highlight in the appropriate direction when pressing these keys:
+    let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+endif
+if v:version >= 703
+    Plug 'https://github.com/ntpeters/vim-better-whitespace'
+    let g:show_spaces_that_precede_tabs=1
+    let g:better_whitespace_skip_empty_lines=1
+    let g:better_whitespace_operator='_s'
+    call add (g:customHLGroups, "ExtraWhitespace ctermbg=Gray guibg=LightGray")
+    " call add (g:customHLGroups, "link ExtraWhitespace CursorColumn")
+endif
+" Relative line numbers only in focussed buffer & not in insert mode.
+Plug 'ericbn/vim-relativize'
+" Needs manual activation. :RainbowParen, :RainbowParen!
+Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
+" Distraction-free vim.
+Plug 'https://github.com/junegunn/goyo.vim'
+" {]}--- Visual ---
+
+" {[}--- Searching, replacing ---
+if has('timers')
+    " Async, uses better grep tools like ack or ag
+    Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
+    cabbrev bfind Grepper -query
+
+    " Multi-file find and replace with a nice interface. May be useful, idk.
+    Plug 'brooth/far.vim'
+else
+    " Bsgrep for searching in all open buffers. Also Bsreplace, Bstoc.
+    Plug 'https://github.com/jeetsukumaran/vim-buffersaurus'
+    cabbrev bfind Bsgrep
+    let g:buffersaurus_autodismiss_on_select=0
+
+    " Quick find and replace text object, repeatable with .
+    " Clobbers s so would need to remap.
+    " Plug 'https://github.com/hauleth/sad.vim'
+    " nmap <leader>s <Plug>(sad-change-forward)
+    " nmap <leader>S <Plug>(sad-change-backward)
+    " xmap <leader>s <Plug>(sad-change-forward)
+    " xmap <leader>S <Plug>(sad-change-backward)
+endif
+" {]}--- Searching, replacing ---
 
 " {[} --- TMUX ---
 Plug 'https://github.com/tmux-plugins/vim-tmux'
@@ -113,20 +174,8 @@ map <Leader>vp :VimuxPromptCommand<CR>
 map <Leader>vl :VimuxRunLastCommand<CR>
 " {]} TMUX
 
-" Close buffers without changing window
-Plug 'https://github.com/moll/vim-bbye'
-cabbrev bd Bdelete
-" Relative line numbers only in focussed buffer & not in insert mode.
-Plug 'ericbn/vim-relativize'
-if v:version >= 702
-    " Highlight f and t chars to get where you want.
-    " TODO monitor progress of this branch. May be updated soon.
-    " Plug 'unblevable/quick-scope'
-    Plug 'https://github.com/bradford-smith94/quick-scope'
-    " Trigger a highlight in the appropriate direction when pressing these keys:
-    let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
-endif
-
+" {[} View and session
+" Automated view session creation.
 Plug 'https://github.com/zhimsel/vim-stay'
 set viewoptions=cursor,folds,slash,unix
 Plug 'xolox/vim-misc'
@@ -148,32 +197,7 @@ if v:version >= 704
     cabbrev os OpenSession
     cabbrev ss SaveSession
 endif
-Plug 'machakann/vim-highlightedyank'
-if !exists('##TextYankPost')
-    map y <Plug>(highlightedyank)
-endif
-" -1 gives persistent highlight until edit or new yank.
-let g:highlightedyank_highlight_duration = 5000
-
-" Needs unite/denite, no mappings by default.
-" Maybe later on, put in ide and don't load yankring if idemode.
-" if exists('##TextYankPost')
-"     Plug 'Shougo/neoyank.vim'
-"     let g:neoyank#file = &directory . 'yankring.txt'
-" nmap <leader>p :unite history/yank
-" else
-Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
-let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
-call add(g:pluginSettingsToExec, "call yankstack#setup()")
-nmap <leader>p <Plug>yankstack_substitute_older_paste
-nmap <leader>P <Plug>yankstack_substitute_newer_paste
-if v:version >= 704
-    Plug 'https://github.com/jlanzarotta/bufexplorer.git'
-endif
-Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
-" Distraction-free vim.
-Plug 'https://github.com/junegunn/goyo.vim'
-
+" {]} View and session
 
 
 " {[} ---------- Prose ----------

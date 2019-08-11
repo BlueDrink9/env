@@ -69,6 +69,10 @@ augroup vcm
     autocmd FileType vim let b:vcm_tab_complete = 'omni'
 augroup end
 
+if v:version >= 704
+    " Useful for overviews, and deleting lots of buffers.
+    Plug 'https://github.com/jlanzarotta/bufexplorer.git'
+endif
 " Separate buffer lists for differetn windows
 " Plug 'https://github.com/zefei/vim-wintabs'
 Plug 'https://github.com/tomtom/tcomment_vim'
