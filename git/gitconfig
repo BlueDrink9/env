@@ -19,6 +19,7 @@
   rc = rebase --continue
   reab = rebase --abort
   resk = rebase --skip
+  conflict = !vim +Conflicted
 
 [credential]
   helper = cache --timeout=3600
@@ -37,11 +38,15 @@
 [mergetool]
   prompt = false
   TrustExitCode = true
-[mergetool "fugative"]
-  cmd = vim -f -c "Gdiff" "$MERGED"
 [mergetool "vimdiff4"]
   cmd = vim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
   TrustExitCode = true
+[mergetool "fugative"]
+  cmd = vim -f -c "Gdiff" "$MERGED"
+# Requires vim plugin... but then again, so does fugative. This one is loaded in main.
+[mergetool "vim-conflicted"]
+  cmd = !vim +Conflicted
+
 # Record resolutions of merges to apply automatically if they occur again.
 [rerere]
   enabled = 1
