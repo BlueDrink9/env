@@ -13,6 +13,7 @@
 " Plug "https://github.com/yuttie/comfortable-motion.vim"
 " {]} ---------- Later ----------
 
+" {[} ---------- Python setup ----------
 " Install python module, preferably for py3.
 function! PythonInstallModule(module)
     if exists('g:skipPythonInstall')
@@ -42,6 +43,7 @@ if has('nvim') && !(has("python") || has("python3"))
     " Needed for neovim python support.
     call PythonInstallModule('neovim')
 endif
+" {]} ---------- Python setup ----------
 
 " {[} ---------- Misc ----------
 " :GhostTextStart/Stop
@@ -85,6 +87,7 @@ omap <C-/>  :Tcomment<CR>
 " It turns out this is because you need to :DoShowMarks first.
 " Plug 'https://github.com/jacquesbh/vim-showmarks.git'
 " seemed to work.
+" This one's ugly. May need to be customized.
 Plug 'jeetsukumaran/vim-markology'
 " Adds a bunch of unix-mapped filesystem ops from vim
 Plug 'https://github.com/tpope/vim-eunuch'
@@ -104,14 +107,6 @@ if v:version < 800 && !has('nvim')
 endif
 " Allows plugin maps to use '.' to repeat
 Plug 'https://github.com/tpope/vim-repeat'
-" Adds indent block as text object. ii , ai or aI
-Plug 'michaeljsmith/vim-indent-object'
-" Adds [ ] mappins for -=+% indentation objects
-Plug 'https://github.com/jeetsukumaran/vim-indentwise'
-" Additional text objects for next braket, i/a comma, pairs, smarter searching.
-Plug 'wellle/targets.vim'
-Plug 'bkad/camelcasemotion'
-call add(g:pluginSettingsToExec, "call camelcasemotion#CreateMotionMappings('<leader>m')")
 Plug 'https://github.com/tpope/vim-speeddating'
 
 " Align CSV files at commas, align Markdown tables, and more.
@@ -121,6 +116,15 @@ Plug 'https://github.com/junegunn/vim-easy-align'
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+" Adds indent block as text object. ii , ai or aI
+Plug 'michaeljsmith/vim-indent-object'
+" Adds [ ] mappins for -=+% indentation objects
+Plug 'https://github.com/jeetsukumaran/vim-indentwise'
+" Additional text objects for next braket, i/a comma, pairs, smarter searching.
+Plug 'wellle/targets.vim'
+" {]} ---------- Misc----------
+
+" {[} ---------- Operators ----------
 
 " Let's give it a go then.
 Plug 'https://github.com/easymotion/vim-easymotion'
@@ -129,7 +133,9 @@ map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 map <Leader>h <Plug>(easymotion-linebackward)
 let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
-" {]} ---------- Misc----------
+Plug 'bkad/camelcasemotion'
+call add(g:pluginSettingsToExec, "call camelcasemotion#CreateMotionMappings('<leader>m')")
+" {]} ---------- Operators ----------
 
 " Maybe ide candidates...
 " Fuzzy finder
