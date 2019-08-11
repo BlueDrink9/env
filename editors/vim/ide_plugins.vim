@@ -355,6 +355,16 @@ let g:jedi#usages_command = "gpu"
 let g:jedi#completions_command = "<C-Space>"
 let g:jedi#rename_command = "gpr"
 
+" Intellisense engine for vim8 & neovim, full language server protocol support as VSCode.
+" Uses VSCode-specific extensions, too. Seems to Just Work?
+" Except do need to install all the sources. Check the readme.
+" Installation is via command - annoying. Also uses hardcoded
+" .json.
+" npm installs extensions!
+" if executable('node')
+    " Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
+" endif
+
 " {]} ---------- Completion----------
 
 " {[} ---------- Tags ----------
