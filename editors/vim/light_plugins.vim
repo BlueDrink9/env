@@ -97,6 +97,12 @@ else
 endif
 " {]} Misc
 
+" Replacement for surround, with more features.
+Plug 'machakann/vim-sandwich'
+" Gives it tpope-surround mappings.
+call add(pluginSettingsToExec, "runtime macros/sandwich/keymap/surround.vim")
+" Plug 'https://github.com/tpope/vim-surround.git'
+
 " {[} --- TMUX ---
 Plug 'https://github.com/tmux-plugins/vim-tmux'
 Plug 'https://github.com/christoomey/vim-tmux-navigator'
@@ -110,6 +116,7 @@ map <Leader>vl :VimuxRunLastCommand<CR>
 " Close buffers without changing window
 Plug 'https://github.com/moll/vim-bbye'
 cabbrev bd Bdelete
+" Relative line numbers only in focussed buffer & not in insert mode.
 Plug 'ericbn/vim-relativize'
 if v:version >= 702
     " Highlight f and t chars to get where you want.
@@ -141,14 +148,12 @@ if v:version >= 704
     cabbrev os OpenSession
     cabbrev ss SaveSession
 endif
-
-Plug 'https://github.com/tpope/vim-surround.git'
 Plug 'machakann/vim-highlightedyank'
 if !exists('##TextYankPost')
     map y <Plug>(highlightedyank)
 endif
-" Persistent highlight until edit or new yank.
-let g:highlightedyank_highlight_duration = -1
+" -1 gives persistent highlight until edit or new yank.
+let g:highlightedyank_highlight_duration = 5000
 
 " Needs unite/denite, no mappings by default.
 " Maybe later on, put in ide and don't load yankring if idemode.
