@@ -515,58 +515,77 @@ END
 }
 alias lpssh="lastpass_ssh_key_add"
 
+choosePkgManager(){
+  options="brew pacman yay pkg apt yum"
+  for option in $options; do
+      if [ $(command -v "${option}" 2>/dev/null) ]; then
+          echo "${option}"
+          break
+      fi
+  done
+  unset options
+}
+
 pack(){
-  cmd="$1"
-  shift
-  args="$@"
-  installcmd="install"
-  refreshcmd="update"
-  upgradecmd="upgrade"
-  searchcmd="search"
-  removecmd="remove"
-  if [ $(command -v brew 2>/dev/null) ]; then
-    alias packcmd="brew"
-    removecmd="uninstall"
-  elif [ $(command -v pacman 2>/dev/null) ]; then
-    if [ $(command -v yay 2>/dev/null) ]; then
-      packcmd="yay"
+    cmd="$1"
+    shift
+    args="$@"
+    useSudo=false
+    installcmd="install"
+    infocmd="info"
+    refreshcmd="update"
+    upgradecmd="upgrade"
+    searchcmd="search"
+    removecmd="remove"
+    packcmd="$(choosePkgManager)"
+    case "$packcmd" in
+        brew )
+            removecmd="uninstall"
+            ;;
+        pacman )
+            installcmd="-S"
+            refreshcmd="-Syy"
+            upgradecmd="-Syu"
+            searchcmd="-Ss"
+            removecmd="-R"
+            useSudo=true
+            ;;
+        pkg )
+            # Probably termux, may be freeBSD.
+            true
+            ;;
+        apt )
+            useSudo=true
+            ;;
+        yum )
+            useSudo=true
+            ;;
+    esac
+    
+    if "$useSudo"; then
+        packcmd="sudo ${packcmd}"
     else
-      packcmd="sudo pacman"
+        packcmd="${packcmd}"
     fi
-    installcmd="-S"
-    refreshcmd="-Syy"
-    upgradecmd="-Syu"
-    searchcmd="-Ss"
-    removecmd="-R"
-  elif [ $(command -v pkg 2>/dev/null) ]; then
-    # Probably termux, may be freeBSD.
-    packcmd="pkg"
-  elif [ $(command -v apt 2>/dev/null) ]; then
-    packcmd="sudo apt"
-  elif [ $(command -v yum 2>/dev/null) ]; then
-    packcmd="sudo yum"
-  fi
 
   case "$cmd" in
-    install | refresh | upgrade | search | remove)
+    install | refresh | upgrade | search | remove | info)
       cmd="${cmd}cmd"
-      # Not posix :(
-      $packcmd ${!cmd} $@
-      ;;
-    "")
-      $packcmd
+      # Not posix :( Expand cmd to get what the actual [$installcmd] is.
+      "$packcmd" "${!cmd}" $args
       ;;
     *)
-      $packcmd $cmd
+      "$packcmd" "$cmd" $args
   esac
 
-  unset packcmd cmd installcmd refreshcmd upgradecmd searchcmd removecmd
+  unset packcmd cmd installcmd refreshcmd upgradecmd searchcmd removecmd infocmd useSudo
 }
 alias packi="pack install"
 alias packr="pack refresh"
 alias packu="pack refresh && pack upgrade"
 alias packs="pack search"
 alias packrm="pack remove"
+alias pack?="pack info"
 
 # kitty_termcopy(){
 #   infocmp xterm-kitty | \ssh $1 tic -x -o \~/.terminfo /dev/stdin
