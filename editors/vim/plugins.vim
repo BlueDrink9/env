@@ -84,6 +84,14 @@ function! s:deregister(repo)
 endfunction
 command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 
+function! IsPluginUsed(name)
+    if has_key(g:plugs, a:name)
+        return 1
+    else
+        return 0
+    endif
+endfunction
+
 cabbrev packi PlugInstall
 cabbrev packu PlugUpdate <bar> PlugUpgrade
 

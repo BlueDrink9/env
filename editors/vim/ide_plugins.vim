@@ -343,7 +343,7 @@ endif
 Plug 'https://github.com/davidhalter/jedi-vim', {'for' : 'python', 'do' : 'AsyncRun pip install jedi' }
 let g:jedi#use_splits_not_buffers = "right"
 " Using deoplete
-if has_key(g:plugs, 'deoplete.nvim')
+if IsPluginUsed('deoplete.nvim')
     Plug 'deoplete-plugins/deoplete-jedi', {'for' : 'python', 'do' : 'AsyncRun pip install jedi' }
     let g:jedi#completions_enabled = 0
 endif
