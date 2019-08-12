@@ -274,11 +274,12 @@ substrInStr(){
   substring="$1"
   string="$2"
   if [ "$substring" = "" ]; then
-    echo "substring is blank!"
+    echo "substring is blank!" >&2
     return 255
   fi
   # if [ "$substring" = "$string" ]; then return 0; fi
   if [ "$string" = "" ]; then
+    # echo "string is blank for substring '${substring}'" >&2
     return 1 # false
   fi
   if [ -z "${string##*$substring*}" ]; then
@@ -301,7 +302,7 @@ substrTest(){
     a newline and no word"; then failed=8; fi
 
   if [[ "${failed}" != "0" ]]; then
-    echo "substrInStr failed test $failed!"
+    echo "substrInStr failed test $failed!" >&2
   fi
 }
 # substrTest
