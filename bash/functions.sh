@@ -295,6 +295,10 @@ substrTest(){
   if substrInStr "blank" ""; then failed=4; fi
   if substrInStr "negative" "a random string without the word"; then failed=5; fi
   # if ! substrInStr "" ""; then failed=6; fi
+  if ! substrInStr "positive" "a string with
+    a newline and the word positive"; then failed=7; fi
+  if substrInStr "positive" "a string with
+    a newline and no word"; then failed=8; fi
 
   if [[ "${failed}" != "0" ]]; then
     echo "substrInStr failed test $failed!"
