@@ -137,7 +137,7 @@ strInText(){
   # gstatus="$(git status)"
   # time (for i in {1..90000}; do substrInStr "modified:" "${gstatus}"; done)
 # real    0m6.743s
-# time (for i in {1..900}; do echo -n "${gstatus}" 2> /dev/null | grep "modified:" &> /dev/null; done)
+# time (for i in {1..900}; do echo -n "${gstatus}" 2> /dev/null | grep "modified:" > /dev/null; done)
 # real    0m3.126s
 
   # echo -n "${text}" 2> /dev/null | grep "${str}" &> /dev/null

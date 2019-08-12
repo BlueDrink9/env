@@ -34,6 +34,7 @@ substrTest(){
     a newline and the word positive"; then failed=7; fi
   if substrInStr "positive" "a string with
     a newline and no word"; then failed=8; fi
+  if substrInStr "case-sensitive" "a random CASE-SENSITIVE string word"; then failed=9; fi
 
   if [[ "${failed}" != "0" ]]; then
     echo "substrInStr failed test $failed!" >&2
