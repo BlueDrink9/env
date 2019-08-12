@@ -130,16 +130,15 @@ strInText(){
   str="$2"
   # After profiling this, I've discovered that my method that uses builtins
   # is waaaaayyy faster than grep. ~ 100x faster.
+  # Probably moot, since it only runs about 10 times, but still something I
+  # would rather avoid, esp on slower machines.
   # Note the extra 2 0's in the first loop range.
   #
+  # gstatus="$(git status)"
   # time (for i in {1..90000}; do substrInStr "modified:" "${gstatus}"; done)
 # real    0m6.743s
-# user    0m6.684s
-# sys     0m0.017s
 # time (for i in {1..900}; do echo -n "${gstatus}" 2> /dev/null | grep "modified:" &> /dev/null; done)
 # real    0m3.126s
-# user    0m1.760s
-# sys     0m2.098s
 
   # echo -n "${text}" 2> /dev/null | grep "${str}" &> /dev/null
   substrInStr "${str}" "${text}"
