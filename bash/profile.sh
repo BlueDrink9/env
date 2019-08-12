@@ -3,10 +3,14 @@
 # Contains bash and cli bootstrapping/init code designed to be run once per
 # shell
 
+# Unnecessary, gets checked in bashrc
+# [ -n "${PROFILE_LOADED}" ] && return
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export DOTFILES_DIR=$(cd "${SCRIPT_DIR}/.." && pwd)
 
 source "${SCRIPT_DIR}/functions.sh"
+# Exec wipes out function definitions, so kill include guard for profile.
+unset BASH_FUNCTIONS_LOADED
 if substrInStr "Microsoft" "$([ -f /proc/version ] && cat /proc/version)"; then
   export isWSL=1
 fi
@@ -22,7 +26,7 @@ else
   # SESSION_TYPE=remote/ssh;;
   # esac
   if substrInStr "darwin1" "$OSTYPE"; then
-    parent="$(ps -o ppid,comm | grep $PPID)"
+    parents="$(ps -o ppid,comm | grep $PPID)"
   else
     parents="$(pstree -p | grep $PPID)"
   fi
