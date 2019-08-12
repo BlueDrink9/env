@@ -5,6 +5,8 @@
 # Assumes a solarised terminal, with 16 colours.
 
 source ${SCRIPT_DIR}/../colour_variables.sh
+# For substrInStr
+source ${SCRIPT_DIR}/../functions.sh
 
 # Set the full bash prompt.
 set_bash_prompt () {
@@ -126,7 +128,21 @@ set_prompt_symbol () {
 strInText(){
   text="$1"
   str="$2"
-  echo -n "${text}" 2> /dev/null | grep "${str}" &> /dev/null
+  # After profiling this, I've discovered that my method that uses builtins
+  # is waaaaayyy faster than grep. ~ 100x faster.
+  # Note the extra 2 0's in the first loop range.
+  #
+  # time (for i in {1..90000}; do substrInStr "modified:" "${gstatus}"; done)
+# real    0m6.743s
+# user    0m6.684s
+# sys     0m0.017s
+# time (for i in {1..900}; do echo -n "${gstatus}" 2> /dev/null | grep "modified:" &> /dev/null; done)
+# real    0m3.126s
+# user    0m1.760s
+# sys     0m2.098s
+
+  # echo -n "${text}" 2> /dev/null | grep "${str}" &> /dev/null
+  substrInStr "${str}" "${text}"
   echo "$?"
 }
 
