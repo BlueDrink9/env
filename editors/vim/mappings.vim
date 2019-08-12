@@ -271,7 +271,7 @@ if &diff
     nnoremap du :diffupdate<CR>
     cabbrev refresh diffupdate
 endif
-cabbrev profile profile start resultfile <bar> profile func *
+command! -bang -nargs=* Profile profile start resultfile <bar> profile func *
 "" Opens an edit command with the path of the currently edited file filled in
 cabbrev le e <C-R>=expand("%:p:h") . "/" <CR>
 " Switch between the last two files. Not working..
@@ -294,3 +294,5 @@ inoremap [, [<CR>],<Esc>O
 inoremap <c-]> <c-x><c-]>
 
 cabbrev pathCopy let @+ = expland("%")
+" Word under cursor.
+cabbrev <cw> <cword>
