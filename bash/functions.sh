@@ -3,6 +3,78 @@
 # This file holds reusable functions
 [ -n "${BASH_FUNCTIONS_LOADED}" ] && return || export BASH_FUNCTIONS_LOADED=1
 
+# Checks if the first arg is a substring of the second.
+substrInStr(){
+  substring="$1"
+  string="$2"
+  if [ "$substring" = "" ]; then
+    echo "substring is blank!" >&2
+    return 255
+  fi
+  # if [ "$substring" = "$string" ]; then return 0; fi
+  if [ "$string" = "" ]; then
+    # echo "string is blank for substring '${substring}'" >&2
+    return 1 # false
+  fi
+  if [ -z "${string##*$substring*}" ]; then
+    return 0 # true
+  else
+    return 1
+  fi
+}
+substrTest(){
+  failed=0
+  if ! substrInStr "positive-middle" " this is positive-middlely the middle "; then failed=1; fi
+  if ! substrInStr "positive-left" "positive-leftly this is left"; then failed=2; fi
+  if ! substrInStr "positive-right" "this is right, positive-right"; then failed=3; fi
+  if substrInStr "blank" ""; then failed=4; fi
+  if substrInStr "negative" "a random string without the word"; then failed=5; fi
+  # if ! substrInStr "" ""; then failed=6; fi
+  if ! substrInStr "positive" "a string with
+    a newline and the word positive"; then failed=7; fi
+  if substrInStr "positive" "a string with
+    a newline and no word"; then failed=8; fi
+
+  if [[ "${failed}" != "0" ]]; then
+    echo "substrInStr failed test $failed!" >&2
+  fi
+}
+# substrTest
+
+
+# Compare two dot-separated version numbers.
+# Usage: compareVersionNum num1 '>=' num2, eg:
+# if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.2 ; then
+compareVersionNum () {
+    op=$2
+    num1=$1
+    num2=$3
+    if [ -z "$num1" ] || [ -z "$num2" ] || [ -z "$op" ] ; then
+        echo "Usage: compareVersionNum num1 '>=' num2, eg:" >&2
+        echo "if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.2 ; then" >&2
+        return 2
+    fi
+    if [ "$op" != "<" ] && [ "$op" != "=" ] && [ "$op" != ">" ]; then
+        echo "Invalid operator: '$op'. Valid operators are <, >, =" >&2
+        return 2
+    fi
+  # Sort -V handles version numbers.
+  # Use that and see what reaches the top of the list!
+  smallestVersion="$(echo "$num1" "$num2" | tr " " "\n" | sort -V | head -n1)"
+  if [ "$num1" == "$num2" ]; then
+    res="="
+  elif [ "$num1" == "$smallestVersion" ]; then
+    res="<"
+  else
+    res=">"
+  fi
+
+  # Use eval to unset without spoiling return code.
+  eval "unset op num1 num2 smallestVersion res; [ \"$res\" == \"$op\" ]"
+  return  # result of previous comparison.
+}
+
+
 # Removes carriage return characters from argument file.
 rmcr() {
   sed -i 's/\r$//' "$1"
@@ -269,77 +341,6 @@ man() {
 		man "$@"
 }
 
-# Checks if the first arg is a substring of the second.
-substrInStr(){
-  substring="$1"
-  string="$2"
-  if [ "$substring" = "" ]; then
-    echo "substring is blank!" >&2
-    return 255
-  fi
-  # if [ "$substring" = "$string" ]; then return 0; fi
-  if [ "$string" = "" ]; then
-    # echo "string is blank for substring '${substring}'" >&2
-    return 1 # false
-  fi
-  if [ -z "${string##*$substring*}" ]; then
-    return 0 # true
-  else
-    return 1
-  fi
-}
-substrTest(){
-  failed=0
-  if ! substrInStr "positive-middle" " this is positive-middlely the middle "; then failed=1; fi
-  if ! substrInStr "positive-left" "positive-leftly this is left"; then failed=2; fi
-  if ! substrInStr "positive-right" "this is right, positive-right"; then failed=3; fi
-  if substrInStr "blank" ""; then failed=4; fi
-  if substrInStr "negative" "a random string without the word"; then failed=5; fi
-  # if ! substrInStr "" ""; then failed=6; fi
-  if ! substrInStr "positive" "a string with
-    a newline and the word positive"; then failed=7; fi
-  if substrInStr "positive" "a string with
-    a newline and no word"; then failed=8; fi
-
-  if [[ "${failed}" != "0" ]]; then
-    echo "substrInStr failed test $failed!" >&2
-  fi
-}
-# substrTest
-
-
-# Compare two dot-separated version numbers.
-# Usage: compareVersionNum num1 '>=' num2, eg:
-# if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.2 ; then
-compareVersionNum () {
-    op=$2
-    num1=$1
-    num2=$3
-    if [ -z "$num1" ] || [ -z "$num2" ] || [ -z "$op" ] ; then
-        echo "Usage: compareVersionNum num1 '>=' num2, eg:" >&2
-        echo "if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.2 ; then" >&2
-        return 2
-    fi
-    if [ "$op" != "<" ] && [ "$op" != "=" ] && [ "$op" != ">" ]; then
-        echo "Invalid operator: '$op'. Valid operators are <, >, =" >&2
-        return 2
-    fi
-  # Sort -V handles version numbers.
-  # Use that and see what reaches the top of the list!
-  smallestVersion="$(echo "$num1" "$num2" | tr " " "\n" | sort -V | head -n1)"
-  if [ "$num1" == "$num2" ]; then
-    res="="
-  elif [ "$num1" == "$smallestVersion" ]; then
-    res="<"
-  else
-    res=">"
-  fi
-
-  # Use eval to unset without spoiling return code.
-  eval "unset op num1 num2 smallestVersion res; [ \"$res\" == \"$op\" ]"
-  return  # result of previous comparison.
-}
-
 # Compare two dot-separated version numbers.
 # Usage: compareVersionNum num1 '>=' num2, eg:
 # if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.2 ; then
@@ -436,7 +437,8 @@ is_tmux_running(){
   # Check tmux is installed
   if command -v \tmux>/dev/null; then
     # Check tmux has a session running
-    if ! \tmux ls 2>&1 | grep -q "no server running"; then
+    # if ! \tmux ls 2>&1 | grep -q "no server running"; then
+    if ! substrInStr "no server running" "$(\tmux ls 2>&1)"; then
       return 0 # true
     fi
   fi
@@ -491,14 +493,16 @@ lastpass_ssh_key_add(){
     return
   fi
   if [ -z "$SSH_KEYS_ADDED" ]; then
-    pubkeys=$(ls $HOME/.ssh/*.pub 2> /dev/null)
+    pubkeys="$HOME/.ssh/*.pub"
     files="${*-$pubkeys}"
     for keyfile in $files; do
       # Strip .pub from public keys...
-      keyfile="${keyfile%.*}"
+      # keyfile="${keyfile%.*}"
       # Backup check to see if key already loaded.
       key="$(cat ${keyfile})"
-      if ! ssh-add -L | grep -q -- "${key}"; then
+      # ssh-add -L lists public keys, oops.
+      # if ! ssh-add -L | grep -q -- "${key}"; then
+      if ! substrInStr "${key}" "$(ssh-add -L)"; then
         # Extract the comment at the end of the pub file
         keyname=$(sed -e 's/[^=]*== //g' < "${keyfile}.pub")
         lastpass_login
