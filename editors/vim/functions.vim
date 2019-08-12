@@ -34,8 +34,11 @@ inoremap <S-Tab> <C-P>
 function! RepeatChar(char, count)
     return repeat(a:char, a:count)
 endfunction
-nnoremap s :<C-U>exec "normal i".RepeatChar(nr2char(getchar()), v:count1)<CR>
-nnoremap S :<C-U>exec "normal a".RepeatChar(nr2char(getchar()), v:count1)<CR>
+function! SingleCharInsert(iora)
+    exec ":normal ".a:iora.RepeatChar(nr2char(getchar()), v:count1)
+endfunction
+nnoremap <silent> s :<C-U>call SingleCharInsert("i")<CR>
+nnoremap <silent> S :<C-U>call SingleCharInsert("a")<CR>
 
 function! IsWSL()
     let s:version = system("cat /proc/version")
