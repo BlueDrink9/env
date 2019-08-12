@@ -123,6 +123,13 @@ set_prompt_symbol () {
   fi
 }
 
+strInText(){
+  text="$1"
+  str="$2"
+  echo -n "${text}" 2> /dev/null | grep "${str}" &> /dev/null
+  echo "$?"
+}
+
 # get current branch in git repo
 # Check status of branch
 # pgreen if no changes, yellow if modified. Cyan if there are misc changes to files.
@@ -132,15 +139,15 @@ prompt_parse_git_branch() {
   if [ ! "${BRANCH}" == "" ]
   then
     status=$(git status 2>&1 | tee)
-    dirty=$(echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?")
-    clean=$(echo -n "${status}" 2> /dev/null | grep "clean" &> /dev/null; echo "$?")
-    untracked=$(echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?")
-    ahead=$(echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?")
-    behind=$(echo -n "${status}" 2> /dev/null | grep "Your branch is behind" &> /dev/null; echo "$?")
-    diverged=$(echo -n "${status}" 2> /dev/null | grep "diverged" &> /dev/null; echo "$?")
-    newfile=$(echo -n "${status}" 2> /dev/null | grep "new file:" &> /dev/null; echo "$?")
-    renamed=$(echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?")
-    deleted=$(echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?")
+    dirty=$(strInText "${status}" "modified:")
+    clean=$(strInText "${status}" "clean")
+    untracked=$(strInText "${status}" "Untracked files")
+    ahead=$(strInText "${status}" "Your branch is ahead of")
+    behind=$(strInText "${status}" "Your branch is behind")
+    diverged=$(strInText "${status}" "diverged")
+    newfile=$(strInText "${status}" "new file:")
+    renamed=$(strInText "${status}" "renamed:")
+    deleted=$(strInText "${status}" "deleted:")
     bits=''
     if [ "${clean}" == "0" ]; then
       STATUS_COLOUR=${pgreen}
@@ -172,7 +179,7 @@ prompt_parse_git_branch() {
       bits="+${bits}"
     fi
     if [ "${dirty}" == "0" ]; then
-      STATUS_COLOUR=${pyellow}
+      STATUS_COLOUR="${pyellow}"
       bits="*${bits}"
     fi
     if [ ! "${bits}" == "" ] || [ "${clean}" == "0" ]; then
