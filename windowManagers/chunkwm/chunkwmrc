@@ -10,6 +10,7 @@ fi
 . "$CHUNKWM_CONFIG_DIR/functions.sh"
 . "$CHUNKWM_CONFIG_DIR/rules.sh"
 
+alias queryWindow="sleep 4; chunkc tiling::query --window \$(chunkc tiling::query --window id)"
 # NOTE: if enabled, chunkwm will monitor the specified plugin_dir
 #       and automatically reload any '.so' file that is changed.
 chunkc core::hotload 0
