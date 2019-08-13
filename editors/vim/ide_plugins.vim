@@ -157,32 +157,22 @@ if has("timers")
             Plug 'Shougo/deoplete.nvim'
             Plug 'roxma/nvim-yarp'
             Plug 'roxma/vim-hug-neovim-rpc'
+            call add(g:pluginSettingsToExec,
+                        \ "call deoplete#custom#option('yarp', v:true)")
         endif
         Plug 'Shougo/denite.nvim'
         " deoplete tab-complete
         inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
         let g:deoplete#enable_at_startup = 1
 
-        " autocmd FileType x
-        " \ call deoplete#custom#buffer_option('auto_complete', v:false)
-        call add(g:pluginSettingsToExec, "call deoplete#custom#option('omni_patterns', {
-                    \ 'r': '[^. *\t]\.\w*',
-                    \})")
-
-        call add(g:pluginSettingsToExec, "
-                    \ call deoplete#custom#var('omni', 'input_patterns', {
-                    \ 'tex': g:vimtex#re#deoplete,
-                    \ 'r': '[^. *\t]\.\w*'
-                    \})
-                    \ ")
+        " let g:deoplete#enable_smart_case = 1
+        " Num processes = 0 means number of sources.
+        call add(g:pluginSettingsToExec, "call deoplete#custom#option(
+                    \ 'smart_case', v:true,
+                    \ 'num_processes', 0,
+                    \ )")
 
         " Completion sources {[}
-        call add(g:pluginSettingsToExec,
-                    \ "call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])")
-        call add(g:pluginSettingsToExec,
-                    \ "call deoplete#custom#source('LanguageClient', 'min_pattern_length', 2)")
-        " let g:deoplete#enable_smart_case = 1
-        call add(g:pluginSettingsToExec, "call deoplete#custom#option('smart_case', v:true)")
         " complete from syntax files
         Plug 'Shougo/neco-syntax'
         Plug 'Shougo/neoinclude.vim'
@@ -190,18 +180,40 @@ if has("timers")
         Plug 'Shougo/neco-vim'
         Plug 'artur-shaik/vim-javacomplete2'
 
+        call add(g:pluginSettingsToExec,
+                    \ "call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])")
+        call add(g:pluginSettingsToExec,
+                    \ "call deoplete#custom#source('LanguageClient', 'min_pattern_length', 2)")
+        " autocmd FileType x
+        " \ call deoplete#custom#buffer_option('auto_complete', v:false)
+
         " Plug 'https://github.com/lionawurscht/deoplete-biblatex'
         Plug 'deoplete-plugins/deoplete-tag'
+        call add(g:pluginSettingsToExec, "call deoplete#custom#option('omni_patterns', {
+                    \ 'r': ['[^. *\t]\.\w*', '\h\w*::\w*', '\h\w*\$\w*'],
+                    \})")
+                    " \ 'r': '[^. *\t]\.\w*',
+
+        call add(g:pluginSettingsToExec, "
+                    \ call deoplete#custom#var('omni', 'input_patterns', {
+                    \ 'tex': g:vimtex#re#deoplete,
+                    \})
+                    \ ")
+        " This was in the previous dict.
+        " See https://github.com/Shougo/deoplete.nvim/issues/745
+                    " \ 'r': '[^. *\t]\.\w*'
+        call add(g:pluginSettingsToExec,
+                    \ "call deoplete#custom#source('dictionary', 'min_pattern_length', 4)")
+        " Rank 200 is below around, above file, below omni.
+        " Note: omni not async :(
+        call add(g:pluginSettingsToExec,
+                    \ "call deoplete#custom#source('buffer', 'rank', 200)")
         if executable("clang")
             Plug 'Shougo/deoplete-clangx', {'for': ['c', 'cpp'] }
         endif
         Plug 'deoplete-plugins/deoplete-dictionary'
         " exec "Plug 'deoplete-plugins/deoplete-dictionary',
         "             \ { 'for': " . g:proseFileTypes . " }"
-        call add(g:pluginSettingsToExec,
-                    \ "call deoplete#custom#source('dictionary', 'min_pattern_length', 4)")
-        call add(g:pluginSettingsToExec,
-                    \ "call deoplete#custom#source('buffer', 'rank', 9999)")
 
         " Completion sources {]}
 
