@@ -629,3 +629,13 @@ base16Reset(){
   rm ~/.base16_theme
   reset
 }
+
+
+hist-search(){
+searchterm="$1"
+logs="$HOME"/.logs/bash-history-
+rg "$searchterm" "${logs}*" 2> /dev/null || \
+  ag "${logs}*" "$searchterm" 2> /dev/null || \
+  grep -r "$searchterm" "${logs}*"
+  unset searchterm logs
+}
