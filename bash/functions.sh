@@ -4,41 +4,37 @@
 [ -n "${BASH_FUNCTIONS_LOADED}" ] && return || export BASH_FUNCTIONS_LOADED=1
 
 # Checks if the first arg is a substring of the second.
-substrInStr(){
+substrInStr() {
   substring="$1"
   string="$2"
-  if [ "$substring" = "" ]; then
-    echo "substring is blank!" >&2
-    return 255
-  fi
-  # if [ "$substring" = "$string" ]; then return 0; fi
-  if [ "$string" = "" ]; then
-    # echo "string is blank for substring '${substring}'" >&2
-    return 1 # false
-  fi
-  if [ -z "${string##*$substring*}" ]; then
-    return 0 # true
-  else
-    return 1
-  fi
+  case "${string?No string given}" in
+    (*${substring?No substring given}*)  return 0 ;;
+    (*)                          return 1 ;;
+  esac
 }
 substrTest(){
-  failed=0
-  if ! substrInStr "positive-middle" " this is positive-middlely the middle "; then failed=1; fi
-  if ! substrInStr "positive-left" "positive-leftly this is left"; then failed=2; fi
-  if ! substrInStr "positive-right" "this is right, positive-right"; then failed=3; fi
-  if substrInStr "blank" ""; then failed=4; fi
-  if substrInStr "negative" "a random string without the word"; then failed=5; fi
-  # if ! substrInStr "" ""; then failed=6; fi
-  if ! substrInStr "positive" "a string with
-    a newline and the word positive"; then failed=7; fi
-  if substrInStr "positive" "a string with
-    a newline and no word"; then failed=8; fi
-  if substrInStr "case-sensitive" "a random CASE-SENSITIVE string word"; then failed=9; fi
+  unset failed
+  i=0
+  if ! substrInStr "positive-middle" " this is positive-middlely the middle "; then failed="${failed},$((i=i+1))"; fi
+  if ! substrInStr "positive-left" "positive-leftly this is left"; then failed="${failed},$((i=i+1))"; fi
+  if ! substrInStr "positive-right" "this is right, positive-right"; then failed="${failed},$((i=i+1))"; fi
+  if ! substrInStr "equal" "equal"; then failed="${failed},$((i=i+1))"; fi
+  if substrInStr "blank" ""; then failed="${failed},$((i=i+1))"; fi
+  if substrInStr "negative" "a random string without the word"; then failed="${failed},$((i=i+1))"; fi
+  # if ! substrInStr "" ""; then failed="${failed},$((i=i+1))"; fi
+  if ! substrInStr "newline" "a string with
+    a newline and the word positive"; then failed="${failed},$((i=i+1))"; fi
+  if substrInStr "newline-negative" "a string with
+    a newline and no word"; then failed="${failed},$((i=i+1))"; fi
+  if substrInStr "case-sensitive" "a random CASE-SENSITIVE string word"; then failed="${failed},$((i=i+1))"; fi
+  if ! substrInStr "" "blank substring"; then failed="${failed},$((i=i+1))"; fi
+  if substrInStr "blank string"; then failed="${failed},$((i=i+1))"; fi
+  if ! substrInStr " " "white space"; then failed="${failed},$((i=i+1))"; fi
 
-  if [[ "${failed}" != "0" ]]; then
-    echo "substrInStr failed test $failed!" >&2
+  if [ -n "${failed}" ]; then
+    echo "substrInStr failed test(s) ${failed##,}!" >&2
   fi
+  unset failed i
 }
 # substrTest
 
