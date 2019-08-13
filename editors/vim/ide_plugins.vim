@@ -372,6 +372,15 @@ Plug 'xolox/vim-misc'
 if executable('ctags-exuberant') || executable('ctags')
     if has("python3") && has("nvim")
         Plug 'c0r73x/neotags.nvim', {'do': 'make'}
+        let g:neotags_directory = CreateVimDir("neotags")
+        let g:neotags_highlight = 0
+        if executable('ag')
+            " Use this option for the_silver_searcher
+            let g:neotags_find_tool = 'ag -g ""'
+        elseif executable('rg')
+            " Or this one for ripgrep. Not both.
+            let g:neotags_find_tool = 'rg --files'
+        endif
     else
         " Async (7.4+), only vimL...
         " Plug 'LucHermitte/lh-vim-lib'
