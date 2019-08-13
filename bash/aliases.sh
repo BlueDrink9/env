@@ -134,3 +134,5 @@ alias darkColours="base16_onedark"
 alias lightColours="base16Reset"
 # Preview images in terminal, even over ssh.
 alias icat="kitty +kitten icat"
+
+alias dotfe="vim \"${DOTFILES_DIR}\"/bash/aliases.sh \"${DOTFILES_DIR}\"/bash/functions.sh"
