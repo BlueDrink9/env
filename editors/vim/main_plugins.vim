@@ -108,6 +108,13 @@ endif
 " Allows plugin maps to use '.' to repeat
 Plug 'https://github.com/tpope/vim-repeat'
 Plug 'https://github.com/tpope/vim-speeddating'
+Plug 'https://github.com/Konfekt/vim-CtrlXA'
+nmap <Plug>SpeedDatingFallbackUp   <Plug>(CtrlXA-CtrlA)
+nmap <Plug>SpeedDatingFallbackDown <Plug>(CtrlXA-CtrlX)
+" Fewer defaults, but preserves case and can apparently support latex.
+" Plug 'https://github.com/bootleq/vim-cycle'
+" map <silent> <Plug>CycleFallbackNext <Plug>SpeedDatingUp
+" map <silent> <Plug>CycleFallbackPrev <Plug>SpeedDatingDown
 
 " Align CSV files at commas, align Markdown tables, and more.
 " Could go in prose... but maybe I'll use it more later.
