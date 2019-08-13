@@ -296,3 +296,20 @@ inoremap <c-]> <c-x><c-]>
 cabbrev pathCopy let @+ = expland("%")
 " Word under cursor.
 cabbrev <cw> <cword>
+
+" From the help for sections. Means { and } don't have to be at the start of
+" the line.
+" TODO, add more whynot. Do in filetype plugins, methinks.
+" nnoremap [[ ?{<CR>w99[{
+" nnoremap ][ /}<CR>b99]}
+" nnoremap ]] j0[[%/{<CR>
+" nnoremap [] k$][%?}<CR>
+" Use [[ and ]] for fold markers!
+nnoremap [[ ?{[}<CR>w
+nnoremap ][ /{[}<CR>b
+nnoremap ]] j0/{]}<CR>
+nnoremap [] k${]}<CR>
+vnoremap [[ ?{[}<CR>w
+vnoremap ][ /{[}<CR>b
+vnoremap ]] j0/{]}<CR>
+vnoremap [] k${]}<CR>
