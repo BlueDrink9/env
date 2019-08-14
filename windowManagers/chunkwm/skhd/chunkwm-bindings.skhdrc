@@ -174,6 +174,8 @@ chunkwmMode < 3 : chunkc tiling::window --send-to-desktop 3
 chunkwmMode < 4 : chunkc tiling::window --send-to-desktop 4
 chunkwmMode < 5 : chunkc tiling::window --send-to-desktop 5
 chunkwmMode < 6 : chunkc tiling::window --send-to-desktop 6
+chunkwmMode < 7 : chunkc tiling::window --send-to-desktop 7
+chunkwmMode < 8 : chunkc tiling::window --send-to-desktop 8
 
 # fast focus desktop. Requires extra hack.
 # Alternative is to set these shortcuts under mission control in sys preferences
@@ -192,6 +194,8 @@ chunkwmMode < alt - 3 : chunkc tiling::desktop --focus 3; default
 chunkwmMode < alt - 4 : chunkc tiling::desktop --focus 4; default
 chunkwmMode < alt - 5 : chunkc tiling::desktop --focus 5; default
 chunkwmMode < alt - 6 : chunkc tiling::desktop --focus 6; default
+chunkwmMode < alt - 7 : chunkc tiling::desktop --focus 7; default
+chunkwmMode < alt - 8 : chunkc tiling::desktop --focus 8; default
 # cmd + alt - 7 : chunkc tiling::desktop --focus 7
 
 # send window to desktop and follow focus
@@ -207,6 +211,8 @@ chunkwmMode < shift + ctrl - 4 : chunkc tiling::window --send-to-desktop 4; chun
 chunkwmMode < shift + ctrl - 5 : chunkc tiling::window --send-to-desktop 5; chunkc tiling::desktop --focus 5; default
 chunkwmMode < shift + ctrl - 6 : chunkc tiling::window --send-to-desktop 6; chunkc tiling::desktop --focus 6; default
 chunkwmMode < shift + ctrl - 7 : chunkc tiling::window --send-to-desktop 7; chunkc tiling::desktop --focus 7; default
+chunkwmMode < shift + ctrl - 8 : chunkc tiling::window --send-to-desktop 8; chunkc tiling::desktop --focus 9; default
+chunkwmMode < shift + ctrl - 9 : chunkc tiling::window --send-to-desktop 9; chunkc tiling::desktop --focus 9; default
 shift + cmd - 4 : chunkc border::clear
 
 # focus monitor
