@@ -630,6 +630,13 @@ base16Reset(){
   reset
 }
 
+kittyColourSet(){
+  export COLOURSCHEME="$1"
+  kitty @ set-colors "${DOTFILES_DIR}/terminal/kitty/colourschemes/${COLOURSCHEME}.conf" 2>> ~/.logs/kitty.log
+}
+kittyColourReset(){
+  kitty @ set-colors "${DOTFILES_DIR}/terminal/kitty/colourschemes/solarized_light.conf"
+}
 
 hist-search(){
   searchterm="$1"
