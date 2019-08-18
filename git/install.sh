@@ -23,7 +23,7 @@ gitUser() {
     printErr "Forcing git update."
   elif [[ "$(git config --global user.name)" =~ .+ ]] && [[ $(git config --global user.email) =~ .+ ]]; then
     printErr "$OK Git global user is set."
-    printErr "Re-run with ( ./install -gu ) to force update."
+    # printErr "Re-run with ( ./install -gu ) to force update."
     return 0
   fi
 
@@ -34,12 +34,16 @@ gitUser() {
   read -r GIT_EMAIL
 
   printErr "${Yellow}Configuring git.$NC"
+  # Blank or unset: Use github no-reply email as a default.
+  default_email="${GIT_USER}@users.noreply.github.com"
+  GIT_EMAIL="${GIT_EMAIL:-$default_email}"
   printErr "Username: $GIT_USER"
   printErr "Email: $GIT_EMAIL"
   git config --global user.name "$GIT_USER"
   git config --global credential.https://github.com.username "$GIT_USER"
   git config --global user.email "$GIT_EMAIL"
-  printErr "${Cyan}You can update your git user by entering:$NC ./install -gu"
+  # printErr "${Cyan}You can update your git user by entering:$NC ./install -gu"
+  unset default_email
 }
 
 gitCredentialCache() {
