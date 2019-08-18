@@ -8,9 +8,9 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export DOTFILES_DIR=$(cd "${SCRIPT_DIR}/.." && pwd)
 
-source "${SCRIPT_DIR}/functions.sh"
 # Exec wipes out function definitions, so kill include guard for profile.
 unset BASH_FUNCTIONS_LOADED
+source "${SCRIPT_DIR}/functions.sh"
 if substrInStr "Microsoft" "$([ -f /proc/version ] && cat /proc/version)"; then
   export isWSL=1
 fi
