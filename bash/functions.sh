@@ -72,7 +72,7 @@ compareVersionNum () {
 }
 # Basically a 1-line version of the above. Not ever called, just here to copy
 # and paste where the above function can't be declared.
-is1EarlierVersionThan2(){ [ "$(printf "%s\n%s" "$1" "$2" | sort -V | head -n1)" == "$1" ] || false; }
+is1EarlierVersionThan2(){ [ "$(printf "%s\n%s" "$1" "$2" | sort -V | head -n1)" == "$1" ]; }
 
 
 # Removes carriage return characters from argument file.
