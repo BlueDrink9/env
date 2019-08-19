@@ -581,10 +581,10 @@ pack(){
     install | refresh | upgrade | search | remove | info)
       cmd="${cmd}cmd"
       # Not posix :( Expand cmd to get what the actual [$installcmd] is.
-      "$packcmd" "${!cmd}" $args
+      $packcmd "${!cmd}" $args
       ;;
     *)
-      "$packcmd" "$cmd" $args
+      $packcmd "$cmd" $args
   esac
 
   unset packcmd cmd installcmd refreshcmd upgradecmd searchcmd removecmd infocmd useSudo
