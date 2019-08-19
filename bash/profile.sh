@@ -96,6 +96,7 @@ if [ -n "$HOMEBREW_PREFIX" ] && ! substrInStr "$HOMEBREW_PREFIX" "${PATH%%:*}" ;
   export MANPATH="$HOMEBREW_PREFIX/share/man:$MANPATH"
   export INFOPATH="$HOMEBREW_PREFIX/share/info:$INFOPATH"
 fi
+# Local (usually manually) installed packages. Should have highest priority.
 if ! substrInStr "$HOME/.local" "${PATH}" ; then
   export PATH="$HOME/.local/bin:$HOME/.local/sbin:$PATH"
   export XDG_DATA_DIRS="$$HOME/.local/share:$XDG_DATA_DIRS"
