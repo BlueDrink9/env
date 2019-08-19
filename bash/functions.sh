@@ -57,7 +57,7 @@ compareVersionNum () {
     fi
   # Sort -V handles version numbers.
   # Use that and see what reaches the top of the list!
-  smallestVersion="$(echo "$num1" "$num2" | tr " " "\n" | sort -V | head -n1)"
+  smallestVersion="$(printf "%s\n%s" "$num1" "$num2" | sort -V | head -n1)"
   if [ "$num1" == "$num2" ]; then
     res="="
   elif [ "$num1" == "$smallestVersion" ]; then
@@ -70,6 +70,9 @@ compareVersionNum () {
   eval "unset op num1 num2 smallestVersion res; [ \"$res\" == \"$op\" ]"
   return  # result of previous comparison.
 }
+# Basically a 1-line version of the above. Not ever called, just here to copy
+# and paste where the above function can't be declared.
+is1EarlierVersionThan2(){ [ "$(printf "%s\n%s" "$1" "$2" | sort -V | head -n1)" == "$1" ] || false; }
 
 
 # Removes carriage return characters from argument file.
