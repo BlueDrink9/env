@@ -534,7 +534,7 @@ END
 alias lpssh="lastpass_ssh_key_add"
 
 choosePkgManager(){
-  options="brew pacman yay pkg apt yum"
+  options="brew yay pacman apt pkg yum"
   for option in $options; do
       if [ $(command -v "${option}" 2>/dev/null) ]; then
           echo "${option}"
@@ -560,13 +560,13 @@ pack(){
         brew )
             removecmd="uninstall"
             ;;
-        pacman )
+        pacman|yay)
             installcmd="-S"
             refreshcmd="-Syy"
             upgradecmd="-Syu"
             searchcmd="-Ss"
             removecmd="-R"
-            useSudo=true
+            if [ "$packcmd" == "pacman" ]; then useSudo=true; fi
             ;;
         pkg )
             # Probably termux, may be freeBSD.
