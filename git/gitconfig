@@ -19,6 +19,8 @@
   rc = rebase --continue
   reab = rebase --abort
   resk = rebase --skip
+  amend = commit --amend
+  merge-feature = merge --no-ff
   conflict = !vim +Conflicted
 
 [credential]
