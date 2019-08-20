@@ -93,10 +93,6 @@ mkcd() {
   mkdir -p "$1" && cd "$1"
 }
 
-sshraw() {
-  \ssh "$@" -t '/bin/bash --norc'
-}
-
 findText(){
   text="$1"
   dir="${2:-.}"
@@ -384,6 +380,10 @@ fi
   fi
 }
 
+sshraw() {
+  \ssh "$@" -t '/bin/bash --norc'
+}
+
 ssh_copy_terminfo (){
   infocmp | \ssh "$@" tic -x -o \~/.terminfo /dev/stdin
 }
@@ -407,6 +407,15 @@ ssh_with_options(){
   \ssh -t "$@" "${EXPORT_TERMOPTIONS_CMD} exec ${shell_base} -l -s"
 }
 alias ssh="ssh_with_options"
+
+mosh_with_options(){
+  local EXPORT_TERMOPTIONS_CMD=$(generate_export_termoptions_cmd)
+  # Calls default shell, stripping leading '-' and directory
+  shell_base="${0##*/}"
+  shell_base="${shell_base#-}"
+  \mosh --ssh="\ssh -t \"$@\" \"${EXPORT_TERMOPTIONS_CMD}\""
+}
+alias mosh="mosh_with_options"
 
 set_tmux_termoptions(){
   if is_tmux_running; then
