@@ -89,8 +89,9 @@ IDEVim(){ vim --cmd "let g:ideMode=1" "$@"; }
 alias idevim="IDEVim"
 liteVim(){ vim --cmd "let g:liteMode=1" "$@"; }
 alias vi="liteVim"
-nopluginVim(){ vim --noplugin --cmd "let g:noPlugins=1" "$@"; }
 alias view="vi -R"
+nopluginVim(){ vim --noplugin --cmd "let g:noPlugins=1" "$@"; }
+alias lvi="nopluginVim"
 shelleditor(){ vim --cmd "let g:liteMode=1" +'set ft=sh' "$@"; }
 
 # You know it, baby. Shouldn't need to use nano ever.
