@@ -27,9 +27,10 @@ endif
 
 
 set encoding=utf-8
-filetype plugin indent on
 " For highlighting, and color schemes
+" Should go before ft plugin on
 syntax on
+filetype plugin indent on
 augroup my_syntax
     autocmd!
     " :h syn-sync. Complicated stuff, can't figure it out really.
