@@ -29,7 +29,7 @@ eval "$(cat <<END
 do${installID}() {
     printErr "Enabling Kitty setup..."
     addTextIfAbsent "${installText}" "${baseRC}"
-    # git clone --depth 1 https://github.com/dexpota/kitty-themes.git ~/.config/kitty/kitty-themes
+    git clone --depth 1 git@github.com:dexpota/kitty-themes.git ~/.config/kitty/kitty-themes
   }
 END
 )"

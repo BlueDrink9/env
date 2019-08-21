@@ -644,10 +644,10 @@ base16Reset(){
 
 kittyColourSet(){
   export COLOURSCHEME="$1"
-  kitty @ set-colors "${DOTFILES_DIR}/terminal/kitty/colourschemes/${COLOURSCHEME}.conf" 2>> ~/.logs/kitty.log
+  kitty @ set-colors "${KITTY_THEME_DIR}/${COLOURSCHEME}.conf" 2>> ~/.logs/kitty.log
 }
 kittyColourReset(){
-  kitty @ set-colors "${DOTFILES_DIR}/terminal/kitty/colourschemes/solarized_light.conf"
+  kitty @ set-colors "${DOTFILES_DIR}/terminal/kitty/solarized_light.conf"
 }
 
 hist-search(){
