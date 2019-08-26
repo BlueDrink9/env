@@ -3,6 +3,7 @@ bspc rule -a Skype pseudo_tiled=on
 # bspc rule -a Spotify pseudo_tiled=on
 # bspc rule -a Thunar pseudo_tiled=on
 bspc rule -a Chromium desktop='^2'
+bspc rule -a xdm state=floating
 bspc rule -a mplayer2 state=floating
 bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off floating=on
