@@ -225,3 +225,9 @@ super + shift + z
 # # end move/resize
 # super + @button{1-3}
 #         bspc pointer -u
+# Save layout using 
+# https://github.com/johannesjo/linux-window-session-manager
+super + w; w
+  lwsm save bspwm
+super + w; e
+  lwsm restore bspwm
