@@ -43,8 +43,8 @@ Plug 'https://github.com/vim-scripts/oceandeep'
 " Purple can be quite fun.
 Plug 'ashfinal/vim-colors-violet'
 Plug 'dracula/vim', { 'as': 'dracula' }
-" Has light and dark, but light may need dark as airline theme?
 Plug 'sonph/onehalf', { 'rtp' : 'vim' }
+Plug 'rakr/vim-one'
 " Black backgrounds
 Plug 'fcpg/vim-fahrenheit'
 Plug 'vim-scripts/Luinnar'
