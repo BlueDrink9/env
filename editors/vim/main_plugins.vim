@@ -85,9 +85,18 @@ nmap <C-/>  :TcommentBlock<CR>
 omap <C-/>  :Tcomment<CR>
 " I thought this wasn't working, because nothing ever showed up.
 " It turns out this is because you need to :DoShowMarks first.
-Plug 'https://github.com/jacquesbh/vim-showmarks.git'
-" This one's ugly. May need to be customized.
-" Plug 'jeetsukumaran/vim-markology'
+" Plug 'https://github.com/jacquesbh/vim-showmarks.git'
+" More advanced version of showmarks. Lots of mappings, eg m]
+Plug 'jeetsukumaran/vim-markology'
+" Enable with m!
+let g:markology_enable=0
+let g:markology_ignore_type="hpq"
+let g:markology_include=
+            \ "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.'`^<>[]()\""
+call add (g:customHLGroups, "link MarkologyHLl LineNr")
+call add (g:customHLGroups, "link MarkologyHLu LineNr")
+call add (g:customHLGroups, "link MarkologyHLo LineNr")
+" call add (g:customHLGroups, "link MarkologyHLo LineNr")
 " Adds a bunch of unix-mapped filesystem ops from vim
 Plug 'https://github.com/tpope/vim-eunuch'
 Plug 'https://github.com/simnalamburt/vim-mundo'
