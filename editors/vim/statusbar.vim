@@ -43,7 +43,9 @@ function! s:AirlineColorVarUpdate()
         " let g:colorSch = &background
         " If theme is unset, Airline will pick from theme highlight colours to
         " get a nice match.
-        unlet g:airline_theme
+        if exists('g:airline_theme')
+            unlet g:airline_theme
+        endif
     else
     let g:airline_theme=g:colorSch
     endif
