@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 source "$DOTFILES_DIR/bash/script_functions.sh"
 
+shebang="#!$PREFIX/usr/bin/env bash"
+
 mkdir -p "$HOME/.termux"
 downloadURLAndExtractGzTo "https://github.com/adi1090x/termux-style/raw/master/data.tar.gz" \
     "$HOME/.termux/termux-style" && \
@@ -14,7 +16,11 @@ chmod +x /usr/bin/launch
 # Disable openssh password auth. Only allow public key.
 sed -i 's/#PasswordAuthentication.*/PasswordAuthentication no/' "$PREFIX/etc/ssh/sshd_config"
 
-shebang="#!$PREFIX/usr/bin/env bash"
+# Use tergent as ssh-agent. Should override default.
+mkdir -p "$HOME/.local/usr/bin"
+printf "%s\ntergent" "${shebang}" > "$HOME/.local/usr/bin/ssh-agent"
+chmod +x "$HOME/.local/usr/bin/"*
+
 # Tasks are run in the background (termux isn't launched).
 mkdir -p "$HOME/.shortcuts/tasks"
 echo "$shebang" > "$HOME/.shortcuts/vim"
