@@ -12,13 +12,16 @@ curl https://github.com/thewisenerd/dotfiles/blob/88d0534c67c2e93f601b1dd757cea9
 chmod +x /usr/bin/launch
 
 # Disable openssh password auth. Only allow public key.
-sed -i 's/#PasswordAuthentication.*/PasswordAuthentication no/' $PREFIX/etc/ssh/sshd_config
+sed -i 's/#PasswordAuthentication.*/PasswordAuthentication no/' "$PREFIX/etc/ssh/sshd_config"
 
-mkdir -p $HOME/.shortcuts
-echo "#!/bin/bash" > "$HOME/.shortcuts/vim"
+mkdir -p "$HOME/.shortcuts"
+shebang="#!$PREFIX/usr/bin/env bash"
+echo "$shebang" > "$HOME/.shortcuts/vim"
 echo source "$($SCRIPTDIR_CMD)/vim" >> "$HOME/.shortcuts/vim"
-mkdir -p $HOME/bin
-echo "#!/bin/bash" > "$HOME/bin/termux-file-editor"
+mkdir -p "$HOME/bin"
+echo "$shebang" > "$HOME/bin/termux-file-editor"
 echo source "$HOME/.shortcuts/vim" >> "$HOME/bin/termux-file-editor"
+printf "%s\nsshd" "${shebang}" > "$HOME/.shortcuts/sshd"
 
 echo Check https://android.stackexchange.com/questions/37/how-do-i-change-the-name-of-my-android-device to alter the hostname
+unset shebang
