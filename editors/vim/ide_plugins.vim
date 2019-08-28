@@ -119,9 +119,10 @@ if has("timers")
     " \ }
     let g:LanguageClient_autoStart = 1
     let g:LanguageClient_autoStop = 1
-    " Displays all messages at end of line. Way too annoying for anything
-    " other than warnings.
-    let g:LanguageClient_useVirtualText = 0
+    " Displays all messages at end of line.
+    " Can be a little annoying, so play with this as Error or Warning.
+    let g:LanguageClient_useVirtualText = 1
+    let g:LanguageClient_diagnosticsMaxSeverity = 'Warning'
     " for documentation. Effective only when the floating window feature is
     " supported.
     let g:LanguageClient_useFloatingHover = 1
@@ -386,12 +387,12 @@ if executable('ctags-exuberant') || executable('ctags')
         Plug 'c0r73x/neotags.nvim', {'do': 'make'}
         let g:neotags_directory = CreateVimDir("neotags")
         let g:neotags_highlight = 0
-        if executable('ag')
-            " Use this option for the_silver_searcher
-            let g:neotags_find_tool = 'ag -g ""'
-        elseif executable('rg')
+        if executable('rg')
             " Or this one for ripgrep. Not both.
             let g:neotags_find_tool = 'rg --files'
+        elseif executable('ag')
+            " Use this option for the_silver_searcher
+            let g:neotags_find_tool = 'ag -g ""'
         endif
     else
         " Async (7.4+), only vimL...
