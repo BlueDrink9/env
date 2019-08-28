@@ -18,10 +18,11 @@ mkdir -p "$HOME/.shortcuts"
 shebang="#!$PREFIX/usr/bin/env bash"
 echo "$shebang" > "$HOME/.shortcuts/vim"
 echo source "$($SCRIPTDIR_CMD)/vim" >> "$HOME/.shortcuts/vim"
+printf "%s\nsshd" "${shebang}" > "$HOME/.shortcuts/sshd"
+chmod +x "$HOME/.shortcuts/"*
 mkdir -p "$HOME/bin"
 echo "$shebang" > "$HOME/bin/termux-file-editor"
 echo source "$HOME/.shortcuts/vim" >> "$HOME/bin/termux-file-editor"
-printf "%s\nsshd" "${shebang}" > "$HOME/.shortcuts/sshd"
 
 echo Check https://android.stackexchange.com/questions/37/how-do-i-change-the-name-of-my-android-device to alter the hostname
 unset shebang
