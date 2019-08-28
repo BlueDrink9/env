@@ -1,10 +1,12 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
 "
-augroup colourschemes
+augroup myColourschemes
     autocmd!
-    autocmd colorscheme * let colorSch = get(g:, 'colors_name', 'default')
 augroup end
+
+autocmd myColourschemes colorscheme * let colorSch =
+            \ get(g:, 'colors_name', 'default')
 
 function! GetBackground()
     return synIDattr(synIDtrans(hlID('SignColumn')), 'bg')

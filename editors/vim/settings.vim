@@ -31,11 +31,8 @@ set encoding=utf-8
 " Should go before ft plugin on
 syntax on
 filetype plugin indent on
-augroup my_syntax
-    autocmd!
-    " :h syn-sync. Complicated stuff, can't figure it out really.
-    autocmd BufWinEnter,Syntax * syn sync minlines=100 | syn sync maxlines=200
-augroup END
+" :h syn-sync. Complicated stuff, can't figure it out really.
+autocmd myVimrc BufWinEnter,Syntax * syn sync minlines=100 | syn sync maxlines=200
 
 " {[} Colours
 let s:defaultBGGUI="light"
@@ -256,24 +253,20 @@ if v:version >= 703
 endif
 set viewoptions-=options
 " Superceded by light plugi 'vim-stay'.
-" augroup view
-"     autocmd!
-"     " save folds
-"     autocmd BufWinLeave *.* mkview
-"     autocmd BufWinEnter *.* silent! loadview
-" augroup END
-augroup autowrite
-    autocmd!
-    " Don't autosave if there is no buffer name.
-    if bufname('%') != '' && &ro != 1 && &modifiable == 1
-        " Automatically save before commands like :next and :make
-        set autowrite
-        " Save on focus loss
-        au FocusLost * silent! :wa
-        " Save leaving insert
-        au InsertLeave <buffer> :update
-    endif
-augroup END
+" save folds
+" autocmd myVimrc BufWinLeave *.* mkview
+" autocmd myVimrc BufWinEnter *.* silent! loadview
+
+" Autosave
+" Don't autosave if there is no buffer name.
+if bufname('%') != '' && &ro != 1 && &modifiable == 1
+    " Automatically save before commands like :next and :make
+    set autowrite
+    " Save on focus loss
+    au myVimrc FocusLost * silent! :wa
+    " Save leaving insert
+    au myVimrc InsertLeave <buffer> :update
+endif
 
 set modeline
 set modelines=5
@@ -294,11 +287,8 @@ endif
 set wrap
 if v:version >= 800
     set listchars=tab:>-,trail:·,eol:¬,precedes:←,extends:→,nbsp:·
-    augroup showbreak
-        au!
-        autocmd optionset wrap let &showbreak=''
-        autocmd optionset nowrap let &showbreak='→ '
-    augroup end
+    autocmd myVimrc optionset wrap let &showbreak=''
+    autocmd myVimrc optionset nowrap let &showbreak='→ '
     let &showbreak='→ '
     " put linebreak in number column? Doesn't seem to work...
     set cpoptions+=n
@@ -345,11 +335,8 @@ set foldminlines=3
 set foldlevelstart=1
 set foldopen+=",insert"
 " Use indent and manual folding
-" augroup fold
-"     au!
-"     au BufReadPre * setlocal foldmethod=indent
-"     au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
-" augroup END
+" au myVimrc BufReadPre * setlocal foldmethod=indent
+" au myVimrc BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
 
 function! s:SetSpellFile()
   let b:spellfilename=PathExpand(expand('%:p:h') . '/custom-spellings-vim.'
@@ -364,10 +351,7 @@ function! s:SetSpellFile()
   endif
 endfunction
 " set spellfile=$HOME/.vim-spell-en.utf-8.add
-augroup spellfile
-  au!
-  au BufEnter * call s:SetSpellFile()
-augroup end
+au myVimrc BufEnter * call s:SetSpellFile()
 "Uses dictionary and source files to find matching words to complete.
 "See help completion for source,
 "Note: usual completion is on <C-n> but more trouble to press all the time.
@@ -392,10 +376,7 @@ let g:netrw_browse_split = 4
 let g:netrw_altv = 1
 let g:netrw_winsize = 25
 " Run on startup
-" augroup ProjectDrawer
-"     autocmd!
-"     autocmd VimEnter * :Vexplore
-" augroup END
+" autocmd myVimrc VimEnter * :Vexplore
 
 "highlight whitespace at the ends of lines
 " autocmd InsertEnter * syn clear EOLWS | syn match EOLWS excludenl /\s\+\%#\@!$/
@@ -436,21 +417,15 @@ function! s:SetTitle()
     set title
 endfunction
 
-augroup title
-    autocmd!
-    autocmd BufEnter,Bufwrite * call s:SetTitle()
-augroup END
+autocmd myVimrc BufEnter,Bufwrite * call s:SetTitle()
 
 " Autoset new buffers to scratch
-augroup scratch
-    autocmd!
-    autocmd BufEnter * if &filetype == "" | setlocal ft=scratch |
-                \  setlocal spell | setl ai| endif
-    " Automatically detect the changed filetype on write. Currently only doing
-    " it if the previous buftype was scratch (ie unnamed, which in default vim
-    " would have done this anyway)
-    autocmd BufWrite * if &filetype == "scratch" | filetype detect | endif
-augroup END
+autocmd myVimrc BufEnter * if &filetype == "" | setlocal ft=scratch |
+            \  setlocal spell | setl ai| endif
+" Automatically detect the changed filetype on write. Currently only doing
+" it if the previous buftype was scratch (ie unnamed, which in default vim
+" would have done this anyway)
+autocmd myVimrc BufWrite * if &filetype == "scratch" | filetype detect | endif
 
 function! s:ReadTemplate()
     filetype detect
@@ -459,10 +434,7 @@ function! s:ReadTemplate()
         exec 'read ' . l:templatePath
     endif
 endfunction
-augroup template
-    autocmd!
-    autocmd BufNewFile * call s:ReadTemplate()
-augroup end
+autocmd myVimrc BufNewFile * call s:ReadTemplate()
 
 " {[} Set cursor based on mode.
 " block cursor in normal mode, line in other.
@@ -495,25 +467,22 @@ endif
     " let s:rCursor = "\e[1 q"
     " elseif $TERMTYPE ~= "xterm"
 
-if exists('s:iCursor')
-    " if exists('$TMUX')
-    "     let s:iCursor = "\<Esc>Ptmux;\<Esc>" . s:iCursor . "\<Esc>\\"
-    "     let s:nCursor = "\<Esc>Ptmux;\<Esc>" . s:nCursor . "\<Esc>\\"
-    "     let s:rCursor = "\<Esc>Ptmux;\<Esc>" . s:rCursor . "\<Esc>\\"
-    "     let s:vCursor = "\<Esc>Ptmux;\<Esc>" . s:vCursor . "\<Esc>\\"
-    " endif
-    exec 'let &t_SI = "' . s:iCursor . '""'
-    exec 'let &t_EI = "' . s:nCursor . '""'
-    " exec 'let &t_VS = "' . s:vCursor . '""'
-    if v:version >= 800
-        exec 'let &t_SR = "' . s:rCursor . '""'
-    endif
-    augroup cursor
-        au!
+    if exists('s:iCursor')
+        " if exists('$TMUX')
+        "     let s:iCursor = "\<Esc>Ptmux;\<Esc>" . s:iCursor . "\<Esc>\\"
+        "     let s:nCursor = "\<Esc>Ptmux;\<Esc>" . s:nCursor . "\<Esc>\\"
+        "     let s:rCursor = "\<Esc>Ptmux;\<Esc>" . s:rCursor . "\<Esc>\\"
+        "     let s:vCursor = "\<Esc>Ptmux;\<Esc>" . s:vCursor . "\<Esc>\\"
+        " endif
+        exec 'let &t_SI = "' . s:iCursor . '""'
+        exec 'let &t_EI = "' . s:nCursor . '""'
+        " exec 'let &t_VS = "' . s:vCursor . '""'
+        if v:version >= 800
+            exec 'let &t_SR = "' . s:rCursor . '""'
+        endif
         " reset cursor when vim exits
-        autocmd VimLeave * silent !echo -ne "\033]112\007"
+        autocmd myVimrc VimLeave * silent !echo -ne "\033]112\007"
         " use \003]12;gray\007 for gnome-terminal and rxvt up to version 9.21
-    augroup end
 endif
 " Cursor {]}
 
@@ -524,20 +493,15 @@ set updatetime=1000
 
 " Close quickfix or location list if it's the last remaining window in the tab
 " Disable status bar too
-augroup quickfixloclist
-    autocmd!
-    autocmd WinEnter * if winnr('$') == 1 && &buftype == "quickfix" | quit | endif
-    autocmd Filetype qf setlocal laststatus=0
-    autocmd Filetype qf setlocal nonu
-    autocmd Filetype qf setlocal norelativenumber
-    if v:version >= 703
-        autocmd Filetype qf setlocal colorcolumn=0
-    endif
-augroup END
+autocmd myVimrc WinEnter * if winnr('$') == 1 && &buftype == "quickfix" | quit | endif
+autocmd myVimrc Filetype qf setlocal laststatus=0
+autocmd myVimrc Filetype qf setlocal nonu
+autocmd myVimrc Filetype qf setlocal norelativenumber
+if v:version >= 703
+    autocmd myVimrc Filetype qf setlocal colorcolumn=0
+endif
 
-augroup my_paste
-  au InsertLeave * set nopaste
-augroup END
+au myVimrc InsertLeave * set nopaste
 
 if $TERM =~ 'kitty'
     let &t_ut=''

@@ -1,5 +1,9 @@
 set nocompatible
 
+augroup myVimrc
+    au!
+augroup end
+
 function! PathExpand(path)
     " Version 7.1 doesn't support fnameescape. Used on iOS.
     " Besides, if you're using 7.1, it's because it's a pre-installed default,

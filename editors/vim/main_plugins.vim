@@ -64,12 +64,9 @@ let g:SuperTabLongestEnhanced = 1
 
 " Lighter-weight, native completion engine. TODO sort
 " Plug 'https://github.com/ajh17/VimCompletesMe'
-augroup vcm
-    au!
-    autocmd bufenter * let b:vcm_tab_complete = 'tags'
-    autocmd FileType vim let b:vcm_tab_complete = 'vim'
-    autocmd FileType vim let b:vcm_tab_complete = 'omni'
-augroup end
+autocmd myPlugins bufenter * let b:vcm_tab_complete = 'tags'
+autocmd myPlugins FileType vim let b:vcm_tab_complete = 'vim'
+autocmd myPlugins FileType vim let b:vcm_tab_complete = 'omni'
 
 if v:version >= 704
     " Useful for overviews, and deleting lots of buffers.
@@ -201,9 +198,6 @@ Plug 'https://github.com/tpope/vim-dispatch'
 
 " {[} ---------- Git ----------
 if executable("git")
-    " augroup myGit
-    "     au!
-    " augroup end
     " :Magit to check all sorts of git stuff. Looks really cool. Capitals for 
     " commands, eg [S]tage-toggle, [CC]ommit.
     Plug 'jreybert/vimagit'
@@ -246,13 +240,10 @@ if executable("git")
     " Causes a write on cursorhold. PITA, so let's replace it.
     " call add(g:pluginSettingsToExec, "autocmd! signify CursorHold,CursorHoldI")
     if has('timers')
-        augroup mysignify
-            au!
-            " This seems to be causing an annoying error :/
-            " autocmd CursorHold,CursorHoldI,BufEnter,FocusGained call silent! sy#start()
-            " autocmd WinEnter call silent! sy#start()
-            autocmd User Fugitive silent! SignifyRefresh
-        augroup end
+        autocmd User Fugitive silent! SignifyRefresh
+        " This seems to be causing an annoying error :/
+        " autocmd myPlugins CursorHold,CursorHoldI,BufEnter,FocusGained call silent! sy#start()
+        " autocmd myPlugins WinEnter call silent! sy#start()
     endif
     " let g:signify_update_on_focusgained = 1
     let g:signify_sign_change = '~'
@@ -269,10 +260,7 @@ if executable("git")
     " autocmd! gitgutter CursorHold,CursorHoldI
     " " " Wait 2000 ms after typing finishes before updating (vim default 4000)
     " " set updatetime=2000
-    " augroup ggutter
-    "     au!
-    "     au BufWritePost * :GitGutter
-    " augroup end
+    " au myPlugins BufWritePost * :GitGutter
     " " Speed issues
     " " plugin only runs on BufRead, BufWritePost and FileChangedShellPost, i.e. when you open or save a file.
     " let g:gitgutter_realtime = 0
@@ -294,10 +282,6 @@ let g:vimtex_fold_manual = 1 " instead of expr folding. Speeds up.
 " Omnifunc complete citations, labels, filenames, glossary
 let g:vimtex_complete_enabled = 1
 let g:vimtex_imaps_disabled = []
-" augroup my_vimtex
-"     autocmd!
-"     autocmd Filetype *tex set foldmethod=expr
-" augroup END
 let g:vimtex_compiler_latexmk = {
     \ 'build_dir' : 'latexbuild',
     \}
@@ -335,10 +319,8 @@ function! SetVimtexMappings()
     inoremap <buffer> <c-e> \textit{}<left>
     inoremap <buffer> <c-`> \texttt{}<left>
 endfunction
-augroup myVimtex
-    au!
-    autocmd Filetype tex :call SetVimtexMappings()
-augroup end
+" autocmd myPlugins Filetype *tex set foldmethod=expr
+autocmd myPlugins Filetype tex :call SetVimtexMappings()
 " {]} ---------- Vimtex ----------
 
 " Plug 'https://github.com/plasticboy/vim-markdown'
@@ -410,12 +392,9 @@ let NERDTreeHijackNetrw=1
 let NERDTreeAutoDeleteBuffer = 1
 let NERDTreeDirArrows = 1
 let NERDTreeShowHidden=1
-augroup NT
-    autocmd!
-    " Open nerdtree on directory edit (startup)
-    autocmd StdinReadPre * let s:std_in=1
-    autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-    autocmd BufRead * if isdirectory(@%) | exec 'NERDTree' | endif
-    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-augroup END
+" Open nerdtree on directory edit (startup)
+autocmd myPlugins StdinReadPre * let s:std_in=1
+autocmd myPlugins VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+autocmd myPlugins BufRead * if isdirectory(@%) | exec 'NERDTree' | endif
+autocmd myPlugins bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " {]} ---------- NerdTree ----------

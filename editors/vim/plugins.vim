@@ -3,6 +3,10 @@
 " the value of 2 variables. These should be set from command line via the
 " --cmd option, eg $(vim --cmd "let g:liteMode=1" [file])
 
+augroup myPlugins
+    au!
+augroup end
+
 " {[} Settings and dir creation
 " Skip loading this file entirely.
 if exists("g:noPlugins")
@@ -56,10 +60,7 @@ if !filereadable(s:vimplug_file)
         finish
     endif
     "   let g:not_finish_vimplug = "yes"
-    augroup pluginstall
-        au!
-        autocmd VimEnter * PlugInstall
-    augroup end
+    autocmd myPlugins VimEnter * PlugInstall
 endif
 
 "
@@ -131,10 +132,7 @@ function! s:reHL()
     endfor
 endfunction
 call s:reHL()
-augroup highlights
-    au!
-    autocmd VimEnter,ColorScheme * call s:reHL()
-augroup end
+    autocmd myPlugins VimEnter,ColorScheme * call s:reHL()
 
 if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
     if !g:hasGUI

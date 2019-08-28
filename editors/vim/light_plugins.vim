@@ -53,12 +53,9 @@ if has("timers")
     command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
     " Set qf statusbar to status of asyncrun
     let g:asyncrun_status = "stopped"
-    augroup qfas
-        au!
-        autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(8, 1)
-        autocmd BufWinEnter quickfix setlocal 
-                    \ statusline=%t\ [%{g:asyncrun_status}]\ %{exists('w:quickfix_title')?\ '\ '.w:quickfix_title\ :\ ''}\ %=%-15(%l,%c%V%)\ %P
-    augroup END
+    autocmd myPlugins QuickFixCmdPost * call asyncrun#quickfix_toggle(8, 1)
+    autocmd myPlugins BufWinEnter quickfix setlocal 
+                \ statusline=%t\ [%{g:asyncrun_status}]\ %{exists('w:quickfix_title')?\ '\ '.w:quickfix_title\ :\ ''}\ %=%-15(%l,%c%V%)\ %P
 else
     let g:hasAsyncrun = 0
 endif
@@ -263,12 +260,9 @@ function! SetProseOptions()
     setl ai
 endfunction
 
-augroup prose
-    autocmd!
-    exec 'autocmd Filetype ' . g:proseFileTypes . ' call SetProseOptions()'
-    " Override default prose settings for some files:
-    " autocmd Filetype git,gitsendemail,*commit*,*COMMIT*
-    "\ call pencil#init({'wrap': 'hard', 'textwidth': 72})
-    autocmd BufEnter * if &filetype == "" || &filetype == "scratch" | call pencil#init()
-augroup END
+exec 'autocmd myPlugins Filetype ' . g:proseFileTypes . ' call SetProseOptions()'
+" Override default prose settings for some files:
+" autocmd Filetype git,gitsendemail,*commit*,*COMMIT*
+"\ call pencil#init({'wrap': 'hard', 'textwidth': 72})
+autocmd myPlugins BufEnter * if &filetype == "" || &filetype == "scratch" | call pencil#init()
 " {]} ---------- Prose----------
