@@ -1,6 +1,9 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
 
+augroup myIDE
+    au!
+augroup end
 " {[} ---------- Misc ----------
 " exec "Plug 'rhysd/vim-grammarous', { 'for': " . g:proseFileTypes . " }"
 " Brilliant for projects with lots of similar files. Check out config
@@ -70,10 +73,7 @@ else
 
     let g:syntastic_error_symbol = 'X'
     let g:syntastic_warning_symbol = "!"
-    augroup mySyntastic
-        autocmd!
-        au FileType tex let b:syntastic_mode = "passive"
-    augroup END
+    au myIDE FileType tex let b:syntastic_mode = "passive"
     " TODO make this window-specific.
     " let g:syntastic_shell = "/bin/sh"
 endif
@@ -130,10 +130,7 @@ if has("timers")
     " let g:LanguageClient_hoverPreview = 'never'
 
     let g:LanguageClient_loggingFile = expand('~/.vim/LanguageClient.log')
-    augroup LSP
-      autocmd!
-      autocmd FileType r,swift,cpp,c call <SID>SetLSPShortcuts()
-    augroup END
+    autocmd myIDE FileType r,swift,cpp,c call <SID>SetLSPShortcuts()
     " Install langserver with:
     let b:cmdInstallRLSP ='if( !is.element("languageserver",
                 \  .packages(all.available = TRUE))){
@@ -394,6 +391,8 @@ if executable('ctags-exuberant') || executable('ctags')
             " Use this option for the_silver_searcher
             let g:neotags_find_tool = 'ag -g ""'
         endif
+        " Async
+        " Plug 'https://github.com/fntlnz/atags.vim'
     else
         " Async (7.4+), only vimL...
         " Plug 'LucHermitte/lh-vim-lib'
@@ -405,11 +404,8 @@ if executable('ctags-exuberant') || executable('ctags')
     let g:airline#extensions#tagbar#enabled = 1
     " nmap <silent> <leader>tb :TagbarToggle<CR>
     cabbrev tb TagbarToggle
-    augroup tag
-        au!
-        " Uncomment to open tagbar automatically whenever possible
-        autocmd BufEnter * nested :call tagbar#autoopen(0)
-    augroup end
+    " Uncomment to open tagbar automatically whenever possible
+    autocmd myIDE BufEnter * nested :call tagbar#autoopen(0)
 endif
 
 if executable('cscope')
@@ -446,11 +442,8 @@ else
     let g:snipMate = {}
     let g:snipMate['description_in_completion'] = 1
     let g:snipMate['no_match_completion_feedkeys_chars'] = ''
-    augroup snipmate
-        au!
-        " Load default/all snippets
-        autocmd BufEnter * SnipMateLoadScope alltypes
-    augroup end
+    " Load default/all snippets
+    autocmd myIDE BufEnter * SnipMateLoadScope alltypes
     imap <C-N> <Plug>snipMateNextOrTrigger
     smap <C-N> <Plug>snipMateNextOrTrigger
     imap <C-E> <Plug>snipMateTrigger
@@ -495,9 +488,7 @@ if v:version > 800 || has('nvim')
             " Debugging maps
             " nnoremap <buffer> <silent> <localleader>b :PythonSetBreak<CR>
         endfunction
-        augroup myjupyter-vim
-            au bufenter *.ipy call JupyterMapKeys()
-        augroup end
+        au myIDE bufenter *.ipy call JupyterMapKeys()
     endif
 endif
 " {]} ------ Python ------
