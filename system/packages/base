@@ -10,6 +10,7 @@ python
 curl
 rsync
 ranger
+ripgrep
 rlwrap
 ssh-agent
 ssh-pass
