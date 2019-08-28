@@ -14,9 +14,9 @@ chmod +x /usr/bin/launch
 # Disable openssh password auth. Only allow public key.
 sed -i 's/#PasswordAuthentication.*/PasswordAuthentication no/' "$PREFIX/etc/ssh/sshd_config"
 
+shebang="#!$PREFIX/usr/bin/env bash"
 # Tasks are run in the background (termux isn't launched).
 mkdir -p "$HOME/.shortcuts/tasks"
-shebang="#!$PREFIX/usr/bin/env bash"
 echo "$shebang" > "$HOME/.shortcuts/vim"
 echo source "$($SCRIPTDIR_CMD)/vim" >> "$HOME/.shortcuts/vim"
 printf "%s\nsshd" "${shebang}" > "$HOME/.shortcuts/tasks/sshd"
