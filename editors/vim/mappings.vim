@@ -2,15 +2,10 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
 
-" let mapleader = "\<Space>"
-let mapleader = " "
-let maplocalleader = " b"
 " Leaders are now set properly in settings, to ensure plugins (loaded after
 " settings but before mappings) will use them properly.
-" nnoremap <SPACE> <Nop>
-" map <SPACE> <leader>
-" This may not work very well...
-" map <SPACE>b <localleader>
+" let mapleader = " "
+" let maplocalleader = " b"
 
 " {[} Basic mappings (usually worth copying to vim emulation programs).
 
