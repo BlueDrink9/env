@@ -1,0 +1,213 @@
+" vim: set ft=vim:
+" vim: foldmethod=marker
+" vim: foldmarker={[},{]}
+
+let mapleader = " "
+
+" {[} Basic mappings (usually worth copying to vim emulation programs).
+
+inoremap kv <esc>
+inoremap vk <esc>
+cnoremap kv <c-f>
+cnoremap vk <c-f>
+
+" Don't have to hold shift for commands. So nice
+nnoremap ; :
+vnoremap ; :
+nnoremap : ;
+vnoremap : ;
+
+" x and X shouldn't overwrite the damn paste register!
+nnoremap x "_x
+nnoremap X "_X
+" Toggle/create folds with backspace.
+nnoremap <backspace> za
+vnoremap <backspace> zf
+" Quicker access to system and unnamed registers
+" (" is default register anyway, so never need "")
+nnoremap "" "+
+vnoremap "" "+
+nnoremap """ "-
+vnoremap """ "-
+" black hole register delete
+vmap <backspace> "_d
+vmap <del> "_d
+"Faster scrolling
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
+" Swap mark jumps to make jump to column easier to press than jump to line.
+nnoremap ' `
+nnoremap ` '
+" Consistent with D, C
+nnoremap Y y$
+" Remember cursor location and reformat file
+nnoremap g= gg=G$()
+nnoremap gQ gggqG$()
+" Insertmode deletes create an undopoint first
+inoremap <c-u> <c-g>u<c-u>
+inoremap <c-w> <c-g>u<c-w>
+" Dot operator leaves cursor where it was
+nmap . .'.
+" Don't lose selection on < or >
+xnoremap <  <gv
+xnoremap >  >gv
+" Delete word under cursor, replace with pasted.
+nnoremap <leader># "_diwP
+" Autoexpand brackets when creating functions etc.
+" inoremap (<CR> (<CR>)<Esc>O
+" inoremap {<CR> {<CR>}<Esc>O
+" inoremap {; {<CR>};<Esc>O
+" inoremap {, {<CR>},<Esc>O
+" inoremap [<CR> [<CR>]<Esc>O
+" inoremap [; [<CR>];<Esc>O
+" inoremap [, [<CR>],<Esc>O
+" Switch between the last two files.
+nnoremap <Leader>a <C-^>
+
+" n and N always go the same direction regardless of whether / or ? was used.
+nnoremap <expr> n  'Nn'[v:searchforward]
+nnoremap <expr> N  'nN'[v:searchforward]
+" Move through previous commands
+nnoremap <expr> n  'Nn'[v:searchforward]
+nnoremap <expr> N  'nN'[v:searchforward]
+" Cd to current file
+" nnoremap <leader>cd :lcd %:p:h<CR>:pwd<CR>
+" Autocomplete from tags
+inoremap <c-]> <c-x><c-]>
+
+" {]} Basic mappings
+
+"{[} Window management
+nnoremap <C-w>t :tabnew<CR>
+nnoremap <C-w><S-R> <W-w> <C-r>
+" Easier way to move between windows
+nnoremap <C-j> <C-W>j
+nnoremap <C-k> <C-W>k
+nnoremap <C-h> <C-W>h
+nnoremap <C-l> <C-W>l
+" Easy resize
+nnoremap <S-Right> 5<C-W>>
+nnoremap <S-Left> 5<C-W><
+nnoremap <S-Up> 3<C-W>+
+nnoremap <S-Down> 3<C-W>-
+" Cycle through buffers
+nnoremap <silent> <Right> :bnext<CR>
+nnoremap <silent> <Left> :bprev<CR>
+nnoremap <silent> <Up> :tabnext<CR>
+nnoremap <silent> <Down> :tabprevious<CR>
+" {]} Window management
+
+" In insert or visual mode, use standard cut/copy/paste shortcuts.
+inoremap <C-v> <C-o>"+P
+cnoremap <C-v> <C-r>+
+vnoremap <C-X> "+d
+vnoremap <C-c> "+y
+" vnoremap <C-v> "+P  " Clobbers block visual
+" In normal mode, use ctrl+q
+nnoremap <C-q> "+P
+
+" Reload .ideavimrc
+nmap <leader>R :source ~/.ideavimrc<CR>
+
+
+set timeoutlen=300
+
+set relativenumber
+set number
+set smartcase
+set wrapscan
+set digraph
+set hlsearch
+set incsearch
+set scroll=5
+set scrolloff=5
+" set viminfo
+" Allow backspace and cursor keys to cross line boundaries
+set whichwrap+=<,>,h,l
+
+" https://youtrack.jetbrains.com/issue/VIM-959
+set ideamarks
+" https://github.com/JetBrains/ideavim/wiki/%60ideajoin%60-examples
+set ideajoin
+" https://youtrack.jetbrains.com/issue/VIM-1521
+set commentary
+nnoremap <leader>c gc
+" https://github.com/JetBrains/ideavim/wiki/Select-mode
+" use visual mode during refactoring
+" set selectmode-=template
+
+"  Mouseless Driven Development by Hadi Hariri https://www.youtube.com/watch?v=UH6YVv9js3s 
+" https://github.com/JetBrains/ideavim
+" https://github.com/Valloric/dotfiles/blob/master/intellij/ideavimrc
+" https://resources.jetbrains.com/storage/products/intellij-idea/docs/IntelliJIDEA_ReferenceCard.pdf
+set surround
+
+
+" IDE commands from here out.
+
+nmap gd              :action GotoDeclaration<CR>
+nmap gh              :action QuickJavaDoc<CR>
+nmap gr              :action FindUsages<CR>
+nmap gs              :action GotoSymbol<CR>
+" These are leader-based alternative shortcuts for actions whose corresponding
+" idea shortcuts require hand-stretching combinations, function keys, Home or
+" Insert.
+
+nmap <leader>f      :action SearchEverywhere<CR>
+nmap <leader><Space> :action GotoAction<CR>
+" Rename
+map <Leader>lr :action RenameElement<CR>
+" Shift + F6 in idea.
+" Alt + R, then R (through the menu bar) also seems to work fine.
+" map <Leader>r :action RenameElement<CR>
+" Ctrl + F12 in idea.
+map <Leader>s :action FileStructurePopup<CR>
+" Perhaps just use the Idea shortcut Ctrl-Alt-B
+" Alt + N, then m (through the menu bar) also seems to work, but it is
+" non-unique.
+map <Leader>li :action GotoImplementation<CR>
+map <Leader>ld :action GotoSymbol<CR>
+nmap <leader>dd      :action Debug<CR>
+map <Leader>lu :action FindUsages<CR>
+" Alt + Insert in idea.
+map <Leader>lg :action Generate<CR>
+" F12
+map <Leader>a :action JumpToLastWindow<CR>
+map <Leader>r :action ChooseRunConfiguration<CR>
+" replace in project
+nmap <leader>rp :action ReplaceInPath<CR>
+
+" These shortcuts mimic the default Idea action for one edition mode, using the
+" Vim action for the other.
+"
+" Same as default IDEA action, but only in normal mode. Delete previous char
+" in insert mode.
+" See also Ctrl + Shift + H for method hierarchy, Ctrl + Alt + H for call
+" hierarchy.
+map <C-h> :action TypeHierarchy<CR>
+" Same as default IDEA action, but only in insert mode. Enter block-visual
+" mode in normal mode.
+imap <C-v> <Esc>:action $Paste<CR>
+
+"
+" Here are mappings about which I'm less sure.
+
+" This is for going to related symbols. I can't find any effect in the community edition.
+" map <Leader>g :action GotoRelated<CR>
+
+" uppercase last inserted text. Perhpas just use gU`[ instead.
+" map <Leader>u `[v`]~`]
+
+" Can also use Ctrl-Shift-[
+" map <Leader>[ :action EditorCodeBlockStart<CR>
+" Can also use Ctrl-Shift-]
+" map <Leader>] :action EditorCodeBlockEnd<CR>
+
+" This is Ctrl-W in the default keymap, but we are using it for Vim.
+" map <C-s> :action EditorSelectWord<CR> " somewhat unconfrotable to type
+" map <C-d> :action EditorSelectWord<CR> " ditto
+" better to use your two hands!
+" map <C-k> :action EditorSelectWord<CR>
+
+" uppercase last inserted word
+" imap <C-l> <Esc>bgUawea
