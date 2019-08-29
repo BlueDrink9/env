@@ -20,6 +20,7 @@
   reab = rebase --abort
   resk = rebase --skip
   amend = commit --amend
+  fpush = push --force
   merge-feature = merge --no-ff
   conflict = !vim +Conflicted
 
