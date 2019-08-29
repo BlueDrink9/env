@@ -78,6 +78,10 @@ endif
 exec 'set background=' . g:backgroundColour
 
 
+" Needs to be set before plugins use it. Set here rather than in mappings.
+let mapleader = " "
+let maplocalleader = " b"
+
 "{[} GUI
 if g:hasGUI
     " GUI is running or is about to start.
@@ -187,10 +191,6 @@ else
     " {]}
 endif
 "{]}
-
-" Needs to be set before plugins use it. Set here rather than in mappings.
-let mapleader = " "
-let maplocalleader = " b"
 
 set showcmd
 " Show cursor coords
