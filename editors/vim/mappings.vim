@@ -73,6 +73,14 @@ inoremap [; [<CR>];<Esc>O
 inoremap [, [<CR>],<Esc>O
 " Switch between the last two files.
 nnoremap <Leader>a <C-^>
+" Emacs/cocoa BoL and EoL mappings. May remove later.
+" imap <c-e> <Esc>A
+" imap <c-a> <Esc>I
+" command line
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-o>I <Home>
+cnoremap <C-o>A <End>
 
 " n and N always go the same direction regardless of whether / or ? was used.
 nnoremap <expr> n  'Nn'[v:searchforward]
