@@ -39,6 +39,9 @@ nnoremap "" "+
 vnoremap "" "+
 nnoremap """ "-
 vnoremap """ "-
+" black hole register delete
+vmap <backspace> "_d
+vmap <del> "_d
 "Faster scrolling
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
