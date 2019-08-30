@@ -219,15 +219,17 @@ set wildmenu
 set wildmode=list:longest,full
 " Allows opening files in case insensitive way.
 set wildignorecase
+" Mapping usable in macros/maps to trigger completion menu.
+set wildcharm=<tab>
 set scrolloff=5
 set completeopt=longest,menu,preview
 if exists("g:ideMode") && g:ideMode == 1
-    " Include tags and includes in completion.
-    set complete+=i
-    set complete+=t
-    " set completeopt+=noselect
+  " Include tags and includes in completion.
+  set complete+=i
+  set complete+=t
+  " set completeopt+=noselect
 else
-    set complete-=i     " Searching includes can be slow
+  set complete-=i     " Searching includes can be slow
 endif
 set display=lastline
 set diffopt+=vertical

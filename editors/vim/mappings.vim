@@ -283,6 +283,18 @@ endif
 " Use CTRL-Q to do what CTRL-V used to do in insert
 inoremap <C-Q> <C-V>
 
+" Complete vim commands in cmd window.
+" autocmd myVimrc CmdwinEnter * inoremap <buffer> <C-Space> <C-x><C-v>
+
+" c-y to move completion to next level.
+cnoremap <C-y> <c-]><TAB>
+" When autocompleting, start another file completion at this level.
+inoremap <C-y> <c-y><c-x><c-f>
+
+" Wildmenu: I use tab/s-tab for moving, so want to keep left/right.
+cnoremap <Left> <Space><BS><Left>
+cnoremap <Right> <Space><BS><Right>
+
 " CTRL-A is Select all in insert mode, s is in visual
 inoremap <C-a> <C-o>gg<C-o><S-V>G
 vnoremap s <esc>gg<S-V>G
