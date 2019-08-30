@@ -285,6 +285,11 @@ inoremap <C-Q> <C-V>
 
 " Complete vim commands in cmd window.
 " autocmd myVimrc CmdwinEnter * inoremap <buffer> <C-Space> <C-x><C-v>
+" Insert mode in cmdwin returns to actual cmd mode with current text.
+autocmd myVimrc CmdwinEnter * nnoremap <buffer> i i<c-c>
+autocmd myVimrc CmdwinEnter * nnoremap <buffer> I I<c-c>
+autocmd myVimrc CmdwinEnter * nnoremap <buffer> a a<c-c>
+autocmd myVimrc CmdwinEnter * nnoremap <buffer> A A<c-c>
 
 " c-y to move completion to next level.
 cnoremap <C-y> <c-]><TAB>
