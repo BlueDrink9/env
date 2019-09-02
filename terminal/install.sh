@@ -30,6 +30,9 @@ do${installID}() {
     printErr "Enabling Kitty setup..."
     addTextIfAbsent "${installText}" "${baseRC}"
     git clone --depth 1 git@github.com:dexpota/kitty-themes.git ~/.config/kitty/kitty-themes
+    if ! command -v kitty > /dev/null 2>&1; then
+      curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+    fi
   }
 END
 )"
