@@ -1,0 +1,7 @@
+# Linux packages are all graphical-only.
+redshift-gtk
+bspwm
+sxhkd
+tdrop
+kitty
+workrave

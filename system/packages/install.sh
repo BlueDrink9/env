@@ -32,15 +32,16 @@ installPackages(){
     # To get "pack" function
     source "$DOTFILES_DIR/bash/functions.sh"
     # Update
-    pack update
+    pack refresh
     installList "$($SCRIPTDIR_CMD)/base"
     if [[ $OSTYPE =~ "darwin1" ]]; then
-        installList "$($SCRIPTDIR_CMD)/osx"
+        installList "$($SCRIPTDIR_CMD)/OSX/list"
+        # Need xcode-8 cmd tools
     elif [[ "$(uname -a)" =~ "Android" ]]; then
-        installList "$($SCRIPTDIR_CMD)/termux"
-         termux-setup-api
+        installList "$($SCRIPTDIR_CMD)/termux/list"
+        termux-setup-api
     elif [[ $OSTYPE =~ "linux" ]]; then
-        installList "$($SCRIPTDIR_CMD)/linux"
+        installList "$($SCRIPTDIR_CMD)/linux/list"
     fi
 }
 

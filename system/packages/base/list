@@ -1,0 +1,43 @@
+# hash and blank lines should be ignored.
+# Packages should fail gracefully, if not silently.
+neovim
+vim
+syncthing
+htop
+tmux
+ranger
+
+bash
+bash-completion@2
+# Only if completion 2 not a thing (ie not homebrewing).
+bash-completion
+git
+expect
+ripgrep
+rsync
+lastpass-cli
+mosh
+pandoc
+
+jq
+ncurses
+ctags
+python
+curl
+rlwrap
+openssh
+cheat
+thefuck
+tldr
+wget
+universal-ctags
+ctags
+shellcheck
+curl
+gcc
+
+# proselint # wooah cool. Pip module
+
+# while read -r pkg; do
+    # pack install $pkg
+# done < "$($SCRIPTDIR_CMD)/packages"

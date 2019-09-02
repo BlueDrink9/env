@@ -1,0 +1,14 @@
+# Note: All packages on OSX will be installed with brew.
+caskroom/cask/inkscape
+caskroom/cask/flux
+caskroom/cask/hammerspoon
+caskroom/cask/kitty
+caskroom/cask/macvim
+caskroom/cask/oni
+caskroom/cask/iterm2
+caskroom/cask/bitbar
+--HEAD universal-ctags/universal-ctags/universal-ctags
+chunkwm
+skhd
+coreutils
+gcc

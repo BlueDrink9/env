@@ -1,9 +1,5 @@
 termux-api
 tsu
-openssh
-wget
-grep
-expect
 ncurses-utils
 root-repo
 unstable-repo
