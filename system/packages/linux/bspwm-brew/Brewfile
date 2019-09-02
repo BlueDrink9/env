@@ -1,0 +1,10 @@
+tap "baskerville/formulae"
+brew "baskerville/formulae/sxhkd"
+tap "linuxbrew/xorg"
+brew "linuxbrew/xorg/xcb-util-wm"
+brew "linuxbrew/xorg/xcb-util-keysyms"
+brew "baskerville/formulae/wmutils", args: ["HEAD"]
+brew "linuxbrew/xorg/xcb-proto"
+brew "linuxbrew/xorg/xcb-util-cursor"
+brew "linuxbrew/xorg/xorg"
+brew "baskerville/formulae/bspwm"
