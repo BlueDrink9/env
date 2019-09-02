@@ -73,16 +73,24 @@ elif [ -e /usr/bin/gvim ]; then
   # xvim (has x11 clipboard support)
 elif [ -e /usr/bin/vimx ]; then
   alias myVim="/usr/bin/vimx"
+else
+  alias myVim="vim"
+  unset -f vim
 fi
-# Aliases aren't expanded in variables, eg $SUDO_EDITOR
-vim(){
-  myVim "$@"
-}
+
 vimAlias="$(alias myVim)"
 # Extract between quotes.
 vimTmp="${vimAlias#*\'}"
 MYVIM="${vimTmp%\'*}"
 unset vimAlias vimTmp
+
+# Prevent recursive 'vim' calls.
+if [ ! "${MYVIM}" = "vim" ]; then
+  # Aliases aren't expanded in variables, eg $SUDO_EDITOR
+  vim(){
+    myVim "$@"
+  }
+fi
 
 # Much faster startup for vim without plugins, or ide if I need it.
 IDEVim(){ vim --cmd "let g:ideMode=1" "$@"; }
