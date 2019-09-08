@@ -83,3 +83,13 @@ function! s:MkNonExDir(file, buf)
     endif
 endfunction
 autocmd myVimrc BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
+
+" :W and :Save will escape a file name and write it
+command! -bang -nargs=* W :call W(<q-bang>, <q-args>) 
+command! -bang -nargs=* Save :call Save(<q-bang>, <q-args>) 
+function! W(bang, filename) 
+    :exe "w".a:bang." ". fnameescape(a:filename) 
+endfu
+function! Save(bang, filename) 
+    :exe "save".a:bang." ". fnameescape(a:filename) 
+endfu
