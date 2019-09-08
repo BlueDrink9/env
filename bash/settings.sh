@@ -73,6 +73,8 @@ fi
 export PROMPT_COMMAND="log_command; ${PROMPT_COMMAND}"
 # Save multi-line commands as one command
 shopt -s cmdhist
+# Always send backspace as ^?, not ^H.
+stty erase ^?
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
