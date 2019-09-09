@@ -213,7 +213,7 @@ chunkwmMode < shift + ctrl - 6 : chunkc tiling::window --send-to-desktop 6; chun
 chunkwmMode < shift + ctrl - 7 : chunkc tiling::window --send-to-desktop 7; chunkc tiling::desktop --focus 7; default
 chunkwmMode < shift + ctrl - 8 : chunkc tiling::window --send-to-desktop 8; chunkc tiling::desktop --focus 9; default
 chunkwmMode < shift + ctrl - 9 : chunkc tiling::window --send-to-desktop 9; chunkc tiling::desktop --focus 9; default
-shift + cmd - 4 : chunkc border::clear
+# shift + cmd - 4 : chunkc border::clear
 
 # focus monitor
 cmd + alt - 0x21  : chunkc tiling::monitor -f prev # left bracket
