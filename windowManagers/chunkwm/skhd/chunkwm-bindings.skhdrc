@@ -78,17 +78,23 @@ chunkwmMode < alt - left   : chunkc tiling::window --grid-layout 1:2:0:0:1:1
 # make floating window fill right-half of screen
 chunkwmMode < alt - right  : chunkc tiling::window --grid-layout 1:2:1:0:1:1
 
-# increase region size
-chunkwmMode < shift - down : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge south
-chunkwmMode < shift - right : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge east
-chunkwmMode < shift - left : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge east
-chunkwmMode < shift - up : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge south
+# Only one of the chained commands gets called. Adjust like i3 - adjust in specified direction.
+chunkwmMode < shift - down : chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge south; chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge north
+chunkwmMode < shift - right : chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge east; chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge west
+chunkwmMode < shift - left : chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge west; chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge east
+chunkwmMode < shift - up : chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge north; chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge south
 
-# decrease region size
-chunkwmMode < shift + alt - down : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge north
-chunkwmMode < shift + alt - right : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge west
-chunkwmMode < shift + alt - left : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge west
-chunkwmMode < shift + alt - up : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge north
+# increase region size
+# chunkwmMode < shift - down : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge south
+# chunkwmMode < shift - right : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge east
+# chunkwmMode < shift - left : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge east
+# chunkwmMode < shift - up : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge south
+
+# # decrease region size
+# chunkwmMode < shift + alt - down : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge north
+# chunkwmMode < shift + alt - right : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge west
+# chunkwmMode < shift + alt - left : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge west
+# chunkwmMode < shift + alt - up : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge north
 
 # Move floating windows. Uses a hack script.
 chunkwmMode < left	: ~/.config/scripts/chunk_float.sh move -x
