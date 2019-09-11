@@ -129,6 +129,9 @@ case $- in
               # useTmuxFor="sshd"
               # if contains "$useTmuxFor" "$PNAME"; then
               if { [ -n "$SSHSESSION" ] || [ -z "$DISPLAY" ]; }; then
+                # Hostname up to first .
+                export HOSTNAME_BASE="${HOSTNAME%%.*}"
+                export TMUX-STATUS-LEFT-LEN="$((22 + ${#HOSTNAME_BASE}))"
                 # unset HAVE_LOADED_BASH PROFILE_LOADED
                 [ -z "$TMUX_VERSION" ] && export TMUX_VERSION="$(tmux -V | cut -f2 -d' ')"
                 if tmux ls 2> /dev/null | grep -q -v attached; then
