@@ -11,5 +11,5 @@ $Boxstarter.RebootOk=$true
 $Boxstarter.NoPassword=$false
 $Boxstarter.AutoLogin=$true
 $cred=Get-Credential domain\username
-Install-BoxstarterPackage -PackageName "boxstarter script.ps1" -Credential $cred
-Install-BoxstarterPackage -PackageName "packages.ps1" -Credential $cred
+Install-BoxstarterPackage -PackageName ".\boxstarter script.ps1" -Credential $cred
+Install-BoxstarterPackage -PackageName ".\packages.ps1" -Credential $cred
