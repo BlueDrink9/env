@@ -14,12 +14,10 @@ cd $scriptdir
 [Environment]::CurrentDirectory = $PWD
 
 # Install chocolatey
-$chocoV = powershell choco -v
-if(-not($chocoV)){
+if(-not(powershell choco -v)){
     Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 }
-$BsV = powershell Boxstarter -v
-if(-not($BsV)){
+if(-not(powershell Boxstarter -v)){
     cup Boxstarter -y
 }
 choco feature enable -n=allowGlobalConfirmation
