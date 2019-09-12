@@ -26,6 +26,7 @@ if(-not(powershell Boxstarter -v 2>&1 | out-null)){
 }
 choco feature enable -n=allowGlobalConfirmation
 
+$scriptdir | out-file -filepath $env:TEMP\dotfiles_win_setup_dir.txt
 Import-Module Boxstarter.Chocolatey
 $Boxstarter.RebootOk=$true
 $Boxstarter.NoPassword=$true
