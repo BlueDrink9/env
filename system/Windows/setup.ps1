@@ -14,7 +14,9 @@ cd $scriptdir
 [Environment]::CurrentDirectory = $PWD
 
 # Install chocolatey
-Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+if(-not(powershell choco -v)){
+    Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+}
 choco feature enable -n=allowGlobalConfirmation
 
 CINST Boxstarter -y
