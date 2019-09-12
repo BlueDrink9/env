@@ -15,18 +15,19 @@ cd $scriptdir
 [Environment]::CurrentDirectory = $PWD
 
 # Install chocolatey
-if(-not(powershell choco -v 2>&1 | out-null)){
+# if(-not(powershell choco -v 2>&1 | out-null)){
+if(-not(Get-Command "choco" -ErrorAction SilentlyContinue)){
     Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
     # Reload path.
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 
 }
-if(-not(powershell Boxstarter -v 2>&1 | out-null)){
+if(-not(Get-Command "boxstarter" -ErrorAction SilentlyContinue)){
     choco install Boxstarter -y
 }
 choco feature enable -n=allowGlobalConfirmation
 
-$scriptdir | out-file -filepath $env:TEMP\dotfiles_win_setup_dir.txt
+$scriptdir | out-file -filepath $env:APPDATA\dotfiles_win_setup_dir.txt
 Import-Module Boxstarter.Chocolatey
 $Boxstarter.RebootOk=$true
 $Boxstarter.NoPassword=$true
