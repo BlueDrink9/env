@@ -27,6 +27,4 @@ $Boxstarter.RebootOk=$true
 $Boxstarter.NoPassword=$false
 $Boxstarter.AutoLogin=$true
 $cred=Get-Credential domain\username
-Install-BoxstarterPackage -PackageName "$scriptdir\packages.ps1" -Credential $cred
-Install-BoxstarterPackage -PackageName "$scriptdir\remove-default-apps.ps1" -Credential $cred
-Install-BoxstarterPackage -PackageName "$scriptdir\settings.ps1" -Credential $cred
+Install-BoxstarterPackage -PackageName "$scriptdir\boxstarter-main.ps1" -Credential $cred
