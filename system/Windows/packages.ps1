@@ -3,6 +3,7 @@ $packages = @(
         "git",
         "vim",
         "cloneapp",
+        "choco-package-list-backup",
         "7zip",
         "googlechrome",
         "classic-shell",
@@ -130,7 +131,9 @@ $packages = @(
 )
 foreach ($package in $packages)
 {
-    cup $package -y
+    # Need to specify cache to avoid recursive dir issue. See
+    # https://github.com/chocolatey/boxstarter/issues/241
+    choco upgrade --cacheLocation "$env:userprofile\AppData\Local\ChocoCache" $package -y 
 }
 
 # cinst Microsoft-Hyper-V-All -source windowsFeatures
