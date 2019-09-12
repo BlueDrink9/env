@@ -1,5 +1,5 @@
 $packages = @(
-               "colemak",
+        "colemak",
         "git",
         "spotify",
         "steam",
@@ -129,7 +129,7 @@ $packages = @(
 )
 foreach ($package in $packages)
 {
-    cinst $update -y
+    cup $package -y
 }
 
 # cinst Microsoft-Hyper-V-All -source windowsFeatures
