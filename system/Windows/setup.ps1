@@ -28,7 +28,7 @@ choco feature enable -n=allowGlobalConfirmation
 
 Import-Module Boxstarter.Chocolatey
 $Boxstarter.RebootOk=$true
-$Boxstarter.NoPassword=$false
+$Boxstarter.NoPassword=$true
 $Boxstarter.AutoLogin=$true
 $cred=Get-Credential domain\username
 Install-BoxstarterPackage -PackageName "$scriptdir\boxstarter-main.ps1" -Credential $cred
