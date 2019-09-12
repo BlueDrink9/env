@@ -51,6 +51,7 @@ $packages = @(
         "itunes",
         "autoruns",
         "virtualbox",
+        "SourceCodePro",
         "procexp",
         "procmon",
         "chocolateygui",
@@ -135,7 +136,8 @@ foreach ($package in $packages)
 {
     # Need to specify cache to avoid recursive dir issue. See
     # https://github.com/chocolatey/boxstarter/issues/241
-    choco upgrade --cacheLocation "$env:userprofile\AppData\Local\ChocoCache" $package -y 
+    choco upgrade --cacheLocation "$env:userprofile\AppData\Local\ChocoCache" $package -y
+    refreshenv
 }
 
 # cinst Microsoft-Hyper-V-All -source windowsFeatures

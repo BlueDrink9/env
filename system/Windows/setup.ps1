@@ -4,8 +4,9 @@
 #
 # To be run from administrative shell
 ##Requires -RunAsAdministrator
-Set-ExecutionPolicy Unrestricted -Force
 if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit }
+
+Set-ExecutionPolicy Unrestricted -Force
 
 # $scriptpath = $MyInvocation.MyCommand.Path
 # $scriptdir = Split-Path $scriptpath
@@ -14,11 +15,14 @@ cd $scriptdir
 [Environment]::CurrentDirectory = $PWD
 
 # Install chocolatey
-if(-not(powershell choco -v)){
+if(-not(powershell choco -v 2>&1 | out-null)){
     Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+    # Reload path.
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
+
 }
-if(-not(powershell Boxstarter -v)){
-    cup Boxstarter -y
+if(-not(powershell Boxstarter -v 2>&1 | out-null)){
+    choco install Boxstarter -y
 }
 choco feature enable -n=allowGlobalConfirmation
 
