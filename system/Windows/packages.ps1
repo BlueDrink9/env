@@ -5,6 +5,8 @@ $packages = @(
         "cloneapp",
         "choco-package-list-backup",
         "7zip",
+        "desktopicons-winconfig /Computer:YES /UserFiles:YES /RecycleBin:YES",
+        "desktopok",
         "googlechrome",
         "classic-shell",
         "winaero-tweaker",
