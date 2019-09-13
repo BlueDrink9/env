@@ -22,7 +22,8 @@ let s:scriptpath = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
 let g:remoteSession = ($SSH_CLIENT != "")
 
-let g:vimrcdir = fnamemodify(expand("$MYVIMRC"), ":p:h")
+" let g:vimrcdir = fnamemodify(expand("$MYVIMRC"), ":p:h")
+  let g:vimrcdir = expand("$HOME", ":p:h")
 if has('nvim')
     let g:vimrcdir = expand("$HOME", ":p:h")
 endif

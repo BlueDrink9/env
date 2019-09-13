@@ -28,7 +28,7 @@ let s:localPlugins = PathExpand(CreateVimDir(g:vimfilesDir) . "/local_plugins.vi
 let s:scriptpath = expand('<sfile>:p:h')
 
 if has('win32') || has ('win64')
-    let $VIMHOME = $HOME."/vimfiles"
+    let $VIMHOME = $HOME."\vimfiles"
 else
     let $VIMHOME = $HOME."/.vim"
 endif
