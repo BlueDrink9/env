@@ -1,3 +1,4 @@
+# Boxstarter-specific commands
 Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowFileExtensions -EnableShowRecentFilesInQuickAccess -EnableShowFrequentFoldersInQuickAccess -EnableExpandToOpenFolder -EnableShowRibbon
 Disable-BingSearch
 Enable-MicrosoftUpdate 
@@ -5,7 +6,10 @@ Disable-GameBarTips
 Install-WindowsUpdate -AcceptEula
 
 Set-TaskbarOptions -Lock -Dock Bottom -Combine full -AlwaysShowIconsOn
+# /Boxstarter-specific commands
 
+cinst --cacheLocation "$env:userprofile\AppData\Local\ChocoCache" colemak -y
+# Input langs
 $langlist = New-WinUserLanguageList en-NZ
 #Clears the other input methods from the displayed language
 $langlist[0].InputMethodTips.Clear()

@@ -1,5 +1,4 @@
 $packages = @(
-        "colemak",
         "git",
         "vim",
         "cloneapp",
