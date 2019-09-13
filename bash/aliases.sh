@@ -34,11 +34,15 @@ if [ -n "$ISTERMUX" ]; then
 fi
 
 # ls defined by os-specific stuff above.
+# C=multi-column output. Default anyway in terminals.
 alias l='ls -C'
 alias lsa="ls -a"
+alias la="lsa"
 alias ll="ls -al"
+alias llt="ls -halt"
 alias lss="ls -ls"
 
+alias c="cd"
 alias ..="cd .. && ls"
 alias ...="cd ../.."
 alias ....="cd ../../.."
