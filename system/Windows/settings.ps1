@@ -14,8 +14,8 @@ $langlist = New-WinUserLanguageList en-NZ
 #Clears the other input methods from the displayed language
 $langlist[0].InputMethodTips.Clear()
 #Sets and adds colemak, then NZ qwerty
-$langlist[0].InputMethodTips.add('1409:A0000409)
-$langlist[0].InputMethodTips.add('1409:00000409)
+$langlist[0].InputMethodTips.add('1409:A0000409')
+$langlist[0].InputMethodTips.add('1409:00000409')
 #Apply the changes made on the system (and force to avoid the prompt  message)
 Set-WinUserLanguageList $langlist -Force
 
