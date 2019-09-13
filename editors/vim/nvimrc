@@ -9,7 +9,7 @@ endif
 " let &runtimepath+=expand($VIMHOME)
 " let &runtimepath+=expand($VIMHOME . "/after")
 " let &runtimepath+=expand($VIMHOME . "/autoload")
-set runtimepath^=~/.vim runtimepath+=~/.vim/after
+set runtimepath^=$VIMHOME runtimepath+=$VIMHOME/after
 let &packpath=&runtimepath
 
 " let g:loaded_python_provider = 1
@@ -19,7 +19,16 @@ let &packpath=&runtimepath
 " let g:python3_host_prog = system('which python3')
 
 if has('win32') || has ('win64')
-    source ~/_vimrc
+  if filereadable("~/vimfiles/vimrc")
+    let s:vimrc="~/vimfiles/vimrc"
+  else
+    let s:vimrc="~/_vimrc"
+  endif
 else
-    source ~/.vimrc
+  if filereadable("~/.vim/vimrc")
+    let s:vimrc="~/.vim/vimrc"
+  else
+    let s:vimrc="~/.vimrc"
+  endif
 endif
+source s:vimrc
