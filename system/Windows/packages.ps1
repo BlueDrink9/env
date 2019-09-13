@@ -2,9 +2,10 @@ $packages = @(
         "git",
         "vim",
         "cloneapp",
+        "lastpass",
         "choco-package-list-backup",
         "7zip",
-        "desktopicons-winconfig /Computer:YES /UserFiles:YES /RecycleBin:YES",
+        "desktopicons-winconfig --params '/Computer:YES /UserFiles:YES /RecycleBin:YES'",
         "desktopok",
         "googlechrome",
         "classic-shell",
@@ -12,7 +13,7 @@ $packages = @(
         "windows-tweaker",
         "7-taskbar-tweaker",
         "spotify",
-        "lastpass",
+        "officeproplus2013",
         "steam",
         "goggalaxy",
         "uplay",
@@ -127,7 +128,6 @@ $packages = @(
         "setpoint",
         "logitechgaming",
         "unifying",
-        "officeproplus2013",
         "onedrive",
         "onetastic"
 )
