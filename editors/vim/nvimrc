@@ -31,4 +31,4 @@ else
     let s:vimrc="~/.vimrc"
   endif
 endif
-source s:vimrc
+exec "source " . s:vimrc

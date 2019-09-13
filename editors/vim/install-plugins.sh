@@ -39,7 +39,7 @@ downloadURLtoFile() {
 tmprc=$(mktemp)
 plugPattern='/^\s*[^\"]\s*Plug\s/ {print}'
 plugPattern='/Plug/ {print}'
-echo "call plug#begin(\"$HOME/vimfiles/plugins\")" >> $tmprc
+echo "call plug#begin(\"$HOME/.vim/plugins\")" >> $tmprc
 awk "$plugPattern" $SCRIPTDIR/light_plugins.vim >> $tmprc
 awk "$plugPattern" $SCRIPTDIR/main_plugins.vim >> $tmprc
 awk "$plugPattern" $SCRIPTDIR/ide_plugins.vim >> $tmprc

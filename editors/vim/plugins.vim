@@ -22,14 +22,13 @@ if !exists("g:ideMode")
     let g:ideMode=0
 endif
 
-let s:vimfilesDir = CreateVimDir("vimfiles")
-let s:pluginPath = CreateVimDir("vimfiles/plugins")
+let s:pluginPath = CreateVimDir(g:vimfilesDir . "/plugins")
 if v:version >= 703
     let s:scriptpath = fnameescape(expand('<sfile>:p:h'))
-    let s:localPlugins = fnameescape(expand(s:vimfilesDir . "/local_plugins.vim"))
+    let s:localPlugins = fnameescape(expand(g:vimfilesDir . "/local_plugins.vim"))
 else
     let s:scriptpath = expand('<sfile>:p:h')
-    let s:lpluginpathS=s:vimfilesDir . "/local_plugins.vim"
+    let s:lpluginpathS=g:vimfilesDir . "/local_plugins.vim"
     let s:localPlugins = expand(s:lpluginpathS)
 endif
 

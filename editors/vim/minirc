@@ -39,8 +39,8 @@ endif
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath=&runtimepath
 
-let s:vimfilesDir = CreateVimDir("vimfiles")
-let s:pluginPath = CreateVimDir("vimfiles/plugins")
+let s:vimfilesDir = CreateVimDir(".vim")
+let s:pluginPath = CreateVimDir(".vim/plugins")
 
 let s:autoloadDir=expand($VIMHOME . "/autoload")
 let s:vimplug_file=expand(s:autoloadDir . "/plug.vim")

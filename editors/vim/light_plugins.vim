@@ -189,7 +189,7 @@ if v:version >= 704
     let g:session_autosave_periodic = 10
     let g:session_autosave = 'yes'
     let g:session_autoload = 'no' " Could also be 'prompt'
-    let g:session_directory = CreateVimDir("vimfiles/sessions/")
+    let g:session_directory = CreateVimDir(g:vimfilesDir . "/sessions/")
     cabbrev cs CloseSession
     cabbrev os OpenSession
     cabbrev ss SaveSession

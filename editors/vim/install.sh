@@ -4,7 +4,11 @@ source "$DOTFILES_DIR/bash/script_functions.sh"
 doVimPlugins(){
     printErr "Installing vim plugins..."
     # Install Plug (plugin manager)
-    downloadURLtoFile https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "${HOME}/.vim/autoload/plug.vim"
+    if [[ $OSTYPE == 'msys' ]]; then
+      downloadURLtoFile https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "${HOME}/vimfiles/autoload/plug.vim"
+    else
+      downloadURLtoFile https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "${HOME}/.vim/autoload/plug.vim"
+    fi
     # This has the problem of making the caret disappear in WSL...
     vim -E +PlugInstall +qall
     # Recover missing cursor due to previous command
@@ -12,7 +16,7 @@ doVimPlugins(){
 }
 
 undoVimPlugins(){
-    rm -rf "${HOME}/vimfiles"
+    rm -rf "${HOME}/.vim/plugins"
     rm -f "${HOME}/.vim/autoload/plug.vim"
 }
 
@@ -21,7 +25,9 @@ doVim(){
     addTextIfAbsent "so $($SCRIPTDIR_CMD)/vimrc" "${HOME}/.vimrc"
     if [[ $OSTYPE == 'msys' ]]; then
       # git bash on windows, so lets also add a windows rc.
-      addTextIfAbsent "so $(cygpath.exe -w "$($SCRIPTDIR_CMD)/vimrc")" "${HOME}/vimrc"
+      # Using the vimfiles dir messes up creating vimfiles because it uses vimrc dir as home.
+      addTextIfAbsent "so $(cygpath.exe -w "$($SCRIPTDIR_CMD)/vimrc")" "${HOME}/vimfiles/vimrc"
+      # addTextIfAbsent "so $(cygpath.exe -w "$($SCRIPTDIR_CMD)/vimrc")" "${HOME}/vimrc"
     fi
     addTextIfAbsent "so $($SCRIPTDIR_CMD)/nvimrc" "${HOME}/.config/nvim/init.vim"
     doVimPlugins

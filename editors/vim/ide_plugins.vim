@@ -623,7 +623,7 @@ Plug 'https://github.com/keith/investigate.vim'
 Plug 'https://github.com/xuhdev/SingleCompile'
 " Customisable start screen, including MRU files
 Plug 'https://github.com/mhinz/vim-startify'
-let g:startify_session_dir = CreateVimDir("vimfiles/sessions/")
+let g:startify_session_dir = CreateVimDir(g:vimfilesDir . "/sessions/")
 let g:startify_lists = [
             \ { 'type': 'sessions',  'header': ['   Sessions']       },
             \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
