@@ -5,7 +5,6 @@ $packages = @(
         "lastpass",
         "choco-package-list-backup",
         "7zip",
-        "desktopicons-winconfig --params '/Computer:YES /UserFiles:YES /RecycleBin:YES'",
         "desktopok",
         "googlechrome",
         "classic-shell",
@@ -138,5 +137,6 @@ foreach ($package in $packages)
     choco upgrade --cacheLocation "$env:userprofile\AppData\Local\ChocoCache" $package -y
     refreshenv
 }
+desktopicons-winconfig --params '/Computer:YES /UserFiles:YES /RecycleBin:YES'
 
 # cinst Microsoft-Hyper-V-All -source windowsFeatures
