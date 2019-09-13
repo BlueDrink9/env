@@ -19,13 +19,13 @@ let &packpath=&runtimepath
 " let g:python3_host_prog = system('which python3')
 
 if has('win32') || has ('win64')
-  if filereadable("~/vimfiles/vimrc")
-    let s:vimrc="~/vimfiles/vimrc"
+  if filereadable(expand("~\vimfiles\vimrc"))
+    let s:vimrc="~\vimfiles\vimrc"
   else
-    let s:vimrc="~/_vimrc"
+    let s:vimrc="~\_vimrc"
   endif
 else
-  if filereadable("~/.vim/vimrc")
+  if filereadable(expand("~/.vim/vimrc"))
     let s:vimrc="~/.vim/vimrc"
   else
     let s:vimrc="~/.vimrc"
