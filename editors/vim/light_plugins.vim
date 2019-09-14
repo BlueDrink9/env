@@ -141,6 +141,9 @@ Plug 'https://github.com/junegunn/goyo.vim'
 if has('timers')
     " Async, uses better grep tools like ack or ag
     Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
+    let g:grepper = {
+          \ 'tools': ['rg', 'ag', 'ack', 'findstr', 'pt', 'git', 'grep'],
+          \ }
     cabbrev bfind Grepper -query
 
     " Multi-file find and replace with a nice interface. May be useful, idk.
