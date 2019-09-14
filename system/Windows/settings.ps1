@@ -9,15 +9,25 @@ Set-TaskbarOptions -Lock -Dock Bottom -Combine full -AlwaysShowIconsOn
 # /Boxstarter-specific commands
 
 cinst --cacheLocation "$env:userprofile\AppData\Local\ChocoCache" colemak -y
-# Input langs
-$langlist = New-WinUserLanguageList en-NZ
-#Clears the other input methods from the displayed language
-$langlist[0].InputMethodTips.Clear()
-#Sets and adds colemak, then NZ qwerty
-$langlist[0].InputMethodTips.add('1409:A0000409')
-$langlist[0].InputMethodTips.add('1409:00000409')
-#Apply the changes made on the system (and force to avoid the prompt  message)
-Set-WinUserLanguageList $langlist -Force
+# Input langs - colemak and US-nz.
+# Current user, then default (which includes welcome screen).
+$userpaths = @(
+        "Registry::HKCU\Keyboard Layout",
+        "Registry::HKEY_USERS\.DEFAULT\Keyboard Layout"
+)
+foreach ($userpath in $userpaths)
+{
+    # First strip out old values
+    Remove-ItemProperty -Path "$userpath\Substitutes" -Name "*"
+    Remove-ItemProperty -Path "$userpath\Preload" -Name "*"
+    # Add colemak then US-nz.
+    New-ItemProperty -Path "$userpath\Substitutes" -Name 'd0011409' -Value 'a0000409' -PropertyType 'String'
+    New-ItemProperty -Path "$userpath\Substitutes" -Name '00001409' -Value '00000409'
+    # Preload = default loaded layouts?
+    Set-ItemProperty -Path "$userpath\Preload" -Name 1 -Value 'd0011409'
+    Set-ItemProperty -Path "$userpath\Preload" -Name 2 -Value '00001409'
+}
+
 
 #--- Windows Settings ---
 # Some from: @NickCraver's gist https://gist.github.com/NickCraver/7ebf9efbfd0c3eab72e9
@@ -212,5 +222,5 @@ cmd /c "powercfg /s $asGuid"
 # Requires restart, or add the -Restart flag
 $computername = "BlueFizzy"
 if ($env:computername -ne $computername) {
-	Rename-Computer -NewName $computername
+	Rename-Computer -NewName $computername -force
 }
