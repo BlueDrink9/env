@@ -421,9 +421,14 @@ endfunction
 
 autocmd myVimrc BufEnter,Bufwrite * call s:SetTitle()
 
-" Autoset new buffers to scratch
-autocmd myVimrc BufEnter * if &filetype == "" | setlocal ft=scratch |
-            \  setlocal spell | setl ai| endif
+" Autoset new named buffers to scratch if no other specified
+autocmd myVimrc BufNewFile * if &filetype == "" | setlocal ft=scratch | endif
+" No names
+autocmd myVimrc BufEnter * if &filetype == "" && @% == "" | setlocal ft=scratch | endif
+autocmd filetype scratch setlocal spell | setl ai
+" Pre-existing files without clear ft: use conf. Gives hash comments,
+" highlights strings. Works for lots of small files.
+autocmd myVimrc BufReadPre * if &filetype == "" | setlocal ft=conf
 " Automatically detect the changed filetype on write. Currently only doing
 " it if the previous buftype was scratch (ie unnamed, which in default vim
 " would have done this anyway)
