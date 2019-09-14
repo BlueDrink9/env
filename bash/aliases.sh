@@ -123,10 +123,11 @@ export GIT_EDITOR="$GIT_EDITOR_CMD"
 export SUDO_EDITOR=vim
 
 # alias ls="ls -CF --color=auto"
+# ;e and ;q are also defined, but via readline
 alias :q="exit"
 alias :e="vim"
 alias e="vim"
-alias e?="vim $(fzf)"
+alias e?="vim \$(fzf)"
 # alias :Q="exit"
 # alias ZZ="exit"
 alias svi="sudoedit"
