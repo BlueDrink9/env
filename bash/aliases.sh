@@ -145,3 +145,4 @@ alias lightColours="base16Reset"
 alias icat="kitty +kitten icat"
 
 alias dotfe="vim \"${DOTFILES_DIR}\"/bash/aliases.sh \"${DOTFILES_DIR}\"/bash/functions.sh"
+alias stowlocal="stow --dir=\"$HOME/.local/packages\" --target=\"$HOME/.local\""
