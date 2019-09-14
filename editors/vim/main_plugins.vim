@@ -156,6 +156,7 @@ if g:hasGUI && !has('terminal')
     Plug 'https://github.com/ctrlpvim/ctrlp.vim'
     let g:ctrlp_cmd = 'CtrlPMixed'
     let g:ctrlp_map = '<leader>f'
+    let g:ctrlp_map = '<leader><space>'
     let g:ctrlp_cache_dir = CreateVimDir("ctrpCache") " Purge cache with f5 in buffer
     let g:ctrlp_clear_cache_on_exit = 0
     if ideMode == 1
@@ -164,11 +165,12 @@ if g:hasGUI && !has('terminal')
 else
     " PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run the install
     " script
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    Plug 'junegunn/fzf', { 'dir': '~/.local/packages/fzf', 'do': './install --all' }
       " Both options are optional. You don't have to install fzf in ~/.fzf
       " and you don't have to run the install script if you use fzf only in
       " Vim.
     nnoremap <leader>f :FZF<CR>
+    nnoremap <leader><space> :FZF<CR>
     " {[} Use proper fzf colours in gvim
     if g:hasGUI
         let g:fzf_colors =
