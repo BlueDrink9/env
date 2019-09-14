@@ -189,6 +189,9 @@ Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryO
 #Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize -Name AppsUseLightTheme -Type DWord -Value 1
 
 # POWER OPTIONS #
+# -x = /change. This option only works for timeouts like these. In minutes.
+powercfg -x -hibernate-timeout-ac 90
+powercfg -x -hibernate-timeout-dc 0
 # Screen on AC timeout
 powercfg /change monitor-timeout-ac 15
 # PC on AC to never sleep
@@ -197,24 +200,32 @@ powercfg /change standby-timeout-ac 0
 powercfg /change monitor-timeout-dc 5
 # Sleep on Battery (Laptop Only)
 powercfg /change standby-timeout-dc 10
-# powercfg /setacvalueindex 
 # Get active scheme guid
 $activeScheme = cmd /c "powercfg /getactivescheme"
 $regEx = '(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}'
 $asGuid = [regex]::Match($activeScheme,$regEx).Value
 $asGuid
-#relative GUIDs for Lid Close settings
 $pwrGuid = '4f971e89-eebd-4455-a8de-9e59040e7347'
-$lidClosedGuid = '5ca83367-6e45-459f-a27b-476b1d01c936'
-# DC Value // On Battery // 1 = sleep
-cmd /c "powercfg /setdcvalueindex $asGuid $pwrGuid $lidClosedGuid 1"
-#AC Value // While plugged in // 0 = do nothing
-cmd /c "powercfg /setacvalueindex $asGuid $pwrGuid $lidClosedGuid 0"
-$buttonGuid = '7648efa3-dd9c-4e3e-b566-50f929386280'
-# DC Value // On Battery // 1 = sleep
-cmd /c "powercfg /setdcvalueindex $asGuid $pwrGuid $buttonGuid 1"
-#AC Value // While plugged in // 3 = shut down
-cmd /c "powercfg /setacvalueindex $asGuid $pwrGuid $buttonGuid 3"
+$currentPowerGuid = "$asGuid $pwrGuid"
+# Get guids for specific settings with powercfg /Q $asGuid
+#AC Value = While plugged in. DC Value = On Battery
+# 1 = sleep, 0 = do nothing
+#relative GUIDs for Lid Close settings
+# $lidClosedGuid = '5ca83367-6e45-459f-a27b-476b1d01c936'
+$lidClosedGuid = 'LIDACTION'
+cmd /c "powercfg /setdcvalueindex $currentPowerGuid $lidClosedGuid 1"
+cmd /c "powercfg /setacvalueindex $currentPowerGuid $lidClosedGuid 0"
+# 1 = sleep, 3 = shut down
+# $buttonGuid = '7648efa3-dd9c-4e3e-b566-50f929386280'
+$buttonGuid = 'PBUTTONACTION'
+cmd /c "powercfg /setdcvalueindex $currentPowerGuid $buttonGuid 1"
+cmd /c "powercfg /setacvalueindex $currentPowerGuid $buttonGuid 3"
+# # Number of seconds.
+# $hibernateAfterGuid = '9d7815a6-7ee4-497e-8888-515a05f02364'
+# $hibernateAfterGuid = 'HIBERNATEIDLE'
+# # 90 mins
+# cmd /c "powercfg /setdcvalueindex $currentPowerGuid $hibernateAfterGuid 1518"
+# cmd /c "powercfg /setacvalueindex $currentPowerGuid $hibernateAfterGuid 0"
 #apply settings
 cmd /c "powercfg /s $asGuid"
 
