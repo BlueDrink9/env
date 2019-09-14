@@ -177,6 +177,13 @@ elif [ $(command -v loadkeys 2>/dev/null) ] && [ "$TERM" = linux ]; then
   loadkeys colemak
 fi
 
+#{[} fzf
+if command -v fd >/dev/null 2>&1; then
+  export FZF_DEFAULT_COMMAND='fd --type f'
+  export FZF_ALT_C_COMMAND='fd --type d . --color=never'
+fi
+#{]}
+
 # Colour all stderr output red.
 # This may be problematic in scripts, actually...
 # exec 9>&2
