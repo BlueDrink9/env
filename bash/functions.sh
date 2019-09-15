@@ -477,6 +477,25 @@ ssh_keygen(){
   ssh-keygen -t rsa -b 4096 -C "$name"
 }
 
+ssh_agent_start(){
+  # Ensures only one ssh-agent will be started, even across multiple shells.
+  # Queries the agent for available keys. If none can be found, it will try
+  # to load the agent config from a file, and if still can't connect to the
+  # agent, it will start a new one.
+  ssh-add -l &>/dev/null
+  if [ "$?" == 2 ]; then
+    test -r ~/.ssh-agent && \
+      eval "$(<~/.ssh-agent)" >/dev/null
+
+    ssh-add -l &>/dev/null
+    if [ "$?" == 2 ]; then
+      (umask 066; ssh-agent > ~/.ssh-agent)
+      eval "$(<~/.ssh-agent)" >/dev/null
+      # ssh-add
+    fi
+  fi
+}
+
 lastpass_login(){
   if ! lpass status > /dev/null; then
     echo "Lastpass is not logged in."
@@ -663,3 +682,4 @@ hist-search(){
     grep -r "$searchterm" "${logs}"*
   unset searchterm logs
 }
+
