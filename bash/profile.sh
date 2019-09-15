@@ -12,7 +12,7 @@ export DOTFILES_DIR=$(cd "${SCRIPT_DIR}/.." && pwd)
 unset BASH_FUNCTIONS_LOADED
 source "${SCRIPT_DIR}/functions.sh"
 
-if substrInStr "Microsoft" "$([ -f /proc/version ] && cat /proc/version)"; then
+if grep -qE "(Microsoft|WSL)" "$([ -f /proc/version ] && cat /proc/version)" > /dev/null 2>&1; then
   export isWSL=1
 fi
 

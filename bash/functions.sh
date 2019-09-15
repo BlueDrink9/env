@@ -555,6 +555,7 @@ pack(){
     upgradecmd="upgrade"
     searchcmd="search"
     removecmd="remove"
+    noconfirmcmd="-y"
     packcmd="$(choosePkgManager)"
     case "$packcmd" in
         brew )
@@ -566,6 +567,7 @@ pack(){
             upgradecmd="-Syu"
             searchcmd="-Ss"
             removecmd="-R"
+            noconfirmcmd="--noconfirm"
             if [ "$packcmd" == "pacman" ]; then useSudo=true; fi
             ;;
         pkg )
@@ -584,6 +586,9 @@ pack(){
         packcmd="sudo ${packcmd}"
     else
         packcmd="${packcmd}"
+    fi
+    if [ -n "$PACK_NOCONFIRM" ]; then
+        packcmd="${packcmd} ${noconfirmcmd}"
     fi
 
   case "$cmd" in

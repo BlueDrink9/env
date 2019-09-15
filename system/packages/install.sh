@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 source "$DOTFILES_DIR/bash/script_functions.sh"
+# Unset to force reloading `pack`
+unset BASH_FUNCTIONS_LOADED
+source "$DOTFILES_DIR/bash/functions.sh"
 
 installID="Packages"
 
@@ -22,8 +25,8 @@ installList(){
     list="$1"
     while read -r package; do
         if [ "${package:0:1}" != "#" ]; then
-            export DEBIAN_FRONTEND=noninteractive
             export HOMEBREW_NO_AUTO_UPDATE=1
+            export PACK_NOCONFIRM=1
             pack install $package
         fi
     done < "$list"
@@ -32,16 +35,19 @@ installList(){
 installPackages(){
     # To get "pack" function
     source "$DOTFILES_DIR/bash/functions.sh"
+    if grep -qE "(Microsoft|WSL)" "$([ -f /proc/version ] && cat /proc/version)" > /dev/null 2>&1; then
+      export isWSL=1
+    fi
     # Update
     pack refresh
-    installList "$($SCRIPTDIR_CMD)/base"
+    installList "$($SCRIPTDIR_CMD)/base/list"
     if [[ $OSTYPE =~ "darwin1" ]]; then
         installList "$($SCRIPTDIR_CMD)/OSX/list"
         # Need xcode-8 cmd tools
     elif [[ "$(uname -a)" =~ "Android" ]]; then
         installList "$($SCRIPTDIR_CMD)/termux/list"
         termux-setup-api
-    elif [[ $OSTYPE =~ "linux" ]]; then
+    elif [[ $OSTYPE =~ "linux" && -z "${isWSL}" ]]; then
         installList "$($SCRIPTDIR_CMD)/linux/list"
     fi
 }
