@@ -234,6 +234,8 @@ cmd /c "powercfg /s $asGuid"
 # Powershell vi mode. Probably needs to go somewhere else, like $PROFILE
 Set-PSReadlineOption -EditMode vi -BellStyle None
 
+Set-Service -StartupType Automatic ssh-agent
+
 #--- Rename the Computer ---
 # Requires restart, or add the -Restart flag
 $computername = "BlueFizzy"

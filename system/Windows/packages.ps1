@@ -126,6 +126,7 @@ $packages = @(
         "logitechgaming",
         "unifying",
         "onedrive",
+        "colortool",
         "onetastic"
 )
         # This gets the opentype version, which looks awful/doesn't alias
@@ -150,4 +151,9 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-L
 # Add-AppxPackage ".\$distro.appx"
 # popd
 
+# colortool.exe /b solarized_dark
+# Choco colortool is a bit funny
+colortool.exe -b solarized_dark.itermcolors
 # cinst Microsoft-Hyper-V-All -source windowsFeatures
+
+Install-Module -Force OpenSSHUtils -Scope AllUsers
