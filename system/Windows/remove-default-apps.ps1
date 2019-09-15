@@ -57,3 +57,16 @@ Get-AppxPackage *Plex* | Remove-AppxPackage
 # Get-AppxPackage Microsoft.XboxIdentityProvider | Remove-AppxPackage
 Get-AppxPackage *DisneyMagicKingdom* | Remove-AppxPackage
 Get-AppxPackage *HiddenCityMysteryofShadows* | Remove-AppxPackage
+
+# rovisioned Appx Packages – These (for lack of a better word) are the “package cache.” These are the manifest of what packages to install for each NEW user when they login. This is why every time your OS upgrades, you have to remove those apps again.  This is part of what is going on behind the scenes of the fabulous message “hang tight, we’re getting things ready for you” when you login to a new (or freshly upgraded) Windows 10 machines.
+
+# How are we going to handle this?  Well, let’s just remove packages from the manifest.  Let’s go remove some of those provisioned packages:
+
+# ##Remove Provisioned Packages 
+# $appname = @( 
+# "*BingWeather*" 
+# "*ZuneMusic*" 
+# "*ZuneVideo*" "*king*" 
+# ) 
+# ForEach($app in $appname){ 
+# Get-AppxProvisionedPackage -Online | where {$_.PackageName -like $app} | Remove-AppxProvisione
