@@ -22,6 +22,7 @@ installList(){
     list="$1"
     while read -r package; do
         if [ "${package:0:1}" != "#" ]; then
+            export DEBIAN_FRONTEND=noninteractive
             export HOMEBREW_NO_AUTO_UPDATE=1
             pack install $package
         fi
