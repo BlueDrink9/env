@@ -140,11 +140,23 @@ Plug 'wellle/targets.vim'
 
 " Let's give it a go then.
 Plug 'https://github.com/easymotion/vim-easymotion'
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+" tab-incrementable search with easymotion dropout feature.
+map  <leader>/ <Plug>(easymotion-sn)
+omap <leader>/ <Plug>(easymotion-tn)
+let g:EasyMotion_smartcase = 1
 map <Leader>l <Plug>(easymotion-lineforward)
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 map <Leader>h <Plug>(easymotion-linebackward)
 let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
+" Cross window boundaries
+nmap <Leader><S-K> <Plug>(easymotion-overwin-line)
+nmap <Leader><S-J> <Plug>(easymotion-overwin-line)
+nmap <Leader><S-L> <Plug>(easymotion-overwin-w)
+nmap <Leader><S-H> <Plug>(easymotion-overwin-w)
+" Like sneak
+nnoremap <leader>s <Plug>(easymotion-overwin-f2)
 Plug 'bkad/camelcasemotion'
 call add(g:pluginSettingsToExec, "call camelcasemotion#CreateMotionMappings('<leader>m')")
 " {]} ---------- Operators ----------
