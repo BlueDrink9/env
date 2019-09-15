@@ -33,7 +33,6 @@ $packages = @(
         "vlc",
         "sysinternals",
         "vscode",
-        "wsl",
         "opera",
         "firefox",
         "gitkraken",
@@ -51,7 +50,6 @@ $packages = @(
         "itunes",
         "autoruns",
         "virtualbox",
-        "SourceCodePro",
         "procexp",
         "procmon",
         "chocolateygui",
@@ -117,7 +115,6 @@ $packages = @(
         "pinnacle-game-profiler",
         "shexview",
         "texlive",
-        "wsl-ubuntu-1804",
         "wsltty",
         "miktex.install",
         "diskgenius",
@@ -131,6 +128,10 @@ $packages = @(
         "onedrive",
         "onetastic"
 )
+        # This gets the opentype version, which looks awful/doesn't alias
+        # properly on win. Manually get the ttf version.
+        # "SourceCodePro",
+        # "wsl",
 foreach ($package in $packages)
 {
     # Need to specify cache to avoid recursive dir issue. See
@@ -138,5 +139,15 @@ foreach ($package in $packages)
     choco upgrade --cacheLocation "$env:userprofile\AppData\Local\ChocoCache" $package -y
     refreshenv
 }
+# Downloads ubuntu for use
+Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+# This didn't work, seemed to just cause problems.
+# ubuntu
+# pushd $env:TMP
+# $distro = "wsl-ubuntu-1804"
+# curl.exe -L -o "$distro.appx" "https://aka.ms/$distro"
+# Add-AppxPackage ".\$distro.appx"
+# popd
 
 # cinst Microsoft-Hyper-V-All -source windowsFeatures
