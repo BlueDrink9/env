@@ -22,11 +22,17 @@ foreach ($userpath in $userpaths)
     Remove-ItemProperty -Path "$userpath\Preload" -Name "*"
     # Add colemak then US-nz.
     New-ItemProperty -Path "$userpath\Substitutes" -Name 'd0011409' -Value 'a0000409' -PropertyType 'String'
-    New-ItemProperty -Path "$userpath\Substitutes" -Name '00001409' -Value '00000409'
+    New-ItemProperty -Path "$userpath\Substitutes" -Name '00001409' -Value '00000409' -PropertyType 'String'
     # Preload = default loaded layouts?
     Set-ItemProperty -Path "$userpath\Preload" -Name 1 -Value 'd0011409'
     Set-ItemProperty -Path "$userpath\Preload" -Name 2 -Value '00001409'
+    # Disable switching hotkeys. 1 = alt+shift, 2 = ctrl+shift. 3 = disabled.
+    Set-ItemProperty -Path "$userpath\Toggle" -Name HotKey -Value 3
+    Set-ItemProperty -Path "$userpath\Toggle" -Name "Language Hotkey" -Value '3'
+    Set-ItemProperty -Path "$userpath\Toggle" -Name "Layout Hotkey" -Value '3'
 }
+Set-WinDefaultInputMethodOverride -InputTip "1409:a0000409"
+
 
 
 #--- Windows Settings ---
