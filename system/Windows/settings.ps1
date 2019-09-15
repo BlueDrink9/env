@@ -124,15 +124,16 @@ New-ItemProperty -Path "HKCU:\Software\Microsoft\Siuf\Rules" -Name "NumberOfSIUF
 #################
 
 # . Logit "Disabling Microsoft Account Sign-in Assistant Service..."
-Set-Service wlidsvc -StartupType Disabled
+# This is needed for ms account login. Keep it.
+# Set-Service wlidsvc -StartupType Disabled
 # . Logit "Disabling Windows Error Reporting Service..."
 Set-Service WerSvc -StartupType Disabled
 # . Logit "Disabling Xbox Live Auth Manager Service..."
-Set-Service XblAuthManager -StartupType Disabled
+# Set-Service XblAuthManager -StartupType Disabled
 # . Logit "Disabling Xbox Live Game Save Service..."
-Set-Service XblGameSave -StartupType Disabled
+# Set-Service XblGameSave -StartupType Disabled
 # . Logit "Disabling Xbox Live Networking Service Service..."
-Set-Service XboxNetApiSvc -StartupType Disabled
+# Set-Service XboxNetApiSvc -StartupType Disabled
 # . Logit "Disabling Xbox Accessory Management Service..."
 # Set-Service XboxGipSvc -StartupType Disabled
 
@@ -228,6 +229,10 @@ cmd /c "powercfg /setacvalueindex $currentPowerGuid $buttonGuid 3"
 # cmd /c "powercfg /setacvalueindex $currentPowerGuid $hibernateAfterGuid 0"
 #apply settings
 cmd /c "powercfg /s $asGuid"
+
+
+# Powershell vi mode. Probably needs to go somewhere else, like $PROFILE
+Set-PSReadlineOption -EditMode vi -BellStyle None
 
 #--- Rename the Computer ---
 # Requires restart, or add the -Restart flag
