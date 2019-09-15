@@ -178,6 +178,11 @@ elif [ $(command -v loadkeys 2>/dev/null) ] && [ "$TERM" = linux ]; then
 fi
 
 #{[} fzf
+# This is added to .bashrc by fzf on installation anyway, and it's easier to disable from there.
+# if [ -f ~/.fzf.bash ]; then
+# source ~/.fzf.bash
+export FZF_CTRL_R_OPTS='--sort'
+# fi
 if command -v fd >/dev/null 2>&1; then
   export FZF_DEFAULT_COMMAND='fd --type f'
   export FZF_ALT_C_COMMAND='fd --type d . --color=never'

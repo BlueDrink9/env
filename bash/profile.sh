@@ -173,15 +173,6 @@ case $- in
         eval "$("$BASE16_SHELL/profile_helper.sh")"
     fi
 
-    # {[} fzf
-    if [ -f ~/.fzf.bash ]; then
-      source ~/.fzf.bash
-      export FZF_CTRL_R_OPTS='--sort'
-      # Disable alt-c mapping to allow ;q to keep working.
-      # Nah, just change ;q binding to ddi instead of cc
-      # bind '"c":"c"
-    fi
-    # {]} fzf
     ;;
   *) return;;
 esac
