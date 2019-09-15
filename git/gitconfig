@@ -28,8 +28,10 @@
   helper = cache --timeout=3600
 [core]
 	# editor = vim --cmd \"let g:liteMode=1\"
-  # autocrlf = input
-  autocrlf = false
+  # Checkout as-is, commit unix
+  autocrlf = input
+  # Checkout win-style, commit unix
+  # autocrlf = true
   safecrlf = true
   eol      = lf
 
