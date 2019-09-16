@@ -43,6 +43,9 @@
 [mergetool]
   prompt = false
   TrustExitCode = true
+  # Prevents .orig files being generated during merges.
+  keepBackup = false
+
 [mergetool "vimdiff4"]
   cmd = vim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
   TrustExitCode = true
