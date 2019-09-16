@@ -127,6 +127,7 @@ export SUDO_EDITOR=vim
 alias :q="exit"
 alias :e="vim"
 alias e="vim"
+alias ide="IDEVim"
 alias e?="vim \$(fzf)"
 # alias :Q="exit"
 # alias ZZ="exit"
