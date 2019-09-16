@@ -31,9 +31,16 @@ set_bash_prompt () {
   if [ -z ${USER} ] ; then
     export USER=$(id -u -n)
   fi
-  USER_AT_HOST="${pblue}\u${pNC}@${pyellow}\h${pNC}"
-  USER_COLOURED="${pblue}\u${pNC}"
-  USER_INITIAL_COLOURED="${pblue}${USER:0:1}${pNC}"
+
+  # If root, use red for name.
+  if [[ $EUID -eq 0 ]]; then
+    userCol="${pred}"
+  else
+    userCol="${pblue}"
+  fi
+  USER_AT_HOST="${userCol}\u${pNC}@${pyellow}\h${pNC}"
+  USER_COLOURED="${userCol}\u${pNC}"
+  USER_INITIAL_COLOURED="${userCol}${USER:0:1}${pNC}"
 
   export HOST=$(uname -n | cut -d"." -f1)
 
