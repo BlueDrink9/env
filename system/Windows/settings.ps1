@@ -243,8 +243,10 @@ Set-PSReadlineOption -EditMode vi -BellStyle None
 Set-Service -StartupType Automatic ssh-agent
 
 #--- Rename the Computer ---
+# Also set description to same as name.
 # Requires restart, or add the -Restart flag
 $computername = "BlueFizzy"
 if ($env:computername -ne $computername) {
 	Rename-Computer -NewName $computername -force
+    Get-CimInstance -ClassName Win32_OperatingSystem | Set-CimInstance -Property @{Description = $computername}
 }
