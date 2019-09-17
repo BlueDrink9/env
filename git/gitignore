@@ -2,6 +2,7 @@
 
 latexbuild/
 generated/
+.syncthing*
 
 # Ignore tags created by etags, ctags, gtags (GNU global) and cscope
 TAGS
