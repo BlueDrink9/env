@@ -108,7 +108,7 @@ chunkwmMode < down	: ~/.config/scripts/chunk_float.sh move +y
 # rotate tree
 chunkwmMode < r : chunkc tiling::desktop --rotate 90
 
-# Re-make binary proportions
+# Re-make binary proportions. Equals key.
 chunkwmMode < shift - 0x18 : chunkc tiling::desktop --equalize  # equals key
 
 # mirror tree y-axis
