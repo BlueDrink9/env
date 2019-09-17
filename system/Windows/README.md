@@ -10,3 +10,4 @@ Run this line manually beforehand to allow the scripts to run.
 * Uninstall other versions of office before choco version
 * Move git bash to own folder, and in installation files/profile, set $HOME to own folder.
 * Install ubuntu from store
+* Create liteVim, ideVim shortcuts.
