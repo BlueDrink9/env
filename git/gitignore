@@ -39,6 +39,8 @@ cscope.po.outags
 
 # Session
 Session.vim
+# OSX office backups
+~$*
 
 # Temporary
 .netrwhist
