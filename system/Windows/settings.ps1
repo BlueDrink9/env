@@ -270,6 +270,10 @@ foreach ($path in $paths)
 # Remove search from taskbar
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "SearchboxTaskbarMode" -Type DWord -Value 0
 
+# Unbind shortcuts used for game bar, so I can use them with virtual desktop
+# enhancer instead.
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "AppCaptureEnabled" -Type DWord -Value 0
+
 # Powershell vi mode. Probably needs to go somewhere else, like $PROFILE
 Set-PSReadlineOption -EditMode vi -BellStyle None
 
