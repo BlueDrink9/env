@@ -237,6 +237,37 @@ cmd /c "powercfg /setacvalueindex $currentPowerGuid $buttonGuid 3"
 cmd /c "powercfg /s $asGuid"
 
 
+# Configure "This PC" entries
+$basepath1 = "HKEY_LOCAL_MACHINE\SOFTWARE"
+$basepath2 = "Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace"
+$paths = @(
+    "Registry::$basepath1\$basepath2",
+    "Registry::$basepath1\Wow6432Node\$basepath2"
+)
+$folderIDs = @(
+        # videos
+        "{A0953C92-50DC-43bf-BE83-3742FED03C9C}",
+        "{f86fa3ab-70d2-4fc7-9c99-fcbf05467f3a}",
+        # music
+        "{1CF1260C-4DD0-4ebb-811F-33C572699FDE}",
+        "{3dfdf296-dbec-4fb4-81d1-6a3438bcf4de}",
+        # pictures
+        "{3ADD1653-EB32-4cb0-BBD7-DFA0ABB5ACCA}",
+        "{24ad3ad4-a569-4530-98e1-ab02f9417aa8}",
+        # 3D Objects
+        "{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}"
+)
+# Remove Videos From This PC
+foreach ($path in $paths)
+{
+    foreach ($folderID in $folderIDs)
+    {
+        Remove-Item -Path "$path\$folderID"
+        "$path\$folderID"
+    }
+}
+
+
 # Powershell vi mode. Probably needs to go somewhere else, like $PROFILE
 Set-PSReadlineOption -EditMode vi -BellStyle None
 
