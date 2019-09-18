@@ -46,6 +46,7 @@ Session.vim
 # Temporary
 .netrwhist
 *~
+*.tmp
 # Auto-generated tag files
 tags
 # Composer
@@ -644,3 +645,5 @@ TSWLatexianTemp*
 
 # standalone packages
 *.sta
+# R statistics
+.Rhistory
