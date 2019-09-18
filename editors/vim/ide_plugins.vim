@@ -150,16 +150,32 @@ if has("timers")
     " {[} Coc
     if has('node')
         Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
+        UnPlug 'autozimu/LanguageClient-neovim'
+        UnPlug 'w0rp/ale'
 
-        " Installed automatically by coc
+        " Installed automatically by coc on startup!
+        " Lists gets qf, files, buffers, tags, etc.
+        " sh uses bash-language-server
         let g:coc_global_extensions = [
                     \ "coc-ultisnips",
                     \ "coc-syntax",
+                    \ "coc-dictionary",
                     \ "coc-omni",
                     \ "coc-tag",
                     \ "coc-gitignore",
+                    \ "coc-git",
+                    \ "coc-lists",
+                    \ "coc-sh",
+                    \ "coc-vimlsp",
+                    \ "coc-bibtex",
+                    \ "coc-vimtex",
+                    \ "coc-python",
+                    \ "coc-java",
                     \ "coc-r-lsp"
                     \ ]
+                    " \ "coc-tabnine"
+                    " latex lsp
+                    " \ "coc-texlab",
 
         function! s:check_back_space() abort
             let col = col('.') - 1
