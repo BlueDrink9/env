@@ -149,17 +149,6 @@ if has("timers")
 
     " {[} Coc
     if has('node')
-        function! PlugCoc(info) abort
-            if a:info.status ==? 'installed' || a:info.force
-                !yarn install
-                call coc#util#install_extension(join(get(s:, 'coc_extensions', [])))
-            elseif a:info.status ==? 'updated'
-                !yarn install
-                call coc#util#update()
-            endif
-            call PlugRemotePlugins(a:info)
-        endfunction
-        " Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release', 'do': function('PlugCoc')}
         Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 
         " Installed automatically by coc
