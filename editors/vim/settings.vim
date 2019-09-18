@@ -201,9 +201,12 @@ set incsearch
 set ignorecase smartcase
 if has('nvim')
     set inccommand=split
+    " when 'c'hanging, don't remove text. Put $ at end instead. Line will be
+    " overwritten.
+    " set cpoptions += "$"
 endif
 
-f has('nvim-0.4')
+if has('nvim-0.4')
     set signcolumn=auto:9
 endif
 " Highlight search results. Use :noh to undo
