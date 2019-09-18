@@ -203,6 +203,9 @@ if has('nvim')
     set inccommand=split
 endif
 
+f has('nvim-0.4')
+    set signcolumn=auto:9
+endif
 " Highlight search results. Use :noh to undo
 " set hlsearch
 " Show line numbers
@@ -224,12 +227,12 @@ set wildcharm=<tab>
 set scrolloff=5
 set completeopt=longest,menu,preview
 if exists("g:ideMode") && g:ideMode == 1
-  " Include tags and includes in completion.
-  set complete+=i
-  set complete+=t
-  " set completeopt+=noselect
+    " Include tags and includes in completion.
+    set complete+=i
+    set complete+=t
+    " set completeopt+=noselect
 else
-  set complete-=i     " Searching includes can be slow
+    set complete-=i     " Searching includes can be slow
 endif
 set display=lastline
 set diffopt+=vertical
