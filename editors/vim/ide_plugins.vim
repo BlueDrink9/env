@@ -145,9 +145,46 @@ if has("timers")
                 \ 'r': b:RLSPArray,
                 \ 'swift': ['sourcekit-lsp'],
                 \ }
-" {]} ---------- LSP ----------
+    " {]} ---------- LSP ----------
 
-    if has("python3")
+    " {[} Coc
+    if has('node')
+        function! PlugCoc(info) abort
+            if a:info.status ==? 'installed' || a:info.force
+                !yarn install
+                call coc#util#install_extension(join(get(s:, 'coc_extensions', [])))
+            elseif a:info.status ==? 'updated'
+                !yarn install
+                call coc#util#update()
+            endif
+            call PlugRemotePlugins(a:info)
+        endfunction
+        " Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release', 'do': function('PlugCoc')}
+        Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
+
+        " Installed automatically by coc
+        let g:coc_global_extensions = [
+                    \ "coc-ultisnips",
+                    \ "coc-syntax",
+                    \ "coc-omni",
+                    \ "coc-tag",
+                    \ "coc-gitignore",
+                    \ "coc-r-lsp"
+                    \ ]
+
+        function! s:check_back_space() abort
+            let col = col('.') - 1
+            return !col || getline('.')[col - 1]  =~# '\s'
+        endfunction
+        inoremap <silent><expr> <TAB>
+                    \ pumvisible() ? "\<C-n>" :
+                    \ <SID>check_back_space() ? "\<TAB>" :
+                    \ coc#refresh()
+        inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+    " endif
+    " {]} Coc
+
+    elseif has("python3")
     " {[} ---------- Deoplete ----------
         if has("nvim")
             Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
