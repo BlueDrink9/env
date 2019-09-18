@@ -31,7 +31,6 @@ set_bash_prompt () {
   if [ -z ${USER} ] ; then
     export USER=$(id -u -n)
   fi
-
   # If root, use red for name.
   if [[ $EUID -eq 0 ]]; then
     userCol="${pred}"
@@ -42,14 +41,18 @@ set_bash_prompt () {
   USER_COLOURED="${userCol}\u${pNC}"
   USER_INITIAL_COLOURED="${userCol}${USER:0:1}${pNC}"
 
-  export HOST=$(uname -n | cut -d"." -f1)
+  if [ -n "$SSHSESSION" ]; then
+    export HOST=$(uname -n | cut -d"." -f1)
 
-  if (( ${#HOST}  > 12 )); then
-    # Truncate hostname if it is too long.
-    HOST=${HOST:0:12}
-    HOST_COLOURED="${pyellow}${HOST}${pNC}"
+    if (( ${#HOST}  > 12 )); then
+      # Truncate hostname if it is too long.
+      HOST=${HOST:0:12}
+      HOST_COLOURED="${pNC}@${pyellow}${HOST}${pNC}"
+    else
+      HOST_COLOURED="${pNC}@${pyellow}\h${pNC}"
+    fi
   else
-    HOST_COLOURED="${pyellow}\h${pNC}"
+    HOST=""
   fi
 
   CURR_FULL_PATH="\w"
@@ -88,11 +91,11 @@ set_bash_prompt () {
   VAR_PROMPT=""
 
   if (( $((${COLUMNS} - $prompt_len)) > ${DESIRED_COMMAND_SPACE})); then
-    VAR_PROMPT="${TIME_PROMPT_COLOURED} ${USER_COLOURED}@${HOST_COLOURED}:"
+    VAR_PROMPT="${TIME_PROMPT_COLOURED} ${USER_COLOURED}${HOST_COLOURED}"
   elif (( $((${COLUMNS} - $prompt_len_no_time)) > ${DESIRED_COMMAND_SPACE})); then
-    VAR_PROMPT="${USER_COLOURED}@${HOST_COLOURED}:"
+    VAR_PROMPT="${USER_COLOURED}${HOST_COLOURED}"
   elif (( $((${COLUMNS} - $prompt_len_no_time_host)) > ${DESIRED_COMMAND_SPACE})); then
-    VAR_PROMPT="${USER_INITIAL_COLOURED}@${HOST_COLOURED}:"
+    VAR_PROMPT="${USER_INITIAL_COLOURED}${HOST_COLOURED}"
     # elif (( $((${COLUMNS} - $prompt_len_no_time_host)) > ${DESIRED_COMMAND_SPACE})); then
     #   VAR_PROMPT="${USER_COLOURED}: "
     # let "remaining_space= ${COLUMNS} - $prompt_len_no_time_host_user"
