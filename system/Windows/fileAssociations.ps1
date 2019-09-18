@@ -42,18 +42,20 @@ foreach ($ext in $plaintextExtensions)
     cmd /c "assoc .$ext=plaintext"
 }
 
-$plaintextEditMenuExtensions = @(
-    "reg",
-    "bat",
-    "ahk",
-    "py",
-    "ps1"
+# "reg",
+# "bat",
+# "ahk",
+# "py",
+# "ps1"
+# This is not the same as the extension. It is a separate key that the
+# extension has as a filetype.
+$plaintextEditMenuFTs = @(
+    "regfile",
+    "batfile",
+    "AutoHotkeyScript",
+    "Python.File",
+    "Microsoft.PowerShellScript.1"
 )
-
-foreach ($ext in $plaintextEditMenuExtensions)
-{
-    cmd /c "assoc .$ext=plaintextRunnable"
-}
 
 $vimbin = "$(where gvim.exe)"
 if ([string]::IsNullOrEmpty($vimbin)) {
@@ -61,11 +63,14 @@ if ([string]::IsNullOrEmpty($vimbin)) {
 }
 cmd /c "ftype plaintext=$vimbin `"%1`""
 cmd /c "ftype text=$vimbin `"%1`""
-if (-not (test-path "HKCU:\Software\Classes\plaintextRunnable\Shell\Edit\command")) {
-    New-Item -Path "HKCU:\Software\Classes\plaintextRunnable"
-    New-Item -Path "HKCU:\Software\Classes\plaintextRunnable\Shell"
-    New-Item -Path "HKCU:\Software\Classes\plaintextRunnable\Shell\Edit"
-    New-Item -Path "HKCU:\Software\Classes\plaintextRunnable\Shell\Edit\command"
+
+# PYthon by default only has 'edit with idle' context command.
+if (-not (test-path "HKLM:\Software\Classes\Python.File\Shell\Edit\command")) {
+    New-Item -Path "HKLM:\Software\Classes\Python.File\Shell\Edit"
+    New-Item -Path "HKLM:\Software\Classes\Python.File\Shell\Edit\command"
 }
-# Set-item alone sets default.
-New-ItemProperty -Path "HKCU:\Software\Classes\plaintextRunnable\Shell\Edit\command" -Name "(Default)" -PropertyType String -Value "`"$vimbin`" `"%1`""
+# Set edit menu command.
+foreach ($ft in $plaintextEditMenuFTs)
+{
+    New-ItemProperty -Path "HKLM:\Software\Classes\$ft\Shell\Edit\command" -Name "(Default)" -PropertyType String -Value "`"$vimbin`" `"%1`""
+}
