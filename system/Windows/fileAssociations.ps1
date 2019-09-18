@@ -30,8 +30,6 @@ $plaintextExtensions = @(
     "php",
     "json",
     # "xml",
-    "vb",
-    "vbs",
     "0",
     "vim",
     "py",
@@ -47,14 +45,17 @@ foreach ($ext in $plaintextExtensions)
 # "ahk",
 # "py",
 # "ps1"
+# "vb",
+# "vbs",
 # This is not the same as the extension. It is a separate key that the
 # extension has as a filetype.
 $plaintextEditMenuFTs = @(
-    "regfile",
-    "batfile",
-    "AutoHotkeyScript",
-    "Python.File",
-    "Microsoft.PowerShellScript.1"
+        "regfile",
+        "batfile",
+        "AutoHotkeyScript",
+        "Python.File",
+        "Microsoft.PowerShellScript.1",
+        "VBSFile"
 )
 
 $vimbin = "$(where gvim.exe)"
