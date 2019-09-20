@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 source "$DOTFILES_DIR/shell/script_functions.sh"
 
-shebang="#!$PREFIX/usr/bin/env bash"
+# env doesn't pick up properly for shortcuts
+shebang="#!/bin/bash"
 
 mkdir -p "$HOME/.termux"
 downloadURLAndExtractGzTo "https://github.com/adi1090x/termux-style/raw/master/data.tar.gz" \
