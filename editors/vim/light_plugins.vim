@@ -124,7 +124,7 @@ endif
 if v:version >= 703
     Plug 'https://github.com/ntpeters/vim-better-whitespace'
     let g:show_spaces_that_precede_tabs=1
-    let g:better_whitespace_skip_empty_lines=1
+    let g:better_whitespace_skip_empty_lines=0
     let g:better_whitespace_operator='_s'
     call add (g:customHLGroups, "ExtraWhitespace ctermbg=Gray guibg=LightGray")
     " call add (g:customHLGroups, "link ExtraWhitespace CursorColumn")
