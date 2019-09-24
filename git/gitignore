@@ -647,3 +647,4 @@ TSWLatexianTemp*
 *.sta
 # R statistics
 .Rhistory
+.Rdata
