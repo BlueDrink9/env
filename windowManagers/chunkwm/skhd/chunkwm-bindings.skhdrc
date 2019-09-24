@@ -137,7 +137,7 @@ chunkwmMode < alt - e : chunkc tiling::window --toggle split
 chunkwmMode < alt - q : chunkc tiling::window --toggle fade
 
 # float / unfloat window and center on screen
-chunkwmMode < u : chunkc tiling::window --toggle float;\
+chunkwmMode < u : tchunkc tiling::window --toggle float;\
           chunkc tiling::window --grid-layout 4:4:1:1:2:2
 
 # toggle sticky (appears on all desktops) Needs chwm-sa

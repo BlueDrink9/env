@@ -40,7 +40,8 @@
   conflictstyle = diff3
   # tool = vimdiff
   # tool = vimdiff4
-  tool = fugative
+  # tool = fugative
+  tool = vim-conflicted
 [mergetool]
   prompt = false
   TrustExitCode = true
