@@ -34,6 +34,8 @@ endif
 Plug 'https://github.com/Konfekt/FastFold'
 Plug 'https://github.com/Konfekt/FoldText'
 
+Plug 'https://github.com/freitass/todo.txt-vim'
+
 " Jump to specified place in file with file(L:C)
 Plug 'https://github.com/wsdjeg/vim-fetch'
 " For switching between header and alt files
