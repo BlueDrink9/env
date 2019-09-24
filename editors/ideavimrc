@@ -2,7 +2,7 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
 
-let mapleader = " "
+" let mapleader = " "
 
 " {[} Basic mappings (usually worth copying to vim emulation programs).
 
@@ -22,8 +22,8 @@ vnoremap ; :
 nnoremap x "_x
 nnoremap X "_X
 " Toggle/create folds with backspace.
-nnoremap <backspace> za
-vnoremap <backspace> zf
+" nnoremap <backspace> za
+" vnoremap <backspace> zf
 " Quicker access to system and unnamed registers
 " (" is default register anyway, so never need "")
 nnoremap "" "+
@@ -31,29 +31,29 @@ vnoremap "" "+
 nnoremap """ "-
 vnoremap """ "-
 " black hole register delete
-vmap <backspace> "_d
-vmap <del> "_d
-"Faster scrolling
-nnoremap <C-e> 3<C-e>
-nnoremap <C-y> 3<C-y>
+" vmap <backspace> "_d
+" vmap <del> "_d
+" "Faster scrolling
+" nnoremap <C-e> 3<C-e>
+" nnoremap <C-y> 3<C-y>
 " Swap mark jumps to make jump to column easier to press than jump to line.
-nnoremap ' `
-nnoremap ` '
+" nnoremap ' `
+" nnoremap ` '
 " Consistent with D, C
 nnoremap Y y$
 " Remember cursor location and reformat file
-nnoremap g= gg=G$()
-nnoremap gQ gggqG$()
+" nnoremap g= gg=G$()
+" nnoremap gQ gggqG$()
 " Insertmode deletes create an undopoint first
-inoremap <c-u> <c-g>u<c-u>
-inoremap <c-w> <c-g>u<c-w>
+" inoremap <c-u> <c-g>u<c-u>
+" inoremap <c-w> <c-g>u<c-w>
 " Dot operator leaves cursor where it was
-nmap . .'.
+" nmap . .'.
 " Don't lose selection on < or >
-xnoremap <  <gv
-xnoremap >  >gv
+" xnoremap <  <gv
+" xnoremap >  >gv
 " Delete word under cursor, replace with pasted.
-nnoremap <leader># "_diwP
+" nnoremap <leader># "_diwP
 " Autoexpand brackets when creating functions etc.
 " inoremap (<CR> (<CR>)<Esc>O
 " inoremap {<CR> {<CR>}<Esc>O
@@ -63,60 +63,60 @@ nnoremap <leader># "_diwP
 " inoremap [; [<CR>];<Esc>O
 " inoremap [, [<CR>],<Esc>O
 " Switch between the last two files.
-nnoremap <Leader>a <C-^>
+" nnoremap <Leader>a <C-^>
 
-" n and N always go the same direction regardless of whether / or ? was used.
-nnoremap <expr> n  'Nn'[v:searchforward]
-nnoremap <expr> N  'nN'[v:searchforward]
-" Move through previous commands
-nnoremap <expr> n  'Nn'[v:searchforward]
-nnoremap <expr> N  'nN'[v:searchforward]
-" Cd to current file
-" nnoremap <leader>cd :lcd %:p:h<CR>:pwd<CR>
-" Autocomplete from tags
-inoremap <c-]> <c-x><c-]>
+" " n and N always go the same direction regardless of whether / or ? was used.
+" nnoremap <expr> n  'Nn'[v:searchforward]
+" nnoremap <expr> N  'nN'[v:searchforward]
+" " Move through previous commands
+" nnoremap <expr> n  'Nn'[v:searchforward]
+" nnoremap <expr> N  'nN'[v:searchforward]
+" " Cd to current file
+" " nnoremap <leader>cd :lcd %:p:h<CR>:pwd<CR>
+" " Autocomplete from tags
+" inoremap <c-]> <c-x><c-]>
 
-" {]} Basic mappings
+" " {]} Basic mappings
 
-"{[} Window management
-nnoremap <C-w>t :tabnew<CR>
-nnoremap <C-w><S-R> <W-w> <C-r>
-" Easier way to move between windows
-nnoremap <C-j> <C-W>j
-nnoremap <C-k> <C-W>k
-nnoremap <C-h> <C-W>h
-nnoremap <C-l> <C-W>l
-" Easy resize
-nnoremap <S-Right> 5<C-W>>
-nnoremap <S-Left> 5<C-W><
-nnoremap <S-Up> 3<C-W>+
-nnoremap <S-Down> 3<C-W>-
-" Cycle through buffers
-" nnoremap <silent> <Right> :bnext<CR>
-" nnoremap <silent> <Left> :bprev<CR>
-" nnoremap <silent> <Up> :tabnext<CR>
-" nnoremap <silent> <Down> :tabprevious<CR>
-" Idea uses tabs as buffers.
-nnoremap <silent> <Right> :tabnext<CR>
-nnoremap <silent> <Left> :tabprevious<CR>
-" {]} Window management
+" "{[} Window management
+" nnoremap <C-w>t :tabnew<CR>
+" nnoremap <C-w><S-R> <W-w> <C-r>
+" " Easier way to move between windows
+" nnoremap <C-j> <C-W>j
+" nnoremap <C-k> <C-W>k
+" nnoremap <C-h> <C-W>h
+" nnoremap <C-l> <C-W>l
+" " Easy resize
+" nnoremap <S-Right> 5<C-W>>
+" nnoremap <S-Left> 5<C-W><
+" nnoremap <S-Up> 3<C-W>+
+" nnoremap <S-Down> 3<C-W>-
+" " Cycle through buffers
+" " nnoremap <silent> <Right> :bnext<CR>
+" " nnoremap <silent> <Left> :bprev<CR>
+" " nnoremap <silent> <Up> :tabnext<CR>
+" " nnoremap <silent> <Down> :tabprevious<CR>
+" " Idea uses tabs as buffers.
+" nnoremap <silent> <Right> :tabnext<CR>
+" nnoremap <silent> <Left> :tabprevious<CR>
+" " {]} Window management
 
-" In insert or visual mode, use standard cut/copy/paste shortcuts.
-inoremap <C-v> <C-o>"+P
-cnoremap <C-v> <C-r>+
-vnoremap <C-X> "+d
-vnoremap <C-c> "+y
-" vnoremap <C-v> "+P  " Clobbers block visual
-" In normal mode, use ctrl+q
-nnoremap <C-q> "+P
+" " In insert or visual mode, use standard cut/copy/paste shortcuts.
+" inoremap <C-v> <C-o>"+P
+" cnoremap <C-v> <C-r>+
+" vnoremap <C-X> "+d
+" vnoremap <C-c> "+y
+" " vnoremap <C-v> "+P  " Clobbers block visual
+" " In normal mode, use ctrl+q
+" nnoremap <C-q> "+P
 
-" Reload .ideavimrc
-nmap <leader><S-R> :source ~/.ideavimrc<CR>
+" " Reload .ideavimrc
+" nmap <leader><S-R> :source ~/.ideavimrc<CR>
 
 
 set timeoutlen=300
 
-set relativenumber
+" set relativenumber
 set number
 set smartcase
 set wrapscan
@@ -147,71 +147,71 @@ nnoremap <leader>c gc
 set surround
 
 
-" IDE commands from here out.
+" " IDE commands from here out.
 
-nnoremap gd              :action GotoDeclaration<CR>
-nnoremap gh              :action QuickJavaDoc<CR>
-nnoremap gr              :action FindUsages<CR>
-nnoremap gs              :action GotoSymbol<CR>
-" These are leader-based alternative shortcuts for actions whose corresponding
-" idea shortcuts require hand-stretching combinations, function keys, Home or
-" Insert.
+" nnoremap gd              :action GotoDeclaration<CR>
+" nnoremap gh              :action QuickJavaDoc<CR>
+" nnoremap gr              :action FindUsages<CR>
+" nnoremap gs              :action GotoSymbol<CR>
+" " These are leader-based alternative shortcuts for actions whose corresponding
+" " idea shortcuts require hand-stretching combinations, function keys, Home or
+" " Insert.
 
-nnoremap <leader>f      :action SearchEverywhere<CR>
-nnoremap <leader><Space> :action GotoAction<CR>
-" Rename
-noremap <Leader>lr :action RenameElement<CR>
-" Shift + F6 in idea.
-" Alt + R, then R (through the menu bar) also seems to work fine.
-" noremap <Leader>r :action RenameElement<CR>
-" Ctrl + F12 in idea.
-noremap <Leader>s :action FileStructurePopup<CR>
-" Perhaps just use the Idea shortcut Ctrl-Alt-B
-" Alt + N, then m (through the menu bar) also seems to work, but it is
-" non-unique.
-noremap <Leader>li :action GotoImplementation<CR>
-noremap <Leader>ld :action GotoSymbol<CR>
-nnoremap <leader>dd      :action Debug<CR>
-noremap <Leader>lu :action FindUsages<CR>
-" Alt + Insert in idea.
-noremap <Leader>lg :action Generate<CR>
-" F12
-noremap <Leader>a :action JumpToLastWindow<CR>
-noremap <Leader>r :action ChooseRunConfiguration<CR>
-" replace in project
-nnoremap <leader>rp :action ReplaceInPath<CR>
+" nnoremap <leader>f      :action SearchEverywhere<CR>
+" nnoremap <leader><Space> :action GotoAction<CR>
+" " Rename
+" noremap <Leader>lr :action RenameElement<CR>
+" " Shift + F6 in idea.
+" " Alt + R, then R (through the menu bar) also seems to work fine.
+" " noremap <Leader>r :action RenameElement<CR>
+" " Ctrl + F12 in idea.
+" noremap <Leader>s :action FileStructurePopup<CR>
+" " Perhaps just use the Idea shortcut Ctrl-Alt-B
+" " Alt + N, then m (through the menu bar) also seems to work, but it is
+" " non-unique.
+" noremap <Leader>li :action GotoImplementation<CR>
+" noremap <Leader>ld :action GotoSymbol<CR>
+" nnoremap <leader>dd      :action Debug<CR>
+" noremap <Leader>lu :action FindUsages<CR>
+" " Alt + Insert in idea.
+" noremap <Leader>lg :action Generate<CR>
+" " F12
+" noremap <Leader>a :action JumpToLastWindow<CR>
+" noremap <Leader>r :action ChooseRunConfiguration<CR>
+" " replace in project
+" nnoremap <leader>rp :action ReplaceInPath<CR>
 
-" These shortcuts mimic the default Idea action for one edition mode, using the
-" Vim action for the other.
-"
-" Same as default IDEA action, but only in normal mode. Delete previous char
-" in insert mode.
-" See also Ctrl + Shift + H for method hierarchy, Ctrl + Alt + H for call
-" hierarchy.
-noremap <C-h> :action TypeHierarchy<CR>
-" Same as default IDEA action, but only in insert mode. Enter block-visual
-" mode in normal mode.
-inoremap <C-v> <Esc>:action $Paste<CR>
+" " These shortcuts mimic the default Idea action for one edition mode, using the
+" " Vim action for the other.
+" "
+" " Same as default IDEA action, but only in normal mode. Delete previous char
+" " in insert mode.
+" " See also Ctrl + Shift + H for method hierarchy, Ctrl + Alt + H for call
+" " hierarchy.
+" noremap <C-h> :action TypeHierarchy<CR>
+" " Same as default IDEA action, but only in insert mode. Enter block-visual
+" " mode in normal mode.
+" inoremap <C-v> <Esc>:action $Paste<CR>
 
-"
-" Here are noremappings about which I'm less sure.
+" "
+" " Here are noremappings about which I'm less sure.
 
-" This is for going to related symbols. I can't find any effect in the community edition.
-" noremap <Leader>g :action GotoRelated<CR>
+" " This is for going to related symbols. I can't find any effect in the community edition.
+" " noremap <Leader>g :action GotoRelated<CR>
 
-" uppercase last inserted text. Perhpas just use gU`[ instead.
-" noremap <Leader>u `[v`]~`]
+" " uppercase last inserted text. Perhpas just use gU`[ instead.
+" " noremap <Leader>u `[v`]~`]
 
-" Can also use Ctrl-Shift-[
-" noremap <Leader>[ :action EditorCodeBlockStart<CR>
-" Can also use Ctrl-Shift-]
-" noremap <Leader>] :action EditorCodeBlockEnd<CR>
+" " Can also use Ctrl-Shift-[
+" " noremap <Leader>[ :action EditorCodeBlockStart<CR>
+" " Can also use Ctrl-Shift-]
+" " noremap <Leader>] :action EditorCodeBlockEnd<CR>
 
-" This is Ctrl-W in the default keynoremap, but we are using it for Vim.
-" noremap <C-s> :action EditorSelectWord<CR> " somewhat unconfrotable to type
-" noremap <C-d> :action EditorSelectWord<CR> " ditto
-" better to use your two hands!
-" noremap <C-k> :action EditorSelectWord<CR>
+" " This is Ctrl-W in the default keynoremap, but we are using it for Vim.
+" " noremap <C-s> :action EditorSelectWord<CR> " somewhat unconfrotable to type
+" " noremap <C-d> :action EditorSelectWord<CR> " ditto
+" " better to use your two hands!
+" " noremap <C-k> :action EditorSelectWord<CR>
 
-" uppercase last inserted word
-" inoremap <C-l> <Esc>bgUawea
+" " uppercase last inserted word
+" " inoremap <C-l> <Esc>bgUawea
