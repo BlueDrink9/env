@@ -413,7 +413,7 @@ mosh_with_options(){
   # Calls default shell, stripping leading '-' and directory
   shell_base="${0##*/}"
   shell_base="${shell_base#-}"
-  \mosh --server="${EXPORT_TERMOPTIONS_CMD} mosh-server" "$@"
+  \mosh --server="${EXPORT_TERMOPTIONS_CMD} mosh-server || ~/.local/bin/mosh-server.sh" "$@"
 }
 alias mosh="mosh_with_options"
 
