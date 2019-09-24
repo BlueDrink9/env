@@ -552,7 +552,10 @@ else
         command! -buffer RStartCustom :call StartR("custom")
         command! -buffer RRunFile :call SendFileToR("echo")
         command! -buffer RRunToHere :execute 'normal Vggo<Esc>' | :call SendSelectionToR("echo", "down")
+        command! -buffer RRunSelection :call SendSelectionToR("echo", "stay")
         command! -buffer RRunChunk :call SendChunkToR("echo", "down")
+        command! -buffer RRunMotion :set opfunc=SendMotionToR<CR>g@
+        command! -buffer RRunParagraph :call SendParagraphToR("echo", "down")
         command! -buffer RRunLine :call SendLineToR("down")
         command! -buffer RObjects :call RObjBrowser()
         command! -buffer RClearObjects :call RClearAll()
