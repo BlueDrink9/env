@@ -274,9 +274,6 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" 
 # enhancer instead.
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "AppCaptureEnabled" -Type DWord -Value 0
 
-# Powershell vi mode. Probably needs to go somewhere else, like $PROFILE
-Set-PSReadlineOption -EditMode vi -BellStyle None
-
 Set-Service -StartupType Automatic ssh-agent
 
 #--- Rename the Computer ---
