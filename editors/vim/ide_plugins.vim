@@ -16,6 +16,8 @@ Plug 'https://github.com/wellle/tmux-complete.vim'
 if v:version >= 703
     " visually show indentation
     Plug 'https://github.com/Yggdroot/indentLine'
+    " Don't override my conceal settings.
+    let g:indentLine_setConceal = 0
 " if v:version >= 702
     " Too hard to get working with terminal. Looks crap.
     " Plug 'nathanaelkane/vim-indent-guides'
