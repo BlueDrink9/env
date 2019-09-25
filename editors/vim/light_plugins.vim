@@ -127,9 +127,10 @@ if v:version >= 703
     Plug 'https://github.com/ntpeters/vim-better-whitespace'
     let g:show_spaces_that_precede_tabs=1
     let g:better_whitespace_skip_empty_lines=0
-    let g:better_whitespace_operator='_s'
+    " Don't HL current line. May cause performance issues.
+    let g:current_line_whitespace_disabled_hard=0
     call add (g:customHLGroups, "ExtraWhitespace ctermbg=Gray guibg=LightGray")
-    " call add (g:customHLGroups, "link ExtraWhitespace CursorColumn")
+    " call add (g:customHLGroups, "link ExtraWhitespace Visual")
 endif
 " Relative line numbers only in focussed buffer & not in insert mode.
 Plug 'ericbn/vim-relativize'
