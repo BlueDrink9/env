@@ -316,7 +316,7 @@ cnoremap %s/ %smagic/
 cnoremap \>s/ \>smagic/
 " fix typos I often make
 nnoremap zQ ZQ
-nnoremap q; :q
+" nnoremap q; :q
 " Because c-] doesn't work on colemak for some reason
 nnoremap <leader>t <c-]>
 " Reset screen entirely (inc highlights)
