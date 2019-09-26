@@ -50,7 +50,7 @@ endif
 let g:fallbackColorSch="morning"
 
 if !exists ('colorSch')
-    if exists("$COLOURSCHEME")
+    if exists("$COLOURSCHEME") && $COLOURSCHEME != ""
         if !exists ('g:backgroundColour')
             if $COLOURSCHEME=~"light"
                 let g:backgroundColour="light"
@@ -60,9 +60,9 @@ if !exists ('colorSch')
         endif
         let colorSch=substitute($COLOURSCHEME, '_dark', '', '')
         let colorSch=substitute(colorSch, '_light', '', '')
-  else
-    let colorSch=s:defaultColorSch
-  endif
+    else
+        let colorSch=s:defaultColorSch
+    endif
 endif
 " {]} Colours
 
