@@ -683,3 +683,9 @@ hist-search(){
   unset searchterm logs
 }
 
+# Gets the path of the most recently modified file in the specified or current
+# directory. Excludes directories. Use like vi `mrf`
+mrf(){
+  dir="${1:-.}"
+  ls -ABrt1 --group-directories-first "$dir" | tail -n1
+}
