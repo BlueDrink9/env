@@ -687,5 +687,5 @@ hist-search(){
 # directory. Excludes directories. Use like vi `mrf`
 mrf(){
   dir="${1:-.}"
-  ls -ABrt1 --group-directories-first "$dir" | tail -n1
+  echo "$dir/$(ls -ABrt1 --group-directories-first "$dir" | tail -n1)"
 }
