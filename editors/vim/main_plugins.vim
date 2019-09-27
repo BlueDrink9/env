@@ -216,7 +216,7 @@ Plug 'https://github.com/tpope/vim-dispatch'
 
 " {[} ---------- Git ----------
 if executable("git")
-    " :Magit to check all sorts of git stuff. Looks really cool. Capitals for 
+    " :Magit to check all sorts of git stuff. Looks really cool. Capitals for
     " commands, eg [S]tage-toggle, [CC]ommit.
     Plug 'jreybert/vimagit'
     " Git wrapper
@@ -226,7 +226,9 @@ if executable("git")
     cabbrev gw Gwrite
     cabbrev gc Gwrite <bar> Gcommit
     cabbrev gco Gcommit
+    cabbrev gupw Gwrite <bar> Gcommit --amend --no-edit
     cabbrev gup Gcommit --amend --no-edit
+    cabbrev gupe Gcommit --amend
     cabbrev gdf Gdiff
     Plug 'sodapopcan/vim-twiggy'
 
