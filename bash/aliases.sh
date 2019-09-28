@@ -37,6 +37,7 @@ fi
 alias l='ls -C'
 alias lsa="ls -a"
 alias ll="ls -al"
+alias lt="ls -lhart"
 alias lss="ls -ls"
 
 alias ..="cd .. && ls"
