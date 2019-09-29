@@ -31,6 +31,9 @@ function! PythonInstallModule(module)
                 " Fallback - python 2
             elseif executable('pip2')
                 let g:pyInstaller="pip2"
+            else
+                silent echom "Err: No pip installed. Will not install python support."
+                return
             endif
             let g:pyInstaller=l:pipVersion . " install --user --upgrade "
         endif
@@ -46,31 +49,31 @@ endif
 " {]} ---------- Python setup ----------
 
 " {[} ---------- Misc ----------
-" :GhostTextStart/Stop
-if has('nvim') && has('node')
+if has('nvim') " && has('node')
     " plugin firenvim in chrome and firefox.
     " Open textframes in nvim, similar to wasavi.
     Plug 'https://github.com/glacambre/firenvim', {'do': ':call firenvim#install(0)'}
     " Configured as json, basically.
     " Enable only on a few websites by default
-    let g:firenvim_config = {
-                \ 'localSettings': {
-                \ '.*': {
-                \ 'selector': '',
-                \ 'priority': 1,
-                \ },
-                \ 'github\.com': {
-                \ 'selector': 'textarea',
-                \ 'priority': 1,
-                \ },
-                \ 'reddit\.com': {
-                \ 'selector': 'textarea',
-                \ 'priority': 1,
-                \ },
-                \ },
-                \ }
-
+    " let g:firenvim_config = {
+    "             \ 'localSettings': {
+    "             \ '.*': {
+    "             \ 'selector': '',
+    "             \ 'priority': 1,
+    "             \ },
+    "             \ 'github\.com': {
+    "             \ 'selector': 'textarea',
+    "             \ 'priority': 1,
+    "             \ },
+    "             \ 'reddit\.com': {
+    "             \ 'selector': 'textarea',
+    "             \ 'priority': 1,
+    "             \ },
+    "             \ },
+    "             \ }
 endif
+
+" :GhostTextStart/Stop
 if has('nvim') && has('python3')
     Plug 'raghur/vim-ghost', {'do': ':GhostInstall'}
 elseif has("channel") && has('python')
