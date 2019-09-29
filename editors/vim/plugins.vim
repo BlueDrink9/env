@@ -15,13 +15,6 @@ if exists("g:noPlugins")
     finish
 endif
 
-if !exists("g:liteMode")
-    let g:liteMode=0
-endif
-if !exists("g:ideMode")
-    let g:ideMode=0
-endif
-
 let s:pluginPath = CreateVimDir(g:vimfilesDir . "/plugins")
 let s:scriptpath = PathExpand('<sfile>:p:h')
 let s:localPlugins = PathExpand(CreateVimDir(g:vimfilesDir) . "/local_plugins.vim")
