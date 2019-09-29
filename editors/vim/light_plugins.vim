@@ -96,6 +96,48 @@ let g:csv_autocmd_arrange_size = 1024*1024
 " TODO link to something so this doesn't look awful outside solarized light.
 call add (g:customHLGroups, "CSVColumnEven guibg=gray90 ctermbg=lightgray")
 call add (g:pluginSettingsToExec, "highlight clear CSVColumnOdd")
+
+if has('nvim') && has('node')
+    " plugin firenvim in chrome and firefox.
+    " Open textframes in nvim, similar to wasavi.
+    Plug 'https://github.com/glacambre/firenvim', {'do': ':call firenvim#install(0)'}
+    " Configured as json, basically.
+    " Enable only on a few websites by default
+    " let g:firenvim_config = {
+    "             \ 'localSettings': {
+    "             \ '.*': {
+    "             \ 'selector': '',
+    "             \ 'priority': 1,
+    "             \ },
+    "             \ 'github\.com': {
+    "             \ 'selector': 'textarea',
+    "             \ 'priority': 1,
+    "             \ },
+    "             \ 'reddit\.com': {
+    "             \ 'selector': 'textarea',
+    "             \ 'priority': 1,
+    "             \ },
+    "             \ },
+    "             \ }
+    " function! FirenvimSetup(channel)
+    "     let l:ui = nvim_get_chan_info(a:channel)
+    "     if has_key(l:ui, 'client') &&
+    "                 \ has_key(l:ui.client, "name") &&
+    "                 \ l:ui.client.name == "Firenvim"
+    "         let l:isFnv = 1
+    "     endif
+    "     if exists("l:isFnv")
+    "         let g:hasGUI=1
+    "         let g:loaded_airline = 1
+    "         " AirlineToggle
+    "         call SetGFN()
+    "     endif
+    " endfunction
+
+    " " autocmd myPlugins UIEnter * if &ft=="text" |
+    " autocmd myPlugins UIEnter * call FirenvimSetup(deepcopy(v:event.chan))
+endif
+
 " {]} Misc
 
 " {[}--- Operators ---

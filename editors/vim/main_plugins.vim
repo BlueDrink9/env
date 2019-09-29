@@ -49,29 +49,6 @@ endif
 " {]} ---------- Python setup ----------
 
 " {[} ---------- Misc ----------
-if has('nvim') " && has('node')
-    " plugin firenvim in chrome and firefox.
-    " Open textframes in nvim, similar to wasavi.
-    Plug 'https://github.com/glacambre/firenvim', {'do': ':call firenvim#install(0)'}
-    " Configured as json, basically.
-    " Enable only on a few websites by default
-    " let g:firenvim_config = {
-    "             \ 'localSettings': {
-    "             \ '.*': {
-    "             \ 'selector': '',
-    "             \ 'priority': 1,
-    "             \ },
-    "             \ 'github\.com': {
-    "             \ 'selector': 'textarea',
-    "             \ 'priority': 1,
-    "             \ },
-    "             \ 'reddit\.com': {
-    "             \ 'selector': 'textarea',
-    "             \ 'priority': 1,
-    "             \ },
-    "             \ },
-    "             \ }
-endif
 
 " :GhostTextStart/Stop
 if has('nvim') && has('python3')

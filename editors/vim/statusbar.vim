@@ -1,3 +1,5 @@
+" Skip airline with
+" let g:loaded_airline = 1
 if exists("g:gui_oni")
     " if OniCommand('Oni.configuration.getValue("oni.statusbar.enabled")') == "true"
         set noshowmode
