@@ -83,6 +83,19 @@ let mapleader = " "
 let maplocalleader = " b"
 
 "{[} GUI
+function! SetGFN()
+    if &guifont == ""
+        let s:useFont = "Source\\ Code\\ Pro\\ Medium"
+        if has("win32")
+            exec 'set guifont=' . s:useFont . ':h11'
+        elseif has("gui_macvim")
+            " exec 'set guifont=' . s:useFont . ':h13'
+            let &gfn="SauceCodeProNerdFontCo-Regular:h15"
+        else
+            exec 'set guifont=' . s:useFont . '\ 11'
+        endif
+    endif
+endfunction
 if g:hasGUI
     " GUI is running or is about to start.
     " {[} ----------- Shell ----------
@@ -137,16 +150,7 @@ if g:hasGUI
     " Default fallback for gui bg colour
     let g:termColors="24bit"
     " if !exists('&guifont')
-    if &guifont == ""
-        let s:useFont = "Source\\ Code\\ Pro\\ Medium"
-        if has("win32")
-            exec 'set guifont=' . s:useFont . ':h11'
-        elseif has("gui_macvim")
-            exec 'set guifont=' . s:useFont . ':h13'
-        else
-            exec 'set guifont=' . s:useFont . '\ 11'
-        endif
-    endif
+    call SetGFN()
     if has("termguicolors")
         set termguicolors
     endif
@@ -428,7 +432,7 @@ endfunction
 autocmd myVimrc BufEnter,Bufwrite * call s:SetTitle()
 
 " Autoset new named buffers to scratch if no other specified
-autocmd myVimrc BufNewFile * if &filetype == "" | setlocal ft=scratch | endif
+autocmd myVimrc BufNewFile * filetype detect | if &filetype == "" | setlocal ft=scratch | endif
 " No names
 autocmd myVimrc BufEnter * if &filetype == "" && @% == "" | setlocal ft=scratch | endif
 autocmd filetype scratch setlocal spell | setl ai
