@@ -4,7 +4,11 @@ exec 1> $HOME/.logs/bspwmrc.log
 
 export DOTFILES_DIR="$(cat $HOME/.config/.dotfiles_dir)"
 # export DOTFILES_DIR="$(cat $HOME/.config/.dotfiles_dir)" && \
-pgrep sxhkd || sxhkd -m -1 -c "$HOME/.config/sxhkd/sxhkdrc" "$DOTFILES_DIR"/windowManagers/bspwm/*.sxhkd &
+pgrep sxhkd || \
+  sxhkd -m -1 -c "$HOME/.config/sxhkd/sxhkdrc" \
+  "$DOTFILES_DIR"/windowManagers/bspwm/*.sxhkd \
+   > $HOME/.logs/sxhkd.log 2> $HOME/.logs/sxhkd.err &
+# flashfocus &
 
 . "$DOTFILES_DIR"/windowManagers/bspwm/rules.sh
 
