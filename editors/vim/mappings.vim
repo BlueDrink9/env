@@ -107,7 +107,7 @@ cabbrev le e <C-R>=expand("%:p:h") . "/" <CR>
 " Load ide plugins/start ide mode.
 cabbrev ide let g:ideMode=1 <bar> so $MYVIMRC
 " Copy path of current buffer.
-cabbrev pathCopy let @+ = expland("%")
+command! -bang -nargs=* PathCopy let @+ = expand("%")
 " Word under cursor.
 cabbrev <cw> <cword>
 
