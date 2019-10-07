@@ -225,7 +225,7 @@ cmd /c "powercfg /setacvalueindex $currentPowerGuid $lidClosedGuid 0"
 # 1 = sleep, 3 = shut down
 # $buttonGuid = '7648efa3-dd9c-4e3e-b566-50f929386280'
 $buttonGuid = 'PBUTTONACTION'
-cmd /c "powercfg /setdcvalueindex $currentPowerGuid $buttonGuid 1"
+cmd /c "powercfg /setdcvalueindex $currentPowerGuid $buttonGuid 3"
 cmd /c "powercfg /setacvalueindex $currentPowerGuid $buttonGuid 3"
 # # Number of seconds.
 # $hibernateAfterGuid = '9d7815a6-7ee4-497e-8888-515a05f02364'

@@ -127,6 +127,7 @@ $packages = @(
         "unifying",
         "onedrive",
         "colortool",
+        "joplin",
         "onetastic"
 )
         # This gets the opentype version, which looks awful/doesn't alias
