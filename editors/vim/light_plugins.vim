@@ -103,22 +103,18 @@ if has('nvim') && has('node')
     Plug 'https://github.com/glacambre/firenvim', {'do': ':call firenvim#install(0)'}
     " Configured as json, basically.
     " Enable only on a few websites by default
-    " let g:firenvim_config = {
-    "             \ 'localSettings': {
-    "             \ '.*': {
-    "             \ 'selector': '',
-    "             \ 'priority': 1,
-    "             \ },
-    "             \ 'github\.com': {
-    "             \ 'selector': 'textarea',
-    "             \ 'priority': 1,
-    "             \ },
-    "             \ 'reddit\.com': {
-    "             \ 'selector': 'textarea',
-    "             \ 'priority': 1,
-    "             \ },
-    "             \ },
-    "             \ }
+    let g:firenvim_config = {
+                \ 'localSettings': {
+                \ '.*': {
+                \ 'selector': 'textarea',
+                \ 'priority': 0,
+                \ },
+                \ 'github\.com': {
+                \ 'selector': 'textarea, * [contenteditable="true"]',
+                \ 'priority': 1,
+                \ },
+                \ },
+                \ }
     function! s:FirenvimSetup(channel)
         let l:ui = nvim_get_chan_info(a:channel)
         if has_key(l:ui, 'client') &&
