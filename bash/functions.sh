@@ -658,6 +658,12 @@ headCSV(){
 }
 alias csvCheck="headCSV"
 
+# Check if base16 scheme has been set, set COLOURSCHEME.
+base16_colourscheme_set(){
+  if [ -n "$BASE16_THEME" ]; then
+    export COLOURSCHEME="base16-${BASE16_THEME}"
+  fi
+}
 base16Reset(){
   unset BASE16_THEME
   unset COLOURSCHEME

@@ -29,11 +29,7 @@ fi
 
 # {]} Terminal settings
 
-base16_colourscheme_set(){
-  if [ -n "$BASE16_THEME" ]; then
-    export COLOURSCHEME="base16-${BASE16_THEME}"
-  fi
-}
+# Check if base16 scheme has been set, set COLOURSCHEME.
 export PROMPT_COMMAND="base16_colourscheme_set; ${PROMPT_COMMAND}"
 
 # Source .dir_colours
