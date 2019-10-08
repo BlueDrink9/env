@@ -130,13 +130,16 @@ if has('nvim') && has('node')
             let g:liteMode = 1
             AirlineToggle
             call SetGFN()
+            call add(g:customHLGroups, "EndOfBuffer guifg=guibg")
+            " set nonumber
+            " set norelativenumber
+            set cmdheight=1
             autocmd myPlugins BufNewFile *.txt call s:FirenvimSetFT()
         endif
     endfunction
 
     function! s:FirenvimSetFT()
       let l:bufname=expand('%:t')
-      echom l:bufname
       if l:bufname =~ "github.com"
         set ft=markdown
       endif
