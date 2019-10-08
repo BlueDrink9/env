@@ -94,7 +94,19 @@ nnoremap <expr> N  'nN'[v:searchforward]
 nnoremap <leader>cd :lcd %:p:h<CR>:pwd<CR>
 " Autocomplete from tags
 inoremap <c-]> <c-x><c-]>
-
+" Quickly re-run last macro with one key (also stop accidentally entering Ex).
+nnoremap Q @@
+" Used as a weird undo. Good candidate for remapping.
+nnoremap U <c-r>
+" Good candidates...
+" nnoremap <CR> ...
+" nnoremap _ ...
+" nnoremap - ...
+" nnoremap + ...
+" Select last paste/change.
+nnoremap gp `[v`]
+nnoremap K $
+nnoremap gK K
 " {]} Basic mappings
 
 " {[} Abbreviations and commands
@@ -110,7 +122,6 @@ cabbrev ide let g:ideMode=1 <bar> so $MYVIMRC
 command! -bang -nargs=* PathCopy let @+ = expand("%:p")
 " Word under cursor.
 cabbrev <cw> <cword>
-
 command! -bang -nargs=* Profile profile start resultfile <bar> profile func *
 " :W! sudo saves the file
 " (useful for handling the permission-denied error)
@@ -120,6 +131,7 @@ cmap W! SudoSave
 " Quickly edit macros
 nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 command! -bang -nargs=* Macros <c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
+
 
 
 " {]} Abbreviations
@@ -156,6 +168,8 @@ nnoremap <S-Up> 3<C-W>+
 nnoremap <S-Down> 3<C-W>-
 " Zoom a window into its own tab.
 noremap <silent> <C-w>z :tab split<CR>
+" Kill current buffer. Complete bdel because may use Bdelete, not bdelete.
+noremap <silent> <C-w>x :bdel<tab><CR>
 " if has("gui")
 "     " If window id of last window is 1, assume only one window present
 "     if winnr($) == 1
