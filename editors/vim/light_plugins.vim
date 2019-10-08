@@ -134,6 +134,11 @@ if has('nvim') && has('node')
             " set nonumber
             " set norelativenumber
             set cmdheight=1
+            set laststatus=0
+            set noshowmode
+            set noruler
+            set noshowcmd
+            set shortmess=aWAFtI
             autocmd myPlugins BufNewFile *.txt call s:FirenvimSetFT()
         endif
     endfunction
@@ -144,6 +149,9 @@ if has('nvim') && has('node')
         set ft=markdown
       endif
       if l:bufname =~ "reddit.com"
+        set ft=markdown
+      endif
+      if l:bufname =~ "stackexchange.com" || l:bufname =~ "stackoverflow.com"
         set ft=markdown
       endif
     endfunction
