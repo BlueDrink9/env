@@ -119,23 +119,33 @@ if has('nvim') && has('node')
     "             \ },
     "             \ },
     "             \ }
-    " function! FirenvimSetup(channel)
-    "     let l:ui = nvim_get_chan_info(a:channel)
-    "     if has_key(l:ui, 'client') &&
-    "                 \ has_key(l:ui.client, "name") &&
-    "                 \ l:ui.client.name == "Firenvim"
-    "         let l:isFnv = 1
-    "     endif
-    "     if exists("l:isFnv")
-    "         let g:hasGUI=1
-    "         let g:loaded_airline = 1
-    "         " AirlineToggle
-    "         call SetGFN()
-    "     endif
-    " endfunction
+    function! s:FirenvimSetup(channel)
+        let l:ui = nvim_get_chan_info(a:channel)
+        if has_key(l:ui, 'client') &&
+                    \ has_key(l:ui.client, "name") &&
+                    \ l:ui.client.name == "Firenvim"
+          " We are in firenvim
+            let g:hasGUI=1
+            let g:loaded_airline = 1
+            let g:liteMode = 1
+            AirlineToggle
+            call SetGFN()
+            autocmd myPlugins BufNewFile *.txt call s:FirenvimSetFT()
+        endif
+    endfunction
 
-    " " autocmd myPlugins UIEnter * if &ft=="text" |
-    " autocmd myPlugins UIEnter * call FirenvimSetup(deepcopy(v:event.chan))
+    function! s:FirenvimSetFT()
+      let l:bufname=expand('%:t')
+      echom l:bufname
+      if l:bufname =~ "github.com"
+        set ft=markdown
+      endif
+      if l:bufname =~ "reddit.com"
+        set ft=markdown
+      endif
+    endfunction
+
+    autocmd myPlugins UIEnter * call s:FirenvimSetup(deepcopy(v:event.chan))
 endif
 
 " {]} Misc
