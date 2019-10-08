@@ -1,4 +1,6 @@
 set nocompatible
+" Use this line to let vim versions < 7.4 pick up .vim/vimrc.
+" runtime vimrc
 
 augroup myVimrc
     au!
