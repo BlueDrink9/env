@@ -54,7 +54,7 @@ if !exists ('colorSch')
         if !exists ('g:backgroundColour')
             if $COLOURSCHEME=~"light"
                 let g:backgroundColour="light"
-            elseif $COLOURSCHEME=~"dar"
+            elseif $COLOURSCHEME=~"dark"
                 let g:backgroundColour="dark"
             endif
         endif
