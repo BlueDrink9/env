@@ -132,7 +132,7 @@ alias ide="IDEVim"
 alias e?="vim \$(fzf)"
 # alias :Q="exit"
 # alias ZZ="exit"
-alias svi="sudoedit"
+alias se="sudoedit"
 
 # Don't accidentally remove or overwrite files.
 # alias cp="cp -i"
