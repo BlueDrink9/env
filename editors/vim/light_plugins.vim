@@ -132,6 +132,7 @@ if has('nvim') && has('node')
             set cmdheight=1
             set laststatus=0
             set noshowmode
+            set termguicolors
             set noruler
             set noshowcmd
             set shortmess=aWAFtI
