@@ -270,7 +270,7 @@ set viewoptions-=options
 " autocmd myVimrc BufWinEnter *.* silent! loadview
 
 " Autosave
-function! s:Autosave()
+function! Autosave()
     " Don't autosave if there is no buffer name.
     if bufname('%') != '' && &ro != 1 && &modifiable == 1
         " Automatically save before commands like :next and :make
@@ -280,7 +280,7 @@ function! s:Autosave()
     endif
 endfunction
 " Save on focus loss, leaving insert, leaving buffer.
-au myVimrc FocusLost,InsertLeave,BufLeave * ++nested call s:Autosave()
+au myVimrc FocusLost,InsertLeave,BufLeave * call Autosave()
 
 set modeline
 set modelines=5
