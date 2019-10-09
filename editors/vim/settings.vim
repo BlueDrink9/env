@@ -280,7 +280,7 @@ function! s:Autosave()
     endif
 endfunction
 " Save on focus loss, leaving insert, leaving buffer.
-au myVimrc FocusLost,InsertLeave,BufLeave * call s:Autosave()
+au myVimrc FocusLost,InsertLeave,BufLeave * ++nested call s:Autosave()
 
 set modeline
 set modelines=5
