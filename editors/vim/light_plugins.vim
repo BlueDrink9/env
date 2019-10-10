@@ -142,16 +142,19 @@ if has('nvim') && has('node')
     endfunction
 
     function! s:FirenvimSetFT()
-      let l:bufname=expand('%:t')
-      if l:bufname =~ "github.com"
-        set ft=markdown
-      endif
-      if l:bufname =~ "reddit.com"
-        set ft=markdown
-      endif
-      if l:bufname =~ "stackexchange.com" || l:bufname =~ "stackoverflow.com"
-        set ft=markdown
-      endif
+        let l:bufname=expand('%:t')
+        let l:associations = {
+                    \ "github.com" : "markdown",
+                    \ "reddit.com" : "markdown",
+                    \ "stackexchange.com" : "markdown",
+                    \ "stackoverflow.com" : "markdown",
+                    \ "cocalc.com" : "python",
+                    \ }
+        for [key, value] in items(l:associations)
+            if l:bufname =~ key
+                set ft=l:associations[key]
+            endif
+        endfor
     endfunction
 
     autocmd myPlugins UIEnter * call s:FirenvimSetup(deepcopy(v:event.chan))
