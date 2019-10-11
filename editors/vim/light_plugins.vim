@@ -113,6 +113,9 @@ if has('nvim') && has('node')
                 \ 'selector': 'textarea, * [contenteditable="true"]',
                 \ 'priority': 1,
                 \ },
+                \ 'google\.com': {
+                \ 'priority': 0,
+                \ },
                 \ },
                 \ }
     function! s:FirenvimSetup(channel)
@@ -125,7 +128,7 @@ if has('nvim') && has('node')
             let g:loaded_airline = 1
             let g:liteMode = 1
             AirlineToggle
-            call SetGFN()
+            call SetGFN(10)
             call add(g:customHLGroups, "EndOfBuffer guifg=guibg")
             " set nonumber
             " set norelativenumber
