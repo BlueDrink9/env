@@ -83,16 +83,29 @@ let mapleader = " "
 let maplocalleader = " b"
 
 "{[} GUI
-function! SetGFN()
-    if &guifont == ""
-        let s:useFont = "Source\\ Code\\ Pro\\ Medium"
+function! SetGFN(...)
+    if a:0 == 1
+        " Override current gfn
+        set gfn=
+        let l:fontSize = a:1
+    else
         if has("win32")
-            exec 'set guifont=' . s:useFont . ':h11'
+            let l:fontSize = 11
         elseif has("macunix")
-            " exec 'set guifont=' . s:useFont . ':h13'
-            let &gfn="SauceCodeProNerdFontCo-Regular:h15"
+            let l:fontSize = 15
         else
-            exec 'set guifont=' . s:useFont . '\ 11'
+            let l:fontSize = 11
+        endif
+    endif
+    if &guifont == ""
+        let l:useFont = "Source\\ Code\\ Pro\\ Medium"
+        if has("win32")
+            let &guifont=l:useFont . ':h' . l:fontSize
+        elseif has("macunix")
+            let l:useFont="SauceCodeProNerdFontCo-Regular"
+            let &guifont=l:useFont . ':h' . l:fontSize
+        else
+            let &guifont=l:useFont . '\ ' . l:fontSize
         endif
     endif
 endfunction
