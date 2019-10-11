@@ -47,6 +47,7 @@ Plug 'ashfinal/vim-colors-violet'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'sonph/onehalf', { 'rtp' : 'vim' }
 Plug 'rakr/vim-one'
+Plug 'cormacrelf/vim-colors-github'
 " Black backgrounds
 Plug 'fcpg/vim-fahrenheit'
 Plug 'vim-scripts/Luinnar'
