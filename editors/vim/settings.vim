@@ -231,6 +231,11 @@ set wildmode=list:longest,full
 set wildignorecase
 " Mapping usable in macros/maps to trigger completion menu.
 set wildcharm=<tab>
+if has('nvim') && &termguicolors && !g:liteMode
+    " Pseudo-transparency for popup menu.
+    set pumblend=30
+    set winblend=30
+endif
 set scrolloff=5
 set completeopt=longest,menu,preview
 if exists("g:ideMode") && g:ideMode == 1
