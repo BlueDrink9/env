@@ -136,7 +136,8 @@ if has('nvim') && has('node')
             set noruler
             set noshowcmd
             set shortmess=aWAFtI
-            colorscheme PaperColor
+            " colorscheme PaperColor
+            colorscheme github
             au! myVimrc FocusLost,InsertLeave,BufLeave * ++nested call Autosave()
             autocmd myPlugins BufNewFile *.txt call s:FirenvimSetFT()
         endif
