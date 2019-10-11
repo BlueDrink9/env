@@ -88,7 +88,7 @@ function! SetGFN()
         let s:useFont = "Source\\ Code\\ Pro\\ Medium"
         if has("win32")
             exec 'set guifont=' . s:useFont . ':h11'
-        elseif has("gui_macvim")
+        elseif has("macunix")
             " exec 'set guifont=' . s:useFont . ':h13'
             let &gfn="SauceCodeProNerdFontCo-Regular:h15"
         else
