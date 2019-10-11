@@ -136,6 +136,7 @@ if has('nvim') && has('node')
             set noruler
             set noshowcmd
             set shortmess=aWAFtI
+            colorscheme PaperColor
             au! myVimrc FocusLost,InsertLeave,BufLeave * ++nested call Autosave()
             autocmd myPlugins BufNewFile *.txt call s:FirenvimSetFT()
         endif
@@ -143,18 +144,16 @@ if has('nvim') && has('node')
 
     function! s:FirenvimSetFT()
         let l:bufname=expand('%:t')
-        let l:associations = {
-                    \ "github.com" : "markdown",
-                    \ "reddit.com" : "markdown",
-                    \ "stackexchange.com" : "markdown",
-                    \ "stackoverflow.com" : "markdown",
-                    \ "cocalc.com" : "python",
-                    \ }
-        for [key, value] in items(l:associations)
-            if l:bufname =~ key
-                set ft=l:associations[key]
-            endif
-        endfor
+        if l:bufname =~ "github.com"
+            colorscheme github
+            set ft=markdown
+        elseif l:bufname =~ "cocalc.com"
+            set ft=python
+        elseif l:bufname =~ "reddit.com"
+            set ft=markdown
+        elseif l:bufname =~ "stackexchange.com" || l:bufname =~ "stackoverflow.com"
+            set ft=markdown
+        endif
     endfunction
 
     autocmd myPlugins UIEnter * call s:FirenvimSetup(deepcopy(v:event.chan))
