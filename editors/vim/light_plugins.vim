@@ -151,7 +151,7 @@ if has('nvim') && has('node')
         if l:bufname =~ "github.com"
             colorscheme github
             set ft=markdown
-        elseif l:bufname =~ "cocalc.com"
+        elseif l:bufname =~ "cocalc.com" || l:bufname =~ "kaggleusercontent.com"
             set ft=python
         elseif l:bufname =~ "reddit.com"
             set ft=markdown
