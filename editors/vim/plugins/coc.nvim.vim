@@ -2,15 +2,16 @@
 " vim: foldmarker={[},{]}
 
 Plug 'neoclide/coc.nvim'
-UnPlug 'autozimu/LanguageClient-neovim'
-UnPlug 'w0rp/ale'
+let g:ale_enabled = 0
+let g:LanguageClient_autoStart = 0
+
 let g:coc_config_home=g:plugindir
 
 let s:coc_disabled_fts = "'
             \placeholder,
             \placeholder
             \'"
-exec 'autocmd myPlugins filetype ' . s:coc_disabled_fts . 'let b:coc_enabled=0'
+exec 'autocmd myIDE filetype ' . s:coc_disabled_fts . 'let b:coc_enabled=0'
 
 " Installed automatically by coc on startup!
 " Lists gets qf, files, buffers, tags, etc.
