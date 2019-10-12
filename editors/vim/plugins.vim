@@ -92,14 +92,15 @@ let g:customHLGroups = []
 " {]}
 call plug#begin(s:pluginPath)
 
+let s:plugindir = PathExpand(s:scriptdir . "/" . "plugins")
 " Get light plugin set first
-exec 'source ' . s:scriptdir . "/colorschemes.vim"
-exec 'source ' . s:scriptdir . "/light_plugins.vim"
+exec 'source ' . s:plugindir . "/colorschemes.vim"
+exec 'source ' . s:plugindir . "/light_plugins.vim"
 if !g:liteMode
-    exec 'source ' . s:scriptdir . "/main_plugins.vim"
-    exec 'source ' . s:scriptdir . "/statusbar.vim"
+    exec 'source ' . s:plugindir . "/main_plugins.vim"
+    exec 'source ' . s:plugindir . "/statusbar.vim"
     if g:ideMode
-        exec 'source ' . s:scriptdir . "/ide_plugins.vim"
+        exec 'source ' . s:plugindir . "/ide_plugins.vim"
     endif
 endif
 
