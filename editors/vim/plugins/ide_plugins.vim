@@ -212,8 +212,8 @@ Plug 'https://github.com/honza/vim-snippets' " Library of snippets
 if (has("python") || has("python3")) && v:version >= 704
     Plug 'https://github.com/SirVer/ultisnips' " Snippit engine
     let g:UltiSnipsExpandTrigger="<c-e>"
-    let g:UltiSnipsJumpForwardTrigger="<c-n>"
-    let g:UltiSnipsJumpBackwardTrigger="<c-p>"
+    let g:UltiSnipsJumpForwardTrigger="<c-f>"
+    let g:UltiSnipsJumpBackwardTrigger="<c-b>"
     " augroup ultisnips
     "     au!
     "     " Load default/all snippets
@@ -235,12 +235,12 @@ else
     let g:snipMate['no_match_completion_feedkeys_chars'] = ''
     " Load default/all snippets
     autocmd myIDE BufEnter * SnipMateLoadScope alltypes
-    imap <C-N> <Plug>snipMateNextOrTrigger
-    smap <C-N> <Plug>snipMateNextOrTrigger
+    imap <C-F> <Plug>snipMateNextOrTrigger
+    smap <C-F> <Plug>snipMateNextOrTrigger
     imap <C-E> <Plug>snipMateTrigger
     smap <C-E> <Plug>snipMateTrigger
-    imap <C-P> <Plug>snipMateBack
-    smap <C-P> <Plug>snipMateBack
+    imap <C-B> <Plug>snipMateBack
+    smap <C-B> <Plug>snipMateBack
     " {]} ---------- Snipmate ----------
 endif
 " way smaller engine than ultisnips, not really much func. Can't use snip libs.
