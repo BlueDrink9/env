@@ -62,7 +62,6 @@ Plug 'https://github.com/tpope/vim-characterize'
 Plug 'https://github.com/metalelf0/supertab' " Fork with a failing feature removed
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabLongestEnhanced = 1
-let g:SuperTabLongestEnhanced = 1
 " List of omni completion option names in the order of precedence that they should be used if available
 " let g:SuperTabContextTextOmniPrecedence = ['&completefunc', '&omnifunc']
 
