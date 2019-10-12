@@ -190,13 +190,19 @@ if executable('ctags-exuberant') || executable('ctags')
         " Plug 'https://github.com/LucHermitte/lh-tags/'
         Plug 'ludovicchabant/vim-gutentags'
     endif
-    Plug 'majutsushi/tagbar'
-    " Shows the current function in statusline
-    let g:airline#extensions#tagbar#enabled = 1
-    " nmap <silent> <leader>tb :TagbarToggle<CR>
-    cabbrev tb TagbarToggle
+    Plug 'liuchengxu/vista.vim'
+    " Stay in current window when opening vista.
+    " let g:vista_stay_on_open = 0
+    cabbrev tb Vista!!
+    nnoremap <leader>t Vista
     " Uncomment to open tagbar automatically whenever possible
     autocmd myIDE BufEnter * nested :call tagbar#autoopen(0)
+    if exists($USENF)
+        let g:vista#renderer#enable_icon = 1
+    endif
+     let g:vista_executive_for = {
+      \ 'markdown': 'toc',
+      \ }
 endif
 
 if executable('cscope')
