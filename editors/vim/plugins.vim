@@ -16,9 +16,9 @@ if exists("g:noPlugins")
 endif
 
 let s:pluginPath = CreateVimDir(g:vimfilesDir . "/plugins")
-let s:scriptpath = PathExpand('<sfile>:p:h')
+let s:scriptdir = PathExpand('<sfile>:p:h')
 let s:localPlugins = PathExpand(CreateVimDir(g:vimfilesDir) . "/local_plugins.vim")
-let s:scriptpath = expand('<sfile>:p:h')
+let s:scriptdir = expand('<sfile>:p:h')
 
 if has('win32') || has ('win64')
     let $VIMHOME = $HOME."/vimfiles"
@@ -93,13 +93,13 @@ let g:customHLGroups = []
 call plug#begin(s:pluginPath)
 
 " Get light plugin set first
-exec 'source ' . s:scriptpath . "/colorschemes.vim"
-exec 'source ' . s:scriptpath . "/light_plugins.vim"
+exec 'source ' . s:scriptdir . "/colorschemes.vim"
+exec 'source ' . s:scriptdir . "/light_plugins.vim"
 if !g:liteMode
-    exec 'source ' . s:scriptpath . "/main_plugins.vim"
-    exec 'source ' . s:scriptpath . "/statusbar.vim"
+    exec 'source ' . s:scriptdir . "/main_plugins.vim"
+    exec 'source ' . s:scriptdir . "/statusbar.vim"
     if g:ideMode
-        exec 'source ' . s:scriptpath . "/ide_plugins.vim"
+        exec 'source ' . s:scriptdir . "/ide_plugins.vim"
     endif
 endif
 

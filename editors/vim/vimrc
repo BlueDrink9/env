@@ -18,9 +18,9 @@ function! PathExpand(path)
 endfunction
 
 " Folder in which current script resides:
-" let s:scriptpath = PathExpand(<sfile>:p:h)
+" let s:scriptdir = PathExpand(<sfile>:p:h)
 " Handles symlinks, etc.
-let s:scriptpath = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+let s:scriptdir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
 let g:remoteSession = ($SSH_CLIENT != "")
 
@@ -50,7 +50,7 @@ call CreateVimDir(g:vimfilesDir)
 function! SourceCustoms(...)
     for vimfile in a:000
         " Converts the path properly for win or unix
-        exec 'source ' . s:scriptpath . expand('/' . vimfile)
+        exec 'source ' . s:scriptdir . expand('/' . vimfile)
     endfor
 endfunction
 
@@ -68,7 +68,7 @@ elseif g:liteMode==1
 endif
 
 " For custom snippets, templates, ftplugins etc kept under VCS.
-let &runtimepath.=',' . s:scriptpath . expand('/runtimepath')
+let &runtimepath.=',' . s:scriptdir . expand('/runtimepath')
 
 " Mappings after plugins, to override any plugin clobbers (although really, I
 " should just configure the plugins better).

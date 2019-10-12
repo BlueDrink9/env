@@ -4,9 +4,9 @@
 
 " Folder in which current script resides:
 if v:version >= 703
-    let s:scriptpath = fnameescape(expand('<sfile>:p:h'))
+    let s:scriptdir = fnameescape(expand('<sfile>:p:h'))
 else
-    let s:scriptpath = expand('<sfile>:p:h')
+    let s:scriptdir = expand('<sfile>:p:h')
 endif
 
 " Set colorScheme variable for use in other settings
@@ -466,7 +466,7 @@ autocmd myVimrc BufWrite * if &filetype == "scratch" | filetype detect | endif
 
 function! s:ReadTemplate()
     filetype detect
-    let l:templatePath = PathExpand(s:scriptpath . '/templates/' . &filetype . '.vim')
+    let l:templatePath = PathExpand(s:scriptdir . '/templates/' . &filetype . '.vim')
     if filereadable(l:templatePath)
         exec 'read ' . l:templatePath
     endif

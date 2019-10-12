@@ -1,6 +1,7 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
 
+let s:scriptdir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 augroup myIDE
     au!
 augroup end
@@ -154,6 +155,7 @@ if has("timers")
         Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
         UnPlug 'autozimu/LanguageClient-neovim'
         UnPlug 'w0rp/ale'
+        let g:coc_config_home=s:scriptdir
 
         " Installed automatically by coc on startup!
         " Lists gets qf, files, buffers, tags, etc.
