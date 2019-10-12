@@ -118,6 +118,9 @@ if has('nvim') && has('node')
                 \ },
                 \ },
                 \ }
+                " \ 'kaggle\.com': { " Regular kaggle is just for console.
+                " \ 'priority': 0,
+                " \ },
     function! s:FirenvimSetup(channel)
         let l:ui = nvim_get_chan_info(a:channel)
         if has_key(l:ui, 'client') &&
@@ -127,8 +130,8 @@ if has('nvim') && has('node')
             let g:hasGUI=1
             let g:loaded_airline = 1
             let g:liteMode = 1
-            AirlineToggle
-            call SetGFN(10)
+            silent! AirlineToggle
+            call SetGFN(12)
             call add(g:customHLGroups, "EndOfBuffer guifg=guibg")
             " set nonumber
             " set norelativenumber
@@ -152,6 +155,9 @@ if has('nvim') && has('node')
             colorscheme github
             set ft=markdown
         elseif l:bufname =~ "cocalc.com" || l:bufname =~ "kaggleusercontent.com"
+            set ft=python
+        elseif l:bufname =~ "localhost"
+            " Assume Jupyter notebook.
             set ft=python
         elseif l:bufname =~ "reddit.com"
             set ft=markdown
