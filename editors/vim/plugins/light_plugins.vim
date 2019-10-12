@@ -180,9 +180,11 @@ call add(pluginSettingsToExec, "runtime macros/sandwich/keymap/surround.vim")
 " Bunch of neat mappings, it's a tpope. Esp [n and ]n, for SCM conflict marks.
 " And [<space> for addign newlines.
 Plug 'https://github.com/tpope/vim-unimpaired'
-" Because ]e for ale_next clobbers this
+" I want to use ]e (normally this) for errors.
 nmap <silent> ]m <Plug>unimpairedMoveDown
 nmap <silent> [m <Plug>unimpairedMoveUp
+" nunmap <silent> ]e
+" nunmap <silent> [e
 " cx to select an object, then cx again to swap it with first thing.
 Plug 'https://github.com/tommcdo/vim-exchange'
 " {]}--- Operators ---

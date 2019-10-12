@@ -1,0 +1,17 @@
+{
+    "suggest.enablePreview": true,
+    "suggest.echodocSupport": true,
+    // "diagnostic.displayByAle": true,
+    "diagnostic.errorSign": "X",
+    "diagnostic.warningSign": "!",
+    // idk what the differences are here.
+    "diagnostic.infoSign": "i",
+    "diagnostic.hintSign": "?",
+    "codeLens.enable": true,
+    // "list.previewHighlightGroup": "Search",
+    "coc.preferences.extensionUpdateCheck": "weekly",
+    // Maybe.
+    "coc.preferences.enableFloatHighlight": false,
+    // Priority for signcolumn goes to diagnostics.
+    "diagnostic.signOffset": 9999,
+}
