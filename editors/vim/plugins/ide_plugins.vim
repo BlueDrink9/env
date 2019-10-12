@@ -167,9 +167,9 @@ let g:jedi#rename_command = "gpr"
 Plug 'xolox/vim-misc'
 if executable('ctags-exuberant') || executable('ctags')
     if has("timers")
-        " Async
+        " Async, seems to generate a lot of errors.
         Plug 'https://github.com/fntlnz/atags.vim'
-        autocmd myIDE BufWritePost * call atags#generate()
+        autocmd myIDE BufWritePost * silent! call atags#generate()
 
     " endif
     " if has("python3") && has("nvim")
