@@ -166,30 +166,7 @@ let g:jedi#rename_command = "gpr"
 " {[} ---------- Tags ----------
 Plug 'xolox/vim-misc'
 if executable('ctags-exuberant') || executable('ctags')
-    if has("timers")
-        " Async, seems to generate a lot of errors.
-        Plug 'https://github.com/fntlnz/atags.vim'
-        autocmd myIDE BufWritePost * silent! call atags#generate()
-
-    " endif
-    " if has("python3") && has("nvim")
-    "     Plug 'c0r73x/neotags.nvim', {'do': 'make'}
-    "     let g:neotags_directory = CreateVimDir("neotags")
-    "     let g:neotags_highlight = 0
-    "     if executable('rg')
-    "         " Or this one for ripgrep. Not both.
-    "         let g:neotags_find_tool = 'rg --files'
-    "     elseif executable('ag')
-    "         " Use this option for the_silver_searcher
-    "         let g:neotags_find_tool = 'ag -g ""'
-    "     endif
-
-    else
-        " Async (7.4+), only vimL...
-        " Plug 'LucHermitte/lh-vim-lib'
-        " Plug 'https://github.com/LucHermitte/lh-tags/'
-        Plug 'ludovicchabant/vim-gutentags'
-    endif
+    Plug 'ludovicchabant/vim-gutentags'
     Plug 'liuchengxu/vista.vim'
     " Stay in current window when opening vista.
     " let g:vista_stay_on_open = 0

@@ -5,6 +5,10 @@ Plug 'neoclide/coc.nvim'
 let g:ale_enabled = 0
 let g:LanguageClient_autoStart = 0
 
+" Use coc instead of ctags.
+" This may mean tags aren't included, which would be a bug.
+let g:vista_default_executive = "coc"
+
 let g:coc_config_home=g:plugindir
 
 let s:coc_disabled_fts = "'
