@@ -20,6 +20,7 @@ exec 'autocmd myIDE filetype ' . s:coc_disabled_fts . 'let b:coc_enabled=0'
 " Installed automatically by coc on startup!
 " Lists gets qf, files, buffers, tags, etc.
 " sh uses bash-language-server
+" Consider re-adding coc-git for ability to stage chunks. Disable signify.
 let g:coc_global_extensions = [
             \ "coc-ultisnips",
             \ "coc-syntax",
@@ -27,7 +28,6 @@ let g:coc_global_extensions = [
             \ "coc-omni",
             \ "coc-tag",
             \ "coc-gitignore",
-            \ "coc-git",
             \ "coc-lists",
             \ "coc-sh",
             \ "coc-vimlsp",
