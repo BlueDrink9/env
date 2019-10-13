@@ -186,6 +186,23 @@ else
       " Vim.
     nnoremap <leader>f :FZF<CR>
     nnoremap <leader><space> :FZF<CR>
+    " Fzf for current buffer list.
+    function! s:buflist()
+        redir => ls
+        silent ls
+        redir END
+        return split(ls, '\n')
+    endfunction
+    function! s:bufopen(e)
+        execute 'buffer' matchstr(a:e, '^[ 0-9]*')
+    endfunction
+    nnoremap <silent> <leader><return> :call fzf#run({
+                \   'source':  reverse(<sid>buflist()),
+                \   'sink':    function('<sid>bufopen'),
+                \   'options': '+m',
+                \   'down':    len(<sid>buflist()) + 2
+                \ })<CR>
+
     " {[} Use proper fzf colours in gvim
     if g:hasGUI
         let g:fzf_colors =
@@ -203,24 +220,9 @@ else
                     \ 'spinner': ['fg', 'Label'],
                     \ 'header':  ['fg', 'Comment'] }
     endif
-    " Fzf for current buffer list.
-    function! s:buflist()
-        redir => ls
-        silent ls
-        redir END
-        return split(ls, '\n')
-    endfunction
-    function! s:bufopen(e)
-        execute 'buffer' matchstr(a:e, '^[ 0-9]*')
-    endfunction
-    nnoremap <silent> <return> :call fzf#run({
-                \   'source':  reverse(<sid>buflist()),
-                \   'sink':    function('<sid>bufopen'),
-                \   'options': '+m',
-                \   'down':    len(<sid>buflist()) + 2
-                \ })<CR>
+    " {]} Use proper fzf colours in gvim
 
-    " Tags
+    " {[} Tags
     function! s:tags_sink(line)
         let parts = split(a:line, '\t\zs')
         let excmd = matchstr(parts[2:], '^.*\ze;"\t')
