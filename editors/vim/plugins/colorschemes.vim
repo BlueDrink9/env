@@ -120,3 +120,7 @@ call add (g:customHLGroups, "MatchParen gui=bold,underline guibg=gray90")
 " call add (g:customHLGroups, "link MatchParen CursorColumn")
 " call add (g:customHLGroups, "clear SignColumn")
 call add (g:customHLGroups, "link SignColumn LineNr")
+if has('nvim')
+    " Group used by neovim for listchars
+    call add (g:customHLGroups, "link Whitespace Comment")
+endif
