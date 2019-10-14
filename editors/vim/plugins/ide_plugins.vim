@@ -344,6 +344,32 @@ nnoremap g= :Neoformat<CR>
 " {]} ---------- IDE----------
 
 " {[} ---------- Completion ----------
+
+" Python completion, plus some refactor, goto def and usage features.
+Plug 'https://github.com/davidhalter/jedi-vim', {'for' : 'python', 'do' : 'pip install jedi' }
+let g:jedi#use_splits_not_buffers = "right"
+" Using deoplete
+if IsPluginUsed('deoplete.nvim')
+    Plug 'deoplete-plugins/deoplete-jedi', {'for' : 'python', 'do' : 'pip install jedi' }
+    let g:jedi#completions_enabled = 0
+endif
+let g:jedi#goto_command = "gpc"
+let g:jedi#goto_assignments_command = "gpa"
+let g:jedi#goto_definitions_command = "gpd"
+let g:jedi#documentation_command = "K"
+let g:jedi#usages_command = "gpu"
+let g:jedi#completions_command = "<C-Space>"
+let g:jedi#rename_command = "gpr"
+
+" Intellisense engine for vim8 & neovim, full language server protocol support as VSCode.
+" Uses VSCode-specific extensions, too. Seems to Just Work?
+" Except do need to install all the sources. Check the readme.
+" Installation is via command - annoying. Also uses hardcoded
+" .json.
+" npm installs extensions!
+" if executable('node')
+    " Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
+" endif
 " Awesome code completion, but requires specific installations
 " Plug 'https://github.com/Valloric/YouCompleteMe'
 if has("timers")
@@ -395,32 +421,6 @@ else
     let g:mucomplete#delayed_completion = 1
     set completeopt+=menuone,noselect
 endif
-
-" Python completion, plus some refactor, goto def and usage features.
-Plug 'https://github.com/davidhalter/jedi-vim', {'for' : 'python', 'do' : 'AsyncRun pip install jedi' }
-let g:jedi#use_splits_not_buffers = "right"
-" Using deoplete
-if IsPluginUsed('deoplete.nvim')
-    Plug 'deoplete-plugins/deoplete-jedi', {'for' : 'python', 'do' : 'AsyncRun pip install jedi' }
-    let g:jedi#completions_enabled = 0
-endif
-let g:jedi#goto_command = "gpc"
-let g:jedi#goto_assignments_command = "gpa"
-let g:jedi#goto_definitions_command = "gpd"
-let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = "gpu"
-let g:jedi#completions_command = "<C-Space>"
-let g:jedi#rename_command = "gpr"
-
-" Intellisense engine for vim8 & neovim, full language server protocol support as VSCode.
-" Uses VSCode-specific extensions, too. Seems to Just Work?
-" Except do need to install all the sources. Check the readme.
-" Installation is via command - annoying. Also uses hardcoded
-" .json.
-" npm installs extensions!
-" if executable('node')
-    " Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
-" endif
 
 " {]} ---------- Completion----------
 
