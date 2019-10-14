@@ -82,87 +82,6 @@ else
 endif
 " {]} ---------- Linting----------
 
-" {[} ---------- Completion ----------
-" Awesome code completion, but requires specific installations
-" Plug 'https://github.com/Valloric/YouCompleteMe'
-if has("timers")
-
-    exec 'source ' . g:plugindir . "/languageclient-neovim.vim"
-
-    if has('node')
-    exec 'source ' . g:plugindir . "/coc.nvim.vim"
-
-    elseif has("python3")
-    exec 'source ' . g:plugindir . "/deoplete.vim"
-
-    else
-        " Async completion engine, doesn't need extra installation.
-        Plug 'maralla/completor.vim'
-        " Use TAB to complete when typing words, else inserts TABs as usual.  Uses
-        " dictionary, source files, and completor to find matching words to complete.
-
-        " Note: usual completion is on <C-n> but more trouble to press all the time.
-        " Never type the same word twice and maybe learn a new spellings!
-        " Use the Linux dictionary when spelling is in doubt.
-        function! Tab_Or_Completor() abort
-            " If completor is already open the $(tab) cycles through suggested completions.
-            if pumvisible()
-                return "\<C-N>"
-                " If completor is not open and we are in the middle of typing a word then
-                " $(tab) opens completor menu.
-            elseif col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
-                return "\<C-R>=completor#do('complete')\<CR>"
-            else
-                " If we aren't typing a word and we press $(tab) simply do the normal $(tab)
-                " action.
-                return "\<Tab>"
-            endif
-        endfunction
-
-        " Use $(tab) key to select completions.  Default is arrow keys.
-        inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-        inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-        " Use tab to trigger auto completion.  Default suggests completions as you type.
-        let g:completor_auto_trigger = 0
-        inoremap <expr> <Tab> Tab_Or_Complete()
-    endif
-else
-    Plug 'https://github.com/lifepillar/vim-mucomplete'
-    let g:mucomplete#enable_auto_at_startup = 1
-    " Only pause after no tyging for [updatetime]
-    let g:mucomplete#delayed_completion = 1
-    set completeopt+=menuone,noselect
-endif
-
-" Python completion, plus some refactor, goto def and usage features.
-Plug 'https://github.com/davidhalter/jedi-vim', {'for' : 'python', 'do' : 'AsyncRun pip install jedi' }
-let g:jedi#use_splits_not_buffers = "right"
-" Using deoplete
-if IsPluginUsed('deoplete.nvim')
-    Plug 'deoplete-plugins/deoplete-jedi', {'for' : 'python', 'do' : 'AsyncRun pip install jedi' }
-    let g:jedi#completions_enabled = 0
-endif
-let g:jedi#goto_command = "gpc"
-let g:jedi#goto_assignments_command = "gpa"
-let g:jedi#goto_definitions_command = "gpd"
-let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = "gpu"
-let g:jedi#completions_command = "<C-Space>"
-let g:jedi#rename_command = "gpr"
-
-" Intellisense engine for vim8 & neovim, full language server protocol support as VSCode.
-" Uses VSCode-specific extensions, too. Seems to Just Work?
-" Except do need to install all the sources. Check the readme.
-" Installation is via command - annoying. Also uses hardcoded
-" .json.
-" npm installs extensions!
-" if executable('node')
-    " Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
-" endif
-
-" {]} ---------- Completion----------
-
 " {[} ---------- Tags ----------
 Plug 'xolox/vim-misc'
 if executable('ctags-exuberant') || executable('ctags')
@@ -423,6 +342,87 @@ let test#strategy = "dispatch"
 Plug 'https://github.com/sbdchd/neoformat'
 nnoremap g= :Neoformat<CR>
 " {]} ---------- IDE----------
+
+" {[} ---------- Completion ----------
+" Awesome code completion, but requires specific installations
+" Plug 'https://github.com/Valloric/YouCompleteMe'
+if has("timers")
+
+    exec 'source ' . g:plugindir . "/languageclient-neovim.vim"
+
+    if has('node')
+    exec 'source ' . g:plugindir . "/coc.nvim.vim"
+
+    elseif has("python3")
+    exec 'source ' . g:plugindir . "/deoplete.vim"
+
+    else
+        " Async completion engine, doesn't need extra installation.
+        Plug 'maralla/completor.vim'
+        " Use TAB to complete when typing words, else inserts TABs as usual.  Uses
+        " dictionary, source files, and completor to find matching words to complete.
+
+        " Note: usual completion is on <C-n> but more trouble to press all the time.
+        " Never type the same word twice and maybe learn a new spellings!
+        " Use the Linux dictionary when spelling is in doubt.
+        function! Tab_Or_Completor() abort
+            " If completor is already open the $(tab) cycles through suggested completions.
+            if pumvisible()
+                return "\<C-N>"
+                " If completor is not open and we are in the middle of typing a word then
+                " $(tab) opens completor menu.
+            elseif col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+                return "\<C-R>=completor#do('complete')\<CR>"
+            else
+                " If we aren't typing a word and we press $(tab) simply do the normal $(tab)
+                " action.
+                return "\<Tab>"
+            endif
+        endfunction
+
+        " Use $(tab) key to select completions.  Default is arrow keys.
+        inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+        inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+        " Use tab to trigger auto completion.  Default suggests completions as you type.
+        let g:completor_auto_trigger = 0
+        inoremap <expr> <Tab> Tab_Or_Complete()
+    endif
+else
+    Plug 'https://github.com/lifepillar/vim-mucomplete'
+    let g:mucomplete#enable_auto_at_startup = 1
+    " Only pause after no tyging for [updatetime]
+    let g:mucomplete#delayed_completion = 1
+    set completeopt+=menuone,noselect
+endif
+
+" Python completion, plus some refactor, goto def and usage features.
+Plug 'https://github.com/davidhalter/jedi-vim', {'for' : 'python', 'do' : 'AsyncRun pip install jedi' }
+let g:jedi#use_splits_not_buffers = "right"
+" Using deoplete
+if IsPluginUsed('deoplete.nvim')
+    Plug 'deoplete-plugins/deoplete-jedi', {'for' : 'python', 'do' : 'AsyncRun pip install jedi' }
+    let g:jedi#completions_enabled = 0
+endif
+let g:jedi#goto_command = "gpc"
+let g:jedi#goto_assignments_command = "gpa"
+let g:jedi#goto_definitions_command = "gpd"
+let g:jedi#documentation_command = "K"
+let g:jedi#usages_command = "gpu"
+let g:jedi#completions_command = "<C-Space>"
+let g:jedi#rename_command = "gpr"
+
+" Intellisense engine for vim8 & neovim, full language server protocol support as VSCode.
+" Uses VSCode-specific extensions, too. Seems to Just Work?
+" Except do need to install all the sources. Check the readme.
+" Installation is via command - annoying. Also uses hardcoded
+" .json.
+" npm installs extensions!
+" if executable('node')
+    " Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
+" endif
+
+" {]} ---------- Completion----------
 
 " {[} ---------- Neosettings ----------
 " " https://github.com/kepbod/ivim/blob/master/vimrc
