@@ -175,7 +175,7 @@ endif
 " Plug 'https://github.com/joereynolds/vim-minisnip'
 " {]} ---------- Snippits----------
 
-" {[} ---------- Syntax ----------
+" {[} ---------- Lang-specific ----------
 " {[} ------ Python ------
 if has('python')
     Plug 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
@@ -184,8 +184,24 @@ if has('python')
     endif
     Plug 'https://github.com/tmhedberg/SimpylFold'
     let g:SimpylFold_docstring_preview = 1
-
 endif
+
+" Python completion, plus some refactor, goto def and usage features.
+Plug 'https://github.com/davidhalter/jedi-vim', {'for' : 'python', 'do' : 'pip install jedi' }
+let g:jedi#use_splits_not_buffers = "right"
+" Using deoplete
+if IsPluginUsed('deoplete.nvim')
+    Plug 'deoplete-plugins/deoplete-jedi', {'for' : 'python', 'do' : 'pip install jedi' }
+    let g:jedi#completions_enabled = 0
+endif
+let g:jedi#goto_command = g:IDE_mappings["definition"]
+let g:jedi#goto_assignments_command = g:IDE_mappings["implementation"]
+let g:jedi#goto_definitions_command = g:IDE_mappings["definition"]
+let g:jedi#documentation_command = g:IDE_mappings["documentation"]
+let g:jedi#usages_command = g:IDE_mappings["references"]
+let g:jedi#completions_command = "Tab"
+let g:jedi#rename_command = g:IDE_mappings["rename"]
+
 if v:version > 800 || has('nvim')
     " Plug 'szymonmaszke/vimpyter', {'do': 'pip install --user notedown'}
     let g:vimpyter_color=1
@@ -279,6 +295,7 @@ Plug 'https://github.com/dragfire/Improved-Syntax-Highlighting-Vim'
 " Plug 'https://github.com/LucHermitte/lh-vim-lib'
 " Plug 'luchermitte/lh-cpp'
 " {]} ------ C ------
+
 " May cause lag on scrolling.
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Multi-lang support
@@ -303,7 +320,7 @@ let g:mkdx#settings = {
 " Syntax highlight ranges with a different filetype to the rest of the doc.
 Plug 'https://github.com/inkarkat/vim-ingo-library'
 Plug 'https://github.com/inkarkat/vim-SyntaxRange'
-" {]} ---------- Syntax----------
+" {]} ---------- Lang-specific ----------
 
 " {[} ---------- Git ----------
 if executable("git")
@@ -371,42 +388,20 @@ nnoremap g= :Neoformat<CR>
 
 " {[} ---------- Completion ----------
 
-" Python completion, plus some refactor, goto def and usage features.
-Plug 'https://github.com/davidhalter/jedi-vim', {'for' : 'python', 'do' : 'pip install jedi' }
-let g:jedi#use_splits_not_buffers = "right"
-" Using deoplete
-if IsPluginUsed('deoplete.nvim')
-    Plug 'deoplete-plugins/deoplete-jedi', {'for' : 'python', 'do' : 'pip install jedi' }
-    let g:jedi#completions_enabled = 0
-endif
-let g:jedi#goto_command = g:IDE_mappings["definition"]
-let g:jedi#goto_assignments_command = g:IDE_mappings["implementation"]
-let g:jedi#goto_definitions_command = g:IDE_mappings["definition"]
-let g:jedi#documentation_command = g:IDE_mappings["documentation"]
-let g:jedi#usages_command = g:IDE_mappings["references"]
-let g:jedi#completions_command = "Tab"
-let g:jedi#rename_command = g:IDE_mappings["rename"]
-
-" Intellisense engine for vim8 & neovim, full language server protocol support as VSCode.
-" Uses VSCode-specific extensions, too. Seems to Just Work?
-" Except do need to install all the sources. Check the readme.
-" Installation is via command - annoying. Also uses hardcoded
-" .json.
-" npm installs extensions!
-" if executable('node')
-    " Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
-" endif
 " Awesome code completion, but requires specific installations
 " Plug 'https://github.com/Valloric/YouCompleteMe'
 if has("timers")
 
     exec 'source ' . g:plugindir . "/languageclient-neovim.vim"
-
     if has('node')
-    exec 'source ' . g:plugindir . "/coc.nvim.vim"
-
+        " Intellisense engine for vim8 & neovim, full language server protocol support as VSCode.
+        " Uses VSCode-specific extensions, too. Seems to Just Work?
+        " Except do need to install all the sources. Check the readme.
+        " Installation is via command - annoying. Also uses hardcoded
+        " .json.
+        exec 'source ' . g:plugindir . "/coc.nvim.vim"
     elseif has("python3")
-    exec 'source ' . g:plugindir . "/deoplete.vim"
+        exec 'source ' . g:plugindir . "/deoplete.vim"
 
     else
         " Async completion engine, doesn't need extra installation.
