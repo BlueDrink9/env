@@ -14,4 +14,6 @@
     "coc.preferences.enableFloatHighlight": false,
     // Priority for signcolumn goes to diagnostics.
     "diagnostic.signOffset": 9999,
+    // Use microsoft python lsp instead of Jedi.
+    // "python.jediEnabled": false,
 }

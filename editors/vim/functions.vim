@@ -6,12 +6,12 @@
 function! Nnoremap(lhs, rhs)
   exec 'nnoremap ' . a:lhs . ' ' . a:rhs
 endfunction
-command! -nargs=+ Nnoremap call Nnoremap(<f-args>)
+" command! -nargs=+ Nnoremap call Nnoremap(<f-args>)
 
 function! Vnoremap(lhs, rhs)
   exec 'vnoremap ' . a:lhs . ' ' . a:rhs
 endfunction
-command! -nargs=+ Vnoremap call Vnoremap(<f-args>)
+" command! -nargs=+ Vnoremap call Vnoremap(<f-args>)
 
 
 " Pipes the output of shell commands into a new window for viewing.
