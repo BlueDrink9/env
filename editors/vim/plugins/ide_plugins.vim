@@ -5,6 +5,30 @@ let s:scriptdir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 augroup myIDE
     au!
 augroup end
+
+" gh - get hint on whatever's under the cursor
+" Use <leader>e for errors/linting/fixing.
+let g:IDE_mappings = {
+            \ "allActions" : "<leader>ia",
+            \ "rename" : "<leader>in",
+            \ "references" : "<leader>ir",
+            \ "refactor" : "<leader>if",
+            \ "definition" : "<leader>id",
+            \ "definition2" : "gd",
+            \ "type-definition" : "gy",
+            \ "implementation" : "<leader>ii",
+            \ "references" : "gr",
+            \ "implementation" : "gi",
+            \ "documentation" : "gh",
+            \ "documentation2" : "K",
+            \ "documentation3" : "<leader>ih",
+            \ "codeAction" : "<leader>eca",
+            \ "codeActionSelected" : "<leader>eca",
+            \ "codelensAction" : "<leader>ecl",
+            \ "fix" : "<leader>ef",
+            \ "listErrs" : "<leader>el" ,
+            \}
+
 " {[} ---------- Misc ----------
 " exec "Plug 'rhysd/vim-grammarous', { 'for': " . g:proseFileTypes . " }"
 " Brilliant for projects with lots of similar files. Check out config
