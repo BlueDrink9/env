@@ -26,7 +26,9 @@ let g:IDE_mappings = {
             \ "codeActionSelected" : "<leader>eca",
             \ "codelensAction" : "<leader>ecl",
             \ "fix" : "<leader>ef",
-            \ "listErrs" : "<leader>el" ,
+            \ "listErrs" : "<leader>el",
+            \ "complete" : "<plug>Non-existant",
+            \ "reformat" : "<plug>Non-existant",
             \}
 
 " {[} ---------- Misc ----------

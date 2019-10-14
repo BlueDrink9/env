@@ -4,18 +4,22 @@ Plug 'autozimu/LanguageClient-neovim', {
             \ 'do': 'bash install.sh',
             \ }
 function! s:SetLSPShortcuts()
-    nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
-    nnoremap gd :call LanguageClient#textDocument_definition()<CR>
-    nnoremap <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
-    nnoremap gy :call LanguageClient#textDocument_typeDefinition()<CR>
-    nnoremap <leader>ln :call LanguageClient#textDocument_rename()<CR>
-    nnoremap <leader>lf :call LanguageClient#textDocument_formatting()<CR>
-    nnoremap <leader>lf :call LanguageClient#textDocument_references()<CR>
-    nnoremap <leader>la :call LanguageClient_workspace_applyEdit()<CR>
-    nnoremap <leader>lc :call LanguageClient#textDocument_completion()<CR>
-    nnoremap <leader>lh :call LanguageClient#textDocument_hover()<CR>
-    nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
-    nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
+    call Nnoremap(g:IDE_mappings["definition"], ":call LanguageClient#textDocument_definition()<CR>")
+    call Nnoremap(g:IDE_mappings["definition2"], ":call LanguageClient#textDocument_definition()<CR>")
+    call Nnoremap(g:IDE_mappings["type-definition"], ":call LanguageClient#textDocument_typeDefinition()<CR>")
+    call Nnoremap(g:IDE_mappings["rename"], ":call LanguageClient#textDocument_rename()<CR>")
+    call Nnoremap(g:IDE_mappings["reformat"], ":call LanguageClient#textDocument_formatting()<CR>")
+    call Nnoremap(g:IDE_mappings["references"], ":call LanguageClient#textDocument_references()<CR>")
+    call Nnoremap(g:IDE_mappings["references2"], ":call LanguageClient#textDocument_references()<CR>")
+    " Not sure about these...
+    call Nnoremap(g:IDE_mappings["codeAction"], ":call LanguageClient_workspace_applyEdit()<CR>")
+    call Nnoremap(g:IDE_mappings["fix"], ":call LanguageClient_workspace_applyEdit()<CR>")
+    call Nnoremap(g:IDE_mappings["complete"], ":call LanguageClient#textDocument_completion()<CR>")
+    call Nnoremap(g:IDE_mappings["codelensAction"], ":call LanguageClient#textDocument_hover()<CR>")
+    call Nnoremap(g:IDE_mappings["documentation"], ":call LanguageClient_textDocument_documentSymbol()<CR>")
+    call Nnoremap(g:IDE_mappings["documentation2"], ":call LanguageClient_textDocument_documentSymbol()<CR>")
+    call Nnoremap(g:IDE_mappings["documentation3"], ":call LanguageClient_textDocument_documentSymbol()<CR>")
+    call Nnoremap(g:IDE_mappings["allActions"], ":call LanguageClient_contextMenu()<CR>")
 endfunction()
 
 let g:LanguageClient_diagnosticsDisplay = { 1: { "name": "Error",
