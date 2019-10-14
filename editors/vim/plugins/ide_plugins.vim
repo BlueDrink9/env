@@ -12,15 +12,15 @@ let g:IDE_mappings = {
             \ "allActions" : "<leader>ia",
             \ "rename" : "<leader>in",
             \ "references" : "<leader>ir",
+            \ "references2" : "gr",
             \ "refactor" : "<leader>if",
             \ "definition" : "<leader>id",
             \ "definition2" : "gd",
             \ "type-definition" : "gy",
             \ "implementation" : "<leader>ii",
-            \ "references" : "gr",
-            \ "implementation" : "gi",
-            \ "documentation" : "gh",
-            \ "documentation2" : "K",
+            \ "implementation2" : "gi",
+            \ "documentation" : "K",
+            \ "documentation2" : "gh",
             \ "documentation3" : "<leader>ih",
             \ "codeAction" : "<leader>eca",
             \ "codeActionSelected" : "<leader>eca",
@@ -377,13 +377,13 @@ if IsPluginUsed('deoplete.nvim')
     Plug 'deoplete-plugins/deoplete-jedi', {'for' : 'python', 'do' : 'pip install jedi' }
     let g:jedi#completions_enabled = 0
 endif
-let g:jedi#goto_command = "gpc"
-let g:jedi#goto_assignments_command = "gpa"
-let g:jedi#goto_definitions_command = "gpd"
-let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = "gpu"
-let g:jedi#completions_command = "<C-Space>"
-let g:jedi#rename_command = "gpr"
+let g:jedi#goto_command = g:IDE_mappings["definition"]
+let g:jedi#goto_assignments_command = g:IDE_mappings["implementation"]
+let g:jedi#goto_definitions_command = g:IDE_mappings["definition"]
+let g:jedi#documentation_command = g:IDE_mappings["documentation"]
+let g:jedi#usages_command = g:IDE_mappings["references"]
+let g:jedi#completions_command = "Tab"
+let g:jedi#rename_command = g:IDE_mappings["rename"]
 
 " Intellisense engine for vim8 & neovim, full language server protocol support as VSCode.
 " Uses VSCode-specific extensions, too. Seems to Just Work?
