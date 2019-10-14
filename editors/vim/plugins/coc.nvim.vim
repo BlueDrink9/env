@@ -4,7 +4,7 @@
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 let g:ale_enabled = 0
 let g:LanguageClient_autoStart = 0
-let g:jedi#completions_enabled = 0
+UnPlug 'davidhalter/jedi-vim'
 
 " Use coc instead of ctags.
 " This may mean tags aren't included, which would be a bug.
