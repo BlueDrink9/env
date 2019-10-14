@@ -4,6 +4,7 @@
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 let g:ale_enabled = 0
 let g:LanguageClient_autoStart = 0
+let g:jedi#completions_enabled = 0
 
 " Use coc instead of ctags.
 " This may mean tags aren't included, which would be a bug.
@@ -62,27 +63,27 @@ let g:coc_snippet_prev = "<c-b>"
 
 " Use <leader>i for IDE.
 " Open Coc action list.
-nnoremap <leader>ia :CocAction<cr>
-nnoremap <leader>in <Plug>(coc-rename)
-nnoremap <leader>ir <Plug>(coc-references)
-nnoremap <leader>if <Plug>(coc-refactor)
-nnoremap <leader>id <Plug>(coc-definition)
-nnoremap <leader>ii <Plug>(coc-implementation)
-nnoremap gr <Plug>(coc-references)
-nnoremap gd <Plug>(coc-definition)
-nnoremap gy <Plug>(coc-type-definition)
-nnoremap gi <Plug>(coc-implementation)
-" gh - get hint on whatever's under the cursor
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-nnoremap <silent> gh :call <SID>show_documentation()<CR>
-nnoremap <silent> <leader>ih :call <SID>show_documentation()<CR>
+call Nnoremap(g:IDE_mappings["allActions"], ":CocAction<cr>")
+call Nnoremap(g:IDE_mappings["rename"], "<Plug>(coc-rename)")
+call Nnoremap(g:IDE_mappings["references"], "<Plug>(coc-references)")
+call Nnoremap(g:IDE_mappings["references2"], "<Plug>(coc-references)")
+call Nnoremap(g:IDE_mappings["refactor"], "<Plug>(coc-refactor)")
+call Nnoremap(g:IDE_mappings["definition"], "<Plug>(coc-definition)")
+call Nnoremap(g:IDE_mappings["definition2"], "<Plug>(coc-definition)")
+call Nnoremap(g:IDE_mappings["type-definition"], "<Plug>(coc-type-definition)")
+call Nnoremap(g:IDE_mappings["implementation"], "<Plug>(coc-implementation)")
+call Nnoremap(g:IDE_mappings["implementation2"], "<Plug>(coc-implementation)")
+call Nnoremap(g:IDE_mappings["references"], "<Plug>(coc-references)")
 " Use <leader>e for errors/linting/fixing.
-nnoremap <leader>eca <Plug>(coc-codeaction)
-vnoremap <leader>eca <Plug>(coc-codeaction-selected)
-nnoremap <leader>ecl <Plug>(coc-codelens-action)
-nnoremap <leader>ef <Plug>(coc-fix-current)
+call Nnoremap(g:IDE_mappings["codeAction"], "<Plug>(coc-codeaction)")
+call Vnoremap(g:IDE_mappings["codeActionSelected"], "<Plug>(coc-codeaction-selected)")
+call Nnoremap(g:IDE_mappings["codelensAction"], "<Plug>(coc-codelens-action)")
+call Nnoremap(g:IDE_mappings["fix"], "<Plug>(coc-fix-current)")
 " List errors
-nnoremap <silent> <leader>el  :<C-u>CocList locationlist<cr>
+exec 'nnoremap <silent> ' . g:IDE_mappings["listErrs"] . ' :<C-u>CocList locationlist<cr>'
+exec 'nnoremap <silent> ' . g:IDE_mappings["documentation"] . ':call s:show_documentation()<CR>'
+exec 'nnoremap <silent> ' . g:IDE_mappings["documentation2"] . ':call s:show_documentation()<CR>'
+exec 'nnoremap <silent> ' . g:IDE_mappings["documentation3"] . ':call s:show_documentation()<CR>'
 
 " Map <tab> to trigger completion and navigate to the next item:
 function! s:check_back_space() abort
