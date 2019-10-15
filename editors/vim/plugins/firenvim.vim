@@ -1,4 +1,5 @@
-if has('nvim')
+" Needs nvim > 0.4, which was probably also when UIEnter was introduced.
+if has('nvim') && exists('##UIEnter')
     " plugin firenvim in chrome and firefox.
     " Open textframes in nvim, similar to wasavi.
     Plug 'https://github.com/glacambre/firenvim', {'do': ':call firenvim#install(0)'}
@@ -67,7 +68,5 @@ if has('nvim')
         endif
     endfunction
 
-    if exists('##UIEnter')
-        autocmd myPlugins UIEnter * call s:FirenvimSetup(deepcopy(v:event.chan))
-    endif
+    autocmd myPlugins UIEnter * call s:FirenvimSetup(deepcopy(v:event.chan))
 endif
