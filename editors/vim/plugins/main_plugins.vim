@@ -166,6 +166,9 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'https://github.com/jeetsukumaran/vim-indentwise'
 " Additional text objects for next braket, i/a comma, pairs, smarter searching.
 Plug 'wellle/targets.vim'
+" Detect indent settings automatically from file or others of same type in
+" dir.
+Plug 'https://github.com/tpope/vim-sleuth'
 " {]} ---------- Misc----------
 
 " {[} ---------- Operators ----------
@@ -514,7 +517,7 @@ exec 'autocmd myPlugins Filetype ' . g:proseFileTypes . ' call SetProseOptions()
 if executable('pandoc')
     " Actually works, fewer dependencies (pandoc, not node or yarn). Doesn't
     " have synced scrolling, hard to change browser.
-    Plug 'JamshedVesuna/vim-markdown-preview'
+    Plug 'JamshedVesuna/vim-markdown-preview', {'for': 'markdown'}
     let vim_markdown_preview_toggle=2
     let vim_markdown_preview_hotkey='<localleader>r'
     command! MarkdownPreview :call Vim_Markdown_Preview()<CR>
