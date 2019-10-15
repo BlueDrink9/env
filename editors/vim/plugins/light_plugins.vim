@@ -69,7 +69,7 @@ endif
 " Confirms opening empty file on tabcomplete
 Plug 'https://github.com/EinfachToll/DidYouMean'
 " Close buffers without changing window
-Plug 'https://github.com/moll/vim-bbye'
+Plug 'https://github.com/moll/vim-bbye', {'on': 'Bdelete'}
 cabbrev bd Bdelete
 
 " {[}--- Yanks ---
