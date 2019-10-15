@@ -67,5 +67,7 @@ if has('nvim')
         endif
     endfunction
 
-    autocmd myPlugins UIEnter * call s:FirenvimSetup(deepcopy(v:event.chan))
+    if exists('##UIEnter')
+        autocmd myPlugins UIEnter * call s:FirenvimSetup(deepcopy(v:event.chan))
+    endif
 endif
