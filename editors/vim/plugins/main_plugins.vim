@@ -169,8 +169,10 @@ Plug 'wellle/targets.vim'
 " {]} ---------- Misc----------
 
 " {[} ---------- Operators ----------
-
-" Let's give it a go then.
+" Replacement for surround, with more features.
+Plug 'machakann/vim-sandwich'
+" Gives it tpope-surround mappings.
+call add(pluginSettingsToExec, "runtime macros/sandwich/keymap/surround.vim")
 Plug 'https://github.com/easymotion/vim-easymotion'
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 " tab-incrementable search with easymotion dropout feature.

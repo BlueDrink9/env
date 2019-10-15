@@ -20,6 +20,8 @@ if g:liteMode
     nmap <C-/>  <Plug>Commentary
     omap <C-/>  <Plug>Commentary
     " {]} Replace Tcomment with commentary
+    " Use better 'vim-sandwich' in main.
+    Plug 'https://github.com/tpope/vim-surround.git'
 
     " Lighter alt to airline for putting buffers in tabline.
     Plug 'https://github.com/ap/vim-buftabline'
@@ -172,11 +174,6 @@ endif
 " {]} Misc
 
 " {[}--- Operators ---
-" Replacement for surround, with more features.
-Plug 'machakann/vim-sandwich'
-" Gives it tpope-surround mappings.
-call add(pluginSettingsToExec, "runtime macros/sandwich/keymap/surround.vim")
-" Plug 'https://github.com/tpope/vim-surround.git'
 " Bunch of neat mappings, it's a tpope. Esp [n and ]n, for SCM conflict marks.
 " And [<space> for addign newlines.
 Plug 'https://github.com/tpope/vim-unimpaired'
