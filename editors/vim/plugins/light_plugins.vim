@@ -224,6 +224,11 @@ if has('timers')
           \ }
     cabbrev bfind Grepper -query
 
+    " Live results.
+    Plug 'wsdjeg/FlyGrep.vim'
+    cabbrev bsearch FlyGrep
+    let g:FlyGrep_input_delay = 200  " ms. default 500
+
     " Multi-file find and replace with a nice interface. May be useful, idk.
     Plug 'brooth/far.vim'
 else
