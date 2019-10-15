@@ -114,9 +114,9 @@ nmap <C-/>  :TcommentBlock<CR>
 omap <C-/>  :Tcomment<CR>
 " I thought this wasn't working, because nothing ever showed up.
 " It turns out this is because you need to :DoShowMarks first.
-" Plug 'https://github.com/jacquesbh/vim-showmarks.git'
+" Plug 'https://github.com/jacquesbh/vim-showmarks.git', {'on': 'DoShowMarks'}
 " More advanced version of showmarks. Lots of mappings, eg m]
-Plug 'jeetsukumaran/vim-markology'
+Plug 'jeetsukumaran/vim-markology', {'on': ['MarkologyEnable', 'MarkologyToggle']}
 " Enable with m!
 let g:markology_enable=0
 let g:markology_ignore_type="hpq"
@@ -169,6 +169,8 @@ Plug 'wellle/targets.vim'
 " Detect indent settings automatically from file or others of same type in
 " dir.
 Plug 'https://github.com/tpope/vim-sleuth'
+" Limelight Looks really nice, esp for prose. Highlight slightly cu* rrent paraghraph.
+exec "Plug 'junegunn/limelight.vim', { 'for': " . g:proseFileTypes . ", 'on': 'Limelight' }"
 " {]} ---------- Misc----------
 
 " {[} ---------- Operators ----------

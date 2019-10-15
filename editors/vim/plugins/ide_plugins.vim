@@ -112,7 +112,7 @@ endif
 Plug 'xolox/vim-misc'
 if executable('ctags-exuberant') || executable('ctags')
     Plug 'ludovicchabant/vim-gutentags'
-    Plug 'liuchengxu/vista.vim'
+    Plug 'liuchengxu/vista.vim', {'on': 'Vista'}
     " Stay in current window when opening vista.
     " let g:vista_stay_on_open = 0
     cabbrev tb Vista!!
@@ -188,12 +188,12 @@ endif
 
 " Python completion, plus some refactor, goto def and usage features.
 Plug 'https://github.com/davidhalter/jedi-vim', {'for' : 'python', 'do' : 'pip install jedi' }
-let g:jedi#use_splits_not_buffers = "right"
 " Using deoplete
 if IsPluginUsed('deoplete.nvim')
     Plug 'deoplete-plugins/deoplete-jedi', {'for' : 'python', 'do' : 'pip install jedi' }
     let g:jedi#completions_enabled = 0
 endif
+let g:jedi#use_splits_not_buffers = "right"
 let g:jedi#goto_command = g:IDE_mappings["definition"]
 let g:jedi#goto_assignments_command = g:IDE_mappings["implementation"]
 let g:jedi#goto_definitions_command = g:IDE_mappings["definition"]

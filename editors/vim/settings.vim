@@ -249,7 +249,7 @@ set wildmode=list:longest,full
 set wildignorecase
 " Mapping usable in macros/maps to trigger completion menu.
 set wildcharm=<tab>
-" if has('nvim') && &termguicolors && !g:liteMode
+" if exists('&pumblend') && &termguicolors && !g:liteMode
 "     " Pseudo-transparency for popup menu.
 "     set pumblend=20
 "     set winblend=20
@@ -549,6 +549,11 @@ if executable('rg')
 elseif executable('ag')
 	set grepformat=%f:%l:%m
 	let &grepprg = 'ag --vimgrep' . (&smartcase ? ' --smart-case' : '')
+endif
+
+if has('patch-8.1.0360')
+    set diffopt+=internal,algorithm:patience
+      " set diffopt=indent-heuristic,algorithm:patience
 endif
 
 au myVimrc InsertLeave * set nopaste

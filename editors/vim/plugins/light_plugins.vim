@@ -93,7 +93,7 @@ nmap <leader>p <Plug>yankstack_substitute_older_paste
 nmap <leader>P <Plug>yankstack_substitute_newer_paste
 " {]}--- Yanks ---
 
-Plug 'https://github.com/chrisbra/csv.vim'
+Plug 'https://github.com/chrisbra/csv.vim', {'for': 'csv'}
 let g:csv_autocmd_arrange	   = 1
 let g:csv_autocmd_arrange_size = 1024*1024
 " let g:csv_highlight_column = 'y' " Current cursor's column.
