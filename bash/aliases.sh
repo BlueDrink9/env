@@ -123,13 +123,16 @@ export GIT_EDITOR="$GIT_EDITOR_CMD"
 # working.
 export SUDO_EDITOR=vim
 
+fuzzyEdit(){
+  "$VISUAL" "$(fzf)"
+}
 # alias ls="ls -CF --color=auto"
 # ;e and ;q are also defined, but via readline
 alias :q="exit"
 alias :e="vim"
 alias e="vim"
 alias ide="IDEVim"
-alias e?="vim \$(fzf)"
+alias e?=fuzzyEdit
 # alias :Q="exit"
 # alias ZZ="exit"
 alias se="sudoedit"
