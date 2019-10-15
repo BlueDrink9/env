@@ -1,11 +1,11 @@
-if has('nvim') && has('node')
+if has('nvim')
     " plugin firenvim in chrome and firefox.
     " Open textframes in nvim, similar to wasavi.
     Plug 'https://github.com/glacambre/firenvim', {'do': ':call firenvim#install(0)'}
     " Configured as json, basically.
-    " Enable only on a few websites by default
+    " enable only on a few websites by default
     let g:firenvim_config = {
-                \ 'localSettings': {
+                \ 'localsettings': {
                 \ '.*': {
                 \ 'selector': 'textarea',
                 \ 'priority': 0,
@@ -19,10 +19,10 @@ if has('nvim') && has('node')
                 \ },
                 \ },
                 \ }
-                " \ 'kaggle\.com': { " Regular kaggle is just for console.
+                " \ 'kaggle\.com': { " regular kaggle is just for console.
                 " \ 'priority': 0,
                 " \ },
-    function! FirenvimSetup(channel)
+    function! s:FirenvimSetup(channel)
         let l:ui = nvim_get_chan_info(a:channel)
         if has_key(l:ui, 'client') &&
                     \ has_key(l:ui.client, "name") &&
