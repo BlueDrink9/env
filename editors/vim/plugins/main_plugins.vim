@@ -411,10 +411,11 @@ let g:lexical#dictionary_key = '<leader>ld'
 
 " Alternative to pencil, but modular if you want it.
 " Plug 'vim-pandoc/vim-pandoc'
-Plug 'https://github.com/reedes/vim-pencil'
-let g:pencil#wrapModeDefault = 'soft'
-let g:pencil#conceallevel=&conceallevel
-let g:pencil#concealcursor=&concealcursor
+" Pencil loaded in lite, for scratch.
+" Plug 'https://github.com/reedes/vim-pencil'
+" let g:pencil#wrapModeDefault = 'soft'
+" let g:pencil#conceallevel=&conceallevel
+" let g:pencil#concealcursor=&concealcursor
 let g:pencil#autoformat_blacklist = [
             \ 'markdownCode',
             \ 'markdownUrl',
@@ -494,20 +495,7 @@ endfunction
 autocmd myPlugins Filetype tex :call SetVimtexMappings()
 " {]} ---------- Vimtex ----------
 
-" vimL word usage highlighter
-exec "Plug 'https://github.com/reedes/vim-wordy', { 'for': " . g:proseFileTypes . " }"
-exec "Plug 'bluedrink9/vim-highlight-gender', { 'for': " . g:proseFileTypes . " }"
-exec "Plug 'https://github.com/vim-scripts/LanguageTool', { 'for': " . g:proseFileTypes . " }"
-" An alternative to langtool:https://github.com/rhysd/vim-grammarous 
-exec "Plug 'https://github.com/panozzaj/vim-autocorrect', { 'for': " . g:proseFileTypes . " }"
-" Limelight Looks really nice, esp for prose. Highlight slightly current paraghraph.
-exec "Plug 'junegunn/limelight.vim', { 'for': " . g:proseFileTypes . " }"
-" Plug 'https://github.com/plasticboy/vim-markdown'
-
-" Override default prose settings for some files:
-" autocmd Filetype git,gitsendemail,*commit*,*COMMIT*
-"\ call pencil#init({'wrap': 'hard', 'textwidth': 72})
-autocmd myPlugins BufEnter * if &filetype == "" || &filetype == "scratch" | call pencil#init()
+exec 'autocmd myPlugins Filetype ' . g:proseFileTypes . ' call SetProseOptions()'
 
 " {[} ---------- Markdown Preview ----------
 " if has('nvim')

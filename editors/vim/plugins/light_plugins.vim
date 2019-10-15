@@ -224,3 +224,12 @@ map <Leader>vp :VimuxPromptCommand<CR>
 map <Leader>vl :VimuxRunLastCommand<CR>
 " {]} TMUX
 
+" {[} ---------- Prose ----------
+Plug 'https://github.com/reedes/vim-pencil'
+let g:pencil#wrapModeDefault = 'soft'
+let g:pencil#conceallevel=&conceallevel
+let g:pencil#concealcursor=&concealcursor
+" Scratch isn't explicitly a prose ft, but for quick notes I want it treated
+" as one.
+autocmd myPlugins VimEnter * if &filetype == "scratch" | call pencil#init()
+" {]} ---------- Prose----------
