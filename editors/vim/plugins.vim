@@ -7,6 +7,12 @@ augroup myPlugins
     au!
 augroup end
 
+" These should speed up things quite a lot, so specify them in .vimrc if you
+" can.
+" let g:python_host_prog  = '/usr/bin/python2'
+" let g:python3_host_prog = '/usr/bin/python3'
+" let g:node_host_prog = '/usr/bin/node'
+
 " {[} Settings and dir creation
 " Skip loading this file entirely.
 if exists("g:noPlugins")
