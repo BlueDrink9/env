@@ -133,6 +133,8 @@ alias :e="vim"
 alias e="vim"
 alias ide="IDEVim"
 alias e?=fuzzyEdit
+# For when the system is so slow it makes you say "what the vuck?"
+alias wtv="vim -u NONE -c 'set nocp | inore vk <esc> | inore kv <esc> | nnoremap ; :'"
 # alias :Q="exit"
 # alias ZZ="exit"
 alias se="sudoedit"

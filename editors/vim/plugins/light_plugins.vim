@@ -22,6 +22,9 @@ if g:liteMode
     " {]} Replace Tcomment with commentary
     " Use better 'vim-sandwich' in main.
     Plug 'https://github.com/tpope/vim-surround.git'
+" Plug 'machakann/vim-sandwich'
+" " Gives it tpope-surround mappings.
+" call add(pluginSettingsToExec, "runtime macros/sandwich/keymap/surround.vim")
 
     " Lighter alt to airline for putting buffers in tabline.
     Plug 'https://github.com/ap/vim-buftabline'
@@ -208,7 +211,7 @@ if v:version >= 703
     " call add (g:customHLGroups, "link ExtraWhitespace Visual")
 endif
 " Distraction-free vim.
-Plug 'https://github.com/junegunn/goyo.vim', {'on', ':Goyo'}
+Plug 'https://github.com/junegunn/goyo.vim', {'on' : ['Goyo',]}
 " {]}--- Visual ---
 
 " {[} --- TMUX ---
