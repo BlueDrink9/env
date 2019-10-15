@@ -25,8 +25,9 @@ super + v
 # The positional argument should be the name of a program in $PATH (as opposed to the full path to a program) and should not contain any flags (see -f if you want to pass additional flags to the program when running it). It should always be the last argument.
 # negative -w arg to account for a border width (default: 100%)
 # -s dropdown starts tmux session 'dropdown'.
+# -m means monitor-aware, requires xrandr. Breaks my config for whatever reason.
 super + grave
-    tdrop -ma --wm bspwm \
+    tdrop -a --wm bspwm \
       --width -4 --height 40% -y "$PANEL_HEIGHT" \
       -s dropdown --pre-create-hook='export COLOURSCHEME="solarized_dark"; clear' \
       --class kitty-dropdown -f "--class kitty-dropdown" kitty
