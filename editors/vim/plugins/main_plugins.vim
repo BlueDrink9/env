@@ -81,10 +81,10 @@ Plug 'ericbn/vim-relativize'
 Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
 " :GhostTextStart/Stop
 if has('nvim') && has('python3')
-    Plug 'raghur/vim-ghost', {'do': ':GhostInstall'}
+    Plug 'raghur/vim-ghost', {'do': ':GhostInstall', 'on': 'GhostStart'}
 elseif has("channel") && has('python')
     " :GhostStart/Stop
-    Plug 'atkenny15/vim-ghosttext'
+    Plug 'atkenny15/vim-ghosttext', {'on': 'GhostStart'}
 endif
 " ga on char shows all representations, not just dec oct hex.
 Plug 'https://github.com/tpope/vim-characterize'
