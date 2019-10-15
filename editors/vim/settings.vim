@@ -543,6 +543,14 @@ if v:version >= 703
     autocmd myVimrc Filetype qf setlocal colorcolumn=0
 endif
 
+if executable('rg')
+	set grepformat=%f:%l:%m
+	let &grepprg = 'rg --vimgrep' . (&smartcase ? ' --smart-case' : '')
+elseif executable('ag')
+	set grepformat=%f:%l:%m
+	let &grepprg = 'ag --vimgrep' . (&smartcase ? ' --smart-case' : '')
+endif
+
 au myVimrc InsertLeave * set nopaste
 
 if $TERM =~ 'kitty'
