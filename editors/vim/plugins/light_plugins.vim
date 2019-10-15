@@ -14,7 +14,7 @@ if g:liteMode
     nmap <leader>c  <Plug>Commentary
     omap <leader>c  <Plug>Commentary
     nmap <leader>cc <Plug>CommentaryLine
-    nmap l<leader>c <Plug>ChangeCommentary
+    nmap <leader>c <Plug>ChangeCommentary
     nmap <leader>cu <Plug>Commentary<Plug>Commentary
     xmap <C-/>  <Plug>Commentary
     nmap <C-/>  <Plug>Commentary
