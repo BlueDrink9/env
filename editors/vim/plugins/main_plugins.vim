@@ -399,6 +399,54 @@ endif
 
 " {[} ---------- Prose ----------
 
+" Neccesary for next plugin
+exec "Plug 'https://github.com/kana/vim-textobj-user', { 'for': " . g:proseFileTypes . " }"
+" Expands what a sentence/word is for prose.
+exec "Plug 'https://github.com/reedes/vim-textobj-sentence', { 'for': " . g:proseFileTypes . " }" 
+" Better prose spellchecking
+exec "Plug 'https://github.com/reedes/vim-lexical', { 'for': " . g:proseFileTypes . " }"
+let g:lexical#spell_key = '<leader>ls'
+let g:lexical#thesaurus_key = '<leader>lt'
+let g:lexical#dictionary_key = '<leader>ld'
+
+" Alternative to pencil, but modular if you want it.
+" Plug 'vim-pandoc/vim-pandoc'
+Plug 'https://github.com/reedes/vim-pencil'
+let g:pencil#wrapModeDefault = 'soft'
+let g:pencil#conceallevel=&conceallevel
+let g:pencil#concealcursor=&concealcursor
+let g:pencil#autoformat_blacklist = [
+            \ 'markdownCode',
+            \ 'markdownUrl',
+            \ 'markdownIdDeclaration',
+            \ 'markdownLinkDelimiter',
+            \ 'markdownHighlight[A-Za-z0-9]+',
+            \ 'mkdCode',
+            \ 'mkdIndentCode',
+            \ 'markdownFencedCodeBlock',
+            \ 'markdownInlineCode',
+            \ 'mmdTable[A-Za-z0-9]*',
+            \ 'txtCode',
+            \ 'texMath',
+            \ ]
+
+function! SetProseOptions()
+    " Add dictionary completion. Requires setting 'dictionary' option.
+    setlocal complete+=k
+    " Is this actually running these functions though?
+    " call AutoCorrect()
+    " call textobj#sentence#init()
+    call add (g:pluginSettingsToExec, "call AutoCorrect()")
+    call add (g:pluginSettingsToExec, "call textobj#sentence#init()")
+    " Default spelling lang is En, I want en_nz.
+    if &spelllang == "en"
+        " Custom lang not set.
+        setl spell spl=en_nz
+    endif
+    call pencil#init()
+    setl ai
+endfunction
+
 " {[} ---------- Vimtex ----------
 Plug 'https://github.com/lervag/vimtex'
 " call add(g:pluginSettingsToExec, "let g:vimtex_compiler_latexmk.build_dir = 'latexbuild'")
@@ -446,16 +494,6 @@ endfunction
 autocmd myPlugins Filetype tex :call SetVimtexMappings()
 " {]} ---------- Vimtex ----------
 
-" Plug 'https://github.com/plasticboy/vim-markdown'
-" Better prose spellchecking
-exec "Plug 'https://github.com/reedes/vim-lexical', { 'for': " . g:proseFileTypes . " }"
-let g:lexical#spell_key = '<leader>ls'
-let g:lexical#thesaurus_key = '<leader>lt'
-let g:lexical#dictionary_key = '<leader>ld'
-" Neccesary for next plugin
-exec "Plug 'https://github.com/kana/vim-textobj-user', { 'for': " . g:proseFileTypes . " }"
-" Expands what a sentence/word is for prose.
-exec "Plug 'https://github.com/reedes/vim-textobj-sentence', { 'for': " . g:proseFileTypes . " }" 
 " vimL word usage highlighter
 exec "Plug 'https://github.com/reedes/vim-wordy', { 'for': " . g:proseFileTypes . " }"
 exec "Plug 'bluedrink9/vim-highlight-gender', { 'for': " . g:proseFileTypes . " }"
@@ -464,28 +502,40 @@ exec "Plug 'https://github.com/vim-scripts/LanguageTool', { 'for': " . g:proseFi
 exec "Plug 'https://github.com/panozzaj/vim-autocorrect', { 'for': " . g:proseFileTypes . " }"
 " Limelight Looks really nice, esp for prose. Highlight slightly current paraghraph.
 exec "Plug 'junegunn/limelight.vim', { 'for': " . g:proseFileTypes . " }"
+" Plug 'https://github.com/plasticboy/vim-markdown'
 
-function! SetProseOptions()
-    " Add dictionary completion. Requires setting 'dictionary' option.
-    setlocal complete+=k
-    " Is this actually running these functions though?
-    " call AutoCorrect()
-    " call textobj#sentence#init()
-    call add (g:pluginSettingsToExec, "call AutoCorrect()")
-    call add (g:pluginSettingsToExec, "call textobj#sentence#init()")
-    " Default spelling lang is En, I want en_nz.
-    if &spelllang == "en"
-        " Custom lang not set.
-        setl spell spl=en_nz
-    endif
-    call pencil#init()
-    setl ai
-endfunction
+" Override default prose settings for some files:
+" autocmd Filetype git,gitsendemail,*commit*,*COMMIT*
+"\ call pencil#init({'wrap': 'hard', 'textwidth': 72})
+autocmd myPlugins BufEnter * if &filetype == "" || &filetype == "scratch" | call pencil#init()
 
-" if &filetype == "" || &filetype == "scratch"
-"     call pencil#init()
+" {[} ---------- Markdown Preview ----------
+" if has('nvim')
+"     " Needs node, yarn.
+"     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+"     let g:mkdp_auto_start = 0
+"     let g:mkdp_auto_close = 0
+"     " On save, insertleave
+"     " let g:mkdp_refresh_slow = 0
+" else
+" if has('python')
+" Requires manually setting open cmd, requires py2.
+"     Plug 'previm/previm'
+"     let g:previm_open_cmd="fopen"
 " endif
-" Bullets.vim
+if executable('pandoc')
+    " Actually works, fewer dependencies (pandoc, not node or yarn). Doesn't
+    " have synced scrolling, hard to change browser.
+    Plug 'JamshedVesuna/vim-markdown-preview'
+    let vim_markdown_preview_toggle=2
+    let vim_markdown_preview_hotkey='<localleader>r'
+    command! MarkdownPreview :call Vim_Markdown_Preview()<CR>
+    let vim_markdown_preview_pandoc=1
+endif
+" endif
+" {]} ---------- Markdown Preview ----------
+
+Plug 'https://github.com/dkarter/bullets.vim'
 let g:bullets_enabled_file_types = [
             \ 'markdown',
             \ 'text',
