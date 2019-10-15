@@ -495,7 +495,7 @@ let g:bullets_enabled_file_types = [
 " {]} ---------- Prose----------
 
 " {[} ---------- NerdTree ----------
-Plug 'https://github.com/scrooloose/nerdtree.git'
+Plug 'https://github.com/scrooloose/nerdtree.git', {'on': ['NERDTree', 'NERDTreeToggle',]}
 " Change these if you feel the desire...
 let g:NERDTreeIndicatorMapCustom = {
             \ "Modified"  : "✹",
@@ -521,5 +521,6 @@ autocmd myPlugins VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists
 autocmd myPlugins BufRead * if isdirectory(@%) | exec 'NERDTree' | endif
 autocmd myPlugins bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-cabbrev nt NerdTreeToggle
+cabbrev nt NERDTreeToggle
+nnoremap _ NERDTreeToggle
 " {]} ---------- NerdTree ----------
