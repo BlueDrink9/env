@@ -178,6 +178,11 @@ else
     " endif
     " AAH, but shift/opt + click overcomes this on my terminal emulaters
     set mouse=a
+    " let &pastetoggle = '\e[201~'
+    " noremap  <special> <expr> <Esc>[200~ <SID>XTermPasteBegin('0i')
+    " inoremap <special> <expr> <Esc>[200~ <SID>XTermPasteBegin('')
+    " cnoremap <special> <Esc>[200~ <nop>
+    " cnoremap <special> <Esc>[201~ <nop>
 
     " {[} Colours
     " Use true colors
