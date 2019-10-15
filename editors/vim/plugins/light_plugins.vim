@@ -207,45 +207,9 @@ if v:version >= 703
     call add (g:customHLGroups, "ExtraWhitespace ctermbg=Gray guibg=LightGray")
     " call add (g:customHLGroups, "link ExtraWhitespace Visual")
 endif
-" Relative line numbers only in focussed buffer & not in insert mode.
-Plug 'ericbn/vim-relativize'
-" Needs manual activation. :RainbowParen, :RainbowParen!
-Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
 " Distraction-free vim.
-Plug 'https://github.com/junegunn/goyo.vim'
+Plug 'https://github.com/junegunn/goyo.vim', {'on', ':Goyo'}
 " {]}--- Visual ---
-
-" {[}--- Searching, replacing ---
-if has('timers')
-    " Async, uses better grep tools like ack or ag
-    Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
-    let g:grepper = {
-          \ 'tools': ['rg', 'ag', 'ack', 'findstr', 'pt', 'git', 'grep'],
-          \ }
-    cabbrev bfind Grepper -query
-
-    " Live results.
-    Plug 'wsdjeg/FlyGrep.vim'
-    cabbrev bsearch FlyGrep
-    let g:FlyGrep_input_delay = 200  " ms. default 500
-
-    " Multi-file find and replace with a nice interface. May be useful, idk.
-    Plug 'brooth/far.vim'
-else
-    " Bsgrep for searching in all open buffers. Also Bsreplace, Bstoc.
-    Plug 'https://github.com/jeetsukumaran/vim-buffersaurus'
-    cabbrev bfind Bsgrep
-    let g:buffersaurus_autodismiss_on_select=0
-
-    " Quick find and replace text object, repeatable with .
-    " Clobbers s so would need to remap.
-    " Plug 'https://github.com/hauleth/sad.vim'
-    " nmap <leader>s <Plug>(sad-change-forward)
-    " nmap <leader>S <Plug>(sad-change-backward)
-    " xmap <leader>s <Plug>(sad-change-forward)
-    " xmap <leader>S <Plug>(sad-change-backward)
-endif
-" {]}--- Searching, replacing ---
 
 " {[} --- TMUX ---
 Plug 'https://github.com/tmux-plugins/vim-tmux'
@@ -256,31 +220,6 @@ map <Leader>vp :VimuxPromptCommand<CR>
 " Run last command executed by VimuxRunCommand
 map <Leader>vl :VimuxRunLastCommand<CR>
 " {]} TMUX
-
-" {[} View and session
-" Automated view session creation.
-Plug 'https://github.com/zhimsel/vim-stay'
-set viewoptions=cursor,folds,slash,unix
-Plug 'xolox/vim-misc'
-" Map os commands (eg maximise), and open windows commands without shell
-" popup.
-Plug 'https://github.com/xolox/vim-shell'
-if v:version >= 704
-    Plug 'https://github.com/xolox/vim-session'
-    let g:session_persist_globals = ['&spelllang', '&autoread', '&spell']
-    let g:session_persist_colors = 0
-    let g:session_persist_font = 0
-    " Open recent session instead of default
-    let g:session_default_to_last = 'yes'
-    let g:session_autosave_periodic = 10
-    let g:session_autosave = 'yes'
-    let g:session_autoload = 'no' " Could also be 'prompt'
-    let g:session_directory = CreateVimDir(g:vimfilesDir . "/sessions/")
-    cabbrev cs CloseSession
-    cabbrev os OpenSession
-    cabbrev ss SaveSession
-endif
-" {]} View and session
 
 
 " {[} ---------- Prose ----------
