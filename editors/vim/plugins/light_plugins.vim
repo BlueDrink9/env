@@ -183,6 +183,9 @@ Plug 'https://github.com/tpope/vim-unimpaired'
 " I want to use ]e (normally this) for errors.
 nmap <silent> ]m <Plug>unimpairedMoveDown
 nmap <silent> [m <Plug>unimpairedMoveUp
+ let g:nremap = {"[e": "", "]e": ""}
+ let g:xremap = {"[e": "", "]e": ""}
+ let g:oremap = {"[e": "", "]e": ""}
 " nunmap <silent> ]e
 " nunmap <silent> [e
 " cx to select an object, then cx again to swap it with first thing.
