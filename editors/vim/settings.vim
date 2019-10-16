@@ -98,7 +98,7 @@ function! SetGFN(...)
         endif
     endif
     if &guifont == ""
-        let l:useFont = "Source\\ Code\\ Pro\\ Medium"
+        let l:useFont = "Source\ Code\ Pro\ Medium"
         if has("win32")
             let &guifont=l:useFont . ':h' . l:fontSize
         elseif has("macunix")
@@ -162,8 +162,9 @@ if g:hasGUI
     set mousemodel="popup_setpos"
     " Default fallback for gui bg colour
     let g:termColors="24bit"
-    " if !exists('&guifont')
-    call SetGFN()
+    if &guifont==?""
+      call SetGFN()
+    endif
     if has("termguicolors")
         set termguicolors
     endif
