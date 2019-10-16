@@ -320,6 +320,9 @@ let g:mkdx#settings = {
 " Syntax highlight ranges with a different filetype to the rest of the doc.
 Plug 'https://github.com/inkarkat/vim-ingo-library'
 Plug 'https://github.com/inkarkat/vim-SyntaxRange'
+
+Plug 'vim-scripts/autohotkey-ahk', {'for': 'autohotkey'}
+Plug 'https://github.com/huleiak47/vim-AHKcomplete', {'for': 'autohotkey'}
 " {]} ---------- Lang-specific ----------
 
 " {[} ---------- Git ----------
@@ -403,7 +406,7 @@ if has("timers")
     elseif has("python3")
         exec 'source ' . g:plugindir . "/deoplete.vim"
 
-    else
+    elseif has("python")
         " Async completion engine, doesn't need extra installation.
         Plug 'maralla/completor.vim'
         " Use TAB to complete when typing words, else inserts TABs as usual.  Uses
