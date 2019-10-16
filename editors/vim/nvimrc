@@ -6,7 +6,6 @@ if has('win32') || has ('win64')
 else
     let $VIMHOME = $HOME."/.vim"
 endif
-echom $VIMHOME
 " let &runtimepath+=expand($VIMHOME)
 " let &runtimepath+=expand($VIMHOME . "/after")
 " let &runtimepath+=expand($VIMHOME . "/autoload")
