@@ -177,30 +177,31 @@ endif
 
 " {[} ---------- Lang-specific ----------
 " {[} ------ Python ------
-if has('python')
+if has('python') || has('python3')
     Plug 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
     if has('python3')
         let g:pymode_python = 'python3'
     endif
     Plug 'https://github.com/tmhedberg/SimpylFold'
     let g:SimpylFold_docstring_preview = 1
+
+    " Python completion, plus some refactor, goto def and usage features.
+    Plug 'https://github.com/davidhalter/jedi-vim', {'for' : 'python', 'do' : 'pip install jedi' }
+    " Using deoplete
+    if IsPluginUsed('deoplete.nvim')
+        Plug 'deoplete-plugins/deoplete-jedi', {'for' : 'python', 'do' : 'pip install jedi' }
+        let g:jedi#completions_enabled = 0
+    endif
+    let g:jedi#use_splits_not_buffers = "right"
+    let g:jedi#goto_command = g:IDE_mappings["definition"]
+    let g:jedi#goto_assignments_command = g:IDE_mappings["implementation"]
+    let g:jedi#goto_definitions_command = g:IDE_mappings["definition"]
+    let g:jedi#documentation_command = g:IDE_mappings["documentation"]
+    let g:jedi#usages_command = g:IDE_mappings["references"]
+    let g:jedi#completions_command = "Tab"
+    let g:jedi#rename_command = g:IDE_mappings["rename"]
 endif
 
-" Python completion, plus some refactor, goto def and usage features.
-Plug 'https://github.com/davidhalter/jedi-vim', {'for' : 'python', 'do' : 'pip install jedi' }
-" Using deoplete
-if IsPluginUsed('deoplete.nvim')
-    Plug 'deoplete-plugins/deoplete-jedi', {'for' : 'python', 'do' : 'pip install jedi' }
-    let g:jedi#completions_enabled = 0
-endif
-let g:jedi#use_splits_not_buffers = "right"
-let g:jedi#goto_command = g:IDE_mappings["definition"]
-let g:jedi#goto_assignments_command = g:IDE_mappings["implementation"]
-let g:jedi#goto_definitions_command = g:IDE_mappings["definition"]
-let g:jedi#documentation_command = g:IDE_mappings["documentation"]
-let g:jedi#usages_command = g:IDE_mappings["references"]
-let g:jedi#completions_command = "Tab"
-let g:jedi#rename_command = g:IDE_mappings["rename"]
 
 if v:version > 800 || has('nvim')
     " Plug 'szymonmaszke/vimpyter', {'do': 'pip install --user notedown'}
