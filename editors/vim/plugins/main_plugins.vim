@@ -39,6 +39,7 @@ endif
 " {]} View and session
 
 " {[} ---------- External model setup neovim ----------
+let g:skipPythonInstall=1  " Tmp skip installing python modules.
 " Install python module, preferably for py3.
 function! PythonInstallModule(module)
     if exists('g:skipPythonInstall')
