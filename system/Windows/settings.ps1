@@ -197,8 +197,8 @@ Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryO
 
 # POWER OPTIONS #
 # -x = /change. This option only works for timeouts like these. In minutes.
-powercfg -x -hibernate-timeout-ac 90
-powercfg -x -hibernate-timeout-dc 0
+powercfg -x -hibernate-timeout-ac 0
+powercfg -x -hibernate-timeout-dc 90
 # Screen on AC timeout
 powercfg /change monitor-timeout-ac 15
 # PC on AC to never sleep
