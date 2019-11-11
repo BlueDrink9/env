@@ -1,3 +1,4 @@
+# wox: Ignore dep so that it doesn't pull in the latest python3.
 $packages = @(
         "git",
         "vim",
@@ -18,11 +19,10 @@ $packages = @(
         "goggalaxy",
         "uplay",
         "origin",
+        "loot",
         "adobereader",
         "windirstat",
         "skype",
-        "python",
-        "python2",
         "pip",
         "paint.net",
         "audacity",
@@ -64,7 +64,7 @@ $packages = @(
         "qbittorrent",
         "pandoc",
         "everything",
-        "wox",
+        "wox --ignoredependencies",
         "sumatrapdf",
         "rufus",
         "yumi",
@@ -128,12 +128,20 @@ $packages = @(
         "onedrive",
         "colortool",
         "joplin",
+        "google-backup-and-sync",
         "onetastic"
 )
         # This gets the opentype version, which looks awful/doesn't alias
         # properly on win. Manually get the ttf version.
+        # "miniconda",
+        # "miniconda3",
         # "SourceCodePro",
         # "wsl",
+        # The versioning here is a bit off it seems. Use conda instead.
+        # This also installs python3 as python, so you can't easily use both
+        # python 2 and 3 with other programs, like vim.
+        # "python",
+        # "python2",
 foreach ($package in $packages)
 {
     # Need to specify cache to avoid recursive dir issue. See
@@ -158,3 +166,13 @@ colortool.exe -b solarized_dark.itermcolors
 # cinst Microsoft-Hyper-V-All -source windowsFeatures
 
 Install-Module -Force OpenSSHUtils -Scope AllUsers
+
+# Add miniconda to path
+# $oldpath = (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).path
+# $condapaths = ";c:\ProgramData\miniconda3;c:\ProgramData\miniconda3\scripts"
+# [Environment]::SetEnvironmentVariable("Path", $env:Path + $condapaths, "Machine")
+# $newpath = "$oldpath$condapaths"
+# Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH -Value $newPath
+# Oh never mind, just use the windows store version. It integrates best with
+# path anyway, and hopefully will work best with other tools.
+python
