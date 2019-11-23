@@ -98,15 +98,27 @@ function! SetGFN(...)
         endif
     endif
     if &guifont == ""
-        let l:useFont = "Source\ Code\ Pro\ Medium"
+        let l:useFonts = [
+              \ "SauceCodePro NF",
+              \ "SauceCodeProNerdFontCo-Regular",
+              \ "Source Code Pro Medium",
+              \ "Source Code Pro"
+              \ ]
         if has("win32")
-            let &guifont=l:useFont . ':h' . l:fontSize
+            let l:sizeSep=':h'
         elseif has("macunix")
-            let l:useFont="SauceCodeProNerdFontCo-Regular"
-            let &guifont=l:useFont . ':h' . l:fontSize
+            let l:sizeSep=':h'
         else
-            let &guifont=l:useFont . '\ ' . l:fontSize
+            let l:sizeSep=' '
         endif
+        for f in l:useFonts
+            let ind = index(l:useFonts, f)
+            let l:useFonts[ind] = f . l:sizeSep . l:fontSize
+        endfor
+        let l:gfn=join(l:useFonts, ',')
+        " Because we are using let, with a variable, spaces in font noames
+        " don't need to be escaped.
+        let &guifont=l:gfn
     endif
 endfunction
 if g:hasGUI
