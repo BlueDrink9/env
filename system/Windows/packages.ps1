@@ -129,7 +129,6 @@ $packages = @(
         "colortool",
         "joplin",
         "google-backup-and-sync",
-        "megatools",
         "onetastic"
 )
 
@@ -144,6 +143,8 @@ $packages = @(
         # python 2 and 3 with other programs, like vim.
         # "python",
         # "python2",
+
+        # Also install "megacmd" from https://mega.nz/cmd (open source) for mega backups.
 
 foreach ($package in $packages)
 {
