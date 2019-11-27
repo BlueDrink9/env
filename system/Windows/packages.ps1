@@ -129,6 +129,7 @@ $packages = @(
         "colortool",
         "joplin",
         "google-backup-and-sync",
+        "megatools",
         "onetastic"
 )
 
