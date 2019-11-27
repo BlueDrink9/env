@@ -131,6 +131,7 @@ $packages = @(
         "google-backup-and-sync",
         "onetastic"
 )
+
         # This gets the opentype version, which looks awful/doesn't alias
         # properly on win. Manually get the ttf version.
         # "miniconda",
@@ -142,6 +143,7 @@ $packages = @(
         # python 2 and 3 with other programs, like vim.
         # "python",
         # "python2",
+
 foreach ($package in $packages)
 {
     # Need to specify cache to avoid recursive dir issue. See
@@ -149,6 +151,7 @@ foreach ($package in $packages)
     choco upgrade --cacheLocation "$env:userprofile\AppData\Local\ChocoCache" $package -y
     refreshenv
 }
+
 # Downloads ubuntu for use
 Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
