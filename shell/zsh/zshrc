@@ -5,15 +5,15 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 SCRIPT_DIR=${0:a:h}
-source ${SCRIPT_DIR}/../functions.sh
-source ${SCRIPT_DIR}/../aliases.sh
-source ${SCRIPT_DIR}/functions.zsh
+source "${SCRIPT_DIR}/../functions.sh"
+source "${SCRIPT_DIR}/../aliases.sh"
+source "${SCRIPT_DIR}/functions.zsh"
 # bindkey -v
-source ${SCRIPT_DIR}/styles.zsh
-source ${SCRIPT_DIR}/settings.zsh
-source ${SCRIPT_DIR}/aliases_global.zsh
-source ${SCRIPT_DIR}/plugins.zsh
-source ${SCRIPT_DIR}/bindings.zsh
+source "${SCRIPT_DIR}/styles.zsh"
+source "${SCRIPT_DIR}/settings.zsh"
+source "${SCRIPT_DIR}/aliases_global.zsh"
+source "${SCRIPT_DIR}/plugins.zsh"
+source "${SCRIPT_DIR}/bindings.zsh"
 
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.zsh_history
