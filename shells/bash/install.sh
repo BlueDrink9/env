@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source "$DOTFILES_DIR/bash/script_functions.sh"
+source "$DOTFILES_DIR/shells/bash/script_functions.sh"
 
 installID="Shell"
 installText="source $($SCRIPTDIR_CMD)/bashrc"

@@ -16,15 +16,15 @@ fi
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 echo $DOTFILES_DIR > $XDG_CONFIG_HOME/.dotfiles_dir
 # SCRIPT COLORS are kept in this file
-source "$SCRIPTDIR/bash/functions.sh"
-source "$SCRIPTDIR/bash/script_functions.sh"
+source "$SCRIPTDIR/shells/bash/functions.sh"
+source "$SCRIPTDIR/shells/bash/script_functions.sh"
 # if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.2 ; then
 source "$SCRIPTDIR/bash/colour_variables.sh"
 OK="[ ${Green}OK${NC} ]"
 Error="[ ${Red}ERROR${NC} ]"
 ALL=0
 
-source "$DOTFILES_DIR/bash/install.sh"
+source "$DOTFILES_DIR/shells/bash/install.sh"
 source "$DOTFILES_DIR/git/install.sh"
 source "$DOTFILES_DIR/terminal/install.sh"
 source "$DOTFILES_DIR/editors/vim/install.sh"
