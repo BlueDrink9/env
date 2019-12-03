@@ -1,0 +1,30 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block, everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+SCRIPT_DIR=${0:a:h}
+source ${SCRIPT_DIR}/../functions.sh
+source ${SCRIPT_DIR}/../aliases.sh
+source ${SCRIPT_DIR}/functions.zsh
+# bindkey -v
+source ${SCRIPT_DIR}/styles.zsh
+source ${SCRIPT_DIR}/settings.zsh
+source ${SCRIPT_DIR}/aliases_global.zsh
+source ${SCRIPT_DIR}/plugins.zsh
+source ${SCRIPT_DIR}/bindings.zsh
+
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.zsh_history
+HISTSIZE=5000
+SAVEHIST=10000
+setopt appendhistory autocd nomatch
+unsetopt beep notify
+# End of lines configured by zsh-newuser-install
+
+# The following lines were added by compinstall
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
