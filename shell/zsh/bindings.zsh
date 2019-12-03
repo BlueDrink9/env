@@ -85,6 +85,12 @@ bindkey '^N' down-history
 autoload edit-command-line; zle -N edit-command-line
 bindkey -M vicmd "^V" edit-command-line
 
+# Expand history automatically on !!
+bindkey ' ' magic-space
+if [[ "${terminfo[kcbt]}" != "" ]]; then
+  bindkey "${terminfo[kcbt]}" reverse-menu-complete   # [Shift-Tab] - move through the completion menu backwards
+fi
+
 # Vim-surround
 autoload -Uz surround
 zle -N delete-surround surround

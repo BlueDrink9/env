@@ -8,6 +8,7 @@ fi
 
 # Theme with instant prompt support
 zplugin ice depth=1; zplugin light romkatv/powerlevel10k
+[ ! -f "$SCRIPT_DIR/plugins/p10k.zsh" ] || source "$SCRIPT_DIR/plugins/p10k.zsh"
 
 # Delay load, skip print when loaded.
 zplugin ice wait lucid atload'_zsh_autosuggest_start'
