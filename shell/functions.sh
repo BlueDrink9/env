@@ -565,7 +565,9 @@ choosePkgManager(){
 
 pack(){
     cmd="$1"
-    shift
+    if [ -n "$cmd" ]; then
+      shift
+    fi
     args="$@"
     useSudo=false
     installcmd="install"
