@@ -2,8 +2,9 @@ source ${SCRIPT_DIR}/../settings.sh
 # Enable using bash's PROMPT_COMMAND.
 _prompt_command() { eval "$PROMPT_COMMAND" }
 precmd_functions+=(_prompt_command)
-# Put info in window title.
-_set_window_title(){ echo -ne }
+DISABLE_AUTO_TITLE="true"
+# Put info in window title. Curr dir for taskbar quicklook, then full info.
+_set_window_title(){ print -Pn "\033][%1~] $USER@$(hostname): [%~] - $shell\007" }
 precmd_functions+=(_set_window_title)
 
 setopt hist_verify appendhistory
