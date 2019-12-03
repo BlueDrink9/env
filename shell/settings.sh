@@ -60,6 +60,7 @@ fi
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 export HISTSIZE=1000
 export HISTFILESIZE=5000
+export SAVEHIST=5000
 if [ ! -d "${HOME}/.logs" ] ; then
   mkdir ${HOME}/.logs
 fi
