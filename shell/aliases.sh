@@ -153,7 +153,7 @@ alias lightColours="base16Reset"
 # Preview images in terminal, even over ssh.
 alias icat="kitty +kitten icat"
 
-alias dotfe="vim \"${DOTFILES_DIR}\"/bash/aliases.sh \"${DOTFILES_DIR}\"/bash/functions.sh"
+alias dotfe="vim \"${DOTFILES_DIR}\"/shell/aliases.sh \"${DOTFILES_DIR}\"/shell/functions.sh"
 alias stowlocal="stow --dir=\"$HOME/.local/packages\" --target=\"$HOME/.local\""
 
 

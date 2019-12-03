@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-source "$DOTFILES_DIR/bash/script_functions.sh"
+source "$DOTFILES_DIR/shell/script_functions.sh"
 # Unset to force reloading `pack`
 unset BASH_FUNCTIONS_LOADED
-source "$DOTFILES_DIR/bash/functions.sh"
+source "$DOTFILES_DIR/shell/functions.sh"
 
 installID="Packages"
 
@@ -34,7 +34,7 @@ installList(){
 
 installPackages(){
     # To get "pack" function
-    source "$DOTFILES_DIR/bash/functions.sh"
+    source "$DOTFILES_DIR/shell/functions.sh"
     if grep -qE "(Microsoft|WSL)" "$([ -f /proc/version ] && cat /proc/version)" > /dev/null 2>&1; then
       export isWSL=1
     fi

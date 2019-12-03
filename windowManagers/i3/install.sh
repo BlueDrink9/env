@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source "$DOTFILES_DIR/bash/script_functions.sh"
+source "$DOTFILES_DIR/shell/script_functions.sh"
 installID="i3"
 # installText="Include \"$($SCRIPTDIR_CMD)/ssh_config\""
 configDir="${HOME}/.config/i3"

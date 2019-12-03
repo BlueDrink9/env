@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source "$DOTFILES_DIR/bash/script_functions.sh"
+source "$DOTFILES_DIR/shell/script_functions.sh"
 installID="Chunkwm"
 configDir="${HOME}"
 # installText="chunkc core::plugin_dir $HOMEBREW_PREFIX/opt/chunkwm/share/chunkwm/plugins; source \"$($SCRIPTDIR_CMD)/chunkwmrc\""

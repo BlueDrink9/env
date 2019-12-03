@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-source "$DOTFILES_DIR/bash/script_functions.sh"
-source "$DOTFILES_DIR/bash/functions.sh"
+source "$DOTFILES_DIR/shell/script_functions.sh"
+source "$DOTFILES_DIR/shell/functions.sh"
 
 installID="OSX"
 # installText="source-file $($SCRIPTDIR_CMD)/tmux/tmux.conf"

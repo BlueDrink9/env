@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source "$DOTFILES_DIR/bash/script_functions.sh"
+source "$DOTFILES_DIR/shell/script_functions.sh"
 
 VSCODE_EXTENSIONS_DIR="${HOME}/.vscode/extensions"
 VSCODE_VERSION=code

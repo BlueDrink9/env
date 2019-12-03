@@ -6,7 +6,7 @@
 # Assumes a solarised terminal, with 16 colours.
 
 # For substrInStr
-source ${SCRIPT_DIR}/../functions.sh
+source ${SCRIPT_DIR}/../../functions.sh
 
 strInText(){
   text="$1"

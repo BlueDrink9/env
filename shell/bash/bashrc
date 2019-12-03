@@ -23,10 +23,10 @@ fi
 # Reload/source inputrc
 # bind -f "${SCRIPT_DIR}/inputrc.sh"
 # INPUTRC="${SCRIPT_DIR}/inputrc.sh"
-source "${SCRIPT_DIR}/functions.sh"
+source "${SCRIPT_DIR}/../functions.sh"
 source "${SCRIPT_DIR}/settings.sh"
-BASH_ENV="${SCRIPT_DIR}/aliases.sh" # Aliases are used for all readline apps.
-source "${SCRIPT_DIR}/aliases.sh"
+BASH_ENV="${SCRIPT_DIR}/../aliases.sh" # Aliases are used for all readline apps.
+source "${SCRIPT_DIR}/../aliases.sh"
 source "${SCRIPT_DIR}/prompt/promptrc.sh"
 
 # Unset include guards to allow refreshing

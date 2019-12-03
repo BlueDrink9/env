@@ -6,7 +6,7 @@
 
 source ${SCRIPT_DIR}/../colour_variables.sh
 # For substrInStr
-source ${SCRIPT_DIR}/../functions.sh
+source ${SCRIPT_DIR}/../../functions.sh
 
 # Set the full bash prompt.
 set_bash_prompt () {
