@@ -18,6 +18,7 @@ if [ -z "$PROFILE_LOADED" ]; then
 fi
 
 source "${SCRIPT_DIR}/../aliases.sh"
+source "${SCRIPT_DIR}/../variables.sh"
 source "${SCRIPT_DIR}/functions.zsh"
 # bindkey -v
 source "${SCRIPT_DIR}/styles.zsh"
