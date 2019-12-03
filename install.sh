@@ -68,17 +68,17 @@ readSettings() {
 
     # Functions must be called "do[X]", with a corresponding "undo[X]" to uninstall.
     if [ $ALL != 1 ]; then
-      if [ "$ALL" == 1 ] || askQuestionYN "$set_up shell?" ; then
+      if [ "$ALL" = 1 ] || askQuestionYN "$set_up shell?" ; then
         installers="$installers doShell"
       fi
-      if [ "$ALL" == 1 ] || askQuestionYN "$set_up SSH?" ; then
+      if [ "$ALL" = 1 ] || askQuestionYN "$set_up SSH?" ; then
         installers="$installers doSSH"
       fi
-      if [ "$ALL" == 1 ] || askQuestionYN "$set_up vim?" ; then
+      if [ "$ALL" = 1 ] || askQuestionYN "$set_up vim?" ; then
         installers="$installers doVim"
       fi
 
-      if [ "$ALL" == 1 ] || askQuestionYN "$set_up terminal?" ; then
+      if [ "$ALL" = 1 ] || askQuestionYN "$set_up terminal?" ; then
         if substrInStr "kitty" "$TERM"; then
           installers="$installers doKitty"
         elif substrInStr "Android" "$(uname -a)";  then
@@ -92,25 +92,25 @@ readSettings() {
 
       fi
 
-      if [ "$ALL" == 1 ] || askQuestionYN "$installStr fonts?" ; then
+      if [ "$ALL" = 1 ] || askQuestionYN "$installStr fonts?" ; then
         installers="$installers doFonts"
       fi
-      # if [ "$ALL" == 1 ] || askQuestionYN "Install VSCode extensions?" ; then
+      # if [ "$ALL" = 1 ] || askQuestionYN "Install VSCode extensions?" ; then
       #     installers="$installers vscodeExtensions"
       # fi
       #
-      if [ "$OSTYPE" == "linux-gnu" ]; then
-        if [ "$ALL" == 1 ] || askQuestionYN "$set_up X?" ; then
+      if [ "$OSTYPE" = "linux-gnu" ]; then
+        if [ "$ALL" = 1 ] || askQuestionYN "$set_up X?" ; then
           installers="$installers doX"
         fi
       elif [[ $OSTYPE =~ 'darwin' ]]; then
-        if [ "$ALL" == 1 ] || askQuestionYN "$set_up OSX?" ; then
+        if [ "$ALL" = 1 ] || askQuestionYN "$set_up OSX?" ; then
           installers="$installers doOSX"
         fi
       fi
 
-      if [ "$ALL" == 1 ] || askQuestionYN "$installStr window manager?" ; then
-        if [ "$OSTYPE" == "linux-gnu" ]; then
+      if [ "$ALL" = 1 ] || askQuestionYN "$installStr window manager?" ; then
+        if [ "$OSTYPE" = "linux-gnu" ]; then
           installers="$installers doBspwm"
         elif [[ $OSTYPE =~ 'darwin' ]]; then
           installers="$installers doChunkwm"
@@ -119,17 +119,17 @@ readSettings() {
 
         # TODO make it automatic whether brew or another packagae manager is
         # installed. Check for sudo access.
-        if [ "$ALL" == 1 ] || askQuestionYN "$installStr brew?" ; then
+        if [ "$ALL" = 1 ] || askQuestionYN "$installStr brew?" ; then
           installers="$installers installBrew"
-          if [ "$ALL" == 1 ] || askQuestionYN "Update brew and install \
+          if [ "$ALL" = 1 ] || askQuestionYN "Update brew and install \
             Brewfile packages? (This can take a very long time)" ; then
                       installers="$installers doPackages"
                     fi
-                  elif [ "$ALL" == 1 ] || askQuestionYN "$installStr packages? (May require sudo)?" ; then
+                  elif [ "$ALL" = 1 ] || askQuestionYN "$installStr packages? (May require sudo)?" ; then
                     installers="doPackages $installers"
                   fi
 
-                  if [ "$ALL" == 1 ] || askQuestionYN "$set_up git credentials?" ; then
+                  if [ "$ALL" = 1 ] || askQuestionYN "$set_up git credentials?" ; then
                     installers="doGit $installers"
                   fi
                 fi
