@@ -12,20 +12,20 @@ export KEYTIMEOUT=20  # Default 40 (400 ms).
 function zle-keymap-select {
   if [[ ${KEYMAP} == vicmd ]] ||
      [[ $1 = 'block' ]]; then
-    echo -ne '\e[1 q'
+    echo -ne "${term_block_cursor}"
 
   elif [[ ${KEYMAP} == main ]] ||
        [[ ${KEYMAP} == viins ]] ||
        [[ ${KEYMAP} = '' ]] ||
        [[ $1 = 'beam' ]]; then
-    echo -ne '\e[5 q'
+    echo -ne "${term_bar_cursor}"
   fi
 }
 zle -N zle-keymap-select
 
 # Use beam shape cursor for each new prompt.
 _fix_cursor() {
-   echo -ne '\e[5 q'
+   echo -ne "${term_bar_cursor}"
 }
 precmd_functions+=(_fix_cursor)
 # Echoing the cursor change causes powerlevel10k's instant prompt to give a
