@@ -5,7 +5,7 @@
 # Only when interactive.
 if [[ $- == *i* ]]; then stty -ixon; fi
 # Always send backspace as ^?, not ^H.
-stty erase ^?
+stty erase ^\?
 
 
 # Prevent duplicating
@@ -13,6 +13,8 @@ PROMPT_COMMAND=""
 
 export XDG_CONFIG_HOME="$HOME/.config"
 
+# Will get exported to ssh servers (see functions->export_termoptions)
+export TERMOPTIONS=(USENF USEPF COLORTERM TERM_PROGRAM COLOURSCHEME)
 # {[} Terminal settings
 
 USENF=${USENF:-}

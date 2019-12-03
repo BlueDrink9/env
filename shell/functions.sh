@@ -74,6 +74,25 @@ compareVersionNum () {
 # and paste where the above function can't be declared.
 is1EarlierVersionThan2(){ [ "$(printf "%s\n%s" "$1" "$2" | sort -V | head -n1)" = "$1" ]; }
 
+ensure_latest_shell(){
+  # If available, replace shell with brew version. (More up-to-date than
+  # system.) Use only if running interactively. (Done in outer case
+  # statement, not here.)
+  shell="$(ps -p $$ | tail -1 | awk '{print $NF}')"
+  if [ -n "$SHELL" ] && [ -z "$HAVE_LOADED_SHELL" ]; then
+    if [ -n "$HOMEBREW_PREFIX" ]; then
+      brewshell="${HOMEBREW_PREFIX}/bin/${shell}"
+      if [ "$SHELL" = "$brewshell" ]; then
+        export HAVE_LOADED_SHELL=1
+      elif [ -f "$brewshell" ]; then
+        export SHELL="$brewshell"
+        export HAVE_LOADED_SHELL=1
+        # Exec replaces the shell with the specified process.
+        exec "$brewshell" -l
+      fi
+    fi
+  fi
+}
 
 # Removes carriage return characters from argument file.
 rmcr() {

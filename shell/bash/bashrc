@@ -13,9 +13,12 @@
 # esac
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# Will get exported to ssh servers (see functions->export_termoptions)
-export TERMOPTIONS=(USENF USEPF COLORTERM TERM_PROGRAM COLOURSCHEME)
-
+# When changing shells, force setup again.
+shell="$(ps -p $$ | tail -1 | awk '{print $NF}')"
+if [ "$shell" != $(basename "$SHELL") ]; then
+  unset PROFILE_LOADED
+  export SHELL="$(which $shell)"
+fi
 if [ -z "$PROFILE_LOADED" ]; then
   source "${SCRIPT_DIR}/profile.sh"
 fi

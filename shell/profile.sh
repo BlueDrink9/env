@@ -118,7 +118,7 @@ case $- in
       # Check HAVE_LOADED_BASH so that if you detach and bash gets upgraded,
       # you don't jump straight back into tmux.
       if [ -z "$TMUX" ] && [[ ! $TERM =~ screen ]] && \
-        [ -z "$HAVE_LOADED_BASH" ]; then
+        [ -z "$HAVE_LOADED_SHELL" ]; then
               # PNAME="$(ps -o comm= $PPID)";
               # useTmuxFor="login sshd gnome-terminal init wslbridge-backe"
               # if contains "$useTmuxFor" "$PNAME"; then
@@ -135,23 +135,7 @@ case $- in
           unset TMUX_256_arg
           # {]} tmux
 
-  # If available, replace bash with brew version. (More up-to-date than system.)
-  # # # Only if running interactively. (Done in outer case statement, not
-  # here.)
-  if [ -n "$BASH" ] && [ -z "$HAVE_LOADED_BASH" ]; then
-    if [ -n "$HOMEBREW_PREFIX" ]; then
-      brewbash="$HOMEBREW_PREFIX/bin/bash"
-      if [ "$BASH" = "$brewbash" ]; then
-        export HAVE_LOADED_BASH=1
-      elif [ -f "$brewbash" ]; then
-        export SHELL="$brewbash"
-        export HAVE_LOADED_BASH=1
-        # Exec replaces the shell with the specified process.
-        exec "$brewbash" -l
-      fi
-    fi
-  fi
-
+    ensure_latest_shell
 
     ssh_agent_start
     # Do this manually instead, using keybinding.

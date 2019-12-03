@@ -7,7 +7,7 @@
 # [ -n "${PROFILE_LOADED}" ] && return
 PROFILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# Exec wipes out function definitions, so kill include guard for profile.
+# Functions aren't exported, so if starting a new shell, need to load again.
 unset SHELL_FUNCTIONS_LOADED
 source "${PROFILE_DIR}/functions.sh"
 
