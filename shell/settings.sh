@@ -1,13 +1,6 @@
 #!/usr/bin/env sh
 # vim: ft=sh:fdm=marker:fmr={[},{]}
 
-# Allow sending ctrl+S to applications in terminal (prev stops scrolling).
-# Only when interactive.
-if [[ $- == *i* ]]; then stty -ixon; fi
-# Always send backspace as ^?, not ^H.
-stty erase ^\?
-
-
 # Prevent duplicating
 PROMPT_COMMAND=""
 

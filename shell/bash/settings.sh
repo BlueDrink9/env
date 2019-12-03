@@ -83,3 +83,9 @@ shopt -s cdable_vars
 # Prevent files from being overwritten by redirection.
 set -o noclobber
 
+# Allow sending ctrl+S to applications in terminal (prev stops scrolling).
+# Only when interactive.
+if [[ $- == *i* ]]; then stty -ixon; fi
+# Always send backspace as ^?, not ^H.
+stty erase ^\?
+
