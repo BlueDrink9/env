@@ -2,7 +2,7 @@
 # Match exec: Include only if ssh version > 7.3p1.
 # (Otherwise Include not defined.)
 # Will apply up to next host or match entry.
-match exec "[ $(echo '7.3p1' $(ssh -V 2>&1 | sed -n 's/OpenSSH_\([^,]*\).*/\1/p') | tr ' ' '\n' | sort -V | head -n1) == '7.3p1' ]"
+match exec "[ $(echo '7.3p1' $(ssh -V 2>&1 | sed -n 's/OpenSSH_\([^,]*\).*/\1/p') | tr ' ' '\n' | sort -V | head -n1) = '7.3p1' ]"
     Include "shared_servers/servers"
 
 #: Forwards X and ssh-agent passwords.
