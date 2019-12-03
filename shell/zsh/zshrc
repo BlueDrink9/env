@@ -15,14 +15,6 @@ source "${SCRIPT_DIR}/aliases_global.zsh"
 source "${SCRIPT_DIR}/plugins.zsh"
 source "${SCRIPT_DIR}/bindings.zsh"
 
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.zsh_history
-HISTSIZE=5000
-SAVEHIST=10000
-setopt appendhistory autocd nomatch
-unsetopt beep notify
-# End of lines configured by zsh-newuser-install
-
 # The following lines were added by compinstall
 autoload -Uz compinit
 compinit

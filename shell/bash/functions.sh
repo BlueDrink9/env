@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+SCRIPT_DIR_LOCAL="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${SCRIPT_DIR_LOCAL}/../functions.sh"
 
 # https://superuser.com/a/437508/885475
 # Automatically add completion for all aliases to commands having completion functions
