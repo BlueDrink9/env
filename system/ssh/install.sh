@@ -19,7 +19,7 @@ do${installID}() {
 END
 )"
 modify_SSH_env_keys(){
-    if [ "$1" == "-u" ]; then
+    if [ "$1" = "-u" ]; then
         local remove=1
     fi
     scriptdir="$($SCRIPTDIR_CMD)"

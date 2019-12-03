@@ -34,7 +34,7 @@ strInText(){
 prompt_parse_git_branch() {
   STATUS_COLOUR=${pNC}
   BRANCH=$(get_git_branch)
-  if [ ! "${BRANCH}" == "" ]; then
+  if [ ! "${BRANCH}" = "" ]; then
     status=$(git status 2>&1 | tee)
     dirty=$(strInText "${status}" "modified:")
     clean=$(strInText "${status}" "clean")
@@ -47,36 +47,36 @@ prompt_parse_git_branch() {
     deleted=$(strInText "${status}" "deleted:")
     conflicted=$(strInText "${status}" "Unmerged:")
     bits=''
-    if [ "${clean}" == "0" ]; then
+    if [ "${clean}" = "0" ]; then
       STATUS_COLOUR=${pgreen}
       bits=""
     fi
-    if [ "${ahead}" == "0" ]; then
+    if [ "${ahead}" = "0" ]; then
       STATUS_COLOUR=${pcyan}
       bits="^${bits}"
     fi
-    if [ "${behind}" == "0" ]; then
+    if [ "${behind}" = "0" ]; then
       STATUS_COLOUR=${pcyan}
       bits="v${bits}"
     fi
-    if [ "${diverged}" == "0" ]; then
+    if [ "${diverged}" = "0" ]; then
       STATUS_COLOUR=${pcyan}
       bits="^v${bits}"
       # optional: use several other possible unicode symbols.
     fi
-    if [ "${untracked}" == "0" ]; then bits="?${bits}"; fi
-    if [ "${renamed}" == "0" ]; then bits=">${bits}"; fi
-    if [ "${deleted}" == "0" ]; then bits="X${bits}"; fi
-    if [ "${newfile}" == "0" ]; then bits="+${bits}"; fi
-    if [ "${dirty}" == "0" ]; then
+    if [ "${untracked}" = "0" ]; then bits="?${bits}"; fi
+    if [ "${renamed}" = "0" ]; then bits=">${bits}"; fi
+    if [ "${deleted}" = "0" ]; then bits="X${bits}"; fi
+    if [ "${newfile}" = "0" ]; then bits="+${bits}"; fi
+    if [ "${dirty}" = "0" ]; then
       STATUS_COLOUR="${pyellow}"
       bits="*${bits}"
     fi
-    if [ "${conflicted}" == "0" ]; then
+    if [ "${conflicted}" = "0" ]; then
       STATUS_COLOUR="${pred}"
       bits="!${bits}"
     fi
-    if [ ! "${bits}" == "" ] || [ "${clean}" == "0" ]; then
+    if [ ! "${bits}" = "" ] || [ "${clean}" = "0" ]; then
       STATUS="${bits}"
     else
       STATUS="!"

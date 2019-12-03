@@ -17,7 +17,7 @@ set_bash_prompt () {
   # if git exists (it doesn't on iOS).
   if hash git 2>/dev/null; then
     GIT_BRANCH="$(get_git_branch)"
-    if [ ! "${GIT_BRANCH}" == "" ]
+    if [ ! "${GIT_BRANCH}" = "" ]
     then
       GIT_STATUS_PROMPT="$(prompt_parse_git_branch)"
     else

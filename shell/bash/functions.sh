@@ -58,21 +58,21 @@ compareVersionNum () {
   # Sort -V handles version numbers.
   # Use that and see what reaches the top of the list!
   smallestVersion="$(printf "%s\n%s" "$num1" "$num2" | sort -V | head -n1)"
-  if [ "$num1" == "$num2" ]; then
+  if [ "$num1" = "$num2" ]; then
     res="="
-  elif [ "$num1" == "$smallestVersion" ]; then
+  elif [ "$num1" = "$smallestVersion" ]; then
     res="<"
   else
     res=">"
   fi
 
   # Use eval to unset without spoiling return code.
-  eval "unset op num1 num2 smallestVersion res; [ \"$res\" == \"$op\" ]"
+  eval "unset op num1 num2 smallestVersion res; [ \"$res\" = \"$op\" ]"
   return  # result of previous comparison.
 }
 # Basically a 1-line version of the above. Not ever called, just here to copy
 # and paste where the above function can't be declared.
-is1EarlierVersionThan2(){ [ "$(printf "%s\n%s" "$1" "$2" | sort -V | head -n1)" == "$1" ]; }
+is1EarlierVersionThan2(){ [ "$(printf "%s\n%s" "$1" "$2" | sort -V | head -n1)" = "$1" ]; }
 
 
 # Removes carriage return characters from argument file.
@@ -102,7 +102,7 @@ findText(){
 del() {
   fileToDel="$1"
   fileDir="$(dirname \"${fileToDel}\")"
-  if [[ $OSTYPE == 'linux-gnu' ]]; then
+  if [ $OSTYPE = 'linux-gnu' ]; then
     TRASHDIR=${HOME}/.local/share/Trash/files
   elif [[ $OSTYPE =~ 'darwin' ]]; then
     TRASHDIR=${HOME}/.Trash
@@ -160,7 +160,7 @@ term() {
 }
 
 fopen() {
-  if [ "$(uname)" == "Darwin" ]; then
+  if [ "$(uname)" = "Darwin" ]; then
     # Mac OS X, open finder.
     open $1
     return
@@ -483,12 +483,12 @@ ssh_agent_start(){
   # to load the agent config from a file, and if still can't connect to the
   # agent, it will start a new one.
   ssh-add -l &>/dev/null
-  if [ "$?" == 2 ]; then
+  if [ "$?" = 2 ]; then
     test -r ~/.ssh-agent && \
       eval "$(<~/.ssh-agent)" >/dev/null
 
     ssh-add -l &>/dev/null
-    if [ "$?" == 2 ]; then
+    if [ "$?" = 2 ]; then
       (umask 066; ssh-agent > ~/.ssh-agent)
       eval "$(<~/.ssh-agent)" >/dev/null
       # ssh-add
@@ -587,7 +587,7 @@ pack(){
             searchcmd="-Ss"
             removecmd="-R"
             noconfirmcmd="--noconfirm"
-            if [ "$packcmd" == "pacman" ]; then useSudo=true; fi
+            if [ "$packcmd" = "pacman" ]; then useSudo=true; fi
             ;;
         pkg )
             # Probably termux, may be freeBSD.
@@ -637,7 +637,7 @@ alias kitty_termcopy="kitty +kitten \ssh"
 htmlCopyAsRichText(){
   if [[ "$OSTYPE" =~ "darwin" ]]; then
     textutil -stdin -format html -convert rtf -stdout | pbcopy
-  elif [ "${isWSL}" == 1 ]; then  # WSL specific stuff
+  elif [ "${isWSL}" = 1 ]; then  # WSL specific stuff
     pandoc.exe --standalone --from=html --to=rtf --output=- | clip.exe
   elif [[ "$OSTYPE" =~ "linux" ]] && command -v xclip > /dev/null 2>&1; then  # Linux specific stuff
     xclip -t text/html -selection clipboard

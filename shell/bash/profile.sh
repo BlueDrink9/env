@@ -149,7 +149,7 @@ case $- in
   if [ -n "$BASH" ] && [ -z "$HAVE_LOADED_BASH" ]; then
     if [ -n "$HOMEBREW_PREFIX" ]; then
       brewbash="$HOMEBREW_PREFIX/bin/bash"
-      if [ "$BASH" == "$brewbash" ]; then
+      if [ "$BASH" = "$brewbash" ]; then
         export HAVE_LOADED_BASH=1
       elif [ -f "$brewbash" ]; then
         export SHELL="$brewbash"
