@@ -213,7 +213,7 @@ fopen() {
 # https://spin.atomicobject.com/2016/05/28/log-bash-history/
 log_command() {
   if [ "$(id -u)" -ne 0 ]; then
-    echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $(history 1)" >> ~/.logs/bash-history-$(date "+%Y-%m-%d").log;
+    echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $(history 1)" >> ~/.logs/shell-history-$(date "+%Y-%m-%d").log;
   fi
 }
 
@@ -272,24 +272,6 @@ bash_history_sync() {
 #   _bash_history_sync
 #   builtin history "$@"
 # }
-
-# Log bash output into log given by argument (or into default log).
-bash_debug_log() {
-  if [ "$1" = "" ]; then
-    logfile="${HOME}/.debug_log_bashsetx"
-  else
-    logfile="$1"
-  fi
-  exec   >| >(tee -ia $logfile)
-  exec  2>| >(tee -ia $logfile >& 2)
-  exec 19>| $logfile
-
-  export BASH_XTRACEFD="19"
-
-  # Fail on first error, output all commands, etc.
-  set pipefail
-  set -eEuxo
-}
 
 # Call from a local repo to open the repository on github/bitbucket in browser
 # Modified version of https://github.com/zeke/ghwd

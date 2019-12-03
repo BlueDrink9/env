@@ -3,6 +3,8 @@ setopt hist_verify
 setopt SHARE_HISTORY
 setopt no_clobber
 HISTFILE=~/.zsh_history
+SAVEHIST="${HISTORY_FILESIZE}"
+HISTORY_IGNORE="${HISTORY_IGNORE}"
 setopt appendhistory autocd nomatch
 unsetopt beep notify
 # Disable ctrl+s for stopping flow.

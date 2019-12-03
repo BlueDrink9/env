@@ -2,6 +2,24 @@
 SCRIPT_DIR_LOCAL="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "${SCRIPT_DIR_LOCAL}/../functions.sh"
 
+# Log bash output into log given by argument (or into default log).
+bash_debug_log() {
+  if [ "$1" = "" ]; then
+    logfile="${HOME}/.debug_log_bashsetx"
+  else
+    logfile="$1"
+  fi
+  exec   >| >(tee -ia $logfile)
+  exec  2>| >(tee -ia $logfile >& 2)
+  exec 19>| $logfile
+
+  export BASH_XTRACEFD="19"
+
+  # Fail on first error, output all commands, etc.
+  set pipefail
+  set -eEuxo
+}
+
 # https://superuser.com/a/437508/885475
 # Automatically add completion for all aliases to commands having completion functions
 function alias_completion {

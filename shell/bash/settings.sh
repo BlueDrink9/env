@@ -17,11 +17,16 @@ if [ "$TERM" = "linux" ]; then
   source "$DOTFILES_DIR/terminal/x/linuxterm.sh"
 fi
 
+# Used with -x for debugging shells
+export PS4='+($(${CURR_SCRIPT_CMD}):${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 # export HISTCONTROL=ignoreboth:erasedups
+# HISTORY_IGNORE set in shell settings.sh file.
 # Don't record some commands
-export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
+export HISTIGNORE="${HISTORY_IGNORE}"
+export HISTFILESIZE="${HISTORY_FILESIZE}"
 export HISTCONTROL=ignoredups:erasedups
 # append to the history file, don't overwrite it
 shopt -s histappend

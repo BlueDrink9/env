@@ -13,13 +13,6 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 source "${SCRIPT_DIR}"/../../variables.sh
 
-# Used when waiting for user input with "select"
-export PS3="Select: "
-# Used with -x for debugging bash
-export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
-
-# \e]0 escapes to window title, \a ends it.
-export WINDOW_TITLE_BASH_PATH="\[\e]2;[\W] \u@\h: [\w] ${GIT_BRANCH} – Bash\a\]"
 
 # Truncate paths with '...', leaving only the last n folders in prompt
 # Not actually desirable, since I only store the full path in the window bar

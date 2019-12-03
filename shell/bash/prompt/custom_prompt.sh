@@ -112,9 +112,9 @@ set_bash_prompt () {
   # Ensures you won't have prompt displaced by previous line's input (eg ^C)
   cursorToBoL="\[\033[G\]"
   # Set the bash prompt variable.
-  # PS1="${WINDOW_TITLE_BASH_PATH}${cursorToBoL}${PROMPT}"
-  PS1="${WINDOW_TITLE_BASH_PATH}${PROMPT}"
-  # PS1="${WINDOW_TITLE_BASH_PATH}${PROMPT_STATICLEN}"
+  # PS1="${WINDOW_TITLE_PATH}${cursorToBoL}${PROMPT}"
+  PS1="${WINDOW_TITLE_PATH}${PROMPT}"
+  # PS1="${WINDOW_TITLE_PATH}${PROMPT_STATICLEN}"
   unset GIT_BRANCH GIT_STATUS_PROMPT USER_AT_HOST \
     USER_COLOURED USER_INITIAL_COLOURED HOST_COLOURED CURR_FULL_PATH CURR_DIR \
     CURR_DIR_COLOURED TIME_PROMPT TIME_PROMPT_COLOURED VI_MODE \
@@ -141,6 +141,6 @@ source ${SCRIPT_DIR}/git_prompt.sh
 PROMPT_COMMAND="set_bash_prompt; ${PROMPT_COMMAND}"
 
 # if hash tmux > /dev/null 2>&1 && tmux info > /dev/null 2>&1; then
-#   PROMPT_COMMAND=$PROMPT_COMMAND && tmux rename-window "$WINDOW_TITLE_BASH_PATH"
+#   PROMPT_COMMAND=$PROMPT_COMMAND && tmux rename-window "$WINDOW_TITLE_PATH"
 # fi
 

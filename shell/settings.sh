@@ -29,6 +29,12 @@ fi
 
 # {]} Terminal settings
 
+# Used when waiting for user input with "select"
+export PS3="Select: "
+
+# \e]0 escapes to window title, \a ends it.
+export WINDOW_TITLE_PATH="\[\e]2;[\W] \u@\h: [\w] ${GIT_BRANCH} – ${shell}\a\]"
+
 # Check if base16 scheme has been set, set COLOURSCHEME.
 export PROMPT_COMMAND="base16_colourscheme_set; ${PROMPT_COMMAND}"
 
@@ -54,8 +60,8 @@ fi
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 export HISTSIZE=1000
-export HISTFILESIZE=5000
-export SAVEHIST=5000
+export HISTORY_FILESIZE=5000
+export HISTORY_IGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
 if [ ! -d "${HOME}/.logs" ] ; then
   mkdir ${HOME}/.logs
 fi
