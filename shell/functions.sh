@@ -553,8 +553,8 @@ END
 alias lpssh="lastpass_ssh_key_add"
 
 choosePkgManager(){
-  options="brew yay pacman pkg apt yum"
-  for option in $options; do
+  _options="brew yay pacman pkg apt yum"
+  for option in $_options; do
       if [ $(command -v "${option}" 2>/dev/null) ]; then
           echo "${option}"
           break
