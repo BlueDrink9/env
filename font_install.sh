@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source "$DOTFILES_DIR/bash/script_functions.sh"
+source "$DOTFILES_DIR/shell/bash/script_functions.sh"
 
 if [[ "$OSTYPE" == 'linux-gnu' ]]; then
     FONTDIR="$HOME/.fonts"
@@ -47,7 +47,7 @@ undoFonts(){
 
 # If directly run instead of sourced, do all
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
-    source "$DOTFILES_DIR/bash/script_functions.sh"
-    source "$DOTFILES_DIR/bash/colour_variables.sh"
+    source "$DOTFILES_DIR/shell/bash/script_functions.sh"
+    source "$DOTFILES_DIR/shell/bash/colour_variables.sh"
     doFonts
 fi
