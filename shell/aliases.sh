@@ -1,8 +1,5 @@
 # vim: foldmethod=marker foldmarker={[},{]}{[}{]}
 
-# Always used
-shopt -s expand_aliases
-
 # ctrl + L often does this anyway though...
 alias cl="clear"
 alias rl="rlwrap"

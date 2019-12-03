@@ -3,6 +3,10 @@
 
 BASH_VERSION_CLEAN="${BASH_VERSION//[^0-9.]*/}"
 
+
+# Always use aliases.
+shopt -s expand_aliases
+
 # Prevent duplicating
 PROMPT_COMMAND=""
 
