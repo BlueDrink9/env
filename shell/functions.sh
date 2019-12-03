@@ -213,8 +213,16 @@ fopen() {
 # https://spin.atomicobject.com/2016/05/28/log-bash-history/
 log_command() {
   if [ "$(id -u)" -ne 0 ]; then
-    echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $(history 1)" >> ~/.logs/shell-history-$(date "+%Y-%m-%d").log;
+    if [ "$shell" = "zsh" ]; then
+      _histarg="-1"
+    elif [ "$shell" = "bash" ]; then
+      _histarg="1"
+    else
+      _histarg="1"
+    fi
+    echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $shell $(history ${_histarg})" >> ~/.logs/shell-history-$(date "+%Y-%m-%d").log;
   fi
+  unset _histcmd
 }
 
 randGen() {
@@ -685,7 +693,7 @@ kittyColourReset(){
 
 hist-search(){
   searchterm="$1"
-  logs="$HOME"/.logs/bash-history-
+  logs="$HOME"/.logs/shell-history-
   rg "$searchterm" "${logs}"* 2> /dev/null || \
     ag "${logs}"* "$searchterm" 2> /dev/null || \
     grep -r "$searchterm" "${logs}"*

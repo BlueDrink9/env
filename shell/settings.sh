@@ -65,6 +65,7 @@ export HISTORY_IGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
 if [ ! -d "${HOME}/.logs" ] ; then
   mkdir ${HOME}/.logs
 fi
+HISTORY_FILE=~/.logs/${shell}_history
 export PROMPT_COMMAND="log_command; ${PROMPT_COMMAND}"
 
 # No init prevents screen being cleared on enter/exit.
