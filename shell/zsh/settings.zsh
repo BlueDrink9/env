@@ -4,7 +4,14 @@ _prompt_command() { eval "$PROMPT_COMMAND" }
 precmd_functions+=(_prompt_command)
 DISABLE_AUTO_TITLE="true"
 # Put info in window title. Curr dir for taskbar quicklook, then full info.
-_set_window_title(){ print -Pn "\033][%1~] $USER@$(hostname): [%~] - $shell\007" }
+_set_window_title(){
+  if [ -n "$TMUX" ]; then
+    # print -Pn "\033][%1~] $USER@$(hostname): [%~] - $shell\007"
+    echo "\e]2;[$(basename $PWD)] $USER@$(hostname): [$(pwd)] ${GIT_BRANCH} – ${shell}\a"
+  else
+    print -Pn "\033][%1~] $USER@$(hostname): [%~] - $shell\007"
+  fi
+}
 precmd_functions+=(_set_window_title)
 
 setopt hist_verify appendhistory
