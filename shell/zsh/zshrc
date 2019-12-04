@@ -27,6 +27,8 @@ source "${SCRIPT_DIR}/aliases_global.zsh"
 source "${SCRIPT_DIR}/plugins.zsh"
 source "${SCRIPT_DIR}/bindings.zsh"
 
+autoload -Uz bracketed-paste-magic
+zle -N bracketed-paste bracketed-paste-magic
 # The following lines were added by compinstall
 autoload -Uz compinit
 compinit
