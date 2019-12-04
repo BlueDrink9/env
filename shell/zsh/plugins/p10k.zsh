@@ -2,14 +2,12 @@
 # Based on romkatv/powerlevel10k/config/p10k-rainbow.zsh, checksum 42073.
 # Wizard options: nerdfont-complete + powerline, small icons, rainbow, round separators,
 # round heads, round tails, 2 lines, solid, right frame, light, sparse, few icons,
-# concise, transient_prompt, instant_prompt=quiet.
+# concise, instant_prompt=quiet.
 # Type `p10k configure` to generate another config.
 #
 # Config for Powerlevel10k with powerline prompt style with colorful background.
-# Type `p10k configure` to generate your own config based on it.
 #
 # Tip: Looking for a nice color? Here's a one-liner to print colormap.
-#
 #   for i in {0..255}; do print -Pn "%${i}F${(l:3::0:)i}%f " ${${(M)$((i%8)):#7}:+$'\n'}; done
 
 # Temporarily change options.
@@ -37,7 +35,7 @@
   # The list of segments shown on the left. Fill it with the most important segments.
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
       # =========================[ Line #1 ]=========================
-      # os_icon               # os identifier
+      os_icon               # os identifier
       dir                     # current directory
       vcs                     # git status
       # =========================[ Line #2 ]=========================
