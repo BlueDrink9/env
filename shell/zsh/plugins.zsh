@@ -24,7 +24,8 @@ zplugin ice wait lucid from"gh-r" as"program"
 zplugin load junegunn/fzf-bin
 
 zplugin ice wait lucid
-zplugin light joel-porquet/zsh-dircolors-solarized
+zplugin light liangguohuan/zsh-dircolors-solarized
+export DIRCOLORTHEME='dircolors.ansi-universal'
 
 # zplugin ice wait lucid
 zplugin light zdharma/fast-syntax-highlighting
