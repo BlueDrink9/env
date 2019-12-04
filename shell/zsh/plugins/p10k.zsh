@@ -283,7 +283,8 @@
   typeset -g POWERLEVEL9K_DIR_FOREGROUND=254  # 254
   # If directory is too long, shorten some of its segments to the shortest possible unique
   # prefix. The shortened directory can be tab-completed to the original.
-  typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_unique
+  # typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_unique
+  typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_last
   # Replace removed segment suffixes with this symbol.
   typeset -g POWERLEVEL9K_SHORTEN_DELIMITER=…
   # Color of the shortened directory segments.
@@ -377,6 +378,11 @@
   #   typeset -g POWERLEVEL9K_DIR_WORK_ANCHOR_FOREGROUND=255
   #
   typeset -g POWERLEVEL9K_DIR_CLASSES=()
+
+  typeset -g POWERLEVEL9K_VCS_SHORTEN_LENGTH="4"
+  typeset -g POWERLEVEL9K_VCS_SHORTEN_MIN_LENGTH="9"
+  typeset -g POWERLEVEL9K_VCS_SHORTEN_STRATEGY="truncate_middle"
+  typeset -g POWERLEVEL9K_SHORTEN_DELIMITER="…"
 
   #####################################[ vcs: git status ]######################################
   # Version control system colors.
