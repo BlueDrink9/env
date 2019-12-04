@@ -76,9 +76,12 @@ else
   unset -f vim
 fi
 
+# Returns some variant on "myVim='alias'"
+# Bash the word 'alias'. Zsh removes quotes.
 vimAlias="$(alias myVim)"
-# Extract between quotes.
-vimTmp="${vimAlias#*\'}"
+# Remove to first =, then remove any quotes.
+vimTmp="${vimAlias#*=}"
+vimTmp="${vimTmp#*\'}"
 MYVIM="${vimTmp%\'*}"
 unset vimAlias vimTmp
 
@@ -108,7 +111,8 @@ export EDITOR=nopluginVim
 # Calling edit-and-execute-command in readline to open the editor actually
 # uses `fc` anyway
 export FCEDIT=shelleditor
-giteditor(){ vim --cmd "let g:liteMode=1" +'set ft=gitcommit'; }
+giteditor(){ vim --cmd "let g:liteMode=1" +'set ft=gitcommit' "$@"; }
+export giteditor
 # The function trick doesn't work with git, but regular arguments do. Means
 # we don't get the best vim version from the alias though.
 # Don't actually need to set ft (git does this for us),
@@ -116,6 +120,7 @@ giteditor(){ vim --cmd "let g:liteMode=1" +'set ft=gitcommit'; }
 export GIT_EDITOR_CMD="${MYVIM}"' --cmd "let g:liteMode=1" +"set ft=gitcommit"'
 # export GIT_EDITOR_CMD=$(type liteVim | head -n4 | tail -n1)
 export GIT_EDITOR="$GIT_EDITOR_CMD"
+export GIT_EDITOR="giteditor"
 # May need to run `sudo update-alternatives --config editor` if this is not
 # working.
 export SUDO_EDITOR=vim
