@@ -411,8 +411,8 @@ ssh_copy_terminfo (){
 
 generate_export_termoptions_cmd(){
   out=""
-  for option in ${TERMOPTIONS[*]}; do
-    out="${out} export ${option}=${!option}; "
+  for _option in ${TERMOPTIONS[*]}; do
+    out="${out} export ${_option}=$(var_expand ${_option}); "
   done
   echo "${out}"
 }
