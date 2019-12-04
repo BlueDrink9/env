@@ -419,11 +419,8 @@ generate_export_termoptions_cmd(){
 
 ssh_with_options(){
   local EXPORT_TERMOPTIONS_CMD=$(generate_export_termoptions_cmd)
-  # Calls default shell, stripping leading '-' and directory
-  shell_base="${0##*/}"
-  shell_base="${shell_base#-}"
-  # \ssh -t "$@" "${EXPORT_TERMOPTIONS_CMD} " '${0#-} -l -s'
-  \ssh -t "$@" "${EXPORT_TERMOPTIONS_CMD} exec ${shell_base} -l -s"
+  # Calls remote user's default shell. Unescape $SHELL to use local user's.
+  \ssh -t "$@" "${EXPORT_TERMOPTIONS_CMD} exec \${SHELL} -l -s"
 }
 alias ssh="ssh_with_options"
 
