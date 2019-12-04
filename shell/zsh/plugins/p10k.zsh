@@ -117,11 +117,12 @@
   #
   # Note: Many default icons cannot be displayed with system fonts. You'll need to install a
   # capable font to use them. See POWERLEVEL9K_MODE below.
-  if [ "$USENF" = 1 ]; then
-    typeset -g POWERLEVEL9K_VISUAL_IDENTIFIER_EXPANSION='${P9K_VISUAL_IDENTIFIER// }'
-  else
-    typeset -g POWERLEVEL9K_VISUAL_IDENTIFIER_EXPANSION=''
-  fi
+  # If using compat, this hopefully won't be an issue.
+  # if [ "$USENF" = 1 ]; then
+  #   typeset -g POWERLEVEL9K_VISUAL_IDENTIFIER_EXPANSION='${P9K_VISUAL_IDENTIFIER// }'
+  # else
+  #   typeset -g POWERLEVEL9K_VISUAL_IDENTIFIER_EXPANSION=''
+  # fi
 
   # This option makes a difference only when default icons are enabled for all or some prompt
   # segments (see POWERLEVEL9K_VISUAL_IDENTIFIER_EXPANSION above). LOCK_ICON can be printed as
@@ -154,14 +155,11 @@
   # When set to true, icons appear before content on both sides of the prompt. When set
   # to false, icons go after content. If empty or not set, icons go before content in the left
   # prompt and after content in the right prompt.
-  #
   # You can also override it for a specific segment:
-  #
   #   POWERLEVEL9K_STATUS_ICON_BEFORE_CONTENT=false
-  #
   # Or for a specific segment in specific state:
-  #
   #   POWERLEVEL9K_DIR_NOT_WRITABLE_ICON_BEFORE_CONTENT=false
+
   typeset -g POWERLEVEL9K_ICON_BEFORE_CONTENT=
   # Add an empty line before each prompt.
   # typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
