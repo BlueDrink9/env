@@ -382,6 +382,10 @@
   # Version control system colors.
   typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND='green'  # 2
   typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND='white'
+  # typeset -g POWERLEVEL9K_VCS_AHEAD_BACKGROUND='cyan'
+  # typeset -g POWERLEVEL9K_VCS_AHEAD_FOREGROUND='white'
+  # typeset -g POWERLEVEL9K_VCS_BEHIND_BACKGROUND='cyan'
+  # typeset -g POWERLEVEL9K_VCS_BEHIND_FOREGROUND='white'
   typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='yellow'  # 3
   typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='white'
   typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=  # 2
@@ -422,6 +426,8 @@
     local       meta='%7F' # light gray foreground
     local      clean='%7F'
     local   modified='%7F'
+    # local      ahead='%4F'
+    # local     behind='%4F'
     local  untracked='%7F'
     local conflicted='%7F'
 
