@@ -74,6 +74,16 @@ compareVersionNum () {
 # and paste where the above function can't be declared.
 is1EarlierVersionThan2(){ [ "$(printf "%s\n%s" "$1" "$2" | sort -V | head -n1)" = "$1" ]; }
 
+# Expand the variable named by $1 into its value. Works in both {ba,z}sh
+# eg: a=HOME $(var_expand $a) == /home/me
+var_expand() {
+  if [ -z "${1-}" ] || [ $# -ne 1 ]; then
+    printf 'var_expand: expected one argument\n' >&2;
+    return 1;
+  fi
+  eval printf '%s' "\"\${$1?}\""
+}
+
 ensure_latest_shell(){
   # If available, replace shell with brew version. (More up-to-date than
   # system.) Use only if running interactively. (Done in outer case
@@ -428,7 +438,7 @@ alias mosh="mosh_with_options"
 
 set_tmux_termoptions(){
   if is_tmux_running; then
-    for option in ${TERMOPTIONS[*]}; do
+    for _option in ${TERMOPTIONS[*]}; do
       # If attaching to a running tmux
       # session, we set a variable in tmux's global environment from
       # the containing shell. (This must be done before attaching to work!)
@@ -437,15 +447,15 @@ set_tmux_termoptions(){
       ## Set tmux environment
       # Check that we're in a session
       if [ ! -z "$TMUX" ]; then
-        for option in ${TERMOPTIONS[*]}; do
-          # Refresh termoption shell variables by parsing tmux's global environment
-          local optval="$(\tmux show-environment -g ${option} 2>/dev/null)"
-          export "${option}"="${optval##*=}"
+        for _option in ${TERMOPTIONS[*]}; do
+          # Refresh term_option shell variables by parsing tmux's global environment
+          local optval="$(\tmux show-environment -g ${_option} 2>/dev/null)"
+          export "${_option}"="${optval##*=}"
           unset optval
         done
       else
         # Should this go after attaching tmux or before???
-        \tmux setenv -g "${option}" "${!option}"
+        \tmux setenv -g "${_option}" "$(var_expand ${_option})"
       fi
     done
   fi
