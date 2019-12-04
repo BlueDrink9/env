@@ -12,7 +12,9 @@ _set_window_title(){
     local escape_start='\033]'
     local escape_end='\007'
   fi
-  print -Pn "${escape_start}[%1~] $USER@$(hostname): [%~] - $shell${escape_end}"
+  # number of bg jobs, or "" if 0.
+  JOBS=$(if [ -n "$(jobs -p)" ]; then echo "%j"; fi)
+  print -Pn "${escape_start}[%1~] %n@%M: [%~] $JOBS - $shell${escape_end}"
 }
 precmd_functions+=(_set_window_title)
 
