@@ -32,6 +32,11 @@
     local LC_ALL=${${(@M)$(locale -a):#*.(utf|UTF)(-|)8}[1]:-en_US.UTF-8}
   fi
 
+  typeset -g POWERLEVEL9K_COLOR_SCHEME='light'
+  if substrInStr "dark" "$COLOURSCHEME"; then
+    typeset -g POWERLEVEL10K_COLOR_SCHEME='dark'
+  fi
+
   if [ "$USENF" = 1 ]; then
     __os_icon="os_icon"
   else
