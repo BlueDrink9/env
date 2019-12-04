@@ -6,11 +6,13 @@ DISABLE_AUTO_TITLE="true"
 # Put info in window title. Curr dir for taskbar quicklook, then full info.
 _set_window_title(){
   if [ -n "$TMUX" ]; then
-    # print -Pn "\033][%1~] $USER@$(hostname): [%~] - $shell\007"
-    echo "\e]2;[$(basename $PWD)] $USER@$(hostname): [$(pwd)] ${GIT_BRANCH} – ${shell}\a"
+    local escape_start='\e]2;'
+    local escape_end='\a'
   else
-    print -Pn "\033][%1~] $USER@$(hostname): [%~] - $shell\007"
+    local escape_start='\033]'
+    local escape_end='\007'
   fi
+  print -Pn "${escape_start}[%1~] $USER@$(hostname): [%~] - $shell${escape_end}"
 }
 precmd_functions+=(_set_window_title)
 
