@@ -20,17 +20,23 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=014"
 
 # Binary release in archive, from GitHub-releases page.
 # After automatic unpacking it provides program "fzf".
-zplugin ice from"gh-r" as"program"
+zplugin ice wait lucid from"gh-r" as"program"
 zplugin load junegunn/fzf-bin
 
+zplugin ice wait lucid
+zplugin light joel-porquet/zsh-dircolors-solarized
+
+# zplugin ice wait lucid
 zplugin light zdharma/fast-syntax-highlighting
+
 # LS_COLORS for a huge number of filetypes. Some end up hard to see on
 # certain themes though.
 # For GNU ls (the binaries can be gls, gdircolors, e.g. on OS X when installing the
 # coreutils package from Homebrew; you can also use https://github.com/ogham/exa)
 # zplugin ice atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh" nocompile'!'
 # zplugin light trapd00r/LS_COLORS
-zplugin light trapd00r/zsh-syntax-highlighting-filetypes
+# zplugin light trapd00r/zsh-syntax-highlighting-filetypes
+# ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets root)
 
 # Load before syntax highlighting
 # Search history for current line.
@@ -40,3 +46,4 @@ zplugin light trapd00r/zsh-syntax-highlighting-filetypes
 # bindkey '^[[B' history-substring-search-down
 # bindkey -M vicmd 'k' history-substring-search-up
 # bindkey -M vicmd 'j' history-substring-search-down
+
