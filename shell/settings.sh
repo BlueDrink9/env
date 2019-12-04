@@ -32,9 +32,6 @@ fi
 # Used when waiting for user input with "select"
 export PS3="Select: "
 
-# \e]0 escapes to window title, \a ends it.
-export WINDOW_TITLE_PATH="\[\e]2;[\W] \u@\h: [\w] ${GIT_BRANCH} – ${shell}\a\]"
-
 # Check if base16 scheme has been set, set COLOURSCHEME.
 export PROMPT_COMMAND="base16_colourscheme_set; ${PROMPT_COMMAND}"
 
