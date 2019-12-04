@@ -15,7 +15,7 @@ zplugin ice wait lucid atload'_zsh_autosuggest_start'
 zplugin light zsh-users/zsh-autosuggestions
 zle -N autosuggest-accept  # Dummy binding to supress error. Replaced later.
 bindkey -M viins "" autosuggest-accept
-# ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#ff00ff,bg=cyan,bold,underline"
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=014"
 
 
 # Binary release in archive, from GitHub-releases page.
