@@ -342,18 +342,6 @@ let &errorformat="%f:%l:%c: %t%*[^:]:%m,%f:%l: %t%*[^:]:%m," . &errorformat
 let errormarker_disablemappings = 1
 cabbrev er ErrorAtCursor
 Plug 'ryanoasis/vim-devicons'
-if has("python3")
-    if has("nvim")
-        Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
-    else
-        " Vdebug for python, pyhp, perl, ruby
-        Plug 'https://github.com/vim-vdebug/vdebug'
-    endif
-elseif has("python2")
-    Plug 'https://github.com/vim-vdebug/vdebug', {'tag': 'v1.5.2'}
-endif
-" vebugger for gdb, lldb, jdb, pdb, rubydebug, node inspect.
-Plug 'https://github.com/idanarye/vim-vebugger'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 " Look up documtenation for word under cursor with gk
 Plug 'https://github.com/keith/investigate.vim'
@@ -389,6 +377,30 @@ let test#strategy = "dispatch"
 Plug 'https://github.com/sbdchd/neoformat'
 nnoremap g= :Neoformat<CR>
 " {]} ---------- IDE----------
+
+" {[} ---------- Debugging ----------
+" Vimspector requires vim 8.1 with this patch. Doesn't support neovim.
+if has("patch-8.1-1264")
+    " Just install all available plugins for now...
+    Plug 'https://github.com/puremourning/vimspector', { 'do': ':!./install_gadget.py --all --disable-tcl' }
+    " See readme. Similar to visual studio, but F-keys only, no shifts or
+    " controls.
+    let g:vimspector_enable_mappings = 'HUMAN'
+else
+    if has("python3")
+        if has("nvim")
+            Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
+        else
+            " Vdebug for python, pyhp, perl, ruby
+            Plug 'https://github.com/vim-vdebug/vdebug'
+        endif
+    elseif has("python2")
+        Plug 'https://github.com/vim-vdebug/vdebug', {'tag': 'v1.5.2'}
+    endif
+    " vebugger for gdb, lldb, jdb, pdb, rubydebug, node inspect.
+    " plug 'https://github.com/idanarye/vim-vebugger'
+endif
+" {]} ---------- Debugging ----------
 
 " {[} ---------- Completion ----------
 
