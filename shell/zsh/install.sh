@@ -10,7 +10,6 @@ do${installID}() {
   printErr "Enabling custom zsh setup..."
   # addTextIfAbsent "source $HOME/.bashrc" "${HOME}/.bash_profile"
 
-  installDircolours
   installBase16Shell
   installZSHPlugins
   # Do after installing plugins
@@ -18,14 +17,6 @@ do${installID}() {
 }
 END
 )"
-
-installDircolours(){
-  printErr "Downloading dircolours_solarized..."
-  downloadURLtoFile  \
-      https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.256dark  \
-      "${HOME}/.dircolours_solarized"
-  # https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-universal
-}
 
 installBase16Shell(){
   printErr "Downloading base16-shell..."
