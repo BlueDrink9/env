@@ -107,6 +107,8 @@ nnoremap U <c-r>
 nnoremap gp `[v`]
 nnoremap K $
 nnoremap gK K
+" Hopefully works in most GUIs, if not terminals.
+inoremap <C-BS> <C-w>
 " {]} Basic mappings
 
 " {[} Abbreviations and commands
