@@ -128,6 +128,7 @@ $packages = @(
         "onedrive",
         "colortool",
         "joplin",
+        "linkshellextension",
         "google-backup-and-sync",
         "onetastic"
 )
