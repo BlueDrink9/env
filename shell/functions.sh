@@ -230,9 +230,11 @@ log_command() {
     else
       _histarg="1"
     fi
-    echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $shell $(history ${_histarg})" >> ~/.logs/shell-history-$(date "+%Y-%m-%d").log;
+    _log="$HOME/.logs/shell-history-$(date "+%Y-%m-%d").log"
+    if [ ! -f "$_log" ]; then touch "$_log"; fi
+    echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $shell $(history ${_histarg})" >> "$_log"
   fi
-  unset _histcmd
+  unset _histcmd _log
 }
 
 randGen() {
