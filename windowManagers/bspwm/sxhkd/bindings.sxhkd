@@ -53,7 +53,7 @@ super + shift + {t,ctrl + t,u,m}
 # # make sxhkd reload its configuration files:
 super + shift + c
 	pkill -USR1 -x sxhkd; bsp_border_reset
-  # killall sxhkd && sxhkd -m -1 -c "$HOME/.config/sxhkd/sxhkdrc" "$DOTFILES_DIR"/windowManagers/bspwm/*.sxhkd &
+  # killall sxhkd && sxhkd -m -1 -c "$HOME/.config/sxhkd/sxhkdrc" "$DOTFILES_DIR"/windowManagers/bspwm/sxhkd/*.sxhkd &
 
 super + {minus, plus} 
   bspc node {-g hidden, $(bspc query -N -n .hidden | tail -n1) -g hidden=off}

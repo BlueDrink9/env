@@ -6,7 +6,7 @@ export DOTFILES_DIR="$(cat $HOME/.config/.dotfiles_dir)"
 # export DOTFILES_DIR="$(cat $HOME/.config/.dotfiles_dir)" && \
 pgrep sxhkd || \
   sxhkd -m -1 -c "$HOME/.config/sxhkd/sxhkdrc" \
-  "$DOTFILES_DIR"/windowManagers/bspwm/*.sxhkd \
+  "$DOTFILES_DIR"/windowManagers/bspwm/sxhkd/*.sxhkd \
    > $HOME/.logs/sxhkd.log 2> $HOME/.logs/sxhkd.err &
 # flashfocus &
 
