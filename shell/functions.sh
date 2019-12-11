@@ -572,12 +572,13 @@ alias lpssh="lastpass_ssh_key_add"
 
 choosePkgManager(){
   _options="brew yay pacman pkg apt yum"
-  for option in $_options; do
+  # Not quite posix, but will at least work in both bash and zsh.
+  while read option; do
       if [ $(command -v "${option}" 2>/dev/null) ]; then
           echo "${option}"
           break
       fi
-  done
+    done < <(echo $_options | tr ' ' '\n')
   unset options
 }
 
@@ -620,7 +621,7 @@ pack(){
             useSudo=true
             ;;
     esac
-    
+
     if "$useSudo"; then
         packcmd="sudo ${packcmd}"
     else
@@ -633,8 +634,8 @@ pack(){
   case "$cmd" in
     install | refresh | upgrade | search | remove | info)
       cmd="${cmd}cmd"
-      # Not posix :( Expand cmd to get what the actual [$installcmd] is.
-      $packcmd "${!cmd}" $args
+      # Expand cmd to get what the actual [$installcmd] is.
+      $packcmd "$(var_expand ${cmd})" $args
       ;;
     *)
       $packcmd "$cmd" $args
