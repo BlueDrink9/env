@@ -39,3 +39,6 @@ setopt AUTO_PARAM_SLASH
 setopt AUTO_LIST
 unsetopt LIST_AMBIGUOUS
 setopt CHECK_JOBS
+# Default includes most punctuation and symbols, dashes, slashes etc. I don't want this.
+# Affects what chars are considered part of a 'word' for ctrl w etc.
+WORDCHARS='_$'
