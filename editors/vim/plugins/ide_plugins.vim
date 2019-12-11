@@ -47,7 +47,7 @@ if v:version >= 703
     let g:indentLine_char="┆"
     " Don't override my conceal settings.
     let g:indentLine_setConceal = 0
-    let g:indentLine_setColors=0
+    " let g:indentLine_setColors=0
 " if v:version >= 702
     " Too hard to get working with terminal. Looks crap.
     " Plug 'nathanaelkane/vim-indent-guides'
