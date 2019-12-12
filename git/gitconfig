@@ -55,7 +55,7 @@
   cmd = vim -f -c "Gdiff" "$MERGED"
 # Requires vim plugin... but then again, so does fugative. This one is loaded in main.
 [mergetool "vim-conflicted"]
-  cmd = !vim +Conflicted
+  cmd = vim +Conflicted
 
 # Record resolutions of merges to apply automatically if they occur again.
 [rerere]
