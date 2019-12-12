@@ -24,6 +24,7 @@
   merge-feature = merge --no-ff
   mt = mergetool
   conflict = !vim +Conflicted
+	search = "log --pickaxe-regex -p --color-words -S"
 
 [credential]
   helper = cache --timeout=3600
