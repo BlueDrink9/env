@@ -709,18 +709,19 @@ kittyColourSet(){
     # strip .conf
     arg="$(basename "$arg" .conf)"
   fi
-  export COLOURSCHEME="${arg:-$COLOURSCHEME}"
+  if [ -z "$arg" ]; then return; fi
+  export COLOURSCHEME="${arg}"
   # Echo themes to force string splitting in zsh.
   for theme in $(echo $KITTY_THEMES); do
     if [ "$(echo $theme | tr '[:upper:]' '[:lower:]')" \
       = "$COLOURSCHEME".conf ];
     then
       kitty @ set-colors "${KITTY_THEME_DIR}/${theme}" # 2>> ~/.logs/kitty.log
+      mkdir -p "${XDG_CACHE_HOME}/kitty"
+      echo "$COLOURSCHEME" >| "${XDG_CACHE_HOME}/kitty/current_theme"
       return
     fi
   done
-  mkdir -p "${XDG_CACHE_HOME}/kitty"
-  echo "$COLOURSCHEME" >| "${XDG_CACHE_HOME}/kitty/current_theme"
 }
 kittyColourReset(){
   kitty @ set-colors "${DOTFILES_DIR}/terminal/kitty/solarized_light.conf"
