@@ -35,9 +35,9 @@ END
 )"
 
 terminal_kitty_install(){
-    local cacheDir="${XDG_CACHE_HOME:-$HOME/.cache}"/kitty
-    mkdir -p "$cacheDir"
-    git clone --depth 1 git@github.com:dexpota/kitty-themes.git "$cacheDir"/kitty-themes
+    local datadir="${XDG_DATA_HOME:-$HOME/.local/share}"/kitty
+    mkdir -p "$datadir"
+    git clone --depth 1 git@github.com:dexpota/kitty-themes.git "$datadir"/kitty-themes
     if ! command -v kitty > /dev/null 2>&1; then
       curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
     fi
