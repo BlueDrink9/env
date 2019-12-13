@@ -699,8 +699,9 @@ KITTY_THEMES="$(ls "$KITTY_THEME_DIR" | tr '\n' ' ')"
 if [ -n "$BASH" ]; then
   complete -W "$KITTY_THEMES" kittyColourSet
 elif [ -n "$ZSH_VERSION" ]; then
+  # Too hard to set up completion for, plus it isn't loaded at this stage.
   true
-  # complete -W "${KITTY_THEME_DIR}/*" kittyColourSet
+  # compdef _kittyColourSet kittyColourSet
 fi
 kittyColourSet(){
   arg="$(echo $1 | tr '[:upper:]' '[:lower:]')"
