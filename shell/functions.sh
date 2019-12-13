@@ -693,13 +693,43 @@ base16Reset(){
   reset
 }
 
+# Expand $HOME etc. KITTY_THEME_DIR set from kitty.conf.
+export KITTY_THEME_DIR="$(eval "echo ${KITTY_THEME_DIR}")"
+KITTY_THEMES="$(ls "$KITTY_THEME_DIR" | tr '\n' ' ')"
+if [ -n "$BASH" ]; then
+  complete -W "$KITTY_THEMES" kittyColourSet
+elif [ -n "$ZSH_VERSION" ]; then
+  true
+  # complete -W "${KITTY_THEME_DIR}/*" kittyColourSet
+fi
 kittyColourSet(){
-  export COLOURSCHEME="$1"
-  kitty @ set-colors "${KITTY_THEME_DIR}/${COLOURSCHEME}.conf" 2>> ~/.logs/kitty.log
+  arg="$(echo $1 | tr '[:upper:]' '[:lower:]')"
+  if substrInStr ".conf" "$arg"; then
+    # strip .conf
+    arg="$(basename "$arg" .conf)"
+  fi
+  export COLOURSCHEME="${arg:-$COLOURSCHEME}"
+  # Echo themes to force string splitting in zsh.
+  for theme in $(echo $KITTY_THEMES); do
+    if [ "$(echo $theme | tr '[:upper:]' '[:lower:]')" \
+      = "$COLOURSCHEME".conf ];
+    then
+      kitty @ set-colors "${KITTY_THEME_DIR}/${theme}" # 2>> ~/.logs/kitty.log
+      return
+    fi
+  done
+  mkdir -p "${XDG_CACHE_HOME}/kitty"
+  echo "$COLOURSCHEME" >| "${XDG_CACHE_HOME}/kitty/current_theme"
 }
 kittyColourReset(){
   kitty @ set-colors "${DOTFILES_DIR}/terminal/kitty/solarized_light.conf"
+  if [ -f "${XDG_CACHE_HOME}/kitty/current_theme" ]; then
+    rm "${XDG_CACHE_HOME}/kitty/current_theme"
+  fi
 }
+if [ -f "${XDG_CACHE_HOME}/kitty/current_theme" ]; then
+  kittyColourSet "$(cat "${XDG_CACHE_HOME}/kitty/current_theme")"
+fi
 
 hist-search(){
   searchterm="$1"
