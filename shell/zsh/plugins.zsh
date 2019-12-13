@@ -1,4 +1,4 @@
-ZPLUGIN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zplugin/bin"
+ZPLUGIN_DIR="${XDG_DATA_HOME}/zplugin/bin"
 if [[ -r "${ZPLUGIN_DIR}" ]]; then
   source "${ZPLUGIN_DIR}/zplugin.zsh"
 else
