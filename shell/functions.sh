@@ -679,58 +679,80 @@ headCSV(){
 }
 alias csvCheck="headCSV"
 
-# Check if base16 scheme has been set, set COLOURSCHEME.
-base16_colourscheme_set(){
-  if [ -n "$BASE16_THEME" ]; then
-    export COLOURSCHEME="base16-${BASE16_THEME}"
-  fi
-}
-base16Reset(){
-  unset BASE16_THEME
-  unset COLOURSCHEME
-  rm ~/.vimrc_background
-  rm ~/.base16_theme
-  reset
-}
-
-# Expand $HOME etc. KITTY_THEME_DIR set from kitty.conf.
-export KITTY_THEME_DIR="$(eval "echo ${KITTY_THEME_DIR}")"
-KITTY_THEMES="$(ls "$KITTY_THEME_DIR" | tr '\n' ' ')"
-if [ -n "$BASH" ]; then
-  complete -W "$KITTY_THEMES" kittyColourSet
-elif [ -n "$ZSH_VERSION" ]; then
-  # Too hard to set up completion for, plus it isn't loaded at this stage.
-  true
-  # compdef _kittyColourSet kittyColourSet
-fi
-kittyColourSet(){
-  arg="$(echo $1 | tr '[:upper:]' '[:lower:]')"
-  if substrInStr ".conf" "$arg"; then
-    # strip .conf
-    arg="$(basename "$arg" .conf)"
-  fi
-  if [ -z "$arg" ]; then return; fi
-  export COLOURSCHEME="${arg}"
-  # Echo themes to force string splitting in zsh.
-  for theme in $(echo $KITTY_THEMES); do
-    if [ "$(echo $theme | tr '[:upper:]' '[:lower:]')" \
-      = "$COLOURSCHEME".conf ];
-    then
-      kitty @ set-colors "${KITTY_THEME_DIR}/${theme}" # 2>> ~/.logs/kitty.log
-      mkdir -p "${XDG_CACHE_HOME}/kitty"
-      echo "$COLOURSCHEME" >| "${XDG_CACHE_HOME}/kitty/current_theme"
-      return
+if [ "$TERM" = "xterm-kitty" ] && [ -z "$SSHSESSION" ]; then
+  # Expand $HOME etc. KITTY_THEME_DIR set from kitty.conf.
+  export KITTY_THEME_DIR="$(eval "echo ${KITTY_THEME_DIR}")"
+  KITTY_THEMES="$(ls "$KITTY_THEME_DIR" | tr '\n' ' ')"
+  kittyColourSet(){
+    arg="$(echo $1 | tr '[:upper:]' '[:lower:]')"
+    if substrInStr ".conf" "$arg"; then
+      # strip .conf
+      arg="$(basename "$arg" .conf)"
     fi
-  done
-}
-kittyColourReset(){
-  kitty @ set-colors "${DOTFILES_DIR}/terminal/kitty/solarized_light.conf"
-  if [ -f "${XDG_CACHE_HOME}/kitty/current_theme" ]; then
-    rm "${XDG_CACHE_HOME}/kitty/current_theme"
+    if [ -z "$arg" ]; then return; fi
+    export COLOURSCHEME="${arg}"
+    # Echo themes to force string splitting in zsh.
+    for theme in $(echo $KITTY_THEMES); do
+      if [ "$(echo $theme | tr '[:upper:]' '[:lower:]')" \
+        = "$COLOURSCHEME".conf ];
+            then
+              kitty @ set-colors "${KITTY_THEME_DIR}/${theme}" # 2>> ~/.logs/kitty.log
+              mkdir -p "${XDG_CACHE_HOME}/kitty"
+              echo "$COLOURSCHEME" >| "${XDG_CACHE_HOME}/kitty/current_theme"
+              return
+      fi
+    done
+  }
+  kittyColourReset(){
+    kitty @ set-colors "${DOTFILES_DIR}/terminal/kitty/solarized_light.conf"
+    if [ -f "${XDG_CACHE_HOME}/kitty/current_theme" ]; then
+      rm "${XDG_CACHE_HOME}/kitty/current_theme"
+    fi
+  }
+  theme(){
+    if [ -n "$1" ]; then
+      kittyColourSet "$1"
+    else
+      if [ -f "${XDG_CACHE_HOME}/kitty/current_theme" ]; then
+        kittyColourSet "$(cat "${XDG_CACHE_HOME}/kitty/current_theme")"
+      fi
+    fi
+  }
+  notheme(){ kittyColourReset; }
+  if [ -n "$BASH" ]; then
+    complete -W "$KITTY_THEMES" kittyColourSet
+    complete -W "$KITTY_THEMES" theme
+  elif [ -n "$ZSH_VERSION" ]; then
+    # Too hard to set up completion for, plus it isn't loaded at this stage.
+    true
+    # compdef _kittyColourSet kittyColourSet
   fi
-}
-if [ -f "${XDG_CACHE_HOME}/kitty/current_theme" ]; then
-  kittyColourSet "$(cat "${XDG_CACHE_HOME}/kitty/current_theme")"
+else
+  # Check if base16 scheme has been set, set COLOURSCHEME.
+  base16_colourscheme_set(){
+    export COLOURSCHEME="${1:-$COLOURSCHEME}"
+    theme="$(echo $COLOURSCHEME | tr '_' '-')"
+    base16_theme_dir="$XDG_CONFIG_HOME/base16-shell/scripts"
+    _base16 "$base16_theme_dir/base16-$theme.sh" $theme
+    unset theme
+  }
+  base16Reset(){
+    unset BASE16_THEME
+    unset COLOURSCHEME
+    rm ~/.vimrc_background
+    rm ~/.base16_theme
+    reset
+  }
+  theme(){
+    if [ -n "$1" ]; then
+      base16_colourscheme_set "$1"
+    else
+      if [ -n "$BASE16_THEME" ]; then
+        export COLOURSCHEME="base16-${BASE16_THEME}"
+      fi
+    fi
+  }
+  notheme(){ kittyColourReset; }
 fi
 
 hist-search(){

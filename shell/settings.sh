@@ -34,8 +34,9 @@ fi
 # Used when waiting for user input with "select"
 export PS3="Select: "
 
-# Check if base16 scheme has been set, set COLOURSCHEME.
-export PROMPT_COMMAND="base16_colourscheme_set; ${PROMPT_COMMAND}"
+# Check if base16 or kitty scheme has been set, update term and set
+# COLOURSCHEME.
+export PROMPT_COMMAND="theme $COLOURSCHEME; ${PROMPT_COMMAND}"
 
 export LC_CTYPE="en_US.UTF-8"
 
