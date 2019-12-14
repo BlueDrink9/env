@@ -1,3 +1,5 @@
+" vim: foldmethod=marker
+" vim: foldmarker={[},{]}
 " Skip airline with
 " let g:loaded_airline = 1
 if exists("g:gui_oni")
