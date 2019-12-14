@@ -109,6 +109,9 @@ nnoremap K $
 nnoremap gK K
 " Hopefully works in most GUIs, if not terminals.
 inoremap <C-BS> <C-w>
+if $TERM ==? "xterm-kitty"
+  inoremap <C-H> <C-w>
+endif
 " {]} Basic mappings
 
 " {[} Abbreviations and commands
