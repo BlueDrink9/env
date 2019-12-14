@@ -51,6 +51,11 @@ if has('nvim') && exists('##UIEnter')
             set norelativenumber
         endif
 
+        " Get rid of the annoying message at the bottom about the new file being
+        " written, and then start insert mode.
+        " nunmap <c-l>
+        " call feedkeys("\<C-L>", 'n')
+
         nnoremap <C-z> :call firenvim#focus_page()<cr>
         nnoremap <Esc><Esc><Esc> :call firenvim#focus_page()<CR>
         au! myVimrc FocusLost,InsertLeave,BufLeave * ++nested call Autosave()
