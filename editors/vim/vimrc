@@ -56,6 +56,9 @@ endfunction
 
 " These settings affect what plugins are loaded, plus a couple of settings.
 " Set here to ensure consistency.
+if $LITE_SYSTEM != ""
+    let g:liteMode=1
+endif
 if !exists("g:ideMode")
     let g:ideMode=0
 elseif g:ideMode==1

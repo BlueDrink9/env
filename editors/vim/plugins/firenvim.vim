@@ -2,56 +2,59 @@
 if has('nvim') && exists('##UIEnter')
     " plugin firenvim in chrome and firefox.
     " Open textframes in nvim, similar to wasavi.
-    Plug 'https://github.com/glacambre/firenvim', {'do': ':call firenvim#install(0)'}
+    let s:startup_prologue='"export LITE_SYSTEM=1"'
+    let g:firenvim_install=":call firenvim#install(0, " . s:startup_prologue . ")"
+    Plug 'https://github.com/glacambre/firenvim', {'do': g:firenvim_install}
     " Configured as json, basically.
-    " enable only on a few websites by default
+    " disable by default. Manually activate with chrome binding.
     let g:firenvim_config = {
-                \ 'localsettings': {
-                \ '.*': {
-                \ 'selector': 'textarea',
+        \ 'localSettings': {
+            \ '.*': {
+                \ 'selector': 'textarea, div[role="textbox"]',
                 \ 'priority': 0,
-                \ },
-                \ 'github\.com': {
-                \ 'selector': 'textarea, * [contenteditable="true"]',
-                \ 'priority': 1,
-                \ },
-                \ 'google\.com': {
-                \ 'priority': 0,
-                \ },
-                \ },
-                \ }
-                " \ 'kaggle\.com': { " regular kaggle is just for console.
-                " \ 'priority': 0,
-                " \ },
+                \ 'takeover': 'once',
+            \ }
+        \ }
+        \ }
     function! s:FirenvimSetup(channel)
         let l:ui = nvim_get_chan_info(a:channel)
-        if has_key(l:ui, 'client') &&
+        if !(has_key(l:ui, 'client') &&
                     \ has_key(l:ui.client, 'name') &&
-                    \ l:ui.client.name ==# 'Firenvim'
-          " We are in firenvim
-            let g:hasGUI=1
+                    \ l:ui.client.name ==# 'Firenvim')
+            return
+        endif
+      " We are in firenvim
+        let g:hasGUI=1
+        let g:liteMode = 1
+        call SetGFN(12)
+        set termguicolors
+        call add(g:customHLGroups, 'EndOfBuffer guifg=guibg')
+        " colorscheme PaperColor
+        colorscheme github
+        if winheight(0) < 18
             let g:loaded_airline = 1
-            let g:liteMode = 1
             silent! AirlineToggle
-            call SetGFN(12)
-            call add(g:customHLGroups, 'EndOfBuffer guifg=guibg')
-            " set nonumber
-            " set norelativenumber
+            " See neovim #1004
+            " set cmdheight=0
             set cmdheight=1
             set laststatus=0
             set noshowmode
-            set termguicolors
             set noruler
             set noshowcmd
             set shortmess=aWAFtI
-            " colorscheme PaperColor
-            colorscheme github
-            au! myVimrc FocusLost,InsertLeave,BufLeave * ++nested call Autosave()
-            autocmd myPlugins BufNewFile *.txt call s:FirenvimSetFT()
         endif
+        if winwidth(0) < 15
+            set nonumber
+            set norelativenumber
+        endif
+
+        nnoremap <C-z> :call firenvim#focus_page()<cr>
+        nnoremap <Esc><Esc><Esc> :call firenvim#focus_page()<CR>
+        au! myVimrc FocusLost,InsertLeave,BufLeave * ++nested call Autosave()
+        autocmd myPlugins BufNewFile *.txt call s:FirenvimSetPageOptions()
     endfunction
 
-    function! s:FirenvimSetFT()
+    function! s:FirenvimSetPageOptions()
         let l:bufname=expand('%:t')
         if l:bufname =~? 'github.com'
             colorscheme github
@@ -65,6 +68,12 @@ if has('nvim') && exists('##UIEnter')
             set ft=markdown
         elseif l:bufname =~? 'stackexchange.com' || l:bufname =~? 'stackoverflow.com'
             set ft=markdown
+        elseif l:bufname =~? 'slack.com' || l:bufname =~? 'gitter.com'
+            " for chat apps. Enter sents the message and deletes the buffer.
+            " Shift enter is normal return. Insert mode by default.
+            normal! i
+            inoremap <CR> <Esc>:w<CR>:call firenvim#press_keys("<LT>CR>")<CR>ggdGa
+            inoremap <s-CR> <CR>
         endif
     endfunction
 

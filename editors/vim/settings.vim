@@ -361,6 +361,7 @@ if winheight(0) < 24
         " Hides airline/any other status bar.
         set laststatus=0
         set showmode
+        let g:loaded_airline = 1
     else
         set laststatus=2
     endif
