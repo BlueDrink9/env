@@ -45,8 +45,9 @@ Plug 'https://github.com/vim-scripts/oceandeep'
 " Purple can be quite fun.
 Plug 'ashfinal/vim-colors-violet'
 Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'sonph/onehalf', { 'rtp' : 'vim' }
 Plug 'rakr/vim-one'
+let g:one_allow_italics = 1
+" call one#highlight('vimLineComment', 'cccccc', '', 'none')
 Plug 'cormacrelf/vim-colors-github'
 " Black backgrounds
 Plug 'fcpg/vim-fahrenheit'
