@@ -31,7 +31,8 @@ if has('nvim') && exists('##UIEnter')
         call add(g:customHLGroups, 'EndOfBuffer guifg=guibg')
         " colorscheme PaperColor
         colorscheme github
-        if winheight(0) < 18
+        set colorcolumn=0
+        if &lines < 18
             let g:loaded_airline = 1
             silent! AirlineToggle
             " See neovim #1004
@@ -42,8 +43,10 @@ if has('nvim') && exists('##UIEnter')
             set noruler
             set noshowcmd
             set shortmess=aWAFtI
+            " Can't afford to hard wrap by mistake.
+            set textwidth=200
         endif
-        if winwidth(0) < 15
+        if &columns < 15
             set nonumber
             set norelativenumber
         endif

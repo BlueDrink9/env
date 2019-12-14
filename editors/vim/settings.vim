@@ -355,9 +355,9 @@ set linebreak
 set splitright
 set splitbelow
 set shortmess=a
-if winheight(0) < 24
+if &lines < 24
     set cmdheight=1
-    if winheight(0) < 18
+    if &lines < 18
         " Hides airline/any other status bar.
         set laststatus=0
         set showmode

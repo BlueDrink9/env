@@ -256,7 +256,7 @@ set noshowmode
 "  reduce delay on insert leaave?
 set ttimeoutlen=50
 
-if winheight(0) < 20
+if &lines < 20
     " Hides airline/any other status bar.
     let g:loaded_airline = 1
 endif
