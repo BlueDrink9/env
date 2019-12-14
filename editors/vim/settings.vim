@@ -357,19 +357,26 @@ set linebreak
 set splitright
 set splitbelow
 set shortmess=a
-if &lines < 24
-    set cmdheight=1
-    if &lines < 18
-        " Hides airline/any other status bar.
-        set laststatus=0
-        set showmode
-        let g:loaded_airline = 1
+function! SmallUIOnResize()
+    if &lines < 24
+        set cmdheight=1
+        if &lines < 18
+            " Hides airline/any other status bar.
+            set laststatus=0
+            set showtabline=0
+            set showmode
+            " let g:loaded_airline = 1
+        else
+            set laststatus=2
+            set showtabline=2
+        endif
     else
-        set laststatus=2
+        set cmdheight=2
     endif
-else
-    set cmdheight=2
-endif
+endfunction
+" Autocmd doesn't trigger on startup, only on change.
+autocmd myVimrc VimEnter * call SmallUIOnResize()
+autocmd myVimrc VimResized * call SmallUIOnResize()
 " Starting with Vim 7, the filetype of empty .tex files defaults to
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
