@@ -60,6 +60,8 @@ if !exists ('colorSch')
         endif
         let colorSch=substitute($COLOURSCHEME, '_dark', '', '')
         let colorSch=substitute(colorSch, '_light', '', '')
+        let colorSch=substitute(colorSch, 'light', '', '')
+        let colorSch=substitute(colorSch, 'dark', '', '')
     else
         let colorSch=s:defaultColorSch
     endif
