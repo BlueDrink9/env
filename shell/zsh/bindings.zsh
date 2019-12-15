@@ -72,9 +72,12 @@ bindkey '^[[B' down-line-or-beginning-search
 # bindkey -M vicmd "k" up-line-or-history
 # bindkey -M vicmd "j" down-line-or-history
 
-# bindkey '^?' backward-delete-char
-# bindkey '^h' backward-delete-char
-bindkey '^w' backward-kill-word
+bindkey '^?' backward-delete-char
+if [ "$TERM" = "xterm-kitty" ]; then
+  # ctrl + bs in kitty gives ^h, bs gives ^?.
+  bindkey -M viins '^h' backward-kill-word
+fi
+bindkey -M viins  '^w' backward-kill-word
 
 # allow ctrl-p, ctrl-n for navigate history (standard behaviour)
 bindkey '^P' up-history
