@@ -14,7 +14,6 @@ endif
 
 " {[} ---------- Airline ----------
 Plug 'https://github.com/vim-airline/vim-airline-themes'
-" exec "Plug \'https://github.com/vim-airline/vim-airline-themes\', {\'rtp\' : \'autoload/airline/themes/". colorSch . ".vim\'}"
 Plug 'https://github.com/vim-airline/vim-airline'
 
 if g:hasAsyncrun
