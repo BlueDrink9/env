@@ -180,10 +180,17 @@ endif
 
 " {[} ---------- Lang-specific ----------
 " {[} ------ Python ------
+" provides text objects and motions for Python classes, methods,
+" functions, and doc strings
+Plug 'jeetsukumaran/vim-pythonsense'
 if has('python') || has('python3')
     Plug 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
     if has('python3')
         let g:pymode_python = 'python3'
+        if has('nvim')
+            " semantic highlighting, including scope-based.
+            Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+        endif
     endif
     Plug 'https://github.com/tmhedberg/SimpylFold'
     let g:SimpylFold_docstring_preview = 1
@@ -203,6 +210,7 @@ if has('python') || has('python3')
     let g:jedi#usages_command = g:IDE_mappings["references"]
     let g:jedi#completions_command = "Tab"
     let g:jedi#rename_command = g:IDE_mappings["rename"]
+    Plug 'https://github.com/Vimjas/vim-python-pep8-indent'
 endif
 
 
