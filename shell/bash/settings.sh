@@ -76,6 +76,12 @@ if [[ $- == *i* ]]; then
     # Will just complete to common subsequence instead.
     bind 'Tab: complete'
   fi
+  if [ "$TERM_PROGRAM" = "mintty" ]; then
+    bind '"\C-_":"\C-W"'
+  elif [ "$TERM" = "xterm-kitty" ]; then
+    true
+    bind '"\C-H":"\C-W"'
+  fi
 fi
 # {]} Bash completion
 
