@@ -4,7 +4,7 @@
 alias cl="clear"
 alias rl="rlwrap"
 alias untar="tar -zxvf"
-alias envupd="git -C \"$DOTFILES_DIR\" pull && . ~/.bashrc"
+alias envupd="git -C \"$DOTFILES_DIR\" pull && $0"
 
 if [[ "$OSTYPE" =~ "darwin" ]]; then  # OSX specific stuff
   alias setssdir="defaults write com.apple.screencapture location"
