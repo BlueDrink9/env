@@ -1,3 +1,4 @@
+# Underscores are ignored in zsh options
 source ${SCRIPT_DIR}/../settings.sh
 # Enable using bash's PROMPT_COMMAND.
 _prompt_command() { eval "$PROMPT_COMMAND" }
@@ -19,14 +20,19 @@ _set_window_title(){
 precmd_functions+=(_set_window_title)
 
 setopt hist_verify appendhistory
-setopt SHARE_HISTORY
 # HISTORY_* set in shell settings.sh file.
 HISTFILE="${HISTORY_FILE}"
 SAVEHIST="${HISTORY_FILESIZE}"
 HISTORY_IGNORE="${HISTORY_IGNORE}"
 setopt HIST_IGNORE_SPACE HIST_IGNORE_DUPS
+setopt hist_no_store histreduceblanks
+# Append to history after every command, not just when shell exits.
+# Set by SHARE_HISTORY
+# setopt inc_append_history
+setopt SHARE_HISTORY
 setopt no_clobber
 setopt autocd nomatch
+setopt cdable_vars
 unsetopt beep notify
 # Disable ctrl+s for stopping flow.
 setopt noflowcontrol
@@ -42,3 +48,4 @@ setopt CHECK_JOBS
 # Default includes most punctuation and symbols, dashes, slashes etc. I don't want this.
 # Affects what chars are considered part of a 'word' for ctrl w etc.
 WORDCHARS='_$'
+setopt ALWAYS_TO_END 
