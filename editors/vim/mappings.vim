@@ -111,6 +111,10 @@ nnoremap gK K
 inoremap <C-BS> <C-w>
 if $TERM ==? "xterm-kitty"
   inoremap <C-H> <C-w>
+  cnoremap <C-H> <C-w>
+elseif $TERM_PROGRAM ==? "mintty"
+  inoremap <C-_> <C-w>
+  cnoremap <C-_> <C-w>
 endif
 " {]} Basic mappings
 
