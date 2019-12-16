@@ -4,7 +4,9 @@ if has('nvim') && exists('##UIEnter')
     " Open textframes in nvim, similar to wasavi.
     let s:startup_prologue='"export LITE_SYSTEM=1"'
     let g:firenvim_install=":call firenvim#install(0, " . s:startup_prologue . ")"
-    Plug 'https://github.com/glacambre/firenvim', {'do': g:firenvim_install}
+    " Only on tags/releases, because they may require the extension to be
+    " updated.
+    Plug 'https://github.com/glacambre/firenvim', {'tag': '*', 'do': g:firenvim_install}
     " Configured as json, basically.
     " disable by default. Manually activate with chrome binding.
     let g:firenvim_config = {
@@ -12,7 +14,7 @@ if has('nvim') && exists('##UIEnter')
             \ '.*': {
                 \ 'selector': 'textarea, div[role="textbox"]',
                 \ 'priority': 0,
-                \ 'takeover': 'once',
+                \ 'takeover': 'nonempty',
             \ }
         \ }
         \ }
