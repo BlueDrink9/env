@@ -58,7 +58,7 @@ if has('nvim') && exists('##UIEnter')
         " nunmap <c-l>
         " call feedkeys("\<C-L>", 'n')
 
-        nnoremap <C-z> :call firenvim#focus_page()<cr>
+        nnoremap <C-z> :call firenvim#hide_frame()<cr>
         nnoremap <Esc><Esc><Esc> :call firenvim#focus_page()<CR>
         au! myVimrc FocusLost,InsertLeave,BufLeave * ++nested call Autosave()
         autocmd myPlugins BufNewFile *.txt call s:FirenvimSetPageOptions()
