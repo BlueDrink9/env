@@ -4,33 +4,65 @@
 import os
 import sys
 
-def get_script_path():
-    return os.path.dirname(os.path.realpath(sys.argv[0]))
+def get_script_dir():
+    # Autokey runs the script via exec, so this doesn't work.
+    # return os.path.realpath(sys.argv[0])
+    # Might be able to use __file__, which gets overriden by
+    # autokey.service.scriptrunner.execute but may not always work...
+    return os.path.dirname(__file__)
 
 # Creates if it doesn't exist, returns if it does.
-folder = engine.create_folder("bspwm_bindings", temporary=True)
-engine.remove_all_temporary(folder="bspwm_bindings")
+# folder = engine.create_folder("bspwm_bindings", temporary=True)
+folder = engine.create_folder("bspwm_bindings")
+engine.remove_all_temporary(folder=folder)
+engine.remove_all_temporary(folder=folder)
+# Seems to be a bug with removing temporary from an individual folder.
+engine.remove_all_temporary()
+engine.remove_all_temporary()
+
 
 def bind(modifiers, key, cmd):
+    name = cmd
+    system_cmd_path = get_script_dir() + "/" + "system_cmd.py"
+    # Escape brackets
+    cmd = cmd.replace('>', '\\>')
+    cmd = cmd.replace('<', '\\<')
+    contents = "<script name='{}' args='{}'>".format(system_cmd_path, cmd)
+    create_phrase(name, contents, modifiers, key)
+
+
+def bind_modechange(modifiers, key, mode):
+    name = mode
+    contents = "<script name='{}' args={}>".format(get_script_dir() + "/bindings.py", mode)
+    create_phrase(name, contents, modifiers, key)
+
+
+def create_phrase(name, contents, modifiers, key):
+    if not isinstance(modifiers, list):
+        modifiers = [modifiers]
     # Remove blanks that might be added automatically.
     try:
         modifiers.remove("")
     except ValueError:
         pass
-    name = cmd
-    contents = "<script name=system_cmd args={}>".format(cmd)
-    abbreviations = key
         # hotkey = ([engine.Key.SHIFT])
-    engine.create_phrase(folder, name, contents, abbreviations, modifiers, temporary = True)
+    hotkey = engine.create_phrase(folder, name, contents, hotkey=(modifiers, key),
+                         temporary = True)
+    assert(hotkey in folder.items)
 
 
-mode = engine.get_macro_arguments()[0]
-try:
-    mode
-except NameError:
+def isMode(query):
+    modes = ["default", "manage"]
+    if query not in modes:
+        print("Error: not a valid mode: {}".format(mode))
+    return query == mode
+
+args = engine.get_macro_arguments()
+if len(args) < 1:
     mode = "default"
-if mode is None:
-    mode = "default"
+else:
+    mode = args[0]
+print(mode)
 
 # Prevent typing these wrong later.
 ctrl="<ctrl>"
@@ -51,7 +83,12 @@ button=super_
 # mode = store.get("mode", "normal")
 # store.set_value("mode", "resize")
 
-if mode == "default":
+# Convert chunkwm colours by removing first two (alpha) values, and turning 0x
+# to #.
+if isMode("default"):
+    os.system('bspc config focused_border_color "#247dcc"')
+    bind_modechange(super_, "w", "manage")
+
     bind([button, alt], esc, "bspc quit")
 
     #----------------------------------------
@@ -67,3 +104,8 @@ if mode == "default":
         for key in keys:
             bind([button, mod], key,
                     "bspc node {} {}".format(mods[mod], keys[key]))
+
+
+if isMode("manage"):
+    os.system('bspc config focused_border_color "#00bc00"')
+    bind_modechange(super_, "w", "default")
