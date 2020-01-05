@@ -1,24 +1,34 @@
 " Needs nvim > 0.4, which was probably also when UIEnter was introduced.
-if has('nvim') && exists('##UIEnter')
+if has('nvim') && exists('##UIEnter') && exists('g:started_by_firenvim')
     " plugin firenvim in chrome and firefox.
     " Open textframes in nvim, similar to wasavi.
     let s:startup_prologue='"export LITE_SYSTEM=1"'
     let g:firenvim_install=":call firenvim#install(0, " . s:startup_prologue . ")"
-    " Only on tags/releases, because they may require the extension to be
+    " Only on tags/releases, because updates may require the extension to be
     " updated.
     Plug 'https://github.com/glacambre/firenvim', {'tag': '*', 'do': g:firenvim_install}
     " Configured as json, basically.
     " disable by default. Manually activate with chrome binding.
+    " Use alt:all to always capture alt instead of sending a special key.
+    " Mainly for OSX. Use alphanum to ignore alt for alphanum.
+    " I don't use any alt mappings anyway, since terminals don't always
+    " support them.
     let g:firenvim_config = {
+        \ 'globalSettings': {
+            \ 'alt': 'alphanum',
+        \  },
         \ 'localSettings': {
             \ '.*': {
-                \ 'selector': 'textarea, div[role="textbox"]',
                 \ 'priority': 0,
+                \ 'selector': 'textarea, div[role="textbox"]',
+                \ 'cmdline': 'firenvim',
                 \ 'takeover': 'nonempty',
             \ },
-            \ 'facebook.com': { 'priority': 1, 'takeover': 'never' }
         \ }
-        \ }
+    \ }
+    let l:fc = g:firenvim_config['localSettings']
+    let l:fc['facebook.com'] = { 'priority': 1, 'takeover': 'never' }
+
     function! s:FirenvimSetup(channel)
         let l:ui = nvim_get_chan_info(a:channel)
         if !(has_key(l:ui, 'client') &&
