@@ -1,5 +1,5 @@
 " Needs nvim > 0.4, which was probably also when UIEnter was introduced.
-if has('nvim') && exists('##UIEnter') && exists('g:started_by_firenvim')
+if has('nvim') && exists('##UIEnter')
     " plugin firenvim in chrome and firefox.
     " Open textframes in nvim, similar to wasavi.
     let s:startup_prologue='"export LITE_SYSTEM=1"'
