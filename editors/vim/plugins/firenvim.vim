@@ -7,6 +7,10 @@ if has('nvim') && exists('##UIEnter')
     " Only on tags/releases, because updates may require the extension to be
     " updated.
     Plug 'https://github.com/glacambre/firenvim', {'tag': '*', 'do': g:firenvim_install}
+    " Saves this config being run for all neovim buffers.
+     if !exists('g:started_by_firenvim')
+         finish
+     endif
     " Configured as json, basically.
     " disable by default. Manually activate with chrome binding.
     " Use alt:all to always capture alt instead of sending a special key.
