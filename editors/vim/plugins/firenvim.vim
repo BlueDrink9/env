@@ -2,13 +2,17 @@
 if has('nvim') && exists('##UIEnter')
     " plugin firenvim in chrome and firefox.
     " Open textframes in nvim, similar to wasavi.
-    let s:startup_prologue='"export LITE_SYSTEM=1"'
+    if has('win32')
+        let s:startup_prologue='"export LITE_SYSTEM=1"'
+    else
+        let s:startup_prologue='"export LITE_SYSTEM=1"'
+    endif
     let g:firenvim_install=":call firenvim#install(0, " . s:startup_prologue . ")"
     " Only on tags/releases, because updates may require the extension to be
     " updated.
     Plug 'https://github.com/glacambre/firenvim', {'tag': '*', 'do': g:firenvim_install}
     " Saves this config being run for all neovim buffers.
-     if !exists('g:started_by_firenvim')
+     if exists('g:started_by_firenvim')
          finish
      endif
     " Configured as json, basically.
@@ -30,8 +34,8 @@ if has('nvim') && exists('##UIEnter')
             \ },
         \ }
     \ }
-    let l:fc = g:firenvim_config['localSettings']
-    let l:fc['facebook.com'] = { 'priority': 1, 'takeover': 'never' }
+    let s:fc = g:firenvim_config['localSettings']
+    let s:fc['facebook.com'] = { 'priority': 1, 'takeover': 'never' }
 
     function! s:FirenvimSetup(channel)
         let l:ui = nvim_get_chan_info(a:channel)
