@@ -15,7 +15,8 @@ if has('nvim') && exists('##UIEnter')
                 \ 'selector': 'textarea, div[role="textbox"]',
                 \ 'priority': 0,
                 \ 'takeover': 'nonempty',
-            \ }
+            \ },
+            \ 'facebook.com': { 'priority': 1, 'takeover': 'never' }
         \ }
         \ }
     function! s:FirenvimSetup(channel)
