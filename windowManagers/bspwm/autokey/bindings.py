@@ -1,8 +1,8 @@
-# Add script to autokey, run autokey and start this script by running
-# `autokey-run bindings default` (where 'bindings' is the script description in
-# autokey.
+# Run autokey and start this script by running
+# `autokey-run -s [path/to/bindings.py]`.
 import os
 import sys
+import pathlib
 
 def get_script_dir():
     # Autokey runs the script via exec, so this doesn't work.
@@ -29,6 +29,16 @@ def bind(modifiers, key, cmd):
     cmd = cmd.replace('<', '\\<')
     contents = "<script name='{}' args='{}'>".format(system_cmd_path, cmd)
     create_phrase(name, contents, modifiers, key)
+
+def multibind(mods, keys, command):
+    if not isinstance(mods, dict):
+        mods = {mods: ""}
+    if not isinstance(keys, dict):
+        keys = {keys: ""}
+    for mod in mods:
+        for key in keys:
+            bind([super_, mod], key,
+                    command.format(mods[mod], keys[key]))
 
 
 def bind_modechange(modifiers, key, mode):
@@ -58,7 +68,7 @@ def isMode(query):
     return query == mode
 
 def include(script):
-    exec(pathlib.Path(script).read_text()
+    exec(pathlib.Path(script).read_text())
 
 args = engine.get_macro_arguments()
 if len(args) < 1:
@@ -72,6 +82,13 @@ ctrl="<ctrl>"
 super_="<super>"
 alt="<alt>"
 shift="<shift>"
+ctrlalt="{} + {}".format(ctrl, alt)
+ctrlshift="{} + {}".format(ctrl, shift)
+altshift="{} + {}".format(alt, shift)
+superctrl="{} + {}".format(super_, ctrl)
+superalt="{} + {}".format(super_, alt)
+supershift="{} + {}".format(super_, shift)
+superaltshift="{} + {} + {}".format(super_, alt, shift)
 esc="<escape>"
 backspace="<backspace>"
 enter="<enter>"
@@ -81,6 +98,7 @@ up="<up>"
 down="<down>"
 left="<left>"
 right="<right>"
+noMod=""
 # Button: The main key used for most bindings. Currently winkey/super.
 # button=super_
 # mode = store.get("mode", "normal")
