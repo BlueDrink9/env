@@ -187,10 +187,12 @@ if has('python') || has('python3')
     Plug 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
     if has('python3')
         let g:pymode_python = 'python3'
-        if has('nvim')
-            " semantic highlighting, including scope-based.
-            Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
-        endif
+        " if has('nvim')
+        "     " semantic highlighting, including scope-based.
+        "     " Doesn't seemd to be working atm, disabling highlighting for all
+        "     " buffers.
+        "     Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+        " endif
     endif
     Plug 'https://github.com/tmhedberg/SimpylFold'
     let g:SimpylFold_docstring_preview = 1
