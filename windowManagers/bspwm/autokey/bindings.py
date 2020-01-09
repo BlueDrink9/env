@@ -37,8 +37,12 @@ def multibind(mods, keys, command):
         keys = {keys: ""}
     for mod in mods:
         for key in keys:
-            bind([mod], key,
-                    command.format(mods[mod], keys[key]))
+            if isinstance(mod, tuple):
+                modifiers = list(mod)
+            else:
+                modifiers = [mod]
+            bind(modifiers, key,
+                 command.format(mods[mod], keys[key]))
 
 
 def bind_modechange(modifiers, key, mode):
@@ -48,6 +52,8 @@ def bind_modechange(modifiers, key, mode):
 
 
 def create_phrase(name, contents, modifiers, key):
+    if isinstance(modifiers, tuple):
+        modifiers = list(modifiers)
     if not isinstance(modifiers, list):
         modifiers = [modifiers]
     # Remove blanks that might be added automatically.
@@ -58,8 +64,8 @@ def create_phrase(name, contents, modifiers, key):
         # hotkey = ([engine.Key.SHIFT])
     hotkey = engine.create_phrase(folder, name, contents, hotkey=(modifiers, key),
                          temporary = True)
-    print("{} + {} \n\t {}".format(modifiers, key, contents))
-    # assert(hotkey in folder.items)
+    # print("{} + {} \n\t {}".format(modifiers, key, contents))
+    assert(hotkey in folder.items)
 
 
 def isMode(query):
@@ -83,13 +89,13 @@ ctrl="<ctrl>"
 super_="<super>"
 alt="<alt>"
 shift="<shift>"
-ctrlalt="{} + {}".format(ctrl, alt)
-ctrlshift="{} + {}".format(ctrl, shift)
-altshift="{} + {}".format(alt, shift)
-superctrl="{} + {}".format(super_, ctrl)
-superalt="{} + {}".format(super_, alt)
-supershift="{} + {}".format(super_, shift)
-superaltshift="{} + {} + {}".format(super_, alt, shift)
+ctrlalt=(ctrl, alt)
+ctrlshift=(ctrl, shift)
+altshift=(alt, shift)
+superctrl=(super_, ctrl)
+superalt=(super_, alt)
+supershift=(super_, shift)
+superaltshift=(super_, alt, shift)
 esc="<escape>"
 backspace="<backspace>"
 enter="<enter>"

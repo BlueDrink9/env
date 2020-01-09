@@ -108,7 +108,7 @@ bind('', '-', "bspc node @/ --balance")
 
 # preselect the direction
 keys={"h": "west", "j": "south", "k": "north", "l": "east"}
-bind(noMod, keys, "bspc node -p {}")
+multibind(noMod, keys, "bspc node -p {}{}")
 # cancel the preselection for the focused node
 bind(ctrl, 'c', "bspc node -p cancel")
 # cancel the preselection for the focused desktop
