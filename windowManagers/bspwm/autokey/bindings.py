@@ -23,11 +23,10 @@ engine.remove_all_temporary()
 
 def bind(modifiers, key, cmd):
     name = cmd
-    system_cmd_path = get_script_dir() + "/" + "system_cmd.py"
     # Escape brackets
     cmd = cmd.replace('>', '\\>')
     cmd = cmd.replace('<', '\\<')
-    contents = "<script name='{}' args='{}'>".format(system_cmd_path, cmd)
+    contents = "<system command='{}'>".format(cmd)
     create_phrase(name, contents, modifiers, key)
 
 def multibind(mods, keys, command):
