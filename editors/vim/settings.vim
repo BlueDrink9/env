@@ -52,9 +52,9 @@ let g:fallbackColorSch="morning"
 if !exists ('colorSch')
     if exists("$COLOURSCHEME") && $COLOURSCHEME != ""
         if !exists ('g:backgroundColour')
-            if $COLOURSCHEME=~"light"
+            if $COLOURSCHEME=~?"light"
                 let g:backgroundColour="light"
-            elseif $COLOURSCHEME=~"dark"
+            elseif $COLOURSCHEME=~?"dark"
                 let g:backgroundColour="dark"
             endif
         endif
