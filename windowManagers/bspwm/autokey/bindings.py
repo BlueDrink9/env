@@ -1,5 +1,5 @@
 # Run autokey and start this script by running
-# `autokey-run -s [path/to/bindings.py]`.
+# `autokey-run -s [/absolute/path/to/bindings.py]`.
 import os
 import sys
 import pathlib
