@@ -57,12 +57,15 @@ def isMode(query):
         print("Error: not a valid mode: {}".format(mode))
     return query == mode
 
+def include(script):
+    exec(pathlib.Path(script).read_text()
+
 args = engine.get_macro_arguments()
 if len(args) < 1:
     mode = "default"
 else:
     mode = args[0]
-print(mode)
+
 
 # Prevent typing these wrong later.
 ctrl="<ctrl>"
@@ -79,33 +82,17 @@ down="<down>"
 left="<left>"
 right="<right>"
 # Button: The main key used for most bindings. Currently winkey/super.
-button=super_
+# button=super_
 # mode = store.get("mode", "normal")
 # store.set_value("mode", "resize")
 
-# Convert chunkwm colours by removing first two (alpha) values, and turning 0x
-# to #.
+
 if isMode("default"):
+    # Convert chunkwm colours by removing first two (alpha) values, and turning
+    # 0x to #.
     os.system('bspc config focused_border_color "#247dcc"')
-    bind_modechange(super_, "w", "manage")
-
-    bind([button, alt], esc, "bspc quit")
-
-    #----------------------------------------
-    # focus/swap
-    #----------------------------------------
-
-    # focus the node in the given direction
-    # super + {_,shift + }{h,j,k,l}
-    #     bspc node -{f,s} {west,south,north,east}
-    keys={"h": "west", "j": "south", "k": "north", "l": "east"}
-    mods = {"": "-f", shift: "-s"}
-    for mod in mods:
-        for key in keys:
-            bind([button, mod], key,
-                    "bspc node {} {}".format(mods[mod], keys[key]))
-
+    include(get_script_dir() + "/default_bindings.py")
 
 if isMode("manage"):
     os.system('bspc config focused_border_color "#00bc00"')
-    bind_modechange(super_, "w", "default")
+    include(get_script_dir() + "/manage_bindings.py")
