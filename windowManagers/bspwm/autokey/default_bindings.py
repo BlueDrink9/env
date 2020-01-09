@@ -10,8 +10,7 @@ bind([super_, alt], esc, "bspc quit")
 # super + {_,shift + }{h,j,k,l}
 #     bspc node -{f,s} {west,south,north,east}
 keys={"h": "west", "j": "south", "k": "north", "l": "east"}
-mods = {"": "-f"}
-multibind(mods, keys, "bspc node {} {}")
+multibind(super_, keys, "bspc node -f {} {}")
 
 # Normally duplicated by window manager
 # focus the next/previous node in the current desktop
@@ -22,7 +21,7 @@ multibind({super_: 'newer', supershift: 'older'}, tab, \
           "bspc wm -h off; bspc node {} -f; bspc wm -h on {}")
 
 # close and kill
-multibind({"": "-c", shift: "-k"}, {"x":""}, "bspc node {}{}")
+multibind({super_: "-c", supershift: "-k"}, {"x":""}, "bspc node {}{}")
 
 # Minimize/hide
 # super - z : osascript -e 'tell application "System Events" to keystroke "m" using {command down}'
@@ -36,11 +35,11 @@ multibind({"": "-c", shift: "-k"}, {"x":""}, "bspc node {}{}")
 # See https://blog.codezen.org/2015/03/13/on-bspwm-tweaking/ #Named Desktops to see how to create if no new one found.
 multibind(super_, {"[": 'prev', "]": 'next'}, "bspc desktop -f {}{}.local")
 multibind(supershift, {"[": 'prev', "]": 'next'}, "bspc node --to-desktop {}{}.local")
-# Move to desktop and focus on it
-bind(superctrl, "[": 'prev', \
-     'id=$(bspc query --nodes --node); bspc node --to-desktop prev; bspc desktop --focus prev; bspc node --focus ${id}')
-bind(superctrl, "]": 'next', \
-  'id=$(bspc query --nodes --node); bspc node --to-desktop next; bspc desktop --focus next; bspc node --focus ${id}')
+# Move to desktop and focus on it.
+# Double {} for literal {}.
+move = 'id=$(bspc query --nodes --node); bspc node --to-desktop {}; bspc desktop --focus {}; ' + 'bspc node --focus ${{id}}'
+bind(superctrl, "[", move.format("prev", "prev"))
+bind(superctrl, "]", move.format("next", "next"))
 
 # Move to specified desktop
 # super + {_,shift + }{1-9,0}

@@ -11,3 +11,11 @@ def get_script_dir():
 
 script = get_script_dir() + "/bindings.py"
 exec(pathlib.Path(script).read_text())
+
+def return_mode():
+    return ['manage']
+
+# with mock.patch("engine.get_macro_arguments", side_effect=return_mode):
+engine.get_macro_arguments = return_mode
+exec(pathlib.Path(script).read_text())
+

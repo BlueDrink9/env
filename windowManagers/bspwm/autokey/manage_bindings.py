@@ -9,7 +9,7 @@ bind_modechange([], esc, "default")
 
 # focus or swap node in the given direction
 keys={"h": "west", "j": "south", "k": "north", "l": "east"}
-mods = {"": "-f", shift: "-s"}
+mods = {super_: "-f", supershift: "-s"}
 multibind(mods, keys, "bspc node {} {}")
 
 # Move/warp window (not implemented in bspwm?)
@@ -30,7 +30,7 @@ keys={left:"left -20 0",down:"bottom 0 20",up:"top 0 -20",right:"right 20 0"}
 multibind(shift, keys, "bspc node -z {}{}")
 # # contract a window by moving one of its side inward
 keys={left:"right -20 0",down:"top 0 20",up:"bottom 0 -20",right:"left 20 0"}
-multibind(ctrlshift:, keys, "bspc node -z {}{}")
+multibind(ctrlshift, keys, "bspc node -z {}{}")
 
 # # move a floating window
 keys={left:"-20 0",down:"0 20",up:"0 -20",right:"20 0"}
@@ -41,7 +41,7 @@ multibind(noMod, keys, "bspc node -v {}{}")
 # #
 
 # close and kill
-mods = {"": "-c", shift: "-k"}
+mods = {super_: "-c", supershift: "-k"}
 multibind(mods, 'x', "bspc node {}{}")
 
 # set the window state. Floating is a toggle, needs extra quotes.
@@ -57,7 +57,7 @@ keys={'m': "marked", 'x':"locked", 'p':"sticky", 'z':'private'}
 multibind(ctrl, keys, "bspc node -g {}{}")
 
 # Hide and unhide nodes?
-keys = {"<minus>": "-g hidden", "<plus>":$(bspc query -N -n .hidden | tail -n1) -g hidden=off}
+keys = {"<minus>": "-g hidden", "<plus>": "$(bspc query -N -n .hidden | tail -n1) -g hidden=off"}
 multibind(noMod, keys, "bspc node {}{}")
 
 

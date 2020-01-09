@@ -37,7 +37,7 @@ def multibind(mods, keys, command):
         keys = {keys: ""}
     for mod in mods:
         for key in keys:
-            bind([super_, mod], key,
+            bind([mod], key,
                     command.format(mods[mod], keys[key]))
 
 
@@ -58,7 +58,8 @@ def create_phrase(name, contents, modifiers, key):
         # hotkey = ([engine.Key.SHIFT])
     hotkey = engine.create_phrase(folder, name, contents, hotkey=(modifiers, key),
                          temporary = True)
-    assert(hotkey in folder.items)
+    print("{} + {} \n\t {}".format(modifiers, key, contents))
+    # assert(hotkey in folder.items)
 
 
 def isMode(query):
