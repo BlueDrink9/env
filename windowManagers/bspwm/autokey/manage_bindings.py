@@ -13,15 +13,23 @@ mods = {super_: "-f", supershift: "-s"}
 multibind(mods, keys, "bspc node {} {}")
 
 # Move/warp window (not implemented in bspwm?)
+# warp node in the given direction (move without replacing).
+warpscript = (pathlib.Path(get_script_dir()) / '..' / 'bspwm-warp.sh').resolve()
+keys={"h": "west", "j": "south", "k": "north", "l": "east"}
+multibind(superalt, keys, "\"%s\" {}{}" % warpscript)
 
 # focus the node for the given path jump
 # This has a duplicate with a plasma shortcut, I think
 # super + {p,b,comma,period}
 #	bspc node -f @{parent,brother,first,second}
 
+# # move a floating window
+keys={left:"-20 0",down:"0 20",up:"0 -20",right:"20 0"}
+multibind(noMod, keys, "bspc node -v {}{}")
+
 
 # #
-# # move/resize
+# # resize
 # #
 
 # # expand a window by moving one of its side outward
@@ -31,10 +39,6 @@ multibind(shift, keys, "bspc node -z {}{}")
 # # contract a window by moving one of its side inward
 keys={left:"right -20 0",down:"top 0 20",up:"bottom 0 -20",right:"left 20 0"}
 multibind(ctrlshift, keys, "bspc node -z {}{}")
-
-# # move a floating window
-keys={left:"-20 0",down:"0 20",up:"0 -20",right:"20 0"}
-multibind(noMod, keys, "bspc node -v {}{}")
 
 # #
 # # states
