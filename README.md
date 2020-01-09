@@ -93,6 +93,8 @@ Not everything works in every context.
 | Move pane to [next,prev] desktop and focus | `%<C-#-[[,]]>` |
 | Move pane to desktop [num] | `%[num]` |
 | jump to desktop [num] | `<#-[num]>` |
+| Move desktop [left,right] on monitor | `%<S-[[,]]>` |
+| Move desktop to [next,prev] monitor | `%<C-[[,]]>` |
 
 <sup>1</sup> Vim and tmux share `ctrl` as the modifier here. Tmux also allows this after prefix, just in case the vim plugin isn't working.
 
