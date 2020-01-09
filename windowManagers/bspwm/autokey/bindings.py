@@ -114,8 +114,8 @@ noMod=""
 
 if isMode("default"):
     # Convert chunkwm colours by removing first two (alpha) values, and turning
-    # 0x to #.
-    os.system('bspc config focused_border_color "#247dcc"')
+    # 0x to #. Chunkwm uses #247dcc as focussed color.
+    os.system('bspc config focused_border_color "#1cb5db"')
     include(get_script_dir() + "/default_bindings.py")
 
 if isMode("manage"):
