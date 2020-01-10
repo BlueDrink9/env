@@ -3,7 +3,7 @@ if has('nvim') && exists('##UIEnter')
     " plugin firenvim in chrome and firefox.
     " Open textframes in nvim, similar to wasavi.
     if has('win32')
-        let s:startup_prologue='"export LITE_SYSTEM=1"'
+        let s:startup_prologue='"set LITE_SYSTEM=1"'
     else
         let s:startup_prologue='"export LITE_SYSTEM=1"'
     endif
