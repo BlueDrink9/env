@@ -40,6 +40,11 @@ if exists("g:noPlugins")
     finish
 endif
 
+" Silence a python deprecation warning.
+if has('python3') && !has('patch-8.1.201')
+  silent! python3 1
+endif
+
 let s:pluginPath = CreateVimDir(g:vimfilesDir . "/plugins")
 let s:scriptdir = PathExpand('<sfile>:p:h')
 let s:localPlugins = PathExpand(CreateVimDir(g:vimfilesDir) . "/local_plugins.vim")
