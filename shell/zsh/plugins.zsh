@@ -17,6 +17,9 @@ zle -N autosuggest-accept  # Dummy binding to supress error. Replaced later.
 bindkey -M viins "" autosuggest-accept
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=014"
 
+zplugin ice wait lucid
+zplugin light wazum/zsh-directory-dot-expansion
+
 
 # Binary release in archive, from GitHub-releases page.
 # After automatic unpacking it provides program "fzf".
