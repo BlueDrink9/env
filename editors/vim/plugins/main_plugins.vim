@@ -329,6 +329,7 @@ Plug 'https://github.com/tpope/vim-dispatch'
 " {[} ---------- Basic extra highlighting ----------
 Plug 'kovetskiy/sxhkd-vim', {'for': 'sxhkd' }
 Plug 'vim-scripts/autohotkey-ahk', {'for': 'autohotkey'}
+Plug 'https://github.com/PProvost/vim-ps1', {'for': 'ps1'}
 " {]} ---------- Basic extra highlighting ----------
 
 " {[} ---------- Git ----------
