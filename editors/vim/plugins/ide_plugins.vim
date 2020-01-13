@@ -315,7 +315,6 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Multi-lang support
 Plug 'https://github.com/sheerun/vim-polyglot'
 let g:polyglot_disabled = ['latex', 'markdown' ]
-Plug 'kovetskiy/sxhkd-vim', {'for': 'sxhkd' }
 
 " Advanced markdown formatting. Lots of features.
 Plug 'SidOfc/mkdx'
@@ -335,8 +334,11 @@ let g:mkdx#settings = {
 Plug 'https://github.com/inkarkat/vim-ingo-library'
 Plug 'https://github.com/inkarkat/vim-SyntaxRange'
 
+Plug 'kovetskiy/sxhkd-vim', {'for': 'sxhkd' }
 Plug 'vim-scripts/autohotkey-ahk', {'for': 'autohotkey'}
-Plug 'https://github.com/huleiak47/vim-AHKcomplete', {'for': 'autohotkey'}
+if has('python3')
+    Plug 'https://github.com/huleiak47/vim-AHKcomplete', {'for': 'autohotkey'}
+endif
 " {]} ---------- Lang-specific ----------
 
 " {[} ---------- Git ----------
