@@ -334,8 +334,6 @@ let g:mkdx#settings = {
 Plug 'https://github.com/inkarkat/vim-ingo-library'
 Plug 'https://github.com/inkarkat/vim-SyntaxRange'
 
-Plug 'kovetskiy/sxhkd-vim', {'for': 'sxhkd' }
-Plug 'vim-scripts/autohotkey-ahk', {'for': 'autohotkey'}
 if has('python3')
     Plug 'https://github.com/huleiak47/vim-AHKcomplete', {'for': 'autohotkey'}
 endif

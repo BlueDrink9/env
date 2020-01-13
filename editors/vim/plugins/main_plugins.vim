@@ -326,6 +326,11 @@ Plug 'https://github.com/JarrodCTaylor/vim-shell-executor'
 " Make is run async (view quickfix with :COpen)
 Plug 'https://github.com/tpope/vim-dispatch'
 
+" {[} ---------- Basic extra highlighting ----------
+Plug 'kovetskiy/sxhkd-vim', {'for': 'sxhkd' }
+Plug 'vim-scripts/autohotkey-ahk', {'for': 'autohotkey'}
+" {]} ---------- Basic extra highlighting ----------
+
 " {[} ---------- Git ----------
 if executable("git")
     " :Magit to check all sorts of git stuff. Looks really cool. Capitals for
