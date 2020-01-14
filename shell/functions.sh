@@ -639,10 +639,10 @@ pack(){
     install | refresh | upgrade | search | remove | info)
       cmd="${cmd}cmd"
       # Expand cmd to get what the actual [$installcmd] is.
-      $packcmd "$(var_expand ${cmd})" $args
+      $(echo "$packcmd") "$(var_expand ${cmd})" $args
       ;;
     *)
-      $packcmd "$cmd" $args
+      $(echo "$packcmd") "$cmd" $args
   esac
 
   unset packcmd cmd installcmd refreshcmd upgradecmd searchcmd removecmd infocmd useSudo
