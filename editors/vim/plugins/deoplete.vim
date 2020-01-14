@@ -1,3 +1,10 @@
+" Return the current script's <SID>. Taken from :h <SID>
+function! s:SID()
+  return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze_SID$')
+endfun
+function! s:prefixSID()
+  return '<SNR>' . s:SID() . '_'
+endfun
 if has("nvim")
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -86,7 +93,11 @@ call add(g:pluginSettingsToExec, "
 " {[} ---------- Denite ----------
 " From https://github.com/ctaylo21/jarvis/blob/master/config/nvim/init.vim#L58
 " Wrap in try/catch to avoid errors on initial install before plugin is available
-try
+" try
+" catch
+"     echo 'Denite not installed. It should work after running :PlugInstall'
+" endtry
+function! s:deniteSetup()
     " === Denite setup ==="
     " Use ripgrep for searching current directory for files
     " By default, ripgrep will respect rules in .gitignore
@@ -151,8 +162,9 @@ try
         endfor
     endfunction
 
+
     call s:profile(s:denite_options)
-catch
-    echo 'Denite not installed. It should work after running :PlugInstall'
-endtry
+endfunction
+let s:deniteSetupCall = 'call ' . s:prefixSID() . 'deniteSetup()'
+call add(g:pluginSettingsToExec, s:deniteSetupCall)
 " {]} ---------- Denite ----------
