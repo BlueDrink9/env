@@ -85,18 +85,8 @@ exec 'nnoremap <silent> ' . g:IDE_mappings["documentation"] . ':call s:show_docu
 exec 'nnoremap <silent> ' . g:IDE_mappings["documentation2"] . ':call s:show_documentation()<CR>'
 exec 'nnoremap <silent> ' . g:IDE_mappings["documentation3"] . ':call s:show_documentation()<CR>'
 
-" Map <tab> to trigger completion and navigate to the next item:
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-inoremap <silent><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
-            \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<s-tab>"
-" <CR> to confirm completion, use:
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
+inoremap <expr><Plug>MyCocRefresh coc#refresh()
+let g:SuperTabDefaultCompletionType = "<Plug>MyCocRefresh"
 " {]} Mappings
 
 " hi CocErrorSign link WarningMsg
