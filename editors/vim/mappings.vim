@@ -145,7 +145,7 @@ command! -bang -nargs=* Macros <c-u><c-r><c-r>='let @'. v:register .' = '. strin
 
 " {]} Abbreviations
 
-"{[} Window management
+" {[} Window management
 " leader w opens new vert window, switches to it
 nnoremap <leader>w <C-w>v<C-w>l
 nnoremap <C-w>t :tabnew<CR>
@@ -301,7 +301,22 @@ else
     exec 'vnoremap <C-c> ' . s:copyCMD
 endif
 " {]} Workarounds
+
 " {]} Clipboard
+
+" {[} pager
+function Pager()
+  nnoremap <buffer> u <c-u>
+  nnoremap <buffer> f <c-f>
+  nnoremap <buffer> b <c-b>
+  nnoremap <buffer> d <c-d>
+  nnoremap <buffer> <up> <c-y>
+  nnoremap <buffer> <down> <c-e>
+  setlocal timeoutlen=20
+endfunction
+autocmd myVimrc bufwinenter * if ! &modifiable || &readonly | call Pager() | endif
+
+" {[} pager
 
 " {[} Misc
 
@@ -315,6 +330,8 @@ autocmd myVimrc CmdwinEnter * nnoremap <buffer> i i<c-c>
 autocmd myVimrc CmdwinEnter * nnoremap <buffer> I I<c-c>
 autocmd myVimrc CmdwinEnter * nnoremap <buffer> a a<c-c>
 autocmd myVimrc CmdwinEnter * nnoremap <buffer> A A<c-c>
+autocmd myVimrc CmdwinEnter * nnoremap <buffer> C C<c-c>
+autocmd myVimrc CmdwinEnter * nnoremap <buffer> c c<c-c>
 
 " c-y to move completion to next level.
 cnoremap <C-y> <c-]><TAB>
