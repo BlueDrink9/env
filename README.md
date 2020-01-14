@@ -106,6 +106,35 @@ Not everything works in every context.
 * Floating: Untiled (u)
 * Pin/make sticky/keep on top: Pin (p)
 
+## Vim IDE function mappings
+
+Sourced from `ide_plugins.vim`.
+
+```
+let g:IDE_mappings = {
+            \ "allActions" : "<leader>ia",
+            \ "rename" : "<leader>in",
+            \ "references" : "<leader>ir",
+            \ "references2" : "gr",
+            \ "refactor" : "<leader>if",
+            \ "definition" : "<leader>id",
+            \ "definition2" : "gd",
+            \ "type-definition" : "gy",
+            \ "implementation" : "<leader>ii",
+            \ "implementation2" : "gi",
+            \ "documentation" : "K",
+            \ "documentation2" : "gh",
+            \ "documentation3" : "<leader>ih",
+            \ "codeAction" : "<leader>eca",
+            \ "codeActionSelected" : "<leader>eca",
+            \ "codelensAction" : "<leader>ecl",
+            \ "fix" : "<leader>ef",
+            \ "listErrs" : "<leader>el",
+            \ "complete" : "<plug>Non-existant",
+            \ "reformat" : "<plug>Non-existant",
+            \}
+```
+
 
 ## Possible points of interest to others
 
