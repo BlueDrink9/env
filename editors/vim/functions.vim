@@ -32,6 +32,7 @@ command! -nargs=+ -complete=command WindowOutput call WindowOutput(<q-args>)
 nnoremap <F9> :w<enter> :WindowOutput !%:p<Enter>
 
 "Use TAB to complete when typing words, else inserts TABs as usual.
+" TODO: Check pub for shift tab? Or incorporate shift tab?
 function! Tab_Or_Complete()
     if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
         return "\<C-N>"
@@ -41,6 +42,8 @@ function! Tab_Or_Complete()
 endfunction
 inoremap <silent> <Tab> <C-R>=Tab_Or_Complete()<CR>
 inoremap <S-Tab> <C-P>
+" <CR> to confirm completion, use:
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
 
 " Allow insertion of single character in normal mode.
 function! RepeatChar(char, count)
