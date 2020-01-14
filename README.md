@@ -22,6 +22,7 @@ Some of these are set automatically, but if set manually, should override the de
 | `.bashrc` | `COLOURSCHEME` | Name of current preferred colourscheme. Append `_light` or `_dark` to specify vim background. | UK spelling to avoid possible clobber. | Before |
 | `.bashrc` | `CLIP_PROGRAM_COPY` | a command | Accepts input on stdin and sends it to clipboard. Used for ctrl+c in vim insert if clipboard not enabled. | Before |
 | `.bashrc` | `CLIP_PROGRAM_PASTE` | a command | Outputs clipboard to stdout. Used for ctrl+v in vim insert if clipboard not enabled. | Before |
+| `.bashrc` | `PACKCMD` | a package manager command | Forces `pack` aliases to use the specified cmd as the package manager. | Any |
 | `.vimrc` | `colorSch` | Name of preferred vim colourscheme | Allows overriding from term scheme/default of solarized | Before |
 | `.vimrc` | `g:backgroundColour` | "light" or "dark" | Sets vim theme to light or dark | Before |
 | `.vimrc` | `ideMode` | 1 or 0 | Enables heavy vim plugins, linting, snippets, etc. | Before |

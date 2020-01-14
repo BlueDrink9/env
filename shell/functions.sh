@@ -583,7 +583,11 @@ choosePkgManager(){
 }
 
 pack(){
-    cmd="$1"
+    if [ -n "$PACKCMD" ]; then
+      cmd="$PACKCMD"
+    else
+      cmd="$1"
+    fi
     if [ -n "$cmd" ]; then
       shift
     fi
