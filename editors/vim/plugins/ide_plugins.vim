@@ -115,7 +115,7 @@ endif
 Plug 'xolox/vim-misc'
 if executable('ctags-exuberant') || executable('ctags')
     Plug 'ludovicchabant/vim-gutentags'
-    Plug 'liuchengxu/vista.vim', {'on': 'Vista'}
+    Plug 'liuchengxu/vista.vim'
     " Stay in current window when opening vista.
     " let g:vista_stay_on_open = 0
     cabbrev tb Vista!!
@@ -405,7 +405,7 @@ else
             Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
         else
             " Vdebug for python, pyhp, perl, ruby
-            Plug 'https://github.com/vim-vdebug/vdebug'
+            silent! Plug 'https://github.com/vim-vdebug/vdebug'
         endif
     elseif has("python2")
         Plug 'https://github.com/vim-vdebug/vdebug', {'tag': 'v1.5.2'}
