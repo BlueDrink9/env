@@ -15,8 +15,7 @@ else
                 \ "call deoplete#custom#option('yarp', v:true)")
 endif
 Plug 'Shougo/denite.nvim'
-" deoplete tab-complete
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" deoplete tab-complete - Supertab handles this.
 let g:deoplete#enable_at_startup = 1
 
 " let g:deoplete#enable_smart_case = 1
