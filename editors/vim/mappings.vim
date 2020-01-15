@@ -312,7 +312,8 @@ function Pager()
   nnoremap <buffer> d <c-d>
   nnoremap <buffer> <up> <c-y>
   nnoremap <buffer> <down> <c-e>
-  setlocal timeoutlen=20
+  " This doesn't have a local value
+  " setlocal timeoutlen=20
 endfunction
 autocmd myVimrc bufwinenter * if ! &modifiable || &readonly | call Pager() | endif
 
