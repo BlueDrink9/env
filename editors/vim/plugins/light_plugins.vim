@@ -133,12 +133,20 @@ if v:version >= 702
 endif
 if v:version >= 703
     Plug 'https://github.com/ntpeters/vim-better-whitespace'
+    let g:better_whitespace_filetypes_blacklist=['diff', 'gitcommit', 'unite', 'qf', 'help', 'far']
     let g:show_spaces_that_precede_tabs=1
+    let g:strip_only_modified_lines=1
     let g:better_whitespace_skip_empty_lines=0
     " Don't HL current line. May cause performance issues.
     let g:current_line_whitespace_disabled_hard=0
-    call add (g:customHLGroups, "ExtraWhitespace ctermbg=Gray guibg=LightGray")
-    " call add (g:customHLGroups, "link ExtraWhitespace Visual")
+    let g:better_whitespace_operator=''
+    " call add (g:customHLGroups, "ExtraWhitespace ctermbg=Gray guibg=LightGray")
+    call add (g:customHLGroups, "link ExtraWhitespace Visual")
+    " call add (g:customHLGroups, "link ExtraWhitespace SpecialKey")
+    function! WhitespaceHighlightDisable()
+        DisableWhitespace
+    endfunction
+    autocmd myPlugins BufReadPost * if &readonly || ! &modifiable | call WhitespaceHighlightDisable() | endif
 endif
 " Distraction-free vim.
 Plug 'https://github.com/junegunn/goyo.vim', {'on' : ['Goyo',]}
