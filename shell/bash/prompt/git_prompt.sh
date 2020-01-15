@@ -24,10 +24,10 @@ strInText(){
   # real    0m3.126s
 
   # echo -n "${text}" 2> /dev/null | grep "${str}" &> /dev/null
-  substrInStr "${str}" "${text}"
+
   # Blank strings are false when tested with [ '' ]. Only return if true.
-  if [ "$?" = 0 ]; then
-    printf 0;
+  if substrInStr "${str}" "${text}"; then
+    echo 0;
   fi
 }
 
@@ -59,7 +59,7 @@ prompt_parse_git_branch() {
     if [ "${renamed}" ]; then bits=">${bits}"; fi
     if [ "${deleted}" ]; then bits="X${bits}"; fi
     if [ "${newfile}" ]; then bits="+${bits}"; fi
-    if [ "${dirty}" ]; then bits="*${bits}"; STATUS_COLOUR="${pyellow}"; fi
+    if [ "${dirty}" ]; then bits="~${bits}"; STATUS_COLOUR="${pyellow}"; fi
     if [ "${conflicted}" ]; then bits="!${bits}"; STATUS_COLOUR="${pred}"; fi
     if [ ! "${bits}" = "" ] || [ "${clean}" = "0" ]; then
       STATUS="${bits}"
