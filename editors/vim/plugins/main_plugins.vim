@@ -229,7 +229,6 @@ if has('timers')
     " Project replace.
     nnoremap <leader>pr :Farp<CR>
     function! s:farMappings()
-      echom 'mapped'
       nnoremap <buffer><silent> q :call g:far#close_preview_window()<cr>
       nnoremap <buffer><silent> <bs> :call g:far#change_collapse_under_cursor(-1)<cr>
       nnoremap <buffer><silent> <c-CR> :Fardo<CR>
