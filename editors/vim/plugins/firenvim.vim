@@ -1,5 +1,8 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
+function s:SID()
+  return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze_SID$')
+endfun
 " Needs nvim > 0.4, which was probably also when UIEnter was introduced.
 if has('nvim') && exists('##UIEnter')
     " Installation {[}
@@ -39,7 +42,7 @@ if has('nvim') && exists('##UIEnter')
     let s:fc['facebook.com*'] = { 'priority': 1, 'takeover': 'never' }
 
     " The following options should only run for firenvim instances.
-     if exists('g:started_by_firenvim')
+     if !exists('g:started_by_firenvim')
          finish
      endif
 
@@ -48,15 +51,14 @@ if has('nvim') && exists('##UIEnter')
         if !(has_key(l:ui, 'client') &&
                     \ has_key(l:ui.client, 'name') &&
                     \ l:ui.client.name ==# 'Firenvim')
-            return false
+            return v:false
         endif
-        return true
+        return v:true
     endfunction
 
     function! s:FirenvimSetup()
       " We are in firenvim
         let g:hasGUI=1
-        let g:liteMode = 1
         call SetGFN(12)
         set termguicolors
         call add(g:customHLGroups, 'EndOfBuffer guifg=guibg')
@@ -84,8 +86,8 @@ if has('nvim') && exists('##UIEnter')
 
         " Get rid of the annoying message at the bottom about the new file being
         " written, and then start insert mode.
-        " nunmap <c-l>
-        " call feedkeys("\<C-L>", 'n')
+        autocmd myPlugins BufNewFile * silent redraw
+        " call feedkeys("i")
 
         nnoremap <C-z> :call firenvim#hide_frame()<cr>
         nnoremap <Esc><Esc><Esc> :call firenvim#focus_page()<CR>
@@ -116,6 +118,7 @@ if has('nvim') && exists('##UIEnter')
         endif
     endfunction
 
-    s:FirenvimSetup()
+    let s:setupCall = GetLocalFunctionCall(s:SID(), 'FirenvimSetup()')
+    call add(g:pluginSettingsToExec, s:setupCall)
     " autocmd myPlugins UIEnter * if s:isConnectedToFirenvim(deepcopy(v:event.chan)) | call s:FirenvimSetup() | endif
 endif
