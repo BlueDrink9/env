@@ -5,6 +5,7 @@ Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 let g:ale_enabled = 0
 let g:LanguageClient_autoStart = 0
 UnPlug 'davidhalter/jedi-vim'
+UnPlug 'python-mode/python-mode'
 
 " Use coc instead of ctags.
 " This may mean tags aren't included, which would be a bug.
@@ -63,7 +64,8 @@ let g:coc_snippet_prev = "<c-b>"
 
 " Use <leader>i for IDE.
 " Open Coc action list.
-call Nmap(g:IDE_mappings["allActions"], ":CocAction<cr>")
+call Nnoremap(g:IDE_mappings["allActions"], ":CocAction<cr>")
+call Nnoremap(g:IDE_mappings["allCommands"], ":CocCommand<cr>")
 call Nmap(g:IDE_mappings["rename"], "<Plug>(coc-rename)")
 call Nmap(g:IDE_mappings["references"], "<Plug>(coc-references)")
 call Nmap(g:IDE_mappings["references2"], "<Plug>(coc-references)")
@@ -74,10 +76,10 @@ call Nmap(g:IDE_mappings["type-definition"], "<Plug>(coc-type-definition)")
 call Nmap(g:IDE_mappings["implementation"], "<Plug>(coc-implementation)")
 call Nmap(g:IDE_mappings["implementation2"], "<Plug>(coc-implementation)")
 call Nmap(g:IDE_mappings["references"], "<Plug>(coc-references)")
-" Use der>e for errors/linting/fixing.
 call Nmap(g:IDE_mappings["codeAction"], "<Plug>(coc-codeaction)")
 call Vmap(g:IDE_mappings["codeActionSelected"], "<Plug>(coc-codeaction-selected)")
 call Nmap(g:IDE_mappings["codelensAction"], "<Plug>(coc-codelens-action)")
+" Use <leader>e for errors/linting/fixing.
 call Nmap(g:IDE_mappings["fix"], "<Plug>(coc-fix-current)")
 " List errors
 exec 'nnoremap <silent> ' . g:IDE_mappings["listErrs"] . ' :<C-u>CocList locationlist<cr>'
