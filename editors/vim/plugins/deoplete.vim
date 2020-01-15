@@ -1,9 +1,5 @@
-" Return the current script's <SID>. Taken from :h <SID>
-function! s:SID()
+function s:SID()
   return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze_SID$')
-endfun
-function! s:prefixSID()
-  return '<SNR>' . s:SID() . '_'
 endfun
 if has("nvim")
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -164,6 +160,6 @@ function! s:deniteSetup()
 
     call s:profile(s:denite_options)
 endfunction
-let s:deniteSetupCall = 'call ' . s:prefixSID() . 'deniteSetup()'
+let s:deniteSetupCall = GetLocalFunctionCall(s:SID(), 'deniteSetup()')
 call add(g:pluginSettingsToExec, s:deniteSetupCall)
 " {]} ---------- Denite ----------
