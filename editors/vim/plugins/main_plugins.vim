@@ -221,8 +221,40 @@ if has('timers')
     cabbrev bsearch FlyGrep
     let g:FlyGrep_input_delay = 200  " ms. default 500
 
-    " Multi-file find and replace with a nice interface. May be useful, idk.
+    " Multi-file find and replace with a 'nice' interface. :Farp
+    " I think this also needs python3
+    " x - exclude. i - include. t - toggle. Capital X I T for all.
     Plug 'brooth/far.vim'
+    command! Replace Farp
+    " Project replace.
+    nnoremap <leader>pr :Farp<CR>
+    function! s:farMappings()
+      echom 'mapped'
+      nnoremap <buffer><silent> q :call g:far#close_preview_window()<cr>
+      nnoremap <buffer><silent> <bs> :call g:far#change_collapse_under_cursor(-1)<cr>
+      nnoremap <buffer><silent> <c-CR> :Fardo<CR>
+      nnoremap <buffer><silent> W :Refar<CR>
+      nnoremap <buffer><silent> r :Fardo<CR>
+    endfunction
+    autocmd myPlugins FileType far call s:farMappings()
+    let g:far#default_mappings=1
+    let g:far#auto_preview=1  " Autoscroll
+    let g:far#window_layout='current'
+    " Used for completion
+    let g:far#file_mask_favorites=['**/*.*', '%']
+    let g:far#default_file_mask='**/*.*'
+    " Sets the first one in the loop it finds.
+    for p in ['rg', 'ag', 'ack']
+      if executable(p)
+        if has('nvim')
+          let g:far#source=p . 'nvim'
+        else
+          let g:far#source=p
+        endif
+        break
+      endif
+    endfor
+
 else
     " Bsgrep for searching in all open buffers. Also Bsreplace, Bstoc.
     Plug 'https://github.com/jeetsukumaran/vim-buffersaurus'
