@@ -1,5 +1,8 @@
+" vim: foldmethod=marker
+" vim: foldmarker={[},{]}
 " Needs nvim > 0.4, which was probably also when UIEnter was introduced.
 if has('nvim') && exists('##UIEnter')
+    " Installation {[}
     " plugin firenvim in chrome and firefox.
     " Open textframes in nvim, similar to wasavi.
     if has('win32')
@@ -15,6 +18,8 @@ if has('nvim') && exists('##UIEnter')
      if exists('g:started_by_firenvim')
          finish
      endif
+    " Installation {]}
+
     " Configured as json, basically.
     " disable by default. Manually activate with chrome binding.
     " Use alt:all to always capture alt instead of sending a special key.
@@ -35,15 +40,19 @@ if has('nvim') && exists('##UIEnter')
         \ }
     \ }
     let s:fc = g:firenvim_config['localSettings']
-    let s:fc['facebook.com'] = { 'priority': 1, 'takeover': 'never' }
+    let s:fc['facebook.com*'] = { 'priority': 1, 'selector': '', 'takeover': 'never' }
 
-    function! s:FirenvimSetup(channel)
+    function! s:isConnectedToFirenvim(channel)
         let l:ui = nvim_get_chan_info(a:channel)
         if !(has_key(l:ui, 'client') &&
                     \ has_key(l:ui.client, 'name') &&
                     \ l:ui.client.name ==# 'Firenvim')
-            return
+            return false
         endif
+        return true
+    endfunction
+
+    function! s:FirenvimSetup()
       " We are in firenvim
         let g:hasGUI=1
         let g:liteMode = 1
@@ -106,5 +115,6 @@ if has('nvim') && exists('##UIEnter')
         endif
     endfunction
 
-    autocmd myPlugins UIEnter * call s:FirenvimSetup(deepcopy(v:event.chan))
+    s:FirenvimSetup()
+    " autocmd myPlugins UIEnter * if s:isConnectedToFirenvim(deepcopy(v:event.chan)) | call s:FirenvimSetup() | endif
 endif
