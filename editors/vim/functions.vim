@@ -13,6 +13,19 @@ function! Vnoremap(lhs, rhs)
 endfunction
 " command! -nargs=+ Vnoremap call Vnoremap(<f-args>)
 
+" Return text to call a local script outside the original.
+" SID must come from the below s:SID function, recreated in the original
+" script.
+function! GetLocalFunctionCall(SID, func)
+  return 'call ' . s:prefixSID(a:SID) . a:func
+endfun
+" Return the current script's <SID>. Taken from :h <SID>
+function! s:SID()
+  return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze_SID$')
+endfun
+function! s:prefixSID(SID)
+  return '<SNR>' . a:SID . '_'
+endfun
 
 " Pipes the output of shell commands into a new window for viewing.
 function! WindowOutput(cmd)
