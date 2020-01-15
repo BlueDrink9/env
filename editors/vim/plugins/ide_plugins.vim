@@ -7,13 +7,17 @@ augroup myIDE
 augroup end
 
 " gh - get hint on whatever's under the cursor
+" Use g[] for get [something].
+" Use <leader>i for ide bits.
 " Use <leader>e for errors/linting/fixing.
 let g:IDE_mappings = {
             \ "allActions" : "<leader>ia",
-            \ "rename" : "<leader>in",
-            \ "references" : "<leader>ir",
-            \ "references2" : "gr",
-            \ "refactor" : "<leader>if",
+            \ "allCommands" : "<leader>ic",
+            \ "rename" : "<leader>irr",
+            \ "renameModule" : "<leader>irm",
+            \ "references" : "<leader>if",
+            \ "references2" : "gf",
+            \ "refactor" : "<leader>ir",
             \ "definition" : "<leader>id",
             \ "definition2" : "gd",
             \ "type-definition" : "gy",
@@ -22,9 +26,9 @@ let g:IDE_mappings = {
             \ "documentation" : "K",
             \ "documentation2" : "gh",
             \ "documentation3" : "<leader>ih",
-            \ "codeAction" : "<leader>eca",
-            \ "codeActionSelected" : "<leader>eca",
-            \ "codelensAction" : "<leader>ecl",
+            \ "codeAction" : "<leader>ia",
+            \ "codeActionSelected" : "<leader>iaa",
+            \ "codelensAction" : "<leader>ial",
             \ "fix" : "<leader>ef",
             \ "listErrs" : "<leader>el",
             \ "complete" : "<plug>Non-existant",
@@ -185,8 +189,16 @@ endif
 Plug 'jeetsukumaran/vim-pythonsense'
 if has('python') || has('python3')
     Plug 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
+    let g:pymode_options_max_line_length = 0
+    let g:pymode_rope = 1
+    let g:pymode_lint_message = 1
+    let g:pymode_lint_on_write = 1
+    let g:pymode_lint_unmodified = 1
+    let g:pymode_lint = 1
+    let g:pymode_rope_rename_bind = g:IDE_mappings["rename"]
+    let g:pymode_rope_rename_module_bind = g:IDE_mappings["renameModule"]
+
     if has('python3')
-        let g:pymode_python = 'python3'
         " if has('nvim')
         "     " semantic highlighting, including scope-based.
         "     " Doesn't seemd to be working atm, disabling highlighting for all
