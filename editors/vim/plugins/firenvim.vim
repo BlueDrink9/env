@@ -42,9 +42,9 @@ if has('nvim') && exists('##UIEnter')
     let s:fc['facebook.com*'] = { 'priority': 1, 'takeover': 'never' }
 
     " The following options should only run for firenvim instances.
-     if !exists('g:started_by_firenvim')
-         finish
-     endif
+    if !exists('g:started_by_firenvim')
+      finish
+    endif
 
     function! s:isConnectedToFirenvim(channel)
         let l:ui = nvim_get_chan_info(a:channel)
@@ -54,6 +54,11 @@ if has('nvim') && exists('##UIEnter')
             return v:false
         endif
         return v:true
+    endfunction
+
+    function! s:onFirenvimLoad()
+      " call feedkeys("\<C-L>", 'n')
+      " call s:FirenvimSetup()
     endfunction
 
     function! s:FirenvimSetup()
@@ -86,7 +91,10 @@ if has('nvim') && exists('##UIEnter')
 
         " Get rid of the annoying message at the bottom about the new file being
         " written, and then start insert mode.
-        autocmd myPlugins BufNewFile * silent redraw
+        " Not working
+        " autocmd myPlugins BufNewFile * silent redraw
+        " autocmd myPlugins BufNewFile * call feedkeys(";:\<CR>")
+        " This works
         " call feedkeys("i")
 
         nnoremap <C-z> :call firenvim#hide_frame()<cr>
@@ -120,5 +128,5 @@ if has('nvim') && exists('##UIEnter')
 
     let s:setupCall = GetLocalFunctionCall(s:SID(), 'FirenvimSetup()')
     call add(g:pluginSettingsToExec, s:setupCall)
-    " autocmd myPlugins UIEnter * if s:isConnectedToFirenvim(deepcopy(v:event.chan)) | call s:FirenvimSetup() | endif
+    autocmd myPlugins UIEnter * if s:isConnectedToFirenvim(deepcopy(v:event.chan)) | call s:onFirenvimLoad() | endif
 endif
