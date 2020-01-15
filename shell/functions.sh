@@ -687,25 +687,39 @@ if [ "$TERM" = "xterm-kitty" ] && [ -z "$SSHSESSION" ]; then
   # Expand $HOME etc. KITTY_THEME_DIR set from kitty.conf.
   export KITTY_THEME_DIR="$(eval "echo ${KITTY_THEME_DIR}")"
   KITTY_THEMES="$(ls "$KITTY_THEME_DIR" | tr '\n' ' ')"
+  kittyThemeMatchesColourscheme(){
+    [ "$(echo $1 | tr '[:upper:]' '[:lower:]')" = "$2".conf ]; }
   kittyColourSet(){
-    arg="$(echo $1 | tr '[:upper:]' '[:lower:]')"
-    if substrInStr ".conf" "$arg"; then
-      # strip .conf
-      arg="$(basename "$arg" .conf)"
-    fi
+    arg="$1"
     if [ -z "$arg" ]; then return; fi
-    export COLOURSCHEME="${arg}"
-    # Echo themes to force string splitting in zsh.
-    for theme in $(echo $KITTY_THEMES); do
-      if [ "$(echo $theme | tr '[:upper:]' '[:lower:]')" \
-        = "$COLOURSCHEME".conf ];
-            then
-              kitty @ set-colors "${KITTY_THEME_DIR}/${theme}" # 2>> ~/.logs/kitty.log
-              mkdir -p "${XDG_CACHE_HOME}/kitty"
-              echo "$COLOURSCHEME" >| "${XDG_CACHE_HOME}/kitty/current_theme"
-              return
-      fi
-    done
+    # strip .conf, convert to lowercase
+    colourscheme="$(basename "$(echo $arg | tr '[:upper:]' '[:lower:]')" .conf)"
+    # If already set for this session, return.
+    if [ "$COLOURSCHEME" = "$colourscheme" ]; then
+      unset colourscheme arg; return; fi
+    if [ -f "${XDG_CACHE_HOME}/kitty/current_theme" ]; then
+      current_theme="$(cat "${XDG_CACHE_HOME}/kitty/current_theme")"
+    fi
+    if [ "$arg" = "$current_theme" ] && \
+      [ -f "${KITTY_THEME_DIR}/${current_theme}" ]; then
+      set_theme="${KITTY_THEME_DIR}/${current_theme}"
+    else
+
+      # Echo themes to force string splitting in zsh.
+      for theme in $(echo $KITTY_THEMES); do
+        if kittyThemeMatchesColourscheme "$theme" "$colourscheme"; then
+          kitty @ set-colors "${KITTY_THEME_DIR}/${theme}" # 2>> ~/.logs/kitty.log
+          mkdir -p "${XDG_CACHE_HOME}/kitty"
+          echo "${theme}" >| "${XDG_CACHE_HOME}/kitty/current_theme"
+          break
+        fi
+      done
+    fi
+    if [ -n "$set_theme" ]; then
+      kitty @ set-colors "${set_theme}"
+      export COLOURSCHEME="${colourscheme}"
+    fi
+    unset arg colourscheme current_theme set_theme
   }
   kittyColourReset(){
     kitty @ set-colors "${DOTFILES_DIR}/terminal/kitty/solarized_light.conf"
