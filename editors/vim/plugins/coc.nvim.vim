@@ -63,22 +63,22 @@ let g:coc_snippet_prev = "<c-b>"
 
 " Use <leader>i for IDE.
 " Open Coc action list.
-call Nnoremap(g:IDE_mappings["allActions"], ":CocAction<cr>")
-call Nnoremap(g:IDE_mappings["rename"], "<Plug>(coc-rename)")
-call Nnoremap(g:IDE_mappings["references"], "<Plug>(coc-references)")
-call Nnoremap(g:IDE_mappings["references2"], "<Plug>(coc-references)")
-call Nnoremap(g:IDE_mappings["refactor"], "<Plug>(coc-refactor)")
-call Nnoremap(g:IDE_mappings["definition"], "<Plug>(coc-definition)")
-call Nnoremap(g:IDE_mappings["definition2"], "<Plug>(coc-definition)")
-call Nnoremap(g:IDE_mappings["type-definition"], "<Plug>(coc-type-definition)")
-call Nnoremap(g:IDE_mappings["implementation"], "<Plug>(coc-implementation)")
-call Nnoremap(g:IDE_mappings["implementation2"], "<Plug>(coc-implementation)")
-call Nnoremap(g:IDE_mappings["references"], "<Plug>(coc-references)")
-" Use <leader>e for errors/linting/fixing.
-call Nnoremap(g:IDE_mappings["codeAction"], "<Plug>(coc-codeaction)")
-call Vnoremap(g:IDE_mappings["codeActionSelected"], "<Plug>(coc-codeaction-selected)")
-call Nnoremap(g:IDE_mappings["codelensAction"], "<Plug>(coc-codelens-action)")
-call Nnoremap(g:IDE_mappings["fix"], "<Plug>(coc-fix-current)")
+call Nmap(g:IDE_mappings["allActions"], ":CocAction<cr>")
+call Nmap(g:IDE_mappings["rename"], "<Plug>(coc-rename)")
+call Nmap(g:IDE_mappings["references"], "<Plug>(coc-references)")
+call Nmap(g:IDE_mappings["references2"], "<Plug>(coc-references)")
+call Nmap(g:IDE_mappings["refactor"], "<Plug>(coc-refactor)")
+call Nmap(g:IDE_mappings["definition"], "<Plug>(coc-definition)")
+call Nmap(g:IDE_mappings["definition2"], "<Plug>(coc-definition)")
+call Nmap(g:IDE_mappings["type-definition"], "<Plug>(coc-type-definition)")
+call Nmap(g:IDE_mappings["implementation"], "<Plug>(coc-implementation)")
+call Nmap(g:IDE_mappings["implementation2"], "<Plug>(coc-implementation)")
+call Nmap(g:IDE_mappings["references"], "<Plug>(coc-references)")
+" Use der>e for errors/linting/fixing.
+call Nmap(g:IDE_mappings["codeAction"], "<Plug>(coc-codeaction)")
+call Vmap(g:IDE_mappings["codeActionSelected"], "<Plug>(coc-codeaction-selected)")
+call Nmap(g:IDE_mappings["codelensAction"], "<Plug>(coc-codelens-action)")
+call Nmap(g:IDE_mappings["fix"], "<Plug>(coc-fix-current)")
 " List errors
 exec 'nnoremap <silent> ' . g:IDE_mappings["listErrs"] . ' :<C-u>CocList locationlist<cr>'
 exec 'nnoremap <silent> ' . g:IDE_mappings["documentation"] . ':call s:show_documentation()<CR>'

@@ -3,13 +3,19 @@
 " vim: foldmarker={[},{]}
 
 
+" Easier ways to use variables in remappings, instead of using exec.
 function! Nnoremap(lhs, rhs)
   exec 'nnoremap ' . a:lhs . ' ' . a:rhs
 endfunction
 " command! -nargs=+ Nnoremap call Nnoremap(<f-args>)
-
+function! Nmap(lhs, rhs)
+  exec 'nmap ' . a:lhs . ' ' . a:rhs
+endfunction
 function! Vnoremap(lhs, rhs)
   exec 'vnoremap ' . a:lhs . ' ' . a:rhs
+endfunction
+function! Vmap(lhs, rhs)
+  exec 'vmap ' . a:lhs . ' ' . a:rhs
 endfunction
 " command! -nargs=+ Vnoremap call Vnoremap(<f-args>)
 
