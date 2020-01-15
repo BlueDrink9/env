@@ -25,7 +25,10 @@ strInText(){
 
   # echo -n "${text}" 2> /dev/null | grep "${str}" &> /dev/null
   substrInStr "${str}" "${text}"
-  echo "$?"
+  # Blank strings are false when tested with [ '' ]. Only return if true.
+  if [ "$?" = 0 ]; then
+    printf 0;
+  fi
 }
 
 # get current branch in git repo
@@ -47,35 +50,17 @@ prompt_parse_git_branch() {
     deleted=$(strInText "${status}" "deleted:")
     conflicted=$(strInText "${status}" "Unmerged:")
     bits=''
-    if [ "${clean}" = "0" ]; then
-      STATUS_COLOUR=${pgreen}
-      bits=""
-    fi
-    if [ "${ahead}" = "0" ]; then
-      STATUS_COLOUR=${pcyan}
-      bits="^${bits}"
-    fi
-    if [ "${behind}" = "0" ]; then
-      STATUS_COLOUR=${pcyan}
-      bits="v${bits}"
-    fi
-    if [ "${diverged}" = "0" ]; then
-      STATUS_COLOUR=${pcyan}
-      bits="^v${bits}"
-      # optional: use several other possible unicode symbols.
-    fi
-    if [ "${untracked}" = "0" ]; then bits="?${bits}"; fi
-    if [ "${renamed}" = "0" ]; then bits=">${bits}"; fi
-    if [ "${deleted}" = "0" ]; then bits="X${bits}"; fi
-    if [ "${newfile}" = "0" ]; then bits="+${bits}"; fi
-    if [ "${dirty}" = "0" ]; then
-      STATUS_COLOUR="${pyellow}"
-      bits="*${bits}"
-    fi
-    if [ "${conflicted}" = "0" ]; then
-      STATUS_COLOUR="${pred}"
-      bits="!${bits}"
-    fi
+    if [ "${clean}" ]; then bits=""; STATUS_COLOUR=${pgreen}; fi
+    if [ "${ahead}" ]; then bits="^${bits}"; STATUS_COLOUR=${pcyan}; fi
+    if [ "${behind}" ]; then bits="v${bits}"; STATUS_COLOUR=${pcyan}; fi
+    # optional: use several other possible unicode symbols.
+    if [ "${diverged}" ]; then bits="^v${bits}"; STATUS_COLOUR=${pcyan}; fi
+    if [ "${untracked}" ]; then bits="?${bits}"; fi
+    if [ "${renamed}" ]; then bits=">${bits}"; fi
+    if [ "${deleted}" ]; then bits="X${bits}"; fi
+    if [ "${newfile}" ]; then bits="+${bits}"; fi
+    if [ "${dirty}" ]; then bits="*${bits}"; STATUS_COLOUR="${pyellow}"; fi
+    if [ "${conflicted}" ]; then bits="!${bits}"; STATUS_COLOUR="${pred}"; fi
     if [ ! "${bits}" = "" ] || [ "${clean}" = "0" ]; then
       STATUS="${bits}"
     else
