@@ -93,7 +93,8 @@ if has('nvim') && exists('##UIEnter')
         " written, and then start insert mode.
         " Not working
         " autocmd myPlugins BufNewFile * silent redraw
-        " autocmd myPlugins BufNewFile * call feedkeys(";:\<CR>")
+        " autocmd myPlugins BufWrite * call feedkeys(";\<CR>")
+        autocmd myPlugins BufWritePost * call nvim_input(";<CR>")
         " This works
         " call feedkeys("i")
 
