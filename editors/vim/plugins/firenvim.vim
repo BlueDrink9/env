@@ -14,10 +14,6 @@ if has('nvim') && exists('##UIEnter')
     " Only on tags/releases, because updates may require the extension to be
     " updated.
     Plug 'https://github.com/glacambre/firenvim', {'tag': '*', 'do': g:firenvim_install}
-    " Saves this config being run for all neovim buffers.
-     if exists('g:started_by_firenvim')
-         finish
-     endif
     " Installation {]}
 
     " Configured as json, basically.
@@ -40,7 +36,12 @@ if has('nvim') && exists('##UIEnter')
         \ }
     \ }
     let s:fc = g:firenvim_config['localSettings']
-    let s:fc['facebook.com*'] = { 'priority': 1, 'selector': '', 'takeover': 'never' }
+    let s:fc['facebook.com*'] = { 'priority': 1, 'takeover': 'never' }
+
+    " The following options should only run for firenvim instances.
+     if exists('g:started_by_firenvim')
+         finish
+     endif
 
     function! s:isConnectedToFirenvim(channel)
         let l:ui = nvim_get_chan_info(a:channel)
