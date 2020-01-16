@@ -385,7 +385,7 @@
   typeset -g POWERLEVEL9K_SHORTEN_DELIMITER="…"
 
   #####################################[ vcs: git status ]######################################
-  # Version control system colors.
+  # Version control system colors. # git colours
   typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND='green'  # 2
   typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND='white'
   # typeset -g POWERLEVEL9K_VCS_AHEAD_BACKGROUND='cyan'
@@ -480,10 +480,16 @@
     [[ -n $VCS_STATUS_ACTION     ]] && res+=" ${conflicted}${VCS_STATUS_ACTION}"
     # !42 if have merge conflicts.
     (( VCS_STATUS_NUM_CONFLICTED )) && res+=" ${conflicted}!${VCS_STATUS_NUM_CONFLICTED}"
-    # +42 if have staged changes.
-    (( VCS_STATUS_NUM_STAGED     )) && res+=" ${modified}+${VCS_STATUS_NUM_STAGED}"
-    # *42 if have unstaged changes.
-    (( VCS_STATUS_NUM_UNSTAGED   )) && res+=" ${modified}*${VCS_STATUS_NUM_UNSTAGED}"
+    # *42 if have staged changes.
+    (( VCS_STATUS_NUM_STAGED     )) && res+=" ${modified}*${VCS_STATUS_NUM_STAGED}"
+    # ~42 if have unstaged changes.
+    (( VCS_STATUS_NUM_UNSTAGED   )) && res+=" ${modified}~${VCS_STATUS_NUM_UNSTAGED}"
+    # =42 if have unstaged deleted.
+    (( VCS_STATUS_NUM_UNSTAGED_DELETED   )) && res+=" ${modified}x${VCS_STATUS_NUM_UNSTAGED_DELETED}"
+    # -42 if have staged deleted.
+    (( VCS_STATUS_NUM_STAGED_DELETED   )) && res+=" ${modified}X${VCS_STATUS_NUM_STAGED_DELETED}"
+    # +42 if have staged added (unstaged added are untracked).
+    (( VCS_STATUS_NUM_STAGED_NEW   )) && res+=" ${modified}+${VCS_STATUS_NUM_STAGED_NEW}"
     # ?42 if have untracked files. It's really a question mark, your font isn't broken.
     # See POWERLEVEL9K_VCS_UNTRACKED_ICON above if you want to use a different icon.
     # Remove the next line if you don't want to see untracked files at all.
