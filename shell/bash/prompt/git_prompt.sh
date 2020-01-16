@@ -44,6 +44,7 @@ prompt_parse_git_branch() {
     untracked=$(strInText "${status}" "Untracked files")
     ahead=$(strInText "${status}" "Your branch is ahead of")
     behind=$(strInText "${status}" "Your branch is behind")
+    staged=$(strInText "${status}" "Changes to be committed")
     diverged=$(strInText "${status}" "diverged")
     newfile=$(strInText "${status}" "new file:")
     renamed=$(strInText "${status}" "renamed:")
@@ -53,6 +54,7 @@ prompt_parse_git_branch() {
     if [ "${clean}" ]; then bits=""; STATUS_COLOUR=${pgreen}; fi
     if [ "${ahead}" ]; then bits="^${bits}"; STATUS_COLOUR=${pcyan}; fi
     if [ "${behind}" ]; then bits="v${bits}"; STATUS_COLOUR=${pcyan}; fi
+    if [ "${staged}" ]; then bits="*${bits}"; fi
     # optional: use several other possible unicode symbols.
     if [ "${diverged}" ]; then bits="^v${bits}"; STATUS_COLOUR=${pcyan}; fi
     if [ "${untracked}" ]; then bits="?${bits}"; fi
