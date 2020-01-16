@@ -459,6 +459,9 @@
     if [[ -n ${VCS_STATUS_REMOTE_BRANCH:#$VCS_STATUS_LOCAL_BRANCH} ]]; then
       res+="${meta}:${clean}${(V)VCS_STATUS_REMOTE_BRANCH//\%/%%}"  # escape %
     fi
+    ((VCS_STATUS_NUM_STAGED=${VCS_STATUS_NUM_STAGED} - \
+      ${VCS_STATUS_NUM_STAGED_DELETED} - \
+      ${VCS_STATUS_NUM_STAGED_NEW}))
 
     VCS_SYMBOL_BEHIND=⇣
     VCS_SYMBOL_AHEAD=⇡
