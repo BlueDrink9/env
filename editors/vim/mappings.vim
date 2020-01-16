@@ -125,6 +125,7 @@ abbrev <expr> [t] strftime("%H:%M")
 cnoreabbrev H helpgrep
 " Opens an edit command with the dir of the currently edited file filled in.
 cabbrev le e <C-R>=expand("%:p:h") . "/" <CR>
+cabbrev lr r <C-R>=expand("%:p:h") . "/" <CR>
 " Load ide plugins/start ide mode.
 cabbrev ide let g:ideMode=1 <bar> so $MYVIMRC
 " Copy path of current buffer.
@@ -326,13 +327,17 @@ inoremap <C-Q> <C-V>
 
 " Complete vim commands in cmd window.
 " autocmd myVimrc CmdwinEnter * inoremap <buffer> <C-Space> <C-x><C-v>
+function! s:cmdWinMappings()
+  nnoremap <buffer> i i<c-c>
+  nnoremap <buffer> I I<c-c>
+  nnoremap <buffer> a a<c-c>
+  nnoremap <buffer> A A<c-c>
+  " Don't work with motions. Consider remapping with :map-operator.
+  " nnoremap <buffer> C C<c-c>
+  " nnoremap <buffer> c c<c-c>
+endfunction
 " Insert mode in cmdwin returns to actual cmd mode with current text.
-autocmd myVimrc CmdwinEnter * nnoremap <buffer> i i<c-c>
-autocmd myVimrc CmdwinEnter * nnoremap <buffer> I I<c-c>
-autocmd myVimrc CmdwinEnter * nnoremap <buffer> a a<c-c>
-autocmd myVimrc CmdwinEnter * nnoremap <buffer> A A<c-c>
-autocmd myVimrc CmdwinEnter * nnoremap <buffer> C C<c-c>
-autocmd myVimrc CmdwinEnter * nnoremap <buffer> c c<c-c>
+autocmd myVimrc CmdwinEnter * call s:cmdWinMappings()
 
 " c-y to move completion to next level.
 cnoremap <C-y> <c-]><TAB>
