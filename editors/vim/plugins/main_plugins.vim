@@ -227,7 +227,7 @@ if has('timers')
     Plug 'brooth/far.vim'
     command! Replace Farp
     " Project replace.
-    nnoremap <leader>pr :Farp<CR>
+    " nnoremap <leader>pr :Farp<CR>
     function! s:farMappings()
       nnoremap <buffer><silent> q :call g:far#close_preview_window()<cr>
       nnoremap <buffer><silent> <bs> :call g:far#change_collapse_under_cursor(-1)<cr>
@@ -267,6 +267,11 @@ else
     " nmap <leader>S <Plug>(sad-change-backward)
     " xmap <leader>s <Plug>(sad-change-forward)
     " xmap <leader>S <Plug>(sad-change-backward)
+endif
+
+if !has("nvim") && !has("patch-8.1.0271")
+  " Live substitute preview.
+  Plug "https://github.com/markonm/traces.vim"
 endif
 
 " Maybe ide candidates...
