@@ -32,7 +32,7 @@ set encoding=utf-8
 syntax on
 filetype plugin indent on
 " :h syn-sync. Complicated stuff, can't figure it out really.
-autocmd myVimrc BufWinEnter,Syntax * syn sync minlines=100 | syn sync maxlines=200
+autocmd myVimrc BufWinEnter,Syntax * syn sync minlines=100 | syn sync maxlines=400
 
 " {[} Colours
 let s:defaultBGGUI="light"
