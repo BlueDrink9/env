@@ -188,8 +188,8 @@ call add(pluginSettingsToExec, "runtime macros/sandwich/keymap/surround.vim")
 Plug 'https://github.com/easymotion/vim-easymotion'
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 " tab-incrementable search with easymotion dropout feature.
-map  <leader>/ <Plug>(easymotion-sn)
-omap <leader>/ <Plug>(easymotion-tn)
+" map  <leader>/ <Plug>(easymotion-sn)
+" omap <leader>/ <Plug>(easymotion-tn)
 let g:EasyMotion_smartcase = 1
 map <Leader>l <Plug>(easymotion-lineforward)
 map <Leader>j <Plug>(easymotion-j)
@@ -216,9 +216,10 @@ if has('timers')
           \ }
     cabbrev bfind Grepper -query
 
-    " Live results.
+    " Live results, fuzzy buffer. Hideous.
     Plug 'wsdjeg/FlyGrep.vim'
     cabbrev bsearch FlyGrep
+    nnoremap <leader>/ :FlyGrep<CR>
     let g:FlyGrep_input_delay = 200  " ms. default 500
 
     " Multi-file find and replace with a 'nice' interface. :Farp
