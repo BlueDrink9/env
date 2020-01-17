@@ -1,5 +1,7 @@
 {
     "imaps": {
         "kv": "<esc>", "vk": "<esc>"
-    }
+    },
+    "log_level": "debug",
+    "swallow_unused_normal_keys": "true"
 }
