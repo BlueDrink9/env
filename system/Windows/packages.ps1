@@ -126,10 +126,11 @@ $packages = @(
         "logitechgaming",
         "unifying",
         "onedrive",
+        "google-backup-and-sync",
         "colortool",
         "joplin",
         "linkshellextension",
-        "google-backup-and-sync",
+        "unetbootin", "rufus", "yumi", "yumi-uefi",
         "onetastic"
 )
 
