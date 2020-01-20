@@ -38,7 +38,7 @@ if v:version >= 704
 endif
 " {]} View and session
 
-" {[} ---------- External model setup neovim ----------
+" {[} ---------- Providers/External model setup neovim ----------
 let g:skipPythonInstall=1  " Tmp skip installing python modules.
 " Install python module, preferably for py3.
 function! PythonInstallModule(module)
@@ -611,3 +611,23 @@ autocmd myPlugins bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NE
 cabbrev nt NERDTreeToggle
 nnoremap _ NERDTreeToggle
 " {]} ---------- NerdTree ----------
+
+" {[} ---------- Terminal ----------
+" REPL (send motions, lines etc)
+Plug 'kassio/neoterm'
+" <Plug>(neoterm-repl-send)
+" <Plug>(neoterm-repl-send-line)
+
+" Convenient hide/show term buffer, $drop to open file with vim
+Plug 'skywind3000/vim-terminal-help'
+" which key will be used to toggle terminal window, default to <m-=>.
+let g:terminal_key="<leader>t"
+" initialize working dir: 0 for unchanged, 1 for file path and 2 for project root.
+let g:terminal_cwd=1
+" how to open the file in vim, default to tab drop.
+let g:terminal_edit="e"
+" set to term to kill term session when exiting vim.
+let g:terminal_kill="term"
+" set to 0 to hide terminal buffer in the buffer list
+let g:terminal_list=0
+" {]} ---------- Terminal ----------
