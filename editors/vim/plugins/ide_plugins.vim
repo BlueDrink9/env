@@ -404,8 +404,8 @@ nnoremap g= :Neoformat<CR>
 " {]} ---------- IDE----------
 
 " {[} ---------- Debugging ----------
-" Vimspector requires vim 8.1 with this patch. Doesn't support neovim.
-if has("patch-8.1-1264")
+" Vimspector requires vim 8.1 with this patch.
+if has("patch-8.1-1264") || has('nvim')
     " Just install all available plugins for now...
     Plug 'https://github.com/puremourning/vimspector', { 'do': ':!./install_gadget.py --all --disable-tcl' }
     " See readme. Similar to visual studio, but F-keys only, no shifts or
