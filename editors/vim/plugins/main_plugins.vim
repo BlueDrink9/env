@@ -272,7 +272,7 @@ endif
 
 if !has("nvim") && !has("patch-8.1.0271")
   " Live substitute preview.
-  Plug "https://github.com/markonm/traces.vim"
+  Plug 'https://github.com/markonm/traces.vim'
 endif
 
 " Maybe ide candidates...
