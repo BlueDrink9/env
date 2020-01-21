@@ -349,8 +349,9 @@ cnoremap <Left> <Space><BS><Left>
 cnoremap <Right> <Space><BS><Right>
 
 " CTRL-A is Select all in insert mode, s is in visual
-inoremap <C-a> <C-o>gg<C-o><S-V>G
-vnoremap s <esc>gg<S-V>G
+" Use f text obj plugin instead. Can manually do it if no plugins.
+" inoremap <C-a> <C-o>gg<C-o><S-V>G
+" vnoremap s <esc>gg<S-V>G
 " Spellcheck with completion list
 nnoremap <leader>s ea<C-X><C-S>
 " Rm spellcheck
