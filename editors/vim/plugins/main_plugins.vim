@@ -5,12 +5,8 @@
 " Plug 'https://github.com/dhruvasagar/vim-table-mode'
 " Scrollwheel on mouse moves screen with cursor (more natural)
 " https://github.com/reedes/vim-wheel
-" Function argument movements
-" Plug 'https://github.com/PeterRincker/vim-argumentative'
 " Bunch of paste stuff, replacing, yankring stuff.
 " https://github.com/svermeulen/vim-easyclip
-" Inertial scrolling, easier to see jump movement.
-" Plug "https://github.com/yuttie/comfortable-motion.vim"
 " {]} ---------- Later ----------
 
 " {[} View and session
@@ -167,16 +163,55 @@ Plug 'https://github.com/junegunn/vim-easy-align'
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+" {[} Extra text objects
+" Additional text objects for next braket, i/a comma, pairs, smarter searching.
+Plug 'wellle/targets.vim'
+" Don't handle argument. Use another plugin
+autocmd User targets#mappings#user call targets#mappings#extend({
+    \ 'a': {},
+    \ })
+" Move args with >, <,. Next arg ], [,. New text obj a, i,.
+" ],
+Plug 'https://github.com/PeterRincker/vim-argumentative'
+" Library for some other text obj plugins.
+Plug 'https://github.com/kana/vim-textobj-user'
+" See https://github.com/kana/vim-textobj-user/wiki for more, esp for
+" lang-specific.
+" Expands what a sentence/word is for prose.
+exec "Plug 'https://github.com/reedes/vim-textobj-sentence', { 'for': " . g:proseFileTypes . " }" 
+Plug 'kana/vim-textobj-line'
+Plug 'kana/vim-textobj-entire'
+let g:textobj_entire_no_default_key_mappings=1
+omap af <Plug>(textobj-entire-a)
+vmap af <Plug>(textobj-entire-a)
+omap if <Plug>(textobj-entire-i)
+vmap if <Plug>(textobj-entire-i)
+" av/iv for lines continued by \
+Plug 'rhysd/vim-textobj-continuous-line'
+" iz az
+Plug 'somini/vim-textobj-fold'
+Plug 'lucapette/vim-textobj-underscore'
+if v:version >= 703
+  " ac, ic, aC
+  Plug 'https://github.com/glts/vim-textobj-comment'
+endif
+Plug 'https://github.com/coachshea/vim-textobj-markdown', { 'for': 'markdown' }
+" Function argument movements
+Plug 'https://github.com/PeterRincker/vim-argumentative'
 " Adds indent block as text object. ii , ai or aI
 Plug 'michaeljsmith/vim-indent-object'
 " Adds [ ] mappins for -=+% indentation objects
 Plug 'https://github.com/jeetsukumaran/vim-indentwise'
-" Additional text objects for next braket, i/a comma, pairs, smarter searching.
-Plug 'wellle/targets.vim'
+" Adds il, al. Alternatively, '_' is the official object for the current line.
+Plug 'https://github.com/bps/vim-textobj-python', { 'for': 'markdown' }
+" {]} Extra text objects
+
 " Detect indent settings automatically from file or others of same type in
 " dir.
 Plug 'https://github.com/tpope/vim-sleuth'
 " Limelight Looks really nice, esp for prose. Highlight slightly cu* rrent paraghraph.
+
 exec "Plug 'junegunn/limelight.vim', { 'for': " . g:proseFileTypes . ", 'on': 'Limelight' }"
 " {]} ---------- Misc----------
 
@@ -270,7 +305,7 @@ else
     " xmap <leader>S <Plug>(sad-change-backward)
 endif
 
-if !has("nvim") && !has("patch-8.1.0271")
+if !(has("nvim") || has("patch-8.1.0271"))
   " Live substitute preview.
   Plug 'https://github.com/markonm/traces.vim'
 endif
@@ -335,32 +370,33 @@ else
     " {]}--- Fuzzy finder ---
 " {]}--- Searching, replacing, finding ---
 
-    " {[} Tags
-    function! s:tags_sink(line)
-        let parts = split(a:line, '\t\zs')
-        let excmd = matchstr(parts[2:], '^.*\ze;"\t')
-        execute 'silent e' parts[1][:-2]
-        let [magic, &magic] = [&magic, 0]
-        execute excmd
-        let &magic = magic
-    endfunction
-    function! s:tags()
-        if empty(tagfiles())
-            echohl WarningMsg
-            echom 'Preparing tags'
-            echohl None
-            call system('ctags -R')
-        endif
-        call fzf#run({
-                    \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
-                    \            '| grep -v -a ^!',
-                    \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
-                    \ 'down':    '40%',
-                    \ 'sink':    function('s:tags_sink')})
-    endfunction
-    command! Tags call s:tags()
-    " {]}
+" {[} Tags
+function! s:tags_sink(line)
+  let parts = split(a:line, '\t\zs')
+  let excmd = matchstr(parts[2:], '^.*\ze;"\t')
+  execute 'silent e' parts[1][:-2]
+  let [magic, &magic] = [&magic, 0]
+  execute excmd
+  let &magic = magic
+endfunction
+function! s:tags()
+  if empty(tagfiles())
+    echohl WarningMsg
+    echom 'Preparing tags'
+    echohl None
+    call system('ctags -R')
+  endif
+  call fzf#run({
+        \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
+        \            '| grep -v -a ^!',
+        \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
+        \ 'down':    '40%',
+        \ 'sink':    function('s:tags_sink')})
+endfunction
+command! Tags call s:tags()
 endif
+" {]}
+
 " Run shell commands async (uses python)
 Plug 'https://github.com/joonty/vim-do'
 Plug 'https://github.com/thinca/vim-quickrun'
@@ -454,15 +490,11 @@ endif
 
 " {[} ---------- Prose ----------
 
-" Neccesary for next plugin
-exec "Plug 'https://github.com/kana/vim-textobj-user', { 'for': " . g:proseFileTypes . " }"
-" Expands what a sentence/word is for prose.
-exec "Plug 'https://github.com/reedes/vim-textobj-sentence', { 'for': " . g:proseFileTypes . " }" 
 " Better prose spellchecking
 exec "Plug 'https://github.com/reedes/vim-lexical', { 'for': " . g:proseFileTypes . " }"
-let g:lexical#spell_key = '<leader>ls'
-let g:lexical#thesaurus_key = '<leader>lt'
-let g:lexical#dictionary_key = '<leader>ld'
+let g:lexical#spell_key = '<localleader>ls'
+let g:lexical#thesaurus_key = '<localleader>lt'
+let g:lexical#dictionary_key = '<localleader>ld'
 
 " Alternative to pencil, but modular if you want it.
 " Plug 'vim-pandoc/vim-pandoc'
