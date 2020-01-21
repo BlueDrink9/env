@@ -141,7 +141,7 @@ cmap W! SudoSave
 " Quickly edit macros
 nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 command! -bang -nargs=* Macros <c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
-
+cnoreabbrev H vert h
 
 
 " {]} Abbreviations
@@ -318,7 +318,7 @@ function Pager()
 endfunction
 autocmd myVimrc bufwinenter * if ! &modifiable || &readonly | call Pager() | endif
 
-" {[} pager
+" {]} pager
 
 " {[} Misc
 
