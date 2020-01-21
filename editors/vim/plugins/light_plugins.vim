@@ -72,6 +72,19 @@ Plug 'https://github.com/EinfachToll/DidYouMean'
 Plug 'https://github.com/moll/vim-bbye', {'on': 'Bdelete'}
 cabbrev bd Bdelete
 
+Plug 'https://github.com/chrisbra/csv.vim', {'for': 'csv'}
+let g:csv_autocmd_arrange	   = 1
+let g:csv_autocmd_arrange_size = 1024*1024
+" let g:csv_highlight_column = 'y' " Current cursor's column.
+" hi CSVColumnEven term=bold ctermbg=Gray guibg=LightGray
+" TODO link to something so this doesn't look awful outside solarized light.
+call add (g:customHLGroups, "CSVColumnEven guibg=gray90 ctermbg=lightgray")
+call add (g:pluginSettingsToExec, "highlight clear CSVColumnOdd")
+
+exec 'source ' . g:plugindir . "/firenvim.vim"
+
+" {]} Misc
+
 " {[}--- Yanks ---
 Plug 'machakann/vim-highlightedyank'
 if !exists('##TextYankPost')
@@ -93,19 +106,6 @@ nmap <leader>p <Plug>yankstack_substitute_older_paste
 nmap <leader>P <Plug>yankstack_substitute_newer_paste
 " {]}--- Yanks ---
 
-Plug 'https://github.com/chrisbra/csv.vim', {'for': 'csv'}
-let g:csv_autocmd_arrange	   = 1
-let g:csv_autocmd_arrange_size = 1024*1024
-" let g:csv_highlight_column = 'y' " Current cursor's column.
-" hi CSVColumnEven term=bold ctermbg=Gray guibg=LightGray
-" TODO link to something so this doesn't look awful outside solarized light.
-call add (g:customHLGroups, "CSVColumnEven guibg=gray90 ctermbg=lightgray")
-call add (g:pluginSettingsToExec, "highlight clear CSVColumnOdd")
-
-exec 'source ' . g:plugindir . "/firenvim.vim"
-
-" {]} Misc
-
 " {[}--- Operators ---
 " Bunch of neat mappings, it's a tpope. Esp [n and ]n, for SCM conflict marks.
 " And [<space> for addign newlines.
@@ -122,7 +122,7 @@ nmap <silent> [m <Plug>unimpairedMoveUp
 Plug 'https://github.com/tommcdo/vim-exchange'
 " {]}--- Operators ---
 
-" {[}--- Visual ---
+" {[}--- Visual changes ---
 if v:version >= 702
     " Highlight f and t chars to get where you want.
     " TODO monitor progress of this branch. May be updated soon.
