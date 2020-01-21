@@ -167,6 +167,14 @@ function! CenterText()
   let &signcolumn="yes:" . l:marginSize
 endfunction
 
-function! s:getScreenWidth()
-  return
+function! ResizeGUIVert(value)
+    let &lines+=a:value
 endfunction
+function! ResizeGUIHoriz(value)
+    let &columns+=a:value
+endfunction
+let g:GUIResizeValue=5
+nnoremap <M-S-left> :call ResizeGUIHoriz(-g:GUIResizeValue)<cr>
+nnoremap <M-S-right> :call ResizeGUIHoriz(g:GUIResizeValue)<cr>
+nnoremap <M-S-up> :call ResizeGUIVert(-g:GUIResizeValue)<cr>
+nnoremap <M-S-down> :call ResizeGUIVert(g:GUIResizeValue)<cr>
