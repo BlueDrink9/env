@@ -143,3 +143,30 @@ function! ToggleHiddenAll()
         set showcmd
     endif
 endfunction
+
+" Uses an expandable signcolumn (neovim feature) to push text into the centre
+" of the view.
+" Sadly doesn't work for signcolumn size > 10.
+function! CenterText()
+  augroup CenterTextFunction
+    au!
+  augroup end
+  let l:desiredTextWidth = 80
+  if exists("s:storedSetting")
+    let &signcolumn=s:storedSetting
+    unlet s:storedSetting
+    return
+  endif
+  let s:storedSetting=&signcolumn
+  let l:excessWidth = winwidth(0) - l:desiredTextWidth
+  if l:excessWidth < 1
+    return
+  endif
+  " Use &columns for whole vim process, winwidth(0) for vim window
+  let l:marginSize = (l:excessWidth) / 2
+  let &signcolumn="yes:" . l:marginSize
+endfunction
+
+function! s:getScreenWidth()
+  return
+endfunction
