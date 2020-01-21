@@ -120,6 +120,11 @@ nmap <silent> [m <Plug>unimpairedMoveUp
 " nunmap <silent> [e
 " cx to select an object, then cx again to swap it with first thing.
 Plug 'https://github.com/tommcdo/vim-exchange'
+Plug 'https://github.com/inkarkat/vim-ReplaceWithRegister'
+nmap yr  <Plug>ReplaceWithRegisterOperator
+nmap yrr <Plug>ReplaceWithRegisterLine
+xmap yr  <Plug>ReplaceWithRegisterVisual
+xmap R  <Plug>ReplaceWithRegisterVisual
 " {]}--- Operators ---
 
 " {[}--- Visual changes ---
