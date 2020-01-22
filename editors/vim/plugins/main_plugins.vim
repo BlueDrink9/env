@@ -331,7 +331,7 @@ else
       " and you don't have to run the install script if you use fzf only in
       " Vim.
     nnoremap <leader>f :FZF<CR>
-    nnoremap <leader><space> :FZF<CR>
+    nnoremap <leader><CR> :FZF<CR>
     " Fzf for current buffer list.
     function! s:buflist()
         redir => ls
@@ -342,7 +342,7 @@ else
     function! s:bufopen(e)
         execute 'buffer' matchstr(a:e, '^[ 0-9]*')
     endfunction
-    nnoremap <silent> <leader><return> :call fzf#run({
+    nnoremap <silent> <leader><space> :call fzf#run({
                 \   'source':  reverse(<sid>buflist()),
                 \   'sink':    function('<sid>bufopen'),
                 \   'options': '+m',
