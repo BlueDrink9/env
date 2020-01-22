@@ -322,6 +322,7 @@ au myVimrc FocusLost,InsertLeave,BufLeave * call Autosave()
 
 set modeline
 set modelines=5
+" Important for security.
 silent! set nomodelineexpr
 set expandtab
 set tabstop=4

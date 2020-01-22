@@ -315,8 +315,11 @@ endif
 " fzf only works in terminal, use ctrlp otherwise
 if g:hasGUI && !has('terminal')
     Plug 'https://github.com/ctrlpvim/ctrlp.vim'
+    " Look in buffers, files and MRU.
     let g:ctrlp_cmd = 'CtrlPMixed'
-    let g:ctrlp_map = '<leader>f'
+    if executable('fd')
+      let g:ctrlp_user_command = 'fd %s -type f'
+    endif
     let g:ctrlp_map = '<leader><space>'
     let g:ctrlp_cache_dir = CreateVimDir("ctrpCache") " Purge cache with f5 in buffer
     let g:ctrlp_clear_cache_on_exit = 0
