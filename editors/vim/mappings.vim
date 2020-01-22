@@ -377,7 +377,7 @@ endif
 function s:remapCtrlBStoCW()
     " Hopefully works in most GUIs, if not terminals.
     if g:hasGUI == 0
-        if $TERM ==? "xterm-kitty"
+        if $TERM ==? "xterm-kitty" || $TERM_PROGRAM ==? "kitty"
             inoremap <C-H> <C-w>
             cnoremap <C-H> <C-w>
         elseif $TERM_PROGRAM ==? "mintty"
