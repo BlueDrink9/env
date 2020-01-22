@@ -48,7 +48,7 @@ function! PythonInstallModule(module)
             if executable('pip3')
                 let l:pipVersion="pip3"
             elseif executable('pip')
-            " elseif executable('pip') && system('pip --version') =~ '3'
+                " elseif executable('pip') && system('pip --version') =~ '3'
                 let g:pyInstaller="pip"
                 " Fallback - python 2
             elseif executable('pip2')
@@ -142,8 +142,8 @@ map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 if v:version < 800 && !has('nvim')
-  " Autoset Paste/nopaste
-  Plug 'https://github.com/ConradIrwin/vim-bracketed-paste'
+    " Autoset Paste/nopaste
+    Plug 'https://github.com/ConradIrwin/vim-bracketed-paste'
 endif
 " Allows plugin maps to use '.' to repeat
 Plug 'https://github.com/tpope/vim-repeat'
@@ -169,8 +169,8 @@ nmap ga <Plug>(EasyAlign)
 Plug 'wellle/targets.vim'
 " Don't handle argument. Use another plugin
 autocmd User targets#mappings#user call targets#mappings#extend({
-    \ 'a': {},
-    \ })
+            \ 'a': {},
+            \ })
 " Move args with >, <,. Next arg ], [,. New text obj a, i,.
 " ],
 Plug 'https://github.com/PeterRincker/vim-argumentative'
@@ -193,8 +193,8 @@ Plug 'rhysd/vim-textobj-continuous-line'
 Plug 'somini/vim-textobj-fold'
 Plug 'lucapette/vim-textobj-underscore'
 if v:version >= 703
-  " ac, ic, aC
-  Plug 'https://github.com/glts/vim-textobj-comment'
+    " ac, ic, aC
+    Plug 'https://github.com/glts/vim-textobj-comment'
 endif
 Plug 'https://github.com/coachshea/vim-textobj-markdown', { 'for': 'markdown' }
 " Function argument movements
@@ -247,8 +247,8 @@ if has('timers')
     " Async, uses better grep tools like ack or ag
     Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
     let g:grepper = {
-          \ 'tools': ['rg', 'ag', 'ack', 'findstr', 'pt', 'git', 'grep'],
-          \ }
+                \ 'tools': ['rg', 'ag', 'ack', 'findstr', 'pt', 'git', 'grep'],
+                \ }
     cabbrev bfind Grepper -query
 
     " Live results, fuzzy buffer. Hideous.
@@ -265,11 +265,11 @@ if has('timers')
     " Project replace.
     " nnoremap <leader>pr :Farp<CR>
     function! s:farMappings()
-      nnoremap <buffer><silent> q :call g:far#close_preview_window()<cr>
-      nnoremap <buffer><silent> <bs> :call g:far#change_collapse_under_cursor(-1)<cr>
-      nnoremap <buffer><silent> <c-CR> :Fardo<CR>
-      nnoremap <buffer><silent> W :Refar<CR>
-      nnoremap <buffer><silent> r :Fardo<CR>
+        nnoremap <buffer><silent> q :call g:far#close_preview_window()<cr>
+        nnoremap <buffer><silent> <bs> :call g:far#change_collapse_under_cursor(-1)<cr>
+        nnoremap <buffer><silent> <c-CR> :Fardo<CR>
+        nnoremap <buffer><silent> W :Refar<CR>
+        nnoremap <buffer><silent> r :Fardo<CR>
     endfunction
     autocmd myPlugins FileType far call s:farMappings()
     let g:far#default_mappings=1
@@ -280,14 +280,14 @@ if has('timers')
     let g:far#default_file_mask='**/*.*'
     " Sets the first one in the loop it finds.
     for p in ['rg', 'ag', 'ack']
-      if executable(p)
-        if has('nvim')
-          let g:far#source=p . 'nvim'
-        else
-          let g:far#source=p
+        if executable(p)
+            if has('nvim')
+                let g:far#source=p . 'nvim'
+            else
+                let g:far#source=p
+            endif
+            break
         endif
-        break
-      endif
     endfor
 
 else
@@ -306,8 +306,8 @@ else
 endif
 
 if !(has("nvim") || has("patch-8.1.0271"))
-  " Live substitute preview.
-  Plug 'https://github.com/markonm/traces.vim'
+    " Live substitute preview.
+    Plug 'https://github.com/markonm/traces.vim'
 endif
 
 " Maybe ide candidates...
@@ -318,7 +318,7 @@ if g:hasGUI && !has('terminal')
     " Look in buffers, files and MRU.
     let g:ctrlp_cmd = 'CtrlPMixed'
     if executable('fd')
-      let g:ctrlp_user_command = 'fd %s -type f'
+        let g:ctrlp_user_command = 'fd %s -type f'
     endif
     let g:ctrlp_map = '<leader><space>'
     let g:ctrlp_cache_dir = CreateVimDir("ctrpCache") " Purge cache with f5 in buffer
@@ -329,31 +329,31 @@ if g:hasGUI && !has('terminal')
 else
     exec 'source ' . g:plugindir . "/fzf.vim"
 endif
-    " {]}--- Fuzzy finder ---
+" {]}--- Fuzzy finder ---
 " {]}--- Searching, replacing, finding ---
 
 " {[} Tags
 function! s:tags_sink(line)
-  let parts = split(a:line, '\t\zs')
-  let excmd = matchstr(parts[2:], '^.*\ze;"\t')
-  execute 'silent e' parts[1][:-2]
-  let [magic, &magic] = [&magic, 0]
-  execute excmd
-  let &magic = magic
+    let parts = split(a:line, '\t\zs')
+    let excmd = matchstr(parts[2:], '^.*\ze;"\t')
+    execute 'silent e' parts[1][:-2]
+    let [magic, &magic] = [&magic, 0]
+    execute excmd
+    let &magic = magic
 endfunction
 function! s:tags()
-  if empty(tagfiles())
-    echohl WarningMsg
-    echom 'Preparing tags'
-    echohl None
-    call system('ctags -R')
-  endif
-  call fzf#run({
-        \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
-        \            '| grep -v -a ^!',
-        \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
-        \ 'down':    '40%',
-        \ 'sink':    function('s:tags_sink')})
+    if empty(tagfiles())
+        echohl WarningMsg
+        echom 'Preparing tags'
+        echohl None
+        call system('ctags -R')
+    endif
+    call fzf#run({
+                \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
+                \            '| grep -v -a ^!',
+                \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
+                \ 'down':    '40%',
+                \ 'sink':    function('s:tags_sink')})
 endfunction
 command! Tags call s:tags()
 endif
@@ -507,12 +507,12 @@ let g:vimtex_fold_manual = 1 " instead of expr folding. Speeds up.
 let g:vimtex_complete_enabled = 1
 let g:vimtex_imaps_disabled = []
 let g:vimtex_compiler_latexmk = {
-    \ 'build_dir' : 'latexbuild',
-    \}
+            \ 'build_dir' : 'latexbuild',
+            \}
 " This prevents errors from showing :/
-    " \ 'options' : [
-    " \ ],
-    " \}
+" \ 'options' : [
+" \ ],
+" \}
 " let g:Tex_DefaultTargetFormat="pdf"
 if has('win32')
     let g:vimtex_view_general_viewer = 'SumatraPDF'
