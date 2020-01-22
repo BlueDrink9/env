@@ -109,6 +109,10 @@ if has('nvim') && exists('##UIEnter')
         if l:bufname =~? 'github.com'
             colorscheme github
             set ft=markdown
+            " C-CR to send comment.
+            l:githubSendComment="<Esc>:w<CR>:call firenvim#press_keys("<tab><tab><tab>CR>")<CR>ggdGa"
+            exec 'inoremap <C-CR> ' . l:githubSendComment
+            exec 'nnoremap <C-CR> ' . l:githubSendComment
         elseif l:bufname =~? 'cocalc.com' || l:bufname =~? 'kaggleusercontent.com'
             set ft=python
         elseif l:bufname =~? 'localhost'
