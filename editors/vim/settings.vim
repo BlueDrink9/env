@@ -322,7 +322,7 @@ au myVimrc FocusLost,InsertLeave,BufLeave * call Autosave()
 
 set modeline
 set modelines=5
-set nomodelineexpr
+silent! set nomodelineexpr
 set expandtab
 set tabstop=4
 let &shiftwidth=&tabstop
