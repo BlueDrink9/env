@@ -341,7 +341,7 @@ function! s:tags_sink(line)
     execute excmd
     let &magic = magic
 endfunction
-function! s:tags()
+function! s:fzftags()
     if empty(tagfiles())
         echohl WarningMsg
         echom 'Preparing tags'
@@ -355,8 +355,7 @@ function! s:tags()
                 \ 'down':    '40%',
                 \ 'sink':    function('s:tags_sink')})
 endfunction
-command! Tags call s:tags()
-endif
+command! Tags call s:fzftags()
 " {]}
 
 " Run shell commands async (uses python)
