@@ -11,6 +11,8 @@ else
                 \ deoplete#custom#option('yarp', v:true)
 endif
 Plug 'Shougo/denite.nvim'
+" Includes listing known vim commands in denite. (also qf, ll, history, etc).
+Plug 'https://github.com/neoclide/denite-extra'
 " deoplete tab-complete - Supertab handles this.
 let g:deoplete#enable_at_startup = 1
 
