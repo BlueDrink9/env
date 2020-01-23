@@ -13,26 +13,26 @@ augroup end
 let g:IDE_mappings = {
             \ "allActions" : "<leader>ia",
             \ "allCommands" : "<leader>ic",
-            \ "rename" : "<leader>irr",
-            \ "renameModule" : "<leader>irm",
-            \ "references" : "<leader>if",
-            \ "references2" : "gf",
-            \ "refactor" : "<leader>ir",
-            \ "definition" : "<leader>id",
-            \ "definition2" : "gd",
-            \ "type-definition" : "gy",
-            \ "implementation" : "<leader>ii",
-            \ "implementation2" : "gi",
-            \ "documentation" : "K",
-            \ "documentation2" : "gh",
-            \ "documentation3" : "<leader>ih",
             \ "codeAction" : "<leader>ia",
             \ "codeActionSelected" : "<leader>iaa",
             \ "codelensAction" : "<leader>ial",
-            \ "fix" : "<leader>ef",
-            \ "listErrs" : "<leader>el",
             \ "complete" : "<plug>Non-existant",
+            \ "definition" : "<leader>id",
+            \ "definition2" : "gd",
+            \ "documentation" : "K",
+            \ "documentation2" : "gh",
+            \ "documentation3" : "<leader>ih",
+            \ "fix" : "<leader>ef",
+            \ "implementation" : "<leader>ii",
+            \ "implementation2" : "gi",
+            \ "listErrs" : "<leader>el",
+            \ "refactor" : "<leader>ir",
+            \ "references" : "<leader>if",
+            \ "references2" : "gf",
             \ "reformat" : "<plug>Non-existant",
+            \ "rename" : "<leader>irr",
+            \ "renameModule" : "<leader>irm",
+            \ "type-definition" : "gy",
             \}
 
 " {[} ---------- Misc ----------
@@ -164,6 +164,8 @@ if (has("python") || has("python3")) && v:version >= 704
     let g:UltiSnipsExpandTrigger="<c-e>"
     let g:UltiSnipsJumpForwardTrigger="<c-f>"
     let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+    " Disable autotrigger
+    " au myIDE VimEnter * au! UltiSnips_AutoTrigger
     " augroup ultisnips
     "     au!
     "     " Load default/all snippets
