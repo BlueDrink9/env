@@ -24,7 +24,6 @@ exec 'autocmd myIDE filetype ' . s:coc_disabled_fts . 'let b:coc_enabled=0'
 " sh uses bash-language-server
 " Consider re-adding coc-git for ability to stage chunks. Disable signifyr
 let g:coc_global_extensions = [
-            \ "coc-ultisnips",
             \ "coc-syntax",
             \ "coc-dictionary",
             \ "coc-omni",
@@ -43,6 +42,12 @@ let g:coc_global_extensions = [
             " latex lsp
             " \ "coc-texlab",
             "
+if IsPluginUsed('ultisnips.vim')
+  call add(g:coc_global_extensions, "coc-ultisnips")
+endif
+if IsPluginUsed('neosnippet.vim')
+  call add(g:coc_global_extensions, "coc-neosnippet")
+endif
 
 function! s:show_documentation()
   if &filetype == 'vim'
@@ -86,6 +91,11 @@ exec 'nnoremap <silent> ' . g:IDE_mappings["listErrs"] . ' :<C-u>CocList locatio
 exec 'nnoremap <silent> ' . g:IDE_mappings["documentation"] . ':call s:show_documentation()<CR>'
 exec 'nnoremap <silent> ' . g:IDE_mappings["documentation2"] . ':call s:show_documentation()<CR>'
 exec 'nnoremap <silent> ' . g:IDE_mappings["documentation3"] . ':call s:show_documentation()<CR>'
+
+let g:coc_snippet_next = g:IDE_mappings["snippet_next"]
+let g:coc_snippet_prev = g:IDE_mappings["snippet_prev"]
+" Inoremap(g:IDE_mappings["snippet_expand"], ":call coc#_select_confirm()")
+Inoremap(g:IDE_mappings["snippet_expand"], ":call coc#snippets-expand-jump()")
 
 inoremap <expr><Plug>MyCocRefresh coc#refresh()
 let g:SuperTabDefaultCompletionType = "<Plug>MyCocRefresh"

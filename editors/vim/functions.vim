@@ -17,6 +17,13 @@ endfunction
 function! Vmap(lhs, rhs)
   exec 'vmap ' . a:lhs . ' ' . a:rhs
 endfunction
+function! Inoremap(lhs, rhs)
+  exec 'inoremap ' . a:lhs . ' ' . a:rhs
+endfunction
+function! Imap(lhs, rhs)
+  exec 'imap ' . a:lhs . ' ' . a:rhs
+  " imap <expr> a:lhs a:rhs
+endfunction
 " command! -nargs=+ Vnoremap call Vnoremap(<f-args>)
 
 " Return text to call a local script outside the original.

@@ -6,6 +6,7 @@ augroup myIDE
     au!
 augroup end
 
+" {[} ------ Mappings ------
 " gh - get hint on whatever's under the cursor
 " Use g[] for get [something].
 " Use <leader>i for ide bits.
@@ -37,11 +38,14 @@ let g:IDE_mappings = {
             \ "snippet_next" : "<c-f>",
             \ "type-definition" : "gy",
             \}
+" {]} ------ Mappings ------
 
 " {[} ---------- Misc ----------
 " exec "Plug 'rhysd/vim-grammarous', { 'for': " . g:proseFileTypes . " }"
 " Brilliant for projects with lots of similar files. Check out config
 Plug 'https://github.com/tpope/vim-projectionist'
+" Filetype can change within files.
+Plug 'Shougo/context_filetype.vim'
 " Autoclose brackets, etc. Aims to mimic eclipse. I don't need to use it,
 " mapping to auto-add brackets on enter is all I need.
 " Plug 'https://github.com/Townk/vim-autoclose'
@@ -162,7 +166,23 @@ endif
 
 " {[} ---------- Snippits ----------
 Plug 'https://github.com/honza/vim-snippets' " Library of snippets
-if (has("python") || has("python3")) && v:version >= 704
+" Only requires 7.4, but recommends this.
+if has("nvim") || v:version >= 800
+    Plug 'Shougo/neosnippet.vim'
+    Plug 'Shougo/neosnippet-snippets.vim'
+    let g:neosnippet#enable_snipmate_compatibility=1
+    " let g:neosnippet#enable_conceal_markers=0
+    call Imap(g:IDE_mappings["snippet_expand"], "<Plug>(neosnippet_expand_or_jump)")
+    call Vmap(g:IDE_mappings["snippet_expand"], "<Plug>(neosnippet_expand_or_jump)")
+    call Imap(g:IDE_mappings["snippet_next"], "<Plug>(neosnippet_jump)")
+    call Vmap(g:IDE_mappings["snippet_next"], "<Plug>(neosnippet_jump)")
+    " imap <expr><TAB>
+    "             \ pumvisible() ? "\<C-n>" :
+    "             \ neosnippet#expandable_or_jumpable() ?
+    "             \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+    " smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+    "             \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+elseif (has("python") || has("python3")) && v:version >= 704
     Plug 'https://github.com/SirVer/ultisnips' " Snippit engine
     let g:UltiSnipsExpandTrigger = g:IDE_mappings["snippet_expand"]
     let g:UltiSnipsJumpForwardTrigger = g:IDE_mappings["snippet_next"]
@@ -524,21 +544,12 @@ endif
 "     let g:neocomplete#force_omni_input_patterns.python=
 "                 \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 " else
-"     Plug 'Shougo/neosnippet.vim' " Snippet engine
-"     Plug 'Shougo/neosnippet-snippets' " Snippets
 "     Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-"     " Plug 'wellle/tmux-complete.vim' " Completion for tmux panes
-"     " -> Neocomplete & Neocomplcache
-"     " Use Tab and S-Tab to select candidate
-"     inoremap <expr><Tab>  pumvisible() ? "\<C-N>" : "\<Tab>"
-"     inoremap <expr><S-Tab> pumvisible() ? "\<C-P>" : "\<S-Tab>""
-"     let g:neosnippet#enable_snipmate_compatibility = 1
 "     " Use honza snippets instead of these defaults
 "     let g:neosnippet#snippets_directory=CreateVimDir('Plugins/vim-snippets')
         " imap <expr><TAB> pumvisible() ? "\<C-n>" :
         "             \ neosnippet#expandable_or_jumpable() ?
         "             \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-        " imap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
         " inoremap <expr><CR> pumvisible() ? deoplete#mappings#close_popup() : "\<CR>"
 " endif
 " {]} ---------- Neosettings----------
