@@ -333,6 +333,17 @@ endif
 " {]}--- Searching, replacing, finding ---
 
 " {[} Tags
+if has('timers')
+    Plug 'https://github.com/wsdjeg/vim-todo'
+    command! Todo OpenTodo
+else
+    " :TaskList to show list of TODOs etc.
+    Plug 'https://github.com/vim-scripts/TaskList.vim', {'on': ['Tasklist']}
+    " Need a mapping to prevent it auto-creating and overriding <leader>t
+    nmap <Plug>__blank <Plug>TaskList
+    command! Todo TaskList
+endif
+
 function! s:tags_sink(line)
     let parts = split(a:line, '\t\zs')
     let excmd = matchstr(parts[2:], '^.*\ze;"\t')
