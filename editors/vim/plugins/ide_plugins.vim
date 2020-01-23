@@ -32,6 +32,9 @@ let g:IDE_mappings = {
             \ "reformat" : "<plug>Non-existant",
             \ "rename" : "<leader>irr",
             \ "renameModule" : "<leader>irm",
+            \ "snippet_expand" : "<c-e>",
+            \ "snippet_prev" : "<c-b>",
+            \ "snippet_next" : "<c-f>",
             \ "type-definition" : "gy",
             \}
 
@@ -161,9 +164,9 @@ endif
 Plug 'https://github.com/honza/vim-snippets' " Library of snippets
 if (has("python") || has("python3")) && v:version >= 704
     Plug 'https://github.com/SirVer/ultisnips' " Snippit engine
-    let g:UltiSnipsExpandTrigger="<c-e>"
-    let g:UltiSnipsJumpForwardTrigger="<c-f>"
-    let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+    let g:UltiSnipsExpandTrigger = g:IDE_mappings["snippet_expand"]
+    let g:UltiSnipsJumpForwardTrigger = g:IDE_mappings["snippet_next"]
+    let g:UltiSnipsJumpBackwardTrigger = g:IDE_mappings["snippet_prev"]
     " Disable autotrigger
     " au myIDE VimEnter * au! UltiSnips_AutoTrigger
     " augroup ultisnips
