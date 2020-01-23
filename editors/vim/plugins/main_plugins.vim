@@ -407,7 +407,6 @@ if executable("git")
     endif
     " Commit browser. :GV
     Plug 'junegunn/gv.vim'
-    Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
 
     " VCS changes shown in sign column.
     Plug 'https://github.com/mhinz/vim-signify'
@@ -582,6 +581,7 @@ let g:bullets_enabled_file_types = [
 
 " {[} ---------- NerdTree ----------
 Plug 'https://github.com/scrooloose/nerdtree.git', {'on': ['NERDTree', 'NERDTreeToggle',]}
+Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
 " Change these if you feel the desire...
 let g:NERDTreeIndicatorMapCustom = {
             \ "Modified"  : "✹",
