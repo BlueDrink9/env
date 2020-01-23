@@ -631,11 +631,12 @@ Plug 'kassio/neoterm'
 " Convenient hide/show term buffer, $drop to open file with vim
 Plug 'skywind3000/vim-terminal-help'
 " which key will be used to toggle terminal window, default to <m-=>.
-let g:terminal_key="<leader>t"
+" Will be mapped while using term, so choose carefully. 
+let g:terminal_key="<c-S>"
 " initialize working dir: 0 for unchanged, 1 for file path and 2 for project root.
 let g:terminal_cwd=1
-" how to open the file in vim, default to tab drop.
-let g:terminal_edit="e"
+" how to open the file in vim? default to tab drop.
+" let g:terminal_edit="e"
 " set to term to kill term session when exiting vim.
 let g:terminal_kill="term"
 " set to 0 to hide terminal buffer in the buffer list
