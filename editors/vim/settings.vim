@@ -279,6 +279,8 @@ if exists("g:ideMode") && g:ideMode == 1
 else
     set complete-=i     " Searching includes can be slow
 endif
+" Lower priority file suffixes in completion menus.
+set suffixes+=.tmp,tags
 set display=lastline
 set diffopt+=vertical
 
