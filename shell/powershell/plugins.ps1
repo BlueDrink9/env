@@ -1,16 +1,19 @@
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 function Plugin {
   param($module)
-    If(Get-Module -ListAvailable -Name "$module"){
-      Import-Module $module
-    } Else {
+    try {
+      Import-Module $module -ErrorAction Stop
+    } catch [System.IO.FileNotFoundException] {
       Install-Module $module -AllowClobber -Scope CurrentUser
-      Import-Module $module
     }
 }
 
 Plugin GuiCompletion
 Install-GuiCompletion -Key Tab
+
+Plugin TabExpansionPlusPlus
+Plugin PSUtil
+Plugin ZLocation
 
 # Coloured LS output
 Plugin Get-ChildItemColor
