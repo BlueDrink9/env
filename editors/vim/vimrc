@@ -20,6 +20,8 @@ endfunction
 function! CreateDir(dir)
     if has('win32')
         let l:dir = escape(a:dir, '\')
+    else
+        let l:dir = a:dir
     endif
     if !isdirectory(l:dir)
         silent exec 'call mkdir("' . l:dir . '", "p")'
