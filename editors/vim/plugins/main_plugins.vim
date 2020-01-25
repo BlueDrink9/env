@@ -145,8 +145,6 @@ if v:version < 800 && !has('nvim')
     " Autoset Paste/nopaste
     Plug 'https://github.com/ConradIrwin/vim-bracketed-paste'
 endif
-" Allows plugin maps to use '.' to repeat
-Plug 'https://github.com/tpope/vim-repeat'
 Plug 'https://github.com/tpope/vim-speeddating'
 Plug 'https://github.com/Konfekt/vim-CtrlXA'
 nmap <Plug>SpeedDatingFallbackUp   <Plug>(CtrlXA-CtrlA)

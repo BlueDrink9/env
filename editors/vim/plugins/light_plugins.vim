@@ -41,6 +41,9 @@ Plug 'https://github.com/Konfekt/FoldText'
 
 Plug 'https://github.com/freitass/todo.txt-vim'
 
+" Allows plugin maps to use '.' to repeat
+Plug 'https://github.com/tpope/vim-repeat'
+
 " Jump to specified place in file with file(L:C)
 Plug 'https://github.com/wsdjeg/vim-fetch'
 " For switching between header and alt files
