@@ -24,18 +24,15 @@ let s:scriptdir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
 let g:remoteSession = ($SSH_CLIENT != "")
 
-" let g:vimrcdir = fnamemodify(expand("$MYVIMRC"), ":p:h")
-  let g:vimrcdir = expand("$HOME", ":p:h")
-if has('nvim')
-    let g:vimrcdir = expand("$HOME", ":p:h")
-endif
+let g:vimfilesParentDir = expand("$HOME", ":p:h")
+
 " Automatically create vimfile directories in same location as vimrc
 function! CreateVimDir(dir)
-    let l:dir = PathExpand(g:vimrcdir . '/' . a:dir)
+    let l:dir = PathExpand(g:vimfilesDir . '/' . a:dir)
     if has('win32')
         let l:dir = escape(l:dir, '\')
     endif
-    if filewritable(g:vimrcdir) && !isdirectory(l:dir)
+    if filewritable(g:vimfilesDir) && !isdirectory(l:dir)
         silent exec "call mkdir(\"" . l:dir . "\")"
     endif
     return l:dir
