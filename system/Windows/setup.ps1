@@ -49,4 +49,5 @@ function addTextIfAbsent{
     }
 }
 addTextIfAbsent $sourceText $powershellRCPath
-
+# Trust plugin store to avoid having to manually confirm each plugin installation.
+Set-PSRepository -Name PSGallery -InstallationPolicy Trusted

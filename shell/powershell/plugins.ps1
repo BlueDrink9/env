@@ -1,4 +1,3 @@
-Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 function Plugin {
   param($module)
     try {
@@ -8,12 +7,12 @@ function Plugin {
     }
 }
 
+Plugin ZLocation  # Also provides startup time info.
+
 Plugin GuiCompletion
 Install-GuiCompletion -Key Tab
-
-Plugin TabExpansionPlusPlus
-Plugin PSUtil
-Plugin ZLocation
+Plugin TabExpansionPlusPlus  # A little heavy.
+# Plugin PSUtil  # Hurts startup time a lot
 
 # Coloured LS output
 Plugin Get-ChildItemColor
