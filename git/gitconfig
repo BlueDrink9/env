@@ -1,5 +1,11 @@
 # vim: ft=cfg ts=2 sw=2 ai
 [alias]
+	s = status
+	co = commit
+	ca = commit --all
+	cam = commit --amend
+	cup = commit --amend --no-edit
+	cupa = commit --all --amend --no-edit
   # diff = diff --ignore-space-change
   # Word=- and character-level diffs.
   diffw = diff --ignore-space-change --color-words
