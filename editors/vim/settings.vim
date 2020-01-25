@@ -291,19 +291,21 @@ if v:version >= 703
         let s:viminfoName = 'viminfo'
     endif
     let s:viminfoPath=PathExpand(g:vimfilesDir . '/' . s:viminfoName)
-    " let s:viminfoPath=substitute(s:viminfoPath,'\\','/','g')
+    " Need to use '/' as path sep, or '\\'. Not '/' as is created by
+    " pathexpand.
+    let s:viminfoPath=substitute(s:viminfoPath,'\\','/','g')
     exec 'set viminfo+=n' . s:viminfoPath
 endif
 
 " Extra slash at end means files will have unique names
 " Backupdir possibly doesn't allow // on older versions
-exec 'set backupdir=' . CreateVimDir("backup") . expand('//')
+exec 'set backupdir=' . CreateVimDir("backup") . '//'
 " au BufWritePre * let &bex = '-' . strftime("%Y%b%d%X") . '.vimbackup'
 set backupext=.vimbackup
-exec 'set directory=' . CreateVimDir("swap") . expand('//')
-exec 'set viewdir=' . CreateVimDir("views") . expand('//')
+exec 'set directory=' . CreateVimDir("swap") . '//'
+exec 'set viewdir=' . CreateVimDir("views") . '//'
 if v:version >= 703
-    exec 'set undodir=' . CreateVimDir("undo") . expand('//')
+    exec 'set undodir=' . CreateVimDir("undo") . '//'
     " Create undo file for inter-session undo
     set undofile
 endif
