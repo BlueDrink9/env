@@ -157,6 +157,8 @@
     typeset -g POWERLEVEL9K_MODE=compatible
   fi
 
+
+
   # When set to true, icons appear before content on both sides of the prompt. When set
   # to false, icons go after content. If empty or not set, icons go before content in the left
   # prompt and after content in the right prompt.
@@ -579,8 +581,9 @@
   # Background jobs color.
   typeset -g POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND=6
   typeset -g POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND=0
+  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_CONTENT_EXPANSION='${${(j: | :)${(@)${(@v)jobtexts}[1,3]%% *}}//\%/%%}${${(@v)jobtexts}[4]:+ | …}'
   # Don't show the number of background jobs.
-  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_VERBOSE=true
+  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_VERBOSE=false
   # Icon to show when there are background jobs.
   typeset -g POWERLEVEL9K_BACKGROUND_JOBS_VISUAL_IDENTIFIER_EXPANSION='${P9K_VISUAL_IDENTIFIER// }'
 
