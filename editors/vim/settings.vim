@@ -285,22 +285,26 @@ set display=lastline
 set diffopt+=vertical
 
 if v:version >= 703
-    let s:vimrcdir = fnamemodify($MYVIMRC, ":p:h")
-    let s:viminfoPath=s:vimrcdir . expand("/" . g:vimfilesDir . "/viminfo")
-    let s:viminfoPath=substitute(s:viminfoPath,'\\','/','g')
-    exec 'set viminfo+=n' . fnameescape(s:viminfoPath)
+    if has('nvim')
+        let s:viminfoName = 'nviminfo'
+    else
+        let s:viminfoName = 'viminfo'
+    endif
+    let s:viminfoPath=PathExpand(g:vimfilesDir . '/' . s:viminfoName)
+    " let s:viminfoPath=substitute(s:viminfoPath,'\\','/','g')
+    exec 'set viminfo+=n' . s:viminfoPath
 endif
 
+" Extra slash at end means files will have unique names
 " Backupdir possibly doesn't allow // on older versions
-exec 'set backupdir=' . CreateVimDir(g:vimfilesDir . "/backup") . expand('//')
+exec 'set backupdir=' . CreateVimDir("backup") . expand('//')
 " au BufWritePre * let &bex = '-' . strftime("%Y%b%d%X") . '.vimbackup'
 set backupext=.vimbackup
-exec 'set directory=' . CreateVimDir(g:vimfilesDir . "/swap") . expand('//')
-exec 'set viewdir=' . CreateVimDir(g:vimfilesDir . "/views") . expand('//')
+exec 'set directory=' . CreateVimDir("swap") . expand('//')
+exec 'set viewdir=' . CreateVimDir("views") . expand('//')
 if v:version >= 703
-    exec 'set undodir=' . CreateVimDir(g:vimfilesDir . "/undo") . expand('//')
+    exec 'set undodir=' . CreateVimDir("undo") . expand('//')
     " Create undo file for inter-session undo
-    " Extra slash means files will have unique names
     set undofile
 endif
 set viewoptions-=options
