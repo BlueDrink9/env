@@ -469,17 +469,27 @@ endif
 
 " {[} ---------- Completion ----------
 
-" Awesome code completion, but requires specific installations
+" Enable completion from keywords in syntax files via omnifunc.
+" Theoretically a built-in plugin, but doesn't seem to load...
+Plug 'https://github.com/vim-scripts/SyntaxComplete'
+autocmd myPlugins Filetype *
+            \	if &omnifunc == "" |
+            \		setlocal omnifunc=syntaxcomplete#Complete |
+            \	endif
+" This function gives list of completion items, for use in other
+" plugins.
+" let s:syntaxKeywords = OmniSyntaxList( [] )
+
+" Awesome code completion, but requires specific installations and
+" compiling a binary.
 " Plug 'https://github.com/Valloric/YouCompleteMe'
 if has("timers")
 
+    " This will be unloaded for CoC.nvim
     exec 'source ' . g:plugindir . "/languageclient-neovim.vim"
     if has('node')
         " Intellisense engine for vim8 & neovim, full language server protocol support as VSCode.
         " Uses VSCode-specific extensions, too. Seems to Just Work?
-        " Except do need to install all the sources. Check the readme.
-        " Installation is via command - annoying. Also uses hardcoded
-        " .json.
         exec 'source ' . g:plugindir . "/coc.nvim.vim"
     elseif has("python3")
         exec 'source ' . g:plugindir . "/deoplete.vim"
