@@ -139,6 +139,8 @@ exec 'source ' . s:localPlugins
 
 call plug#end()
 
+" TODO: Make this a user autocmd, call it here. Makes more sense than strings
+" in an array.
 for item in g:pluginSettingsToExec
     exec item
 endfor
@@ -150,7 +152,7 @@ function! s:reHL()
     endfor
 endfunction
 call s:reHL()
-    autocmd myPlugins VimEnter,ColorScheme * call s:reHL()
+autocmd myPlugins VimEnter,ColorScheme * call s:reHL()
 
 if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
     if !g:hasGUI
