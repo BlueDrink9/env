@@ -1,5 +1,4 @@
-function Plugin {
-  param($module)
+function Plugin($module) {
     try {
       Import-Module $module -ErrorAction Stop
     } catch [System.IO.FileNotFoundException] {
@@ -8,6 +7,7 @@ function Plugin {
 }
 
 Plugin ZLocation  # Also provides startup time info.
+Plugin PSReadline  # Included by default after v3.
 
 Plugin GuiCompletion
 Install-GuiCompletion -Key Tab
