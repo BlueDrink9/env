@@ -16,12 +16,17 @@ if (!($PSVersionTable.PSVersion.Major -lt 7)) {
 
 Set-PSReadLineKeyHandler -vimode insert -Chord "k" -ScriptBlock { mapTwoLetterNormal 'k' 'v' }
 Set-PSReadLineKeyHandler -vimode insert -Chord "v" -ScriptBlock { mapTwoLetterNormal 'v' 'k' }
-function mapTwoLetterNormal{
-  param($a, $b)
+function mapTwoLetterNormal($a, $b){
+  mapTwoLetterFunc $a $b -func $function:setViCommandMode
+}
+function setViCommandMode{
+    [Microsoft.PowerShell.PSConsoleReadLine]::ViCommandMode()
+}
+function mapTwoLetterFunc($a,$b,$func) {
   if ([Microsoft.PowerShell.PSConsoleReadLine]::InViInsertMode()) {
     $key = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
     if ($key.Character -eq $b) {
-      [Microsoft.PowerShell.PSConsoleReadLine]::ViCommandMode()
+        &$func
     } else {
       [Microsoft.Powershell.PSConsoleReadLine]::Insert("$a")
       [Microsoft.Powershell.PSConsoleReadLine]::Insert($key.Character)
@@ -45,3 +50,4 @@ Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadlineOption -ShowToolTips
 Set-PSReadlineOption -CompletionQueryItems 100
 Set-PSReadlineOption -BellStyle None
+# Set-PSDebug -Trace 0
