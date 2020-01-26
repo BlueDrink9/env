@@ -205,11 +205,7 @@ Plug 'https://github.com/jeetsukumaran/vim-indentwise'
 Plug 'https://github.com/bps/vim-textobj-python', { 'for': 'markdown' }
 " {]} Extra text objects
 
-" Detect indent settings automatically from file or others of same type in
-" dir.
-Plug 'https://github.com/tpope/vim-sleuth'
 " Limelight Looks really nice, esp for prose. Highlight slightly cu* rrent paraghraph.
-
 exec "Plug 'junegunn/limelight.vim', { 'for': " . g:proseFileTypes . ", 'on': 'Limelight' }"
 " {]} ---------- Misc----------
 
