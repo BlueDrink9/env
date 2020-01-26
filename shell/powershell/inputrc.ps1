@@ -22,6 +22,14 @@ function mapTwoLetterNormal($a, $b){
 function setViCommandMode{
     [Microsoft.PowerShell.PSConsoleReadLine]::ViCommandMode()
 }
+
+function replaceWithExit {
+    [Microsoft.PowerShell.PSConsoleReadLine]::BackwardKillLine()
+    [Microsoft.PowerShell.PSConsoleReadLine]::KillLine()
+    [Microsoft.PowerShell.PSConsoleReadLine]::Insert('exit')
+}
+Set-PSReadLineKeyHandler -Chord ";" -ScriptBlock { mapTwoLetterFunc ';' 'q' -func $function:replaceWithExit }
+
 function mapTwoLetterFunc($a,$b,$func) {
   if ([Microsoft.PowerShell.PSConsoleReadLine]::InViInsertMode()) {
     $key = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
