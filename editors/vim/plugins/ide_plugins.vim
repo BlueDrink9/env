@@ -169,7 +169,7 @@ Plug 'https://github.com/honza/vim-snippets' " Library of snippets
 " Only requires 7.4, but recommends this.
 if has("nvim") || v:version >= 800
     Plug 'Shougo/neosnippet.vim'
-    Plug 'Shougo/neosnippet-snippets.vim'
+    Plug 'Shougo/neosnippet-snippets'
     let g:neosnippet#enable_snipmate_compatibility=1
     " let g:neosnippet#enable_conceal_markers=0
     call Imap(g:IDE_mappings["snippet_expand"], "<Plug>(neosnippet_expand_or_jump)")
