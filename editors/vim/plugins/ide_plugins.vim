@@ -491,7 +491,7 @@ if has("timers")
         " Intellisense engine for vim8 & neovim, full language server protocol support as VSCode.
         " Uses VSCode-specific extensions, too. Seems to Just Work?
         exec 'source ' . g:plugindir . "/coc.nvim.vim"
-    elseif has("python3")
+    elseif has("python3") && HasNvimPythonModule()
         exec 'source ' . g:plugindir . "/deoplete.vim"
 
     elseif has("python")

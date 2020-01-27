@@ -40,6 +40,19 @@ function! s:prefixSID(SID)
   return '<SNR>' . a:SID . '_'
 endfun
 
+function! HasNvimPythonModule()
+    try
+        python3 import pynvim
+    catch
+        try
+            python3 import neovim
+        catch
+            return v:false
+        endtry
+    endtry
+    return v:true
+endfunction
+
 " Pipes the output of shell commands into a new window for viewing.
 function! WindowOutput(cmd)
     redir => message
