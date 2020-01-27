@@ -500,23 +500,15 @@ if has("timers")
         " Use TAB to complete when typing words, else inserts TABs as usual.  Uses
         " dictionary, source files, and completor to find matching words to complete.
 
-        " Note: usual completion is on <C-n> but more trouble to press all the time.
-        " Never type the same word twice and maybe learn a new spellings!
-        " Use the Linux dictionary when spelling is in doubt.
-        function! Tab_Or_Completor() abort
-            " If completor is already open the $(tab) cycles through suggested completions.
-            if pumvisible()
-                return "\<C-N>"
-                " If completor is not open and we are in the middle of typing a word then
-                " $(tab) opens completor menu.
-            elseif col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
-                return "\<C-R>=completor#do('complete')\<CR>"
-            else
-                " If we aren't typing a word and we press $(tab) simply do the normal $(tab)
-                " action.
-                return "\<Tab>"
+        " Check the plugin has loaded correctly before overriding
+        " completion command.
+        function! CompletorSetCompletionCommand()
+            if exists('completor#do')
+                let g:completionCommand = "\<C-R>=completor#do('complete')\<CR>"
             endif
-        endfunction
+        endfunc
+
+        call add(g:pluginSettingsToExec, "call CompletorSetCompletionCommand()")
 
         " Use $(tab) key to select completions.  Default is arrow keys.
         inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"

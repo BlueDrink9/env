@@ -62,8 +62,12 @@ nnoremap <F9> :w<enter> :WindowOutput !%:p<Enter>
 if !exists('g:completionCommand')
     let g:completionCommand="\<C-N>"
 endif
-function! Tab_Or_Complete()
-    if s:inWord()
+" Abort means func will abort if it detects an error.
+function! Tab_Or_Complete() abort
+    " If menu is already open the $(tab) cycles through suggested completions.
+    if pumvisible()
+        return "\<C-N>"
+    elseif s:inWord()
         return g:completionCommand
     else
         return "\<Tab>"
