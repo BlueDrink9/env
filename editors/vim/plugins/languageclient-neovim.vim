@@ -1,8 +1,16 @@
 
-Plug 'autozimu/LanguageClient-neovim', {
-            \ 'branch': 'next',
-            \ 'do': 'bash install.sh',
-            \ }
+if has('win32')
+    Plug 'autozimu/LanguageClient-neovim', {
+                \ 'branch': 'next',
+                \ 'do': 'powershell -executionpolicy bypass -File install.ps1',
+                \ }
+else
+    Plug 'autozimu/LanguageClient-neovim', {
+                \ 'branch': 'next',
+                \ 'do': 'bash install.sh',
+                \ }
+endif
+
 function! s:SetLSPShortcuts()
     call Nnoremap(g:IDE_mappings["definition"], ":call LanguageClient#textDocument_definition()<CR>")
     call Nnoremap(g:IDE_mappings["definition2"], ":call LanguageClient#textDocument_definition()<CR>")
