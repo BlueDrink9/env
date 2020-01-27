@@ -10,6 +10,9 @@ else
                 \ 'do': 'bash install.sh',
                 \ }
 endif
+" On windows, the binary is an exe, so windows and WSL plugins can share
+" a folder and have different binary names.
+command! LanguageClientUpdateAndInstallBinary PlugInstall! LanguageClient-neovim
 
 function! s:SetLSPShortcuts()
     call Nnoremap(g:IDE_mappings["definition"], ":call LanguageClient#textDocument_definition()<CR>")
