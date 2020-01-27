@@ -60,12 +60,16 @@ nnoremap <F9> :w<enter> :WindowOutput !%:p<Enter>
 "Use TAB to complete when typing words, else inserts TABs as usual.
 " TODO: Check pub for shift tab? Or incorporate shift tab?
 function! Tab_Or_Complete()
-    if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+    if s:inWord()
         return "\<C-N>"
     else
         return "\<Tab>"
     endif
 endfunction
+function! s:inWord()
+    return col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+endfunction
+
 inoremap <silent> <Tab> <C-R>=Tab_Or_Complete()<CR>
 inoremap <S-Tab> <C-P>
 " <CR> to confirm completion, use:
