@@ -7,19 +7,12 @@ else
     Plug 'Shougo/deoplete.nvim'
     Plug 'roxma/nvim-yarp'
     Plug 'roxma/vim-hug-neovim-rpc'
-    call add(g:pluginSettingsToExec,
-                \ "call deoplete#custom#option('yarp', v:true)")
+    autocmd myPlugins User pluginSettingsToExec call
+                \ deoplete#custom#option('yarp', v:true)
 endif
 Plug 'Shougo/denite.nvim'
 " deoplete tab-complete - Supertab handles this.
 let g:deoplete#enable_at_startup = 1
-
-" let g:deoplete#enable_smart_case = 1
-" Num processes = 0 means number of sources.
-call add(g:pluginSettingsToExec, "call deoplete#custom#option(
-            \ 'smart_case', v:true,
-            \ 'num_processes', 0,
-            \ )")
 
 " Completion sources {[}
 " complete from syntax files
@@ -29,34 +22,45 @@ Plug 'Shougo/neoinclude.vim'
 Plug 'Shougo/neco-vim'
 Plug 'artur-shaik/vim-javacomplete2'
 
-call add(g:pluginSettingsToExec,
-            \ "call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])")
-call add(g:pluginSettingsToExec,
-            \ "call deoplete#custom#source('LanguageClient', 'min_pattern_length', 2)")
-" autocmd FileType x
-" \ call deoplete#custom#buffer_option('auto_complete', v:false)
+function! s:setupDeopleteSources()
+    call deoplete#custom#source('ultisnips',
+                \ 'matchers',
+                \ ['matcher_fuzzy'])
+    call deoplete#custom#source('LanguageClient',
+                \ 'min_pattern_length',
+                \ 2)
+    " Rank 200 is below around, above file, below omni.
+    call deoplete#custom#source('buffer', 'rank', 200)
+    call deoplete#custom#source('dictionary', 'min_pattern_length', 4)
+    " autocmd FileType x
+    " \ call deoplete#custom#buffer_option('auto_complete', v:false)
+endfunction
+
 
 " Plug 'https://github.com/lionawurscht/deoplete-biblatex'
 Plug 'deoplete-plugins/deoplete-tag'
-call add(g:pluginSettingsToExec, "call deoplete#custom#option('omni_patterns', {
-            \ 'r': ['[^. *\t]\.\w*', '\h\w*::\w*', '\h\w*\$\w*'],
-            \})")
-            " \ 'r': '[^. *\t]\.\w*',
+function! s:setupDeopleteOptions()
+    " let g:deoplete#enable_smart_case = 1
+    " Num processes = 0 means number of sources.
+    call deoplete#custom#option(
+                \ 'smart_case', v:true,
+                \ 'num_processes', 0,
+                \ )
 
-call add(g:pluginSettingsToExec, "
-            \ call deoplete#custom#var('omni', 'input_patterns', {
-            \ 'tex': g:vimtex#re#deoplete,
-            \})
-            \ ")
+    " Note: omni not async :(
+    call deoplete#custom#option('omni_patterns', {
+                \ 'r': ['[^. *\t]\.\w*', '\h\w*::\w*', '\h\w*\$\w*'],
+                \ })
+                " \ 'r': '[^. *\t]\.\w*',
+    call deoplete#custom#var('omni', 'input_patterns', {
+                \ 'tex': g:vimtex#re#deoplete,
+                \})
+endfunction
+
 " This was in the previous dict.
 " See https://github.com/Shougo/deoplete.nvim/issues/745
             " \ 'r': '[^. *\t]\.\w*'
-call add(g:pluginSettingsToExec,
-            \ "call deoplete#custom#source('dictionary', 'min_pattern_length', 4)")
-" Rank 200 is below around, above file, below omni.
-" Note: omni not async :(
-call add(g:pluginSettingsToExec,
-            \ "call deoplete#custom#source('buffer', 'rank', 200)")
+
 if executable("clang")
     Plug 'Shougo/deoplete-clangx', {'for': ['c', 'cpp'] }
 endif
@@ -81,9 +85,13 @@ let g:context_filetype#same_filetypes.gitconfig = '_'
 " Todo: Fix context and LanguageClient interactions. For some reason
 " don't work properly together, and completion from other buffers with
 " different filetypes fails.
-call add(g:pluginSettingsToExec, "
-\ call deoplete#custom#var('buffer', 'require_same_filetype', v:false)
-            \")
+
+function! s:setupDeoplete()
+    call deoplete#custom#var('buffer', 'require_same_filetype', v:false)
+    call s:setupDeopleteSources()
+    call s:setupDeopleteOptions()
+endfunction
+autocmd myPlugins User pluginSettingsToExec call s:setupDeoplete()
 
 " {[} ---------- Denite ----------
 " From https://github.com/ctaylo21/jarvis/blob/master/config/nvim/init.vim#L58
@@ -160,6 +168,5 @@ function! s:deniteSetup()
 
     call s:profile(s:denite_options)
 endfunction
-let s:deniteSetupCall = GetLocalFunctionCall(s:SID(), 'deniteSetup()')
-call add(g:pluginSettingsToExec, s:deniteSetupCall)
+autocmd myPlugins User pluginSettingsToExec call s:deniteSetup()
 " {]} ---------- Denite ----------

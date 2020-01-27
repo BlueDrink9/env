@@ -222,7 +222,7 @@ exec "Plug 'junegunn/limelight.vim', { 'for': " . g:proseFileTypes . ", 'on': 'L
 " Replacement for surround, with more features.
 Plug 'machakann/vim-sandwich'
 " Gives it tpope-surround mappings.
-call add(pluginSettingsToExec, "runtime macros/sandwich/keymap/surround.vim")
+autocmd myPlugins User pluginSettingsToExec runtime macros/sandwich/keymap/surround.vim
 Plug 'https://github.com/easymotion/vim-easymotion'
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 " tab-incrementable search with easymotion dropout feature.
@@ -242,7 +242,7 @@ nmap <Leader><S-H> <Plug>(easymotion-overwin-w)
 " Like sneak
 nnoremap <leader>s <Plug>(easymotion-overwin-f2)
 Plug 'bkad/camelcasemotion'
-call add(g:pluginSettingsToExec, "call camelcasemotion#CreateMotionMappings('<leader>m')")
+autocmd myPlugins User pluginSettingsToExec call camelcasemotion#CreateMotionMappings('<leader>m')
 " {]} ---------- Operators ----------
 
 " {[}--- Searching, replacing, finding ---
@@ -382,14 +382,16 @@ if executable("git")
 
     " Async fugitive
     if g:hasAsyncrun
-        call add(g:pluginSettingsToExec, "command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
-                    \if exists(':Make') == 2
-                    \noautocmd Make
-                    \else
-                    \silent noautocmd make!
-                    \redraw!
-                    \return 'call fugitive#cwindow()'
-                    \endif")
+        autocmd myPlugins User pluginSettingsToExec command!
+                    \ -bang -nargs=* -complete=file
+                    \ Make AsyncRun -program=make @ <args>
+                    \ if exists(':Make') == 2
+                    \ noautocmd Make
+                    \ else
+                    \ silent noautocmd make!
+                    \ redraw!
+                    \ return 'call fugitive#cwindow()'
+                    \ endif
     endif
     " github wrapper
     if v:version > 701
@@ -405,7 +407,7 @@ if executable("git")
     " Async, so shouldn't be too bad. Ignored if not async.
     " let g:signify_realtime = 1
     " Causes a write on cursorhold. PITA, so let's replace it.
-    " call add(g:pluginSettingsToExec, "autocmd! signify CursorHold,CursorHoldI")
+    " autocmd myPlugins User pluginSettingsToExec autocmd! signify CursorHold,CursorHoldI
     if has('timers')
         autocmd User Fugitive silent! SignifyRefresh
         " This seems to be causing an annoying error :/
@@ -468,14 +470,15 @@ let g:pencil#autoformat_blacklist = [
             \ 'texMath',
             \ ]
 
+" TODO check that SetProseOptions is run at the right times.
 function! SetProseOptions()
     " Add dictionary completion. Requires setting 'dictionary' option.
     setlocal complete+=k
     " Is this actually running these functions though?
     " call AutoCorrect()
     " call textobj#sentence#init()
-    call add (g:pluginSettingsToExec, "call AutoCorrect()")
-    call add (g:pluginSettingsToExec, "call textobj#sentence#init()")
+    autocmd myPlugins User pluginSettingsToExec call AutoCorrect()
+    autocmd myPlugins User pluginSettingsToExec call textobj#sentence#init()
     " Default spelling lang is En, I want en_nz.
     if &spelllang == "en"
         " Custom lang not set.
@@ -487,8 +490,8 @@ endfunction
 
 " {[} ---------- Vimtex ----------
 Plug 'https://github.com/lervag/vimtex'
-" call add(g:pluginSettingsToExec, "let g:vimtex_compiler_latexmk.build_dir = 'latexbuild'")
-call add(g:pluginSettingsToExec, "let g:vimtex_compiler_progname = 'nvr'")
+" autocmd myPlugins User pluginSettingsToExec exec "let g:vimtex_compiler_latexmk.build_dir = 'latexbuild'"
+autocmd myPlugins User pluginSettingsToExec let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_fold_enabled = 1
 let g:vimtex_fold_manual = 1 " instead of expr folding. Speeds up.
 " Omnifunc complete citations, labels, filenames, glossary

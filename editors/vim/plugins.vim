@@ -139,11 +139,7 @@ exec 'source ' . s:localPlugins
 
 call plug#end()
 
-" TODO: Make this a user autocmd, call it here. Makes more sense than strings
-" in an array.
-for item in g:pluginSettingsToExec
-    exec item
-endfor
+doautocmd User pluginSettingsToExec
 
 " HLGroups get cleared by colourschemes when changing. This resets them.
 function! s:reHL()

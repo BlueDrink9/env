@@ -58,10 +58,10 @@ if has('nvim') && exists('##UIEnter')
 
     function! s:onFirenvimLoad()
       " call feedkeys("\<C-L>", 'n')
-      " call s:FirenvimSetup()
+      " call s:firenvimSetup()
     endfunction
 
-    function! s:FirenvimSetup()
+    function! s:firenvimSetup()
       " We are in firenvim
         let g:hasGUI=1
         call SetGFN(12)
@@ -127,7 +127,6 @@ if has('nvim') && exists('##UIEnter')
         endif
     endfunction
 
-    let s:setupCall = GetLocalFunctionCall(s:SID(), 'FirenvimSetup()')
-    call add(g:pluginSettingsToExec, s:setupCall)
+    autocmd myPlugins User pluginSettingsToExec call s:firenvimSetup()
     autocmd myPlugins UIEnter * if s:isConnectedToFirenvim(deepcopy(v:event.chan)) | call s:onFirenvimLoad() | endif
 endif

@@ -59,8 +59,8 @@ endfunction
 
 " {[} Mappings
 " use <Plug>(coc-diagnostic-next) for all diagnostics.
-call add(g:pluginSettingsToExec, 'nmap <silent> ]e <Plug>(coc-diagnostic-next-error)')
-call add(g:pluginSettingsToExec, 'nmap <silent> [e <Plug>(coc-diagnostic-prev-error)')
+autocmd myPlugins User pluginSettingsToExec nmap <silent> ]e <Plug>(coc-diagnostic-next-error)
+autocmd myPlugins User pluginSettingsToExec nmap <silent> [e <Plug>(coc-diagnostic-prev-error)
 " Unimpaired makes remapping tricky.
 let g:nremap = {"]e": "<Plug>(coc-diagnostic-next-error)","[e": "<Plug>(coc-diagnostic-prev-error)" }
 

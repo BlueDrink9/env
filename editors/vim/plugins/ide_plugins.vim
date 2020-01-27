@@ -102,8 +102,8 @@ if has("timers")
     " Downside is having to restart vim if you install a new linter.
     let g:ale_cache_executable_check_failures = 1
     " let g:ale_open_list=1 " Auto-open error lsit
-    call add(g:pluginSettingsToExec, 'nmap <silent> ]e <Plug>(ale_next_wrap)')
-    call add(g:pluginSettingsToExec, 'nmap <silent> [e <Plug>(ale_previous_wrap)')
+    autocmd myPlugins User pluginSettingsToExec nmap <silent> ]e <Plug>(ale_next_wrap)
+    autocmd myPlugins User pluginSettingsToExec nmap <silent> [e <Plug>(ale_previous_wrap)
     " Unimpaired makes remapping tricky.
     let g:nremap = {"]e": "<Plug>(ale_next_wrap)","[e": "<Plug>(ale_previous_wrap)" }
     " Disabled in favour of LSP from LanguageClient-neovim.
@@ -502,12 +502,12 @@ if has("timers")
 
         " Check the plugin has loaded correctly before overriding
         " completion command.
-        function! CompletorSetCompletionCommand()
+        function! s:completorSetCompletionCommand()
             if exists('completor#do')
                 let g:completionCommand = "\<C-R>=completor#do('complete')\<CR>"
             endif
         endfunc
-        call add(g:pluginSettingsToExec, "call CompletorSetCompletionCommand()")
+        autocmd myPlugins User pluginSettingsToExec call s:completorSetCompletionCommand()
         let g:completor_auto_trigger = 1
 
     endif

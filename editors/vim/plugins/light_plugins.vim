@@ -22,10 +22,6 @@ if g:liteMode
     " {]} Replace Tcomment with commentary
     " Use better 'vim-sandwich' in main.
     Plug 'https://github.com/tpope/vim-surround.git'
-" Plug 'machakann/vim-sandwich'
-" " Gives it tpope-surround mappings.
-" call add(pluginSettingsToExec, "runtime macros/sandwich/keymap/surround.vim")
-
     " Lighter alt to airline for putting buffers in tabline.
     Plug 'https://github.com/ap/vim-buftabline'
     " Only show buffer line if there are > 2 buffers open.
@@ -82,7 +78,9 @@ let g:csv_autocmd_arrange_size = 1024*1024
 " hi CSVColumnEven term=bold ctermbg=Gray guibg=LightGray
 " TODO link to something so this doesn't look awful outside solarized light.
 call add (g:customHLGroups, "CSVColumnEven guibg=gray90 ctermbg=lightgray")
-call add (g:pluginSettingsToExec, "highlight clear CSVColumnOdd")
+" TODO Check if csv column highlight should be a highlight update or a
+" pluginSettings update.
+autocmd myPlugins User pluginSettingsToExec highlight clear CSVColumnOdd
 
 exec 'source ' . g:plugindir . "/firenvim.vim"
 
@@ -104,7 +102,7 @@ let g:highlightedyank_highlight_duration = 5000
 " else
 Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
 let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
-call add(g:pluginSettingsToExec, "call yankstack#setup()")
+autocmd myPlugins User pluginSettingsToExec call yankstack#setup()
 nmap <leader>p <Plug>yankstack_substitute_older_paste
 nmap <leader>P <Plug>yankstack_substitute_newer_paste
 " {]}--- Yanks ---

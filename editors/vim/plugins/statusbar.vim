@@ -19,7 +19,7 @@ Plug 'https://github.com/vim-airline/vim-airline'
 if g:hasAsyncrun
     " Async errors appear in airline.
     let g:asyncrun_status = ''
-    call add (g:pluginSettingsToExec, "let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])")
+    autocmd myPlugins User pluginSettingsToExec let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
 endif
 
 function! s:AirlineColorVarUpdate()
@@ -199,13 +199,14 @@ if g:airline_powerline_fonts == 0
     " airline symbols
     let g:airline_symbols.readonly = ''
 
-    " Skip gap between col symbol and number (custom section)
-    call add (g:pluginSettingsToExec,
-                \ "call airline#parts#define_raw('linenr', g:airline_symbols.linenr . ' %l')")
-    call add (g:pluginSettingsToExec,
-                \ "call airline#parts#define_raw('columnnr', g:airline_symbols.columnnr . '%c')")
-    call add (g:pluginSettingsToExec, "let g:airline_section_z = airline#section#create([
-                \ 'linenr', 'maxlinenr',' ', 'columnnr'])")
+    function! s:makeAirlineCustomParts()
+        " Skip gap between col symbol and number (custom section)
+        call airline#parts#define_raw('linenr', g:airline_symbols.linenr . ' %l')
+        call airline#parts#define_raw('columnnr', g:airline_symbols.columnnr . '%c')
+        let g:airline_section_z = airline#section#create([
+                    \ 'linenr', 'maxlinenr',' ', 'columnnr'])
+    endfunction
+
 else
     " Using predefined symbols
     " This causes linenr to be blank. But without it, symbols don't exist!
@@ -214,17 +215,19 @@ else
     "     let g:airline_symbols = {}
     "     let g:airline_symbols.linenr = '∥'
     " endif
-    call add (g:pluginSettingsToExec, "let g:airline_symbols.columnnr = '∥'")
-    call add (g:pluginSettingsToExec, "let g:airline_symbols.maxlinenr = ''")
-    call add (g:pluginSettingsToExec,
-                \ "call airline#parts#define_raw('columnnr', g:airline_symbols.columnnr . '%c')")
-    call add (g:pluginSettingsToExec, "call airline#parts#define_raw('linenr', g:airline_symbols.linenr . '%l')")
-    " call add (g:pluginSettingsToExec, "call airline#parts#define_raw('maxlinenr', '/%L' . g:airline_symbols.maxlinenr)")
-    call add (g:pluginSettingsToExec, "call airline#parts#define_raw('maxlinenr', '/%L')")
-    " Skip gap between col symbol and number (custom section)
-    call add (g:pluginSettingsToExec, "let g:airline_section_z = airline#section#create([
-                \ 'linenr', 'maxlinenr',' ', 'columnnr'])")
+    function! s:makeAirlineCustomParts()
+        let g:airline_symbols.columnnr = '∥'
+        let g:airline_symbols.maxlinenr = ''
+        call airline#parts#define_raw('columnnr', g:airline_symbols.columnnr . '%c')
+        call airline#parts#define_raw('linenr', g:airline_symbols.linenr . '%l')
+        " call airline#parts#define_raw('maxlinenr', '/%L' . g:airline_symbols.maxlinenr)
+        call airline#parts#define_raw('maxlinenr', '/%L')
+        " Skip gap between col symbol and number (custom section)
+        let g:airline_section_z = airline#section#create([
+                    \ 'linenr', 'maxlinenr',' ', 'columnnr'])
+    endfunction
 endif
+autocmd myPlugins User pluginSettingsToExec call s:makeAirlineCustomParts()
 
 " {]} ---------- Nerd/pl fonts----------
 
@@ -246,7 +249,7 @@ let g:airline#extensions#whitespace#mixed_indent_algo = 1
 let g:airline#extensions#tabline#alt_sep = 1
 let g:airline#extensions#tabline# = 1
 " let g:airline#extensions#tabline#show_tabs = 0
-call add (g:pluginSettingsToExec, "let g:airline_section_tabline = airline#section#create(['%{getcwd()}'])")
+autocmd myPlugins User pluginSettingsToExec let g:airline_section_tabline = airline#section#create(['%{getcwd()}'])
 
 let g:airline#extensions#hunks#non_zero_only = 1
 let g:airline#extensions#whitespace#checks = []

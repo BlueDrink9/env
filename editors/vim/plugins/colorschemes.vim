@@ -70,8 +70,8 @@ let g:jellybeans_overrides = {
 " endif
 if filereadable(expand("~/.vimrc_background")) && exists($BASE16_THEME)
   let base16colorspace=256
-  call add(g:pluginSettingsToExec, "source ~/.vimrc_background")
-  call add(g:pluginSettingsToExec, "let colorSch=g:colors_name")
+  autocmd myPlugins User pluginSettingsToExec source ~/.vimrc_background
+  autocmd myPlugins User pluginSettingsToExec let colorSch=g:colors_name
 endif
 " {]} ---------- Base16 ----------
 
@@ -112,10 +112,10 @@ endif
 
 " {]}
 
-" Double expansion so variables are set at the right time (after plugin
+" exec so variables are set at the right time (after plugin
 " load).
-call add (g:pluginSettingsToExec, "exec 'colorscheme ' . colorSch")
-" call add (g:pluginSettingsToExec, "exec 'echom colorSch'")
+autocmd myPlugins User pluginSettingsToExec exec 'colorscheme ' . colorSch
+" autocmd myPlugins User pluginSettingsToExec exec 'echom colorSch'
 call add (g:customHLGroups, "MatchParen cterm=bold,underline ctermbg=lightgray")
 call add (g:customHLGroups, "MatchParen gui=bold,underline guibg=gray90")
 " call add (g:customHLGroups, "link MatchParen CursorColumn")
