@@ -5,7 +5,6 @@ Set-Alias e nvim
 function liteEdit {nvim --cmd "let g:liteMode=1"}
 Set-Alias le liteEdit
 function ide {nvim --cmd "let g:ideMode=1"}
-Set-Alias ide ide
 Set-Alias time measure-command
 Set-Alias fopen explorer.exe
 function envupd { git -C "$DOTFILES_DIR" pull }
