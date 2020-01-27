@@ -41,6 +41,9 @@ function! s:prefixSID(SID)
 endfun
 
 function! HasNvimPythonModule()
+    if has('nvim')
+        return has('python') || has('python3')
+    endif
     try
         python3 import pynvim
     catch
