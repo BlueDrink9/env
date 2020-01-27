@@ -111,6 +111,15 @@ endif
 " Plug 'https://github.com/zefei/vim-wintabs'
 Plug 'https://github.com/tomtom/tcomment_vim'
 let g:tcomment_opleader1='<leader>c'
+" By default <c-_>, it is what terminals send for <c-/>. That's what a lot of
+" IDEs use, so it's probably worth keeping... but it also happens to be what
+" mintty sends as <c-bs>. Gvim doesn't send anything.
+" Maps in insert mode.
+if $TERM_PROGRAM ==? "mintty"
+    let g:tcomment_mapleader1=''
+endif
+" default '<leader>_'. Maps in select mode. I don't use it.
+let g:tcomment_mapleader2=''
 let g:tcomment#blank_lines=0
 xmap <C-/>  :Tcomment<CR>
 nmap <C-/>  :TcommentBlock<CR>
