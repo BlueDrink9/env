@@ -507,16 +507,9 @@ if has("timers")
                 let g:completionCommand = "\<C-R>=completor#do('complete')\<CR>"
             endif
         endfunc
-
         call add(g:pluginSettingsToExec, "call CompletorSetCompletionCommand()")
+        let g:completor_auto_trigger = 1
 
-        " Use $(tab) key to select completions.  Default is arrow keys.
-        inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-        inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-        " Use tab to trigger auto completion.  Default suggests completions as you type.
-        let g:completor_auto_trigger = 0
-        inoremap <expr> <Tab> Tab_Or_Complete()
     endif
 else
     Plug 'https://github.com/lifepillar/vim-mucomplete'

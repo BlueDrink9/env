@@ -73,11 +73,10 @@ endfunction
 command! -nargs=+ -complete=command WindowOutput call WindowOutput(<q-args>)
 nnoremap <F9> :w<enter> :WindowOutput !%:p<Enter>
 
-"Use TAB to complete when typing words, else inserts TABs as usual.
-" TODO: Check pub for shift tab? Or incorporate shift tab?
 if !exists('g:completionCommand')
     let g:completionCommand="\<C-N>"
 endif
+" Use TAB to complete when typing words, else inserts TABs as usual.
 " Abort means func will abort if it detects an error.
 function! Tab_Or_Complete() abort
     " If menu is already open the $(tab) cycles through suggested completions.
@@ -94,6 +93,8 @@ function! s:inWord()
 endfunction
 
 inoremap <silent> <Tab> <C-R>=Tab_Or_Complete()<CR>
+" Make imap if we want to remap s-tab normally.
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <S-Tab> <C-P>
 " <CR> to confirm completion, use:
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
