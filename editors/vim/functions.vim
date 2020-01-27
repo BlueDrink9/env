@@ -59,9 +59,12 @@ nnoremap <F9> :w<enter> :WindowOutput !%:p<Enter>
 
 "Use TAB to complete when typing words, else inserts TABs as usual.
 " TODO: Check pub for shift tab? Or incorporate shift tab?
+if !exists('g:completionCommand')
+    let g:completionCommand="\<C-N>"
+endif
 function! Tab_Or_Complete()
     if s:inWord()
-        return "\<C-N>"
+        return g:completionCommand
     else
         return "\<Tab>"
     endif
