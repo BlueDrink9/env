@@ -306,7 +306,7 @@ endif
 " {]} Clipboard
 
 " {[} pager
-function Pager()
+function! Pager()
   nnoremap <buffer> u <c-u>
   nnoremap <buffer> f <c-f>
   nnoremap <buffer> b <c-b>

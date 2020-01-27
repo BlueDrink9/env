@@ -1,6 +1,6 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
-function s:SID()
+function! s:SID()
   return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze_SID$')
 endfun
 " Needs nvim > 0.4, which was probably also when UIEnter was introduced.
