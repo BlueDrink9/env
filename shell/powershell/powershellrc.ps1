@@ -5,6 +5,7 @@
 # https://github.com/lukesampson/concfg
 
 $scriptdir = $PSScriptRoot
+$DOTFILES_DIR = "$PSScriptRoot\..\.."
 
 set-location $home
 
