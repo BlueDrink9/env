@@ -26,6 +26,7 @@ exec 'autocmd myIDE filetype ' . s:coc_disabled_fts . 'let b:coc_enabled=0'
 let g:coc_global_extensions = [
             \ "coc-syntax",
             \ "coc-dictionary",
+            \ "coc-snippets",
             \ "coc-omni",
             \ "coc-tag",
             \ "coc-gitignore",
@@ -94,8 +95,8 @@ exec 'nnoremap <silent> ' . g:IDE_mappings["documentation3"] . ':call s:show_doc
 
 let g:coc_snippet_next = g:IDE_mappings["snippet_next"]
 let g:coc_snippet_prev = g:IDE_mappings["snippet_prev"]
-" Inoremap(g:IDE_mappings["snippet_expand"], ":call coc#_select_confirm()")
-Inoremap(g:IDE_mappings["snippet_expand"], ":call coc#snippets-expand-jump()")
+" call Inoremap(g:IDE_mappings["snippet_expand"], ":call coc#_select_confirm()")
+call Imap(g:IDE_mappings["snippet_expand"], "<Plug>(coc-snippets-expand-jump)")
 
 inoremap <expr><Plug>MyCocRefresh coc#refresh()
 let g:SuperTabDefaultCompletionType = "<Plug>MyCocRefresh"
