@@ -39,7 +39,7 @@ if has('nvim') && exists('##UIEnter')
         \ }
     \ }
     let s:fc = g:firenvim_config['localSettings']
-    let s:fc['facebook.com*'] = { 'priority': 1, 'selector': "", 'takeover': 'never' }
+    let s:fc['facebook.com*'] = { 'priority': 1, 'selector': '', 'takeover': 'never' }
 
     " The following options should only run for firenvim instances.
     if !exists('g:started_by_firenvim')
