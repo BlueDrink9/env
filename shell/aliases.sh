@@ -55,7 +55,7 @@ alias dif="git diffw"
 # Custom function with logic for different address formats
 alias gc="git_clone"
 # Way nicer and more compact way to view logs. Pass -p to see line differences.
-alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias glog="git plog"
 
 alias rg="rg --smart-case"
 
