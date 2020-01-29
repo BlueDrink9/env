@@ -15,3 +15,14 @@ Set-Alias time measure-command
 Set-Alias fopen explorer.exe
 function envupd { git -C "$DOTFILES_DIR" pull }
 # function sudo { elevate.exe -k }  # k = persistent
+
+# ln -h linkname source
+function ln($linkname, $source, $s, $j, $h){
+    if ($j){
+        New-Item -ItemType junction -Path $source -Target $linkname
+    } elseif ($h){
+        New-Item -ItemType hardlink -Path $source -Target $linkname
+    } else { #if ($s){
+        New-Item -ItemType SymbolicLink -Path $source -Target $linkname
+    }
+}
