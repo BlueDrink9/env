@@ -7,6 +7,7 @@ function gca { git commit --all }
 function gup { git commit --amend --no-edit --all }
 function gupa { git commit --amend --no-edit --all }
 function gupe { git commit --amend }
+function gdif { git diffw }
 Set-Alias e nvim
 function liteEdit {nvim --cmd "let g:liteMode=1"}
 Set-Alias le liteEdit
