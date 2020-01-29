@@ -107,15 +107,11 @@ nnoremap U <c-r>
 nnoremap gp `[v`]
 nnoremap K $
 nnoremap gK K
-" Hopefully works in most GUIs, if not terminals.
+
 inoremap <C-BS> <C-w>
-if $TERM ==? "xterm-kitty"
-  inoremap <C-H> <C-w>
-  cnoremap <C-H> <C-w>
-elseif $TERM_PROGRAM ==? "mintty"
-  inoremap <C-_> <C-w>
-  cnoremap <C-_> <C-w>
-endif
+cnoremap <C-BS> <C-w>
+" See s:remapCtrlBStoCW() for mappings in terminal. Not set here because
+" they aren't 'basic'.
 " {]} Basic mappings
 
 " {[} Abbreviations and commands
@@ -377,20 +373,29 @@ if &diff
     nnoremap du :diffupdate<CR>
     cabbrev refresh diffupdate
 endif
-" From the help for sections. Means { and } don't have to be at the start of
-" the line.
-" TODO, add more whynot. Do in filetype plugins, methinks.
-" nnoremap [[ ?{<CR>w99[{
-" nnoremap ][ /}<CR>b99]}
-" nnoremap ]] j0[[%/{<CR>
-" nnoremap [] k$][%?}<CR>
-" Use [[ and ]] for fold markers!
-" nnoremap [[ ?{[}<CR>w
-" nnoremap ][ /{[}<CR>b
-" nnoremap ]] j0/{]}<CR>
-" nnoremap [] k${]}<CR>
-" vnoremap [[ ?{[}<CR>w
-" vnoremap ][ /{[}<CR>b
-" vnoremap ]] j0/{]}<CR>
-" vnoremap [] k${]}<CR>
+
+function s:remapCtrlBStoCW()
+    " Hopefully works in most GUIs, if not terminals.
+    if g:hasGUI == 0
+        if $TERM ==? "xterm-kitty"
+            inoremap <C-H> <C-w>
+            cnoremap <C-H> <C-w>
+        elseif $TERM_PROGRAM ==? "mintty"
+            inoremap <C-_> <C-w>
+            cnoremap <C-_> <C-w>
+        elseif has('nvim') && $TERM ==? "vtpcon"
+            " Windows console vim gets ^H for normal backspace.
+            " Nvim sets term in this case, normal vim doesn't.
+            inoremap <BS> <C-w>
+            cnoremap <BS> <C-w>
+        elseif has('win32') && $TERM ==? ""
+            " Normal vim in windows console.
+            " Wow. It sees the control key plus literal <c-?>.
+            inoremap <c-> <C-w>
+            cnoremap <c-> <C-w>
+        endif
+    endif
+endfunction
+call s:remapCtrlBStoCW()
+
 " {]} Misc
