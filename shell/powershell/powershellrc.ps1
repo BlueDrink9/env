@@ -6,6 +6,8 @@
 
 $scriptdir = $PSScriptRoot
 $DOTFILES_DIR = "$PSScriptRoot\..\.."
+# Oh how good!
+$env:VISUAL='nvim'
 
 set-location $home
 
