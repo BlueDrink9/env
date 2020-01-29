@@ -48,11 +48,8 @@ Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward
 
 # Complete to LCS?
-# Set-PSReadlineKeyHandler -Key Tab -ScriptBlock {
-#       [Microsoft.PowerShell.PSConsoleReadLine]::Insert('exit')
-# }
-# Alternative, by default mapped to c-space
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
+# Set-PSReadlineKeyHandler -Key Shift+Tab -Function TabCompletePrevious
 
 # Menu that pops up when completing
 Set-PSReadlineOption -ShowToolTips

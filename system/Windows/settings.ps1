@@ -284,3 +284,24 @@ if ($env:computername -ne $computername) {
 	Rename-Computer -NewName $computername -force
     Get-CimInstance -ClassName Win32_OperatingSystem | Set-CimInstance -Property @{Description = $computername}
 }
+
+
+# Change the default lockscreen wallpaper.
+# https://abcdeployment.wordpress.com/2017/04/20/how-to-set-custom-backgrounds-for-desktop-and-lockscreen-in-windows-10-creators-update-v1703-with-powershell/
+$RegKeyPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP"
+if(!(Test-Path $RegKeyPath)) {
+  New-Item -Path $RegKeyPath -Force | Out-Null
+}
+
+$LockScreenPath = "LockScreenImagePath"
+$LockScreenStatus = "LockScreenImageStatus"
+$LockScreenUrl = "LockScreenImageUrl"
+
+$StatusValue = "1"
+
+# https://wallpapercave.com/wp/cETFpUH.jpg
+$LockScreenImageValue = "$home\Pictures\Wallpapers\Colourful jungle river 1080.jpg"
+
+  New-ItemProperty -Path $RegKeyPath -Name $LockScreenStatus -Value $StatusValue -PropertyType DWORD -Force | Out-Null
+  New-ItemProperty -Path $RegKeyPath -Name $LockScreenUrl -Value $LockScreenImageValue -PropertyType STRING -Force | Out-Null
+  New-ItemProperty -Path $RegKeyPath -Name $LockScreenPath -Value $LockScreenImageValue -PropertyType STRING -Force | Out-Null
