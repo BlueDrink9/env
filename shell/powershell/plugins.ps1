@@ -9,8 +9,6 @@ function Plugin($module) {
 Plugin ZLocation  # Also provides startup time info.
 Plugin PSReadline  # Included by default after v3.
 
-Plugin GuiCompletion
-Install-GuiCompletion -Key Tab
 Plugin TabExpansionPlusPlus  # A little heavy.
 # Plugin PSUtil  # Hurts startup time a lot
 
