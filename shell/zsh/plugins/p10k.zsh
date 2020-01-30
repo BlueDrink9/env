@@ -59,9 +59,9 @@
   # last prompt line gets hidden if it would overlap with left prompt.
   typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
       # =========================[ Line #1 ]=========================
+      background_jobs         # presence of background jobs
       status                  # exit code of the last command
       command_execution_time  # duration of the last command
-      background_jobs         # presence of background jobs
       direnv                  # direnv status (https://direnv.net/)
       virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
       anaconda                # conda environment (https://conda.io/)
@@ -581,7 +581,8 @@
   # Background jobs color.
   typeset -g POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND=6
   typeset -g POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND=0
-  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_CONTENT_EXPANSION='${${(j: | :)${(@)${(@v)jobtexts}[1,3]%% *}}//\%/%%}${${(@v)jobtexts}[4]:+ | …}'
+  # Lists the first 3 jobnames, and if more, the total number of jobs.
+  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_CONTENT_EXPANSION='${${(j: | :)${(@)${(@v)jobtexts}[1,3]%% *}}//\%/%%}${${(@v)jobtexts}[4]:+ … (%j)}'
   # Don't show the number of background jobs.
   typeset -g POWERLEVEL9K_BACKGROUND_JOBS_VERBOSE=false
   # Icon to show when there are background jobs.
