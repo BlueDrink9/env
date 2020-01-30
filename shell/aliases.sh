@@ -87,23 +87,13 @@ vimTmp="${vimTmp#*\'}"
 MYVIM="${vimTmp%\'*}"
 unset vimAlias vimTmp
 
-# Prevent recursive 'vim' calls.
-if [ ! "${MYVIM}" = "vim" ]; then
-  # Aliases aren't expanded in variables, eg $SUDO_EDITOR
-  vim(){
-    myVim "$@"
-  }
-fi
-
+editor(){ myVim "$@"; }
 # Much faster startup for vim without plugins, or ide if I need it.
-IDEVim(){ vim --cmd "let g:ideMode=1" "$@"; }
-alias idevim="IDEVim"
-liteVim(){ vim --cmd "let g:liteMode=1" "$@"; }
+IDEVim(){ myVim --cmd "let g:ideMode=1" "$@"; }
+liteVim(){ myVim --cmd "let g:liteMode=1" "$@"; }
 alias vi="liteVim"
-alias view="vi -R"
-nopluginVim(){ vim --noplugin --cmd "let g:noPlugins=1" "$@"; }
-alias lvi="nopluginVim"
-shelleditor(){ vim --cmd "let g:liteMode=1" +'set ft=sh' "$@"; }
+nopluginVim(){ myVim --noplugin --cmd "let g:noPlugins=1" "$@"; }
+shelleditor(){ myVim --cmd "let g:liteMode=1" +'set ft=sh' "$@"; }
 
 # You know it, baby. Shouldn't need to use nano ever.
 # Should also be getting a nice lite nvim where needed.
@@ -113,11 +103,11 @@ export EDITOR=nopluginVim
 # Calling edit-and-execute-command in readline to open the editor actually
 # uses `fc` anyway
 export FCEDIT=shelleditor
-giteditor(){ vim --cmd "let g:liteMode=1" +'set ft=gitcommit' "$@"; }
 # The function trick doesn't work with git, but regular arguments do. Means
 # we don't get the best vim version from the alias though.
 # Don't actually need to set ft (git does this for us),
 # but leaving it for specificity.
+# giteditor(){ myVim --cmd "let g:liteMode=1" +'set ft=gitcommit' "$@"; }
 export GIT_EDITOR_CMD="${MYVIM}"' --cmd "let g:liteMode=1" +"set ft=gitcommit"'
 # export GIT_EDITOR_CMD=$(type liteVim | head -n4 | tail -n1)
 export GIT_EDITOR="$GIT_EDITOR_CMD"
@@ -126,18 +116,19 @@ export GIT_EDITOR="$GIT_EDITOR_CMD"
 export SUDO_EDITOR=vim
 
 fuzzyEdit(){
-  "$VISUAL" "$(fzf)"
+  editor "$(fzf)"
 }
 # alias ls="ls -CF --color=auto"
 # ;e and ;q are also defined, but via readline
 alias :q="exit"
-alias :e="vim"
-alias e="vim"
+alias :e="myVim"
+alias e="editor"
 alias ide="IDEVim"
 alias le="liteVim"
 alias lle="nopluginVim"
 # For when the system is super super slow.
-alias llle="vim -u NONE -c 'set nocp | inore vk <esc> | inore kv <esc> | nnoremap ; :'"
+alias llle="myVim -u NONE -c 'set nocp | inore vk <esc> | inore kv <esc> | nnoremap ; :'"
+alias view="liteVim -R"
 alias e\?=fuzzyEdit
 # alias :Q="exit"
 # alias ZZ="exit"
@@ -157,6 +148,6 @@ alias lightColours="base16Reset"
 # Preview images in terminal, even over ssh.
 alias icat="kitty +kitten icat"
 
-alias dotfe="vim \"${DOTFILES_DIR}\"/shell/aliases.sh \"${DOTFILES_DIR}\"/shell/functions.sh"
+alias dotfe="editor \"${DOTFILES_DIR}\"/shell/aliases.sh \"${DOTFILES_DIR}\"/shell/functions.sh"
 alias stowlocal="stow --dir=\"$HOME/.local/packages\" --target=\"$HOME/.local\""
 
