@@ -36,7 +36,7 @@ let g:IDE_mappings = {
             \ "snippet_expand" : "<c-e>",
             \ "snippet_prev" : "<c-b>",
             \ "snippet_next" : "<c-f>",
-            \ "type-definition" : "gy",
+            \ "type_definition" : "gy",
             \}
 " {]} ------ Mappings ------
 
@@ -172,10 +172,10 @@ if has("nvim") || v:version >= 800
     Plug 'Shougo/neosnippet-snippets'
     let g:neosnippet#enable_snipmate_compatibility=1
     " let g:neosnippet#enable_conceal_markers=0
-    call Imap(g:IDE_mappings["snippet_expand"], "<Plug>(neosnippet_expand_or_jump)")
-    call Vmap(g:IDE_mappings["snippet_expand"], "<Plug>(neosnippet_expand_or_jump)")
-    call Imap(g:IDE_mappings["snippet_next"], "<Plug>(neosnippet_jump)")
-    call Vmap(g:IDE_mappings["snippet_next"], "<Plug>(neosnippet_jump)")
+    call Imap(g:IDE_mappings.snippet_expand, "<Plug>(neosnippet_expand_or_jump)")
+    call Vmap(g:IDE_mappings.snippet_expand, "<Plug>(neosnippet_expand_or_jump)")
+    call Imap(g:IDE_mappings.snippet_next, "<Plug>(neosnippet_jump)")
+    call Vmap(g:IDE_mappings.snippet_next, "<Plug>(neosnippet_jump)")
     " imap <expr><TAB>
     "             \ pumvisible() ? "\<C-n>" :
     "             \ neosnippet#expandable_or_jumpable() ?
@@ -184,9 +184,9 @@ if has("nvim") || v:version >= 800
     "             \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 elseif (has("python") || has("python3")) && v:version >= 704
     Plug 'https://github.com/SirVer/ultisnips' " Snippit engine
-    let g:UltiSnipsExpandTrigger = g:IDE_mappings["snippet_expand"]
-    let g:UltiSnipsJumpForwardTrigger = g:IDE_mappings["snippet_next"]
-    let g:UltiSnipsJumpBackwardTrigger = g:IDE_mappings["snippet_prev"]
+    let g:UltiSnipsExpandTrigger = g:IDE_mappings.snippet_expand
+    let g:UltiSnipsJumpForwardTrigger = g:IDE_mappings.snippet_next
+    let g:UltiSnipsJumpBackwardTrigger = g:IDE_mappings.snippet_prev
     " Disable autotrigger
     " au myIDE VimEnter * au! UltiSnips_AutoTrigger
     " augroup ultisnips
@@ -235,8 +235,8 @@ if has('python') || has('python3')
     let g:pymode_lint_on_write = 1
     let g:pymode_lint_unmodified = 1
     let g:pymode_lint = 1
-    let g:pymode_rope_rename_bind = g:IDE_mappings["rename"]
-    let g:pymode_rope_rename_module_bind = g:IDE_mappings["renameModule"]
+    let g:pymode_rope_rename_bind = g:IDE_mappings.rename
+    let g:pymode_rope_rename_module_bind = g:IDE_mappings.renameModule
 
     if has('python3')
         " if has('nvim')
@@ -257,13 +257,13 @@ if has('python') || has('python3')
         let g:jedi#completions_enabled = 0
     endif
     let g:jedi#use_splits_not_buffers = "right"
-    let g:jedi#goto_command = g:IDE_mappings["definition"]
-    let g:jedi#goto_assignments_command = g:IDE_mappings["implementation"]
-    let g:jedi#goto_definitions_command = g:IDE_mappings["definition"]
-    let g:jedi#documentation_command = g:IDE_mappings["documentation"]
-    let g:jedi#usages_command = g:IDE_mappings["references"]
+    let g:jedi#goto_command = g:IDE_mappings.definition
+    let g:jedi#goto_assignments_command = g:IDE_mappings.implementation
+    let g:jedi#goto_definitions_command = g:IDE_mappings.definition
+    let g:jedi#documentation_command = g:IDE_mappings.documentation
+    let g:jedi#usages_command = g:IDE_mappings.references
     let g:jedi#completions_command = "Tab"
-    let g:jedi#rename_command = g:IDE_mappings["rename"]
+    let g:jedi#rename_command = g:IDE_mappings.rename
     Plug 'https://github.com/Vimjas/vim-python-pep8-indent'
 endif
 

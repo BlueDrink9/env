@@ -70,33 +70,33 @@ let g:coc_snippet_prev = "<c-b>"
 
 " Use <leader>i for IDE.
 " Open Coc action list.
-call Nnoremap(g:IDE_mappings["allActions"], ":CocAction<cr>")
-call Nnoremap(g:IDE_mappings["allCommands"], ":CocCommand<cr>")
-call Nmap(g:IDE_mappings["rename"], "<Plug>(coc-rename)")
-call Nmap(g:IDE_mappings["references"], "<Plug>(coc-references)")
-call Nmap(g:IDE_mappings["references2"], "<Plug>(coc-references)")
-call Nmap(g:IDE_mappings["refactor"], "<Plug>(coc-refactor)")
-call Nmap(g:IDE_mappings["definition"], "<Plug>(coc-definition)")
-call Nmap(g:IDE_mappings["definition2"], "<Plug>(coc-definition)")
-call Nmap(g:IDE_mappings["type-definition"], "<Plug>(coc-type-definition)")
-call Nmap(g:IDE_mappings["implementation"], "<Plug>(coc-implementation)")
-call Nmap(g:IDE_mappings["implementation2"], "<Plug>(coc-implementation)")
-call Nmap(g:IDE_mappings["references"], "<Plug>(coc-references)")
-call Nmap(g:IDE_mappings["codeAction"], "<Plug>(coc-codeaction)")
-call Vmap(g:IDE_mappings["codeActionSelected"], "<Plug>(coc-codeaction-selected)")
-call Nmap(g:IDE_mappings["codelensAction"], "<Plug>(coc-codelens-action)")
+call Nnoremap(g:IDE_mappings.allActions, ":CocAction<cr>")
+call Nnoremap(g:IDE_mappings.allCommands, ":CocCommand<cr>")
+call Nmap(g:IDE_mappings.rename, "<Plug>(coc-rename)")
+call Nmap(g:IDE_mappings.references, "<Plug>(coc-references)")
+call Nmap(g:IDE_mappings.references2, "<Plug>(coc-references)")
+call Nmap(g:IDE_mappings.refactor, "<Plug>(coc-refactor)")
+call Nmap(g:IDE_mappings.definition, "<Plug>(coc-definition)")
+call Nmap(g:IDE_mappings.definition2, "<Plug>(coc-definition)")
+call Nmap(g:IDE_mappings.type_definition, "<Plug>(coc-type-definition)")
+call Nmap(g:IDE_mappings.implementation, "<Plug>(coc-implementation)")
+call Nmap(g:IDE_mappings.implementation2, "<Plug>(coc-implementation)")
+call Nmap(g:IDE_mappings.references, "<Plug>(coc-references)")
+call Nmap(g:IDE_mappings.codeAction, "<Plug>(coc-codeaction)")
+call Vmap(g:IDE_mappings.codeActionSelected, "<Plug>(coc-codeaction-selected)")
+call Nmap(g:IDE_mappings.codelensAction, "<Plug>(coc-codelens-action)")
 " Use <leader>e for errors/linting/fixing.
-call Nmap(g:IDE_mappings["fix"], "<Plug>(coc-fix-current)")
+call Nmap(g:IDE_mappings.fix, "<Plug>(coc-fix-current)")
 " List errors
-exec 'nnoremap <silent> ' . g:IDE_mappings["listErrs"] . ' :<C-u>CocList locationlist<cr>'
-exec 'nnoremap <silent> ' . g:IDE_mappings["documentation"] . ':call s:show_documentation()<CR>'
-exec 'nnoremap <silent> ' . g:IDE_mappings["documentation2"] . ':call s:show_documentation()<CR>'
-exec 'nnoremap <silent> ' . g:IDE_mappings["documentation3"] . ':call s:show_documentation()<CR>'
+exec 'nnoremap <silent> ' . g:IDE_mappings.listErrs . ' :<C-u>CocList locationlist<cr>'
+exec 'nnoremap <silent> ' . g:IDE_mappings.documentation . ':call s:show_documentation()<CR>'
+exec 'nnoremap <silent> ' . g:IDE_mappings.documentation2 . ':call s:show_documentation()<CR>'
+exec 'nnoremap <silent> ' . g:IDE_mappings.documentation3 . ':call s:show_documentation()<CR>'
 
-let g:coc_snippet_next = g:IDE_mappings["snippet_next"]
-let g:coc_snippet_prev = g:IDE_mappings["snippet_prev"]
-" call Inoremap(g:IDE_mappings["snippet_expand"], ":call coc#_select_confirm()")
-call Imap(g:IDE_mappings["snippet_expand"], "<Plug>(coc-snippets-expand-jump)")
+let g:coc_snippet_next = g:IDE_mappings.snippet_next
+let g:coc_snippet_prev = g:IDE_mappings.snippet_prev
+" call Inoremap(g:IDE_mappings.snippet_expand, ":call coc#_select_confirm()")
+call Imap(g:IDE_mappings.snippet_expand, "<Plug>(coc-snippets-expand-jump)")
 
 inoremap <expr><Plug>MyCocRefresh coc#refresh()
 let g:SuperTabDefaultCompletionType = "<Plug>MyCocRefresh"
