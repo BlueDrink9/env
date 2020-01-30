@@ -16,7 +16,7 @@ endif
 Plug 'https://github.com/vim-airline/vim-airline-themes'
 Plug 'https://github.com/vim-airline/vim-airline'
 
-if g:hasAsyncrun
+if exists('g:hasAsyncrun') && g:hasAsyncrun
     " Async errors appear in airline.
     let g:asyncrun_status = ''
     autocmd myPlugins User pluginSettingsToExec let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])

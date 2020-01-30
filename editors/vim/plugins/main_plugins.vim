@@ -381,7 +381,7 @@ if executable("git")
     Plug 'sodapopcan/vim-twiggy'
 
     " Async fugitive
-    if g:hasAsyncrun
+    if exists('g:hasAsyncrun') && g:hasAsyncrun
         autocmd myPlugins User pluginSettingsToExec command!
                     \ -bang -nargs=* -complete=file
                     \ Make AsyncRun -program=make @ <args>
