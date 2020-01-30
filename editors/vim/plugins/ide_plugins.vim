@@ -29,7 +29,7 @@ let g:IDE_mappings = {
             \ "listErrs" : "<leader>el",
             \ "refactor" : "<leader>ir",
             \ "references" : "<leader>if",
-            \ "references2" : "gf",
+            \ "references2" : "gr",
             \ "reformat" : "<plug>Non-existant",
             \ "rename" : "<leader>irr",
             \ "renameModule" : "<leader>irm",
