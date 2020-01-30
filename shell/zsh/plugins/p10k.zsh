@@ -583,6 +583,8 @@
   typeset -g POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND=0
   # Lists the first 3 jobnames, and if more, the total number of jobs.
   typeset -g POWERLEVEL9K_BACKGROUND_JOBS_CONTENT_EXPANSION='${${(j: | :)${(@)${(@v)jobtexts}[1,3]%% *}}//\%/%%}${${(@v)jobtexts}[4]:+ … (%j)}'
+  # No powerline triangle after background jobs.
+  POWERLEVEL9K_BACKGROUND_JOBS_RIGHT_SEGMENT_SEPARATOR=
   # Don't show the number of background jobs.
   typeset -g POWERLEVEL9K_BACKGROUND_JOBS_VERBOSE=false
   # Icon to show when there are background jobs.
