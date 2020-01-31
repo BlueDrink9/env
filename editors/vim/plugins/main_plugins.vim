@@ -89,10 +89,10 @@ exec "Plug 'https://github.com/reedes/vim-textobj-sentence', { 'for': " . g:pros
 Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-entire'
 let g:textobj_entire_no_default_key_mappings=1
-omap af <Plug>(textobj-entire-a)
-vmap af <Plug>(textobj-entire-a)
-omap if <Plug>(textobj-entire-i)
-vmap if <Plug>(textobj-entire-i)
+omap a% <Plug>(textobj-entire-a)
+vmap a% <Plug>(textobj-entire-a)
+omap i% <Plug>(textobj-entire-i)
+vmap i% <Plug>(textobj-entire-i)
 " av/iv for lines continued by \
 Plug 'rhysd/vim-textobj-continuous-line'
 " iz az
