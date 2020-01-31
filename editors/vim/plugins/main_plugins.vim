@@ -623,4 +623,7 @@ let g:terminal_cwd=1
 let g:terminal_kill="term"
 " set to 0 to hide terminal buffer in the buffer list
 let g:terminal_list=0
+if has("win32")
+    let g:terminal_shell="powershell"
+endif
 " {]} ---------- Terminal ----------
