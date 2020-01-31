@@ -103,11 +103,26 @@ let g:highlightedyank_highlight_duration = 5000
 "     let g:neoyank#file = &directory . 'yankring.txt'
 " nmap <leader>p :unite history/yank
 " else
-Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
-let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
-autocmd myPlugins User pluginSettingsToExec call yankstack#setup()
-nmap <leader>p <Plug>yankstack_substitute_older_paste
-nmap <leader>P <Plug>yankstack_substitute_newer_paste
+if exists('##TextYankPost')
+    Plug 'https://github.com/svermeulen/vim-yoink'
+    let g:yoinkSavePersistently = 1  " Nvim only.
+    let g:yoinkSwapClampAtEnds = 0  " Cycle back to start.
+    let g:yoinkSyncSystemClipboardOnFocus = 0
+
+    nmap <expr> <leader>p yoink#isSwapping() ?
+                \ '<plug>(YoinkPostPasteSwapForward)' :
+                \ '<plug>(YoinkPaste_p)'
+    nmap <expr> <leader>P yoink#isSwapping() ?
+                \ '<plug>(YoinkPostPasteSwapBack)' :
+                \ '<plug>(YoinkPaste_P)'
+
+else
+    Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
+    let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
+    autocmd myPlugins User pluginSettingsToExec call yankstack#setup()
+    nmap <leader>p <Plug>yankstack_substitute_older_paste
+    nmap <leader>P <Plug>yankstack_substitute_newer_paste
+endif
 " {]}--- Yanks ---
 
 " {[}--- Operators ---
