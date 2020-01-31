@@ -86,6 +86,7 @@ Plug 'https://github.com/kana/vim-textobj-user'
 " lang-specific.
 " Expands what a sentence/word is for prose.
 exec "Plug 'https://github.com/reedes/vim-textobj-sentence', { 'for': " . g:proseFileTypes . " }" 
+" Adds il, al. Alternatively, '_' is the official object for the current line.
 Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-entire'
 let g:textobj_entire_no_default_key_mappings=1
@@ -109,8 +110,8 @@ Plug 'https://github.com/PeterRincker/vim-argumentative'
 Plug 'michaeljsmith/vim-indent-object'
 " Adds [ ] mappins for -=+% indentation objects
 Plug 'https://github.com/jeetsukumaran/vim-indentwise'
-" Adds il, al. Alternatively, '_' is the official object for the current line.
-Plug 'https://github.com/bps/vim-textobj-python', { 'for': 'markdown' }
+" af, if for functions, ac, ic for classes. Also ]pf, [pc for movements.
+Plug 'https://github.com/bps/vim-textobj-python'
 " {]} Extra text objects
 
 " {[} ---------- Misc ----------
