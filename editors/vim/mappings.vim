@@ -120,8 +120,11 @@ abbrev <expr> [d] strftime("%Y-%m-%d")
 abbrev <expr> [t] strftime("%H:%M")
 cnoreabbrev H helpgrep
 " Opens an edit command with the dir of the currently edited file filled in.
-cabbrev le e <C-R>=expand("%:p:h") . "/" <CR>
-cabbrev lr r <C-R>=expand("%:p:h") . "/" <CR>
+" The C-R at the end is a hack. It swallows the space subsequently used to
+" expand the abbreviation, meaning the cursor is left at the end of the
+" path.
+cabbrev le e <C-R>=expand("%:p:h") . "/" <CR><C-R>
+cabbrev lr r <C-R>=expand("%:p:h") . "/" <CR><C-R>
 " Load ide plugins/start ide mode.
 cabbrev ide let g:ideMode=1 <bar> so $MYVIMRC
 " Copy path of current buffer.
