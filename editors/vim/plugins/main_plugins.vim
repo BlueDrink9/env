@@ -70,6 +70,49 @@ if has('nvim') && !(has("python") || has("python3"))
 endif
 " {]} ---------- Module setup ----------
 
+" {[} Extra text objects
+" Additional text objects for next braket, i/a comma, pairs, smarter searching.
+Plug 'wellle/targets.vim'
+" Don't handle argument. Use another plugin
+autocmd User targets#mappings#user call targets#mappings#extend({
+            \ 'a': {},
+            \ })
+" Move args with >, <,. Next arg ], [,. New text obj a, i,.
+" ],
+Plug 'https://github.com/PeterRincker/vim-argumentative'
+" Library for some other text obj plugins.
+Plug 'https://github.com/kana/vim-textobj-user'
+" See https://github.com/kana/vim-textobj-user/wiki for more, esp for
+" lang-specific.
+" Expands what a sentence/word is for prose.
+exec "Plug 'https://github.com/reedes/vim-textobj-sentence', { 'for': " . g:proseFileTypes . " }" 
+Plug 'kana/vim-textobj-line'
+Plug 'kana/vim-textobj-entire'
+let g:textobj_entire_no_default_key_mappings=1
+omap af <Plug>(textobj-entire-a)
+vmap af <Plug>(textobj-entire-a)
+omap if <Plug>(textobj-entire-i)
+vmap if <Plug>(textobj-entire-i)
+" av/iv for lines continued by \
+Plug 'rhysd/vim-textobj-continuous-line'
+" iz az
+Plug 'somini/vim-textobj-fold'
+Plug 'lucapette/vim-textobj-underscore'
+if v:version >= 703
+    " ac, ic, aC
+    Plug 'https://github.com/glts/vim-textobj-comment'
+endif
+Plug 'https://github.com/coachshea/vim-textobj-markdown', { 'for': 'markdown' }
+" Function argument movements
+Plug 'https://github.com/PeterRincker/vim-argumentative'
+" Adds indent block as text object. ii , ai or aI
+Plug 'michaeljsmith/vim-indent-object'
+" Adds [ ] mappins for -=+% indentation objects
+Plug 'https://github.com/jeetsukumaran/vim-indentwise'
+" Adds il, al. Alternatively, '_' is the official object for the current line.
+Plug 'https://github.com/bps/vim-textobj-python', { 'for': 'markdown' }
+" {]} Extra text objects
+
 " {[} ---------- Misc ----------
 
 " Relative line numbers only in focussed buffer & not in insert mode.
@@ -170,49 +213,6 @@ Plug 'https://github.com/junegunn/vim-easy-align'
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
-
-" {[} Extra text objects
-" Additional text objects for next braket, i/a comma, pairs, smarter searching.
-Plug 'wellle/targets.vim'
-" Don't handle argument. Use another plugin
-autocmd User targets#mappings#user call targets#mappings#extend({
-            \ 'a': {},
-            \ })
-" Move args with >, <,. Next arg ], [,. New text obj a, i,.
-" ],
-Plug 'https://github.com/PeterRincker/vim-argumentative'
-" Library for some other text obj plugins.
-Plug 'https://github.com/kana/vim-textobj-user'
-" See https://github.com/kana/vim-textobj-user/wiki for more, esp for
-" lang-specific.
-" Expands what a sentence/word is for prose.
-exec "Plug 'https://github.com/reedes/vim-textobj-sentence', { 'for': " . g:proseFileTypes . " }" 
-Plug 'kana/vim-textobj-line'
-Plug 'kana/vim-textobj-entire'
-let g:textobj_entire_no_default_key_mappings=1
-omap af <Plug>(textobj-entire-a)
-vmap af <Plug>(textobj-entire-a)
-omap if <Plug>(textobj-entire-i)
-vmap if <Plug>(textobj-entire-i)
-" av/iv for lines continued by \
-Plug 'rhysd/vim-textobj-continuous-line'
-" iz az
-Plug 'somini/vim-textobj-fold'
-Plug 'lucapette/vim-textobj-underscore'
-if v:version >= 703
-    " ac, ic, aC
-    Plug 'https://github.com/glts/vim-textobj-comment'
-endif
-Plug 'https://github.com/coachshea/vim-textobj-markdown', { 'for': 'markdown' }
-" Function argument movements
-Plug 'https://github.com/PeterRincker/vim-argumentative'
-" Adds indent block as text object. ii , ai or aI
-Plug 'michaeljsmith/vim-indent-object'
-" Adds [ ] mappins for -=+% indentation objects
-Plug 'https://github.com/jeetsukumaran/vim-indentwise'
-" Adds il, al. Alternatively, '_' is the official object for the current line.
-Plug 'https://github.com/bps/vim-textobj-python', { 'for': 'markdown' }
-" {]} Extra text objects
 
 " Limelight Looks really nice, esp for prose. Highlight slightly cu* rrent paraghraph.
 exec "Plug 'junegunn/limelight.vim', { 'for': " . g:proseFileTypes . ", 'on': 'Limelight' }"
