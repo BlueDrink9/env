@@ -131,6 +131,7 @@ $packages = @(
         "joplin",
         "linkshellextension",
         "unetbootin", "rufus", "yumi", "yumi-uefi",
+        "ext2fsd",
         "onetastic"
 )
 
