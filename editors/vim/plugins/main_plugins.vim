@@ -5,8 +5,8 @@
 " Plug 'https://github.com/dhruvasagar/vim-table-mode'
 " Scrollwheel on mouse moves screen with cursor (more natural)
 " https://github.com/reedes/vim-wheel
-" Bunch of paste stuff, replacing, yankring stuff.
-" https://github.com/svermeulen/vim-easyclip
+" Powerful changing of textobjects
+" https://github.com/svermeulen/vim-subversive
 " {]} ---------- Later ----------
 
 " {[} View and session
@@ -71,6 +71,8 @@ endif
 " {]} ---------- Module setup ----------
 
 " {[} Extra text objects
+" iv = current viewable text in the buffer
+onoremap iv :exec "normal! HVL"<cr>
 " Additional text objects for next braket, i/a comma, pairs, smarter searching.
 Plug 'wellle/targets.vim'
 " Don't handle argument. Use another plugin
