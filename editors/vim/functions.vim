@@ -90,22 +90,21 @@ endfunction
 function! SetFirstValidGuifont(fonts)
     " preserve existing value
     let l:fontBackup = &guifont
+    " let l:invalidFontError="/E596/"
 
     for font in a:fonts
         try
             let l:font=substitute(font, "\\ ", "\\\\ ", "g")
             exec "set guifont=" . l:font
-            echom "Applied GUI font: " . l:font
+            " echom "Applied GUI font: " . l:font
             return
         catch /E596/
-            " ie: Vim(set):E596: Invalid font(s): guifont=<font-name>
             " echom v:exception
             continue
-        finally
-            " always restore original value
-            exec "set guifont=" . l:fontBackup
         endtry
     endfor
+    " restore original value if a new valid one not found.
+    exec "set guifont=" . substitute(l:fontBackup, "\\ ", "\\\\ ", "g")
 endfunc
 
 " Pipes the output of shell commands into a new window for viewing.
