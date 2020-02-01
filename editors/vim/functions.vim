@@ -66,7 +66,16 @@ function! SetGFN(...)
     endif
     if &guifont == ""
         let l:formattedFonts = s:formatFontOptions(deepcopy(g:guiFonts), l:fontSize)
-        call SetFirstValidGuifont(l:formattedFonts)
+        " Doesn't work with GTK, doesn't work unless set from GUIEnter
+        " autocmd. That makes it pointless, since it's main use is to know
+        " what the GUI font will be so smart character choices can be made
+        " (powerline fonts etc).
+        " call SetFirstValidGuifont(l:formattedFonts)
+        let l:gfn=join(l:formattedFonts, ',')
+        " Because we are using let, with a variable, spaces in font noames
+        " don't need to be escaped.
+        let &guifont=l:gfn
+
     endif
 endfunction
 
