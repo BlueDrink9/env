@@ -35,6 +35,12 @@ Plug 'https://github.com/morhetz/gruvbox'
 Plug 'https://github.com/jnurmine/Zenburn'
 Plug 'https://github.com/tomasr/molokai'
 Plug 'aonemd/kuroi.vim'
+silent! if &termguicolors || g:hasGUI
+    Plug 'https://github.com/ayu-theme/ayu-vim'
+    " Apparently we can't have all versions. Daft.
+    " Dark version doesn't work easily with airline anyway.
+    let ayucolor="light"
+endif
 Plug 'liuchengxu/space-vim-dark'
 " High contrast themes.
 " Mainly for rift (dark green) and maybe day (sol-style), summer (dark
