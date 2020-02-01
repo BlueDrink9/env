@@ -47,7 +47,7 @@ if exists('&g:colors_name')
     let colorSch = g:colors_name
 endif
 " Only used if colorSch not set (plugins didn't get loaded)
-let g:fallbackColorSch="morning"
+let g:fallbackColorSch="default"
 
 if !exists ('colorSch')
     if exists("$COLOURSCHEME") && $COLOURSCHEME != ""
