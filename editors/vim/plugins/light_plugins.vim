@@ -109,10 +109,10 @@ if exists('##TextYankPost')
     let g:yoinkSwapClampAtEnds = 0  " Cycle back to start.
     let g:yoinkSyncSystemClipboardOnFocus = 0
 
-    nmap <expr> <leader>p yoink#isSwapping() ?
+    nmap <expr> <leader>p yoink#canSwap() ?
                 \ '<plug>(YoinkPostPasteSwapForward)' :
                 \ '<plug>(YoinkPaste_p)'
-    nmap <expr> <leader>P yoink#isSwapping() ?
+    nmap <expr> <leader>P yoink#canSwap() ?
                 \ '<plug>(YoinkPostPasteSwapBack)' :
                 \ '<plug>(YoinkPaste_P)'
 
