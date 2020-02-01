@@ -94,13 +94,12 @@ function! SetFirstValidGuifont(fonts)
     for font in a:fonts
         try
             let l:font=substitute(font, "\\ ", "\\\\ ", "g")
-            " exec "set guifont=" . l:font
             exec "set guifont=" . l:font
             echom "Applied GUI font: " . l:font
             return
         catch /E596/
             " ie: Vim(set):E596: Invalid font(s): guifont=<font-name>
-            echom v:exception
+            " echom v:exception
             continue
         finally
             " always restore original value

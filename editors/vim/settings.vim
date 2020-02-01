@@ -154,7 +154,7 @@ if g:hasGUI
     " Default fallback for gui bg colour
     let g:termColors="24bit"
     if &guifont==?""
-      call SetGFN()
+      au myVimrc GUIEnter * call SetGFN()
     endif
     if has("termguicolors")
         set termguicolors
