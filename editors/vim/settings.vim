@@ -85,44 +85,21 @@ let mapleader = " "
 let maplocalleader = " b"
 
 "{[} GUI
-function! SetGFN(...)
-    if a:0 == 1
-        " Override current gfn
-        set gfn=
-        let l:fontSize = a:1
-    else
-        if has("win32")
-            let l:fontSize = 11
-        elseif has("macunix")
-            let l:fontSize = 15
-        else
-            let l:fontSize = 11
-        endif
-    endif
-    if &guifont == ""
-        let l:useFonts = [
+" Guifont will be set to the first available font in this list.
+let g:guiFonts = [
               \ "SauceCodePro NF",
               \ "SauceCodeProNerdFontCo-Regular",
               \ "Source Code Pro Medium",
               \ "Source Code Pro"
               \ ]
-        if has("win32")
-            let l:sizeSep=':h'
-        elseif has("macunix")
-            let l:sizeSep=':h'
-        else
-            let l:sizeSep=' '
-        endif
-        for f in l:useFonts
-            let ind = index(l:useFonts, f)
-            let l:useFonts[ind] = f . l:sizeSep . l:fontSize
-        endfor
-        let l:gfn=join(l:useFonts, ',')
-        " Because we are using let, with a variable, spaces in font noames
-        " don't need to be escaped.
-        let &guifont=l:gfn
-    endif
-endfunction
+if has("win32")
+    let g:defaultFontSize = 11
+elseif has("macunix")
+    let g:defaultFontSize = 15
+else
+    let g:defaultFontSize = 11
+endif
+
 if g:hasGUI
     " GUI is running or is about to start.
     " {[} ----------- Shell ----------

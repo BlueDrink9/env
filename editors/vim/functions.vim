@@ -56,6 +56,59 @@ function! HasNvimPythonModule()
     return v:true
 endfunction
 
+function! SetGFN(...)
+    if a:0 == 1
+        " Override current gfn
+        set gfn=
+        let l:fontSize = a:1
+    else
+        let l:fontSize = g:defaultFontSize
+    endif
+    if &guifont == ""
+        let l:formattedFonts = s:formatFontOptions(deepcopy(g:guiFonts), l:fontSize)
+        call SetFirstValidGuifont(l:formattedFonts)
+    endif
+endfunction
+
+function! s:formatFontOptions(list, size)
+    let l:list=a:list
+    let l:size=a:size
+    if has("win32")
+        let l:sizeSep=':h'
+    elseif has("macunix")
+        let l:sizeSep=':h'
+    else
+        let l:sizeSep=' '
+    endif
+    for f in l:list
+        let ind = index(l:list, f)
+        let l:list[ind] = f . l:sizeSep . l:size
+    endfor
+    return l:list
+endfunction
+
+function! SetFirstValidGuifont(fonts)
+    " preserve existing value
+    let l:fontBackup = &guifont
+
+    for font in a:fonts
+        try
+            let l:font=substitute(font, "\\ ", "\\\\ ", "g")
+            " exec "set guifont=" . l:font
+            exec "set guifont=" . l:font
+            echom "Applied GUI font: " . l:font
+            return
+        catch /E596/
+            " ie: Vim(set):E596: Invalid font(s): guifont=<font-name>
+            echom v:exception
+            continue
+        finally
+            " always restore original value
+            exec "set guifont=" . l:fontBackup
+        endtry
+    endfor
+endfunc
+
 " Pipes the output of shell commands into a new window for viewing.
 function! WindowOutput(cmd)
     redir => message
