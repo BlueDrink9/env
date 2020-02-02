@@ -23,7 +23,6 @@ $packages = @(
         "adobereader",
         "windirstat",
         "skype",
-        "pip",
         "paint.net",
         "audacity",
         "autohotkey",
@@ -137,15 +136,18 @@ $packages = @(
 
         # This gets the opentype version, which looks awful/doesn't alias
         # properly on win. Manually get the ttf version.
+        # "SourceCodePro",
+        # Not yet a choco package.
+        # "sauce-code-pro-nerd-font",
         # "miniconda",
         # "miniconda3",
-        # "SourceCodePro",
         # "wsl",
         # The versioning here is a bit off it seems. Use conda instead.
         # This also installs python3 as python, so you can't easily use both
         # python 2 and 3 with other programs, like vim.
         # "python",
         # "python2",
+        # "pip",
 
         # Also install "megacmd" from https://mega.nz/cmd (open source) for mega backups.
 
