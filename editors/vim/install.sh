@@ -33,6 +33,13 @@ doVim(){
     doVimPlugins
     addTextIfAbsent "so $(realpath "$(${SCRIPTDIR_CMD})/../ideavimrc")" "${HOME}/.ideavimrc"
     printErr "Done setting up vim"
+    if grep -qE "(Microsoft|WSL)" "$([ -f /proc/version ] && cat /proc/version)" > /dev/null 2>&1; then
+      export isWSL=1
+    fi
+    if [ -n "${isWSL}" ]; then
+      $NEOVIM_WIN_DIR="/mnt/c/tools/neovim/Neovim"
+      sudo ln -s "$NEOVIM_WIN_DIR/bin/win32yank.exe" "/usr/local/bin/win32yank"
+    fi
 }
 
 undoVim(){
