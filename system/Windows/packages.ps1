@@ -126,11 +126,14 @@ $packages = @(
         "unifying",
         "onedrive",
         "google-backup-and-sync",
+        "duplicacy",
+        "rclone",
         "colortool",
         "joplin",
         "linkshellextension",
         "unetbootin", "rufus", "yumi", "yumi-uefi",
         "ext2fsd",
+        "openconnect-gui",
         "onetastic"
 )
 
