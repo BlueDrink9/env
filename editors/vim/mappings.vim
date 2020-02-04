@@ -226,7 +226,8 @@ nnoremap <C-w>j :call <SID>SplitDown()<CR>
 " {]} Window management
 
 " {[} Clipboard
-if has("clipboard")
+" On WSL, xclip exists but we don't want to use it.
+if has("clipboard") && !IsWSL()
     " In insert or visual mode, use standard cut/copy/paste shortcuts.
     inoremap <C-v> <C-r>+
     cnoremap <C-v> <C-r>+
@@ -281,18 +282,20 @@ else
     " <c-u> gets rid of range before calling.
     exec 'let s:copyCMD = ":w !' . s:copy . '<CR><CR>"'
 
-    let g:clipboard = {
-          \   'name': 'clipboard set in mappings',
-          \   'copy': {
-          \      '+': s:copy,
-          \      '*': s:copy,
-          \    },
-          \   'paste': {
-          \      '+': s:paste,
-          \      '*': s:paste,
-          \   },
-          \   'cache_enabled': 1,
-          \ }
+    if has('nvim')
+        let g:clipboard = {
+              \   'name': 'clipboard set in mappings',
+              \   'copy': {
+              \      '+': s:copy,
+              \      '*': s:copy,
+              \    },
+              \   'paste': {
+              \      '+': s:paste,
+              \      '*': s:paste,
+              \   },
+              \   'cache_enabled': 1,
+              \ }
+    endif
     exec 'inoremap <C-v> <Esc>' . s:pasteCMD
     " exec 'cnoremap <C-v> <C-r>:read !' . s:paste . '<CR>'
     exec 'vnoremap <C-v> ' . s:pasteCMD
