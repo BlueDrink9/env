@@ -170,6 +170,9 @@ nnoremap <silent> s :<C-U>call SingleCharInsert("i")<CR>
 nnoremap <silent> S :<C-U>call SingleCharInsert("a")<CR>
 
 function! IsWSL()
+    if has('nvim')
+      return has('wsl')
+    endif
     let s:version = system("cat /proc/version")
     if s:version=~"Microsoft"
         return 1
