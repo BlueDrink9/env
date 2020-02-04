@@ -165,13 +165,6 @@ if g:hasGUI
     "{]}
 else
     "{[} Console
-
-    " if !has("clipboard") || $SSHSESSION
-        " Without clipboard or over ssh, need mouse to select stuff sorry.
-        " Allow mouse for everything except in visualmode
-        " set mouse=hnic
-    " endif
-    " AAH, but shift/opt + click overcomes this on my terminal emulaters
     set mouse=a
     " let &pastetoggle = '\e[201~'
     " noremap  <special> <expr> <Esc>[200~ <SID>XTermPasteBegin('0i')
