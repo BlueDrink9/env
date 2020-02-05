@@ -127,7 +127,7 @@ $packages = @(
         "onedrive",
         "google-backup-and-sync",
         "duplicacy",
-        "rclone",
+        "rclone", "winfsp",
         "colortool",
         "joplin",
         "linkshellextension",
@@ -179,6 +179,10 @@ colortool.exe -b solarized_dark.itermcolors
 # cinst Microsoft-Hyper-V-All -source windowsFeatures
 
 Install-Module -Force OpenSSHUtils -Scope AllUsers
+
+$linkname="C:\tools\vim\latest"
+$source="$(where gvim.exe)"
+New-Item -ItemType SymbolicLink -Path $source -Target $linkname
 
 # Add miniconda to path
 # $oldpath = (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).path
