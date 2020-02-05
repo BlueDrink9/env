@@ -8,6 +8,13 @@ Install-WindowsUpdate -AcceptEula
 Set-TaskbarOptions -Lock -Dock Bottom -Combine full -AlwaysShowIconsOn
 # /Boxstarter-specific commands
 
+function createNewRegKey($path){
+    if(!(Test-Path $path)){
+        # This deletes the contents of the key, which is why we test it exists first.
+        New-Item $path -Force;
+    }
+}
+
 cinst --cacheLocation "$env:userprofile\AppData\Local\ChocoCache" colemak -y
 # Input langs - colemak and US-nz.
 # Current user, then default (which includes welcome screen).
@@ -266,6 +273,12 @@ foreach ($path in $paths)
         "$path\$folderID"
     }
 }
+
+# Pin user folder to side navigation bar
+$RegKeyPath = "HKCU:\SOFTWARE\Classes\CLSID\{59031a47-3f72-44a7-89c5-5595fe6b30ee}"
+createNewRegKey $RegKeyPath
+$PinUser = "System.IsPinnedToNameSpaceTree"
+New-ItemProperty -Path $RegKeyPath -Name $PinUser -Value 1 -PropertyType DWORD -Force | Out-Null
 
 # Remove search from taskbar
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "SearchboxTaskbarMode" -Type DWord -Value 0
