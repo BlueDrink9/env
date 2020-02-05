@@ -185,7 +185,7 @@ if has("nvim") || v:version >= 800
     "             \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
     " smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
     "             \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-elseif (has("python") || has("python3")) && v:version >= 704
+elseif HasPython() && v:version >= 704
     Plug 'https://github.com/SirVer/ultisnips' " Snippit engine
     let g:UltiSnipsExpandTrigger = g:IDE_mappings.snippet_expand
     let g:UltiSnipsJumpForwardTrigger = g:IDE_mappings.snippet_next
@@ -230,7 +230,7 @@ endif
 " provides text objects and motions for Python classes, methods,
 " functions, and doc strings
 Plug 'jeetsukumaran/vim-pythonsense'
-if has('python') || has('python3')
+if HasPython()
     Plug 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
     let g:pymode_options_max_line_length = 0
     let g:pymode_rope = 1

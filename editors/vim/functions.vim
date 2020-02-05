@@ -40,6 +40,10 @@ function! s:prefixSID(SID)
   return '<SNR>' . a:SID . '_'
 endfun
 
+function! HasPython()
+    return has('python') || has('python3') || has('pythonx')
+endfunction
+
 function! HasNvimPythonModule()
     if has('nvim')
         return has('python') || has('python3')

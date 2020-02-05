@@ -108,7 +108,7 @@ Not everything works in every context.
 
 ## Vim IDE function mappings
 
-Sourced from `ide_plugins.vim`.
+Sourced from `ide_plugins.vim`. Check there for the latest.
 
 ```
 let g:IDE_mappings = {
