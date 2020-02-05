@@ -20,10 +20,10 @@ function envupd { git -C "$DOTFILES_DIR" pull }
 # ln -h linkname source
 function ln($linkname, $source, $s, $j, $h){
     if ($j){
-        New-Item -ItemType junction -Path $source -Target $linkname
+        New-Item -ItemType junction -Path $linkname -Target $source
     } elseif ($h){
-        New-Item -ItemType hardlink -Path $source -Target $linkname
+        New-Item -ItemType hardlink -Path $linkname -Target $source
     } else { #if ($s){
-        New-Item -ItemType SymbolicLink -Path $source -Target $linkname
+        New-Item -ItemType SymbolicLink -Path $linkname -Target $source
     }
 }
