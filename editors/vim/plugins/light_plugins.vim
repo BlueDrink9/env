@@ -105,7 +105,9 @@ let g:highlightedyank_highlight_duration = 5000
 " else
 if exists('##TextYankPost')
     Plug 'https://github.com/svermeulen/vim-yoink'
-    let g:yoinkSavePersistently = 1  " Nvim only.
+    if has('nvim')
+        let g:yoinkSavePersistently = 1  " Nvim only.
+    endif
     let g:yoinkSwapClampAtEnds = 0  " Cycle back to start.
     let g:yoinkSyncSystemClipboardOnFocus = 0
 
