@@ -180,9 +180,18 @@ colortool.exe -b solarized_dark.itermcolors
 
 Install-Module -Force OpenSSHUtils -Scope AllUsers
 
-$linkname="C:\tools\vim\latest"
-$source="$(where gvim.exe)"
-New-Item -ItemType SymbolicLink -Path $source -Target $linkname
+# This is where chocolatey keeps vim now.
+$ToolsVimDir="C:\tools\vim"
+$linkname="${ToolsVimDir}\latest"
+# Define helper as per linked answer. https://stackoverflow.com/a/32818070
+$VerNumsToNatural = { [regex]::Replace($_, '\d+', { $args[0].Value.PadLeft(20) }) }
+# Get dirlist, Sort with helper and check the output is natural result
+$latestVimDir = gci $ToolsVimDir | sort $VerNumsToNatural -Descending | select -First 1
+
+$source=$latestVimDir.fullname
+# Won't ever work. Gets gvim.bat in sys32.
+# $source=$(Get-Command gvim).Path | split-path
+New-Item -ItemType SymbolicLink -Path $linkname -Target $source
 
 # Add miniconda to path
 # $oldpath = (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).path
