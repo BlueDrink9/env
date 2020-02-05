@@ -217,6 +217,38 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
+if v:version >= 703
+    " Vim hexedit. Low dependency, interface as you'd expect. Pretty
+    " good.
+    Plug 'https://github.com/Shougo/vinarise.vim'
+    let g:vinarise_enable_auto_detect=1
+    let g:vinarise_detect_large_file_size=0
+    " dump with VinarisePluginDump
+    " let g:vinarise_objdump_command="objdump"
+    let g:vinarise_objdump_intel_assembly=1
+
+    au myPlugins FileType vinarise call s:setupVinarise()
+    function s:setupVinarise()
+        command! Assembly VinarisePluginDump
+        command! Dump VinarisePluginDump
+        DisableWhitespace
+    endfunction
+elseif executable('xxd')
+    " Doesn't use autoload.
+    Plug 'https://github.com/fidian/hexmodee', {'on': 'HexEdit'}
+    command! HexEdit :HexMode<CR>
+    let g:hexmode_autodetect = 1
+    let g:hexmode_patterns = '*.bin,*.exe,*.dat,*.o'
+endif
+if HasPython() && executable('pfp')
+    " Powerful hexedit interface. Needs pip install pfp. Allows seing the
+    " assembly.
+    " Also requires downloading a .bt file for the filetype you are interested in.
+    " Get at https://www.sweetscape.com/010editor/repository/templates/
+    Plug 'https://github.com/d0c-s4vage/pfp-vim', {'on': 'HexEditFull'}
+    command! HexEditFull :PfpParse<CR>
+endif
+
 " Limelight Looks really nice, esp for prose. Highlight slightly cu* rrent paraghraph.
 exec "Plug 'junegunn/limelight.vim', { 'for': " . g:proseFileTypes . ", 'on': 'Limelight' }"
 " {]} ---------- Misc----------
