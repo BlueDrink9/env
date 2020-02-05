@@ -252,8 +252,8 @@ else
         if IsWSL()
             let s:paste = "paste.exe"
             let s:copy = "clip.exe"
-            exec 'let s:pasteCMD = ":exec \"norm i\" . system(\"' . s:paste . '\")<CR><CR>
-                \ <esc>kkkkkJJJJhi"'
+            " exec 'let s:pasteCMD = ":exec \"norm i\" . system(\"' . s:paste . '\")<CR><CR>
+            "     \ <esc>kkkkkJJJJhi"'
 
         elseif s:uname =~ "Darwin"
             let s:paste = "pbpaste"
@@ -295,13 +295,14 @@ else
               \   },
               \   'cache_enabled': 1,
               \ }
+    else
+        exec 'inoremap <C-v> <Esc>' . s:pasteCMD
+        " exec 'cnoremap <C-v> <C-r>:read !' . s:paste . '<CR>'
+        exec 'vnoremap <C-v> ' . s:pasteCMD
+        exec 'nnoremap <C-q> ' . s:pasteCMD
+        exec 'vnoremap <C-X> ' . s:copyCMD
+        exec 'vnoremap <C-c> ' . s:copyCMD
     endif
-    exec 'inoremap <C-v> <Esc>' . s:pasteCMD
-    " exec 'cnoremap <C-v> <C-r>:read !' . s:paste . '<CR>'
-    exec 'vnoremap <C-v> ' . s:pasteCMD
-    exec 'nnoremap <C-q> ' . s:pasteCMD
-    exec 'vnoremap <C-X> ' . s:copyCMD
-    exec 'vnoremap <C-c> ' . s:copyCMD
 endif
 " {]} Workarounds
 
