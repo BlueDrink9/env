@@ -300,6 +300,8 @@ else
     " Bsgrep for searching in all open buffers. Also Bsreplace, Bstoc.
     Plug 'https://github.com/jeetsukumaran/vim-buffersaurus'
     cabbrev bfind Bsgrep
+    command! Find Bsgrep
+    command! Replace2 Bsreplace
     let g:buffersaurus_autodismiss_on_select=0
 
     " Quick find and replace text object, repeatable with .
