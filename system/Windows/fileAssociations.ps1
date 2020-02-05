@@ -60,7 +60,7 @@ $plaintextEditMenuFTs = @(
 
 $vimbin = "$(where gvim.exe)"
 if ([string]::IsNullOrEmpty($vimbin)) {
-    $vimbin = 'C:\Program Files (x86)\Vim\vim80\gvim.exe'
+    $vimbin = 'C:\tools\vim\latest\gvim.exe'
 }
 cmd /c "ftype plaintext=$vimbin `"%1`""
 cmd /c "ftype text=$vimbin `"%1`""
