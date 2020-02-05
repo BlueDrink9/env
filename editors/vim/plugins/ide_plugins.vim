@@ -37,6 +37,9 @@ let g:IDE_mappings = {
             \ "snippet_prev" : "<c-b>",
             \ "snippet_next" : "<c-f>",
             \ "type_definition" : "gy",
+            \ "debug_file" : "<leader>dd",
+            \ "set_breakpoint" : "<leader>b",
+            \ "repl_send_obj" : "<leader>r",
             \}
 " {]} ------ Mappings ------
 
