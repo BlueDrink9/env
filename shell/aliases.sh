@@ -44,6 +44,7 @@ alias .....="cd ../../../.."
 alias cd..="cd .."
 
 alias g="git"
+alias ga="git add"
 alias gca="git commit -a"
 alias gc="git commit"
 alias gup="git commit --amend --no-edit"

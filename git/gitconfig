@@ -2,6 +2,8 @@
 [alias]
 	s = status
 	c = commit
+  a = add
+  d = diff
 	ca = commit --all
 	cam = commit --amend
 	cup = commit --amend --no-edit
@@ -25,6 +27,7 @@
   rc = rebase --continue
   reab = rebase --abort
   resk = rebase --skip
+  ch = cherry-pick
   amend = commit --amend
   fpush = push --force
   merge-feature = merge --no-ff
