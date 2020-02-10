@@ -30,10 +30,12 @@
   ch = cherry-pick
   amend = commit --amend
   fpush = push --force
+  pushnew = git push --set-upstream origin $(git rev-parse — abbrev-ref HEAD)
   merge-feature = merge --no-ff
   mt = mergetool
   conflict = !vim +Conflicted
 	search = "log --pickaxe-regex -p --color-words -S"
+  ls = log --oneline
 
 [credential]
   helper = cache --timeout=3600
