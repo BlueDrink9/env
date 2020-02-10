@@ -1,7 +1,7 @@
 # vim: ft=cfg ts=2 sw=2 ai
 [alias]
 	s = status
-	co = commit
+	c = commit
 	ca = commit --all
 	cam = commit --amend
 	cup = commit --amend --no-edit
@@ -21,7 +21,7 @@
   ls = 'branch'
   newbranch = checkout -b
   br = branch
-  ch = checkout
+  co = checkout
   rc = rebase --continue
   reab = rebase --abort
   resk = rebase --skip

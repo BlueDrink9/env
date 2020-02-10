@@ -45,7 +45,7 @@ alias cd..="cd .."
 
 alias g="git"
 alias gca="git commit -a"
-alias gco="git commit"
+alias gc="git commit"
 alias gup="git commit --amend --no-edit"
 alias gupa="git commit -a --amend --no-edit"
 alias gs="git status"
@@ -53,7 +53,7 @@ alias gpl="git pull &"
 alias gpsh="git push &"
 alias dif="git diffw"
 # Custom function with logic for different address formats
-alias gc="git_clone"
+alias gcl="git_clone"
 # Way nicer and more compact way to view logs. Pass -p to see line differences.
 alias glog="git plog"
 
