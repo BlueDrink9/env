@@ -454,7 +454,7 @@ if has("patch-8.1-1264") || has('nvim')
     " See readme. Similar to visual studio, but F-keys only, no shifts or
     " controls.
     let g:vimspector_enable_mappings = 'HUMAN'
-    Nmap(g:IDE_mappings.debug_file, "<F5>")
+    call Nmap(g:IDE_mappings.debug_file, "<F5>")
     function! s:vimspectorSettings()
         nnoremap <buffer> q :VimspectorReset<CR>
         nnoremap <buffer> ! :VimspectorEval<CR>
