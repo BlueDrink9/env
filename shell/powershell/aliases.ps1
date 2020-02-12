@@ -2,7 +2,7 @@
 Set-Alias which where.exe
 Set-Alias g git
 function gs { git status }
-function gco { git commit }
+function gc { git commit }
 function gca { git commit --all }
 function gup { git commit --amend --no-edit --all }
 function gupa { git commit --amend --no-edit --all }
