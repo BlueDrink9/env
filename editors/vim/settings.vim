@@ -87,6 +87,7 @@ let maplocalleader = " b"
 "{[} GUI
 " Guifont will be set to the first available font in this list.
 let g:guiFonts = [
+              \ "SauceCodePro_NF",
               \ "SauceCodePro NF",
               \ "SauceCodeProNerdFontCo-Regular",
               \ "Source Code Pro Medium",
