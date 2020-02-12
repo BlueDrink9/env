@@ -3,6 +3,7 @@ Set-Alias which where.exe
 Set-Alias g git
 function gs { git status }
 function gc { git commit }
+Remove-Item -force alias:gc
 function gca { git commit --all }
 function gup { git commit --amend --no-edit --all }
 function gupa { git commit --amend --no-edit --all }
