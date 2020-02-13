@@ -142,8 +142,8 @@ nmap <silent> [m <Plug>unimpairedMoveUp
 " cx to select an object, then cx again to swap it with first thing.
 Plug 'https://github.com/tommcdo/vim-exchange'
 Plug 'https://github.com/inkarkat/vim-ReplaceWithRegister'
-nmap cr  <Plug>ReplaceWithRegisterOperator
-nmap crr <Plug>ReplaceWithRegisterLine
+nmap dr  <Plug>ReplaceWithRegisterOperator
+nmap drr <Plug>ReplaceWithRegisterLine
 " Causes delay on yank op.
 " xmap yr  <Plug>ReplaceWithRegisterVisual
 xmap R  <Plug>ReplaceWithRegisterVisual
