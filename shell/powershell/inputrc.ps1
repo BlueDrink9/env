@@ -56,3 +56,7 @@ Set-PSReadlineOption -ShowToolTips
 Set-PSReadlineOption -CompletionQueryItems 100
 Set-PSReadlineOption -BellStyle None
 # Set-PSDebug -Trace 0
+
+# Don't colour command name yellow!
+Set-PSReadLineOption -Colors @{ "CommandColor"="`e[0x1b;37m" }
+
