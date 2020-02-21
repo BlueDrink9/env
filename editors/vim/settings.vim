@@ -86,7 +86,9 @@ let maplocalleader = " b"
 
 "{[} GUI
 " Guifont will be set to the first available font in this list.
+" GTK fonts should be the top, since the gtk gvim doesn't use fallbacks.
 let g:guiFonts = [
+              \ "SauceCodePro Nerd Font",
               \ "SauceCodePro_NF",
               \ "SauceCodePro NF",
               \ "SauceCodeProNerdFontCo-Regular",
