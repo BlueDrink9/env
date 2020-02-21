@@ -9,113 +9,6 @@
 " https://github.com/svermeulen/vim-subversive
 " {]} ---------- Later ----------
 
-" {[} View and session
-" Automated view session creation.
-Plug 'https://github.com/zhimsel/vim-stay'
-set viewoptions=cursor,folds,slash,unix
-Plug 'xolox/vim-misc'
-" Map os commands (eg maximise), and open windows commands without shell
-" popup.
-Plug 'https://github.com/xolox/vim-shell'
-if v:version >= 704
-    Plug 'https://github.com/xolox/vim-session'
-    let g:session_persist_globals = ['&spelllang', '&autoread', '&spell']
-    let g:session_persist_colors = 0
-    let g:session_persist_font = 0
-    " Open recent session instead of default
-    let g:session_default_to_last = 'yes'
-    let g:session_autosave_periodic = 10
-    let g:session_autosave = 'yes'
-    let g:session_autoload = 'no' " Could also be 'prompt'
-    let g:session_directory = CreateVimDir("sessions")
-    cabbrev cs CloseSession
-    cabbrev os OpenSession
-    cabbrev ss SaveSession
-endif
-" {]} View and session
-
-" {[} ---------- Providers/External model setup neovim ----------
-let g:skipPythonInstall=1  " Tmp skip installing python modules.
-" Install python module, preferably for py3.
-function! PythonInstallModule(module)
-    if exists('g:skipPythonInstall')
-        return
-    endif
-    if !exists('g:pyInstaller')
-        if executable('conda')
-            let g:pyInstaller="conda install -y -c conda-forge -c malramsay "
-        else
-            if executable('pip3')
-                let l:pipVersion="pip3"
-            elseif executable('pip')
-                " elseif executable('pip') && system('pip --version') =~ '3'
-                let g:pyInstaller="pip"
-                " Fallback - python 2
-            elseif executable('pip2')
-                let g:pyInstaller="pip2"
-            else
-                silent echom "Err: No pip installed. Will not install python support."
-                return
-            endif
-            let g:pyInstaller=l:pipVersion . " install --user --upgrade "
-        endif
-    endif
-    exec "!" . g:pyInstaller . a:module
-endfunction
-
-" Should pick up from either python types.
-if has('nvim') && !(has("python") || has("python3"))
-    " Needed for neovim python support.
-    call PythonInstallModule('neovim')
-endif
-" {]} ---------- Module setup ----------
-
-" {[} Extra text objects
-" iv = current viewable text in the buffer
-onoremap iv :exec "normal! HVL"<cr>
-" Additional text objects for next braket, i/a comma, pairs, smarter searching.
-Plug 'wellle/targets.vim'
-" Don't handle argument. Use another plugin
-autocmd User targets#mappings#user call targets#mappings#extend({
-            \ 'a': {},
-            \ })
-" Move args with >, <,. Next arg ], [,. New text obj a, i,.
-" ],
-Plug 'https://github.com/PeterRincker/vim-argumentative'
-" Library for some other text obj plugins.
-Plug 'https://github.com/kana/vim-textobj-user'
-" See https://github.com/kana/vim-textobj-user/wiki for more, esp for
-" lang-specific.
-" Expands what a sentence/word is for prose.
-exec "Plug 'https://github.com/reedes/vim-textobj-sentence', { 'for': " . g:proseFileTypes . " }" 
-" Adds il, al. Alternatively, '_' is the official object for the current line.
-Plug 'kana/vim-textobj-line'
-Plug 'kana/vim-textobj-entire'
-let g:textobj_entire_no_default_key_mappings=1
-omap a% <Plug>(textobj-entire-a)
-vmap a% <Plug>(textobj-entire-a)
-omap i% <Plug>(textobj-entire-i)
-vmap i% <Plug>(textobj-entire-i)
-" av/iv for lines continued by \
-Plug 'rhysd/vim-textobj-continuous-line'
-" iz az
-Plug 'somini/vim-textobj-fold'
-Plug 'lucapette/vim-textobj-underscore'
-if v:version >= 703
-    " ac, ic, aC
-    Plug 'https://github.com/glts/vim-textobj-comment'
-endif
-Plug 'https://github.com/coachshea/vim-textobj-markdown', { 'for': 'markdown' }
-" Function argument movements
-Plug 'https://github.com/PeterRincker/vim-argumentative'
-" Adds indent block as text object. ii , ai or aI
-Plug 'michaeljsmith/vim-indent-object'
-" Adds [ ] mappins for -=+% indentation objects
-Plug 'https://github.com/jeetsukumaran/vim-indentwise'
-" af, if for functions, ac, ic for classes. Also ]pf, [pc for movements.
-Plug 'https://github.com/bps/vim-textobj-python'
-" {]} Extra text objects
-
 " {[} ---------- Misc ----------
 
 " Custom text for folds, includes indent level. Integrates with fastfold.
@@ -257,6 +150,113 @@ endif
 " Limelight Looks really nice, esp for prose. Highlight slightly cu* rrent paraghraph.
 exec "Plug 'junegunn/limelight.vim', { 'for': " . g:proseFileTypes . ", 'on': 'Limelight' }"
 " {]} ---------- Misc----------
+
+" {[} View and session
+" Automated view session creation.
+Plug 'https://github.com/zhimsel/vim-stay'
+set viewoptions=cursor,folds,slash,unix
+Plug 'xolox/vim-misc'
+" Map os commands (eg maximise), and open windows commands without shell
+" popup.
+Plug 'https://github.com/xolox/vim-shell'
+if v:version >= 704
+    Plug 'https://github.com/xolox/vim-session'
+    let g:session_persist_globals = ['&spelllang', '&autoread', '&spell']
+    let g:session_persist_colors = 0
+    let g:session_persist_font = 0
+    " Open recent session instead of default
+    let g:session_default_to_last = 'yes'
+    let g:session_autosave_periodic = 10
+    let g:session_autosave = 'yes'
+    let g:session_autoload = 'no' " Could also be 'prompt'
+    let g:session_directory = CreateVimDir("sessions")
+    cabbrev cs CloseSession
+    cabbrev os OpenSession
+    cabbrev ss SaveSession
+endif
+" {]} View and session
+
+" {[} ---------- Providers/External model setup neovim ----------
+let g:skipPythonInstall=1  " Tmp skip installing python modules.
+" Install python module, preferably for py3.
+function! PythonInstallModule(module)
+    if exists('g:skipPythonInstall')
+        return
+    endif
+    if !exists('g:pyInstaller')
+        if executable('conda')
+            let g:pyInstaller="conda install -y -c conda-forge -c malramsay "
+        else
+            if executable('pip3')
+                let l:pipVersion="pip3"
+            elseif executable('pip')
+                " elseif executable('pip') && system('pip --version') =~ '3'
+                let g:pyInstaller="pip"
+                " Fallback - python 2
+            elseif executable('pip2')
+                let g:pyInstaller="pip2"
+            else
+                silent echom "Err: No pip installed. Will not install python support."
+                return
+            endif
+            let g:pyInstaller=l:pipVersion . " install --user --upgrade "
+        endif
+    endif
+    exec "!" . g:pyInstaller . a:module
+endfunction
+
+" Should pick up from either python types.
+if has('nvim') && !(has("python") || has("python3"))
+    " Needed for neovim python support.
+    call PythonInstallModule('neovim')
+endif
+" {]} ---------- Module setup ----------
+
+" {[} Extra text objects
+" iv = current viewable text in the buffer
+onoremap iv :exec "normal! HVL"<cr>
+" Additional text objects for next braket, i/a comma, pairs, smarter searching.
+Plug 'wellle/targets.vim'
+" Don't handle argument. Use another plugin
+autocmd User targets#mappings#user call targets#mappings#extend({
+            \ 'a': {},
+            \ })
+" Move args with >, <,. Next arg ], [,. New text obj a, i,.
+" ],
+Plug 'https://github.com/PeterRincker/vim-argumentative'
+" Library for some other text obj plugins.
+Plug 'https://github.com/kana/vim-textobj-user'
+" See https://github.com/kana/vim-textobj-user/wiki for more, esp for
+" lang-specific.
+" Expands what a sentence/word is for prose.
+exec "Plug 'https://github.com/reedes/vim-textobj-sentence', { 'for': " . g:proseFileTypes . " }" 
+" Adds il, al. Alternatively, '_' is the official object for the current line.
+Plug 'kana/vim-textobj-line'
+Plug 'kana/vim-textobj-entire'
+let g:textobj_entire_no_default_key_mappings=1
+omap a% <Plug>(textobj-entire-a)
+vmap a% <Plug>(textobj-entire-a)
+omap i% <Plug>(textobj-entire-i)
+vmap i% <Plug>(textobj-entire-i)
+" av/iv for lines continued by \
+Plug 'rhysd/vim-textobj-continuous-line'
+" iz az
+Plug 'somini/vim-textobj-fold'
+Plug 'lucapette/vim-textobj-underscore'
+if v:version >= 703
+    " ac, ic, aC
+    Plug 'https://github.com/glts/vim-textobj-comment'
+endif
+Plug 'https://github.com/coachshea/vim-textobj-markdown', { 'for': 'markdown' }
+" Function argument movements
+Plug 'https://github.com/PeterRincker/vim-argumentative'
+" Adds indent block as text object. ii , ai or aI
+Plug 'michaeljsmith/vim-indent-object'
+" Adds [ ] mappins for -=+% indentation objects
+Plug 'https://github.com/jeetsukumaran/vim-indentwise'
+" af, if for functions, ac, ic for classes. Also ]pf, [pc for movements.
+Plug 'https://github.com/bps/vim-textobj-python'
+" {]} Extra text objects
 
 " {[} ---------- Operators ----------
 " Replacement for surround, with more features.
