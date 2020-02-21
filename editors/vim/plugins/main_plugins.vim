@@ -120,6 +120,9 @@ Plug 'https://github.com/bps/vim-textobj-python'
 
 " Custom text for folds, includes indent level. Integrates with fastfold.
 Plug 'https://github.com/Konfekt/FoldText'
+" Auto-set foldcolumn if folds exist in buffer.
+Plug 'https://github.com/benknoble/vim-auto-origami'
+au myPlugins CursorHold,BufWinEnter,WinEnter * AutoOrigamiFoldColumn
 " Relative line numbers only in focussed buffer & not in insert mode.
 Plug 'ericbn/vim-relativize'
 " Needs manual activation. :RainbowParen, :RainbowParen!
