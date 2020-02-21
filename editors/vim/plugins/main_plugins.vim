@@ -118,6 +118,8 @@ Plug 'https://github.com/bps/vim-textobj-python'
 
 " {[} ---------- Misc ----------
 
+" Custom text for folds, includes indent level. Integrates with fastfold.
+Plug 'https://github.com/Konfekt/FoldText'
 " Relative line numbers only in focussed buffer & not in insert mode.
 Plug 'ericbn/vim-relativize'
 " Needs manual activation. :RainbowParen, :RainbowParen!
@@ -385,6 +387,7 @@ else
 endif
 " {]}
 
+"{[} Running/executing
 " Run shell commands async (uses python)
 Plug 'https://github.com/joonty/vim-do'
 Plug 'https://github.com/thinca/vim-quickrun'
@@ -392,6 +395,7 @@ Plug 'https://github.com/thinca/vim-quickrun'
 Plug 'https://github.com/JarrodCTaylor/vim-shell-executor'
 " Make is run async (view quickfix with :COpen)
 Plug 'https://github.com/tpope/vim-dispatch'
+"{]}
 
 " {[} ---------- Basic extra highlighting ----------
 Plug 'kovetskiy/sxhkd-vim', {'for': 'sxhkd' }

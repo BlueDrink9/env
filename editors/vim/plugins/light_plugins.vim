@@ -46,8 +46,6 @@ let g:fastfold_fold_command_suffixes =
             \ ['x','X','a','A','o','O','c','C','r','R','m','M','i','n','N']
 nnoremap <BS> :<C-u>FastFoldUpdate<cr>za
 let g:fastfold_minlines = 700
-" Custom text for folds, includes indent level. Integrates with fastfold.
-Plug 'https://github.com/Konfekt/FoldText'
 
 Plug 'https://github.com/freitass/todo.txt-vim'
 
