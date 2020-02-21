@@ -35,7 +35,13 @@ let g:firenvim_config = {
     \ }
 \ }
 let s:fc = g:firenvim_config['localSettings']
-let s:fc['facebook.com*'] = { 'priority': 1, 'selector': '', 'takeover': 'never' }
+let s:disabled_sites=[
+            \ 'docs.google.com*',
+            \ 'facebook.com*',
+            \ ]
+for site in s:disabled_sites
+    let s:fc[site] = { 'priority': 1, 'selector': '', 'takeover': 'never' }
+endfor
 
 " The following options should only run for firenvim instances.
 if !exists('g:started_by_firenvim')
@@ -90,7 +96,7 @@ function! s:firenvimSetup()
     " Not working
     " autocmd myPlugins BufNewFile * silent redraw
     " autocmd myPlugins BufWrite * call feedkeys(";\<CR>")
-    autocmd myPlugins BufWritePost * call nvim_input(";<CR>")
+    " autocmd myPlugins BufWritePost * call nvim_input(";<CR>")
     " This works
     " call feedkeys("i")
 
