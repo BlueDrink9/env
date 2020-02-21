@@ -375,9 +375,10 @@ set foldminlines=6
 " set foldmethod=marker
 " set foldmarker={[},{]}
 set foldnestmax=3
-" set foldcolumn=5
+" Shows a column that displays folds.
+" set foldcolumn=1
 set foldminlines=3
-" All/some folds closed on bufopen
+" Most folds closed on bufopen, not all.
 set foldlevelstart=1
 set foldopen+=",insert"
 " Use indent and manual folding
