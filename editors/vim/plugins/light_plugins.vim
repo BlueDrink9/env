@@ -33,6 +33,20 @@ endif
 " {[}--- Misc ---
 " Needed, really, because vim folding sucks otherwise.
 Plug 'https://github.com/Konfekt/FastFold'
+let g:tex_fold_enabled=1
+let g:vimsyn_folding='af'
+let g:xml_syntax_folding = 1
+let g:javaScript_fold = 1
+let g:ruby_fold = 1
+let g:sh_fold_enabled= 7
+let g:php_folding = 1
+let g:perl_fold = 1
+let g:python_fold = 1
+let g:fastfold_fold_command_suffixes =
+            \ ['x','X','a','A','o','O','c','C','r','R','m','M','i','n','N']
+nnoremap <BS> :<C-u>FastFoldUpdate<cr>za
+let g:fastfold_minlines = 700
+" Custom text for folds, includes indent level. Integrates with fastfold.
 Plug 'https://github.com/Konfekt/FoldText'
 
 Plug 'https://github.com/freitass/todo.txt-vim'
