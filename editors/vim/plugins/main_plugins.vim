@@ -197,7 +197,7 @@ let g:detectindent_preferred_indent = &shiftwidth
 au myPlugins BufReadPost * silent! :DetectIndent
 
 " Zoom window to tab, and out again
-Plug 'https://github.com/troydm/zoomwintab.vim/blob/master/plugin/zoomwintab.vim'
+Plug 'https://github.com/troydm/zoomwintab.vim'
 nnoremap <c-w>z :ZoomWinTabToggle<cr>
 " {]} ---------- Misc----------
 
@@ -494,7 +494,14 @@ if executable("git")
     " let g:gitgutter_eager = 0
 
     Plug 'https://github.com/christoomey/vim-conflicted'
-    set stl+=%{ConflictedVersion()}
+    function! s:setupConflicted()
+        " TODO: integrate with airline.
+        set stl+=%{ConflictedVersion()}
+        " Resolve and move to next conflicted file.
+        nnoremap ]m :GitNextConflict<cr>
+    endfunction
+    let g:diffget_local_map = 'gl'
+    let g:diffget_upstream_map = 'gu'
 endif
 " {]} ---------- Git----------
 
