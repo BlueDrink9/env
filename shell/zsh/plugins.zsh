@@ -18,6 +18,10 @@ zplugin light zsh-users/zsh-autosuggestions
 zle -N autosuggest-accept  # Dummy binding to supress error. Replaced later.
 bindkey -M viins "" autosuggest-accept
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=014"
+# Completion requires zpty
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=40
+ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 zplugin ice wait lucid
 zplugin light wazum/zsh-directory-dot-expansion
