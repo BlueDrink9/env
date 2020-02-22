@@ -7,6 +7,8 @@
 " https://github.com/reedes/vim-wheel
 " Powerful changing of textobjects
 " https://github.com/svermeulen/vim-subversive
+" fzf for all the shortcuts defined in vim
+" https://github.com/sunaku/vim-shortcut
 " {]} ---------- Later ----------
 
 " {[} ---------- Misc ----------
