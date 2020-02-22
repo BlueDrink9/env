@@ -407,6 +407,15 @@ if executable("git")
     Plug 'https://github.com/junegunn/gv.vim'
     " Better diff algs with :PatientDiff or :EnhancedDiff
     Plug 'https://github.com/chrisbra/vim-diff-enhanced'
+    " View commit messages for current line in floating window.
+    " :GitMessenger
+    Plug 'rhysd/git-messenger.vim'
+    let g:git_messenger_no_default_mappings=v:true
+    " Include diff for all files in commit. Could be 'current'
+    let g:git_messenger_include_diff="all"
+    " Move cursor into popup for easier scrolling. Can manually do it by
+    " running command a second time.
+    let g:git_messenger_always_into_popup=v:true
 endif
 " {]} ---------- Git----------
 
