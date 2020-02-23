@@ -52,7 +52,8 @@ bspc config gapless_monocle     false #Default setup uses negative padding, and 
 bspc config swallow_first_click true
 # When focusing a window/monitor, put the pointer at its center.
 bspc config pointer_follows_focus false
-bspc config focus_follows_pointer true
+# For some reason settings this true prevents using the mouse on the desktop.
+# bspc config focus_follows_pointer true
 bspc config pointer_follows_monitor true
 
 bspc config pointer_modifier mod4 # super
