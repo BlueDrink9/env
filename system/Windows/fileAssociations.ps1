@@ -63,6 +63,7 @@ $plaintextEditMenuFTs = @(
         "AutoHotkeyScript",
         "Python.File",
         "Microsoft.PowerShellScript.1",
+        "XML Document",
         "VBSFile"
 )
 
