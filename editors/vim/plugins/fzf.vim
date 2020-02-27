@@ -18,6 +18,7 @@ nnoremap <silent> <leader>f :Lines<CR>
 nnoremap <silent> <leader>ft :Tags<CR>
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
+command! MRUFZF :History
 
 " {[} Use proper fzf colours in gvim
 if g:hasGUI
