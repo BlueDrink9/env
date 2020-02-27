@@ -141,7 +141,7 @@ cmap W! SudoSave
 nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 command! -bang -nargs=* Macros <c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 cnoreabbrev H vert h
-
+command! MRU browse oldfiles
 
 " {]} Abbreviations
 
