@@ -584,20 +584,22 @@ autocmd myPlugins Filetype tex :call SetVimtexMappings()
 exec 'autocmd myPlugins Filetype ' . g:proseFileTypes . ' call SetProseOptions()'
 
 " {[} ---------- Markdown Preview ----------
-" if has('nvim')
-"     " Needs node, yarn.
-"     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
-"     let g:mkdp_auto_start = 0
-"     let g:mkdp_auto_close = 0
-"     " On save, insertleave
-"     " let g:mkdp_refresh_slow = 0
+if (has('nvim') || v:version >= 801) && !has('win32')
+    " Downloads and uses a pre-build.
+    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 'markdown'}
+    let g:mkdp_auto_start = 0
+    let g:mkdp_auto_close = 0
+    let g:mkdp_echo_preview_url = 1
+    " On save, insertleave
+    " let g:mkdp_refresh_slow = 1
+endif
 " else
 " if has('python')
 " Requires manually setting open cmd, requires py2.
 "     Plug 'previm/previm'
 "     let g:previm_open_cmd="fopen"
 " endif
-if executable('pandoc')
+if executable('pandoc') && !has('win32')
     " Actually works, fewer dependencies (pandoc, not node or yarn). Doesn't
     " have synced scrolling, hard to change browser.
     Plug 'JamshedVesuna/vim-markdown-preview', {'for': 'markdown'}
