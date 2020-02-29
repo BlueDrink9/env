@@ -194,7 +194,11 @@ exec "Plug 'junegunn/limelight.vim', { 'for': " . g:proseFileTypes . ", 'on': 'L
 Plug 'https://github.com/idbrii/detectindent'
 let g:detectindent_preferred_expandtab = &expandtab
 let g:detectindent_preferred_indent = &shiftwidth
-au myPlugins BufReadPost * :DetectIndent
+au myPlugins BufReadPost * silent! :DetectIndent
+
+" Zoom window to tab, and out again
+Plug 'https://github.com/troydm/zoomwintab.vim/blob/master/plugin/zoomwintab.vim'
+nnoremap <c-w>z :ZoomWinTabToggle<cr>
 " {]} ---------- Misc----------
 
 " {[} View and session
