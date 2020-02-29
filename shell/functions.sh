@@ -792,7 +792,13 @@ mrf(){
 
 vim_single_plugin(){
   plugin="$1"
-  editor="${2:-vim}"
-  "$editor" -u NORC --cmd "set rtp+=$HOME/.vim/plugins/$plugin" -c "nnoremap ; :" -c "nnoremap kv <esc>"
+  shift
+  if [ -n "$2" ]; then
+    editor="${2}"
+    shift
+  else
+    editor="vim"
+  fi
+  "$editor" -u NORC --cmd "set rtp+=$HOME/.vim/plugins/$plugin" -c "nnoremap ; :" -c "nnoremap kv <esc>" $@
   unset plugin
 }
