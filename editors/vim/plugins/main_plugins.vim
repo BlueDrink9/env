@@ -11,6 +11,42 @@
 " https://github.com/sunaku/vim-shortcut
 " {]} ---------- Later ----------
 
+" {[} ---------- Providers/External model setup neovim ----------
+let g:skipPythonInstall=1  " Tmp skip installing python modules.
+" Install python module, preferably for py3.
+function! PythonInstallModule(module)
+    if exists('g:skipPythonInstall')
+        return
+    endif
+    if !exists('g:pyInstaller')
+        if executable('conda')
+            let g:pyInstaller="conda install -y -c conda-forge -c malramsay "
+        else
+            if executable('pip3')
+                let l:pipVersion="pip3"
+            elseif executable('pip')
+                " elseif executable('pip') && system('pip --version') =~ '3'
+                let g:pyInstaller="pip"
+                " Fallback - python 2
+            elseif executable('pip2')
+                let g:pyInstaller="pip2"
+            else
+                silent echom "Err: No pip installed. Will not install python support."
+                return
+            endif
+            let g:pyInstaller=l:pipVersion . " install --user --upgrade "
+        endif
+    endif
+    exec "!" . g:pyInstaller . a:module
+endfunction
+
+" Should pick up from either python types.
+if has('nvim') && !(has("python") || has("python3"))
+    " Needed for neovim python support.
+    call PythonInstallModule('neovim')
+endif
+" {]} ---------- Module setup ----------
+
 " {[} ---------- Misc ----------
 
 " Custom text for folds, includes indent level. Integrates with fastfold.
@@ -177,42 +213,6 @@ if v:version >= 704
     cabbrev ss SaveSession
 endif
 " {]} View and session
-
-" {[} ---------- Providers/External model setup neovim ----------
-let g:skipPythonInstall=1  " Tmp skip installing python modules.
-" Install python module, preferably for py3.
-function! PythonInstallModule(module)
-    if exists('g:skipPythonInstall')
-        return
-    endif
-    if !exists('g:pyInstaller')
-        if executable('conda')
-            let g:pyInstaller="conda install -y -c conda-forge -c malramsay "
-        else
-            if executable('pip3')
-                let l:pipVersion="pip3"
-            elseif executable('pip')
-                " elseif executable('pip') && system('pip --version') =~ '3'
-                let g:pyInstaller="pip"
-                " Fallback - python 2
-            elseif executable('pip2')
-                let g:pyInstaller="pip2"
-            else
-                silent echom "Err: No pip installed. Will not install python support."
-                return
-            endif
-            let g:pyInstaller=l:pipVersion . " install --user --upgrade "
-        endif
-    endif
-    exec "!" . g:pyInstaller . a:module
-endfunction
-
-" Should pick up from either python types.
-if has('nvim') && !(has("python") || has("python3"))
-    " Needed for neovim python support.
-    call PythonInstallModule('neovim')
-endif
-" {]} ---------- Module setup ----------
 
 " {[} Extra text objects
 " iv = current viewable text in the buffer
@@ -620,6 +620,30 @@ let g:bullets_enabled_file_types = [
             \]
 " {]} ---------- Prose----------
 
+" {[} ---------- Terminal ----------
+" REPL (send motions, lines etc)
+Plug 'kassio/neoterm'
+" <Plug>(neoterm-repl-send)
+" <Plug>(neoterm-repl-send-line)
+
+" Convenient hide/show term buffer, $drop to open file with vim
+Plug 'skywind3000/vim-terminal-help'
+" which key will be used to toggle terminal window, default to <m-=>.
+" Will be mapped while using term, so choose carefully. 
+let g:terminal_key="<c-S>"
+" initialize working dir: 0 for unchanged, 1 for file path and 2 for project root.
+let g:terminal_cwd=1
+" how to open the file in vim? default to tab drop.
+" let g:terminal_edit="e"
+" set to term to kill term session when exiting vim.
+let g:terminal_kill="term"
+" set to 0 to hide terminal buffer in the buffer list
+let g:terminal_list=0
+if has("win32")
+    let g:terminal_shell="powershell"
+endif
+" {]} ---------- Terminal ----------
+
 " {[} ---------- NerdTree ----------
 Plug 'https://github.com/scrooloose/nerdtree.git', {'on': ['NERDTree', 'NERDTreeToggle',]}
 Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
@@ -651,27 +675,3 @@ autocmd myPlugins bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NE
 cabbrev nt NERDTreeToggle
 nnoremap _ NERDTreeToggle
 " {]} ---------- NerdTree ----------
-
-" {[} ---------- Terminal ----------
-" REPL (send motions, lines etc)
-Plug 'kassio/neoterm'
-" <Plug>(neoterm-repl-send)
-" <Plug>(neoterm-repl-send-line)
-
-" Convenient hide/show term buffer, $drop to open file with vim
-Plug 'skywind3000/vim-terminal-help'
-" which key will be used to toggle terminal window, default to <m-=>.
-" Will be mapped while using term, so choose carefully. 
-let g:terminal_key="<c-S>"
-" initialize working dir: 0 for unchanged, 1 for file path and 2 for project root.
-let g:terminal_cwd=1
-" how to open the file in vim? default to tab drop.
-" let g:terminal_edit="e"
-" set to term to kill term session when exiting vim.
-let g:terminal_kill="term"
-" set to 0 to hide terminal buffer in the buffer list
-let g:terminal_list=0
-if has("win32")
-    let g:terminal_shell="powershell"
-endif
-" {]} ---------- Terminal ----------
