@@ -185,8 +185,16 @@ if HasPython() && executable('pfp')
     command! HexEditFull :PfpParse<CR>
 endif
 
-" Limelight Looks really nice, esp for prose. Highlight slightly cu* rrent paraghraph.
+" Limelight Looks really nice, esp for prose. Highlight slightly current paragraph.
 exec "Plug 'junegunn/limelight.vim', { 'for': " . g:proseFileTypes . ", 'on': 'Limelight' }"
+" Alternative is vim-sleuth, which seems overzealous.
+" This plugin has several forks. I am using the most updated one, but may be
+" worth playing with them.
+" Has a number of settings related to getting better accuracy.
+Plug 'https://github.com/idbrii/detectindent'
+let g:detectindent_preferred_expandtab = &expandtab
+let g:detectindent_preferred_indent = &shiftwidth
+au myPlugins BufReadPost * :DetectIndent
 " {]} ---------- Misc----------
 
 " {[} View and session
