@@ -787,4 +787,12 @@ hist-search(){
 mrf(){
   dir="${1:-.}"
   echo "$dir/$(ls -ABrt1 --group-directories-first "$dir" | tail -n1)"
+  unset dir
+}
+
+vim_single_plugin(){
+  plugin="$1"
+  editor="${2:-vim}"
+  "$editor" -u NORC --cmd "set rtp+=$HOME/.vim/plugins/$plugin" -c "nnoremap ; :" -c "nnoremap kv <esc>"
+  unset plugin
 }
