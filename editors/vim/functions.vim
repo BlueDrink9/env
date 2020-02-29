@@ -278,5 +278,5 @@ endfunction
 let g:GUIResizeValue=5
 nnoremap <M-S-left> :call ResizeGUIHoriz(-g:GUIResizeValue)<cr>
 nnoremap <M-S-right> :call ResizeGUIHoriz(g:GUIResizeValue)<cr>
-nnoremap <M-S-up> :call ResizeGUIVert(-g:GUIResizeValue)<cr>
-nnoremap <M-S-down> :call ResizeGUIVert(g:GUIResizeValue)<cr>
+nnoremap <M-S-up> :call ResizeGUIVert(g:GUIResizeValue)<cr>
+nnoremap <M-S-down> :call ResizeGUIVert(-g:GUIResizeValue)<cr>
