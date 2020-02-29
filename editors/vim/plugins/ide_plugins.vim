@@ -144,19 +144,26 @@ endif
 Plug 'xolox/vim-misc'
 if executable('ctags-exuberant') || executable('ctags')
     Plug 'ludovicchabant/vim-gutentags'
-    Plug 'liuchengxu/vista.vim'
-    " Stay in current window when opening vista.
-    " let g:vista_stay_on_open = 0
-    cabbrev tb Vista!!
-    nnoremap <leader>t Vista
-    " Uncomment to open tagbar automatically whenever possible
-    autocmd myIDE BufEnter * nested :call tagbar#autoopen(0)
-    if exists($USENF)
-        let g:vista#renderer#enable_icon = 1
+    if !has('...')
+        Plug 'liuchengxu/vista.vim'
+        " Stay in current window when opening vista.
+        " let g:vista_stay_on_open = 0
+        let s:tagbarOpenCmd="Vista!!"
+        if exists($USENF)
+            let g:vista#renderer#enable_icon = 1
+        endif
+        let g:vista_executive_for = {
+                    \ 'markdown': 'toc',
+                    \ }
+        let g:vista_fzf_preview = ['right:50%']
+    else
+        Plug 'majutsushi/tagbar'
+        let s:tagbarOpenCmd="TagbarToggle"
+        " Uncomment to open tagbar automatically whenever possible
+        autocmd myIDE BufEnter * nested :call tagbar#autoopen(0)
     endif
-     let g:vista_executive_for = {
-      \ 'markdown': 'toc',
-      \ }
+    exec 'cabbrev tb ' . s:tagbarOpenCmd
+    exec 'nnoremap <leader>tt :' . s:tagbarOpenCmd . '<cr>'
 endif
 
 if executable('cscope')
