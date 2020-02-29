@@ -153,9 +153,11 @@ nmap <silent> [m <Plug>unimpairedMoveUp
 " nunmap <silent> [e
 " cx to select an object, then cx again to swap it with first thing.
 Plug 'https://github.com/tommcdo/vim-exchange'
+" Do replace, because cr is used for abolish. Yr is unused atm?
 Plug 'https://github.com/inkarkat/vim-ReplaceWithRegister'
 nmap dr  <Plug>ReplaceWithRegisterOperator
 nmap drr <Plug>ReplaceWithRegisterLine
+nmap dR <Plug>ReplaceWithRegisterLine
 " Causes delay on yank op.
 " xmap yr  <Plug>ReplaceWithRegisterVisual
 xmap R  <Plug>ReplaceWithRegisterVisual
