@@ -5,7 +5,8 @@
 " Plug 'https://github.com/dhruvasagar/vim-table-mode'
 " Scrollwheel on mouse moves screen with cursor (more natural)
 " https://github.com/reedes/vim-wheel
-" Powerful changing of textobjects
+" Powerful changing of textobjects. See also
+" https://www.reddit.com/r/vim/comments/f8obyy/why_doesnt_the_s_command_accept_a_motion/fimqru6/
 " https://github.com/svermeulen/vim-subversive
 " fzf for all the shortcuts defined in vim
 " https://github.com/sunaku/vim-shortcut
