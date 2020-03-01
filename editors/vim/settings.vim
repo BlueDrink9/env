@@ -83,7 +83,7 @@ exec 'set background=' . g:backgroundColour
 
 " Needs to be set before plugins use it. Set here rather than in mappings.
 let mapleader = " "
-let maplocalleader = " b"
+let maplocalleader = "<CR>"
 
 "{[} GUI
 " Guifont will be set to the first available font in this list.
