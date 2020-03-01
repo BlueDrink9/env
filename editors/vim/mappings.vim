@@ -356,7 +356,7 @@ cnoremap <Right> <Space><BS><Right>
 " inoremap <C-a> <C-o>gg<C-o><S-V>G
 " vnoremap s <esc>gg<S-V>G
 " Spellcheck with completion list
-nnoremap <leader>s ea<C-X><C-S>
+" nnoremap <leader>s ea<C-X><C-S>
 " Rm spellcheck
 map <RightMouse> z=
 " Magic regex default

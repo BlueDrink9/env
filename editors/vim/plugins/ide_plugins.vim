@@ -12,6 +12,8 @@ augroup end
 " Use <leader>i for ide bits.
 " Use <leader>e for errors/linting/fixing.
 let g:IDE_mappings = {
+            \ "REPLSend" : "<leader>s",
+            \ "REPLSendLine" : "<leader>ss",
             \ "allActions" : "<leader>ia",
             \ "allCommands" : "<leader>ic",
             \ "codeAction" : "<leader>ia",
