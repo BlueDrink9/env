@@ -419,6 +419,7 @@ Plug 'https://github.com/tpope/vim-dispatch'
 Plug 'kovetskiy/sxhkd-vim', {'for': 'sxhkd' }
 Plug 'vim-scripts/autohotkey-ahk', {'for': 'autohotkey'}
 Plug 'https://github.com/PProvost/vim-ps1', {'for': 'ps1'}
+Plug 'https://github.com/lervag/vim-rmarkdown', {'for': 'rmd'}
 " {]} ---------- Basic extra highlighting ----------
 
 " {[} ---------- Git ----------
