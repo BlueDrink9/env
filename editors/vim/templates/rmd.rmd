@@ -1,0 +1,25 @@
+---
+title:
+author: BlueDrink9
+date: [d]
+output:
+  html_document:
+    # Change if you include local images.
+    self_contained: true
+    code_download: true
+    number_sections: false
+    toc: true
+    toc_depth: 2
+    toc_float: false
+      collapsed: true
+      smooth_scroll: true
+    # Smart quotes, dashes, etc.
+    smart: true
+    fig_width: 7
+    fig_height: 5
+    fig_caption: true
+    # https://bookdown.org/yihui/rmarkdown/html-document.html#tab:df-print
+    df_print: kable
+    code_folding: show
+---
+
