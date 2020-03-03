@@ -10,6 +10,11 @@
 " https://github.com/svermeulen/vim-subversive
 " fzf for all the shortcuts defined in vim
 " https://github.com/sunaku/vim-shortcut
+" if has('python3')
+"     " Allows direct insertion of zotero citations.
+"     " Requires zot version > 5
+"     Plug 'https://github.com/jalvesaq/zotcite'
+" endif
 " {]} ---------- Later ----------
 
 " {[} ---------- Providers/External model setup neovim ----------
@@ -516,7 +521,9 @@ let g:lexical#thesaurus_key = '<localleader>lt'
 let g:lexical#dictionary_key = '<localleader>ld'
 
 " Alternative to pencil, but modular if you want it.
-" Plug 'vim-pandoc/vim-pandoc'
+exec "Plug 'https://github.com/vim-pandoc/vim-pandoc', { 'for': " . g:proseFileTypes . " }"
+exec "Plug 'https://github.com/vim-pandoc/vim-pandoc-syntax', { 'for': " . g:proseFileTypes . " }"
+Plug 'https://github.com/vim-pandoc/vim-rmarkdown', {'for': 'rmd' }
 " Pencil loaded in lite, for scratch.
 " Plug 'https://github.com/reedes/vim-pencil'
 " let g:pencil#wrapModeDefault = 'soft'
