@@ -502,7 +502,7 @@ if executable("git")
     " let g:gitgutter_realtime = 0
     " let g:gitgutter_eager = 0
 
-    Plug 'https://github.com/christoomey/vim-conflicted'
+    Plug 'https://github.com/christoomey/vim-conflicted', {'on': 'Conflicted'}
     function! s:setupConflicted()
         " TODO: integrate with airline.
         set stl+=%{ConflictedVersion()}
