@@ -3,6 +3,8 @@
 " Maybe later, once I want them.
 " {[} ---------- Later ----------
 " Plug 'https://github.com/dhruvasagar/vim-table-mode'
+" Nasty to configure. Unite source for zotero or bibtex (via python lib) citations.
+" https://github.com/rafaqz/citation.vim
 " Scrollwheel on mouse moves screen with cursor (more natural)
 " https://github.com/reedes/vim-wheel
 " Powerful changing of textobjects. See also
