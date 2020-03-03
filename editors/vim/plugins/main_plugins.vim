@@ -521,9 +521,9 @@ let g:lexical#thesaurus_key = '<localleader>lt'
 let g:lexical#dictionary_key = '<localleader>ld'
 
 " Alternative to pencil, but modular if you want it.
-exec "Plug 'https://github.com/vim-pandoc/vim-pandoc', { 'for': " . g:proseFileTypes . " }"
-exec "Plug 'https://github.com/vim-pandoc/vim-pandoc-syntax', { 'for': " . g:proseFileTypes . " }"
-Plug 'https://github.com/vim-pandoc/vim-rmarkdown', {'for': 'rmd' }
+" exec "Plug 'https://github.com/vim-pandoc/vim-pandoc', { 'for': " . g:proseFileTypes . " }"
+" exec "Plug 'https://github.com/vim-pandoc/vim-pandoc-syntax', { 'for': " . g:proseFileTypes . " }"
+" Plug 'https://github.com/vim-pandoc/vim-rmarkdown', {'for': 'rmd' }
 " Pencil loaded in lite, for scratch.
 " Plug 'https://github.com/reedes/vim-pencil'
 " let g:pencil#wrapModeDefault = 'soft'
