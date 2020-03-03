@@ -484,7 +484,7 @@ function! s:ReadTemplate()
     filetype detect
     let l:templatePath = PathExpand(s:scriptdir . '/templates/' . &filetype . '.vim')
     if filereadable(l:templatePath)
-        exec 'read ' . l:templatePath
+        exec 'silent! 0read ' . l:templatePath
     endif
 endfunction
 autocmd myVimrc BufNewFile * call s:ReadTemplate()
