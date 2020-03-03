@@ -639,6 +639,8 @@ let g:bullets_enabled_file_types = [
             \ 'gitcommit',
             \ 'scratch'
             \]
+Plug 'ferrine/md-img-paste.vim', {'for': 'markdown'}
+autocmd myPlugins FileType markdown command! PasteImage silent call mdip#MarkdownClipboardImage()<CR>
 " {]} ---------- Prose----------
 
 " {[} ---------- Terminal ----------
