@@ -482,10 +482,11 @@ autocmd myVimrc BufWrite * if &filetype == "scratch" | filetype detect | endif
 
 function! s:ReadTemplate()
     filetype detect
-    let l:templatePath = PathExpand(s:scriptdir . '/templates/' . &filetype . '.vim')
-    if filereadable(l:templatePath)
-        exec 'silent! 0read ' . l:templatePath
-    endif
+    let l:templateDir = PathExpand(s:scriptdir . '/templates')
+    let l:templatePaths = split(globpath(l:templateDir, &filetype . '.*'), '\n')
+    for templatePath in l:templatePaths
+      exec 'silent! 0read ' . templatePath . 'arst'
+    endfor
 endfunction
 autocmd myVimrc BufNewFile * call s:ReadTemplate()
 
