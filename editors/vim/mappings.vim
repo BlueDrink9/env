@@ -237,74 +237,8 @@ if has("clipboard") && !IsWSL()
     " In normal mode, use ctrl+q
     nnoremap <C-q> "+P
 
-    " {[} Workarounds
-else
-    " Replace with writing/reading from system commands in console vim.
-    if exists('$CLIP_PROGRAM_COPY')
-        let s:copy=$CLIP_PROGRAM_COPY
-        let s:paste=$CLIP_PROGRAM_PASTE
-    elseif has("win32")
-        let s:paste = "paste.exe"
-        let s:copy = "clip.exe"
-
-    elseif has("unix")
-        let s:uname = system("uname")
-        if IsWSL()
-            let s:paste = "paste.exe"
-            let s:copy = "clip.exe"
-            " exec 'let s:pasteCMD = ":exec \"norm i\" . system(\"' . s:paste . '\")<CR><CR>
-            "     \ <esc>kkkkkJJJJhi"'
-
-        elseif s:uname =~ "Darwin"
-            let s:paste = "pbpaste"
-            let s:copy = "pbcopy"
-        elseif $ISTERMUX " set in bash settings
-            " Assume termux
-            if executable('termux-get-clipboard')
-                let s:paste = "termux-get-clipboard"
-                let s:copy = "termux-set-clipboard"
-            else
-                echom "Termux-api not installed."
-            endif
-        else
-            " Linux
-            let s:paste = "xclip -o"
-            let s:copy = "xclip"
-        endif
-    endif
-    " exec 'let s:pasteCMD = ":let @j=system(\"' . s:paste . '\")<CR><CR>\"jp"'
-    if !exists('s:pasteCMD')
-        exec 'let s:pasteCMD = ":read !' . s:paste . '<CR><CR>"'
-    endif
-    " :exe 'norm i' . system("ls -l") inserts results at cursor, but with
-    " paste still adds two newlines.
-    " :exe 'norm i' . system("ls -l") inserts results at cursor, but with
-    " <c-u> gets rid of range before calling.
-    exec 'let s:copyCMD = ":w !' . s:copy . '<CR><CR>"'
-
-    if has('nvim')
-        let g:clipboard = {
-              \   'name': 'clipboard set in mappings',
-              \   'copy': {
-              \      '+': s:copy,
-              \      '*': s:copy,
-              \    },
-              \   'paste': {
-              \      '+': s:paste,
-              \      '*': s:paste,
-              \   },
-              \   'cache_enabled': 1,
-              \ }
-    else
-        exec 'inoremap <C-v> <Esc>' . s:pasteCMD
-        " exec 'cnoremap <C-v> <C-r>:read !' . s:paste . '<CR>'
-        exec 'vnoremap <C-v> ' . s:pasteCMD
-        exec 'nnoremap <C-q> ' . s:pasteCMD
-        exec 'vnoremap <C-X> ' . s:copyCMD
-        exec 'vnoremap <C-c> ' . s:copyCMD
-    endif
+    " Workarounds are now set using vim-fakeclip, light plugin.
 endif
-" {]} Workarounds
 
 " {]} Clipboard
 

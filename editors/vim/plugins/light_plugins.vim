@@ -102,6 +102,19 @@ endif
 " {]} Misc
 
 " {[}--- Yanks ---
+" Provides access to clipboard via programs
+" Note that this fork is basically Unmaintained, but there are so many others
+" too that I don't know which to choose. None have all the PRs.
+Plug 'https://github.com/kana/vim-fakeclip'
+if !has('clipboard') || IsWSL()
+    nmap "" "+
+    vmap "" "+
+    " In insert or visual mode, use standard cut/copy/paste shortcuts.
+    imap <C-v> <Plug>(fakeclip-insert)
+    cmap <C-v> <Plug>(fakeclip-insert)
+    vmap <C-X> <Plug>(fakeclip-d)
+    vmap <C-c> <Plug>(fakeclip-y)
+endif
 " Needs unite/denite, no mappings by default.
 " Maybe later on, put in ide and don't load yankring if idemode.
 " if exists('##TextYankPost')
