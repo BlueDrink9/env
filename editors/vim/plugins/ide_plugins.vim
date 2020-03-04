@@ -262,10 +262,10 @@ if HasPython()
     let g:SimpylFold_docstring_preview = 1
 
     " Python completion, plus some refactor, goto def and usage features.
-    Plug 'https://github.com/davidhalter/jedi-vim', {'for' : 'python', 'do' : 'pip install jedi' }
+    Plug 'https://github.com/davidhalter/jedi-vim', {'for' : 'python', 'do' : 'pip install --user jedi' }
     " Using deoplete
     if IsPluginUsed('deoplete.nvim')
-        Plug 'deoplete-plugins/deoplete-jedi', {'for' : 'python', 'do' : 'pip install jedi' }
+        Plug 'deoplete-plugins/deoplete-jedi', {'for' : 'python', 'do' : 'pip3 install --user jedi' }
         let g:jedi#completions_enabled = 0
     endif
     let g:jedi#use_splits_not_buffers = "right"
