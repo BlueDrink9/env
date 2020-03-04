@@ -60,6 +60,10 @@ function! HasNvimPythonModule()
     return v:true
 endfunction
 
+function! ExecutePlugMapping(mapping)
+    execute "normal \<Plug>" . a:mapping
+endfunction
+
 function! SetGFN(...)
     if a:0 == 1
         " Override current gfn
