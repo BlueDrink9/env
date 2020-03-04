@@ -209,6 +209,16 @@ Plug 'https://github.com/troydm/zoomwintab.vim'
 nnoremap <c-w>z :ZoomWinTabToggle<cr>
 " {]} ---------- Misc----------
 
+
+" {[} ---------- Visual changes ----------
+Plug 'machakann/vim-highlightedyank'
+if !exists('##TextYankPost')
+    map y <Plug>(highlightedyank)
+endif
+" -1 gives persistent highlight until edit or new yank.
+let g:highlightedyank_highlight_duration = 5000
+" {]} ---------- Visual changes ----------
+
 " {[} View and session
 " Automated view session creation.
 Plug 'https://github.com/zhimsel/vim-stay'

@@ -102,12 +102,6 @@ endif
 " {]} Misc
 
 " {[}--- Yanks ---
-Plug 'machakann/vim-highlightedyank'
-if !exists('##TextYankPost')
-    map y <Plug>(highlightedyank)
-endif
-" -1 gives persistent highlight until edit or new yank.
-let g:highlightedyank_highlight_duration = 5000
 " Needs unite/denite, no mappings by default.
 " Maybe later on, put in ide and don't load yankring if idemode.
 " if exists('##TextYankPost')
