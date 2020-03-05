@@ -10,8 +10,6 @@
 " Powerful changing of textobjects. See also
 " https://www.reddit.com/r/vim/comments/f8obyy/why_doesnt_the_s_command_accept_a_motion/fimqru6/
 " https://github.com/svermeulen/vim-subversive
-" fzf for all the shortcuts defined in vim
-" https://github.com/sunaku/vim-shortcut
 " if has('python3')
 "     " Allows direct insertion of zotero citations.
 "     " Requires zot version > 5
@@ -207,6 +205,8 @@ au myPlugins BufReadPost * silent! :DetectIndent
 " Zoom window to tab, and out again
 Plug 'https://github.com/troydm/zoomwintab.vim'
 nnoremap <c-w>z :ZoomWinTabToggle<cr>
+" fzf for all the shortcuts defined in vim
+Plug 'https://github.com/sunaku/vim-shortcut'
 " {]} ---------- Misc----------
 
 
