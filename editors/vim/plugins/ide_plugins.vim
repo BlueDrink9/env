@@ -14,6 +14,9 @@ augroup end
 let g:IDE_mappings = {
             \ "REPLSend" : "<leader>s",
             \ "REPLSendLine" : "<leader>ss",
+            \ "REPLSendAndInsert" : "<leader>si",
+            \ "REPLClear" : "<leader>sc",
+            \ "make" : "<leader>im",
             \ "allActions" : "<leader>ia",
             \ "allCommands" : "<leader>ic",
             \ "codeAction" : "<leader>ia",
@@ -41,7 +44,6 @@ let g:IDE_mappings = {
             \ "type_definition" : "gy",
             \ "debug_file" : "<leader>dd",
             \ "set_breakpoint" : "<leader>b",
-            \ "repl_send_obj" : "<leader>r",
             \}
 " {]} ------ Mappings ------
 
@@ -312,6 +314,18 @@ if !has('nvim') && !has('job')
     Plug 'jcfaria/vim-r-plugin'
 else
     Plug 'jalvesaq/Nvim-R'
+    " Autostart when entering r files, if not already running.
+    " From plugin docs.
+    autocmd FileType r if string(g:SendCmdToR) == "function('SendCmdToR_fake')" | call StartR("R") | call <SID>SetnvimRShortcuts() | endif
+    autocmd FileType rmd if string(g:SendCmdToR) == "function('SendCmdToR_fake')" | call StartR("R") | call <SID>SetnvimRShortcuts() | endif
+    " And quit automatically
+    autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
+    let r_syntax_folding = 1
+    let rrst_syn_hl_chunk = 1
+    let rmd_syn_hl_chunk = 1
+    let rout_follow_colorscheme = 1
+    " Make r tex recognised by tex plugins, at least for latex-box.
+    autocmd FileType rnoweb let b:main_tex_file = substitute(expand("%"), "\....$", ".tex", "")
     command! RStart :call StartR("R") | call <SID>SetnvimRShortcuts()
     function! s:SetnvimRShortcuts()
         " Rstop is already defined by plugin.
@@ -329,6 +343,11 @@ else
         nnoremap <buffer> <localleader>h :RRunToHere<CR>
         inoremap <buffer> <C-f> <C-O>:RRunLine<CR>
         nnoremap <buffer> <C-p> :RRunLine<CR>
+        exec 'nnoremap <buffer> ' . g:IDE_mappings.REPLSendLine . ' :RRunLine<CR>'
+        exec 'nnoremap <buffer> ' . g:IDE_mappings.REPLSend . ' <Plug>RSendMotion'
+        exec 'nnoremap <buffer> ' . g:IDE_mappings.REPLClear . ' <Plug>RClearConsole'
+        exec 'nnoremap <buffer> ' . g:IDE_mappings.make . ' <Plug>RKnit'
+        cabbrev <buffer> RR :exec "normal \<Plug>R"<left>
     endfunction
 endif
 " R output is highlighted with current colorscheme
