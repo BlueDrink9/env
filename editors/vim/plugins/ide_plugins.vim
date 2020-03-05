@@ -6,47 +6,6 @@ augroup myIDE
     au!
 augroup end
 
-" {[} ------ Mappings ------
-" gh - get hint on whatever's under the cursor
-" Use g[] for get [something].
-" Use <leader>i for ide bits.
-" Use <leader>e for errors/linting/fixing.
-let g:IDE_mappings = {
-            \ "REPLSend" : "<leader>s",
-            \ "REPLSendLine" : "<leader>ss",
-            \ "REPLSendAndInsert" : "<leader>si",
-            \ "REPLClear" : "<leader>sc",
-            \ "make" : "<leader>im",
-            \ "allActions" : "<leader>ia",
-            \ "allCommands" : "<leader>ic",
-            \ "codeAction" : "<leader>ia",
-            \ "codeActionSelected" : "<leader>iaa",
-            \ "codelensAction" : "<leader>ial",
-            \ "complete" : "<plug>Non-existant",
-            \ "definition" : "<leader>id",
-            \ "definition2" : "gd",
-            \ "documentation" : "K",
-            \ "documentation2" : "gh",
-            \ "documentation3" : "<leader>ih",
-            \ "fix" : "<leader>ef",
-            \ "implementation" : "<leader>ii",
-            \ "implementation2" : "gi",
-            \ "listErrs" : "<leader>el",
-            \ "refactor" : "<leader>ir",
-            \ "references" : "<leader>if",
-            \ "references2" : "gr",
-            \ "reformat" : "<plug>Non-existant",
-            \ "rename" : "<leader>irr",
-            \ "renameModule" : "<leader>irm",
-            \ "snippet_expand" : "<c-e>",
-            \ "snippet_prev" : "<c-b>",
-            \ "snippet_next" : "<c-f>",
-            \ "type_definition" : "gy",
-            \ "debug_file" : "<leader>dd",
-            \ "set_breakpoint" : "<leader>b",
-            \}
-" {]} ------ Mappings ------
-
 " {[} ---------- Misc ----------
 " exec "Plug 'rhysd/vim-grammarous', { 'for': " . g:proseFileTypes . " }"
 " Brilliant for projects with lots of similar files. Check out config
