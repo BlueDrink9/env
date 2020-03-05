@@ -28,8 +28,8 @@ let g:PaperColor_Theme_Options = {
   \   }
   \ }
   " \       'override' : {
-  " \         'SpellBad' : [GetBackground(), '232'],
-  " \         'SpellCap' : [GetBackground(), '232']
+  " \         'SpellBad' : ['underline', 'underline'],
+  " \         'SpellCap' : ['underline', 'underline']
   " \       }
 Plug 'https://github.com/morhetz/gruvbox'
 Plug 'https://github.com/jnurmine/Zenburn'

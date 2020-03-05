@@ -669,6 +669,14 @@ Nmap(g:IDE_mappings.g:IDE_mappings.REPLSend, "<Plug>(neoterm-repl-send)")
 Vmap(g:IDE_mappings.g:IDE_mappings.REPLSend, "<Plug>(neoterm-repl-send)")
 Nmap(g:IDE_mappings.g:IDE_mappings.REPLSendLine, "<Plug>(neoterm-repl-send-line)")
 
+" Useful for REPL, but can also send the commands back to the other window.
+" Also dot repeatable.
+" Have to specify direction to send, however.
+" https://github.com/KKPMW/vim-sendtowindow
+" Super lightweight, have to specify command for each filetype.
+" Example config in readme.
+" https://github.com/axvr/zepl.vim
+
 " Convenient hide/show term buffer, $drop to open file with vim
 Plug 'skywind3000/vim-terminal-help'
 " which key will be used to toggle terminal window, default to <m-=>.
