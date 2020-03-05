@@ -32,6 +32,12 @@ Some of these are set automatically, but if set manually, should override the de
 
 Edit `TERMOPTIONS` and append any env variables you want to be passed through SSH.
 
+## Bindings
+
+Editor bindings are mostly in `mappings.vim`, with some in `functions.vim`. Mappings for plugins are kept with the plugin settings, in the various files in `plugins/`.
+
+There is a dictionary in `mappings.vim` with all IDE-related mappings, which are used for relevant plugins.
+
 ## Viewports
 
 All systems for arranging views should behave in as similar a fashion as possible, with similar bindings. Tmux is the base analogy, and the associated view metaphors are summarized in this table:
