@@ -665,8 +665,8 @@ autocmd myPlugins FileType markdown command! PasteImage silent call mdip#Markdow
 " {[} ---------- Terminal ----------
 " REPL (send motions, lines etc)
 Plug 'kassio/neoterm'
-" <Plug>(neoterm-repl-send)
-" <Plug>(neoterm-repl-send-line)
+Nmap(g:IDE_mappings.g:IDE_mappings.REPLSend, "<Plug>(neoterm-repl-send)")
+Nmap(g:IDE_mappings.g:IDE_mappings.REPLSendLine, "<Plug>(neoterm-repl-send-line)")
 
 " Convenient hide/show term buffer, $drop to open file with vim
 Plug 'skywind3000/vim-terminal-help'
