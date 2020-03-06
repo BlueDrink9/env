@@ -13,13 +13,15 @@ function ChocoUpgradeAndRefresh($package){
 function InstallPackagesFromFile($packageFile){
     # Read file skipping # comments and blank lines.
     Get-Content -Path "$packageFile"  | Where { $_ -notmatch '^#.*' -and $_ -notmatch '^\s*$' } | foreach-object {
-        # Preserve spaces to pass options
+        # Preserve spaces to pass options. Not working.
         $package=$_
         ChocoUpgradeAndRefresh($package)
     }
 }
 
-InstallPackagesFromFile("packages/misc.conf")
+Get-ChildItem "packages/" -filter "*.conf" | foreach-object {
+    InstallPackagesFromFile("packages/$_")
+}
 
 
 # Downloads ubuntu for use
