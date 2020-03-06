@@ -2,7 +2,6 @@ $localscriptdir = $PSScriptRoot
 pushd $localscriptdir
 [Environment]::CurrentDirectory = $PWD
 
-
 function ChocoUpgradeAndRefresh($package){
     # Need to specify cache to avoid recursive dir issue. See
     # https://github.com/chocolatey/boxstarter/issues/241
