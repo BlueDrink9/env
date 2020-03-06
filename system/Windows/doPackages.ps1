@@ -24,17 +24,17 @@ Get-ChildItem "packages/" -filter "*.conf" | foreach-object {
 }
 
 
-# Downloads ubuntu for use
-# ========================
-Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
-Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
-# This didn't work, seemed to just cause problems.
-# ubuntu
-# pushd $env:TMP
-# $distro = "wsl-ubuntu-1804"
-# curl.exe -L -o "$distro.appx" "https://aka.ms/$distro"
-# Add-AppxPackage ".\$distro.appx"
-# popd
+# # Downloads ubuntu for use
+# # ========================
+# Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+# Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+# # This didn't work, seemed to just cause problems.
+# # ubuntu
+# # pushd $env:TMP
+# # $distro = "wsl-ubuntu-1804"
+# # curl.exe -L -o "$distro.appx" "https://aka.ms/$distro"
+# # Add-AppxPackage ".\$distro.appx"
+# # popd
 
 
 # colortool.exe /b solarized_dark
@@ -53,7 +53,6 @@ $linkname="${ToolsVimDir}\latest"
 $VerNumsToNatural = { [regex]::Replace($_, '\d+', { $args[0].Value.PadLeft(20) }) }
 # Get dirlist, Sort with helper and check the output is natural result
 $latestVimDir = gci $ToolsVimDir | sort $VerNumsToNatural -Descending | select -First 1
-
 $source=$latestVimDir.fullname
 # Won't ever work. Gets gvim.bat in sys32.
 # $source=$(Get-Command gvim).Path | split-path
@@ -67,6 +66,7 @@ New-Item -ItemType SymbolicLink -Path $linkname -Target $source
 # Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH -Value $newPath
 # Oh never mind, just use the windows store version. It integrates best with
 # path anyway, and hopefully will work best with other tools.
+# Opens windows store if python not installed.
 python
 
 popd
