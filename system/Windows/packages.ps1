@@ -1,168 +1,30 @@
-# wox: Ignore dep so that it doesn't pull in the latest python3.
-$packages = @(
-        "git",
-        "vim",
-        "cloneapp",
-        "lastpass",
-        "choco-package-list-backup",
-        "7zip",
-        "desktopicons-winconfig --params '/Computer:YES /UserFiles:YES /RecycleBin:YES'",
-        "desktopok",
-        "googlechrome",
-        "classic-shell",
-        "winaero-tweaker",
-        "windows-tweaker",
-        "7-taskbar-tweaker",
-        "spotify",
-        "officeproplus2013",
-        "steam",
-        "goggalaxy",
-        "uplay",
-        "origin",
-        "loot",
-        "adobereader",
-        "windirstat",
-        "skype",
-        "paint.net",
-        "audacity",
-        "autohotkey",
-        "clink",
-        "conemu",
-        "cmder",
-        "vlc",
-        "sysinternals",
-        "vscode",
-        "opera",
-        "firefox",
-        "gitkraken",
-        "tortoisegit",
-        "git-credential-manager-for-windows",
-        "git-credential-winstore",
-        "spotify",
-        "jre8",
-        "javaruntime",
-        "malwarebytes",
-        "sumatrapdf",
-        "inkscape",
-        "gimp",
-        "teamviewer",
-        "itunes",
-        "autoruns",
-        "virtualbox",
-        "procexp",
-        "procmon",
-        "chocolateygui",
-        "vcredist2012",
-        "vcredist140",
-        "dotnetfx",
-        "dotnet3.5",
-        "directx",
-        "irfanview",
-        "calibre",
-        "google-backup-and-sync",
-        "qbittorrent",
-        "pandoc",
-        "everything",
-        "wox --ignoredependencies",
-        "sumatrapdf",
-        "rufus",
-        "yumi",
-        "f.lux",
-        "revouninstallerpro",
-        "mp3tag",
-        "speccy",
-        "nirlauncher",
-        "handbrake",
-        "processhacker",
-        "partitionwizard",
-        "windowsrepair",
-        "hashcheck",
-        "teracopy",
-        "sudo",
-        "graphviz",
-        "synctrayzor",
-        "ccleaner",
-        "recuva",
-        "reshack",
-        "onenote",
-        "xming",
-        "sandboxie.install",
-        "ripgrep",
-        "ctags",
-        "zotero",
-        "internet-download-manager",
-        "wordweb-free",
-        "stickies",
-        "hunt-and-peck",
-        "eithermouse",
-        "draglock",
-        "text-editor-anywhere",
-        "workrave",
-        "ifunbox",
-        "veusz",
-        "megasync",
-        "testdisk",
-        "antimicro",
-        "fixwin",
-        "combofix",
-        "partitionmasterfree",
-        "todobackup",
-        "defaultprogramseditor",
-        "gamesavemanager",
-        "hamachi",
-        "mp3directcut",
-        "pinnacle-game-profiler",
-        "shexview",
-        "texlive",
-        "wsltty",
-        "miktex.install",
-        "diskgenius",
-        "droidexplorer",
-        "disable-nvidia-telemetry",
-        "sharpkeys",
-        "ibackupbot",
-        "setpoint",
-        "logitechgaming",
-        "unifying",
-        "onedrive",
-        "google-backup-and-sync",
-        "duplicacy",
-        "rclone", "winfsp",
-        "colortool",
-        "joplin",
-        "linkshellextension",
-        "unetbootin", "rufus", "yumi", "yumi-uefi",
-        "ext2fsd",
-        "openconnect-gui",
-        "onetastic"
-)
+$localscriptdir = $PSScriptRoot
+pushd $localscriptdir
+[Environment]::CurrentDirectory = $PWD
 
-        # This gets the opentype version, which looks awful/doesn't alias
-        # properly on win. Manually get the ttf version.
-        # "SourceCodePro",
-        # Not yet a choco package.
-        # "sauce-code-pro-nerd-font",
-        # "miniconda",
-        # "miniconda3",
-        # "wsl",
-        # The versioning here is a bit off it seems. Use conda instead.
-        # This also installs python3 as python, so you can't easily use both
-        # python 2 and 3 with other programs, like vim.
-        # "python",
-        # "python2",
-        # "pip",
 
-        # Also install "megacmd" from https://mega.nz/cmd (open source) for mega backups.
-
-foreach ($package in $packages)
-{
+function ChocoUpgradeAndRefresh($package){
     # Need to specify cache to avoid recursive dir issue. See
     # https://github.com/chocolatey/boxstarter/issues/241
-    choco upgrade --cacheLocation "$env:userprofile\AppData\Local\ChocoCache" $package -y
+    $chocoCache="$env:userprofile\AppData\Local\ChocoCache"
+    choco upgrade --cacheLocation "$chocoCache" $package -y
     refreshenv
 }
 
+function InstallPackagesFromFile($packageFile){
+    # Read file skipping # comments and blank lines.
+    Get-Content -Path "$packageFile"  | Where { $_ -notmatch '^#.*' -and $_ -notmatch '^\s*$' } | foreach-object {
+        # Preserve spaces to pass options
+        $package=$_
+        ChocoUpgradeAndRefresh($package)
+    }
+}
+
+InstallPackagesFromFile("packages/misc.conf")
+
+
 # Downloads ubuntu for use
+# ========================
 Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
 # This didn't work, seemed to just cause problems.
@@ -173,6 +35,7 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-L
 # Add-AppxPackage ".\$distro.appx"
 # popd
 
+
 # colortool.exe /b solarized_dark
 # Choco colortool is a bit funny
 colortool.exe -b solarized_dark.itermcolors
@@ -180,6 +43,8 @@ colortool.exe -b solarized_dark.itermcolors
 
 Install-Module -Force OpenSSHUtils -Scope AllUsers
 
+# Create symlink folder for latest version of vim
+# ===============================================
 # This is where chocolatey keeps vim now.
 $ToolsVimDir="C:\tools\vim"
 $linkname="${ToolsVimDir}\latest"
@@ -202,3 +67,5 @@ New-Item -ItemType SymbolicLink -Path $linkname -Target $source
 # Oh never mind, just use the windows store version. It integrates best with
 # path anyway, and hopefully will work best with other tools.
 python
+
+popd
