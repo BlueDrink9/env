@@ -665,9 +665,9 @@ autocmd myPlugins FileType markdown command! PasteImage silent call mdip#Markdow
 " {[} ---------- Terminal ----------
 " REPL (send motions, lines etc)
 Plug 'kassio/neoterm'
-Nmap(g:IDE_mappings.g:IDE_mappings.REPLSend, "<Plug>(neoterm-repl-send)")
-Vmap(g:IDE_mappings.g:IDE_mappings.REPLSend, "<Plug>(neoterm-repl-send)")
-Nmap(g:IDE_mappings.g:IDE_mappings.REPLSendLine, "<Plug>(neoterm-repl-send-line)")
+call Nmap(g:IDE_mappings.REPLSend, "<Plug>(neoterm-repl-send)")
+call Vmap(g:IDE_mappings.REPLSend, "<Plug>(neoterm-repl-send)")
+call Nmap(g:IDE_mappings.REPLSendLine, "<Plug>(neoterm-repl-send-line)")
 
 " Useful for REPL, but can also send the commands back to the other window.
 " Also dot repeatable.
