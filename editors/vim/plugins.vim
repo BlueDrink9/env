@@ -1,4 +1,6 @@
 " vim: set ft=vim:
+" vim: foldmethod=marker
+" vim: foldmarker={[},{]}
 " This file will source from light, main and ide plugin files, depending on
 " the value of 2 variables. These should be set from command line via the
 " --cmd option, eg $(vim --cmd "let g:liteMode=1" [file])
@@ -39,6 +41,48 @@ if exists("g:noPlugins")
     let g:ideMode=0
     finish
 endif
+
+" {[} ------ IDE Mappings ------
+" gh - get hint on whatever's under the cursor
+" Use g[] for get [something].
+" Use <leader>i for ide bits.
+" Use <leader>e for errors/linting/fixing.
+let g:IDE_mappings = {
+            \ "REPLSend" : "<leader>s",
+            \ "REPLSendLine" : "<leader>ss",
+            \ "REPLSendAndInsert" : "<leader>si",
+            \ "REPLClear" : "<leader>sc",
+            \ "make" : "<leader>im",
+            \ "allActions" : "<leader>ia",
+            \ "allCommands" : "<leader>ic",
+            \ "codeAction" : "<leader>ia",
+            \ "codeActionSelected" : "<leader>iaa",
+            \ "codelensAction" : "<leader>ial",
+            \ "complete" : "<plug>Non-existant",
+            \ "definition" : "<leader>id",
+            \ "definition2" : "gd",
+            \ "documentation" : "K",
+            \ "documentation2" : "gh",
+            \ "documentation3" : "<leader>ih",
+            \ "fix" : "<leader>ef",
+            \ "implementation" : "<leader>ii",
+            \ "implementation2" : "gi",
+            \ "listErrs" : "<leader>el",
+            \ "refactor" : "<leader>ir",
+            \ "references" : "<leader>if",
+            \ "references2" : "gr",
+            \ "reformat" : "<plug>Non-existant",
+            \ "rename" : "<leader>irr",
+            \ "renameModule" : "<leader>irm",
+            \ "snippet_expand" : "<c-e>",
+            \ "snippet_prev" : "<c-b>",
+            \ "snippet_next" : "<c-f>",
+            \ "type_definition" : "gy",
+            \ "debug_file" : "<leader>dd",
+            \ "set_breakpoint" : "<leader>b",
+            \}
+" {]} ------ IDE Mappings ------
+
 
 " Silence a python deprecation warning.
 if has('python3') && !has('patch-8.1.201')
