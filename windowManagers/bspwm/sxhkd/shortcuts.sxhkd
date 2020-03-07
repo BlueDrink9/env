@@ -32,6 +32,9 @@ super + grave
       -s dropdown --pre-create-hook='export COLOURSCHEME="Solarized_Dark"; clear' \
       --class kitty-dropdown -f "--class kitty-dropdown" kitty
 
+super + shift + q
+  qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1
+
 # program launcher
 # super + @space
 # 	dmenu_run
