@@ -263,7 +263,8 @@ set diffopt+=vertical
 
 if v:version >= 703
     if has('nvim')
-        let s:viminfoName = 'nviminfo'
+        " Note that viminfo is an alias for &shada in nvim.
+        let s:viminfoName = 'nviminfo.shada'
     else
         let s:viminfoName = 'viminfo'
     endif
