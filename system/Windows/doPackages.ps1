@@ -19,10 +19,16 @@ function InstallPackagesFromFile($packageFile){
     }
 }
 
+function AddToPath($path){
+    $oldpath = (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).path
+    [Environment]::SetEnvironmentVariable("Path", "$env:Path;$path", "Machine")
+    $newpath = "$oldpath;$path"
+    Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH -Value $newPath
+}
+
 Get-ChildItem "packages/" -filter "*.conf" | foreach-object {
     InstallPackagesFromFile("packages/$_")
 }
-
 
 # # Downloads ubuntu for use
 # # ========================
