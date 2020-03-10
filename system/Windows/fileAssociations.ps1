@@ -36,6 +36,7 @@ $plaintextExtensions = @(
     "cpp",
     "hpp",
     "md",
+    "tex",
     "markdown",
     "tex",
     "bib",
