@@ -3,6 +3,7 @@
 latexbuild/
 generated/
 .syncthing*
+custom-spellings-vim.utf-8.add*
 
 # Ignore tags created by etags, ctags, gtags (GNU global) and cscope
 TAGS
