@@ -36,7 +36,7 @@
   conflict = !vim +Conflicted
 	search = "log --pickaxe-regex -p --color-words -S"
   ls = log --oneline
-  atag = tag -m
+  atag = tag -a
 
 [credential]
   helper = cache --timeout=3600
