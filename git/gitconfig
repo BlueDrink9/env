@@ -36,6 +36,7 @@
   conflict = !vim +Conflicted
 	search = "log --pickaxe-regex -p --color-words -S"
   ls = log --oneline
+  atag = tag -m
 
 [credential]
   helper = cache --timeout=3600
@@ -81,6 +82,9 @@
   cmd = vim -d $LOCAL $REMOTE
 [pull]
   rebase = true
+[push]
+  # Autopush annotated tags
+  followTags = true
 [rebase]
   autoStash = true
 # Gives diffs in commit message
