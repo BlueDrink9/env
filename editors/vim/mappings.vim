@@ -334,6 +334,10 @@ function s:remapCtrlBStoCW()
             " Wow. It sees the control key plus literal <c-?>.
             inoremap <c-> <C-w>
             cnoremap <c-> <C-w>
+        else
+            " Termux, maybe other xterms.
+            inoremap <C-H> <C-w>
+            cnoremap <C-H> <C-w>
         endif
     endif
 endfunction
