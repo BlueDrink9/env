@@ -1,7 +1,7 @@
 # vim:ts=2:sw=2
 # vim:foldmarker={[},{]}:foldmethod=marker
 # This file holds reusable functions
-[ -n "${SHELL_FUNCTIONS_LOADED}" ] && return || export SHELL_FUNCTIONS_LOADED=1
+[ -n "${SHELL_FUNCTIONS_LOADED}" ] && return || SHELL_FUNCTIONS_LOADED=1
 
 # Checks if the first arg is a substring of the second.
 substrInStr() {
