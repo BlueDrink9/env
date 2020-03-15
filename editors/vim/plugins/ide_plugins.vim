@@ -272,42 +272,7 @@ if !has('nvim') && !has('job')
     " Unmaintained version that doesn't need vim 8
     Plug 'jcfaria/vim-r-plugin'
 else
-    Plug 'jalvesaq/Nvim-R'
-    " Autostart when entering r files, if not already running.
-    " From plugin docs.
-    autocmd FileType r if string(g:SendCmdToR) == "function('SendCmdToR_fake')" | call StartR("R") | call <SID>SetnvimRShortcuts() | endif
-    autocmd FileType rmd if string(g:SendCmdToR) == "function('SendCmdToR_fake')" | call StartR("R") | call <SID>SetnvimRShortcuts() | endif
-    " And quit automatically
-    autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
-    let r_syntax_folding = 1
-    let rrst_syn_hl_chunk = 1
-    let rmd_syn_hl_chunk = 1
-    let rout_follow_colorscheme = 1
-    " Make r tex recognised by tex plugins, at least for latex-box.
-    autocmd FileType rnoweb let b:main_tex_file = substitute(expand("%"), "\....$", ".tex", "")
-    command! RStart :call StartR("R") | call <SID>SetnvimRShortcuts()
-    function! s:SetnvimRShortcuts()
-        " Rstop is already defined by plugin.
-        command! -buffer RStartCustom :call StartR("custom")
-        command! -buffer RRunFile :call SendFileToR("echo")
-        command! -buffer RRunToHere :execute 'normal Vggo<Esc>' | :call SendSelectionToR("echo", "down")
-        command! -buffer RRunSelection :call SendSelectionToR("echo", "stay")
-        command! -buffer RRunChunk :call SendChunkToR("echo", "down")
-        command! -buffer RRunMotion :set opfunc=SendMotionToR<CR>g@
-        command! -buffer RRunParagraph :call SendParagraphToR("echo", "down")
-        command! -buffer RRunLine :call SendLineToR("down")
-        command! -buffer RObjects :call RObjBrowser()
-        command! -buffer RClearObjects :call RClearAll()
-        command! -buffer RHelpMappings :help Nvim-R-use
-        nnoremap <buffer> <localleader>h :RRunToHere<CR>
-        inoremap <buffer> <C-f> <C-O>:RRunLine<CR>
-        nnoremap <buffer> <C-p> :RRunLine<CR>
-        exec 'nnoremap <buffer> ' . g:IDE_mappings.REPLSendLine . ' :RRunLine<CR>'
-        exec 'nnoremap <buffer> ' . g:IDE_mappings.REPLSend . ' <Plug>RSendMotion'
-        exec 'nnoremap <buffer> ' . g:IDE_mappings.REPLClear . ' <Plug>RClearConsole'
-        exec 'nnoremap <buffer> ' . g:IDE_mappings.make . ' <Plug>RKnit'
-        cabbrev <buffer> RR :exec "normal \<Plug>R"<left>
-    endfunction
+    exec 'source ' . g:plugindir . "/nvim-R.vim"
 endif
 " R output is highlighted with current colorscheme
 let g:rout_follow_colorscheme = 1

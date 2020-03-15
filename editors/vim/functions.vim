@@ -3,6 +3,9 @@
 " vim: foldmarker={[},{]}
 
 
+" Check out
+" https://github.com/jalvesaq/Nvim-R/blob/03214225dd0467bb6724b38955f1c7ae5b439022/R/common_global.vim#L2792
+" for more complex version of these funcs.
 " Easier ways to use variables in remappings, instead of using exec.
 function! Nnoremap(lhs, rhs)
   exec 'nnoremap ' . a:lhs . ' ' . a:rhs
