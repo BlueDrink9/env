@@ -9,6 +9,10 @@ else
     let s:scriptdir = expand('<sfile>:p:h')
 endif
 
+" Needs to be set before plugins use it. Set here rather than in mappings.
+let mapleader = " "
+let maplocalleader = ""
+
 " Set colorScheme variable for use in other settings
 " Doesn't override preset scheme
 " Background should always be set after colorscheme.
@@ -80,10 +84,6 @@ endif
 
 exec 'set background=' . g:backgroundColour
 
-
-" Needs to be set before plugins use it. Set here rather than in mappings.
-let mapleader = " "
-let maplocalleader = ""
 
 "{[} GUI
 " Guifont will be set to the first available font in this list.
