@@ -2,6 +2,8 @@
 exec 2> $HOME/.logs/bspwmrc.err
 exec 1> $HOME/.logs/bspwmrc.log
 
+export SXHKD_SHELL="sh"
+
 export DOTFILES_DIR="$(cat $HOME/.config/.dotfiles_dir)"
 # export DOTFILES_DIR="$(cat $HOME/.config/.dotfiles_dir)" && \
 pgrep sxhkd || \
