@@ -272,7 +272,7 @@ if !has('nvim') && !has('job')
     " Unmaintained version that doesn't need vim 8
     Plug 'jcfaria/vim-r-plugin'
 else
-    exec 'source ' . g:plugindir . "/nvim-R.vim"
+    call SourcePluginFile("nvim-R.vim")
 endif
 " R output is highlighted with current colorscheme
 let g:rout_follow_colorscheme = 1
@@ -459,13 +459,13 @@ autocmd myPlugins Filetype *
 if has("timers")
 
     " This will be unloaded for CoC.nvim
-    exec 'source ' . g:plugindir . "/languageclient-neovim.vim"
+    call SourcePluginFile("languageclient-neovim.vim")
     if has('node')
         " Intellisense engine for vim8 & neovim, full language server protocol support as VSCode.
         " Uses VSCode-specific extensions, too. Seems to Just Work?
-        exec 'source ' . g:plugindir . "/coc.nvim.vim"
+        call SourcePluginFile("coc.nvim.vim")
     elseif has("python3") && HasNvimPythonModule()
-        exec 'source ' . g:plugindir . "/deoplete.vim"
+        call SourcePluginFile("deoplete.vim")
 
     elseif has("python")
         " Async completion engine, doesn't need extra installation.

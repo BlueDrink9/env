@@ -404,7 +404,7 @@ if g:hasGUI && !has('terminal')
         let g:ctrlp_extensions = ['tag', 'buffertag', 'rtscript']
     endif
 else
-    exec 'source ' . g:plugindir . "/fzf.vim"
+    call SourcePluginFile("fzf.vim")
 endif
 " {]}--- Fuzzy finder ---
 " {]}--- Searching, replacing, finding ---

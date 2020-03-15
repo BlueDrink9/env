@@ -137,6 +137,11 @@ if !filereadable(s:localPlugins)
     bdelete
 endif
 
+let g:plugindir = PathExpand(s:scriptdir . "/" . "plugins")
+function! SourcePluginFile(name)
+    exec 'source ' . g:plugindir . '/' . a:name
+endfunction
+
 " To remove a Plugged repo using UnPlug 'user/repo'
 function! s:deregister(repo)
     let repo = substitute(a:repo, '[\/]\+$', '', '')
@@ -166,15 +171,14 @@ let g:customHLGroups = []
 " {]}
 call plug#begin(s:pluginPath)
 
-let g:plugindir = PathExpand(s:scriptdir . "/" . "plugins")
 " Get light plugin set first
-exec 'source ' . g:plugindir . "/colorschemes.vim"
-exec 'source ' . g:plugindir . "/light_plugins.vim"
+call SourcePluginFile("colorschemes.vim")
+call SourcePluginFile("light_plugins.vim")
 if !g:liteMode
-    exec 'source ' . g:plugindir . "/main_plugins.vim"
-    exec 'source ' . g:plugindir . "/statusbar.vim"
+    call SourcePluginFile("main_plugins.vim")
+    call SourcePluginFile("statusbar.vim")
     if g:ideMode
-        exec 'source ' . g:plugindir . "/ide_plugins.vim"
+        call SourcePluginFile("ide_plugins.vim")
     endif
 endif
 
