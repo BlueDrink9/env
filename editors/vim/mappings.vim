@@ -105,8 +105,6 @@ nnoremap U <c-r>
 " nnoremap + ...
 " Select last paste/change.
 nnoremap gp `[v`]
-nnoremap K $
-nnoremap gK K
 
 inoremap <C-BS> <C-w>
 cnoremap <C-BS> <C-w>
