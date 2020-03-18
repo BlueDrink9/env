@@ -486,7 +486,7 @@ function! s:ReadTemplate()
     let l:templateDir = PathExpand(s:scriptdir . '/templates')
     let l:templatePaths = split(globpath(l:templateDir, &filetype . '.*'), '\n')
     for templatePath in l:templatePaths
-      exec 'silent! 0read ' . templatePath . 'arst'
+      exec 'silent! 0read ' . templatePath
     endfor
 endfunction
 autocmd myVimrc BufNewFile * call s:ReadTemplate()
