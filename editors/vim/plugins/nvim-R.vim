@@ -38,6 +38,7 @@ function! s:SetnvimRShortcuts()
     nnoremap <buffer> <localleader>h :RRunToHere<CR>
     inoremap <buffer> <C-f> <C-O>:RRunLine<CR>
     nnoremap <buffer> <C-p> :RRunLine<CR>
+    exec 'nnoremap <buffer> ' . g:IDE_mappings.REPLCancel . ' :call RStop()'
     exec 'nnoremap <silent><buffer> ' . g:IDE_mappings.REPLSendLine . ' :RRunLine<CR>'
     exec 'noremap <silent><buffer> ' . g:IDE_mappings.REPLSend . ' :set opfunc=SendMotionToR<CR>g@'
     " exec 'nmap <buffer> ' . g:IDE_mappings.REPLSend . ' <Plug>RSendMotion'

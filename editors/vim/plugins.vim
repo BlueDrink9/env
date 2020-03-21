@@ -52,6 +52,7 @@ let g:IDE_mappings = {
             \ "REPLSendLine" : "<leader>ss",
             \ "REPLSendAndInsert" : "<leader>si",
             \ "REPLClear" : "<leader>sc",
+            \ "REPLCancel" : "<leader>s<c-c>",
             \ "make" : "<leader>im",
             \ "allActions" : "<leader>ia",
             \ "allCommands" : "<leader>ic",
