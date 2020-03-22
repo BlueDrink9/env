@@ -11,6 +11,9 @@ let r_syntax_folding = 1
 let rrst_syn_hl_chunk = 1
 let rmd_syn_hl_chunk = 1
 let rout_follow_colorscheme = 1
+let Rout_more_colors = 1
+let R_rconsole_height = 5  " min height
+let R_editing_mode = "vi"
 " Make r tex recognised by tex plugins, at least for latex-box.
 autocmd FileType rnoweb let b:main_tex_file = substitute(expand("%"), "\....$", ".tex", "")
 
