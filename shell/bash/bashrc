@@ -19,8 +19,8 @@ export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 
 
 # When changing shells, force setup again.
-shell="$(ps -p $$ | tail -1 | awk '{print $NF}')"
-if [ "$shell" != $(basename "$SHELL") ]; then
+shell="$(ps -p $$ | tail -1 | sed 's/-//' | awk '{print $NF}')"
+if [ "$shell" != "$(basename "$SHELL")" ]; then
   unset PROFILE_LOADED
   export SHELL="$(which $shell)"
 fi
