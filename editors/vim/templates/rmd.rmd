@@ -1,7 +1,7 @@
 ---
 title:
 author: BlueDrink9
-date: [d]
+date: '`r format(Sys.time(), "%d %B, %Y")`'
 output:
   html_document:
     # Change if you include local images.
