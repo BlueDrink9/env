@@ -7,6 +7,11 @@ augroup myIDE
 augroup end
 
 " {[} ---------- Misc ----------
+" Display the indentation context in a window above the code you are
+" looking at (helps understand where you are in a long func/class).
+Plug 'wellle/context.vim'
+let g:context_filetype_blacklist = []
+let g:context_add_autocmds = 1
 " exec "Plug 'rhysd/vim-grammarous', { 'for': " . g:proseFileTypes . " }"
 " Brilliant for projects with lots of similar files. Check out config
 Plug 'https://github.com/tpope/vim-projectionist'
