@@ -8,7 +8,14 @@ extractPSCmdCol(){
 }
 getShellProgram(){
   # Get cmd of current process, last row of ps, strip leading - (osx) and trailing args.
-  ps -p $$ | extractPSCmdCol | tail -1 | sed 's/^-//' | sed 's/ -.*//'
+  # Doesn't strip directory though...
+  basename $(ps -p $$ | extractPSCmdCol | tail -1 | sed 's/^-//' | sed 's/ -.*//')
+  # Get default shell, stripping leading '-' and directory
+  # For some reason this just prints the function name.
+  # shell_base="${0##*/}"
+  # shell_base="${shell_base#-}"
+  # echo $shell_base
+  # unset $shell_base
 }
 
 loadProfile(){
