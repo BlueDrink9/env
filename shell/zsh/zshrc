@@ -9,16 +9,7 @@ if [[ -r "${XDG_CACHE_HOME}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# When changing shells, force setup again.
-shell="$(getShellProgram)"
-echo "'$shell'"
-if [ "$shell" != "$(basename "$SHELL")" ]; then
-  unset PROFILE_LOADED
-  export SHELL="$(which $shell)"
-fi
-if [ -z "$PROFILE_LOADED" ]; then
-  source "${SCRIPT_DIR}/profile.zsh"
-fi
+loadProfile
 
 source "${SCRIPT_DIR}/../aliases.sh"
 source "${SCRIPT_DIR}/../variables.sh"

@@ -15,15 +15,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "${SCRIPT_DIR}/../XDG_setup.sh"
 source "${SCRIPT_DIR}/../bootstrap_functions.sh"
 
-# When changing shells, force setup again.
-shell="$(getShellProgram)"
-if [ "$shell" != "$(basename "$SHELL")" ]; then
-  unset PROFILE_LOADED
-  export SHELL="$(which $shell)"
-fi
-if [ -z "$PROFILE_LOADED" ]; then
-  source "${SCRIPT_DIR}/profile.sh"
-fi
+loadProfile
 
 # Reload/source inputrc
 # bind -f "${SCRIPT_DIR}/inputrc.sh"
