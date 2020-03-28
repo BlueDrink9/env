@@ -802,3 +802,7 @@ vim_single_plugin(){
   "$editor" -u NORC --cmd "set rtp+=$HOME/.vim/plugins/$plugin" -c "nnoremap ; :" -c "nnoremap kv <esc>" $@
   unset plugin
 }
+
+plugupdate() {
+  vim +PlugUpgrade +PlugUpdate +CocUpdate +qa && zinit update && $HOME/.tmux/plugins/tpm/bin/update_plugins all
+}

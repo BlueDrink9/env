@@ -24,10 +24,10 @@ installBase16Shell(){
 }
 
 installZSHPlugins(){
-  printErr "Downloading zplugin..."
-  local DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zplugin"
+  printErr "Downloading zinit..."
+  local DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zinit"
   mkdir -p "$DIR"
-  git clone https://github.com/zdharma/zplugin.git "$DIR"/bin
+  git clone https://github.com/zdharma/init.git "$DIR"/bin
 }
 
 installLiquidprompt(){
