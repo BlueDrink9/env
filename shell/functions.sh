@@ -223,16 +223,16 @@ fopen() {
 # https://spin.atomicobject.com/2016/05/28/log-bash-history/
 log_command() {
   if [ "$(id -u)" -ne 0 ]; then
-    if [ "$shell" = "zsh" ]; then
+    if [ "$SHELL_PROGRAM" = "zsh" ]; then
       _histarg="-1"
-    elif [ "$shell" = "bash" ]; then
+    elif [ "$SHELL_PROGRAM" = "bash" ]; then
       _histarg="1"
     else
       _histarg="1"
     fi
     _log="$HOME/.logs/shell-history-$(date "+%Y-%m-%d").log"
     if [ ! -f "$_log" ]; then touch "$_log"; fi
-    echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $shell $(history ${_histarg})" >> "$_log"
+    echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $SHELL_PROGRAM $(history ${_histarg})" >> "$_log"
   fi
   unset _histcmd _log
 }
@@ -428,7 +428,9 @@ alias ssh="ssh_with_options"
 
 mosh_with_options(){
   local EXPORT_TERMOPTIONS_CMD=$(generate_export_termoptions_cmd)
-  # Calls default shell, stripping leading '-' and directory
+  # To get currently used shell, use getShellProgram?
+  # Calls currently used shell locally on remote server. Unused.
+  # stripping leading '-' and directory
   shell_base="${0##*/}"
   shell_base="${shell_base#-}"
   \mosh --server="${EXPORT_TERMOPTIONS_CMD} mosh-server || ~/.local/bin/mosh-server.sh" "$@"
