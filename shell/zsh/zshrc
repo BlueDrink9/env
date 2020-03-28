@@ -1,18 +1,17 @@
+SCRIPT_DIR=${0:a:h}
+source "${SCRIPT_DIR}/../XDG_setup.sh"
+source "${SCRIPT_DIR}/../bootstrap_functions.sh"
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block, everything else may go below.
-export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
-export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
-export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
-
 if [[ -r "${XDG_CACHE_HOME}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-SCRIPT_DIR=${0:a:h}
-
 # When changing shells, force setup again.
-shell="$(ps -p $$ | tail -1 | sed 's/-//' |awk '{print $NF}')"
+shell="$(getShellProgram)"
+echo "'$shell'"
 if [ "$shell" != "$(basename "$SHELL")" ]; then
   unset PROFILE_LOADED
   export SHELL="$(which $shell)"
