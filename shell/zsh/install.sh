@@ -27,7 +27,7 @@ installZSHPlugins(){
   printErr "Downloading zinit..."
   local DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zinit"
   mkdir -p "$DIR"
-  git clone https://github.com/zdharma/init.git "$DIR"/bin
+  git clone https://github.com/zdharma/zinit "$DIR"/bin
 }
 
 installLiquidprompt(){
