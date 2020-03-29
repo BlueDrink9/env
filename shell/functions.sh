@@ -88,17 +88,17 @@ ensure_latest_shell(){
   # If available, replace shell with brew version. (More up-to-date than
   # system.) Use only if running interactively. (Done in outer case
   # statement, not here.)
-  shell="$(ps -p $$ | tail -1 | awk '{print $NF}')"
+  SHELL_PROGRAM="$(getShellProgram)"
   if [ -n "$SHELL" ] && [ -z "$HAVE_LOADED_SHELL" ]; then
     if [ -n "$HOMEBREW_PREFIX" ]; then
-      brewshell="${HOMEBREW_PREFIX}/bin/${shell}"
+      brewshell="${HOMEBREW_PREFIX}/bin/${SHELL_PROGRAM}"
       if [ "$SHELL" = "$brewshell" ]; then
         export HAVE_LOADED_SHELL=1
       elif [ -f "$brewshell" ]; then
         export SHELL="$brewshell"
         export HAVE_LOADED_SHELL=1
         # Exec replaces the shell with the specified process.
-        exec "$brewshell" -l
+        exec "$brewshell"
       fi
     fi
   fi
