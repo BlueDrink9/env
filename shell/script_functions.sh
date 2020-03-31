@@ -154,3 +154,16 @@ resolveSymlinkToDir() {
   popd > /dev/null 2>&1
   unset link linkTarget targetDir linkDir path
 }
+
+userHasSudo(){
+  prompt=$(sudo -nv 2>&1)
+  if [ $? -eq 0 ]; then
+    # exit code of sudo-command is 0
+    return 0
+  elif echo $prompt | grep -q '^sudo:'; then
+    # echo "has_sudo__needs_pass"
+    return 0
+  else
+    return 1
+  fi
+}
