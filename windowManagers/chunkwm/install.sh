@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 source "$DOTFILES_DIR/shell/script_functions.sh"
-installID="Chunkwm"
-configDir="${HOME}"
-# installText="chunkc core::plugin_dir $HOMEBREW_PREFIX/opt/chunkwm/share/chunkwm/plugins; source \"$($SCRIPTDIR_CMD)/chunkwmrc\""
-installText="chunkc core::plugin_dir $(dirname $(which chunkwm))/../share/chunkwm/plugins; source \"$($SCRIPTDIR_CMD)/chunkwmrc\""
-baseRC="${configDir}/.chunkwmrc"
+source "$DOTFILES_DIR/shell/XDG_setup.sh"
+installID="chunkwm"
+chunkwmDir="$(resolveSymlinkToDir $(which chunkwm))/.."
+chunkwmDir="${chunkwmDir:-$HOMEBREW_PREFIX/opt/chunkwm}"
+installText="chunkc core::plugin_dir $chunkwmDir/share/chunkwm/plugins; source \"$($SCRIPTDIR_CMD)/chunkwmrc\""
+configDir="${XDG_CONFIG_HOME}/chunkwm"
+baseRC="${configDir}/chunkwmrc"
 
 eval "$(cat <<END
 do${installID}() {
@@ -23,7 +25,7 @@ getFloatScripts() {
 
 doSkhd(){
   installText=".load \"$($SCRIPTDIR_CMD)/skhd/skhdrc\""
-  baseRC="$HOME/.skhdrc"
+  baseRC="$XDG_CONFIG_HOME/skhd/skhdrc"
   addTextIfAbsent "${installText}" "${baseRC}"
 }
 
