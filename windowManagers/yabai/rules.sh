@@ -2,7 +2,7 @@
 # https://github.com/koekeishiya/yabai/blob/master/doc/yabai.asciidoc#66-rule
 
 yabai -m rule --add app="workrave" manage=off
-yabai -m rule --add app="System Preferences" manage=on
+yabai -m rule --add app="System Preferences" manage=off
 yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
 yabai -m rule --add label="Calculator" app="^Calculator$" manage=off
 yabai -m rule --add label="Dictionary" app="^Dictionary$" manage=off

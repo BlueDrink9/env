@@ -1,0 +1,71 @@
+#!/bin/bash
+cd $HOME
+XDG_CONFIG_HOME="$HOME/.config"
+export DOTFILES_DIR=$(cat "${XDG_CONFIG_HOME}/.dotfiles_dir")
+export YABAI_CONFIG_DIR="$DOTFILES_DIR/windowManagers/yabai"
+. "$YABAI_CONFIG_DIR/../variables.sh"
+if ! pgrep skhd; then
+  skhd > $HOME/.logs/skhd.log 2> $HOME/.logs/skhd.err &
+fi
+
+. "$YABAI_CONFIG_DIR/functions.sh"
+. "$YABAI_CONFIG_DIR/rules.sh"
+
+alias queryWindow="sleep 4; chunkc tiling::query --window \$(chunkc tiling::query --window id)"
+
+# general space settings
+padding_size=10
+yabai -m config layout                       bsp
+yabai -m config split_ratio                  0.5
+yabai -m config auto_balance                 off
+# New window spawns to the right if vertical split, or bottom if horizontal split
+yabai -m config window_placement second_child
+
+yabai -m config top_padding                  $padding_size
+yabai -m config bottom_padding               $padding_size
+yabai -m config left_padding                 $padding_size
+yabai -m config right_padding                $padding_size
+yabai -m config window_gap                   10
+unset padding_size
+
+yabai -m config window_border                on
+yabai -m config window_border_placement      exterior
+yabai -m config window_border_width          4
+yabai -m config window_border_radius         -1.0
+yabai -m config active_window_border_topmost off
+yabai -m config active_window_border_color   0xff$focused_border_color
+yabai -m config normal_window_border_color   0xff$unfocused_border_color
+yabai -m config insert_window_border_color   0xff$preselect_border_color
+
+# floating windows are always on top (default: off)
+yabai -m config window_topmost               on
+yabai -m config window_opacity               on
+yabai -m config window_opacity_duration      0.2
+yabai -m config active_window_opacity        1.0
+yabai -m config normal_window_opacity        0.90
+# Only have win shadows for floating windows
+yabai -m config window_shadow                float
+
+yabai -m config mouse_follows_focus          on
+yabai -m config focus_follows_mouse          autoraise
+
+yabai -m config mouse_modifier               alt
+yabai -m config mouse_action1                move
+yabai -m config mouse_action2                resize
+
+#
+# NOTE: syntax for desktop-specific settings
+#
+# yabai -m config --space 5 layout float
+
+
+# bar settings
+yabai -m config status_bar                   off
+# yabai -m config status_bar_text_font         "Helvetica Neue:Bold:12.0"
+# yabai -m config status_bar_icon_font         "FontAwesome:Regular:12.0"
+# yabai -m config status_bar_background_color  0xff202020
+# yabai -m config status_bar_foreground_color  0xffa8a8a8
+# yabai -m config status_bar_space_icon_strip  I II III IV V VI VII VIII IX X
+# yabai -m config status_bar_power_icon_strip   
+# yabai -m config status_bar_space_icon        
+# yabai -m config status_bar_clock_icon        
