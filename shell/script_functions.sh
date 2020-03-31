@@ -135,3 +135,22 @@ askQuestionYN() {
     return 1
   fi
 }
+
+resolveSymlinkToDir() {
+  # doesn't work with directories. Would have to check if link is directory,
+  # then not use pwd if it is (or append basename).
+  link="$1"
+  linkTarget="$(readlink "$link")"
+  # If not a symlink, set to original.
+  linkTarget="${linkTarget:-$link}"
+  linkDir="$(dirname "$link")"
+  targetDir="$(dirname "$linkTarget")"
+  # cd first to link dir, in case link is relative.
+  pushd "$linkDir" > /dev/null 2>&1
+  pushd "$targetDir" > /dev/null 2>&1
+  path="$(pwd -P)"
+  echo "$path"
+  popd > /dev/null 2>&1
+  popd > /dev/null 2>&1
+  unset link linkTarget targetDir linkDir path
+}
