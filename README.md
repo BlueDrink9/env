@@ -70,9 +70,9 @@ Not everything works in every context.
 
 | Action |Binding |
 |--------|--------|
-| Move to [left, right, above, below] pane<sup>1</sup> | `<#-[hlkj]>` |
-| Move to [next, previous] window | `*<#-[right,left]>` |
-| Move to [next, previous] session | `*<#-[up,down]>` |
+| Focus [left, right, above, below] pane<sup>1</sup> | `<#-[hlkj]>` |
+| Focus [next, previous] window | `*<#-[right,left]>` |
+| Focus [next, previous] session | `*<#-[up,down]>` |
 | `!`Expand current pane (Behaviour differs between programmes here) | `*%<S-[down,right]>` |
 | `!`Contract current pane | `*%<S-[up,left]>` |
 | `!`Contract/expand pane in other direction (if permitted) | `*%<S-C-[up,down,left,right]>` |
@@ -80,7 +80,8 @@ Not everything works in every context.
 | `!`Push pane into next container | `%<S-#-[hjkl]>` |
 | `!`Zoom/fullscreen pane | `%f` |
 | `!`Minimize/pause/hide | `%z` |
-| `!`Rotate tree | `r` |
+| `!`Rotate tree | `%r` |
+| `!`Rotate tree backwards | `%<S-r>` |
 | Close pane (not vim) | `!x`/`#x` |
 
 | Windowm manager only Action |Binding |
@@ -96,12 +97,16 @@ Not everything works in every context.
 | Use monocle/tabbed layout | `%<S-m>` |
 | Float next window | `%<c-u>` |
 | Focus [next,prev] desktop | `<#-[[,]]>` |
+| Focus [prev,next] monitor | `<#-A-[[,]]>` |
 | Move pane to [next,prev] desktop | `%<S-#-[[,]]>` |
 | Move pane to [next,prev] desktop and focus | `%<C-#-[[,]]>` |
 | Move pane to desktop [num] | `%[num]` |
 | jump to desktop [num] | `<#-[num]>` |
-| Move desktop [left,right] on monitor | `%<S-[[,]]>` |
-| Move desktop to [next,prev] monitor | `%<C-[[,]]>` |
+| Move desktop to [next,prev] monitor | `%<S-[[,]]>` |
+| Move desktop to [next,prev] monitor and focus | `%<C-[[,]]>` |
+| Move desktop [left,right] on monitor | `%[<,>]` |
+| Create desktop | `%n` |
+| Delete desktop | `%<S-n>` |
 
 <sup>1</sup> Vim and tmux share `ctrl` as the modifier here. Tmux also allows this after prefix, just in case the vim plugin isn't working.
 
