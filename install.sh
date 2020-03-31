@@ -30,6 +30,7 @@ source "$DOTFILES_DIR/git/install.sh"
 source "$DOTFILES_DIR/terminal/install.sh"
 source "$DOTFILES_DIR/editors/vim/install.sh"
 source "$DOTFILES_DIR/editors/vscode/install.sh"
+source "$DOTFILES_DIR/windowManagers/install.sh"
 source "$DOTFILES_DIR/system/packages/install.sh"
 source "$DOTFILES_DIR/font_install.sh"
 source "$DOTFILES_DIR/system/ssh/install.sh"
@@ -111,40 +112,36 @@ readSettings() {
       fi
 
       if [ "$ALL" = 1 ] || askQuestionYN "$installStr window manager?" ; then
-        if [ "$OSTYPE" = "linux-gnu" ]; then
-          installers="$installers doBspwm"
-        elif [[ $OSTYPE =~ 'darwin' ]]; then
-          installers="$installers doChunkwm"
-        fi
+        installers="$installers doWM"
       fi
 
-        # TODO make it automatic whether brew or another packagae manager is
-        # installed. Check for sudo access.
-        if [ "$ALL" = 1 ] || askQuestionYN "$installStr brew?" ; then
-          installers="$installers installBrew"
-          if [ "$ALL" = 1 ] || askQuestionYN "Update brew and install \
-            Brewfile packages? (This can take a very long time)" ; then
-                      installers="$installers doPackages"
-                    fi
-                  elif [ "$ALL" = 1 ] || askQuestionYN "$installStr packages? (May require sudo)?" ; then
-                    installers="doPackages $installers"
-                  fi
+      # TODO make it automatic whether brew or another packagae manager is
+      # installed. Check for sudo access.
+      if [ "$ALL" = 1 ] || askQuestionYN "$installStr brew?" ; then
+        installers="$installers installBrew"
+      if [ "$ALL" = 1 ] || askQuestionYN "Update brew and install \
+        Brewfile packages? (This can take a very long time)" ; then
+        installers="$installers doPackages"
+      fi
+      elif [ "$ALL" = 1 ] || askQuestionYN "$installStr packages? (May require sudo)?" ; then
+        installers="doPackages $installers"
+      fi
 
-                  if [ "$ALL" = 1 ] || askQuestionYN "$set_up git credentials?" ; then
-                    installers="doGit $installers"
-                  fi
-                fi
-              }
+      if [ "$ALL" = 1 ] || askQuestionYN "$set_up git credentials?" ; then
+        installers="doGit $installers"
+      fi
+    fi
+  }
 
-            main() {
-              readSettings
-              for installer in $installers; do
-                $installer ${1:-}
-              done
-              printErr "${Green} Install Complete${NC}"
+  main() {
+    readSettings
+    for installer in $installers; do
+      $installer ${1:-}
+    done
+    printErr "${Green} Install Complete${NC}"
 
-    # Restart bash
-    exec bash
+    # Restart shell
+    exec $SHELL
   }
 
 # set default arg to avoid warnings
