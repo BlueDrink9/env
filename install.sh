@@ -25,7 +25,7 @@ OK="[ ${Green}OK${NC} ]"
 Error="[ ${Red}ERROR${NC} ]"
 ALL=0
 
-source "$DOTFILES_DIR/shell/bash/install.sh"
+source "$DOTFILES_DIR/shell/install.sh"
 source "$DOTFILES_DIR/git/install.sh"
 source "$DOTFILES_DIR/terminal/install.sh"
 source "$DOTFILES_DIR/editors/vim/install.sh"
