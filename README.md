@@ -98,12 +98,13 @@ Not everything works in every context.
 | Float next window | `%<c-u>` |
 | Focus [next,prev] desktop | `<#-[[,]]>` |
 | Focus [prev,next] monitor | `<#-A-[[,]]>` |
-| Move pane to [next,prev] desktop | `%<S-#-[[,]]>` |
+| Move pane to [next,prev] desktop | `<S-#-[[,]]>` |
+| Move pane to [next,prev] desktop and focus | `%<[[,]]>` |
 | Move pane to [next,prev] desktop and focus | `%<C-#-[[,]]>` |
 | Move pane to desktop [num] | `%[num]` |
 | jump to desktop [num] | `<#-[num]>` |
-| Move desktop to [next,prev] monitor | `%<S-[[,]]>` |
-| Move desktop to [next,prev] monitor and focus | `%<C-[[,]]>` |
+| Move desktop to [next,prev] monitor | `%<S-A-[[,]]>` |
+| Move desktop to [next,prev] monitor and focus | `%<C-A-[[,]]>` |
 | Move desktop [left,right] on monitor | `%[<,>]` |
 | Create desktop | `%n` |
 | Delete desktop | `%<S-n>` |

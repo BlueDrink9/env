@@ -53,6 +53,7 @@ manage < alt - l : yabai -m window --focus east
 
 # close focused window
 alt - x : yabai -m window --close
+alt + shift - x : skhd -k "cmd-q"
 manage < x : yabai -m window --close
 # Minimize
 alt - z : osascript -e 'tell application "System Events" to keystroke "m" using {command down}'
@@ -77,168 +78,164 @@ manage < alt - left   : yabai -m window --grid 1:2:0:0:1:1
 manage < alt - right  : yabai -m window --grid 1:2:1:0:1:1
 
 # Want to be expanding on one key, contracting on the opposite.
-manage < shift - down : yabai -m window --resize bottom 0:$window_resize_delta; \
-  yabai -m window --resize top 0:$window_resize_delta
-manage < shift - up : yabai -m window --resize up 0:-$window_resize_delta; \
-  yabai -m window --resize bottom 0:-$window_resize_delta
-manage < shift - right : yabai -m window --resize right $window_resize_delta:0; \
-  yabai -m window --resize left $window_resize_delta:0
-manage < shift - left : yabai -m window --resize left -$window_resize_delta:0; \
-  yabai -m window --resize right -$window_resize_delta:0
+# Adds an amount to the x or y, so negatives have to be used to expand left and
+# up.
+manage < shift - down : yabai -m window --resize bottom:0:$window_resize_delta; \
+  yabai -m window --resize top:0:-$window_resize_delta
+manage < shift - up : yabai -m window --resize top:0:$window_resize_delta; \
+  yabai -m window --resize bottom:0:-$window_resize_delta
+manage < shift - right : yabai -m window --resize right:$window_resize_delta:0; \
+  yabai -m window --resize left:-$window_resize_delta:0
+manage < shift - left : yabai -m window --resize left:$window_resize_delta:0; \
+  yabai -m window --resize right:-$window_resize_delta:0
 
 # Move floating windows. Uses a hack script.
-manage < left	: ~/.config/scripts/chunk_float.sh move -x
-manage < right	: ~/.config/scripts/chunk_float.sh move +x
-manage < up	: ~/.config/scripts/chunk_float.sh move -y
-manage < down	: ~/.config/scripts/chunk_float.sh move +y
+manage < down	 : yabai -m window --move rel:0:$window_resize_delta
+manage < up	   : yabai -m window --move rel:0:-$window_resize_delta
+manage < left	 : yabai -m window --move rel:-$window_resize_delta:0
+manage < right : yabai -m window --move rel:$window_resize_delta:0
 
 # manage < cmd - j : yabai -m window --focus prev
 # manage < cmd - k : yabai -m window --focus next
 
 # rotate tree
 manage < r : yabai -m space --rotate 90
+manage < shift - r : yabai -m space --rotate 270
 
 # Re-make binary proportions. Equals key.
-manage < shift - 0x18 : yabai -m space --equalize  # equals key
+manage < 0x18 : yabai -m space --balance  # equals key
 
-# mirror tree y-axis
-manage < s : yabai -m space --mirror vertical
-
-# mirror tree x-axis
-manage < v : yabai -m space --mirror horizontal
-
-# toggle desktop offset XXX
-manage < shift - g : yabai -m space --toggle offset
+# mirror tree
+manage < s : yabai -m space --mirror y-axis
+manage < v : yabai -m space --mirror x-axis
 
 # toggle window fullscreen
-manage < cmd - f : yabai -m window --toggle fullscreen
-manage < f : yabai -m window --toggle fullscreen
-
-# toggle window native fullscreen
-manage < shift + cmd - f : yabai -m window --toggle native-fullscreen
-
+manage < f       : yabai -m window --toggle zoom-fullscreen
+manage < cmd - f : yabai -m window --toggle native-fullscreen
 # toggle window parent zoom
 manage < alt - f : yabai -m window --toggle parent
-
 # toggle window split type
 manage < alt - e : yabai -m window --toggle split
-
 # toggle window fade
 manage < alt - q : yabai -m window --toggle fade
+# pinned/always on top.
+manage < p : yabai -m window --toggle topmost
+# toggle sticky (appears on all desktops)
+# manage < p : yabai -m window --toggle sticky
+
 
 # float / unfloat window and center on screen
 manage < u : yabai -m window --toggle float;\
           yabai -m window --grid 4:4:1:1:2:2
 
-# toggle sticky (appears on all desktops) Needs chwm-sa
-# manage < p : yabai -m window --toggle sticky
-# pinned. Needs chwm-sa
-manage < p : yabai -m config window_float_topmost 1
-
-# toggle sticky, float and resize to picture-in-picture size. Needs chwm-sa
+# toggle sticky, float and resize to picture-in-picture size.
 manage < alt - p : yabai -m window --toggle sticky;\
           yabai -m window --grid 5:5:4:0:1:1
 
 # float next window to be tiled
-manage < ctrl - u : yabai -m config window_float_next 1
+# manage < ctrl - u : yabai -m config window_float_next 1
 
 # change layout of desktop
 manage < shift - t : yabai -m space --layout bsp
-manage < shift - m : yabai -m space --layout monocle
 manage < shift - u : yabai -m space --layout float
-
-# Functions specified in chunkwmrc.
-manage < ctrl - w : chunkwm_serialize
-manage < ctrl - e : chunkwm_deserialize
+# Not yet added
+manage < shift - m : yabai -m space --layout monocle
 
 # set insertion point for focused container. Prefixed, so will auto-exit mode.
-manage < ctrl - c : yabai -m window --use-insertion-point cancel
-manage < h : yabai -m window --use-insertion-point west; skhd -k "escape"
-manage < j : yabai -m window --use-insertion-point south; skhd -k "escape"
-manage < k : yabai -m window --use-insertion-point north; skhd -k "escape"
-manage < l : yabai -m window --use-insertion-point east; skhd -k "escape"
+# Undo by redoing in same direction
+# manage < ctrl - c : yabai -m window --insert cancel
+manage < h : yabai -m window --insert west; skhd -k "escape"
+manage < j : yabai -m window --insert south; skhd -k "escape"
+manage < k : yabai -m window --insert north; skhd -k "escape"
+manage < l : yabai -m window --insert east; skhd -k "escape"
+
+
+### Desktops/spaces ###
+
+# create/detroy desktop
+manage < n : yabai -m space --create
+manage < shift - n : yabai -m space --destroy
+# create desktop and follow focus
+manage < ctrl + alt - n : yabai -m space --create; \
+  yabai -m space --focus last; \
+  skhd -k "escape"
+
+# Fast focus desktop. Requires scripting addon.
+# Use this one if the scripting addon is installed.
+alt - 0x21  : yabai -m space --focus prev
+alt - 0x1E  : yabai -m space --focus next
+# Alternative is to set these shortcuts under mission control in sys
+# preferences, which is done under osx setup script
+# alt - 0x21  : skhd -k "ctrl - left"
+# alt - 0x1E  : skhd -k "ctrl - right"
+manage < cmd + alt - x : yabai -m space --focus recent
 
 # send window to desktop
-manage < shift - x : yabai -m window --send-to-desktop $(yabai get _last_active_desktop)
-alt + shift - 0x21  : yabai -m window --send-to-desktop prev
-alt + shift - 0x1E  : yabai -m window --send-to-desktop next
-manage < shift - 0x21 : yabai -m window --send-to-desktop prev
-manage < shift - 0x1E : yabai -m window --send-to-desktop next
-manage < 1 : yabai -m window --send-to-desktop 1
-manage < 2 : yabai -m window --send-to-desktop 2
-manage < 3 : yabai -m window --send-to-desktop 3
-manage < 4 : yabai -m window --send-to-desktop 4
-manage < 5 : yabai -m window --send-to-desktop 5
-manage < 6 : yabai -m window --send-to-desktop 6
-manage < 7 : yabai -m window --send-to-desktop 7
-manage < 8 : yabai -m window --send-to-desktop 8
+manage < shift - x : yabai -m window --space recent
+# 0x21, 0x1E: keys for [ and ]
+# Move to next
+alt + shift - 0x21  : yabai -m window --space prev
+alt + shift - 0x1E  : yabai -m window --space next
+# Move and focus
+alt + ctrl - 0x21  : yabai -m window --space prev; yabai -m space --focus prev
+alt + ctrl - 0x1E  : yabai -m window --space next; yabai -m space --focus next
+manage < 0x21 : yabai -m window --space prev; yabai -m space --focus prev
+manage < 0x1E : yabai -m window --space next; yabai -m space --focus next
 
-# fast focus desktop. Requires extra hack.
-# Alternative is to set these shortcuts under mission control in sys preferences
-# Done under osx setup script
-manage < cmd + alt - x : yabai -m space --focus $(yabai get _last_active_desktop)
-alt - 0x21  : skhd -k "ctrl - left"
-alt - 0x1E  : skhd -k "ctrl - right"
-# Use this one if the hack is installed. Seems to bind better?
-# alt - 0x21  : yabai -m space --focus prev
-# alt - 0x1E  : yabai -m space --focus next
-# alt - [  : yabai -m space --focus prev
-# alt - ]  : yabai -m space --focus next
-manage < alt - 1 : yabai -m space --focus 1; default
-manage < alt - 2 : yabai -m space --focus 2; default
-manage < alt - 3 : yabai -m space --focus 3; default
-manage < alt - 4 : yabai -m space --focus 4; default
-manage < alt - 5 : yabai -m space --focus 5; default
-manage < alt - 6 : yabai -m space --focus 6; default
-manage < alt - 7 : yabai -m space --focus 7; default
-manage < alt - 8 : yabai -m space --focus 8; default
-# cmd + alt - 7 : yabai -m space --focus 7
+alt - 1 : yabai -m space --focus 1
+alt - 2 : yabai -m space --focus 2
+alt - 3 : yabai -m space --focus 3
+alt - 4 : yabai -m space --focus 4
+alt - 5 : yabai -m space --focus 5
+alt - 6 : yabai -m space --focus 6
+alt - 7 : yabai -m space --focus 7
+alt - 8 : yabai -m space --focus 8
 
-# send window to desktop and follow focus
-manage < shift + cmd - x : yabai -m window --send-to-desktop $(yabai get _last_active_desktop); yabai -m space --focus $(yabai get _last_active_desktop)
-# alt + ctrl - 0x21  : yabai -m window --send-to-desktop prev; yabai -m space --focus prev
-# alt + ctrl - 0x1E  : yabai -m window --send-to-desktop next; yabai -m space --focus next
-alt + ctrl - 0x21  : yabai -m window --send-to-desktop prev; skhd -k "ctrl - left" # left bracket
-alt + ctrl - 0x1E  : yabai -m window --send-to-desktop next; skhd -k "ctrl - right" # right bracket
-manage < shift + ctrl - 1 : yabai -m window --send-to-desktop 1; yabai -m space --focus 1; default
-manage < shift + ctrl - 2 : yabai -m window --send-to-desktop 2; yabai -m space --focus 2; default
-manage < shift + ctrl - 3 : yabai -m window --send-to-desktop 3; yabai -m space --focus 3; default
-manage < shift + ctrl - 4 : yabai -m window --send-to-desktop 4; yabai -m space --focus 4; default
-manage < shift + ctrl - 5 : yabai -m window --send-to-desktop 5; yabai -m space --focus 5; default
-manage < shift + ctrl - 6 : yabai -m window --send-to-desktop 6; yabai -m space --focus 6; default
-manage < shift + ctrl - 7 : yabai -m window --send-to-desktop 7; yabai -m space --focus 7; default
-manage < shift + ctrl - 8 : yabai -m window --send-to-desktop 8; yabai -m space --focus 9; default
-manage < shift + ctrl - 9 : yabai -m window --send-to-desktop 9; yabai -m space --focus 9; default
+manage < 1 : yabai -m space --focus 1
+manage < 2 : yabai -m space --focus 2
+manage < 3 : yabai -m space --focus 3
+manage < 4 : yabai -m space --focus 4
+manage < 5 : yabai -m space --focus 5
+manage < 6 : yabai -m space --focus 6
+manage < 7 : yabai -m space --focus 7
+manage < 8 : yabai -m space --focus 8
+
+manage < shift - 1 : yabai -m window --space 1
+manage < shift - 2 : yabai -m window --space 2
+manage < shift - 3 : yabai -m window --space 3
+manage < shift - 4 : yabai -m window --space 4
+manage < shift - 5 : yabai -m window --space 5
+manage < shift - 6 : yabai -m window --space 6
+manage < shift - 7 : yabai -m window --space 7
+manage < shift - 8 : yabai -m window --space 8
+
 # shift + cmd - 4 : yabai border::clear
 
-# focus monitor
-cmd + alt - 0x21  : yabai tiling::monitor -f prev # left bracket
-cmd + alt - 0x1E  : yabai tiling::monitor -f next # right bracket
-# ctrl + alt - [  : yabai tiling::monitor -f prev
-# ctrl + alt - ]  : yabai tiling::monitor -f next
-manage < cmd + alt - 1  : yabai tiling::monitor -f 1
-manage < cmd + alt - 2  : yabai tiling::monitor -f 2
-manage < cmd + alt - 3  : yabai tiling::monitor -f 3
-
-# send window to monitor and follow focus
-manage < shift + ctrl + cmd + alt - 0x21  : yabai -m window --send-to-monitor prev; yabai tiling::monitor -f prev
-manage < shift + ctrl + cmd + alt - 0x1E  : yabai -m window --send-to-monitor next; yabai tiling::monitor -f next
-manage < shift + ctrl + cmd + alt - 1  : yabai -m window --send-to-monitor 1; yabai tiling::monitor -f 1
-manage < shift + ctrl + cmd + alt - 2  : yabai -m window --send-to-monitor 2; yabai tiling::monitor -f 2
-manage < shift + ctrl + cmd + alt - 3  : yabai -m window --send-to-monitor 3; yabai tiling::monitor -f 3
-
-
-# create desktop, move window and follow focus
-manage < shift + alt + cmd - n : yabai -m space --create;\
-                  id=$(yabai -m query --desktops-for-monitor $(yabai -m query --monitor-for-desktop $(yabai -m query --desktop id)));\
-                  yabai -m window --send-to-desktop $(echo ${id##* });\
-                  yabai -m space --focus $(echo ${id##* })
-
-# create desktop and follow focus
-manage < cmd + alt - n : yabai -m space --create;\
-                id=$(yabai -m query --desktops-for-monitor $(yabai -m query --monitor-for-desktop $(yabai -m query --desktop id)));\
-                yabai -m space --focus $(echo ${id##* })
-# destroy desktop
-manage < cmd + alt - q : yabai -m space --annihilate
-
 # Mouse bindings are set in chunkwm options
+
+# Desktops {]}
+
+### Monitor ### {[}
+
+# focus monitor
+cmd + alt - 0x21  : yabai -m display --focus prev # left bracket
+cmd + alt - 0x1E  : yabai -m display --focus next # right bracket
+manage < cmd - 0x21  : yabai -m display --focus prev # left bracket
+manage < cmd - 0x1E  : yabai -m display --focus next # right bracket
+cmd + alt - 1  : yabai -m display --focus 1
+cmd + alt - 2  : yabai -m display --focus 2
+cmd + alt - 3  : yabai -m display --focus 3
+# send window to monitor
+manage < shift + cmd - 0x21  : yabai -m window --display prev
+manage < shift + cmd - 0x1E  : yabai -m window --display next
+manage < shift + cmd - 1  : yabai -m window --display 1
+manage < shift + cmd - 2  : yabai -m window --display 2
+manage < shift + cmd - 3  : yabai -m window --display 3
+# send window to monitor and follow focus
+manage < ctrl + cmd - 0x21  : yabai -m window --display prev; yabai -m display --focus prev
+manage < ctrl + cmd - 0x1E  : yabai -m window --display next; yabai -m display --focus next
+manage < ctrl + cmd - 1     : yabai -m window --display 1;    yabai -m display --focus 1
+manage < ctrl + cmd - 2     : yabai -m window --display 2;    yabai -m display --focus 2
+manage < ctrl + cmd - 3     : yabai -m window --display 3;    yabai -m display --focus 3
+
+### Monitor ### {]}

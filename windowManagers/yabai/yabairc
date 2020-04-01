@@ -38,7 +38,7 @@ yabai -m config normal_window_border_color   0xff$unfocused_border_color
 yabai -m config insert_window_border_color   0xff$preselect_border_color
 
 # floating windows are always on top (default: off)
-yabai -m config window_topmost               on
+yabai -m config window_topmost               off
 yabai -m config window_opacity               on
 yabai -m config window_opacity_duration      0.2
 yabai -m config active_window_opacity        1.0

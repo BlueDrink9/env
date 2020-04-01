@@ -20,7 +20,7 @@ yabai -m rule --add app="PowerPoint" manage=on
 yabai -m rule --add app="Excel" manage=on
 yabai -m rule --add app="Word" manage=on
 yabai -m rule --add app="OneNote" manage=on
-yabai -m rule --add app="kitty" opacity=0.9
+yabai -m rule --add app="kitty" opacity=0.95
 # XQuartz basically cannot be accessed by accessability API.
 # yabai -m rule --add app=XQuartz manage=on
 # yabai -m rule --add app=Inkscape manage=on
