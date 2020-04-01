@@ -77,7 +77,6 @@ manage < alt - left   : yabai -m window --grid 1:2:0:0:1:1
 manage < alt - right  : yabai -m window --grid 1:2:1:0:1:1
 
 # Want to be expanding on one key, contracting on the opposite.
-# Then another set with extra binding to swap the direciton.
 manage < shift - down : yabai -m window --resize bottom 0:$window_resize_delta; \
   yabai -m window --resize top 0:$window_resize_delta
 manage < shift - up : yabai -m window --resize up 0:-$window_resize_delta; \
@@ -86,15 +85,6 @@ manage < shift - right : yabai -m window --resize right $window_resize_delta:0; 
   yabai -m window --resize left $window_resize_delta:0
 manage < shift - left : yabai -m window --resize left -$window_resize_delta:0; \
   yabai -m window --resize right -$window_resize_delta:0
-
-# manage < shift - alt - down : yabai -m window --resize bottom 0:$window_resize_delta; \
-#   yabai -m windowalt -  --resize top 0:$window_resize_delta
-# manage < shift - alt - up : yabai -m window --resize up 0:-$window_resize_delta; \
-#   yabai -m windowalt -  --resize bottom 0:-$window_resize_delta
-# manage < shift - alt - right : yabai -m window --resize right $window_resize_delta:0; \
-#   yabai -m windowalt -  --resize left $window_resize_delta:0
-# manage < shift - alt - left : yabai -m window --resize left -$window_resize_delta:0; \
-#   yabai -m window --resize right -$window_resize_delta:0
 
 # Move floating windows. Uses a hack script.
 manage < left	: ~/.config/scripts/chunk_float.sh move -x
