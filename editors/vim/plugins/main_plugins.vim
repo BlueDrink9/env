@@ -53,6 +53,14 @@ if has('nvim') && !(has("python") || has("python3"))
 endif
 " {]} ---------- Module setup ----------
 
+" {[} Neovim UIs/integrations
+" Needs nvim > 0.4, which was probably also when UIEnter was introduced.
+if has('nvim') && exists('##UIEnter')
+    call SourcePluginFile("firenvim.vim")
+endif
+
+" {]} Neovim UIs/integrations
+
 " {[} ---------- Misc ----------
 
 " Custom text for folds, includes indent level. Integrates with fastfold.
@@ -208,7 +216,6 @@ nnoremap <c-w>z :ZoomWinTabToggle<cr>
 " fzf for all the shortcuts defined in vim
 Plug 'https://github.com/sunaku/vim-shortcut'
 " {]} ---------- Misc----------
-
 
 " {[} ---------- Visual changes ----------
 Plug 'machakann/vim-highlightedyank'

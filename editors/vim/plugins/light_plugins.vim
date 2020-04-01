@@ -94,11 +94,6 @@ call add (g:customHLGroups, "CSVColumnEven guibg=gray90 ctermbg=lightgray")
 " pluginSettings update.
 autocmd myPlugins User pluginSettingsToExec highlight clear CSVColumnOdd
 
-" Needs nvim > 0.4, which was probably also when UIEnter was introduced.
-if has('nvim') && exists('##UIEnter')
-    call SourcePluginFile("firenvim.vim")
-endif
-
 " {]} Misc
 
 " {[}--- Yanks ---
