@@ -70,31 +70,31 @@ manage < shift + alt - k : yabai -m window --warp north
 manage < shift + alt - l : yabai -m window --warp east
 
 # make floating window fill screen
-# manage < f     : yabai -m window --grid-layout 1:1:0:0:1:1
-
+manage < alt - up     : yabai -m window --grid 1:1:0:0:1:1
 # make floating window fill left-half of screen
-manage < alt - left   : yabai -m window --grid-layout 1:2:0:0:1:1
-
+manage < alt - left   : yabai -m window --grid 1:2:0:0:1:1
 # make floating window fill right-half of screen
-manage < alt - right  : yabai -m window --grid-layout 1:2:1:0:1:1
+manage < alt - right  : yabai -m window --grid 1:2:1:0:1:1
 
-# Only one of the chained commands gets called. Adjust like i3 - adjust in specified direction.
-manage < shift - down : yabai -m window --use-temporary-ratio 0.05 --adjust-window-edge south; yabai -m window --use-temporary-ratio -0.05 --adjust-window-edge north
-manage < shift - right : yabai -m window --use-temporary-ratio 0.05 --adjust-window-edge east; yabai -m window --use-temporary-ratio -0.05 --adjust-window-edge west
-manage < shift - left : yabai -m window --use-temporary-ratio 0.05 --adjust-window-edge west; yabai -m window --use-temporary-ratio -0.05 --adjust-window-edge east
-manage < shift - up : yabai -m window --use-temporary-ratio 0.05 --adjust-window-edge north; yabai -m window --use-temporary-ratio -0.05 --adjust-window-edge south
+# Want to be expanding on one key, contracting on the opposite.
+# Then another set with extra binding to swap the direciton.
+manage < shift - down : yabai -m window --resize bottom 0:$window_resize_delta; \
+  yabai -m window --resize top 0:$window_resize_delta
+manage < shift - up : yabai -m window --resize up 0:-$window_resize_delta; \
+  yabai -m window --resize bottom 0:-$window_resize_delta
+manage < shift - right : yabai -m window --resize right $window_resize_delta:0; \
+  yabai -m window --resize left $window_resize_delta:0
+manage < shift - left : yabai -m window --resize left -$window_resize_delta:0; \
+  yabai -m window --resize right -$window_resize_delta:0
 
-# increase region size
-# manage < shift - down : yabai -m window --use-temporary-ratio 0.1 --adjust-window-edge south
-# manage < shift - right : yabai -m window --use-temporary-ratio 0.1 --adjust-window-edge east
-# manage < shift - left : yabai -m window --use-temporary-ratio -0.1 --adjust-window-edge east
-# manage < shift - up : yabai -m window --use-temporary-ratio -0.1 --adjust-window-edge south
-
-# # decrease region size
-# manage < shift + alt - down : yabai -m window --use-temporary-ratio 0.1 --adjust-window-edge north
-# manage < shift + alt - right : yabai -m window --use-temporary-ratio 0.1 --adjust-window-edge west
-# manage < shift + alt - left : yabai -m window --use-temporary-ratio -0.1 --adjust-window-edge west
-# manage < shift + alt - up : yabai -m window --use-temporary-ratio -0.1 --adjust-window-edge north
+# manage < shift - alt - down : yabai -m window --resize bottom 0:$window_resize_delta; \
+#   yabai -m windowalt -  --resize top 0:$window_resize_delta
+# manage < shift - alt - up : yabai -m window --resize up 0:-$window_resize_delta; \
+#   yabai -m windowalt -  --resize bottom 0:-$window_resize_delta
+# manage < shift - alt - right : yabai -m window --resize right $window_resize_delta:0; \
+#   yabai -m windowalt -  --resize left $window_resize_delta:0
+# manage < shift - alt - left : yabai -m window --resize left -$window_resize_delta:0; \
+#   yabai -m window --resize right -$window_resize_delta:0
 
 # Move floating windows. Uses a hack script.
 manage < left	: ~/.config/scripts/chunk_float.sh move -x
@@ -138,7 +138,7 @@ manage < alt - q : yabai -m window --toggle fade
 
 # float / unfloat window and center on screen
 manage < u : yabai -m window --toggle float;\
-          yabai -m window --grid-layout 4:4:1:1:2:2
+          yabai -m window --grid 4:4:1:1:2:2
 
 # toggle sticky (appears on all desktops) Needs chwm-sa
 # manage < p : yabai -m window --toggle sticky
@@ -147,7 +147,7 @@ manage < p : yabai -m config window_float_topmost 1
 
 # toggle sticky, float and resize to picture-in-picture size. Needs chwm-sa
 manage < alt - p : yabai -m window --toggle sticky;\
-          yabai -m window --grid-layout 5:5:4:0:1:1
+          yabai -m window --grid 5:5:4:0:1:1
 
 # float next window to be tiled
 manage < ctrl - u : yabai -m config window_float_next 1
