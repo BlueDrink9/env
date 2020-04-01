@@ -1,0 +1,254 @@
+# vim:ft=sh
+
+# --------------------
+# skhdrc-chunkwm-bindings
+# --------------------
+
+# Create a prefix mode that times out after 5 seconds. Qes synthesises a keypress?
+#default < shift + cmd - o ; prefix
+# prefix < escape ; default
+# :: prefix @   : yabai border::color 0xFFFAC863; sleep 5; qes -k "escape"
+
+
+# Set up yabai with a modal entry, and using the same shortcuts as I
+# use for vim, tmux, etc.
+# Declare mode. Use green border when in mode, blue otherwise.
+# @ swallows unassigned keybinds so mis-pressing won't type.
+:: manage @ : yabai -m config active_window_border_color "0xff$manage_border_color"
+
+:: default : yabai -m config active_window_border_color "0xff$focused_border_color"; \
+  yabai -m config focus_follows_mouse autoraise
+
+# Passthrough should have nothing associated with it.
+# Also disable ffm to allow cmd-dragging.
+# Border colour is default but transparent.
+:: passthrough : yabai -m config active_window_border_color "0x55$focused_border_color"; \
+  yabai -m config focus_follows_mouse off
+
+# Using this mode, you will time out after 5 seconds and send escape.
+# Can't return directly to default, see koekeishiya/skhd/issues/37.
+:: prefix @ : yabai -m config active_window_border_color "0xFF$prefix_border_color"; \
+  sleep 5; \
+  skhd -k "escape"
+
+
+manage,passthrough,prefix < escape ; default
+manage,passthrough,prefix < return ; default
+# option - w enters window management mode
+alt - w ; manage
+manage < alt - w ; default
+
+alt - q ; passthrough
+
+
+# focus window
+alt - h : yabai -m window --focus west
+alt - j : yabai -m window --focus south
+alt - k : yabai -m window --focus north
+alt - l : yabai -m window --focus east
+manage < alt - h : yabai -m window --focus west
+manage < alt - j : yabai -m window --focus south
+manage < alt - k : yabai -m window --focus north
+manage < alt - l : yabai -m window --focus east
+
+# close focused window
+alt - x : yabai -m window --close
+manage < x : yabai -m window --close
+# Minimize
+alt - z : osascript -e 'tell application "System Events" to keystroke "m" using {command down}'
+
+# swap window
+manage < shift - h : yabai -m window --swap west
+manage < shift - j : yabai -m window --swap south
+manage < shift - k : yabai -m window --swap north
+manage < shift - l : yabai -m window --swap east
+
+# move window
+manage < shift + alt - h : yabai -m window --warp west
+manage < shift + alt - j : yabai -m window --warp south
+manage < shift + alt - k : yabai -m window --warp north
+manage < shift + alt - l : yabai -m window --warp east
+
+# make floating window fill screen
+# manage < f     : yabai -m window --grid-layout 1:1:0:0:1:1
+
+# make floating window fill left-half of screen
+manage < alt - left   : yabai -m window --grid-layout 1:2:0:0:1:1
+
+# make floating window fill right-half of screen
+manage < alt - right  : yabai -m window --grid-layout 1:2:1:0:1:1
+
+# Only one of the chained commands gets called. Adjust like i3 - adjust in specified direction.
+manage < shift - down : yabai -m window --use-temporary-ratio 0.05 --adjust-window-edge south; yabai -m window --use-temporary-ratio -0.05 --adjust-window-edge north
+manage < shift - right : yabai -m window --use-temporary-ratio 0.05 --adjust-window-edge east; yabai -m window --use-temporary-ratio -0.05 --adjust-window-edge west
+manage < shift - left : yabai -m window --use-temporary-ratio 0.05 --adjust-window-edge west; yabai -m window --use-temporary-ratio -0.05 --adjust-window-edge east
+manage < shift - up : yabai -m window --use-temporary-ratio 0.05 --adjust-window-edge north; yabai -m window --use-temporary-ratio -0.05 --adjust-window-edge south
+
+# increase region size
+# manage < shift - down : yabai -m window --use-temporary-ratio 0.1 --adjust-window-edge south
+# manage < shift - right : yabai -m window --use-temporary-ratio 0.1 --adjust-window-edge east
+# manage < shift - left : yabai -m window --use-temporary-ratio -0.1 --adjust-window-edge east
+# manage < shift - up : yabai -m window --use-temporary-ratio -0.1 --adjust-window-edge south
+
+# # decrease region size
+# manage < shift + alt - down : yabai -m window --use-temporary-ratio 0.1 --adjust-window-edge north
+# manage < shift + alt - right : yabai -m window --use-temporary-ratio 0.1 --adjust-window-edge west
+# manage < shift + alt - left : yabai -m window --use-temporary-ratio -0.1 --adjust-window-edge west
+# manage < shift + alt - up : yabai -m window --use-temporary-ratio -0.1 --adjust-window-edge north
+
+# Move floating windows. Uses a hack script.
+manage < left	: ~/.config/scripts/chunk_float.sh move -x
+manage < right	: ~/.config/scripts/chunk_float.sh move +x
+manage < up	: ~/.config/scripts/chunk_float.sh move -y
+manage < down	: ~/.config/scripts/chunk_float.sh move +y
+
+# manage < cmd - j : yabai -m window --focus prev
+# manage < cmd - k : yabai -m window --focus next
+
+# rotate tree
+manage < r : yabai -m space --rotate 90
+
+# Re-make binary proportions. Equals key.
+manage < shift - 0x18 : yabai -m space --equalize  # equals key
+
+# mirror tree y-axis
+manage < s : yabai -m space --mirror vertical
+
+# mirror tree x-axis
+manage < v : yabai -m space --mirror horizontal
+
+# toggle desktop offset XXX
+manage < shift - g : yabai -m space --toggle offset
+
+# toggle window fullscreen
+manage < cmd - f : yabai -m window --toggle fullscreen
+manage < f : yabai -m window --toggle fullscreen
+
+# toggle window native fullscreen
+manage < shift + cmd - f : yabai -m window --toggle native-fullscreen
+
+# toggle window parent zoom
+manage < alt - f : yabai -m window --toggle parent
+
+# toggle window split type
+manage < alt - e : yabai -m window --toggle split
+
+# toggle window fade
+manage < alt - q : yabai -m window --toggle fade
+
+# float / unfloat window and center on screen
+manage < u : yabai -m window --toggle float;\
+          yabai -m window --grid-layout 4:4:1:1:2:2
+
+# toggle sticky (appears on all desktops) Needs chwm-sa
+# manage < p : yabai -m window --toggle sticky
+# pinned. Needs chwm-sa
+manage < p : yabai -m config window_float_topmost 1
+
+# toggle sticky, float and resize to picture-in-picture size. Needs chwm-sa
+manage < alt - p : yabai -m window --toggle sticky;\
+          yabai -m window --grid-layout 5:5:4:0:1:1
+
+# float next window to be tiled
+manage < ctrl - u : yabai -m config window_float_next 1
+
+# change layout of desktop
+manage < shift - t : yabai -m space --layout bsp
+manage < shift - m : yabai -m space --layout monocle
+manage < shift - u : yabai -m space --layout float
+
+# Functions specified in chunkwmrc.
+manage < ctrl - w : chunkwm_serialize
+manage < ctrl - e : chunkwm_deserialize
+
+# set insertion point for focused container. Prefixed, so will auto-exit mode.
+manage < ctrl - c : yabai -m window --use-insertion-point cancel
+manage < h : yabai -m window --use-insertion-point west; skhd -k "escape"
+manage < j : yabai -m window --use-insertion-point south; skhd -k "escape"
+manage < k : yabai -m window --use-insertion-point north; skhd -k "escape"
+manage < l : yabai -m window --use-insertion-point east; skhd -k "escape"
+
+# send window to desktop
+manage < shift - x : yabai -m window --send-to-desktop $(yabai get _last_active_desktop)
+alt + shift - 0x21  : yabai -m window --send-to-desktop prev
+alt + shift - 0x1E  : yabai -m window --send-to-desktop next
+manage < shift - 0x21 : yabai -m window --send-to-desktop prev
+manage < shift - 0x1E : yabai -m window --send-to-desktop next
+manage < 1 : yabai -m window --send-to-desktop 1
+manage < 2 : yabai -m window --send-to-desktop 2
+manage < 3 : yabai -m window --send-to-desktop 3
+manage < 4 : yabai -m window --send-to-desktop 4
+manage < 5 : yabai -m window --send-to-desktop 5
+manage < 6 : yabai -m window --send-to-desktop 6
+manage < 7 : yabai -m window --send-to-desktop 7
+manage < 8 : yabai -m window --send-to-desktop 8
+
+# fast focus desktop. Requires extra hack.
+# Alternative is to set these shortcuts under mission control in sys preferences
+# Done under osx setup script
+manage < cmd + alt - x : yabai -m space --focus $(yabai get _last_active_desktop)
+alt - 0x21  : skhd -k "ctrl - left"
+alt - 0x1E  : skhd -k "ctrl - right"
+# Use this one if the hack is installed. Seems to bind better?
+# alt - 0x21  : yabai -m space --focus prev
+# alt - 0x1E  : yabai -m space --focus next
+# alt - [  : yabai -m space --focus prev
+# alt - ]  : yabai -m space --focus next
+manage < alt - 1 : yabai -m space --focus 1; default
+manage < alt - 2 : yabai -m space --focus 2; default
+manage < alt - 3 : yabai -m space --focus 3; default
+manage < alt - 4 : yabai -m space --focus 4; default
+manage < alt - 5 : yabai -m space --focus 5; default
+manage < alt - 6 : yabai -m space --focus 6; default
+manage < alt - 7 : yabai -m space --focus 7; default
+manage < alt - 8 : yabai -m space --focus 8; default
+# cmd + alt - 7 : yabai -m space --focus 7
+
+# send window to desktop and follow focus
+manage < shift + cmd - x : yabai -m window --send-to-desktop $(yabai get _last_active_desktop); yabai -m space --focus $(yabai get _last_active_desktop)
+# alt + ctrl - 0x21  : yabai -m window --send-to-desktop prev; yabai -m space --focus prev
+# alt + ctrl - 0x1E  : yabai -m window --send-to-desktop next; yabai -m space --focus next
+alt + ctrl - 0x21  : yabai -m window --send-to-desktop prev; skhd -k "ctrl - left" # left bracket
+alt + ctrl - 0x1E  : yabai -m window --send-to-desktop next; skhd -k "ctrl - right" # right bracket
+manage < shift + ctrl - 1 : yabai -m window --send-to-desktop 1; yabai -m space --focus 1; default
+manage < shift + ctrl - 2 : yabai -m window --send-to-desktop 2; yabai -m space --focus 2; default
+manage < shift + ctrl - 3 : yabai -m window --send-to-desktop 3; yabai -m space --focus 3; default
+manage < shift + ctrl - 4 : yabai -m window --send-to-desktop 4; yabai -m space --focus 4; default
+manage < shift + ctrl - 5 : yabai -m window --send-to-desktop 5; yabai -m space --focus 5; default
+manage < shift + ctrl - 6 : yabai -m window --send-to-desktop 6; yabai -m space --focus 6; default
+manage < shift + ctrl - 7 : yabai -m window --send-to-desktop 7; yabai -m space --focus 7; default
+manage < shift + ctrl - 8 : yabai -m window --send-to-desktop 8; yabai -m space --focus 9; default
+manage < shift + ctrl - 9 : yabai -m window --send-to-desktop 9; yabai -m space --focus 9; default
+# shift + cmd - 4 : yabai border::clear
+
+# focus monitor
+cmd + alt - 0x21  : yabai tiling::monitor -f prev # left bracket
+cmd + alt - 0x1E  : yabai tiling::monitor -f next # right bracket
+# ctrl + alt - [  : yabai tiling::monitor -f prev
+# ctrl + alt - ]  : yabai tiling::monitor -f next
+manage < cmd + alt - 1  : yabai tiling::monitor -f 1
+manage < cmd + alt - 2  : yabai tiling::monitor -f 2
+manage < cmd + alt - 3  : yabai tiling::monitor -f 3
+
+# send window to monitor and follow focus
+manage < shift + ctrl + cmd + alt - 0x21  : yabai -m window --send-to-monitor prev; yabai tiling::monitor -f prev
+manage < shift + ctrl + cmd + alt - 0x1E  : yabai -m window --send-to-monitor next; yabai tiling::monitor -f next
+manage < shift + ctrl + cmd + alt - 1  : yabai -m window --send-to-monitor 1; yabai tiling::monitor -f 1
+manage < shift + ctrl + cmd + alt - 2  : yabai -m window --send-to-monitor 2; yabai tiling::monitor -f 2
+manage < shift + ctrl + cmd + alt - 3  : yabai -m window --send-to-monitor 3; yabai tiling::monitor -f 3
+
+
+# create desktop, move window and follow focus
+manage < shift + alt + cmd - n : yabai -m space --create;\
+                  id=$(yabai -m query --desktops-for-monitor $(yabai -m query --monitor-for-desktop $(yabai -m query --desktop id)));\
+                  yabai -m window --send-to-desktop $(echo ${id##* });\
+                  yabai -m space --focus $(echo ${id##* })
+
+# create desktop and follow focus
+manage < cmd + alt - n : yabai -m space --create;\
+                id=$(yabai -m query --desktops-for-monitor $(yabai -m query --monitor-for-desktop $(yabai -m query --desktop id)));\
+                yabai -m space --focus $(echo ${id##* })
+# destroy desktop
+manage < cmd + alt - q : yabai -m space --annihilate
+
+# Mouse bindings are set in chunkwm options

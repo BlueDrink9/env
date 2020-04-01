@@ -59,8 +59,8 @@ chunkc set window_region_locked          1
 
 # This could also be all, to follow OSX-generated events as well as chunkwm's.
 chunkc set mouse_follows_focus           intrinsic
-chunkc set mouse_move_window             \"alt 1\"
-chunkc set mouse_resize_window           \"alt 2\"
+# chunkc set mouse_move_window             \"alt 1\"
+# chunkc set mouse_resize_window           \"alt 2\"
 # chunkc set mouse_resize_window           \"alt shift 1\"
 
 chunkc set mouse_motion_interval         35
