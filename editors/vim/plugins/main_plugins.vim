@@ -668,6 +668,16 @@ Plug 'kassio/neoterm'
 call Nmap(g:IDE_mappings.REPLSend, "<Plug>(neoterm-repl-send)")
 call Vmap(g:IDE_mappings.REPLSend, "<Plug>(neoterm-repl-send)")
 call Nmap(g:IDE_mappings.REPLSendLine, "<Plug>(neoterm-repl-send-line)")
+call Nmap(g:IDE_mappings.REPLClear, ":Tclear<cr>")
+" Autostart repl on command
+let g:neoterm_auto_repl_cmd=1
+" Don't use shell as intermediary, open REPL directly.
+let g:neoterm_direct_open_repl=1
+" Use tab neoterm instead of most recent.
+let g:neoterm_term_per_tab=1
+" start in insert mode
+let g:neoterm_autoinsert=1
+let g:neoterm_autoscroll=1
 
 " Useful for REPL, but can also send the commands back to the other window.
 " Also dot repeatable.
