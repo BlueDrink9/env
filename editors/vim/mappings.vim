@@ -52,6 +52,7 @@ nnoremap ' `
 nnoremap ` '
 " Consistent with D, C
 nnoremap Y y$
+vnoremap Y $y
 " Remember cursor location and reformat file
 nnoremap g= gg=G$()
 nnoremap gQ gggqG$()
