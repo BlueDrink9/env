@@ -4,11 +4,12 @@
 " Installation {[}
 " plugin firenvim in chrome and firefox.
 " Open textframes in nvim, similar to wasavi.
-if has('win32')
-    let s:startup_prologue='"set LITE_SYSTEM=1"'
-else
-    let s:startup_prologue='"export LITE_SYSTEM=1"'
-endif
+" if has('win32')
+"     let s:startup_prologue='"set LITE_SYSTEM=1"'
+" else
+"     let s:startup_prologue='"export LITE_SYSTEM=1"'
+" endif
+let s:startup_prologue=''
 let g:firenvim_install=":call firenvim#install(0, " . s:startup_prologue . ")"
 " Only on tags/releases, because updates may require the extension to be
 " updated.
