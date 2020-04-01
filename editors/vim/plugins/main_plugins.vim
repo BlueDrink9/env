@@ -57,6 +57,7 @@ endif
 " Needs nvim > 0.4, which was probably also when UIEnter was introduced.
 if has('nvim') && exists('##UIEnter')
     call SourcePluginFile("firenvim.vim")
+    call SourcePluginFile("vscode-neovim.vim")
 endif
 
 " {]} Neovim UIs/integrations
