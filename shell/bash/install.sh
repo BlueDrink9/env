@@ -24,7 +24,7 @@ installDircolours(){
 
 installLiquidprompt(){
   printErr "Downloading liquidprompt..."
-  git clone https://github.com/nojhan/liquidprompt.git ~/.config/liquidprompt
+  git clone --depth 1 https://github.com/nojhan/liquidprompt.git ~/.config/liquidprompt
   addTextIfAbsent "source \"$($SCRIPTDIR_CMD)/prompt/liquidprompt/liquidpromptrc\"" "${HOME}/.config/liquidpromptrc"
 }
 

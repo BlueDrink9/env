@@ -9,7 +9,7 @@ wr_dependencies_official="gettext intltool gobject-introspection autoconf-archiv
 wr_dependencies_extra="automake autoconf libtool gnome-icon-theme hicolor-icon-theme"
 brew install $wr_dependencies_official $wr_dependencies_extra
 brew link --force gettext libffi
-git clone https://github.com/palfrey/workrave/ "$HOME/.local/src/workrave"
+git clone --depth 1 https://github.com/palfrey/workrave/ "$HOME/.local/src/workrave"
 cd .local/src/workrave
 git checkout os-x-fixes
 autoreconf -if
