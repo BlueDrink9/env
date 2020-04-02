@@ -673,10 +673,9 @@ autocmd myPlugins FileType markdown command! PasteImage silent call mdip#Markdow
 " {[} ---------- Terminal ----------
 " REPL (send motions, lines etc)
 Plug 'kassio/neoterm'
-call Nmap(g:IDE_mappings.REPLSend, "<Plug>(neoterm-repl-send)")
-call Vmap(g:IDE_mappings.REPLSend, "<Plug>(neoterm-repl-send)")
-call Nmap(g:IDE_mappings.REPLSendLine, "<Plug>(neoterm-repl-send-line)")
-call Nmap(g:IDE_mappings.REPLClear, ":Tclear<cr>")
+" Split instead of replacing buffer.
+let g:neoterm_default_mod='belowright'
+let g:neoterm_size=10  " Rows
 " Autostart repl on command
 let g:neoterm_auto_repl_cmd=1
 " Don't use shell as intermediary, open REPL directly.
@@ -686,6 +685,10 @@ let g:neoterm_term_per_tab=1
 " start in insert mode
 let g:neoterm_autoinsert=1
 let g:neoterm_autoscroll=1
+call Nmap(g:IDE_mappings.REPLSend, "<Plug>(neoterm-repl-send)")
+call Vmap(g:IDE_mappings.REPLSend, "<Plug>(neoterm-repl-send)")
+call Nmap(g:IDE_mappings.REPLSendLine, "<Plug>(neoterm-repl-send-line)")
+call Nmap(g:IDE_mappings.REPLClear, ":Tclear<cr>")
 
 " Useful for REPL, but can also send the commands back to the other window.
 " Also dot repeatable.
