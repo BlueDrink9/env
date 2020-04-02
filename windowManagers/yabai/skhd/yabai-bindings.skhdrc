@@ -220,6 +220,11 @@ manage < shift - 8 : yabai -m window --space 8
 # focus monitor
 cmd + alt - 0x21  : yabai -m display --focus prev # left bracket
 cmd + alt - 0x1E  : yabai -m display --focus next # right bracket
+cmd + alt - h  : yabai -m display --focus prev
+cmd + alt - l  : yabai -m display --focus next
+manage < cmd + alt - h  : yabai -m display --focus prev
+manage < cmd + alt - l  : yabai -m display --focus next
+manage < cmd - 0x1E  : yabai -m display --focus next # right bracket
 manage < cmd - 0x21  : yabai -m display --focus prev # left bracket
 manage < cmd - 0x1E  : yabai -m display --focus next # right bracket
 cmd + alt - 1  : yabai -m display --focus 1
