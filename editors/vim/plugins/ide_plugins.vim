@@ -249,6 +249,9 @@ endif
 if executable('jupytext')
     Plug 'goerz/jupytext.vim'
     let g:jupytext_fmt = 'py:percent'
+    " Override normal autosave with nested one, so it triggers update instead
+    " of erasing buffer.
+    autocmd myIDE bufenter *.ipynb au myVimrc FocusLost,InsertLeave,BufLeave * ++nested call Autosave()
 endif
 
 " {]} ------ Python ------
