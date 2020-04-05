@@ -249,9 +249,26 @@ endif
 if executable('jupytext')
     Plug 'goerz/jupytext.vim'
     let g:jupytext_fmt = 'py:percent'
-    " Override normal autosave with nested one, so it triggers update instead
-    " of erasing buffer.
-    autocmd myIDE bufenter *.ipynb au myVimrc FocusLost,InsertLeave,BufLeave * ++nested call Autosave()
+    function! s:jupytextSetup()
+        function! GetJupytextFold(linenum)
+            if getline(a:linenum) =~ "^#\\s%%"
+                " start fold
+                return ">1"
+            elseif getline(a:linenum) =~ "^\\s*$"
+                return "<1"
+            else
+                return "-1"
+            endif
+        endfunction
+        " Override normal autosave with nested one, so it triggers update instead
+        " of erasing buffer.
+        au! myVimrc FocusLost,InsertLeave,BufLeave *
+        au myVimrc FocusLost,InsertLeave,BufLeave * ++nested call Autosave()
+        " syn region myFold start="# %%" end="\r" transparent fold
+        setlocal foldexpr=GetJupytextFold(v:lnum)
+        setlocal foldmethod=expr
+    endfunction
+    autocmd myIDE bufenter *.ipynb ++nested call s:jupytextSetup()
 endif
 
 " {]} ------ Python ------
