@@ -268,7 +268,7 @@ if executable('jupytext')
         setlocal foldexpr=GetJupytextFold(v:lnum)
         setlocal foldmethod=expr
     endfunction
-    autocmd myIDE bufenter *.ipynb ++nested call s:jupytextSetup()
+    autocmd myIDE bufreadpost *.ipynb ++nested call s:jupytextSetup()
 endif
 
 " {]} ------ Python ------
