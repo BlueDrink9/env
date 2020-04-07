@@ -1,5 +1,7 @@
 # Put this line after bindings, otherwise any set bindings will be overridden.
 bindkey -v
+# Otherwise backspace doesn't delete previous entries, like vi (not vim).
+bindkey -v '^?' backward-delete-char
 bindkey -M viins 'kv' vi-cmd-mode
 bindkey -M viins 'vk' vi-cmd-mode
 bindkey -M viins '^[' vi-cmd-mode
