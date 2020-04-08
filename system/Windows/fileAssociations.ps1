@@ -46,6 +46,8 @@ $plaintextExtensions = @(
     "class",
     "java",
     "R",
+    "rmd",
+    "rnoweb",
     "lisp",
     "php",
     "json",
@@ -75,7 +77,7 @@ $plaintextEditMenuFTs = @(
         "AutoHotkeyScript",
         "Python.File",
         "Microsoft.PowerShellScript.1",
-        "XML Document",
+        "xmlfile",
         "VBSFile"
 )
 
