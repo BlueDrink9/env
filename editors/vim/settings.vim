@@ -472,7 +472,7 @@ autocmd myVimrc BufEnter,Bufwrite * call s:SetTitle()
 autocmd myVimrc BufEnter {} setlocal ft=scratch
 " Autoset new named buffers to scratch if no other specified
 autocmd myVimrc BufNewFile * filetype detect | if &filetype == "" | setlocal ft=scratch | endif
-autocmd filetype scratch setlocal spell | setl ai
+autocmd myVimrc filetype scratch setlocal spell | setl ai
 " Pre-existing files without clear ft: use conf. Gives hash comments,
 " highlights strings. Works for lots of small files.
 autocmd myVimrc FileType {} setlocal ft=conf
