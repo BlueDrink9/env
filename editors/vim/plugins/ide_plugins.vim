@@ -268,7 +268,8 @@ if executable('jupytext')
         setlocal foldexpr=GetJupytextFold(v:lnum)
         setlocal foldmethod=expr
     endfunction
-    autocmd myIDE bufreadpost *.ipynb ++nested call s:jupytextSetup()
+    " Bufread does't work because the plugin overrides bufreadcmd.
+    autocmd myIDE BufWinEnter *.ipynb ++nested call s:jupytextSetup()
 endif
 
 " {]} ------ Python ------
