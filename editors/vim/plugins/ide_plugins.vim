@@ -252,13 +252,15 @@ if executable('jupytext')
     Plug 'goerz/jupytext.vim'
     let g:jupytext_fmt = 'py:percent'
     function! s:jupytextSetup()
-        function! GetJupytextFold(linenum)
+        function! GetJupytextPercentFold(linenum)
             if getline(a:linenum) =~ "^#\\s%%"
-                " start fold
+                " start fold at # %%
                 return ">1"
-            elseif getline(a:linenum) =~ "^\\s*$"
+            elseif getline(a:linenum+1) =~ "^#\\s%%"
+                " end fold at the line before the next # %%
                 return "<1"
             else
+                " keep the previous foldlevel
                 return "-1"
             endif
         endfunction
@@ -267,7 +269,7 @@ if executable('jupytext')
         au! myVimrc FocusLost,InsertLeave,BufLeave *
         au myVimrc FocusLost,InsertLeave,BufLeave * ++nested call Autosave()
         " syn region myFold start="# %%" end="\r" transparent fold
-        setlocal foldexpr=GetJupytextFold(v:lnum)
+        setlocal foldexpr=GetJupytextPercentFold(v:lnum)
         setlocal foldmethod=expr
     endfunction
     " Bufread does't work because the plugin overrides bufreadcmd.
