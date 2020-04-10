@@ -269,11 +269,11 @@ if executable('jupytext')
         au! myVimrc FocusLost,InsertLeave,BufLeave *
         au myVimrc FocusLost,InsertLeave,BufLeave * ++nested call Autosave()
         " syn region myFold start="# %%" end="\r" transparent fold
-        setlocal foldexpr=GetJupytextPercentFold(v:lnum)
         setlocal foldmethod=expr
     endfunction
-    " Bufread does't work because the plugin overrides bufreadcmd.
+    " Bufread does't work because the plugin overrides bufreadcmd?
     autocmd myIDE BufWinEnter *.ipynb ++nested call s:jupytextSetup()
+    autocmd myIDE bufread *.ipynb setlocal foldexpr=GetJupytextPercentFold(v:lnum)
 endif
 
 " {]} ------ Python ------
