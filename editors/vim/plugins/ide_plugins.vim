@@ -1,6 +1,8 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
 
+" AI-powered completion and snippets for python. Very cool-looking.
+" https://github.com/kiteco/vim-plugin
 let s:scriptdir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 augroup myIDE
     au!
