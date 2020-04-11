@@ -14,7 +14,7 @@ augroup end
 Plug 'wellle/context.vim'
 let g:context_filetype_blacklist = []
 let g:context_add_autocmds = 1
-" exec "Plug 'rhysd/vim-grammarous', { 'for': " . g:proseFileTypes . " }"
+" Plug 'rhysd/vim-grammarous', { 'for': g:proseFileTypes }
 " Brilliant for projects with lots of similar files. Check out config
 Plug 'https://github.com/tpope/vim-projectionist'
 " Filetype can change within files.

@@ -125,12 +125,13 @@ if !filereadable(s:vimplug_file)
     autocmd myPlugins VimEnter * PlugInstall
 endif
 
-"
-let g:proseFileTypes = "'latex,context,plaintex,tex,
-            \markdown,mkd,
-            \text,textile,
-            \git,gitsendemail,
-            \mail'"
+
+let g:proseFileTypes = ["latex","context","plaintex","tex",
+            \"markdown","mkd",
+            \"text","textile",
+            \"git","gitsendemail",
+            \"mail",
+            \]
 
 if !filereadable(s:localPlugins)
     new

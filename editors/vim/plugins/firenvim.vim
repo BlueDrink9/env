@@ -73,7 +73,7 @@ function! s:firenvimSetup()
     " colorscheme PaperColor
     colorscheme github
     set colorcolumn=0
-    if &lines < 18
+    if &lines < 20
         let g:loaded_airline = 1
         silent! AirlineToggle
         " See neovim #1004

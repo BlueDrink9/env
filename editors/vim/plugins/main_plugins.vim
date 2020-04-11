@@ -203,7 +203,7 @@ if HasPython() && executable('pfp')
 endif
 
 " Limelight Looks really nice, esp for prose. Highlight slightly current paragraph.
-exec "Plug 'junegunn/limelight.vim', { 'for': " . g:proseFileTypes . ", 'on': 'Limelight' }"
+Plug 'junegunn/limelight.vim', { 'for': g:proseFileTypes, 'on': 'Limelight' }
 " Alternative is vim-sleuth, which seems overzealous.
 " This plugin has several forks. I am using the most updated one, but may be
 " worth playing with them.
@@ -271,7 +271,9 @@ Plug 'https://github.com/kana/vim-textobj-user'
 " See https://github.com/kana/vim-textobj-user/wiki for more, esp for
 " lang-specific.
 " Expands what a sentence/word is for prose.
-exec "Plug 'https://github.com/reedes/vim-textobj-sentence', { 'for': " . g:proseFileTypes . " }" 
+Plug 'https://github.com/reedes/vim-textobj-sentence', { 'for': g:proseFileTypes }
+" Called by vim-plug when this is loaded.
+autocmd! User vim-textobj-sentence call textobj#sentence#init()
 " Adds il, al. Alternatively, '_' is the official object for the current line.
 Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-entire'
@@ -537,14 +539,14 @@ endif
 " {[} ---------- Prose ----------
 
 " Better prose spellchecking
-exec "Plug 'https://github.com/reedes/vim-lexical', { 'for': " . g:proseFileTypes . " }"
+Plug 'https://github.com/reedes/vim-lexical', { 'for': g:proseFileTypes }
 let g:lexical#spell_key = '<localleader>ls'
 let g:lexical#thesaurus_key = '<localleader>lt'
 let g:lexical#dictionary_key = '<localleader>ld'
 
 " Alternative to pencil, but modular if you want it.
-" exec "Plug 'https://github.com/vim-pandoc/vim-pandoc', { 'for': " . g:proseFileTypes . " }"
-" exec "Plug 'https://github.com/vim-pandoc/vim-pandoc-syntax', { 'for': " . g:proseFileTypes . " }"
+" Plug 'https://github.com/vim-pandoc/vim-pandoc', { 'for': g:proseFileTypes }
+" Plug 'https://github.com/vim-pandoc/vim-pandoc-syntax', { 'for': g:proseFileTypes }
 " Plug 'https://github.com/vim-pandoc/vim-rmarkdown', {'for': 'rmd' }
 " Pencil loaded in lite, for scratch.
 " Plug 'https://github.com/reedes/vim-pencil'
@@ -570,17 +572,16 @@ let g:pencil#autoformat_blacklist = [
 function! SetProseOptions()
     " Add dictionary completion. Requires setting 'dictionary' option.
     setlocal complete+=k
-    " Is this actually running these functions though?
-    " call AutoCorrect()
-    " call textobj#sentence#init()
-    autocmd myPlugins User pluginSettingsToExec call AutoCorrect()
-    autocmd myPlugins User pluginSettingsToExec call textobj#sentence#init()
     " Default spelling lang is En, I want en_nz.
     if &spelllang == "en"
         " Custom lang not set.
         setl spell spl=en_nz
     endif
     call pencil#init()
+    " Undo pencil mappings to stop them overriding my own (since they are
+    " buffer maps, they take precedence even though mine were mapped later)
+    unmap <buffer> <up>
+    unmap <buffer> <down>
     setl ai
 endfunction
 
@@ -630,8 +631,6 @@ endfunction
 " autocmd myPlugins Filetype *tex set foldmethod=expr
 autocmd myPlugins Filetype tex :call SetVimtexMappings()
 " {]} ---------- Vimtex ----------
-
-exec 'autocmd myPlugins Filetype ' . g:proseFileTypes . ' call SetProseOptions()'
 
 " {[} ---------- Markdown Preview ----------
 if (has('nvim') || v:version >= 801) && !has('win32')
