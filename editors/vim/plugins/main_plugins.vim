@@ -690,6 +690,7 @@ call Nmap(g:IDE_mappings.REPLSend, "<Plug>(neoterm-repl-send)")
 call Vmap(g:IDE_mappings.REPLSend, "<Plug>(neoterm-repl-send)")
 call Nmap(g:IDE_mappings.REPLSendLine, "<Plug>(neoterm-repl-send-line)")
 call Nmap(g:IDE_mappings.REPLClear, ":Tclear<cr>")
+call Nmap(g:IDE_mappings.REPLClose, ":Tclose<cr>")
 
 " Useful for REPL, but can also send the commands back to the other window.
 " Also dot repeatable.

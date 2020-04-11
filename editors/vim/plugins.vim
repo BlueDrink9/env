@@ -15,6 +15,7 @@ augroup end
 " let g:python3_host_prog = '/usr/bin/python3'
 " let g:node_host_prog = '/usr/bin/node'
 
+" {[} ------ Disable built-in plugins ------
 " " Disable vim distribution plugins
 " let g:loaded_getscript = 1
 " let g:loaded_getscriptPlugin = 1
@@ -33,6 +34,7 @@ augroup end
 " let g:loaded_vimballPlugin = 1
 " let g:loaded_zip = 1
 " let g:loaded_zipPlugin = 1
+" {]} ------ Disable built-in plugins ------
 
 " {[} Settings and dir creation
 " Skip loading this file entirely.
@@ -53,6 +55,7 @@ let g:IDE_mappings = {
             \ "REPLSendAndInsert" : "<leader>si",
             \ "REPLClear" : "<leader>sc",
             \ "REPLCancel" : "<leader>s<c-c>",
+            \ "REPLClose" : "<leader>sx",
             \ "make" : "<leader>im",
             \ "allActions" : "<leader>ia",
             \ "allCommands" : "<leader>ic",
