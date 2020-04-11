@@ -753,7 +753,9 @@ else
     export COLOURSCHEME="${1:-$COLOURSCHEME}"
     theme="$(echo $COLOURSCHEME | tr '_' '-')"
     base16_theme_dir="$XDG_CONFIG_HOME/base16-shell/scripts"
-    _base16 "$base16_theme_dir/base16-$theme.sh" $theme
+    if command -v _base16 > /dev/null 2>&1; then
+      _base16 "$base16_theme_dir/base16-$theme.sh" $theme
+    fi
     unset theme
   }
   base16Reset(){
