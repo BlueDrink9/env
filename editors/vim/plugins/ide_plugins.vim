@@ -25,18 +25,14 @@ Plug 'Shougo/context_filetype.vim'
 " Autocomplete from other tmux panes' text
 Plug 'https://github.com/wellle/tmux-complete.vim'
 if has("timers")
-    " Inertial scrolling, easier to see jump movement.
-    Plug 'https://github.com/yuttie/comfortable-motion.vim'
-    noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
-    noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
     " Alternative, may be done better.
-    " Plug 'https://github.com/terryma/vim-smooth-scroll'
-    " noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-    " noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-    " noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-    " noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
-    " noremap <silent> <ScrollWheelDown> :call smooth_scroll#up(&scroll, 0, 1)<CR>
-    " noremap <silent> <ScrollWheelUp>   :call smooth_scroll#down(&scroll, 0, 1)<CR>
+    Plug 'https://github.com/terryma/vim-smooth-scroll'
+    noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+    noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+    noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+    noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+    noremap <silent> <ScrollWheelDown> :call smooth_scroll#up(&scroll, 0, 1)<CR>
+    noremap <silent> <ScrollWheelUp>   :call smooth_scroll#down(&scroll, 0, 1)<CR>
 endif
 
 if v:version >= 703
