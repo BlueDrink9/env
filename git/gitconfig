@@ -37,6 +37,8 @@
 	search = "log --pickaxe-regex -p --color-words -S"
   ls = log --oneline
   atag = tag -a
+  merge-into = !sh -c '_CURRENT_BRANCH=$(git symbolic-ref --short HEAD) && git checkout $1 && git merge $_CURRENT_BRANCH && unset _CURRENT_BRANCH -'
+
 
 [credential]
   helper = cache --timeout=3600
