@@ -231,12 +231,16 @@ cmd + alt - 1  : yabai -m display --focus 1
 cmd + alt - 2  : yabai -m display --focus 2
 cmd + alt - 3  : yabai -m display --focus 3
 # send window to monitor
+alt + shift + cmd - 0x21  : yabai -m window --display prev
+alt + shift + cmd - 0x1E  : yabai -m window --display next
 manage < shift + cmd - 0x21  : yabai -m window --display prev
 manage < shift + cmd - 0x1E  : yabai -m window --display next
 manage < shift + cmd - 1  : yabai -m window --display 1
 manage < shift + cmd - 2  : yabai -m window --display 2
 manage < shift + cmd - 3  : yabai -m window --display 3
 # send window to monitor and follow focus
+alt + ctrl + cmd - 0x21  : yabai -m window --display prev; yabai -m display --focus prev
+alt + ctrl + cmd - 0x1E  : yabai -m window --display next; yabai -m display --focus next
 manage < ctrl + cmd - 0x21  : yabai -m window --display prev; yabai -m display --focus prev
 manage < ctrl + cmd - 0x1E  : yabai -m window --display next; yabai -m display --focus next
 manage < ctrl + cmd - 1     : yabai -m window --display 1;    yabai -m display --focus 1
