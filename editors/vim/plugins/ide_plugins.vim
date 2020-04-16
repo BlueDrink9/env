@@ -31,8 +31,8 @@ if has("timers")
     noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
     noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
     noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
-    noremap <silent> <ScrollWheelDown> :call smooth_scroll#up(&scroll, 0, 1)<CR>
-    noremap <silent> <ScrollWheelUp>   :call smooth_scroll#down(&scroll, 0, 1)<CR>
+    noremap <silent> <ScrollWheelUp>   :call smooth_scroll#up(&scroll, 0, 1)<CR>
+    noremap <silent> <ScrollWheelDown> :call smooth_scroll#down(&scroll, 0, 1)<CR>
 endif
 
 if v:version >= 703
