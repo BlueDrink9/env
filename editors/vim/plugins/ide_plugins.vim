@@ -27,12 +27,21 @@ Plug 'https://github.com/wellle/tmux-complete.vim'
 if has("timers")
     " Alternative, may be done better.
     Plug 'https://github.com/terryma/vim-smooth-scroll'
-    noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-    noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-    noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-    noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
-    noremap <silent> <ScrollWheelUp>   :call smooth_scroll#up(&scroll, 0, 1)<CR>
-    noremap <silent> <ScrollWheelDown> :call smooth_scroll#down(&scroll, 0, 1)<CR>
+    function! s:mapSmoothScroll(map, goUp, distance, linesPerFrame)
+        let l:frameDuration=0
+        let l:updown = a:goUp ? "up" : "down"
+        exec 'noremap <silent> ' . a:map . ':call smooth_scroll#' . l:updown . '('
+                    \ . a:distance . ','
+                    \ . l:frameDuration . ','
+                    \ . a:linesPerFrame . ')<CR>'
+    endfunction
+    call s:mapSmoothScroll("<c-u>", v:true, &scroll, 2)
+    call s:mapSmoothScroll("<c-d>", v:false, &scroll, 2)
+    call s:mapSmoothScroll("<c-d>", v:false, &scroll, 2)
+    call s:mapSmoothScroll("<c-b>", v:true, &scroll*2, 4)
+    call s:mapSmoothScroll("<c-f>", v:false, &scroll*2, 4)
+    call s:mapSmoothScroll("<ScrollWheelUp>", v:true, &scroll, 1)
+    call s:mapSmoothScroll("<ScrollWheelDown>", v:false, &scroll, 1)
 endif
 
 if v:version >= 703
