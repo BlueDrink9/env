@@ -8,7 +8,7 @@ caskroom/cask/oni
 caskroom/cask/iterm2
 caskroom/cask/bitbar
 --HEAD universal-ctags/universal-ctags/universal-ctags
-chunkwm
+yabai
 skhd
 coreutils
 gcc
