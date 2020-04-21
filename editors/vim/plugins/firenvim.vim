@@ -46,26 +46,20 @@ endfor
 
 " The following options should only run for firenvim instances.
 if !exists('g:started_by_firenvim')
-  finish
+    finish
 endif
-
-function! s:isConnectedToFirenvim(channel)
-    let l:ui = nvim_get_chan_info(a:channel)
-    if !(has_key(l:ui, 'client') &&
-                \ has_key(l:ui.client, 'name') &&
-                \ l:ui.client.name ==# 'Firenvim')
-        return v:false
-    endif
-    return v:true
-endfunction
+autocmd myPlugins User pluginSettingsToExec call s:onFirenvimLoad()
 
 function! s:onFirenvimLoad()
-  " call feedkeys("\<C-L>", 'n')
-  " call s:firenvimSetup()
+    " call feedkeys("\<C-L>", 'n')
+    call s:firenvimSetup()
 endfunction
 
 function! s:firenvimSetup()
-  " We are in firenvim
+    " We are in firenvim
+    let s:debugMessages = []
+    autocmd myPlugins UIEnter * echom join(s:debugMessages, "\n")
+    " call add(s:debugMessages, 'setup')
     let g:hasGUI=1
     call SetGFN(12)
     set termguicolors
@@ -126,6 +120,8 @@ function! s:FirenvimSetPageOptions()
     elseif l:bufname =~? 'stackexchange.com' || l:bufname =~? 'stackoverflow.com'
         set ft=markdown
     elseif l:bufname =~? 'slack.com' || l:bufname =~? 'gitter.com'
+        call add(s:debugMessages, 'slack')
+        set ft=markdown
         " for chat apps. Enter sents the message and deletes the buffer.
         " Shift enter is normal return. Insert mode by default.
         normal! i
@@ -133,6 +129,3 @@ function! s:FirenvimSetPageOptions()
         inoremap <s-CR> <CR>
     endif
 endfunction
-
-autocmd myPlugins User pluginSettingsToExec call s:firenvimSetup()
-autocmd myPlugins UIEnter * if s:isConnectedToFirenvim(deepcopy(v:event.chan)) | call s:onFirenvimLoad() | endif
