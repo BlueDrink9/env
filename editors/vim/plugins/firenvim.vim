@@ -55,17 +55,17 @@ function! s:onFirenvimLoad()
     call s:firenvimSetup()
 endfunction
 
+let s:debugMessages = []
 function! s:firenvimSetup()
     " We are in firenvim
-    let s:debugMessages = []
-    autocmd myPlugins UIEnter * echom join(s:debugMessages, "\n")
+    autocmd myPlugins BufEnter * echom join(s:debugMessages, "\n")
     " call add(s:debugMessages, 'setup')
     let g:hasGUI=1
     call SetGFN(12)
     set termguicolors
     call add(g:customHLGroups, 'EndOfBuffer guifg=guibg')
     " colorscheme PaperColor
-    colorscheme github
+    " colorscheme github
     set colorcolumn=0
     if &lines < 20
         let g:loaded_airline = 1
@@ -98,21 +98,24 @@ function! s:firenvimSetup()
     nnoremap <C-z> :call firenvim#hide_frame()<cr>
     nnoremap <Esc><Esc><Esc> :call firenvim#focus_page()<CR>
     au! myVimrc FocusLost,InsertLeave,BufLeave * ++nested call Autosave()
-    autocmd myPlugins BufNewFile *.txt call s:FirenvimSetPageOptions()
+    autocmd myPlugins BufEnter *.txt call s:FirenvimSetPageOptions()
 endfunction
 
 function! s:FirenvimSetPageOptions()
     let l:bufname=expand('%:t')
+    " set background=dark
+    " Use <LT>CR> to escape the CR and send it as a string, rather than
+    " including it in the mapping. Needed for mapping to press_keys.
     if l:bufname =~? 'github.com'
         colorscheme github
         set ft=markdown
         " C-CR to send comment.
-        l:githubSendComment="<Esc>:w<CR>:call firenvim#press_keys("<tab><tab><tab>CR>")<CR>ggdGa"
-        exec 'inoremap <C-CR> ' . l:githubSendComment
-        exec 'nnoremap <C-CR> ' . l:githubSendComment
+        " l:githubSendComment="<Esc>:w<CR>:call firenvim#press_keys('<tab><tab><tab><CR>')<CR>ggdGa"
+        " exec 'inoremap <buffer> <C-CR> ' . l:githubSendComment
+        " exec 'nnoremap <buffer> <C-CR> ' . l:githubSendComment
     elseif l:bufname =~? 'cocalc.com' || l:bufname =~? 'kaggleusercontent.com'
         set ft=python
-    elseif l:bufname =~? 'localhost'
+    elseif l:bufname =~? 'localhost' || l:bufname =~? '127.0.0.1'
         " Assume Jupyter notebook.
         set ft=python
     elseif l:bufname =~? 'reddit.com'
@@ -120,12 +123,13 @@ function! s:FirenvimSetPageOptions()
     elseif l:bufname =~? 'stackexchange.com' || l:bufname =~? 'stackoverflow.com'
         set ft=markdown
     elseif l:bufname =~? 'slack.com' || l:bufname =~? 'gitter.com'
-        call add(s:debugMessages, 'slack')
         set ft=markdown
         " for chat apps. Enter sents the message and deletes the buffer.
         " Shift enter is normal return. Insert mode by default.
         normal! i
-        inoremap <CR> <Esc>:w<CR>:call firenvim#press_keys("<LT>CR>")<CR>ggdGa
-        inoremap <s-CR> <CR>
+        " Use buffer mappings to ensure they override other mappings.
+        " Note: slack doesn't actually respond to press_keys (see firenvim readme).
+        inoremap <buffer> <CR> <Esc>:w<CR>:call firenvim#press_keys("<LT>CR>")<CR>ggdGa
+        imap <buffer> <s-CR> <CR>
     endif
 endfunction
