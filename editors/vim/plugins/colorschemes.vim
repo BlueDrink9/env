@@ -65,7 +65,6 @@ let g:jellybeans_overrides = {
 \    'background': { 'guibg': '000000' },
 \}
 
-
 " {[} ---------- Base16 ----------
 " If using a Base16 terminal theme designed to keep the 16 ANSI colors intact (a "256" variation) and have sucessfully modified your 256 colorspace with base16-shell you'll need to add the following to your ~/.vimrc before the colorsheme declaration.
 " Should override COLOURSCHEME settings by setting colorSch
@@ -119,10 +118,8 @@ endif
 
 " {]}
 
-" exec so variables are set at the right time (after plugin
-" load).
+" exec so variables are set at the right time (after plugin load).
 autocmd myPlugins User pluginSettingsToExec exec 'colorscheme ' . colorSch
-" autocmd myPlugins User pluginSettingsToExec exec 'echom colorSch'
 call add (g:customHLGroups, "MatchParen cterm=bold,underline ctermbg=lightgray")
 call add (g:customHLGroups, "MatchParen gui=bold,underline guibg=gray90")
 " call add (g:customHLGroups, "link MatchParen CursorColumn")

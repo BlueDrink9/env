@@ -50,6 +50,9 @@ endfor
 if !exists('g:started_by_firenvim')
     finish
 endif
+" Fix odd bug that sometimes stops firenvim loading the text if setting a
+" colourscheme from a plugin. Will be overridden in setup anyway.
+let g:colorSch='default'
 autocmd myPlugins User pluginSettingsToExec call s:onFirenvimLoad()
 
 function! s:onFirenvimLoad()

@@ -23,7 +23,7 @@ endif
 let g:defaultColorSch="morning"
 
 
-if has("gui_running") || exists("g:gui_oni")
+if has("gui_running") || exists("g:gui_oni") || exists("g:started_by_firenvim")
     let g:hasGUI=1
 else
     let g:hasGUI=0
