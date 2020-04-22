@@ -73,7 +73,7 @@ function! s:firenvimSetup()
     set termguicolors
     call add(g:customHLGroups, 'EndOfBuffer guifg=guibg')
     " colorscheme PaperColor
-    " colorscheme github
+    colorscheme github
     set colorcolumn=0
     if &lines < 20
         let g:loaded_airline = 1
