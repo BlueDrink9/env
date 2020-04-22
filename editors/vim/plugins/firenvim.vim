@@ -58,8 +58,10 @@ endfunction
 let s:debugMessages = []
 function! s:firenvimSetup()
     " We are in firenvim
+    " For debug messages during startup. After startup, use echom.
     autocmd myPlugins BufEnter * echom join(s:debugMessages, "\n")
     " call add(s:debugMessages, 'setup')
+    inoremap <C-CR> <esc>:wq<cr>
     let g:hasGUI=1
     call SetGFN(12)
     set termguicolors
@@ -103,16 +105,11 @@ endfunction
 
 function! s:FirenvimSetPageOptions()
     let l:bufname=expand('%:t')
-    " set background=dark
     " Use <LT>CR> to escape the CR and send it as a string, rather than
     " including it in the mapping. Needed for mapping to press_keys.
     if l:bufname =~? 'github.com'
         colorscheme github
         set ft=markdown
-        " C-CR to send comment.
-        " l:githubSendComment="<Esc>:w<CR>:call firenvim#press_keys('<tab><tab><tab><CR>')<CR>ggdGa"
-        " exec 'inoremap <buffer> <C-CR> ' . l:githubSendComment
-        " exec 'nnoremap <buffer> <C-CR> ' . l:githubSendComment
     elseif l:bufname =~? 'cocalc.com' || l:bufname =~? 'kaggleusercontent.com'
         set ft=python
     elseif l:bufname =~? 'localhost' || l:bufname =~? '127.0.0.1'
