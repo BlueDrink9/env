@@ -1,9 +1,10 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
-
-" Installation {[}
 " plugin firenvim in chrome and firefox.
 " Open textframes in nvim, similar to wasavi.
+
+" Installation {[}
+
 " if has('win32')
 "     let s:startup_prologue='"set LITE_SYSTEM=1"'
 " else
@@ -39,6 +40,7 @@ let s:fc = g:firenvim_config['localSettings']
 let s:disabled_sites=[
             \ 'docs.google.com*',
             \ 'facebook.com*',
+            \ 'twitter.com*',
             \ ]
 for site in s:disabled_sites
     let s:fc[site] = { 'priority': 1, 'selector': '', 'takeover': 'never' }
