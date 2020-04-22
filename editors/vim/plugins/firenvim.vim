@@ -65,7 +65,8 @@ function! s:firenvimSetup()
     " call add(s:debugMessages, 'setup')
     inoremap <C-CR> <esc>:wq<cr>
     let g:hasGUI=1
-    call SetGFN(12)
+    " Tested to match github default size on osx chrome.
+    call SetGFN(11)
     set termguicolors
     call add(g:customHLGroups, 'EndOfBuffer guifg=guibg')
     " colorscheme PaperColor
