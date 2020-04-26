@@ -405,6 +405,13 @@ nnoremap g= :Neoformat<CR>
 " {]} ---------- IDE----------
 
 " {[} ---------- Debugging ----------
+" :UnstackFromClipboard to take a stack trace from the clipboard and open the
+" relevant function calls in their own splits
+Plug 'https://github.com/mattboehm/vim-unstack'
+" IDK what mapping to use here.
+let g:unstack_mapkey=<F2>
+" Top to bottom splits
+let g:unstack_layout = "portrait"
 " Vimspector requires vim 8.1 with this patch.
 if has("patch-8.1-1264") || has('nvim')
     " Just install all available plugins for now...
