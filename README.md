@@ -97,6 +97,8 @@ Not everything works in every context.
 | Use monocle/tabbed layout | `%<S-m>` |
 | Float next window | `%<c-u>` |
 | Focus [next,prev] desktop | `<#-[[,]]>` |
+| Focus desktop [number] | `<#-[number]>` |
+| Focus previously focussed desktop (`^`) | `<#-S-6>` |
 | Focus [prev,next] monitor | `<#-A-[[,]]>` |
 | Move pane to [next,prev] desktop | `<S-#-[[,]]>` |
 | Move pane to [next,prev] desktop and focus | `%<[[,]]>` |

@@ -182,6 +182,7 @@ alt + ctrl - 0x1E  : yabai -m window --space next; yabai -m space --focus next
 manage < 0x21 : yabai -m window --space prev; yabai -m space --focus prev
 manage < 0x1E : yabai -m window --space next; yabai -m space --focus next
 
+alt + shift - 6 : yabai -m space --focus recent  # ^
 alt - 1 : yabai -m space --focus 1
 alt - 2 : yabai -m space --focus 2
 alt - 3 : yabai -m space --focus 3
