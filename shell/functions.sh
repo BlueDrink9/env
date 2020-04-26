@@ -727,13 +727,13 @@ if [ "$TERM" = "xterm-kitty" ] && [ -z "$SSHSESSION" ]; then
       done
     fi
     if [ -n "$theme_path" ]; then
-      kitty @ set-colors "${theme_path}" # 2>> ~/.logs/kitty.log
+      kitty @ set-colors --all "${theme_path}" # 2>> ~/.logs/kitty.log
       export COLOURSCHEME="${colourscheme}"
     fi
     unset arg colourscheme current_theme theme_path
   }
   kittyColourReset(){
-    kitty @ set-colors "${DOTFILES_DIR}/terminal/kitty/solarized_light.conf"
+    kitty @ set-colors --all "${DOTFILES_DIR}/terminal/kitty/solarized_light.conf"
     if [ -f "${KITTY_CURRENT_THEME_FILE}" ]; then
       rm "${KITTY_CURRENT_THEME_FILE}"
     fi
