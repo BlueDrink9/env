@@ -758,6 +758,16 @@ if [ "$TERM" = "xterm-kitty" ] && [ -z "$SSHSESSION" ]; then
   #{]} Kitty theme
 else
   #{[} base16 theme
+  # Added by base16, normally in bashrc. Now called by `theme` call in profile.
+  if [ -z "${BASE16_SHELL}" ]; then
+    BASE16_SHELL="$HOME/.config/base16-shell/"
+  fi
+  if [ -d "${BASE16_SHELL}" ]; then
+    [ -n "$PS1" ] && \
+      [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+      eval "$("$BASE16_SHELL/profile_helper.sh")"
+  fi
+
   # Check if base16 scheme has been set, set COLOURSCHEME.
   base16_colourscheme_set(){
     export COLOURSCHEME="${1:-$COLOURSCHEME}"
