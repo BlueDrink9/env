@@ -709,27 +709,27 @@ if [ "$TERM" = "xterm-kitty" ] && [ -z "$SSHSESSION" ]; then
 
     # Expand $HOME etc. KITTY_THEME_DIR set from kitty.conf.
     export KITTY_THEME_DIR="$(eval "echo ${KITTY_THEME_DIR}")"
-    # If arg is same as current theme and that theme exists, we will use that theme.
+    # If arg is same as current theme and that theme exists, make note.
     if [ "$arg" = "$current_theme" ] && \
       [ -f "${KITTY_THEME_DIR}/${current_theme}" ]; then
-      set_theme="${KITTY_THEME_DIR}/${current_theme}"
+      theme_path="${KITTY_THEME_DIR}/${current_theme}"
     else
       KITTY_THEMES="$(ls "$KITTY_THEME_DIR" | tr '\n' ' ')"
       # Echo themes to force string splitting in zsh.
-      for theme in $(echo $KITTY_THEMES); do
-        if kittyThemeMatchesColourscheme "$theme" "$colourscheme"; then
-          kitty @ set-colors "${KITTY_THEME_DIR}/${theme}" # 2>> ~/.logs/kitty.log
+      for themeconf in $(echo $KITTY_THEMES); do
+        if kittyThemeMatchesColourscheme "$themeconf" "$colourscheme"; then
+          theme_path="${KITTY_THEME_DIR}/${themeconf}"
           mkdir -p "${XDG_CACHE_HOME}/kitty"
-          echo "${theme}" >| "${XDG_CACHE_HOME}/kitty/current_theme"
+          echo "${themeconf}" >| "${XDG_CACHE_HOME}/kitty/current_theme"
           break
         fi
       done
     fi
-    if [ -n "$set_theme" ]; then
-      kitty @ set-colors "${set_theme}"
+    if [ -n "$theme_path" ]; then
+      kitty @ set-colors "${theme_path}" # 2>> ~/.logs/kitty.log
       export COLOURSCHEME="${colourscheme}"
     fi
-    unset arg colourscheme current_theme set_theme
+    unset arg colourscheme current_theme theme_path
   }
   kittyColourReset(){
     kitty @ set-colors "${DOTFILES_DIR}/terminal/kitty/solarized_light.conf"
