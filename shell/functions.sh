@@ -688,6 +688,7 @@ alias csvCheck="headCSV"
 # {[} Theme
 if [ "$TERM" = "xterm-kitty" ] && [ -z "$SSHSESSION" ]; then
   #{[} Kitty theme
+  KITTY_CURRENT_THEME_FILE="${XDG_CACHE_HOME}/kitty/current_theme"
 
   kittyThemeMatchesColourscheme(){
     [ "$(echo $1 | tr '[:upper:]' '[:lower:]')" = "$2".conf ];
@@ -703,8 +704,8 @@ if [ "$TERM" = "xterm-kitty" ] && [ -z "$SSHSESSION" ]; then
     fi
 
     # Get current kitty theme from file
-    if [ -f "${XDG_CACHE_HOME}/kitty/current_theme" ]; then
-      current_theme="$(cat "${XDG_CACHE_HOME}/kitty/current_theme")"
+    if [ -f "${KITTY_CURRENT_THEME_FILE}" ]; then
+      current_theme="$(cat "${KITTY_CURRENT_THEME_FILE}")"
     fi
 
     # Expand $HOME etc. KITTY_THEME_DIR set from kitty.conf.
@@ -720,7 +721,7 @@ if [ "$TERM" = "xterm-kitty" ] && [ -z "$SSHSESSION" ]; then
         if kittyThemeMatchesColourscheme "$themeconf" "$colourscheme"; then
           theme_path="${KITTY_THEME_DIR}/${themeconf}"
           mkdir -p "${XDG_CACHE_HOME}/kitty"
-          echo "${themeconf}" >| "${XDG_CACHE_HOME}/kitty/current_theme"
+          echo "${themeconf}" >| "${KITTY_CURRENT_THEME_FILE}"
           break
         fi
       done
@@ -733,16 +734,16 @@ if [ "$TERM" = "xterm-kitty" ] && [ -z "$SSHSESSION" ]; then
   }
   kittyColourReset(){
     kitty @ set-colors "${DOTFILES_DIR}/terminal/kitty/solarized_light.conf"
-    if [ -f "${XDG_CACHE_HOME}/kitty/current_theme" ]; then
-      rm "${XDG_CACHE_HOME}/kitty/current_theme"
+    if [ -f "${KITTY_CURRENT_THEME_FILE}" ]; then
+      rm "${KITTY_CURRENT_THEME_FILE}"
     fi
   }
   theme(){
     if [ -n "$1" ]; then
       kittyColourSet "$1"
     else
-      if [ -f "${XDG_CACHE_HOME}/kitty/current_theme" ]; then
-        kittyColourSet "$(cat "${XDG_CACHE_HOME}/kitty/current_theme")"
+      if [ -f "${KITTY_CURRENT_THEME_FILE}" ]; then
+        kittyColourSet "$(cat "${KITTY_CURRENT_THEME_FILE}")"
       fi
     fi
   }
