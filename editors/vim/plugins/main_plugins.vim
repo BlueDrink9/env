@@ -227,6 +227,8 @@ if !exists('##TextYankPost')
 endif
 " -1 gives persistent highlight until edit or new yank.
 let g:highlightedyank_highlight_duration = 5000
+" Resizes splits proportionally when changing overall size
+Plug 'https://github.com/vim-scripts/ProportionalResize'
 " {]} ---------- Visual changes ----------
 
 " {[} View and session
