@@ -51,7 +51,6 @@ if substrInStr "kitty" "$TERM"; then
   COLORTERM="truecolor"
   USENF=${USENF:-1}
   TERM_PROGRAM="kitty"
-  if [ -n "$COLOURSCHEME" ] && [ -z "$SSHSESSION" ]; then kittyColourSet "$COLOURSCHEME"; fi
 elif substrInStr "Android" "$(uname -a)";  then
   # Termux
   export ISTERMUX=1
