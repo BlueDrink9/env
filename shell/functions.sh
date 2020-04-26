@@ -685,12 +685,16 @@ headCSV(){
 }
 alias csvCheck="headCSV"
 
+# {[} Theme
 if [ "$TERM" = "xterm-kitty" ] && [ -z "$SSHSESSION" ]; then
+  #{[} Kitty theme
   # Expand $HOME etc. KITTY_THEME_DIR set from kitty.conf.
   export KITTY_THEME_DIR="$(eval "echo ${KITTY_THEME_DIR}")"
   KITTY_THEMES="$(ls "$KITTY_THEME_DIR" | tr '\n' ' ')"
+
   kittyThemeMatchesColourscheme(){
-    [ "$(echo $1 | tr '[:upper:]' '[:lower:]')" = "$2".conf ]; }
+    [ "$(echo $1 | tr '[:upper:]' '[:lower:]')" = "$2".conf ];
+  }
   kittyColourSet(){
     arg="$1"
     if [ -z "$arg" ]; then return; fi
@@ -698,15 +702,19 @@ if [ "$TERM" = "xterm-kitty" ] && [ -z "$SSHSESSION" ]; then
     colourscheme="$(basename "$(echo $arg | tr '[:upper:]' '[:lower:]')" .conf)"
     # If already set for this session, return.
     if [ "$COLOURSCHEME" = "$colourscheme" ]; then
-      unset colourscheme arg; return; fi
+      unset colourscheme arg; return;
+    fi
+
+    # Get current kitty theme from file
     if [ -f "${XDG_CACHE_HOME}/kitty/current_theme" ]; then
       current_theme="$(cat "${XDG_CACHE_HOME}/kitty/current_theme")"
     fi
+
+    # If arg is same as current theme and that theme exists, we will use that theme.
     if [ "$arg" = "$current_theme" ] && \
       [ -f "${KITTY_THEME_DIR}/${current_theme}" ]; then
       set_theme="${KITTY_THEME_DIR}/${current_theme}"
     else
-
       # Echo themes to force string splitting in zsh.
       for theme in $(echo $KITTY_THEMES); do
         if kittyThemeMatchesColourscheme "$theme" "$colourscheme"; then
@@ -747,7 +755,9 @@ if [ "$TERM" = "xterm-kitty" ] && [ -z "$SSHSESSION" ]; then
     true
     # compdef _kittyColourSet kittyColourSet
   fi
+  #{]} Kitty theme
 else
+  #{[} base16 theme
   # Check if base16 scheme has been set, set COLOURSCHEME.
   base16_colourscheme_set(){
     export COLOURSCHEME="${1:-$COLOURSCHEME}"
@@ -775,7 +785,9 @@ else
     fi
   }
   notheme(){ kittyColourReset; }
+  #{]} base16 theme
 fi
+#{]} Theme
 
 hist-search(){
   searchterm="$1"
