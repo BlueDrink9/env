@@ -402,6 +402,9 @@ let test#strategy = "dispatch"
 " Doesn't state any requirements in readme...
 Plug 'https://github.com/sbdchd/neoformat'
 nnoremap g= :Neoformat<CR>
+" :Minimap to create a special buffer that gives an outline of the current
+" file, synced to where you scroll. Uses drawille library (braille unicode)
+Plug 'https://github.com/severin-lemaignan/vim-minimap'
 " {]} ---------- IDE----------
 
 " {[} ---------- Debugging ----------
