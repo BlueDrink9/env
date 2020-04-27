@@ -129,8 +129,8 @@ if !filereadable(s:vimplug_file)
 endif
 
 
-let g:proseFileTypes = ["latex","context","plaintex","tex",
-            \"markdown","mkd",
+let g:proseFileTypes = ["latex","context","plaintex","tex","rnoweb",
+            \"markdown","mkd","rmd",
             \"text","textile",
             \"git","gitsendemail",
             \"mail",
