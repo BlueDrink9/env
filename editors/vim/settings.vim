@@ -357,9 +357,13 @@ function! SmallUIOnResize()
         else
             set laststatus=2
             set showtabline=2
+            set noshowmode
         endif
     else
         set cmdheight=2
+        set laststatus=2
+        set showtabline=2
+        set noshowmode
     endif
 endfunction
 " Autocmd doesn't trigger on startup, only on change.
