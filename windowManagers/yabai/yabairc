@@ -35,7 +35,7 @@ yabai -m config window_border_radius         -1.0
 yabai -m config active_window_border_topmost off
 yabai -m config active_window_border_color   0xff$focused_border_color
 yabai -m config normal_window_border_color   0xff$unfocused_border_color
-yabai -m config insert_window_border_color   0xff$preselect_border_color
+yabai -m config insert_feedback_color   0xff$preselect_border_color
 
 # floating windows are always on top (default: off)
 yabai -m config window_topmost               off
