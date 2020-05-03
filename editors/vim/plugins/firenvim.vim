@@ -116,6 +116,8 @@ function! s:FirenvimSetPageOptions()
     if l:bufname =~? 'github.com'
         colorscheme github
         set ft=markdown
+        let l:clickCommentButtonJS = 'document.getElementById("partial-new-comment-form-actions").getElementsByClassName("btn btn-primary")[0].click();'
+        inoremap <buffer> <C-CR> :call firenvim#eval_js(l:clickCommentButtonJS)<cr>
     elseif l:bufname =~? 'cocalc.com' || l:bufname =~? 'kaggleusercontent.com'
         set ft=python
     elseif l:bufname =~? 'localhost' || l:bufname =~? '127.0.0.1'
