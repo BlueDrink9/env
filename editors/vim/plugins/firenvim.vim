@@ -110,14 +110,16 @@ function! s:firenvimSetup()
 endfunction
 
 function! s:FirenvimSetPageOptions()
+    " Use buffer mappings to ensure they override other mappings, even if
+    " unlikely to change buffers in firenvim. Also future-proofs.
     let l:bufname=expand('%:t')
     " Use <LT>CR> to escape the CR and send it as a string, rather than
     " including it in the mapping. Needed for mapping to press_keys.
     if l:bufname =~? 'github.com'
         colorscheme github
         set ft=markdown
-        let l:clickCommentButtonJS = 'document.getElementById("partial-new-comment-form-actions").getElementsByClassName("btn btn-primary")[0].click();'
-        inoremap <buffer> <C-CR> :call firenvim#eval_js(l:clickCommentButtonJS)<cr>
+        let l:clickSubmitButtonJS = 'document.getElementById("partial-new-comment-form-actions").getElementsByClassName("btn btn-primary")[0].click();'
+        inoremap <buffer> <C-CR> :call firenvim#eval_js(l:clickSubmitButtonJS)<cr>
     elseif l:bufname =~? 'cocalc.com' || l:bufname =~? 'kaggleusercontent.com'
         set ft=python
     elseif l:bufname =~? 'localhost' || l:bufname =~? '127.0.0.1'
@@ -127,14 +129,18 @@ function! s:FirenvimSetPageOptions()
         set ft=markdown
     elseif l:bufname =~? 'stackexchange.com' || l:bufname =~? 'stackoverflow.com'
         set ft=markdown
-    elseif l:bufname =~? 'slack.com' || l:bufname =~? 'gitter.com'
+    elseif l:bufname =~? 'slack.com' || l:bufname =~? 'gitter.im'
         set ft=markdown
-        " for chat apps. Enter sents the message and deletes the buffer.
+        " For chat apps. Enter sents the message and deletes the buffer.
         " Shift enter is normal return. Insert mode by default.
         normal! i
-        " Use buffer mappings to ensure they override other mappings.
-        " Note: slack doesn't actually respond to press_keys (see firenvim readme).
-        inoremap <buffer> <CR> <Esc>:w<CR>:call firenvim#press_keys("<LT>CR>")<CR>ggdGa
+        if l:bufname =~? 'slack.com'
+            " Requires the send button to be enabled for this workspace.
+            let l:clickSubmitButtonJS = 'document.getElementsByClassName("c-icon c-icon--paperplane-filled")[0].click();'
+            inoremap <buffer> <CR> <Esc>:w<CR>:call firenvim#eval_js(l:clickSubmitButtonJS)<CR>ggdGa
+        else
+            inoremap <buffer> <CR> <Esc>:w<CR>:call firenvim#press_keys("<LT>CR>")<CR>ggdGa
+        endif
         imap <buffer> <s-CR> <CR>
     endif
 endfunction
