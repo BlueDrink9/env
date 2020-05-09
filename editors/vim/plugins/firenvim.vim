@@ -74,6 +74,10 @@ function! s:firenvimSetup()
     call add(g:customHLGroups, 'EndOfBuffer guifg=guibg')
     " colorscheme PaperColor
     colorscheme github
+    " Cmd + v on osx
+    inoremap <D-v> <c-r>+
+    cnoremap <D-v> <c-r>+
+    vnoremap <D-c> "+y
     set colorcolumn=0
     if &lines < 20
         let g:loaded_airline = 1
