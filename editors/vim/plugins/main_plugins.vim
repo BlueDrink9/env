@@ -749,5 +749,5 @@ autocmd myPlugins BufRead * if isdirectory(@%) | exec 'NERDTree' | endif
 autocmd myPlugins bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 cabbrev nt NERDTreeToggle
-nnoremap _ NERDTreeToggle
+nnoremap _ :NERDTreeToggle<CR>
 " {]} ---------- NerdTree ----------
