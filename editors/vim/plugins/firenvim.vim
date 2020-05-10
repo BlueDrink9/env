@@ -139,6 +139,7 @@ function! s:FirenvimSetPageOptions()
         " Shift enter is normal return. Insert mode by default.
         normal! i
         if l:bufname =~? 'slack.com'
+            " slack doesn't actually respond to press_keys (see firenvim readme).
             " Requires the send button to be enabled for this workspace.
             let l:clickSubmitButtonJS = 'document.getElementsByClassName("c-icon c-icon--paperplane-filled")[0].click();'
             inoremap <buffer> <CR> <Esc>:w<CR>:call firenvim#eval_js(l:clickSubmitButtonJS)<CR>ggdGa
