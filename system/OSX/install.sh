@@ -10,7 +10,7 @@ eval "$(cat <<END
 do${installID}() {
     printErr "Enabling custom OSX settings..."
     source "$($SCRIPTDIR_CMD)/setup.sh"
-    addTextIfAbsent 'dofile(os.getenv("DOTFILES_DIR") .. "/misc/VimMode.spoon.lua")' ~/.hammerspoon/init.lua
+    addTextIfAbsent "dofile(\"$DOTFILES_DIR/misc/VimMode.spoon.lua\")" ~/.hammerspoon/init.lua
   }
 END
 )"
