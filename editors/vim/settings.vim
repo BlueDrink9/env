@@ -261,6 +261,8 @@ set suffixes+=.tmp,tags
 set display=lastline
 set diffopt+=vertical
 
+set previewheight=6
+
 if v:version >= 703
     if has('nvim')
         " Note that viminfo is an alias for &shada in nvim.
