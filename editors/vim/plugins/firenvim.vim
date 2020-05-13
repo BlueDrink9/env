@@ -50,6 +50,45 @@ endfor
 if !exists('g:started_by_firenvim')
     finish
 endif
+
+function! s:FirenvimSetPageOptions()
+    " Use buffer mappings to ensure they override other mappings, even if
+    " unlikely to change buffers in firenvim. Also future-proofs.
+    let l:bufname=expand('%:t')
+    " Use <LT>CR> to escape the CR and send it as a string, rather than
+    " including it in the mapping. Needed for mapping to press_keys.
+    if l:bufname =~? 'github.com'
+        colorscheme github
+        set ft=markdown
+        let l:clickSubmitButtonJS = 'document.getElementById("partial-new-comment-form-actions").getElementsByClassName("btn btn-primary")[0].click();'
+        inoremap <buffer> <C-CR> :call firenvim#eval_js(l:clickSubmitButtonJS)<cr>
+    elseif l:bufname =~? 'cocalc.com' || l:bufname =~? 'kaggleusercontent.com'
+        set ft=python
+    elseif l:bufname =~? 'localhost' || l:bufname =~? '127.0.0.1'
+        " Assume Jupyter notebook.
+        set ft=python
+    elseif l:bufname =~? 'reddit.com'
+        set ft=markdown
+    elseif l:bufname =~? 'stackexchange.com' || l:bufname =~? 'stackoverflow.com'
+        set ft=markdown
+    elseif l:bufname =~? 'slack.com' || l:bufname =~? 'gitter.im'
+        set ft=markdown
+        " For chat apps. Enter sents the message and deletes the buffer.
+        " Shift enter is normal return. Insert mode by default.
+        normal! i
+        if l:bufname =~? 'slack.com'
+            " slack doesn't actually respond to press_keys (see firenvim readme).
+            " Requires the send button to be enabled for this workspace.
+            let l:clickSubmitButtonJS = 'document.getElementsByClassName("c-icon c-icon--paperplane-filled")[0].click();'
+            inoremap <buffer> <CR> <Esc>:w<CR>:call firenvim#eval_js(l:clickSubmitButtonJS)<CR>ggdGa
+        else
+            inoremap <buffer> <CR> <Esc>:w<CR>:call firenvim#press_keys("<LT>CR>")<CR>ggdGa
+        endif
+        imap <buffer> <s-CR> <CR>
+    endif
+endfunction
+
+
 " Fix odd bug that sometimes stops firenvim loading the text if setting a
 " colourscheme from a plugin. Will be overridden in setup anyway.
 let g:colorSch='default'
@@ -111,41 +150,4 @@ function! s:firenvimSetup()
     nnoremap <Esc><Esc><Esc> :call firenvim#focus_page()<CR>
     au! myVimrc FocusLost,InsertLeave,BufLeave * ++nested call Autosave()
     autocmd myPlugins BufEnter *.txt call s:FirenvimSetPageOptions()
-endfunction
-
-function! s:FirenvimSetPageOptions()
-    " Use buffer mappings to ensure they override other mappings, even if
-    " unlikely to change buffers in firenvim. Also future-proofs.
-    let l:bufname=expand('%:t')
-    " Use <LT>CR> to escape the CR and send it as a string, rather than
-    " including it in the mapping. Needed for mapping to press_keys.
-    if l:bufname =~? 'github.com'
-        colorscheme github
-        set ft=markdown
-        let l:clickSubmitButtonJS = 'document.getElementById("partial-new-comment-form-actions").getElementsByClassName("btn btn-primary")[0].click();'
-        inoremap <buffer> <C-CR> :call firenvim#eval_js(l:clickSubmitButtonJS)<cr>
-    elseif l:bufname =~? 'cocalc.com' || l:bufname =~? 'kaggleusercontent.com'
-        set ft=python
-    elseif l:bufname =~? 'localhost' || l:bufname =~? '127.0.0.1'
-        " Assume Jupyter notebook.
-        set ft=python
-    elseif l:bufname =~? 'reddit.com'
-        set ft=markdown
-    elseif l:bufname =~? 'stackexchange.com' || l:bufname =~? 'stackoverflow.com'
-        set ft=markdown
-    elseif l:bufname =~? 'slack.com' || l:bufname =~? 'gitter.im'
-        set ft=markdown
-        " For chat apps. Enter sents the message and deletes the buffer.
-        " Shift enter is normal return. Insert mode by default.
-        normal! i
-        if l:bufname =~? 'slack.com'
-            " slack doesn't actually respond to press_keys (see firenvim readme).
-            " Requires the send button to be enabled for this workspace.
-            let l:clickSubmitButtonJS = 'document.getElementsByClassName("c-icon c-icon--paperplane-filled")[0].click();'
-            inoremap <buffer> <CR> <Esc>:w<CR>:call firenvim#eval_js(l:clickSubmitButtonJS)<CR>ggdGa
-        else
-            inoremap <buffer> <CR> <Esc>:w<CR>:call firenvim#press_keys("<LT>CR>")<CR>ggdGa
-        endif
-        imap <buffer> <s-CR> <CR>
-    endif
 endfunction
