@@ -459,6 +459,8 @@ autocmd myPlugins Filetype *
 " This function gives list of completion items, for use in other
 " plugins.
 " let s:syntaxKeywords = OmniSyntaxList( [] )
+" Close preview window.
+autocmd myIDE CompleteDone * if pumvisible() == 0 | pclose | endif
 
 " Awesome code completion, but requires specific installations and
 " compiling a binary.
