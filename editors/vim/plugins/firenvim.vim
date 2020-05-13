@@ -30,7 +30,7 @@ let g:firenvim_config = {
     \ 'localSettings': {
         \ '.*': {
             \ 'priority': 0,
-            \ 'selector': 'textarea, div[role="textbox"]',
+            \ 'selector': 'textarea:not([class="crayon-plain print-no"]), div[role="textbox"]',
             \ 'cmdline': 'firenvim',
             \ 'takeover': 'nonempty',
         \ },
