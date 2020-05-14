@@ -94,8 +94,8 @@ let g:guiFonts = [
               \ "SauceCodePro NF",
               \ "SauceCodeProNerdFontCo-Regular",
               \ "Source Code Pro Medium",
-              \ "Source Code Pro"
-              \ "Menlo"
+              \ "Source Code Pro",
+              \ "Menlo",
               \ "Consolas"
               \ ]
 if has("win32")
