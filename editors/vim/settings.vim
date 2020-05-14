@@ -250,11 +250,11 @@ set wildcharm=<tab>
 " endif
 set scrolloff=5
 set completeopt=longest,menu
-try
+if has('textprop')
   set completeopt+=popup
-catch
+else
   set completeopt+=preview
-endtry
+endif
 if exists("g:ideMode") && g:ideMode == 1
     " Include tags and includes in completion.
     set complete+=i
