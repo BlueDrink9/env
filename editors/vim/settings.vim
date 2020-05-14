@@ -247,7 +247,12 @@ set wildcharm=<tab>
 "     set winblend=20
 " endif
 set scrolloff=5
-set completeopt=longest,menu,preview
+set completeopt=longest,menu
+try
+  set completeopt+=popup
+catch
+  set completeopt+=preview
+endtry
 if exists("g:ideMode") && g:ideMode == 1
     " Include tags and includes in completion.
     set complete+=i
@@ -262,8 +267,16 @@ set display=lastline
 set diffopt+=vertical
 set previewheight=6
 " Close preview window.
-autocmd myIDE InsertLeave * pclose
-autocmd myVimrc bufopen * if &previewwindow | setlocal nobuflisted | endif
+autocmd myVimrc InsertLeave * pclose
+function! s:previewWinSettings()
+  if !&previewwindow
+    return
+  endif
+  setlocal nobuflisted
+  setlocal nonumber
+  setlocal norelativenumber
+endfunction
+autocmd myVimrc BufWinEnter * if &previewwindow | call s:previewWinSettings() | endif
 
 
 if v:version >= 703
