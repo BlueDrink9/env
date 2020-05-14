@@ -260,8 +260,11 @@ endif
 set suffixes+=.tmp,tags
 set display=lastline
 set diffopt+=vertical
-
 set previewheight=6
+" Close preview window.
+autocmd myIDE InsertLeave * pclose
+autocmd myVimrc bufopen * if &previewwindow | setlocal nobuflisted | endif
+
 
 if v:version >= 703
     if has('nvim')
