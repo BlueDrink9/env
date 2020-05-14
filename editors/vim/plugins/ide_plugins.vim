@@ -405,6 +405,13 @@ nnoremap g= :Neoformat<CR>
 " :Minimap to create a special buffer that gives an outline of the current
 " file, synced to where you scroll. Uses drawille library (braille unicode)
 Plug 'https://github.com/severin-lemaignan/vim-minimap'
+
+if !has('textprop')
+    " Gives behaviour like completeopt=popup for neovim.
+    Plug 'https://github.com/ncm2/float-preview.nvim'
+    let g:float_preview#docked = 0
+endif
+
 " {]} ---------- IDE----------
 
 " {[} ---------- Debugging ----------
