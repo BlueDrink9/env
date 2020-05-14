@@ -95,6 +95,8 @@ let g:guiFonts = [
               \ "SauceCodeProNerdFontCo-Regular",
               \ "Source Code Pro Medium",
               \ "Source Code Pro"
+              \ "Menlo"
+              \ "Consolas"
               \ ]
 if has("win32")
     let g:defaultFontSize = 11
