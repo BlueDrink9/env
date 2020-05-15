@@ -238,28 +238,16 @@ if executable('jupytext')
     Plug 'goerz/jupytext.vim'
     let g:jupytext_fmt = 'py:percent'
     function! s:jupytextSetup()
-        function! GetJupytextPercentFold(linenum)
-            if getline(a:linenum) =~ "^#\\s%%"
-                " start fold at # %%
-                return ">1"
-            elseif getline(a:linenum+1) =~ "^#\\s%%"
-                " end fold at the line before the next # %%
-                return "<1"
-            else
-                " keep the previous foldlevel
-                return "-1"
-            endif
-        endfunction
+        " Use py:percent folding instead of SimpylFold python folding.
+        let b:loaded_SimpylFold = 1
         " Override normal autosave with nested one, so it triggers update instead
         " of erasing buffer.
         au! myVimrc FocusLost,InsertLeave,BufLeave *
         au myVimrc FocusLost,InsertLeave,BufLeave * ++nested call Autosave()
-        " syn region myFold start="# %%" end="\r" transparent fold
         setlocal foldmethod=expr
     endfunction
     " Bufread does't work because the plugin overrides bufreadcmd?
-    autocmd myIDE BufWinEnter *.ipynb ++nested call s:jupytextSetup()
-    autocmd myIDE bufread *.ipynb setlocal foldexpr=GetJupytextPercentFold(v:lnum)
+    autocmd myIDE filetype jupytext ++nested call s:jupytextSetup()
 endif
 
 " {]} ------ Python ------
