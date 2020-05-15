@@ -1,0 +1,59 @@
+
+{
+    "title": "Mine",
+    "rules": [
+        {
+            "description": "Run a caps lock toggle script by pressing both shift keys",
+            "manipulators": [
+                {
+                    "from": {
+                        "key_code": "left_shift",
+                        "modifiers": {
+                            "mandatory": [
+                                "right_shift"
+                            ],
+                            "optional": [
+                                "caps_lock"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "shell_command": "osascript -l JavaScript /Users/william/env/scripts/OSX/toggleCaps.jxa.applescript"
+                        }
+                    ],
+                    "to_if_alone": [
+                        {
+                            "key_code": "left_shift"
+                        }
+                    ],
+                    "type": "basic"
+                },
+                {
+                    "from": {
+                        "key_code": "right_shift",
+                        "modifiers": {
+                            "mandatory": [
+                                "left_shift"
+                            ],
+                            "optional": [
+                                "caps_lock"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "shell_command": "osascript -l JavaScript /Users/william/env/scripts/OSX/toggleCaps.jxa.applescript"
+                        }
+                    ],
+                    "to_if_alone": [
+                        {
+                            "key_code": "right_shift"
+                        }
+                    ],
+                    "type": "basic"
+                }
+            ]
+        }
+    ]
+}
