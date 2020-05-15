@@ -38,6 +38,7 @@
   ls = log --oneline
   atag = tag -a
   merge-into = !sh -c '_CURRENT_BRANCH=$(git symbolic-ref --short HEAD) && git checkout $1 && git merge $_CURRENT_BRANCH && unset _CURRENT_BRANCH -'
+  add-fork = !sh -c 'git remote add fork git@github.com:bluedrink9/$(basename "$(git config --get remote.origin.url)")'
 
 
 [credential]
