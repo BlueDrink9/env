@@ -536,9 +536,11 @@ if executable("git")
         set stl+=%{ConflictedVersion()}
         " Resolve and move to next conflicted file.
         nnoremap ]m :GitNextConflict<cr>
+        nnoremap [m :GitPrevConflict<cr>
     endfunction
     let g:diffget_local_map = 'gl'
     let g:diffget_upstream_map = 'gu'
+    autocmd myVimrc User VimConflicted call s:setupConflicted()
 endif
 " {]} ---------- Git----------
 
