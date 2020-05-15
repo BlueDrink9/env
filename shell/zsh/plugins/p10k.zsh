@@ -282,7 +282,7 @@
   # Current directory background color.
   # typeset -g POWERLEVEL9K_DIR_BACKGROUND=4
   # Default current directory foreground color.
-  typeset -g POWERLEVEL9K_DIR_FOREGROUND=254  # 254
+  typeset -g POWERLEVEL9K_DIR_FOREGROUND='black'  # 254
   # If directory is too long, shorten some of its segments to the shortest possible unique
   # prefix. The shortened directory can be tab-completed to the original.
   # typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_unique
@@ -389,17 +389,18 @@
   #####################################[ vcs: git status ]######################################
   # Version control system colors. # git colours
   typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND='green'  # 2
-  typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND='white'
+  typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND='black'
   # typeset -g POWERLEVEL9K_VCS_AHEAD_BACKGROUND='cyan'
   # typeset -g POWERLEVEL9K_VCS_AHEAD_FOREGROUND='white'
   # typeset -g POWERLEVEL9K_VCS_BEHIND_BACKGROUND='cyan'
   # typeset -g POWERLEVEL9K_VCS_BEHIND_FOREGROUND='white'
   typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='yellow'  # 3
-  typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='white'
+  typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='black'
   typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=2  # 2
-  # typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=
+  typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='black'
   typeset -g POWERLEVEL9K_VCS_CONFLICTED_BACKGROUND='red'  # 3
-  typeset -g POWERLEVEL9K_VCS_CONFLICTED_FOREGROUND='white'
+  typeset -g POWERLEVEL9K_VCS_CONFLICTED_FOREGROUND='black'
+  # typeset -g POWERLEVEL9K_VCS_CONFLICTED_FOREGROUND='white'
   typeset -g POWERLEVEL9K_VCS_LOADING_BACKGROUND=8  # 8
   # typeset -g POWERLEVEL9K_VCS_LOADING_FOREGROUND=8  # 8
 
@@ -431,13 +432,15 @@
     fi
 
     # Styling for different parts of Git status.
-    local       meta='%7F' # light gray foreground
-    local      clean='%7F'
-    local   modified='%7F'
+    # see http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Visual-effects
+    local       meta='%F{black}' # '%7F' # light gray foreground
+    # Clean is used for the branch name too.
+    local      clean='%F{black}'
+    local   modified='%F{black}'
     # local      ahead='%4F'
     # local     behind='%4F'
-    local  untracked='%7F'
-    local conflicted='%7F'
+    local  untracked='%F{black}'
+    local conflicted='%F{black}'
 
     local res
     local where  # branch name, tag or commit
@@ -685,7 +688,7 @@
 
   ###[ virtualenv: python virtual environment (https://docs.python.org/3/library/venv.html) ]###
   # Python virtual environment color.
-  # typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=0
+  typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND='black'
   # typeset -g POWERLEVEL9K_VIRTUALENV_BACKGROUND=4
   # Don't show Python version next to the virtual environment name.
   typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false
@@ -696,7 +699,7 @@
 
   #####################[ anaconda: conda environment (https://conda.io/) ]######################
   # Anaconda environment color.
-  # typeset -g POWERLEVEL9K_ANACONDA_FOREGROUND=0
+  typeset -g POWERLEVEL9K_ANACONDA_FOREGROUND='black'
   # typeset -g POWERLEVEL9K_ANACONDA_BACKGROUND=4
   # Don't show Python version next to the anaconda environment name.
   typeset -g POWERLEVEL9K_ANACONDA_SHOW_PYTHON_VERSION=false
@@ -707,7 +710,7 @@
 
   ################[ pyenv: python environment (https://github.com/pyenv/pyenv) ]################
   # Pyenv color.
-  # typeset -g POWERLEVEL9K_PYENV_FOREGROUND=0
+  typeset -g POWERLEVEL9K_PYENV_FOREGROUND='black'
   # typeset -g POWERLEVEL9K_PYENV_BACKGROUND=4
   # Don't show the current Python version if it's the same as global.
   typeset -g POWERLEVEL9K_PYENV_PROMPT_ALWAYS_SHOW=false
