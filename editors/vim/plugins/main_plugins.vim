@@ -447,12 +447,15 @@ Plug 'https://github.com/JarrodCTaylor/vim-shell-executor'
 Plug 'https://github.com/tpope/vim-dispatch'
 "{]}
 
-" {[} ---------- Basic extra highlighting ----------
+" {[} ---------- Basic extra filetype support ----------
 Plug 'kovetskiy/sxhkd-vim', {'for': 'sxhkd' }
+" Adds syntax highlighting.
 Plug 'vim-scripts/autohotkey-ahk', {'for': 'autohotkey'}
+" Adds indent. Included in polyglot.
+Plug 'https://github.com/hnamikaw/vim-autohotkey', {'for': 'autohotkey'}
 Plug 'https://github.com/PProvost/vim-ps1', {'for': 'ps1'}
 Plug 'https://github.com/lervag/vim-rmarkdown', {'for': 'rmd'}
-" {]} ---------- Basic extra highlighting ----------
+" {]} ---------- Basic extra filetype support ----------
 
 " {[} ---------- Git ----------
 if executable("git")
