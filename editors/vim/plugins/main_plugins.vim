@@ -93,6 +93,7 @@ let g:SuperTabLongestEnhanced = 1
 let g:SuperTabMappingForward='<tab>'
 let g:SuperTabMappingBackward='<s-tab>'
 let g:SuperTabLongestEnhanced=1
+let g:SuperTabClosePreviewOnPopupClose = 1
 " List of omni completion option names in the order of precedence that they should be used if available
 " let g:SuperTabContextTextOmniPrecedence = ['&completefunc', '&omnifunc']
 
