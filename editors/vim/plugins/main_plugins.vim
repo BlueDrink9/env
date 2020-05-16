@@ -473,7 +473,7 @@ if executable("git")
     cabbrev gup Gcommit --amend --no-edit
     cabbrev gupe Gcommit --amend
     cabbrev gdf Gdiff
-    Plug 'sodapopcan/vim-twiggy'
+    autocmd myPlugins filetype fugitive setlocal nobuflisted
 
     " Async fugitive
     if exists('g:hasAsyncrun') && g:hasAsyncrun
@@ -488,6 +488,8 @@ if executable("git")
                     \ return 'call fugitive#cwindow()'
                     \ endif
     endif
+    " Enhances working with branches in fugitive
+    Plug 'sodapopcan/vim-twiggy'
     " github wrapper
     if v:version > 701
         Plug 'https://github.com/tpope/vim-rhubarb'
