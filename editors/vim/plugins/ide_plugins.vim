@@ -48,7 +48,8 @@ if exists("v:completed_item")
     let g:echodoc#type = 'signature'
 endif
 " Auto-add 'end' statements, eg endif.
-Plug 'https://github.com/tpope/vim-endwise'
+" Has odd bug with prose fts.
+" Plug 'https://github.com/tpope/vim-endwise'
 " {]} ---------- Misc ----------
 
 " {[} ---------- Linting ----------
