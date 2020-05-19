@@ -594,6 +594,7 @@ function! SetProseOptions()
     unmap <buffer> <down>
     setl ai
 endfunction
+exec 'autocmd myPlugins Filetype ' . join(g:proseFileTypes, ",") . ' call SetProseOptions()'
 
 " {[} ---------- Vimtex ----------
 Plug 'https://github.com/lervag/vimtex'
