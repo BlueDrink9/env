@@ -49,6 +49,8 @@ function! s:SetnvimRShortcuts()
     exec 'nmap <buffer> ' . g:IDE_mappings.make . ' <Plug>RKnit'
     exec 'nmap <buffer> ' . g:IDE_mappings.documentation . ':call RAction("help")<CR>'
     exec 'vmap <buffer> ' . g:IDE_mappings.documentation . '<esc>:call RAction("help")<CR>'
+    exec 'nmap <buffer> ' . g:IDE_mappings.documentation2 . ':call RAction("help")<CR>'
+    exec 'vmap <buffer> ' . g:IDE_mappings.documentation2 . '<esc>:call RAction("help")<CR>'
     " {]} mappings
 
 endfunction
