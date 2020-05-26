@@ -19,6 +19,11 @@ autocmd FileType rnoweb let b:main_tex_file = substitute(expand("%"), "\....$", 
 
 command! RStart :call StartR("R") | call <SID>SetnvimRShortcuts()
 
+" Need to create mock maps in order for nvim-R to create <plug> map on
+" startup.
+nnoremap <Plug>(Mock-nvim-R1) <Plug>RClearConsole
+nnoremap <Plug>(Mock-nvim-R2) <Plug>RKnit
+
 function! s:SetnvimRShortcuts()
 
     " {[} commands
