@@ -7,6 +7,9 @@ export YABAI_CONFIG_DIR="$DOTFILES_DIR/windowManagers/yabai"
 if ! pgrep skhd; then
   skhd > $HOME/.logs/skhd.log 2> $HOME/.logs/skhd.err &
 fi
+# kill any existing limelight process if one exists, before we launch a new one
+killall limelight &> /dev/null
+$HOME/.local/bin/limelight -c "$YABAI_CONFIG_DIR/limelightrc"> $HOME/.logs/limelight.log 2> $HOME/.logs/limelight.err &
 
 . "$YABAI_CONFIG_DIR/functions.sh"
 . "$YABAI_CONFIG_DIR/rules.sh"
@@ -20,6 +23,7 @@ yabai -m config split_ratio                  0.5
 yabai -m config auto_balance                 off
 # New window spawns to the right if vertical split, or bottom if horizontal split
 yabai -m config window_placement second_child
+yabai -m config insert_feedback_color   0xff$preselect_border_color
 
 yabai -m config top_padding                  $padding_size
 yabai -m config bottom_padding               $padding_size
@@ -27,15 +31,6 @@ yabai -m config left_padding                 $padding_size
 yabai -m config right_padding                $padding_size
 yabai -m config window_gap                   10
 unset padding_size
-
-yabai -m config window_border                on
-yabai -m config window_border_placement      exterior
-yabai -m config window_border_width          4
-yabai -m config window_border_radius         -1.0
-yabai -m config active_window_border_topmost off
-yabai -m config active_window_border_color   0xff$focused_border_color
-yabai -m config normal_window_border_color   0xff$unfocused_border_color
-yabai -m config insert_feedback_color   0xff$preselect_border_color
 
 # floating windows are always on top (default: off)
 yabai -m config window_topmost               off

@@ -1,0 +1,10 @@
+#!/bin/bash
+. "$YABAI_CONFIG_DIR/../variables.sh"
+
+limelight -m config placement      exterior
+limelight -m config width          4
+limelight -m config radius         -1.0
+# limelight -m config active_window_border_topmost off
+limelight -m config active_color   0xff$focused_border_color
+limelight -m config normal_color   0xff$unfocused_border_color
+
