@@ -12,8 +12,8 @@ fi
 loadProfile
 
 source "${SCRIPT_DIR}/../aliases.sh"
-source "${SCRIPT_DIR}/../variables.sh"
 source "${SCRIPT_DIR}/functions.zsh"
+source "${SCRIPT_DIR}/../variables.sh"
 # bindkey -v
 source "${SCRIPT_DIR}/styles.zsh"
 source "${SCRIPT_DIR}/settings.zsh"
