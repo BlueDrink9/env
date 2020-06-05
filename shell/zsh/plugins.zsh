@@ -6,11 +6,17 @@ else
   return
 fi
 
+alias plugupdate="zinit self-update; zinit update"
+alias plugu="plugupdate"
+
 # Theme with instant prompt support
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 [ ! -f "$SCRIPT_DIR/plugins/p10k.zsh" ] || source "$SCRIPT_DIR/plugins/p10k.zsh"
-alias plugupdate="zinit self-update; zinit update"
-alias plugu="plugupdate"
+
+# Prevents kitty set-colours from swallowing input
+zinit ice depth=1; zinit light romkatv/zsh-defer
+zsh-defer -a -c "$PROMPT_COMMAND"
+precmd_functions=("${(@)precmd_functions:#_prompt_command}")
 
 # Delay load, skip print when loaded.
 zinit ice wait lucid atload'_zsh_autosuggest_start'
