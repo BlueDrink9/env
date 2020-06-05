@@ -14,9 +14,11 @@ zinit ice depth=1; zinit light romkatv/powerlevel10k
 [ ! -f "$SCRIPT_DIR/plugins/p10k.zsh" ] || source "$SCRIPT_DIR/plugins/p10k.zsh"
 
 # Prevents kitty set-colours from swallowing input
-zinit ice depth=1; zinit light romkatv/zsh-defer
-zsh-defer -a -c "$PROMPT_COMMAND"
 precmd_functions=("${(@)precmd_functions:#_prompt_command}")
+zinit ice depth=1; zinit light romkatv/zsh-defer
+# Restore the precmd_function
+zsh-defer -a -c "precmd_functions+=(_prompt_command)"
+zsh-defer -a -c "$PROMPT_COMMAND"
 
 # Delay load, skip print when loaded.
 zinit ice wait lucid atload'_zsh_autosuggest_start'
