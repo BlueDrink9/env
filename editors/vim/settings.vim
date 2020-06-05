@@ -252,7 +252,7 @@ set scrolloff=5
 set completeopt=longest,menu
 try
   set completeopt+=popup
-catch E474
+catch /E474:/
   set completeopt+=preview
 endtry
 if exists("g:ideMode") && g:ideMode == 1
@@ -464,7 +464,7 @@ let g:netrw_winsize = 25
 " Put buffer name in window title
 function! s:SetTitle()
     if g:hasGUI
-        " Exclude "Vim" for guivim (because it'll have a logo)
+        " Exclude 'Vim' for guivim (because it'll have a logo)
         let l:app = ""
     elseif has("nvim")
         let l:app = "NVim"
