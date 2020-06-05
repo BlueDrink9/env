@@ -4,6 +4,8 @@ XDG_CONFIG_HOME="$HOME/.config"
 export DOTFILES_DIR=$(cat "${XDG_CONFIG_HOME}/.dotfiles_dir")
 export YABAI_CONFIG_DIR="$DOTFILES_DIR/windowManagers/yabai"
 . "$YABAI_CONFIG_DIR/../variables.sh"
+
+# Inconsistent treatment of skhd vs limelight...
 if ! pgrep skhd; then
   skhd >> $HOME/.logs/skhd.log 2>> $HOME/.logs/skhd.err &
 fi

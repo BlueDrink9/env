@@ -15,6 +15,8 @@
 "     " Requires zot version > 5
 "     Plug 'https://github.com/jalvesaq/zotcite'
 " endif
+" Use colourcolumn highlight for all of inactive windows.
+" https://github.com/blueyed/vim-diminactive/
 " {]} ---------- Later ----------
 
 " {[} ---------- Providers/External model setup neovim ----------

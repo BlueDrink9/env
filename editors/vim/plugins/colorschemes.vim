@@ -33,6 +33,8 @@ let g:PaperColor_Theme_Options = {
   " \       }
 Plug 'https://github.com/morhetz/gruvbox'
 Plug 'https://github.com/jnurmine/Zenburn'
+" CursorColumn a stronger option
+" au myPlugins colorscheme zenburn hi! link StatusLineNC ColorColumn | hi! link StatusLine ColorColumn
 Plug 'https://github.com/tomasr/molokai'
 Plug 'aonemd/kuroi.vim'
 silent! if &termguicolors || g:hasGUI
@@ -66,7 +68,7 @@ let g:jellybeans_overrides = {
 \}
 
 " {[} ---------- Base16 ----------
-" If using a Base16 terminal theme designed to keep the 16 ANSI colors intact (a "256" variation) and have sucessfully modified your 256 colorspace with base16-shell you'll need to add the following to your ~/.vimrc before the colorsheme declaration.
+" If using a Base16 terminal theme designed to keep the 16 ANSI colors intact (a "256" variation) and have sucessfully modified your 256 colorspace with base16-shell you'll need to add the following to your ~/.vimrc before the colorscheme declaration.
 " Should override COLOURSCHEME settings by setting colorSch
 " let base16colorspace=256  " Access colors present in 256 colorspace
 " if has('nvim')

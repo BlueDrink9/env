@@ -365,6 +365,11 @@ set linebreak
 set splitright
 set splitbelow
 set shortmess=a
+" Don't seem to be set properly...
+" https://en.wikipedia.org/wiki/Box-drawing_character#DOS
+" set fillchars+="vert:│,stlnc:─"
+set fillchars+="vert:║,stlnc:═,stl:\ ,"
+
 function! SmallUIOnResize()
     if &lines < 24
         set cmdheight=1
