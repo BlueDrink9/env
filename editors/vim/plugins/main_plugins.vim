@@ -735,6 +735,8 @@ endif
 " {]} ---------- Terminal ----------
 
 " {[} ---------- NerdTree ----------
+" NT loads quite a lot in plugin/, so prefer to lazy-load when it gets opened.
+" Downside is that netrw will be used instead when opening directories before NT opened for the first time.
 Plug 'https://github.com/scrooloose/nerdtree.git', {'on': ['NERDTree', 'NERDTreeToggle',]}
 Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
 " Change these if you feel the desire...

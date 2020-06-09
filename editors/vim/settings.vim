@@ -446,15 +446,16 @@ set noerrorbells
 " set t_vb=
 " set tm=500
 
-" Set up default file explorer plugin to be like NERDTree (for using noplugin
-" mode).
+" default file explorer plugin.
 let g:netrw_banner = 0
+" Tree-style listing
 let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
+" Right split
 let g:netrw_altv = 1
-let g:netrw_winsize = 25
-" Run on startup
-" autocmd myVimrc VimEnter * :Vexplore
+" Open files in vert split, use winsize % of netrw window for new file.
+let g:netrw_browse_split = 2
+let g:netrw_winsize = 80
+" autocmd myVimrc BufRead * if isdirectory(@%) | exec 'Explore!' | endif
 
 "highlight whitespace at the ends of lines
 " autocmd InsertEnter * syn clear EOLWS | syn match EOLWS excludenl /\s\+\%#\@!$/
