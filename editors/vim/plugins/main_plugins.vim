@@ -15,7 +15,7 @@
 "     " Requires zot version > 5
 "     Plug 'https://github.com/jalvesaq/zotcite'
 " endif
-" Use colourcolumn highlight for all of inactive windows.
+" Use colourcolumn highlight for all of inactive windowsy.
 " https://github.com/blueyed/vim-diminactive/
 " {]} ---------- Later ----------
 
@@ -332,6 +332,7 @@ nmap <Leader><S-H> <Plug>(easymotion-overwin-w)
 nnoremap <leader>s <Plug>(easymotion-overwin-f2)
 Plug 'bkad/camelcasemotion'
 autocmd myPlugins User pluginSettingsToExec call camelcasemotion#CreateMotionMappings('<leader>m')
+autocmd myPlugins User pluginSettingsToExec call camelcasemotion#CreateMotionMappings('_')
 " {]} ---------- Operators ----------
 
 " {[}--- Searching, replacing, finding ---
