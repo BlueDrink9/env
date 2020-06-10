@@ -36,9 +36,10 @@ unset padding_size
 
 # floating windows are always on top (default: off)
 yabai -m config window_topmost               off
-# Turning this on causes OSX to crash on catalina - see #277
-yabai -m config window_opacity               off
-yabai -m config window_opacity_duration      0.2
+yabai -m config window_opacity               on
+# Turning this on causes OSX to crash on catalina - see #277.
+# yabai -m config window_opacity_duration      0.2
+yabai -m config window_opacity_duration      0.0
 yabai -m config active_window_opacity        1.0
 yabai -m config normal_window_opacity        0.90
 # Only have win shadows for floating windows
