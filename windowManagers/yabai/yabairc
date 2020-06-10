@@ -7,7 +7,7 @@ export YABAI_CONFIG_DIR="$DOTFILES_DIR/windowManagers/yabai"
 
 # Inconsistent treatment of skhd vs limelight...
 if ! pgrep skhd; then
-  skhd >> $HOME/.logs/skhd.log 2>> $HOME/.logs/skhd.err &
+  PATH="$PATH:$HOME/.local/bin" skhd >> $HOME/.logs/skhd.log 2>> $HOME/.logs/skhd.err &
 fi
 # kill any existing limelight process if one exists, before we launch a new one
 killall limelight &> /dev/null
