@@ -9,9 +9,11 @@ export YABAI_CONFIG_DIR="$DOTFILES_DIR/windowManagers/yabai"
 if ! pgrep skhd; then
   PATH="$PATH:$HOME/.local/bin" skhd >> $HOME/.logs/skhd.log 2>> $HOME/.logs/skhd.err &
 fi
+
+# Use limelight if SIP is disabled. Otherwise, use newer built-in method.
 # kill any existing limelight process if one exists, before we launch a new one
-killall limelight &> /dev/null
-PATH="$PATH:$HOME/.local/bin" limelight -c "$YABAI_CONFIG_DIR/limelightrc" >> $HOME/.logs/limelight.log 2>> $HOME/.logs/limelight.err &
+# killall limelight &> /dev/null
+# PATH="$PATH:$HOME/.local/bin" limelight -c "$YABAI_CONFIG_DIR/limelightrc" >> $HOME/.logs/limelight.log 2>> $HOME/.logs/limelight.err &
 
 . "$YABAI_CONFIG_DIR/functions.sh"
 . "$YABAI_CONFIG_DIR/rules.sh"
