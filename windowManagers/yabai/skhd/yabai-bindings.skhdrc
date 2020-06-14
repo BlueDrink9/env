@@ -14,15 +14,18 @@
 # use for vim, tmux, etc.
 # Declare mode. Use green border when in mode, blue otherwise.
 # @ swallows unassigned keybinds so mis-pressing won't type.
-:: manage @ : limelight -m config active_color "0xff$manage_border_color"
+# :: manage @ : limelight -m config active_color "0xff$manage_border_color"
+:: manage @ : yabai -m config active_window_border_color "0xff$manage_border_color"
 
-:: default : limelight -m config active_color "0xff$focused_border_color"; \
+# :: default : limelight -m config active_color "0xff$focused_border_color"; \
+:: default : yabai -m config active_window_border_color "0xff$focused_border_color"; \
   yabai -m config focus_follows_mouse autoraise
 
 # Passthrough should have nothing associated with it.
 # Also disable ffm to allow cmd-dragging.
 # Border colour is default but transparent.
-:: passthrough : limelight -m config active_color "0x55$focused_border_color"; \
+# :: passthrough : limelight -m config active_color "0x55$focused_border_color"; \
+:: passthrough : yabai -m config active_window_border_color "0x55$focused_border_color"; \
   yabai -m config focus_follows_mouse off
 
 # Using this mode, you will time out after 5 seconds and send escape.
