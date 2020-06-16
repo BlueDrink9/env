@@ -89,6 +89,7 @@ function! s:FirenvimSetPageOptions()
         else
             inoremap <buffer> <CR> <Esc>:w<CR>:call firenvim#press_keys("<LT>CR>")<CR>ggdGa
         endif
+        inoremap <buffer> <s-CR> <CR>
     endif
 endfunction
 
