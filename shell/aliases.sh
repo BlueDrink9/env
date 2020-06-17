@@ -13,6 +13,7 @@ if [[ "$OSTYPE" =~ "darwin" ]]; then  # OSX specific stuff
   }
   alias ls="ls -Fh -G"
   alias grep="grep --color=auto"
+  alias sudoedit="sudo -e"
   # ls and grep should use colours automatically because CLICOLOR is set.
   # Apparently though, don't!
 
