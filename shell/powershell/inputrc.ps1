@@ -37,8 +37,15 @@ function mapTwoLetterFunc($a,$b,$func) {
         &$func
     } else {
       [Microsoft.Powershell.PSConsoleReadLine]::Insert("$a")
-      $wshell = New-Object -ComObject wscript.shell
-      $wshell.SendKeys("{$($key.Character)}")
+      # Representation of modifiers (like shift) when ReadKey uses IncludeKeyDown
+      if ($key.Character -eq 0x00) {
+        return
+      } else {
+        # Insert func above converts escape characters to their literals, e.g.
+        # converts return to ^M. This doesn't.
+        $wshell = New-Object -ComObject wscript.shell
+        $wshell.SendKeys("{$($key.Character)}")
+      }
     }
   }
 }
