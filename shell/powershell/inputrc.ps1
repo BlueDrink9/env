@@ -37,7 +37,8 @@ function mapTwoLetterFunc($a,$b,$func) {
         &$func
     } else {
       [Microsoft.Powershell.PSConsoleReadLine]::Insert("$a")
-      [Microsoft.Powershell.PSConsoleReadLine]::Insert($key.Character)
+      $wshell = New-Object -ComObject wscript.shell
+      $wshell.SendKeys("{$($key.Character)}")
     }
   }
 }
