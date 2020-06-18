@@ -113,7 +113,7 @@ case $- in
       execCmd="exec"
       # Else nothing
     fi
-    if command -v tmux>/dev/null && [ -z "$NOTMUX" ]; then
+    if command -v 'tmux'>/dev/null && [ -z "$NOTMUX" ]; then
       # Check HAVE_LOADED_BASH so that if you detach and bash gets upgraded,
       # you don't jump straight back into tmux.
       if [ -z "$TMUX" ] && [[ ! $TERM =~ screen ]] && \
