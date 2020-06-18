@@ -41,7 +41,7 @@ END
 )"
 
 installID="Readline"
-installText="\\\$include $($SCRIPTDIR_CMD)/inputrc"
+installText="\\\$include $($SCRIPTDIR_CMD)/bash/inputrc"
 installText="${installText}
 \\\$include $HOME/.readline-surround"
 baseRC="${HOME}/.inputrc"
