@@ -18,8 +18,8 @@ Set-Alias fopen explorer.exe
 function envupd { git -C "$DOTFILES_DIR" pull }
 # function sudo { elevate.exe -k }  # k = persistent
 
-# ln -h linkname source
-function ln($linkname, $source, $s, $j, $h){
+# ln -h source/target linkname
+function ln($source, $linkname, $s, $j, $h){
     if ($j){
         New-Item -ItemType junction -Path $linkname -Target $source
     } elseif ($h){
