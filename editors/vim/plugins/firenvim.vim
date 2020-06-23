@@ -60,9 +60,9 @@ function! s:FirenvimSetPageOptions()
     if l:bufname =~? 'github.com'
         colorscheme github
         set ft=markdown
-        let l:clickSubmitButtonJS = '"document.getElementById(\"partial-new-comment-form-actions\").getElementsByClassName(\"btn btn-primary\")[0].click();'
-        inoremap <buffer> <C-CR> :call firenvim#eval_js(l:clickSubmitButtonJS)<cr>
-        exec 'inoremap <buffer> <c-CR> <Esc>:w<CR>:call firenvim#eval_js(' . l:clickSubmitButtonJS . ')<CR>:q'
+        let l:clickSubmitButtonJS = "'document.getElementById(\"partial-new-comment-form-actions\").getElementsByClassName(\"btn btn-primary\")[0].click();'"
+        exec 'inoremap <buffer> <c-CR> <Esc>:w<CR>:call firenvim#eval_js(' . l:clickSubmitButtonJS . ')<CR>:q<CR>'
+        exec 'nnoremap <buffer> <c-CR> :w<CR>:call firenvim#eval_js(' . l:clickSubmitButtonJS . ')<CR>:q<CR>'
     elseif l:bufname =~? 'cocalc.com' || l:bufname =~? 'kaggleusercontent.com'
         set ft=python
     elseif l:bufname =~? 'localhost' || l:bufname =~? '127.0.0.1'
@@ -74,9 +74,11 @@ function! s:FirenvimSetPageOptions()
         set ft=markdown
     elseif l:bufname =~? 'slack.com' || l:bufname =~? 'gitter.im'
         set ft=markdown
+        setlocal norelativenumber
+        setlocal nonumber
         " For chat apps. Enter sents the message and deletes the buffer.
         " Shift enter is normal return.
-        imap <buffer> <s-CR> <CR>
+        inoremap <buffer> <s-CR> <CR>
         " Insert mode start by default.
         normal! i
         if l:bufname =~? 'slack.com'
