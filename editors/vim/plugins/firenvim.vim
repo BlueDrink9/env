@@ -60,8 +60,9 @@ function! s:FirenvimSetPageOptions()
     if l:bufname =~? 'github.com'
         colorscheme github
         set ft=markdown
-        let l:clickSubmitButtonJS = 'document.getElementById("partial-new-comment-form-actions").getElementsByClassName("btn btn-primary")[0].click();'
+        let l:clickSubmitButtonJS = '"document.getElementById(\"partial-new-comment-form-actions\").getElementsByClassName(\"btn btn-primary\")[0].click();'
         inoremap <buffer> <C-CR> :call firenvim#eval_js(l:clickSubmitButtonJS)<cr>
+        exec 'inoremap <buffer> <c-CR> <Esc>:w<CR>:call firenvim#eval_js(' . l:clickSubmitButtonJS . ')<CR>:q'
     elseif l:bufname =~? 'cocalc.com' || l:bufname =~? 'kaggleusercontent.com'
         set ft=python
     elseif l:bufname =~? 'localhost' || l:bufname =~? '127.0.0.1'
@@ -74,17 +75,18 @@ function! s:FirenvimSetPageOptions()
     elseif l:bufname =~? 'slack.com' || l:bufname =~? 'gitter.im'
         set ft=markdown
         " For chat apps. Enter sents the message and deletes the buffer.
-        " Shift enter is normal return. Insert mode by default.
+        " Shift enter is normal return.
+        imap <buffer> <s-CR> <CR>
+        " Insert mode start by default.
         normal! i
         if l:bufname =~? 'slack.com'
             " slack doesn't actually respond to press_keys (see firenvim readme).
             " Requires the send button to be enabled for this workspace.
-            let l:clickSubmitButtonJS = 'document.getElementsByClassName("c-icon c-icon--paperplane-filled")[0].click();'
-            inoremap <buffer> <CR> <Esc>:w<CR>:call firenvim#eval_js(l:clickSubmitButtonJS)<CR>ggdGa
+            let l:clickSubmitButtonJS = "'document.getElementsByClassName(\"c-icon c-icon--paperplane-filled\")[0].click();'"
+            exec 'inoremap <buffer> <CR> <Esc>:w<CR>:call firenvim#eval_js(' . l:clickSubmitButtonJS . ')<CR>ggdGa'
         else
             inoremap <buffer> <CR> <Esc>:w<CR>:call firenvim#press_keys("<LT>CR>")<CR>ggdGa
         endif
-        imap <buffer> <s-CR> <CR>
     endif
 endfunction
 
