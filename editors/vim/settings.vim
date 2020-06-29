@@ -300,6 +300,8 @@ endif
 exec 'set backupdir=' . CreateVimDir("backup") . '//'
 " au BufWritePre * let &bex = '-' . strftime("%Y%b%d%X") . '.vimbackup'
 set backupext=.vimbackup
+set backup
+set writebackup
 exec 'set directory=' . CreateVimDir("swap") . '//'
 exec 'set viewdir=' . CreateVimDir("views") . '//'
 if v:version >= 703
