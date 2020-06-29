@@ -17,6 +17,8 @@ Set-Alias time measure-command
 Set-Alias fopen explorer.exe
 function envupd { git -C "$DOTFILES_DIR" pull }
 # function sudo { elevate.exe -k }  # k = persistent
+Set-Alias PlugUpdate Update-Module
+Set-Alias plugu Update-Module
 
 # ln -h source/target linkname
 function ln($source, $linkname, $s, $j, $h){
