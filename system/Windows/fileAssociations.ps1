@@ -1,4 +1,5 @@
 # vim: foldmethod=marker:foldmarker={[},{]}
+
 # Won't ever work. Gets gvim.bat in sys32.
 # $editor = "$(Get-Command gvim).Path"
 

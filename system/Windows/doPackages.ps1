@@ -2,6 +2,9 @@ $localscriptdir = $PSScriptRoot
 pushd $localscriptdir
 [Environment]::CurrentDirectory = $PWD
 
+# Make registry drive for HKEY_CLASSES_ROOT hive
+New-PSDrive -PSProvider registry -Root HKEY_CLASSES_ROOT -Name HKCR
+
 function ChocoUpgradeAndRefresh($package){
     # Need to specify cache to avoid recursive dir issue. See
     # https://github.com/chocolatey/boxstarter/issues/241
@@ -55,14 +58,20 @@ Install-Module -Force OpenSSHUtils -Scope AllUsers
 # This is where chocolatey keeps vim now.
 $ToolsVimDir="C:\tools\vim"
 $linkname="${ToolsVimDir}\latest"
+
 # Define helper as per linked answer. https://stackoverflow.com/a/32818070
 $VerNumsToNatural = { [regex]::Replace($_, '\d+', { $args[0].Value.PadLeft(20) }) }
 # Get dirlist, Sort with helper and check the output is natural result
 $latestVimDir = gci $ToolsVimDir | sort $VerNumsToNatural -Descending | select -First 1
-$source=$latestVimDir.fullname
+
 # Won't ever work. Gets gvim.bat in sys32.
 # $source=$(Get-Command gvim).Path | split-path
+$source=$latestVimDir.fullname
 New-Item -ItemType SymbolicLink -Path $linkname -Target $source
+
+# Use latest path for 'edit with vim' context menu command.
+$RegKeyPath = "HKCR:\*\shell\Vim\Command"
+Set-Item -Path "$RegKeyPath" -Value "`"$linkname\gvim.exe`" `"%1`""
 
 # Add miniconda to path
 # $oldpath = (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).path
