@@ -37,6 +37,7 @@ let g:coc_global_extensions = [
             \ "coc-vimtex",
             \ "coc-python",
             \ "coc-java",
+            \ "coc-clangd",
             \ "coc-r-lsp"
             \ ]
             " \ "coc-tabnine"
