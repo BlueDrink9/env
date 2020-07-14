@@ -7,15 +7,19 @@ OPTIONS=bones
 
 # appearance
 OPTIONS=color,hilite_pet,hilite_pile,lit_corridor,menucolors,DECgraphics,boulder:8,dark_room,hitpointbar,runmode:walk,standout,hilite_hidden_stairs,hilite_obj_pile,
-OPTIONS=showborn,showexp,showscore,showrace,time,!implicit_uncursed,showweight
+OPTIONS=showborn,showexp,showscore,showrace,time,!implicit_uncursed,showweight,invweight,showdmg
+OPTIONS=scores:10 top/3 around/own
 OPTIONS=menustyle:full,msghistory:400,msg_window:full
 OPTIONS=sortloot:loot,disclose:+i+a+v+g+c+o
+TILES=name:
 
 # controls
 OPTIONS=quicklook,force_invmenu,herecmdmenu
 OPTIONS=autodig,autodescribe,autoopen,autoquiver,number_pad,paranoid_confirmation:pray attack quit Were-change,pushweapon,quiver_fired
+
 OPTIONS=autopickup,pickup_burden:B,pickup_thrown
 OPTIONS=pickup_types:?!/="$
+
 AUTOPICKUP_EXCEPTION=">Amulet of Yendor$"
 AUTOPICKUP_EXCEPTION="<Amulet of Vendor named"
 AUTOPICKUP_EXCEPTION=">scroll of scare monster"
@@ -89,3 +93,62 @@ MSGTYPE=stop "you feel a faint trembling under your *."
 MSGTYPE=stop "you feel a weak trembling under your *."
 
 
+# From gurrhack android ports (specifically unnethack)
+
+# *** General options ***
+#
+#OPTIONS=packorder:")[%?+/=!(*0_`
+#OPTIONS=nolegacy,noverbose
+
+# *** Dumpfile Options ***
+#
+# A dumpfile is a log that is written when the game is
+# over. It contains a view of the map and a record of the
+# player's belonging, attributes, etc.
+#
+# dumpfile: The path and name of the file where the log is
+# written. If a relative path is specified it is relative
+# to the game's data directory. Normally
+# /sdcard/Android/data/com.tbd.UnNetHack
+# The macros %n and %d can be used. %n is replaced by the
+# character's name and %d is replaced by the current date.
+#
+# dumpfile_format: the format of the log. It can be html,
+# text, or both. ".html" or ".txt" is appended to the
+# filename depending on format.
+#
+OPTIONS=dumpfile:unh_log
+OPTIONS=dumpfile_format:html
+
+# Colorize individual rows on a menu based on what regular expressions match its text
+# http://nethackwiki.com/wiki/Menucolors
+MENUCOLOR=" blessed "=green
+MENUCOLOR=" holy "=green
+MENUCOLOR=" uncursed "=yellow
+MENUCOLOR=" cursed "=red
+MENUCOLOR=" unholy "=red
+MENUCOLOR=" cursed .* \(being worn\)"=red&underline
+MENUCOLOR="loadstone|wand (of|called) cancellation"=white&underline
+MENUCOLOR="Amulet of Yendor named"=magenta
+MENUCOLOR="gold piece"=yellow
+
+#
+#
+# Colorize the status line values                                                                
+## HP                                                                                            
+STATUSCOLOR=hp%100=green,hp%66=yellow,hp%50=orange                                               
+STATUSCOLOR=hp%33=red&bold,hp%15:red&inverse,hp%0:red&inverse                              
+## Pw                                                                                            
+STATUSCOLOR=pw%100=green,pw%66=yellow,pw%50:orange,pw%33=red&bold                                
+## Carry                                                                                         
+STATUSCOLOR=burdened:yellow,stressed:orange,strained:red&bold                                    
+STATUSCOLOR=overtaxed:red&inverse,overloaded:red&inverse                                   
+## Hunger                                                                                        
+STATUSCOLOR=satiated:yellow,hungry:orange,weak:red&bold                                          
+STATUSCOLOR=fainting:red&inverse,fainted:red&inverse                                       
+## Mental                                                                                        
+STATUSCOLOR=hallu:yellow,conf:orange,stun:red&bold                                               
+## Health                                                                                        
+STATUSCOLOR=ill:red&inverse,foodpois:red&inverse,slime:red&inverse                               
+## Other                                                                                         
+STATUSCOLOR=held:red&inverse,blind:red&inverse
