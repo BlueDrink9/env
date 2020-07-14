@@ -1,3 +1,10 @@
+# For convenience: Gurrhack android command panel layouts.
+# Use | after to change the label.
+# Replace Elbereth with ^E in unnethack
+# ^o is overview, #lc is name class \ discoveries
+# Inventory/items (right side): @ T W w R P x D e i a
+# Actions (bottom): # E-Elbereth\n|Eword . z Z f ^a|redo n10s|10s ^d|kick t F m #lc|name \ ^o|dmap ^p|msgs ; , : E ...|abc menu
+#
 # === OPTIONS ===
 # character
 # names
