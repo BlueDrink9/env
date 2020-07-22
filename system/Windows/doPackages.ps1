@@ -35,8 +35,9 @@ Get-ChildItem "packages/" -filter "*.conf" | foreach-object {
 
 # # Downloads ubuntu for use
 # # ========================
-# Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
-# Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+# Needed for WSL2
+Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform
 # # This didn't work, seemed to just cause problems.
 # # ubuntu
 # # pushd $env:TMP
@@ -44,7 +45,6 @@ Get-ChildItem "packages/" -filter "*.conf" | foreach-object {
 # # curl.exe -L -o "$distro.appx" "https://aka.ms/$distro"
 # # Add-AppxPackage ".\$distro.appx"
 # # popd
-
 
 # colortool.exe /b solarized_dark
 # Choco colortool is a bit funny
