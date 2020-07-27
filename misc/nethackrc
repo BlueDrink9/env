@@ -4,6 +4,7 @@
 # ^o is overview, #lc is name class \ discoveries
 # Inventory/items (right side): @ T W w R P x D e i a
 # Actions (bottom): # E-Elbereth\n|Eword . z Z f ^a|redo n10s|10s ^d|kick t F m #lc|name \ ^o|dmap ^p|msgs ; , : E ...|abc menu
+# Macros (Top, only in landscape): Oa|!Adig #e|dip #aD|dig #aH|horn p|pay
 #
 # === OPTIONS ===
 # character
@@ -22,9 +23,13 @@ TILES=name:
 
 # controls
 OPTIONS=quicklook,force_invmenu,herecmdmenu
-OPTIONS=autodig,autodescribe,autoopen,autoquiver,number_pad,paranoid_confirmation:pray attack quit Were-change,pushweapon,quiver_fired
+OPTIONS=autodescribe,autoopen,autoquiver,number_pad,paranoid_confirmation:pray attack quit Were-change,pushweapon,quiver_fired
+# This can (and has) made mistakes in movement direction deadly.
+# If you really need it, temporarily set it with shift+o a.
+OPTIONS=!autodig
+OPTIONS=!rest_on_space
 
-OPTIONS=autopickup,pickup_burden:B,pickup_thrown
+OPTIONS=autopickup,pickup_burden:U,pickup_thrown
 OPTIONS=pickup_types:?!/="$
 
 AUTOPICKUP_EXCEPTION=">Amulet of Yendor$"
