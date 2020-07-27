@@ -27,7 +27,6 @@ elif [[ "$OSTYPE" =~ "linux" ]]; then  # Linux specific stuff
   alias egrep='egrep --color=auto'
 fi
 if [ -n "$ISTERMUX" ]; then
-  alias sudo="tsudo"
   alias su="tsu"
 fi
 
