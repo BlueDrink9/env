@@ -1,12 +1,13 @@
 # hash and blank lines should be ignored.
 # Packages should fail gracefully, if not silently.
 neovim
-vim
+tmux
 syncthing
 htop
-tmux
 ranger
+vim
 
+zsh
 bash
 bash-completion@2
 # Only if completion 2 not a thing (ie not homebrewing).
