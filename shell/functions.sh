@@ -765,7 +765,7 @@ else
   #{[} base16 theme
   # Added by base16, normally in bashrc. Now called by `theme` call in PROMPT_COMMAND
   if [ -z "${BASE16_SHELL}" ]; then
-    BASE16_SHELL="$HOME/.config/base16-shell/"
+    BASE16_SHELL="${XDG_DATA_HOME:-$HOME/.local/share}"/base16-shell
   fi
   if [ -d "${BASE16_SHELL}" ]; then
     [ -n "$PS1" ] && \

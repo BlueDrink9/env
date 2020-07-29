@@ -28,7 +28,8 @@ installDircolours(){
 
 installBase16Shell(){
   printErr "Downloading base16-shell..."
-  git clone --depth 1 https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
+  git clone --depth 1 https://github.com/chriskempson/base16-shell.git \
+    "${XDG_DATA_HOME:-$HOME/.local/share}"/base16-shell
 }
 
 eval "$(cat <<END
