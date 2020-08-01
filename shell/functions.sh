@@ -271,6 +271,10 @@ function_exists() {
     return $?
 }
 
+program_exists() {
+  command -v "$1" >/dev/null 2>&1
+  return $?
+}
 
 # https://unix.stackexchange.com/a/48116
 # Save to history when command is executed, rather than when terminal is closed.
@@ -836,4 +840,15 @@ vim_single_plugin(){
 
 plugupdate() {
   vim +PlugUpgrade +PlugUpdate +CocUpdate +qa && zinit update && $HOME/.tmux/plugins/tpm/bin/update_plugins all
+}
+
+ips(){
+  if program_exists ifconfig; then
+    ifconfig | grep 'inet'
+  elif program_exists ip; then
+    # ip addr | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
+    ip addr | grep "scope global"
+  else
+    printf "neither ifconfig or ip installed" > &2
+  fi
 }
