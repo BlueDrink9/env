@@ -3,8 +3,12 @@ pushd $HOME
 set -e
 mkdir -p ~/Applications ~/.local/packages ~/.local/src
 SRCDIR="$HOME/.local/src/workrave"
-# rm -rf ~/Library/Preferences/com.workrave.plist
-# rm -rf ~/Library/Preferences/workrave.plist
+PACKAGE_DIR="$HOME/.local/packages/workrave"
+rm -rf ~/Library/Preferences/com.workrave.plist || true
+rm -rf ~/Library/Preferences/workrave.plist || true
+rm -rf ~/.workrave || true
+rm -rf "$SRCDIR" || true
+rm -rf "$PACKAGE_DIR" || true
 # Officially required packages:
 wr_dependencies_official="gettext intltool gobject-introspection autoconf-archive gtk+ gtk-mac-integration gtkmm3 ice"
 # These packages get it working without crashes, with caveat of no symbols/icons. IDK which one does the trick.
@@ -16,7 +20,7 @@ git clone --depth 1 --single-branch --branch os-x-fixes https://github.com/palfr
 cd "$SRCDIR"
 autoreconf -if
 intltoolize --automake --copy --force
-./configure --prefix="$HOME/.local/packages/workrave" --config-cache
+./configure --prefix="$PACKAGE_DIR" --config-cache
 make
 make install
 stow  --dir="$HOME/.local/packages" workrave --target="$HOME/.local"
