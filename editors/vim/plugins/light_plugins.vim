@@ -64,11 +64,10 @@ if has("timers")
     let g:hasAsyncrun = 1
     " Open quickfix window at height 8 on running
     let g:asyncrun_open = 8
-    " cmap !! AsyncRun
-    " cmap ! AsyncRun
-    cabbrev ! AsyncRun
     let g:asyncrun_auto = "make"
-    command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
+    command! -bang -nargs=* -complete=file ASMake AsyncRun -program=make @ <args>
+    cabbrev make Make
+    cabbrev !! AsyncRun
     " Set qf statusbar to status of asyncrun
     let g:asyncrun_status = "stopped"
     autocmd myPlugins QuickFixCmdPost * call asyncrun#quickfix_toggle(8, 1)

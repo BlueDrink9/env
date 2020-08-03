@@ -450,8 +450,9 @@ Plug 'https://github.com/joonty/vim-do'
 Plug 'https://github.com/thinca/vim-quickrun'
 " Select code to execute.
 Plug 'https://github.com/JarrodCTaylor/vim-shell-executor'
-" Make is run async (view quickfix with :COpen)
+" Async make, autoset compiler and makeprg from filetype plugin (view quickfix with :COpen)
 Plug 'https://github.com/tpope/vim-dispatch'
+call Nnoremap(g:IDE_mappings.make, ":Dispatch<cr>")
 "{]}
 
 " {[} ---------- Basic extra filetype support ----------
@@ -482,18 +483,11 @@ if executable("git")
     cabbrev gdf Gdiff
     autocmd myPlugins filetype fugitive setlocal nobuflisted
 
-    " Async fugitive
+    " Async Fugitive (Fugitive uses whatever `Make` is available).
     if exists('g:hasAsyncrun') && g:hasAsyncrun
         autocmd myPlugins User pluginSettingsToExec command!
                     \ -bang -nargs=* -complete=file
                     \ Make AsyncRun -program=make @ <args>
-                    \ if exists(':Make') == 2
-                    \ noautocmd Make
-                    \ else
-                    \ silent noautocmd make!
-                    \ redraw!
-                    \ return 'call fugitive#cwindow()'
-                    \ endif
     endif
     " Enhances working with branches in fugitive
     Plug 'sodapopcan/vim-twiggy'
