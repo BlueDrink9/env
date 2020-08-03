@@ -452,7 +452,7 @@ Plug 'https://github.com/thinca/vim-quickrun'
 Plug 'https://github.com/JarrodCTaylor/vim-shell-executor'
 " Async make, autoset compiler and makeprg from filetype plugin (view quickfix with :COpen)
 Plug 'https://github.com/tpope/vim-dispatch'
-call Nnoremap(g:IDE_mappings.make, ":Dispatch<cr>")
+call Nnoremap(g:IDE_mappings.make, ":w <bar> Dispatch<cr>")
 "{]}
 
 " {[} ---------- Basic extra filetype support ----------
