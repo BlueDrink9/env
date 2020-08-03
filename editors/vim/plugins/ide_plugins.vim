@@ -397,7 +397,7 @@ nnoremap g= :Neoformat<CR>
 " file, synced to where you scroll. Uses drawille library (braille unicode)
 Plug 'https://github.com/severin-lemaignan/vim-minimap'
 
-if !has('textprop')
+if has("patch-8.1-1880") && has('nvim')
     " Gives behaviour like completeopt=popup for neovim.
     Plug 'https://github.com/ncm2/float-preview.nvim'
     let g:float_preview#docked = 0
