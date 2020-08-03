@@ -11,6 +11,9 @@ UnPlug 'python-mode/python-mode'
 " This may mean tags aren't included, which would be a bug.
 let g:vista_default_executive = "coc"
 
+" Sets location of settigns json. Consider using coc#config() with a read in
+" from a json instead, because otherwise you can't have a machine-local user
+" config.
 let g:coc_config_home=g:plugindir
 
 let s:coc_disabled_fts = "'
