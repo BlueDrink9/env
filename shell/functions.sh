@@ -849,6 +849,6 @@ ips(){
     # ip addr | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
     ip addr | grep "scope global"
   else
-    printf "neither ifconfig or ip installed" > &2
+    printf "neither ifconfig or ip installed" >&2
   fi
 }
