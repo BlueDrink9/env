@@ -190,6 +190,13 @@ DerivedData/
 *.lo
 *.o
 *.obj
+# Kernel object files
+*.ko
+*.ko.cmd
+*.o.cmd
+*.symvers
+*.mod.c
+modules.order
 
 # Precompiled Headers
 *.gch
