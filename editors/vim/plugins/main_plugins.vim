@@ -738,7 +738,11 @@ if has("win32")
 endif
 " {]} ---------- Terminal ----------
 
-" {[} ---------- NerdTree ----------
+" {[} ---------- NerdTree Project/file drawer ----------
+" Better version with more async and smarts.
+" if has('python3') && has('nvim')
+" Plug 'ms-jpq/chadtree'
+" endif
 " NT loads quite a lot in plugin/, so prefer to lazy-load when it gets opened.
 " Downside is that netrw will be used instead when opening directories before NT opened for the first time.
 Plug 'https://github.com/scrooloose/nerdtree.git', {'on': ['NERDTree', 'NERDTreeToggle',]}
