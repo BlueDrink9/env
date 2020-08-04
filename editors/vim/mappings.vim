@@ -258,7 +258,9 @@ autocmd myVimrc bufwinenter * if ! &modifiable || &readonly | call Pager() | end
 
 " {[} Misc
 
-call Nnoremap(g:IDE_mappings.make, ":w <bar> make<cr>")
+if maparg(g:IDE_mappings.make, 'n') ==? ""
+  call Nnoremap(g:IDE_mappings.make, ":w <bar> make<cr>")
+endif
 " Use CTRL-Q to do what CTRL-V used to do in insert
 inoremap <C-Q> <C-V>
 
