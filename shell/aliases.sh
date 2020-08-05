@@ -74,9 +74,12 @@ elif [ -e /usr/bin/gvim ]; then
   # xvim (has x11 clipboard support)
 elif [ -e /usr/bin/vimx ]; then
   alias myVim="/usr/bin/vimx"
-else
+elif [ $(command -v vim 2>/dev/null) ]; then
   alias myVim="vim"
-  unset -f vim
+else
+  # Old reliable caveman
+  alias myVim="vi"
+  # unset -f vim
 fi
 
 # Returns some variant on "myVim='alias'"
