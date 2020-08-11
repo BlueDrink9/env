@@ -61,7 +61,7 @@ let g:LanguageClient_useFloatingHover = 1
 " let g:LanguageClient_hoverPreview = 'never'
 
 let g:LanguageClient_loggingFile = expand('~/.vim/LanguageClient.log')
-autocmd myIDE FileType r,swift,cpp,c call <SID>SetLSPShortcuts()
+autocmd myIDE FileType * call <SID>SetLSPShortcuts()
 " Install langserver with:
 let b:cmdInstallRLSP ='if( !is.element("languageserver",
             \  .packages(all.available = TRUE))){
