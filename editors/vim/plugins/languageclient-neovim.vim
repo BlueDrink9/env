@@ -61,7 +61,10 @@ let g:LanguageClient_useFloatingHover = 1
 " let g:LanguageClient_hoverPreview = 'never'
 
 let g:LanguageClient_loggingFile = expand('~/.vim/LanguageClient.log')
-autocmd myIDE FileType * call <SID>SetLSPShortcuts()
+" Check for successful loading. Failure means binary not available, in which
+" case we don't want to clobber any mappings.
+autocmd myIDE FileType * if exists('g:LanguageClient_loaded') && g:LanguageClient_loaded == 1
+            \ | call <SID>SetLSPShortcuts() | endif
 " Install langserver with:
 let b:cmdInstallRLSP ='if( !is.element("languageserver",
             \  .packages(all.available = TRUE))){
