@@ -4,6 +4,7 @@
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 let g:ale_enabled = 0
 let g:LanguageClient_autoStart = 0
+UnPlug 'autozimu/LanguageClient-neovim'
 UnPlug 'davidhalter/jedi-vim'
 UnPlug 'python-mode/python-mode'
 
