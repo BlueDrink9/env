@@ -165,12 +165,9 @@ function! IsPluginUsed(name)
 endfunction
 
 " Plug installs the plugin, but only loads on InsertEnter.
-" url: the normal first arg to Plug
-" name: the last part of the url
-" options: a dict with the plug options. Should include 'on': [] to prevent
-" load.
-function! PlugOnInsertEnter(url, name, options)
-  exec "Plug '" . a:url . "', a:options"
+" name: the last part of the plugin url (just name, no auth).
+" Plug options should include 'on': [] to prevent load before insertenter.
+function! LoadPluginOnInsertEnter(name)
   let l:plugLoad = 'autocmd InsertEnter * call plug#load("'
   let l:plugLoadEnd = '")'
   let l:undoAutocmd = 'autocmd! ' . a:name . '_insertenter'
