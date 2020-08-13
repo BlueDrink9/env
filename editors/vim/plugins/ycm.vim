@@ -20,7 +20,7 @@ function! BuildYCM()
             call add(l:installOptions, l:installSupports[prog])
         endif
     endfor
-    let l:installCmd="python3 install.py " . join(l:installOptions ," ") . " >| $HOME/.logs/ycm 2>&1"
+    let l:installCmd="python3 install.py " . join(l:installOptions ," ") . " | tee $HOME/.logs/ycm_install.log 2>&1"
     exec '!' . l:installCmd
     if filereadable(PathExpand('third_party/ycmd/ycm_core.so'))
         let g:YCM_Installed=1
