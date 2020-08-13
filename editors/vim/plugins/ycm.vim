@@ -39,6 +39,8 @@ if filereadable(PathExpand(s:YCM_dir . '/third_party/ycmd/ycm_core.so'))
 endif
 if exists("g:YCM_Installed")
     call LoadPluginOnInsertEnter('YouCompleteMe')
+else
+    finish
 endif
 
 " let g:ycm_global_ycm_extra_conf = '~/.config/ycm/ycm_extra_conf.py'
