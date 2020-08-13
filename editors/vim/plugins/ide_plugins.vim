@@ -458,9 +458,6 @@ autocmd myPlugins Filetype *
 " plugins.
 " let s:syntaxKeywords = OmniSyntaxList( [] )
 
-" Awesome code completion, but requires specific installations and
-" compiling a binary.
-" Plug 'https://github.com/Valloric/YouCompleteMe'
 if has("timers")
 
     " This will be unloaded for CoC.nvim
@@ -469,8 +466,16 @@ if has("timers")
         " Intellisense engine for vim8 & neovim, full language server protocol support as VSCode.
         " Uses VSCode-specific extensions, too. Seems to Just Work?
         call SourcePluginFile("coc.nvim.vim")
-    elseif has("python3") && HasNvimPythonModule()
-        call SourcePluginFile("deoplete.vim")
+    elseif has("python3")
+        if executable("cmake")
+            " Awesome code completion, but requires specific installations and
+            " compiling a binary.
+            call SourcePluginFile("ycm.vim")
+        endif
+        " Fallback to deoplete if YCM hasn't installed properly.
+        if HasNvimPythonModule() && !exists("g:YCM_Installed")
+            call SourcePluginFile("deoplete.vim")
+        endif
 
     elseif has("python")
         " Async completion engine, doesn't need extra installation.
@@ -489,10 +494,14 @@ if has("timers")
         let g:completor_auto_trigger = 1
 
     endif
+elseif has("python3") && executable("cmake")
+    " Awesome code completion, but requires specific installations and
+    " compiling a binary.
+    call SourcePluginFile("ycm.vim")
 else
     Plug 'https://github.com/lifepillar/vim-mucomplete'
     let g:mucomplete#enable_auto_at_startup = 1
-    " Only pause after no tyging for [updatetime]
+    " Only pause after no typing for [updatetime]
     let g:mucomplete#delayed_completion = 1
     set completeopt+=menuone,noselect
 endif
