@@ -83,7 +83,8 @@ if [ -z "$SSHSESSION" ]; then
 fi
 
 # brew paths. Only before load to avoid loading twice.
-if [ -n "$HOMEBREW_PREFIX" ] && ! substrInStr "$HOMEBREW_PREFIX" "${PATH%%:*}" ; then
+# Only check first path entry ${PATH%%:*}, to ensure it is earlier than other things.
+if [ -n "$HOMEBREW_PREFIX" ] && ! substrInStr "$HOMEBREW_PREFIX" "${PATH%%:%%:*}" ; then
   export HOMEBREW_CELLAR="$HOMEBREW_PREFIX/Cellar"
   export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
   export XDG_DATA_DIRS="$HOMEBREW_PREFIX/share:$XDG_DATA_DIRS"
@@ -91,12 +92,22 @@ if [ -n "$HOMEBREW_PREFIX" ] && ! substrInStr "$HOMEBREW_PREFIX" "${PATH%%:*}" ;
   export INFOPATH="$HOMEBREW_PREFIX/share/info:$INFOPATH"
 fi
 # Local (usually manually) installed packages. Should have highest priority.
-if ! substrInStr "$HOME/.local" "${PATH}" ; then
+if ! substrInStr "$HOME/.local" "${PATH%%:*}" ; then
   export PATH="$HOME/.local/bin:$HOME/.local/sbin:$PATH"
-  export XDG_DATA_DIRS="$$HOME/.local/share:$XDG_DATA_DIRS"
-  export MANPATH="$$HOME/.local/share/man:$MANPATH"
-  export INFOPATH="$$HOME/.local/share/info:$INFOPATH"
+  export XDG_DATA_DIRS="$HOME/.local/share:$XDG_DATA_DIRS"
+  export MANPATH="$HOME/.local/share/man:$MANPATH"
+  export INFOPATH="$HOME/.local/share/info:$INFOPATH"
 fi
+
+# Want xcode to be lower priority than brew
+if substrInStr "darwin1" "$OSTYPE"; then
+  xcodeBin="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/"
+  if ! substrInStr "${xcodeBin}" "${PATH}" ; then
+    export PATH="${PATH}:${xcodeBin}"
+  fi
+fi
+
+  unset xcodeBin
 
 # Check if interactive is part of shell options (running interactively)
 case $- in
