@@ -31,19 +31,6 @@ else
   fi
 fi
 
-if [ -z "$HOMEBREW_PREFIX" ]; then
-  if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
-    export HOMEBREW_PREFIX="$HOME/homebrew"
-  elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
-    # Linuxbrew paths
-    export HOMEBREW_PREFIX="$HOME/.linuxbrew"
-    export HOMEBREW_REPOSITORY="$HOMEBREW_PREFIX/Homebrew"
-  fi
-  if [ ! -d "$HOMEBREW_PREFIX" ]; then
-    unset HOMEBREW_PREFIX
-  fi
-fi
-
 # {[} Terminal-specific settings
 # TODO use case
 # Set defaults here for various terms
@@ -79,6 +66,19 @@ if [ -z "$SSHSESSION" ]; then
   if [ -n "$ISTERMUX" ]; then
     COLORTERM="truecolor"
     export NOTMUX=1
+  fi
+fi
+
+if [ -z "$HOMEBREW_PREFIX" ]; then
+  if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
+    export HOMEBREW_PREFIX="$HOME/homebrew"
+  elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
+    # Linuxbrew paths
+    export HOMEBREW_PREFIX="$HOME/.linuxbrew"
+    export HOMEBREW_REPOSITORY="$HOMEBREW_PREFIX/Homebrew"
+  fi
+  if [ ! -d "$HOMEBREW_PREFIX" ]; then
+    unset HOMEBREW_PREFIX
   fi
 fi
 
