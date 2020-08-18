@@ -147,9 +147,10 @@ command! MRU browse oldfiles
 " {[} Window management
 " leader w opens new vert window, switches to it
 nnoremap <leader>w <C-w>v<C-w>l
-nnoremap <C-w>t :tabnew<CR>
-" No idea wtf this is meant to do...
-nnoremap <C-w><S-R> <W-w> <C-r>
+" Edit current buffer with a new tab
+nnoremap <C-w>t :tab sb
+" No idea wtf this was meant to do...
+" nnoremap <C-w><S-R> <W-w> <C-r>
 " Easier way to move between windows
 nnoremap <C-j> <C-W>j
 nnoremap <C-k> <C-W>k
