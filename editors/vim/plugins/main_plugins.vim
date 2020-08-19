@@ -453,6 +453,10 @@ Plug 'https://github.com/JarrodCTaylor/vim-shell-executor'
 " Async make, autoset compiler and makeprg from filetype plugin (view quickfix with :COpen)
 Plug 'https://github.com/tpope/vim-dispatch'
 call Nnoremap(g:IDE_mappings.make, ":w <bar> Dispatch<cr>")
+Plug 'https://github.com/radenling/vim-dispatch-neovim'
+" Not sure how this compares to Dispatch. Not a complete replacement.
+" Plug 'https://github.com/neomake/neomake'
+" command! -bang -nargs=* -complete=file Make Neomake! <args>
 "{]}
 
 " {[} ---------- Basic extra filetype support ----------
