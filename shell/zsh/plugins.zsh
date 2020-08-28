@@ -47,6 +47,19 @@ export DIRCOLORTHEME='dircolors.ansi-universal'
 # zinit ice wait lucid
 zinit light zdharma/fast-syntax-highlighting
 
+# This speeds up pasting w/ autosuggest
+# https://github.com/zsh-users/zsh-autosuggestions/issues/238
+autoload -U url-quote-magic
+pasteinit() {
+  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+  zle -N self-insert url-quote-magic
+}
+pastefinish() {
+  zle -N self-insert $OLD_SELF_INSERT
+}
+zstyle :bracketed-paste-magic paste-init pasteinit
+zstyle :bracketed-paste-magic paste-finish pastefinish
+
 # LS_COLORS for a huge number of filetypes. Some end up hard to see on
 # certain themes though.
 # For GNU ls (the binaries can be gls, gdircolors, e.g. on OS X when installing the
