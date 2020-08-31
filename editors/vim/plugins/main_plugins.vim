@@ -131,7 +131,7 @@ onoremap <C-/>  :Tcomment<CR>
 " Plug 'https://github.com/jacquesbh/vim-showmarks.git', {'on': 'DoShowMarks'}
 " More advanced version of showmarks. Lots of mappings, eg m]
 Plug 'jeetsukumaran/vim-markology', {'on': ['MarkologyEnable', 'MarkologyToggle']}
-" Enable with m!
+nnoremap m? :MarkologyEnable<cr>
 let g:markology_enable=0
 let g:markology_ignore_type="hpq"
 let g:markology_include=
@@ -453,6 +453,8 @@ Plug 'https://github.com/JarrodCTaylor/vim-shell-executor'
 " Async make, autoset compiler and makeprg from filetype plugin (view quickfix with :COpen)
 Plug 'https://github.com/tpope/vim-dispatch'
 call Nnoremap(g:IDE_mappings.make, ":w <bar> Dispatch<cr>")
+let g:dispatch_no_maps = 1
+call Nmap(g:IDE_mappings.make, ":Make<CR>")
 Plug 'https://github.com/radenling/vim-dispatch-neovim'
 " Not sure how this compares to Dispatch. Not a complete replacement.
 " Plug 'https://github.com/neomake/neomake'
