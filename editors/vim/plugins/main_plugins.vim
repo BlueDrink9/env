@@ -123,9 +123,9 @@ endif
 " default '<leader>_'. Maps in select mode. I don't use it.
 let g:tcomment_mapleader2=''
 let g:tcomment#blank_lines=0
-xmap <C-/>  :Tcomment<CR>
-nmap <C-/>  :TcommentBlock<CR>
-omap <C-/>  :Tcomment<CR>
+xnoremap <C-/>  :Tcomment<CR>
+nnoremap <C-/>  :TcommentBlock<CR>
+onoremap <C-/>  :Tcomment<CR>
 " I thought this wasn't working, because nothing ever showed up.
 " It turns out this is because you need to :DoShowMarks first.
 " Plug 'https://github.com/jacquesbh/vim-showmarks.git', {'on': 'DoShowMarks'}
