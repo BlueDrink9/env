@@ -79,6 +79,7 @@ $plaintextEditMenuFTs = @(
         "Python.File",
         "Microsoft.PowerShellScript.1",
         "xmlfile",
+        "JSFile",
         "VBSFile"
 )
 
