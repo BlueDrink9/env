@@ -28,7 +28,7 @@ export WINDOW_TITLE_PATH="\[\e]2;[\W] \u@\h: [\w] ${GIT_BRANCH} – ${SHELL_PROG
 # export HISTCONTROL=ignoreboth:erasedups
 # HISTORY_* set in shell settings.sh file.
 # Don't record some commands
-export HISTIGNORE="${HISTORY_IGNORE}"
+export HISTIGNORE="${HISTORY_IGNORE_PATTERNS}"
 export HISTFILESIZE="${HISTORY_FILESIZE}"
 export HISTCONTROL=ignoredups:erasedups
 export HISTFILE="${HISTORY_FILE}"

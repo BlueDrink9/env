@@ -23,7 +23,8 @@ setopt hist_verify appendhistory
 # HISTORY_* set in shell settings.sh file.
 HISTFILE="${HISTORY_FILE}"
 SAVEHIST="${HISTORY_FILESIZE}"
-HISTORY_IGNORE="${HISTORY_IGNORE}"
+# Zsh HISTORY_IGNORE uses regex (a|b) for separate patterns.
+HISTORY_IGNORE="($(echo ${HISTORY_IGNORE_PATTERNS} | tr ':' '|'))"
 setopt HIST_IGNORE_SPACE HIST_IGNORE_DUPS
 setopt hist_no_store histreduceblanks
 # Append to history after every command, not just when shell exits.
