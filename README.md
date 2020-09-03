@@ -11,6 +11,7 @@ Some of these are set automatically, but if set manually, should override the de
 
 |Set in file|Option|Possible values|Description|Set after or before sourcing|
 |-----------|------|---------------|-----------|----------------------------|
+| Shell or rc | `WINDOW_CUSTOM_NAME` | string | Prepended to title of window, useful for naming windows for a session. Include a training space to give a gap before the short path |
 | `.bashrc` | `USENF` | 1 or unset | Affects whether vim uses powerline and nerd symbols. Change this depending on your current font.| Before |
 | `.bashrc` | `USEPF` | 1 or 0 | Affects whether vim uses powerline symbols. Change this depending on your current font.| Before |
 | `.bashrc` | `COLORTERM` | truecolor, 24bit, 16, 256 | Mostly used for vim. Advertises your term capabilities. 16 is useful if the term's colours are customised, eg for solarized, and you want to use them instead of a 256 colourscheme | Before |
