@@ -20,8 +20,8 @@ fi
 # Used with -x for debugging shells
 export PS4='+($(${CURR_SCRIPT_CMD}):${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
 
-# \e]0 escapes to window title, \a ends it.
-export WINDOW_TITLE_PATH="\[\e]2;\${WINDOW_CUSTOM_NAME}[\W] \u@\h: [\w] ${GIT_BRANCH} – ${SHELL_PROGRAM}\a\]"
+# \e]0 escapes to window title, \a ends it. Escaped \$ to evaluate live.
+export WINDOW_TITLE_PATH="\[\e]2;\${WINDOW_CUSTOM_NAME}[\W] \u@\h: [\w] \${GIT_BRANCH} – \${SHELL_PROGRAM}\a\]"
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
