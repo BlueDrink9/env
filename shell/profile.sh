@@ -99,6 +99,12 @@ if ! substrInStr "$HOME/.local" "${PATH%%:*}" ; then
   export INFOPATH="$HOME/.local/share/info:$INFOPATH"
 fi
 
+scriptsFolder="${SCRIPT_DIR_LOCAL}/scripts"
+if ! substrInStr "$scriptsFolder" "${PATH}" ; then
+  export PATH="$scriptsFolder:$PATH"
+fi
+unset scriptsFolder
+
 # Want xcode to be lower priority than brew
 if substrInStr "darwin1" "$OSTYPE"; then
   xcodeBin="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/"
