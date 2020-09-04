@@ -128,96 +128,6 @@ findText(){
   grep --color=auto -rn "$text" "${dir}" "${@:3}"
 }
 
-del() {
-  fileToDel="$1"
-  fileDir="$(dirname \"${fileToDel}\")"
-  if [ $OSTYPE = 'linux-gnu' ]; then
-    TRASHDIR=${HOME}/.local/share/Trash/files
-  elif [[ $OSTYPE =~ 'darwin' ]]; then
-    TRASHDIR=${HOME}/.Trash
-  fi
-  mkdir -p "${TRASHDIR}/$fileDir"
-  # Safer than rm
-  mv "$fileToDel" "${TRASHDIR}/$fileToDel"
-}
-
-# Delete and reclone current git directory
-reclone() {
-  if is_git_repository ; then
-    remoteUrl=$(git config --get remote.origin.url)
-    repoFolder=$(pwd)
-    cd .. && rm -rf "${repoFolder}" && git clone "${remoteUrl}" && cd "${repoFolder}"
-  else
-    echo "Error: not a git repository ${remoteUrl}"
-    return 1
-  fi
-}
-
-# provides shortcuts for git cloning
-git_clone() {
-  if [[  "$1" =~ https://github.com ]] ; then
-    git clone "$1"
-  elif [[  "$1" =~ @github.com ]] ; then
-    git clone "$1"
-  elif [[  "$1" =~ github.com ]] ; then
-    git clone https://"$1"
-  else
-    git clone https://github.com/"$1"
-  fi
-}
-
-#TODO rceate function to try a range of terms...
-term() {
-  terminals="
-  kitty --single-instance -d $(pwd)
-  gnome-terminal
-  xfce4-terminal
-  terminal
-  iterm2
-  wsl.exe
-  "
-  tarray=($terminals)
-  for term in "${tarray[@]}" ; do
-    # if [ $(function_exists "$browser") ]; then
-    function_exists "$term"
-    command -v $term >/dev/null 2>&1 # deliberately only get first word of cmd. Don't quote!
-    if [ "$?" -eq 0 ]; then
-      "$term" "$1"
-      break
-    fi
-  done || echo "Terminal emulator unknown" >&2
-}
-
-fopen() {
-  if [ "$(uname)" = "Darwin" ]; then
-    # Mac OS X, open finder.
-    open $1
-    return
-  fi
-  filebrowsers="
-  xdg-open
-  explorer.exe
-  finder
-  nautilus
-  gnome-open
-  caja
-  dolphin
-  konquerer
-  nemo
-  "
-  fbarray=($filebrowsers)
-  for browser in "${fbarray[@]}" ; do
-    # if [ $(function_exists "$browser") ]; then
-    function_exists "$browser"
-    command -v $browser >/dev/null 2>&1
-    if [ "$?" -eq 0 ]; then
-      $browser "$1"
-      break
-    fi
-  done || echo "File browser unknown" >&2
-}
-
-
 # Save all commands with timestamp and working dir to log file. Doesn't
 # affect bash's recallable history, or speed.
 # https://spin.atomicobject.com/2016/05/28/log-bash-history/
@@ -297,58 +207,6 @@ bash_history_sync() {
 #   builtin history "$@"
 # }
 
-# Call from a local repo to open the repository on github/bitbucket in browser
-# Modified version of https://github.com/zeke/ghwd
-repo() {
-	# Figure out github repo base URL
-	local base_url
-	base_url=$(git config --get remote.origin.url)
-	base_url=${base_url%\.git} # remove .git from end of string
-
-	# Fix git@github.com: URLs
-	base_url=${base_url//git@github\.com:/https:\/\/github\.com\/}
-
-	# Fix git://github.com URLS
-	base_url=${base_url//git:\/\/github\.com/https:\/\/github\.com\/}
-
-	# Fix git@bitbucket.org: URLs
-	base_url=${base_url//git@bitbucket.org:/https:\/\/bitbucket\.org\/}
-
-	# Fix git@gitlab.com: URLs
-	base_url=${base_url//git@gitlab\.com:/https:\/\/gitlab\.com\/}
-
-	# Validate that this folder is a git folder
-	if ! git branch 2>/dev/null 1>&2 ; then
-		echo "Not a git repo!"
-		exit $?
-	fi
-
-	# Find current directory relative to .git parent
-	full_path=$(pwd)
-	git_base_path=$(cd "./$(git rev-parse --show-cdup)" || exit 1; pwd)
-	relative_path=${full_path#$git_base_path} # remove leading git_base_path from working directory
-
-	# If filename argument is present, append it
-	if [ "$1" ]; then
-		relative_path="$relative_path/$1"
-	fi
-
-	# Figure out current git branch
-	# git_where=$(command git symbolic-ref -q HEAD || command git name-rev --name-only --no-undefined --always HEAD) 2>/dev/null
-	git_where=$(command git name-rev --name-only --no-undefined --always HEAD) 2>/dev/null
-
-	# Remove cruft from branchname
-	branch=${git_where#refs\/heads\/}
-
-	[[ $base_url == *bitbucket* ]] && tree="src" || tree="tree"
-	url="$base_url/$tree/$branch$relative_path"
-
-
-	echo "Calling $(type open) for $url"
-
-	open "$url" &> /dev/null || (echo "Using $(type open) to open URL failed." && exit 1);
-}
-
 # Get colors in manual pages
 man() {
 	env \
@@ -423,24 +281,6 @@ generate_export_termoptions_cmd(){
   echo "${out}"
 }
 
-ssh_with_options(){
-  local EXPORT_TERMOPTIONS_CMD=$(generate_export_termoptions_cmd)
-  # Calls remote user's default shell. Unescape $SHELL to use local user's.
-  \ssh -t "$@" "${EXPORT_TERMOPTIONS_CMD} exec \${SHELL} -l -s"
-}
-alias ssh="ssh_with_options"
-
-mosh_with_options(){
-  local EXPORT_TERMOPTIONS_CMD=$(generate_export_termoptions_cmd)
-  # To get currently used shell, use getShellProgram?
-  # Calls currently used shell locally on remote server. Unused.
-  # stripping leading '-' and directory
-  shell_base="${0##*/}"
-  shell_base="${shell_base#-}"
-  \mosh --server="${EXPORT_TERMOPTIONS_CMD} mosh-server || ~/.local/bin/mosh-server.sh" "$@"
-}
-alias mosh="mosh_with_options"
-
 set_tmux_termoptions(){
   if is_tmux_running; then
     for _option in ${TERMOPTIONS[*]}; do
@@ -454,7 +294,7 @@ set_tmux_termoptions(){
       if [ ! -z "$TMUX" ]; then
         for _option in ${TERMOPTIONS[*]}; do
           # Refresh term_option shell variables by parsing tmux's global environment
-          local optval="$(\tmux show-environment -g ${_option} 2>/dev/null)"
+          optval="$(\tmux show-environment -g ${_option} 2>/dev/null)"
           export "${_option}"="${optval##*=}"
           unset optval
         done
@@ -490,21 +330,6 @@ if command -v 'tmux'>/dev/null; then
 fi
 # {]} Exporting for ssh
 
-ssh_reset_permissions(){
-  chmod 700 $HOME/.ssh
-  chmod 644 $HOME/.ssh/*
-  chmod 600 $HOME/.ssh/*_rsa
-  chmod 644 $HOME/.ssh/*.pub
-  chmod go-w $HOME
-  chown $USER $HOME/.ssh
-  chown $USER $HOME/.ssh/*
-}
-
-ssh_keygen(){
-  read -p "What should this key be called in the comment? " name
-  ssh-keygen -t rsa -b 4096 -C "$name"
-}
-
 ssh_agent_start(){
   # Ensures only one ssh-agent will be started, even across multiple shells.
   # Queries the agent for available keys. If none can be found, it will try
@@ -524,163 +349,10 @@ ssh_agent_start(){
   fi
 }
 
-lastpass_login(){
-  if ! lpass status > /dev/null; then
-    echo "Lastpass is not logged in."
-    if [ -z "${LPUSERNAME}" ]; then
-      read -r -p "Enter lastpass username \
-        (set LPUSERNAME to skip prompt): " LPUSERNAME
-    fi
-    lpass login "$LPUSERNAME"
-  fi
-}
-
-# Adds an ssh key to agent, using the passphrase in lastpass.
-# Uses the extra note at the end of the .pub as the key name in lastpass.
-# If no key files are given as arguments, all keys in ~/.ssh are added.
-lastpass_ssh_key_add(){
-  if ! command -v lpass > /dev/null; then
-    echo "lastpass-cli not installed."
-    ssh-add
-    return
-  fi
-  if ! command -v ssh > /dev/null; then
-    echo "openssh not installed."
-    return
-  fi
-  if [ -z "$SSH_KEYS_ADDED" ]; then
-    pubkeys="$HOME/.ssh/*.pub"
-    files="${*-$pubkeys}"
-    for keyfile in $files; do
-      # Strip .pub from public keys...
-      # keyfile="${keyfile%.*}"
-      # Backup check to see if key already loaded.
-      key="$(cat ${keyfile})"
-      # ssh-add -L lists public keys, oops.
-      # if ! ssh-add -L | grep -q -- "${key}"; then
-      if ! substrInStr "${key}" "$(ssh-add -L)"; then
-        # Extract the comment at the end of the pub file
-        keyname=$(sed -e 's/[^=]*== //g' < "${keyfile}.pub")
-        lastpass_login
-        if ! lpass status; then
-          echo "Lastpass not logged in. No keys added."
-          return
-        fi
-        # Note: Indent END with tabs, not spaces, or this won't work.
-        expect <<- END
-          spawn ssh-add ${keyfile}
-          expect "Enter passphrase"
-          send "$(lpass show --field=Passphrase SSH/${keyname})\r"
-          expect eof
-END
-        export SSH_KEYS_ADDED=1
-      fi
-    done
-  fi
-}
-alias lpssh="lastpass_ssh_key_add"
-
-choosePkgManager(){
-  _options="brew yay pacman pkg apt yum"
-  # Not quite posix, but will at least work in both bash and zsh.
-  while read option; do
-      if [ $(command -v "${option}" 2>/dev/null) ]; then
-          echo "${option}"
-          break
-      fi
-    done < <(echo $_options | tr ' ' '\n')
-  unset options
-}
-
-pack(){
-    if [ -n "$PACKCMD" ]; then
-      cmd="$PACKCMD"
-    else
-      cmd="$1"
-    fi
-    if [ -n "$cmd" ]; then
-      shift
-    fi
-    args="$@"
-    useSudo=false
-    installcmd="install"
-    infocmd="info"
-    refreshcmd="update"
-    upgradecmd="upgrade"
-    searchcmd="search"
-    removecmd="remove"
-    noconfirmcmd="-y"
-    packcmd="$(choosePkgManager)"
-    case "$packcmd" in
-        brew )
-            removecmd="uninstall"
-            ;;
-        pacman|yay)
-            installcmd="-S"
-            refreshcmd="-Syy"
-            upgradecmd="-Syu"
-            searchcmd="-Ss"
-            removecmd="-R"
-            noconfirmcmd="--noconfirm"
-            if [ "$packcmd" = "pacman" ]; then useSudo=true; fi
-            ;;
-        pkg )
-            # Probably termux, may be freeBSD.
-            true
-            ;;
-        apt )
-            useSudo=true
-            ;;
-        yum )
-            useSudo=true
-            ;;
-    esac
-
-    if "$useSudo"; then
-        packcmd="sudo ${packcmd}"
-    else
-        packcmd="${packcmd}"
-    fi
-    if [ -n "$PACK_NOCONFIRM" ]; then
-        packcmd="${packcmd} ${noconfirmcmd}"
-    fi
-
-  case "$cmd" in
-    install | refresh | upgrade | search | remove | info)
-      cmd="${cmd}cmd"
-      # Expand cmd to get what the actual [$installcmd] is.
-      $(echo "$packcmd") "$(var_expand ${cmd})" $args
-      ;;
-    *)
-      $(echo "$packcmd") "$cmd" $args
-  esac
-
-  unset packcmd cmd installcmd refreshcmd upgradecmd searchcmd removecmd infocmd useSudo
-}
-alias packi="pack install"
-alias packr="pack refresh"
-alias packu="pack refresh && pack upgrade"
-alias packs="pack search"
-alias packrm="pack remove"
-alias pack\?="pack info"
-
 # kitty_termcopy(){
 #   infocmp xterm-kitty | \ssh $1 tic -x -o \~/.terminfo /dev/stdin
 # }
 alias kitty_termcopy="kitty +kitten \ssh"
-
-htmlCopyAsRichText(){
-  if [[ "$OSTYPE" =~ "darwin" ]]; then
-    textutil -stdin -format html -convert rtf -stdout | pbcopy
-  elif [ "${isWSL}" = 1 ]; then  # WSL specific stuff
-    pandoc.exe --standalone --from=html --to=rtf --output=- | clip.exe
-  elif [[ "$OSTYPE" =~ "linux" ]] && command -v xclip > /dev/null 2>&1; then  # Linux specific stuff
-    xclip -t text/html -selection clipboard
-  fi
-}
-markdownCopyAsRichText(){
-  pandoc "$@" -f markdown-smart -t html | htmlCopyAsRichText
-}
 
 viewCSV(){
   # Column by default merges empty columns, so add space before all commas to fix
@@ -808,15 +480,6 @@ else
 fi
 #{]} Theme
 
-hist-search(){
-  searchterm="$1"
-  logs="$HOME"/.logs/shell-history-
-  rg "$searchterm" "${logs}"* 2> /dev/null || \
-    ag "${logs}"* "$searchterm" 2> /dev/null || \
-    grep -r "$searchterm" "${logs}"*
-  unset searchterm logs
-}
-
 # Gets the path of the most recently modified file in the specified or current
 # directory. Excludes directories. Use like vi `mrf`
 mrf(){
@@ -825,30 +488,6 @@ mrf(){
   unset dir
 }
 
-vim_single_plugin(){
-  plugin="$1"
-  shift
-  if [ -n "$2" ]; then
-    editor="${2}"
-    shift
-  else
-    editor="vim"
-  fi
-  "$editor" -u NORC --cmd "set rtp+=$HOME/.vim/plugins/$plugin" -c "nnoremap ; :" -c "nnoremap kv <esc>" $@
-  unset plugin
-}
-
 plugupdate() {
   vim +PlugUpgrade +PlugUpdate +CocUpdate +qa && zinit update && $HOME/.tmux/plugins/tpm/bin/update_plugins all
-}
-
-ips(){
-  if program_exists ifconfig; then
-    ifconfig | grep 'inet'
-  elif program_exists ip; then
-    # ip addr | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
-    ip addr | grep "scope global"
-  else
-    printf "neither ifconfig or ip installed" >&2
-  fi
 }

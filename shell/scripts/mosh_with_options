@@ -1,0 +1,14 @@
+#!/bin/sh
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$SCRIPT_DIR/../functions.sh"
+
+# mosh_with_options(){
+  EXPORT_TERMOPTIONS_CMD=$(generate_export_termoptions_cmd)
+  # To get currently used shell, use getShellProgram?
+  # Calls currently used shell locally on remote server. Unused.
+  # stripping leading '-' and directory
+  shell_base="${0##*/}"
+  shell_base="${shell_base#-}"
+  \mosh --server="${EXPORT_TERMOPTIONS_CMD} mosh-server || ~/.local/bin/mosh-server.sh" "$@"
+# }
+

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# del() {
+  fileToDel="$1"
+  fileDir="$(dirname \"${fileToDel}\")"
+  if [ $OSTYPE = 'linux-gnu' ]; then
+    TRASHDIR=${HOME}/.local/share/Trash/files
+  elif [[ $OSTYPE =~ 'darwin' ]]; then
+    TRASHDIR=${HOME}/.Trash
+  fi
+  mkdir -p "${TRASHDIR}/$fileDir"
+  # Safer than rm
+  mv "$fileToDel" "${TRASHDIR}/$fileToDel"
+# }
+

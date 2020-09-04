@@ -1,0 +1,33 @@
+#!/bin/sh
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$SCRIPT_DIR/../functions.sh"
+
+# fopen() {
+  if [ "$(uname)" = "Darwin" ]; then
+    # Mac OS X, open finder.
+    open $1
+    exit
+  fi
+  filebrowsers="
+  xdg-open
+  explorer.exe
+  finder
+  nautilus
+  gnome-open
+  caja
+  dolphin
+  konquerer
+  nemo
+  "
+  fbarray=($filebrowsers)
+  for browser in "${fbarray[@]}" ; do
+    # if [ $(function_exists "$browser") ]; then
+    function_exists "$browser"
+    command -v $browser >/dev/null 2>&1
+    if [ "$?" -eq 0 ]; then
+      $browser "$1"
+      break
+    fi
+  done || echo "File browser unknown" >&2
+# }
+

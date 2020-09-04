@@ -1,0 +1,11 @@
+#!/bin/sh
+# ips(){
+  if program_exists ifconfig; then
+    ifconfig | grep 'inet'
+  elif program_exists ip; then
+    # ip addr | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
+    ip addr | grep "scope global"
+  else
+    printf "neither ifconfig or ip installed" >&2
+  fi
+# }

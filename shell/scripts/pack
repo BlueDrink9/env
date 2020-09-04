@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$SCRIPT_DIR/../functions.sh"
+
+choosePkgManager(){
+  _options="brew yay pacman pkg apt yum"
+  # Not quite posix, but will at least work in both bash and zsh.
+  while read option; do
+      if [ $(command -v "${option}" 2>/dev/null) ]; then
+          echo "${option}"
+          break
+      fi
+    done < <(echo $_options | tr ' ' '\n')
+  unset options
+}
+
+# pack(){
+    if [ -n "$PACKCMD" ]; then
+      cmd="$PACKCMD"
+    else
+      cmd="$1"
+    fi
+    if [ -n "$cmd" ]; then
+      shift
+    fi
+    args="$@"
+    useSudo=false
+    installcmd="install"
+    infocmd="info"
+    refreshcmd="update"
+    upgradecmd="upgrade"
+    searchcmd="search"
+    removecmd="remove"
+    noconfirmcmd="-y"
+    packcmd="$(choosePkgManager)"
+    case "$packcmd" in
+        brew )
+            removecmd="uninstall"
+            ;;
+        pacman|yay)
+            installcmd="-S"
+            refreshcmd="-Syy"
+            upgradecmd="-Syu"
+            searchcmd="-Ss"
+            removecmd="-R"
+            noconfirmcmd="--noconfirm"
+            if [ "$packcmd" = "pacman" ]; then useSudo=true; fi
+            ;;
+        pkg )
+            # Probably termux, may be freeBSD.
+            true
+            ;;
+        apt )
+            useSudo=true
+            ;;
+        yum )
+            useSudo=true
+            ;;
+    esac
+
+    if "$useSudo"; then
+        packcmd="sudo ${packcmd}"
+    else
+        packcmd="${packcmd}"
+    fi
+    if [ -n "$PACK_NOCONFIRM" ]; then
+        packcmd="${packcmd} ${noconfirmcmd}"
+    fi
+
+  case "$cmd" in
+    install | refresh | upgrade | search | remove | info)
+      cmd="${cmd}cmd"
+      # Expand cmd to get what the actual [$installcmd] is.
+      $(echo "$packcmd") "$(var_expand ${cmd})" $args
+      ;;
+    *)
+      $(echo "$packcmd") "$cmd" $args
+  esac
+
+  unset packcmd cmd installcmd refreshcmd upgradecmd searchcmd removecmd infocmd useSudo
+# }
+

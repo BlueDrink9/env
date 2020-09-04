@@ -1,0 +1,10 @@
+#!/bin/sh
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$SCRIPT_DIR/../functions.sh"
+
+# ssh_with_options(){
+  EXPORT_TERMOPTIONS_CMD=$(generate_export_termoptions_cmd)
+  # Calls remote user's default shell. Unescape $SHELL to use local user's.
+  \ssh -t "$@" "${EXPORT_TERMOPTIONS_CMD} exec \${SHELL} -l -s"
+# }
+

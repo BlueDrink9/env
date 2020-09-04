@@ -1,0 +1,5 @@
+#!/bin/sh
+# ssh_keygen(){
+  read -p "What should this key be called in the comment? " name
+  ssh-keygen -t rsa -b 4096 -C "$name"
+# }

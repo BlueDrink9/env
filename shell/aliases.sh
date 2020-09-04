@@ -157,3 +157,13 @@ alias icat="kitty +kitten icat"
 alias dotfe="editor \"${DOTFILES_DIR}\"/shell/aliases.sh \"${DOTFILES_DIR}\"/shell/functions.sh"
 alias stowlocal="stow --dir=\"$HOME/.local/packages\" --target=\"$HOME/.local\""
 
+alias packi="pack install"
+alias packr="pack refresh"
+alias packu="pack refresh && pack upgrade"
+alias packs="pack search"
+alias packrm="pack remove"
+alias pack\?="pack info"
+
+alias lpssh="lastpass_ssh_key_add"
+alias mosh="mosh_with_options"
+alias ssh="ssh_with_options"
