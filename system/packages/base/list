@@ -29,6 +29,9 @@ rlwrap
 openssh
 cheat
 lsd
+bat
+batgrep
+broot
 thefuck
 tldr
 wget
@@ -37,6 +40,7 @@ ctags
 shellcheck
 curl
 gcc
+topgrade
 
 # proselint # wooah cool. Pip module
 

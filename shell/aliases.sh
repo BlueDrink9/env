@@ -6,6 +6,10 @@ alias rl="rlwrap"
 alias untar="tar -zxvf"
 alias envupd="git -C \"$DOTFILES_DIR\" pull && $0"
 
+if [ -n "$ISTERMUX" ]; then
+  alias su="tsu"
+fi
+
 if [[ "$OSTYPE" =~ "darwin" ]]; then  # OSX specific stuff
   alias setssdir="defaults write com.apple.screencapture location"
   notify(){
@@ -26,20 +30,22 @@ elif [[ "$OSTYPE" =~ "linux" ]]; then  # Linux specific stuff
   alias fgrep='fgrep --color=auto'
   alias egrep='egrep --color=auto'
 fi
-if [ -n "$ISTERMUX" ]; then
-  alias su="tsu"
-fi
+
 if command -v lsd >/dev/null 2>&1 && [ "$USENF" = 1 ]; then
-  alias ls="lsd -Fh"
+  alias ls="lsd"
   alias tree="lsd --tree"
+elif command -v exa >/dev/null 2>&1; then
+  alias ls="exa"
+fi
+if command -v broot >/dev/null 2>&1; then
+  alias tree="br"
 fi
 
 # ls defined by os-specific stuff above.
 alias l='ls -C'
 alias lsa="ls -a"
 alias ll="ls -al"
-alias lt="ls -lhart"
-alias lss="ls -ls"
+alias lt="ls -lart"
 
 alias ..="cd .. && ls"
 alias ...="cd ../.."
