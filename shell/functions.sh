@@ -417,6 +417,9 @@ if [ "$TERM" = "xterm-kitty" ] && [ -z "$SSHSESSION" ]; then
     if [ -f "${KITTY_CURRENT_THEME_FILE}" ]; then
       rm "${KITTY_CURRENT_THEME_FILE}"
     fi
+    # Unset, or set to default colours? Unsure.
+    # unset COLOURSCHEME
+    export COLOURSCHEME="${KITTY_DEFAULT_COLOURSCHEME}"
   }
   theme(){
     if [ -n "$1" ]; then
