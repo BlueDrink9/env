@@ -372,6 +372,15 @@ set shortmess=a
 " set fillchars+="vert:│,stlnc:─"
 set fillchars+="vert:║,stlnc:═,stl:\ ,"
 
+function! MinimumUI()
+  set laststatus=0
+  set showtabline=0
+  set showmode
+  set nonumber norelativenumber foldcolumn=0
+  set nolist nospell
+  set colorcolumn=0
+endfunction
+
 function! SmallUIOnResize()
     if &lines < 24
         set cmdheight=1
@@ -393,9 +402,14 @@ function! SmallUIOnResize()
         set noshowmode
     endif
 endfunction
-" Autocmd doesn't trigger on startup, only on change.
-autocmd myVimrc VimEnter * call SmallUIOnResize()
-autocmd myVimrc VimResized * call SmallUIOnResize()
+if exists("g:minimumUI")
+  call MinimumUI()
+else
+  " Autocmd doesn't trigger on startup, only on change.
+  autocmd myVimrc VimEnter * call SmallUIOnResize()
+  autocmd myVimrc VimResized * call SmallUIOnResize()
+endif
+
 " Starting with Vim 7, the filetype of empty .tex files defaults to
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
