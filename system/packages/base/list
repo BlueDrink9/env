@@ -28,6 +28,7 @@ curl
 rlwrap
 openssh
 cheat
+lsd
 thefuck
 tldr
 wget
