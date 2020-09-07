@@ -246,7 +246,7 @@ endif
 function! Pager()
   nnoremap <buffer> u <c-u>
   nnoremap <buffer> f <c-f>
-  nnoremap <buffer> b <c-b>
+  " nnoremap <buffer> b <c-b>
   nnoremap <buffer> d <c-d>
   nnoremap <buffer> <up> <c-y>
   nnoremap <buffer> <down> <c-e>
