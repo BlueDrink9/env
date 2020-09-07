@@ -37,9 +37,6 @@ if command -v lsd >/dev/null 2>&1 && [ "$USENF" = 1 ]; then
 elif command -v exa >/dev/null 2>&1; then
   alias ls="exa"
 fi
-if command -v broot >/dev/null 2>&1; then
-  alias tree="br"
-fi
 
 # ls defined by os-specific stuff above.
 alias l='ls -C'
