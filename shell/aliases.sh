@@ -29,6 +29,10 @@ fi
 if [ -n "$ISTERMUX" ]; then
   alias su="tsu"
 fi
+if command -v lsd >/dev/null 2>&1 && [ "$USENF" = 1 ]; then
+  alias ls="lsd -Fh"
+  alias tree="lsd --tree"
+fi
 
 # ls defined by os-specific stuff above.
 alias l='ls -C'
@@ -62,19 +66,19 @@ alias rg="rg --smart-case"
 
 # Try to set vim to better versions.
 # Will be expanded by functions, but not variables.
-if [ $(command -v nvim 2>/dev/null) ]; then
+if command -v nvim >/dev/null 2>&1; then
   alias myVim="nvim"
-elif [ $(command -v mvim 2>/dev/null) ]; then
+elif command -v mvim >/dev/null 2>&1; then
   # Prefer macvim to gvim.
   alias myVim="mvim -v"
-elif [ $(command -v gvim 2>/dev/null) ]; then
+elif command -v gvim >/dev/null 2>&1; then
   alias myVim="gvim -v"
 elif [ -e /usr/bin/gvim ]; then
   alias myVim="/usr/bin/gvim -v"
   # xvim (has x11 clipboard support)
 elif [ -e /usr/bin/vimx ]; then
   alias myVim="/usr/bin/vimx"
-elif [ $(command -v vim 2>/dev/null) ]; then
+elif command -v vim >/dev/null 2>&1; then
   alias myVim="vim"
 else
   # Old reliable caveman
@@ -167,3 +171,7 @@ alias pack\?="pack info"
 alias lpssh="lastpass_ssh_key_add"
 alias mosh="mosh_with_options"
 alias ssh="ssh_with_options"
+if command -v batgrep >/dev/null 2>&1; then
+  # rg + bat.
+  alias bg="batgrep"
+fi

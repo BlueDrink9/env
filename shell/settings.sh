@@ -41,7 +41,7 @@ export PROMPT_COMMAND="theme \$COLOURSCHEME; ${PROMPT_COMMAND}"
 export LC_CTYPE="en_US.UTF-8"
 
 if [ -n "$DISPLAY" ]; then
-  if [ "$OSTYPE" = "linux-gnu" ] && [ $(command -v xorg 2>/dev/null) ]; then
+  if [ "$OSTYPE" = "linux-gnu" ] && command -v xorg >/dev/null 2>&1; then
     # Keyboard setup stuff
     export XKB_DEFAULT_LAYOUT="us,us"
     export XKB_DEFAULT_VARIANT="colemak,"
@@ -54,7 +54,8 @@ if [ -n "$DISPLAY" ]; then
     setxkbmap $colemak $capsToBS $altWinSwap $winSpaceToggle $capsLed
     unset colemak capsToBS altWinSwap winSpaceToggle capsLed
   fi
-elif [ $(command -v loadkeys 2>/dev/null) ] && [ "$TERM" = linux ]; then
+
+elif command -v loadkeys >/dev/null 2>&1 && [ "$TERM" = linux ]; then
   loadkeys colemak
 fi
 

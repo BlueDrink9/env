@@ -57,7 +57,7 @@ uninstallPackages(){
 }
 
 installBrew() {
-    if [ $(command -v brew 2>/dev/null) ]; then
+    if command -v brew >/dev/null 2>&1; then
         echo "Brew already installed"
         return
     fi
