@@ -36,14 +36,6 @@ augroup end
 " let g:loaded_zipPlugin = 1
 " {]} ------ Disable built-in plugins ------
 
-" {[} Settings and dir creation
-" Skip loading this file entirely.
-if exists("g:noPlugins")
-    let g:liteMode=0
-    let g:ideMode=0
-    finish
-endif
-
 " {[} ------ IDE Mappings ------
 " gh - get hint on whatever's under the cursor
 " Use g[] for get [something].
@@ -89,6 +81,13 @@ let g:IDE_mappings = {
             \}
 " {]} ------ IDE Mappings ------
 
+" {[} Settings and dir creation
+" Skip loading this file entirely.
+if exists("g:noPlugins")
+    let g:liteMode=0
+    let g:ideMode=0
+    finish
+endif
 
 " Silence a python deprecation warning.
 if has('python3') && !has('patch-8.1.201')
