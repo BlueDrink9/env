@@ -52,7 +52,7 @@
   autocrlf = input
   # Checkout win-style, commit unix
   # autocrlf = true
-  safecrlf = true
+  safecrlf = warn
   eol      = lf
 
 [merge]
