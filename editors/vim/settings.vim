@@ -327,6 +327,8 @@ function! Autosave()
 endfunction
 " Save on focus loss, leaving insert, leaving buffer.
 au myVimrc FocusLost,InsertLeave,BufLeave * call Autosave()
+" Checktime is used for things like autoread.
+au myVimrc FocusLost,BufLeave * checktime
 
 set modeline
 set modelines=5
