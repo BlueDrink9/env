@@ -50,3 +50,5 @@ setopt CHECK_JOBS
 # Affects what chars are considered part of a 'word' for ctrl w etc.
 WORDCHARS='_$'
 setopt ALWAYS_TO_END 
+# Allows # comments during cmd line
+setopt interactivecomments
