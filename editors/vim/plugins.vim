@@ -90,7 +90,8 @@ if exists("g:noPlugins")
 endif
 
 " Silence a python deprecation warning.
-if has('python3') && !has('patch-8.1.201')
+if has('python3') && !(has('patch-8.1.201') || has('nvim')) && g:liteMode == 0
+  echom 'python'
   silent! python3 1
 endif
 
