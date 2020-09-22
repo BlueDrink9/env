@@ -111,9 +111,9 @@ if substrInStr "darwin1" "$OSTYPE"; then
   if ! substrInStr "${xcodeBin}" "${PATH}" ; then
     export PATH="${PATH}:${xcodeBin}"
   fi
+  unset xcodeBin
 fi
 
-  unset xcodeBin
 
 # Check if interactive is part of shell options (running interactively)
 case $- in
