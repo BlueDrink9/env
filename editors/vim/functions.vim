@@ -287,3 +287,44 @@ nnoremap <M-S-left> :call ResizeGUIHoriz(-g:GUIResizeValue)<cr>
 nnoremap <M-S-right> :call ResizeGUIHoriz(g:GUIResizeValue)<cr>
 nnoremap <M-S-up> :call ResizeGUIVert(g:GUIResizeValue)<cr>
 nnoremap <M-S-down> :call ResizeGUIVert(-g:GUIResizeValue)<cr>
+
+" Vim script to add user-defined words to spell file automatically
+" A function to search for words after {marker_text} and add them to local
+" spell file
+function! AutoSpellGoodWords(marker_text)
+    call cursor(1, 1)
+    " let l:marker_text = '"%%  LocalWords:'
+    let l:marker_text = a:marker_text
+
+    let l:lines = []
+    let l:goodwords_start = search(l:marker_text, 'cW')
+    let l:line = getline(l:goodwords_start)
+    let l:header = strpart(l:line, 0, strlen(l:marker_text))
+    if l:header == l:marker_text
+        call insert(l:lines, l:line)
+    endif
+
+    while l:goodwords_start > 0
+        let l:goodwords_start = search(l:marker_text, 'W')
+        if l:goodwords_start == 0
+            break
+        end
+        let l:line = getline(l:goodwords_start)
+        let l:header = strpart(l:line, 0, strlen(l:marker_text))
+        if l:header == l:marker_text
+            call insert(l:lines, l:line)
+        endif
+    endwhile
+
+    let l:words = []
+    for l:line in l:lines
+        let l:line = strpart(l:line, strlen(l:marker_text) + 1)
+        call extend(l:words, split(l:line))
+    endfor
+    for l:word in l:words
+        silent execute ':spellgood! ' . l:word
+    endfor
+endfunction
+
+" Comment with LocalWords at end of doc, similar to emacs.
+autocmd myVimrc FileType tex call AutoSpellGoodWords('%  LocalWords:')
