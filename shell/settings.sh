@@ -16,7 +16,10 @@ else
 fi
 COLORTERM=${COLORTERM:-16}
 TERM_PROGRAM=${TERM_PROGRAM:-}
+# Export each term option.
 export $TERMOPTIONS
+# Needed for TERMOPTIONS as a string to export properly.
+TERMOPTIONS="$TERMOPTIONS"; export TERMOPTIONS
 
 if [ -n "$TMUX" ]; then
   # In a tmux session
