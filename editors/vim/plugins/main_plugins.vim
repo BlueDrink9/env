@@ -184,7 +184,7 @@ if v:version >= 703
     let g:vinarise_objdump_intel_assembly=1
 
     au myPlugins FileType vinarise call s:setupVinarise()
-    function s:setupVinarise()
+    function! s:setupVinarise()
         command! Assembly VinarisePluginDump
         command! Dump VinarisePluginDump
         DisableWhitespace
