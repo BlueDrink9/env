@@ -59,6 +59,7 @@ function! s:FirenvimSetPageOptions()
     " including it in the mapping. Needed for mapping to press_keys.
     if l:bufname =~? 'github.com'
         colorscheme github
+        set background=light
         set ft=markdown
         let l:clickSubmitButtonJS = "'document.getElementById(\"partial-new-comment-form-actions\").getElementsByClassName(\"btn btn-primary\")[0].click();'"
         exec 'inoremap <buffer> <c-CR> <Esc>:w<CR>:call firenvim#eval_js(' . l:clickSubmitButtonJS . ')<CR>:q<CR>'
