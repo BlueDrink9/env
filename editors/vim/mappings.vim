@@ -118,6 +118,9 @@ cnoremap <C-BS> <C-w>
 abbrev <expr> [d] strftime("%Y-%m-%d")
 abbrev <expr> [t] strftime("%H:%M")
 cnoreabbrev H helpgrep
+cnoreabbrev hg helpgrep
+cnoreabbrev vg vimgrep
+cnoreabbrev H vert h
 " Opens an edit command with the dir of the currently edited file filled in.
 " The C-R at the end is a hack. It swallows the space subsequently used to
 " expand the abbreviation, meaning the cursor is left at the end of the
@@ -139,7 +142,6 @@ cmap W! SudoSave
 " Quickly edit macros
 nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 command! -bang -nargs=* Macros <c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
-cnoreabbrev H vert h
 command! MRU browse oldfiles
 
 " {]} Abbreviations
