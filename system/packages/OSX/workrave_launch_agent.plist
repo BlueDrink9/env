@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>StandardErrorPath</key>
+        <string>$HOME/.logs/workrave.err</string>
+        <key>StandardOutPath</key>
+        <string>$HOME/.logs/workrave.out</string>
+        <key>Label</key>
+        <string>com.workrave.app</string>
+        <key>ProgramArguments</key>
+        <array>
+            <string>$HOME/.local/bin/workrave</string>
+        </array>
+        <key>RunAtLoad</key>
+        <true/>
+        <key>KeepAlive</key>
+        <false/>
+    </dict>
+</plist>
