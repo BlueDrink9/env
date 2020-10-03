@@ -3,6 +3,7 @@
 ctrl + cmd - t : $HOME/Applications/kitty.app/Contents/MacOS/kitty --single-instance || /Applications/kitty.app/Contents/MacOS/kitty --single-instance
 # alt - return : $HOME/Applications/kitty.app/Contents/MacOS/kitty --single-instance || /Applications/kitty.app/Contents/MacOS/kitty --single-instance
 ctrl + cmd - b : "$HOME/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" || "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+alt - v : /Applications/MacVim.app/Contents/MacOS/Vim -g || $HOME/Applications/MacVim.app/Contents/MacOS/Vim -g
 # Finder
 # Open -n seems to not open a new finder process any more. This one won't open a new window but it will at least open one if none are open to $HOME.
 alt - e : open $HOME
