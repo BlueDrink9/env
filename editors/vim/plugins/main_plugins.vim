@@ -469,6 +469,7 @@ Plug 'vim-scripts/autohotkey-ahk', {'for': 'autohotkey'}
 Plug 'https://github.com/hnamikaw/vim-autohotkey', {'for': 'autohotkey'}
 Plug 'https://github.com/PProvost/vim-ps1', {'for': 'ps1'}
 Plug 'https://github.com/lervag/vim-rmarkdown', {'for': 'rmd'}
+Plug 'https://github.com/liuchengxu/graphviz.vim', {'for': 'dot'}
 " {]} ---------- Basic extra filetype support ----------
 
 " {[} ---------- Git ----------
