@@ -1,6 +1,6 @@
 # vim:ft=sh
 
-ctrl + cmd - t : $HOME/Applications/kitty.app/Contents/MacOS/kitty --single-instance || /Applications/kitty.app/Contents/MacOS/kitty --single-instance
+ctrl + cmd - t : $DOTFILES_DIR/windowManagers/yabai/kitty_yabai_new_win.sh
 # alt - return : $HOME/Applications/kitty.app/Contents/MacOS/kitty --single-instance || /Applications/kitty.app/Contents/MacOS/kitty --single-instance
 ctrl + cmd - b : "$HOME/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" || "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 alt - v : /Applications/MacVim.app/Contents/MacOS/Vim -g || $HOME/Applications/MacVim.app/Contents/MacOS/Vim -g
