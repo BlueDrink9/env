@@ -19,7 +19,7 @@
                     },
                     "to": [
                         {
-                            "shell_command": "osascript -l JavaScript /Users/william/env/scripts/OSX/toggleCaps.jxa.applescript"
+                            "shell_command": "osascript -l JavaScript /Users/william/env/misc_scripts/OSX/toggleCaps.jxa.applescript"
                         }
                     ],
                     "to_if_alone": [
@@ -43,7 +43,7 @@
                     },
                     "to": [
                         {
-                            "shell_command": "osascript -l JavaScript /Users/william/env/scripts/OSX/toggleCaps.jxa.applescript"
+                            "shell_command": "osascript -l JavaScript /Users/william/env/misc_scripts/OSX/toggleCaps.jxa.applescript"
                         }
                     ],
                     "to_if_alone": [
