@@ -27,7 +27,9 @@
   rc = rebase --continue
   reab = rebase --abort
   resk = rebase --skip
-  ch = cherry-pick
+  chp = cherry-pick
+  chpc = cherry-pick --continue
+  chpab = cherry-pick --abort
   amend = commit --amend
   fpush = push --force
   pushnew = "!git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)"
