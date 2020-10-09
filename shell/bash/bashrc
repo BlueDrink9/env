@@ -24,7 +24,9 @@ source "${SCRIPT_DIR}/functions.sh"
 source "${SCRIPT_DIR}/settings.sh"
 BASH_ENV="${SCRIPT_DIR}/../aliases.sh" # Aliases are used for all readline apps.
 source "${SCRIPT_DIR}/../aliases.sh"
-alias_completion
+if command -v have >/dev/null 2>&1 && [ "$LITE_SYSTEM" != 1 ]; then
+  alias_completion
+fi
 source "${SCRIPT_DIR}/prompt/promptrc.sh"
 
 # Unset include guards to allow refreshing
