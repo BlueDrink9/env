@@ -24,6 +24,8 @@ source "${SCRIPT_DIR}/functions.sh"
 source "${SCRIPT_DIR}/settings.sh"
 BASH_ENV="${SCRIPT_DIR}/../aliases.sh" # Aliases are used for all readline apps.
 source "${SCRIPT_DIR}/../aliases.sh"
+# 'have' is a command defined by bash completion. If it doesn't exist,
+# completion isn't enabled.
 if command -v have >/dev/null 2>&1 && [ "$LITE_SYSTEM" != 1 ]; then
   alias_completion
 fi
