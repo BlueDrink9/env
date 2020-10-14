@@ -83,7 +83,9 @@ Plug 'https://github.com/moll/vim-bbye', {'on': 'Bdelete'}
 cabbrev bd Bdelete
 
 Plug 'https://github.com/chrisbra/csv.vim', {'for': 'csv'}
+" Set to 0 to skip autoformatting of CSVs.
 let g:csv_autocmd_arrange	   = 1
+" limit to only apply for files under 1 MB
 let g:csv_autocmd_arrange_size = 1024*1024
 " let g:csv_highlight_column = 'y' " Current cursor's column.
 " hi CSVColumnEven term=bold ctermbg=Gray guibg=LightGray

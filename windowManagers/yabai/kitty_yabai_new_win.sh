@@ -9,8 +9,8 @@ space=$(yabai -m query --spaces --space | jq .index)
 yabai -m signal --add event=window_created action=" \
   yabai -m signal --remove 'testkitty' &&
   yabai -m window $YABAI_WINDOW_ID --display $display &&
-  yabai -m space --focus $space &&
-  yabai -m display --focus $display" \
+  yabai -m display --focus $display &&
+  yabai -m space --focus $space" \
   app="kitty" label="testkitty"
 
 $HOME/Applications/kitty.app/Contents/MacOS/kitty --single-instance || /Applications/kitty.app/Contents/MacOS/kitty --single-instance
