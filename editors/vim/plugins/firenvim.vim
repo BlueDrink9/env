@@ -40,6 +40,7 @@ let s:fc = g:firenvim_config['localSettings']
 let s:disabled_sites=[
             \ 'docs.google.com*',
             \ 'facebook.com*',
+            \ 'messenger.com*',
             \ 'twitter.com*',
             \ ]
 for site in s:disabled_sites
