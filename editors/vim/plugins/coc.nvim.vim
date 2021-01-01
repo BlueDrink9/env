@@ -40,6 +40,7 @@ let g:coc_global_extensions = [
             \ "coc-bibtex",
             \ "coc-vimtex",
             \ "coc-python",
+            \ "coc-jedi",
             \ "coc-java",
             \ "coc-clangd",
             \ "coc-r-lsp"
