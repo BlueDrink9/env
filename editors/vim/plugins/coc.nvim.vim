@@ -32,6 +32,7 @@ let g:coc_global_extensions = [
             \ "coc-dictionary",
             \ "coc-snippets",
             \ "coc-omni",
+            \ "coc-diagnostic",
             \ "coc-tag",
             \ "coc-gitignore",
             \ "coc-lists",
