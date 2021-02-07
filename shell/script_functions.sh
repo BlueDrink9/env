@@ -123,6 +123,20 @@ addTextIfAbsent() {
   grep -q -F "$text" "$file" > /dev/null 2>&1 || echo "$text" >> "$file"
 }
 
+prependTextIfAbsent() {
+  default="invalid text or filename"
+  text="${1:-$default}"
+  file="${2:-$default}"
+  mkdir -p "$(dirname "$file")"
+  if [ -f "$file" ]; then touch "$file"; fi;
+  # Check if text exists in file, otherwise append.
+  # -i is inplace for GNU sed. Use -i.bak for BSD (OSX) (it creates a .bak
+  # file, which we remove).
+  grep -q -F "$text" "$file" > /dev/null 2>&1 || \
+    sed -i.bak "1s;^;$text\n;" "$file"
+  rm "$file".bak > /dev/null 2>&1 || true
+}
+
 askQuestionYN() {
   default="?"
   question=${1:-default}
