@@ -1,8 +1,7 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
+(setq script_dir (file-name-directory (or load-file-name buffer-file-name)))
+(load-file (concat script_dir "bindings.el"))
+;; Remember, you do not need to run 'doom sync' after modifying this file!
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
@@ -24,18 +23,6 @@
 
 (setq doom-font (font-spec :family "SauceCodePro NF" :size 16))
 
-;; Swap ;, :
-;; May need to be done for visual as well?
-(with-eval-after-load 'evil-maps
-  (define-key evil-motion-state-map (kbd ";") 'evil-ex))
-  ;; (define-key evil-motion-state-map (kbd ":") 'evil-repeat-find-char))
-
-;; Requires KeyChord library
-(setq key-chord-two-keys-delay 0.5)
-(key-chord-define evil-insert-state-map "kv" 'evil-normal-state)
-(key-chord-define evil-insert-state-map "vk" 'evil-normal-state)
-(key-chord-mode 1)
-
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
@@ -47,7 +34,7 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type "relative")
 
 
 ;; Here are some additional functions/macros that could help you configure Doom:
