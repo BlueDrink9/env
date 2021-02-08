@@ -185,6 +185,7 @@ DerivedData/
 #C++
 # Prerequisites
 *.d
+!*.d/
 
 # Compiled Object files
 *.slo
@@ -647,7 +648,7 @@ TSWLatexianTemp*
 
 # auto folder when using emacs and auctex
 ./auto/*
-*.el
+# *.el
 
 # expex forward references with \gathertags
 *-tags.tex
