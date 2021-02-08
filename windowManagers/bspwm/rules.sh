@@ -17,3 +17,5 @@ bspc rule -a feh floating=on manage=off
 bspc rule -a onenote floating=on
 bspc rule -a anbox floating=on
 bspc rule -a Gimp desktop='^8' state=floating follow=on
+# Emacs needs to be forced to start tiling.
+bspc rule -a Emacs state=tiled
