@@ -62,8 +62,8 @@ function! s:FirenvimSetPageOptions()
         colorscheme github
         set ft=markdown
         let l:clickSubmitButtonJS = "'document.getElementById(\"partial-new-comment-form-actions\").getElementsByClassName(\"btn btn-primary\")[0].click();'"
-        exec 'inoremap <buffer> <c-CR> <Esc>:w<CR>:call firenvim#eval_js(' . l:clickSubmitButtonJS . ')<CR>:q<CR>'
-        exec 'nnoremap <buffer> <c-CR> :w<CR>:call firenvim#eval_js(' . l:clickSubmitButtonJS . ')<CR>:q<CR>'
+        exec 'inoremap <buffer> <C-CR> <Esc>:w<CR>:call firenvim#eval_js(' . l:clickSubmitButtonJS . ')<CR>:q<CR>'
+        exec 'nnoremap <buffer> <C-CR> :w<CR>:call firenvim#eval_js(' . l:clickSubmitButtonJS . ')<CR>:q<CR>'
     elseif l:bufname =~? 'cocalc.com' || l:bufname =~? 'kaggleusercontent.com'
         set ft=python
     elseif l:bufname =~? 'localhost' || l:bufname =~? '127.0.0.1'
@@ -95,23 +95,12 @@ function! s:FirenvimSetPageOptions()
 endfunction
 
 
-" Fix odd bug that sometimes stops firenvim loading the text if setting a
-" colourscheme from a plugin. Will be overridden in setup anyway.
-let g:colorSch='default'
-autocmd myPlugins User pluginSettingsToExec call s:onFirenvimLoad()
-
-function! s:onFirenvimLoad()
-    " call feedkeys("\<C-L>", 'n')
-    call s:firenvimSetup()
-endfunction
-
 let s:debugMessages = []
 function! s:firenvimSetup()
     " We are in firenvim
     " For debug messages during startup. After startup, use echom.
     autocmd myPlugins BufEnter * echom join(s:debugMessages, "\n")
     " call add(s:debugMessages, 'setup')
-    inoremap <C-CR> <esc>:wq<cr>
     let g:hasGUI=1
     " Tested to match github default size on osx chrome.
     call SetGFN(11)
@@ -120,11 +109,16 @@ function! s:firenvimSetup()
     " colorscheme PaperColor
     colorscheme github
     set background=light
+
+    inoremap <C-CR> <Esc>:wq<cr>
+    nnoremap <C-z> :call firenvim#hide_frame()<cr>
+    nnoremap <Esc><Esc><Esc> :call firenvim#focus_page()<CR>
     " Cmd + v on osx
     inoremap <D-v> <c-r>+
     cnoremap <D-v> <c-r>+
     vnoremap <D-c> "+y
     set colorcolumn=0
+
     if &lines < 20
         let g:loaded_airline = 1
         silent! AirlineToggle
@@ -153,8 +147,19 @@ function! s:firenvimSetup()
     " This works
     " call feedkeys("i")
 
-    nnoremap <C-z> :call firenvim#hide_frame()<cr>
-    nnoremap <Esc><Esc><Esc> :call firenvim#focus_page()<CR>
     au! myVimrc FocusLost,InsertLeave,BufLeave * ++nested call Autosave()
+
     autocmd myPlugins BufEnter *.txt call s:FirenvimSetPageOptions()
+    # Auto-enter insertmode if the buffer is empty.
+    autocmd myPlugins BufWinEnter * if line('$') == 1 && getline(1) == '' | startinsert | endif
 endfunction
+
+function! s:onFirenvimLoad()
+    " call feedkeys("\<C-L>", 'n')
+    call s:firenvimSetup()
+endfunction
+
+" Fix odd bug that sometimes stops firenvim loading the text if setting a
+" colourscheme from a plugin. Will be overridden in setup anyway.
+let g:colorSch='default'
+autocmd myPlugins User pluginSettingsToExec call s:onFirenvimLoad()
