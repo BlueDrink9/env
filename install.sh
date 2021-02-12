@@ -178,11 +178,9 @@ elif [[ $OSTYPE =~ 'darwin' ]]; then
   main ${1:-}
 
 elif [[ $OSTYPE == 'msys' ]]; then
-  printErr "${Red}Git Bash not supported."
-  if askQuestionYN "Continue anyway?" ; then
-    printLine "${Red}Attempting install on Git Bash."
-    main ${1:-}
-  fi
+  printErr "[$Green Win (git bash) ${NC}]"
+  printLine "${Red}Attempting install on Git Bash."
+  main ${1:-}
 else
   printErr "OS not detected..."
   if askQuestionYN "Continue anyway?" ; then
