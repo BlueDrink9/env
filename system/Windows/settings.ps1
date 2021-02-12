@@ -15,6 +15,9 @@ function createNewRegKey($path){
     }
 }
 
+# Create %HOME% environment variable
+[System.Environment]::SetEnvironmentVariable("HOME", "${env:HOMEDRIVE}$env:HOMEPATH", [System.EnvironmentVariableTarget]::User)
+
 cinst --cacheLocation "$env:userprofile\AppData\Local\ChocoCache" colemak -y
 # Input langs - colemak and US-nz.
 # Current user, then default (which includes welcome screen).
