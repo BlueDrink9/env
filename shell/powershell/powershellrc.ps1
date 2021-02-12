@@ -14,4 +14,19 @@ set-location $home
 . $scriptdir/settings.ps1
 . $scriptdir/inputrc.ps1
 . $scriptdir/aliases.ps1
-. $scriptdir/plugins.ps1
+
+# Set up async (well, actually just delayed) plugin loading
+$Runspace = [runspacefactory]::CreateRunspace()
+$PowerShell = [powershell]::Create()
+$PowerShell.runspace = $Runspace
+$Runspace.Open()
+[void]$PowerShell.AddScript({
+    Start-Sleep -Seconds 1
+})
+$AsyncObject = $PowerShell.BeginInvoke()
+$null = Register-ObjectEvent -InputObject $Powershell -EventName InvocationStateChanged -Action {
+    . $scriptdir/plugins.ps1
+    # Clean up after async bits
+    $Data = $PowerShell.EndInvoke($AsyncObject)
+    $PowerShell.Dispose()
+}
