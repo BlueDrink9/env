@@ -2,7 +2,7 @@
 source "$DOTFILES_DIR/shell/script_functions.sh"
 source "$DOTFILES_DIR/shell/XDG_setup.sh"
 installID="Chunkwm"
-chunkwmDir="$(resolveSymlinkToDir $(which chunkwm))/.."
+chunkwmDir="$(resolveSymlinkToDir $(which chunkwm 2>/dev/null))/.."
 chunkwmDir="${chunkwmDir:-$HOMEBREW_PREFIX/opt/chunkwm}"
 installText="chunkc core::plugin_dir $chunkwmDir/share/chunkwm/plugins; source \"$($SCRIPTDIR_CMD)/chunkwmrc\""
 configDir="${XDG_CONFIG_HOME}/chunkwm"
