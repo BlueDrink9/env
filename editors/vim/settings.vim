@@ -328,7 +328,9 @@ endfunction
 " Save on focus loss, leaving insert, leaving buffer.
 au myVimrc FocusLost,InsertLeave,BufLeave * call Autosave()
 " Checktime is used for things like autoread.
-au myVimrc FocusLost,BufLeave * checktime
+"https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
+" on these events, any filename... and not in command mode then check files for changes
+au myVimrc FocusLost,BufLeave * if mode() != 'c' | checktime | endif
 
 set modeline
 set modelines=5
