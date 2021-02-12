@@ -25,16 +25,24 @@ OK="[ ${Green}OK${NC} ]"
 Error="[ ${Red}ERROR${NC} ]"
 ALL=0
 
-source "$DOTFILES_DIR/shell/install.sh"
-source "$DOTFILES_DIR/git/install.sh"
-source "$DOTFILES_DIR/terminal/install.sh"
 source "$DOTFILES_DIR/editors/vim/install.sh"
 source "$DOTFILES_DIR/editors/vscode/install.sh"
-source "$DOTFILES_DIR/windowManagers/install.sh"
-source "$DOTFILES_DIR/system/packages/install.sh"
+source "$DOTFILES_DIR/editors/emacs/install.sh"
 source "$DOTFILES_DIR/font_install.sh"
-source "$DOTFILES_DIR/system/ssh/install.sh"
+source "$DOTFILES_DIR/git/install.sh"
+source "$DOTFILES_DIR/shell/install.sh"
 source "$DOTFILES_DIR/system/OSX/install.sh"
+source "$DOTFILES_DIR/system/packages/install.sh"
+source "$DOTFILES_DIR/system/ssh/install.sh"
+source "$DOTFILES_DIR/terminal/install.sh"
+source "$DOTFILES_DIR/windowManagers/install.sh"
+
+# # Source every `install.sh` file in env
+# # Problematic because some of the installers are recursive.
+# find "$DOTFILES_DIR" -name "install.sh" -print0 |
+#   while read installer; do
+#     source "$installer"
+#   done
 
 # {]} Setup and variables
 
@@ -78,6 +86,9 @@ readSettings() {
       fi
       if [ "$ALL" = 1 ] || askQuestionYN "$set_up vim?" ; then
         installers="$installers doVim"
+      fi
+      if [ "$ALL" = 1 ] || askQuestionYN "$set_up emacs?" ; then
+        installers="$installers doEmacs"
       fi
 
       if [ "$ALL" = 1 ] || askQuestionYN "$set_up terminal?" ; then
