@@ -24,6 +24,10 @@ installDoomEmacs(){
   # Use emacs.d because that's where packages are installed, and I don't want them taking up backup space in ~/.config
   git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
   ~/.emacs.d/bin/doom install
+  # If git bash, set user environment variable $DOOMDIR
+  if [[ $OSTYPE == 'msys' ]]; then
+    powershell.exe -command "[System.Environment]::SetEnvironmentVariable('DOOMDIR', '$(cygpath.exe -w $DOOMDIR)', [System.EnvironmentVariableTarget]::User)"
+  fi
 }
 
 
