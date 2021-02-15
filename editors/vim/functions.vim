@@ -68,6 +68,7 @@ function! ExecutePlugMapping(mapping)
 endfunction
 
 function! SetGFN(...)
+    " If given an arg, use it as fontSize.
     if a:0 == 1
         " Override current gfn
         set gfn=
@@ -93,9 +94,7 @@ endfunction
 function! s:formatFontOptions(list, size)
     let l:list=a:list
     let l:size=a:size
-    if has("win32")
-        let l:sizeSep=':h'
-    elseif has("macunix")
+    if has("win32") || has("macunix") || has("nvim")
         let l:sizeSep=':h'
     else
         let l:sizeSep=' '
