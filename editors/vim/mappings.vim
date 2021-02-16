@@ -88,9 +88,6 @@ cnoremap <C-o>A <End>
 " n and N always go the same direction regardless of whether / or ? was used.
 nnoremap <expr> n  'Nn'[v:searchforward]
 nnoremap <expr> N  'nN'[v:searchforward]
-" Move through previous commands
-nnoremap <expr> n  'Nn'[v:searchforward]
-nnoremap <expr> N  'nN'[v:searchforward]
 " Cd to current file
 nnoremap <leader>cd :lcd %:p:h<CR>:pwd<CR>
 " Autocomplete from tags
