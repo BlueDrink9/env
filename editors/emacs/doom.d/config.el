@@ -1,6 +1,9 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+; TODO: insert single char; ex command; unimparied options;
 (setq script_dir (file-name-directory (or load-file-name buffer-file-name)))
 (load-file (concat script_dir "bindings.el"))
+(load-file (concat script_dir "aliases.el"))
+(load-file (concat script_dir "file-mode-settings.el"))
 ;; Remember, you do not need to run 'doom sync' after modifying this file!
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
@@ -34,8 +37,16 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type "relative")
+(setq display-line-numbers-type 'relative)
 
+;; Fancy bullets in org mode, heavy plugin.
+(remove-hook 'org-mode-hook #'org-superstar-mode)
+
+   ;; (after! org
+   ;;   (setq org-fontify-quote-and-verse-blocks nil
+   ;;         org-fontify-whole-heading-line nil
+   ;;         org-hide-leading-stars nil
+   ;;         org-startup-indented nil))
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;

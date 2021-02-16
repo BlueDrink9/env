@@ -1,11 +1,18 @@
 ;; -*- no-byte-compile: t; -*-
 ;;; $DOOMDIR/packages.el
 
+; TODO: add git gutter, replacement operator, ...
+
 ;; Run '~/.emacs.d/bin/doom sync' on the command line, then restart Emacs. 
 ;; Or use 'M-x doom/reload'.
 
 (package! key-chord)
 (package! evil-collection)
+
+;; (package! smartparens :disable t)
+
+;; Consider disabling these packages since they are heavier.
+;; =:ui tabs=, =:ui indent-guides=, =:ui ligatures=, =:editor word-wrap= and =:ui
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:

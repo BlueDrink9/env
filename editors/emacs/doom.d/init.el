@@ -73,6 +73,7 @@
        vc                ; version-control and Emacs, sitting in a tree
 
        :term
+       ;; TODO do OS check. Use vterm on uni, term on win. But note that this doom! section needs to redo doom! sync each time. Shuoldn't affect most OS-specific stuff though...
        ;;eshell            ; the elisp shell that works everywhere
        ;;shell             ; simple shell REPL for Emacs
        ;;term              ; basic terminal emulator for Emacs
