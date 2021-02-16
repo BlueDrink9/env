@@ -173,11 +173,10 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
 function! RepeatChar(char, count)
     return repeat(a:char, a:count)
 endfunction
-function! SingleCharInsert(iora)
-    exec ":normal ".a:iora.RepeatChar(nr2char(getchar()), v:count1)
+function! SingleCharInsert()
+    exec ":normal ".RepeatChar(nr2char(getchar()), v:count1)
 endfunction
-nnoremap <silent> s :<C-U>call SingleCharInsert("i")<CR>
-nnoremap <silent> S :<C-U>call SingleCharInsert("a")<CR>
+nnoremap <silent> \ :<C-U>call SingleCharInsert()<CR>
 
 function! IsWSL()
     if !has('unix')

@@ -81,8 +81,7 @@ set keymap vi-command
 "g!": 'cccd !$ && ls\C-m'
 
 # Insert single char in normal mode, like in vim.
-"s": 'i_\er'
-"S": 'A_\er'
+"\\": 'i_\er'
 
 # When hitting up/down, cycle through the previous commands
 # which start with the prefix you've entered, rather than just cycling through
