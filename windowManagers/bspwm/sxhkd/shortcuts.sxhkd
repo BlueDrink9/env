@@ -6,10 +6,10 @@ ctrl + alt + t
 	kitty
 
 ctrl + alt + b
-  gtk-launch google-chrome.desktop || \
-    xdg-open /usr/share/applications/google-chrome-stable || \
-    xdg-open ~/usr/share/applications/google-chrome-stable || \
-    google-chrome-stable
+    brave || \
+    xdg-open /usr/share/applications/brave-browser.desktop || \
+    xdg-open ~/usr/share/applications/brave-browser.desktop || \
+    gtk-launch brave-browser.desktop
 
 # ctrl + alt + e
 # 	dolphin
