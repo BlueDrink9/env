@@ -174,7 +174,7 @@ function! RepeatChar(char, count)
     return repeat(a:char, a:count)
 endfunction
 function! SingleCharInsert()
-    exec ":normal ".RepeatChar(nr2char(getchar()), v:count1)
+    exec ":normal i".RepeatChar(nr2char(getchar()), v:count1)
 endfunction
 nnoremap <silent> \ :<C-U>call SingleCharInsert()<CR>
 
