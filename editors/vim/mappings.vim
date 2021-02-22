@@ -331,6 +331,12 @@ function! s:remapCtrlBStoCW()
             " Nvim sets term in this case, normal vim doesn't.
             inoremap <BS> <C-w>
             cnoremap <BS> <C-w>
+        elseif has('nvim') && $TERM ==? "cygwin"
+            " This seems to be the case with Windows Terminal and git commits.
+            inoremap <BS> <C-w>
+            cnoremap <BS> <C-w>
+            inoremap <c-h> <bs>
+            cnoremap <c-h> <bs>
         elseif has('win32') && $TERM ==? ""
             " Normal vim in windows console.
             " Wow. It sees the control key plus literal <c-?>.
