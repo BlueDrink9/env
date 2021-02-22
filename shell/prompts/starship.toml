@@ -1,0 +1,73 @@
+# https://starship.rs/config
+# No new line before prompt.
+add_newline = false
+# Wait x milliseconds for starship to check files under the current directory.
+scan_timeout = 30
+
+# For a two-line prompt.
+[line_break]
+disabled = true
+
+[user]
+style_root = "red"
+style_user = "yellow"
+format = "[$user]($style)"
+
+[character]
+success_symbol = "[](green)"
+error_symbol = "[](red)"
+vicmd_symbol = "[](green)"
+# success_symbol = "[](green)"
+# error_symbol = "[](red)"
+# vicmd_symbol = "[](green)"
+use_symbol_for_status = true
+
+[status]
+style = "red"
+
+[directory]
+format = "[\\[$path]($style)[$read_only]($read_only_style)[\\]]($style)"
+truncation_length = 3 # Parent folders
+truncation_symbol = "…/"
+truncate_to_repo = false
+style = "blue"
+disabled = false
+# Truncate parent folders names instead of removing.
+fish_style_pwd_dir_length = 5
+use_logical_path = true  # don't resolve symlinks.
+
+[hostname]
+format = "[@$hostname]($style)"
+
+[git_branch]
+format = "[{$symbol$branch]($style)"
+truncation_length = 8
+truncation_symbol = "…"
+style = "yellow"
+symbol = ""
+
+[git_commit]
+style = "purple"
+tag_disabled = false
+tag_symbol = "🏷"
+# format = "[\\($hash\\)]($style) [\\($tag\\)]($style)"
+
+[git_state]
+style = "yellow"
+format = '\([$state( $progress_current/$progress_total)]($style)\)'
+
+[git_status]
+modified  = "~"
+staged  = "*"
+stashed = "○"
+conflicted = "!"
+deleted = "X"
+format = '([$all_status$ahead_behind}]($style) )'
+style = "yellow"
+
+[jobs]
+style = "cyan"
+symbol = ""
+
+[battery]
+disabled = true

@@ -5,7 +5,7 @@
 # https://github.com/lukesampson/concfg
 
 $scriptdir = $PSScriptRoot
-$DOTFILES_DIR = "$PSScriptRoot\..\.."
+$DOTFILES_DIR = "$(resolve-path "$PSScriptRoot\..\..")"
 # Oh how good!
 $env:VISUAL='nvim'
 
@@ -14,6 +14,10 @@ set-location $home
 . $scriptdir/settings.ps1
 . $scriptdir/inputrc.ps1
 . $scriptdir/aliases.ps1
+if (Get-Command "starship" -ErrorAction SilentlyContinue) {
+    $ENV:STARSHIP_CONFIG="$DOTFILES_DIR\shell\prompts\starship.toml"
+    Invoke-Expression (&starship init powershell)
+}
 
 # Set up async (well, actually just delayed) plugin loading
 $Runspace = [runspacefactory]::CreateRunspace()

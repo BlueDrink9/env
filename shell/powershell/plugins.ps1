@@ -20,7 +20,6 @@ If (-Not (Test-Path Variable:PSise)) {  # Only run this in the console and not i
     $Global:GetChildItemColorVerticalSpace = 1 # Powershell default is 2.
 }
 
+# Git autocomplete
 Plugin posh-git
-Plugin oh-my-posh
-Set-Theme Agnoster
 
