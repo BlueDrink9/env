@@ -1,12 +1,15 @@
 # Cursor changes size to indicate vi mode!
 Set-PSReadlineOption -EditMode vi -ViModeIndicator cursor
 function OnViModeChangeSetCursor {
-    if ($args[0] -eq 'Command') {
+    Param($mode)
+    if ($mode -eq 'Command') {
         # Set the cursor to a blinking block.
         Write-Host -NoNewLine "`e[1 q"
+        $Env:SHELL_VI_MODE_SYMBOL = "::"
     } else {
         # Set the cursor to a blinking line.
         Write-Host -NoNewLine "`e[5 q"
+        $Env:SHELL_VI_MODE_SYMBOL = "++"
     }
 }
 if (!($PSVersionTable.PSVersion.Major -lt 7)) {
@@ -66,5 +69,5 @@ Set-PSReadlineOption -BellStyle None
 # Set-PSDebug -Trace 0
 
 # Don't colour command name yellow!
-Set-PSReadLineOption -Colors @{ "CommandColor"="`e[0x1b;37m" }
+Set-PSReadLineOption -Colors @{ Command = [ConsoleColor]::White }
 
