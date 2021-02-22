@@ -1,20 +1,16 @@
 # Cursor changes size to indicate vi mode!
-Set-PSReadlineOption -EditMode vi -ViModeIndicator cursor
 function OnViModeChangeSetCursor {
     Param($mode)
+    $Esc=[char]0x1b
     if ($mode -eq 'Command') {
         # Set the cursor to a blinking block.
-        Write-Host -NoNewLine "`e[1 q"
-        $Env:SHELL_VI_MODE_SYMBOL = "::"
+        Write-Host -NoNewLine "$Esc[1 q"
     } else {
         # Set the cursor to a blinking line.
-        Write-Host -NoNewLine "`e[5 q"
-        $Env:SHELL_VI_MODE_SYMBOL = "++"
+        Write-Host -NoNewLine "$Esc[5 q"
     }
 }
-if (!($PSVersionTable.PSVersion.Major -lt 7)) {
-  Set-PSReadLineOption -ViModeIndicator Script -ViModeChangeHandler $Function:OnViModeChangeSetCursor
-}
+Set-PSReadLineOption -ViModeIndicator Script -ViModeChangeHandler $Function:OnViModeChangeSetCursor
 
 
 Set-PSReadLineKeyHandler -vimode insert -Chord "k" -ScriptBlock { mapTwoLetterNormal 'k' 'v' }
