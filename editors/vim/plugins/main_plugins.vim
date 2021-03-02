@@ -55,15 +55,6 @@ if has('nvim') && !(has("python") || has("python3"))
 endif
 " {]} ---------- Module setup ----------
 
-" {[} Neovim UIs/integrations
-" Needs nvim > 0.4, which was probably also when UIEnter was introduced.
-if has('nvim') && exists('##UIEnter')
-    call SourcePluginFile("firenvim.vim")
-    call SourcePluginFile("vscode-neovim.vim")
-endif
-
-" {]} Neovim UIs/integrations
-
 " {[} ---------- Misc ----------
 
 " Custom text for folds, includes indent level. Integrates with fastfold.
@@ -778,3 +769,17 @@ autocmd myPlugins bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NE
 cabbrev nt NERDTreeToggle
 " nnoremap _ :NERDTreeToggle<CR>
 " {]} ---------- NerdTree ----------
+
+" {[} Neovim UIs/integrations
+" Needs nvim > 0.4, which was probably also when UIEnter was introduced.
+if has('nvim') && exists('##UIEnter')
+    if exists('g:vscode')
+        " Needs nvim > 0.5
+        call SourcePluginFile("vscode-neovim.vim")
+    else
+        call SourcePluginFile("firenvim.vim")
+    endif
+endif
+
+" {]} Neovim UIs/integrations
+

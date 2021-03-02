@@ -1,0 +1,67 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+    {
+        "key": "ctrl+n",
+        "command": "-workbench.action.files.newUntitledFile"
+    },
+    {
+        "key": "alt+right",
+        "command": "workbench.action.navigateForward"
+    },
+    {
+        "key": "alt+right",
+        "command": "-workbench.action.navigateForward"
+    },
+    {
+        "key": "ctrl+k ctrl+c",
+        "command": "-editor.action.addCommentLine",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "command": "vscode-neovim.compositeEscape1",
+        "key": "k",
+        "when": "neovim.mode == insert && editorTextFocus",
+        "args": "k"
+    },
+    {
+        "command": "vscode-neovim.compositeEscape2",
+        "key": "v",
+        "args": "v",
+        "when": "editorTextFocus && neovim.mode == 'insert'"
+    },
+    {
+        "key": "left",
+        "command": "-settings.action.focusTOC",
+        "when": "inSettingsEditor && settingRowFocus"
+    },
+    {
+        "key": "left",
+        "command": "-notebook.fold",
+        "when": "notebookEditorFocused && !inputFocus && activeEditor == 'workbench.editor.notebook'"
+    },
+    {
+        "key": "left",
+        "command": "-cursorLeft",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "left",
+        "command": "-workbench.statusBar.focusPrevious",
+        "when": "statusBarFocused"
+    },
+    {
+        "key": "right",
+        "command": "-cursorRight",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "right",
+        "command": "-workbench.statusBar.focusNext",
+        "when": "statusBarFocused"
+    },
+    {
+        "key": "right",
+        "command": "-notebook.unfold",
+        "when": "notebookEditorFocused && !inputFocus && activeEditor == 'workbench.editor.notebook'"
+    }
+]

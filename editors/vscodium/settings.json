@@ -1,0 +1,15 @@
+{
+    "vscode-neovim.neovimExecutablePaths.win32": "C:\\Program Files\\Neovim-nightly\\bin\\nvim.exe",
+    "vscode-neovim.revealCursorScrollLine": true,
+    "vscode-neovim.textDecorationsAtTop": true,
+    "editor.fontFamily": "'SauceCodePro NF', 'Source Code Pro', Consolas, 'Courier New', monospace",
+    "editor.renderWhitespace": "all",
+    "editor.wordWrap": "on",
+    "editor.autoClosingBrackets": "never",
+    "editor.autoClosingQuotes": "never",
+    "editor.autoSurround": "never",
+    "editor.definitionLinkOpensInPeek": true,
+    "editor.acceptSuggestionOnEnter": "off",
+    "editor.suggest.insertMode": "replace",
+    "files.autoGuessEncoding": true
+}
