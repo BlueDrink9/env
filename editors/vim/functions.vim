@@ -326,3 +326,18 @@ endfunction
 
 " Comment with LocalWords at end of doc, similar to emacs.
 autocmd myVimrc FileType tex call AutoSpellGoodWords('%  LocalWords:')
+
+function! s:toggleSystemClipboard()
+  let l:clipboard="unnamedplus"
+  if !exists("s:savedClipboardSetting")
+    let s:savedClipboardSetting = &clipboard
+  endif
+  if &clipboard !=# l:clipboard
+    let s:savedClipboardSetting = &clipboard
+    let &clipboard=l:clipboard
+  else
+    let &clipboard = s:savedClipboardSetting
+  endif
+endfunction
+
+nnoremap yoy <cmd>call <sid>toggleSystemClipboard()<cr>
