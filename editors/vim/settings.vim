@@ -316,21 +316,26 @@ set viewoptions-=options
 " autocmd myVimrc BufWinEnter *.* silent! loadview
 
 " Autosave
+" Automatically save before commands like :next and :make or when
+" changing buffer.
+set autowrite
 function! Autosave()
-    " Don't autosave if there is no buffer name.
-    if bufname('%') != '' && &ro != 1 && &modifiable == 1
-        " Automatically save before commands like :next and :make
-        set autowrite
+    " Don't autosave if there is no buffer name, or readonly, and ensure
+    " autowrite is set.
+    if bufname('%') != '' && &ro != 1 && &modifiable == 1 && &autowrite
         " If no changes, don't touch modified timestamp.
         silent! update
     endif
 endfunction
-" Save on focus loss, leaving insert, leaving buffer.
-au myVimrc FocusLost,InsertLeave,BufLeave * call Autosave()
-" Checktime is used for things like autoread.
-"https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
-" on these events, any filename... and not in command mode then check files for changes
-au myVimrc FocusLost,BufLeave * if mode() != 'c' | checktime | endif
+augroup autosave
+    au!
+    " Save on focus loss, leaving insert, leaving buffer.
+    au autosave FocusLost,InsertLeave,BufLeave * call Autosave()
+    " Checktime is used for things like autoread.
+    "https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
+    " on these events, any filename... and not in command mode then check files for changes
+    au myVimrc FocusLost,BufLeave * if mode() != 'c' | checktime | endif
+augroup end
 
 set modeline
 set modelines=5
