@@ -339,5 +339,13 @@ function! s:toggleSystemClipboard()
     let &clipboard = s:savedClipboardSetting
   endif
 endfunction
-
 nnoremap yoy <cmd>call <sid>toggleSystemClipboard()<cr>
+
+function! ToggleAutoWrite()
+    if &autowrite
+      set noautowrite
+    else
+      set autowrite
+    endif
+endfunction
+nnoremap yoa <cmd>call ToggleAutoWrite()<cr>
