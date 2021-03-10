@@ -1,7 +1,10 @@
-# Linux packages are all graphical-only.
+# Linux packages are all graphical-only. Otherwise they go in base.
 redshift-gtk
 bspwm
 sxhkd
 tdrop
 kitty
 workrave
+keepassxc
+authy
+pcloud-drive
