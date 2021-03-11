@@ -475,12 +475,14 @@ if executable("git")
     " nnoremap <leader>gs :Gstatus<CR> cabbrev gs Gstatus
     cabbrev gs Gstatus
     cabbrev gw Gwrite
-    cabbrev gc Gwrite <bar> Gcommit
-    cabbrev gco Gcommit
+    cabbrev gc Gwrite <bar> Git commit
+    cabbrev gco Git commit
     cabbrev gupw Gwrite <bar> Gcommit --amend --no-edit
-    cabbrev gup Gcommit --amend --no-edit
-    cabbrev gupe Gcommit --amend
+    cabbrev gup Git commit --amend --no-edit
+    cabbrev gupe Git commit --amend
     cabbrev gdf Gdiff
+    cabbrev gpsh Git push
+    cabbrev gpll Git pull
     autocmd myPlugins filetype fugitive setlocal nobuflisted
 
     " Async Fugitive (Fugitive uses whatever `Make` is available).
