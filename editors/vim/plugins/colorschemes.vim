@@ -54,6 +54,7 @@ Plug 'https://github.com/vim-scripts/oceandeep'
 Plug 'ashfinal/vim-colors-violet'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'rakr/vim-one'
+Plug 'https://github.com/sainnhe/forest-night'
 let g:one_allow_italics = 1
 " call one#highlight('vimLineComment', 'cccccc', '', 'none')
 Plug 'cormacrelf/vim-colors-github'
