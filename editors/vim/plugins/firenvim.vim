@@ -151,7 +151,8 @@ function! s:firenvimSetup()
 
     autocmd myPlugins BufEnter *.txt call s:FirenvimSetPageOptions()
     # Auto-enter insertmode if the buffer is empty.
-    autocmd myPlugins BufWinEnter * if line('$') == 1 && getline(1) == '' | startinsert | endif
+    autocmd myPlugins BufWinEnter * if line('$') == 1 && getline(1) == ''
+                \ | startinsert | else | stopinsert | endif
 endfunction
 
 function! s:onFirenvimLoad()
