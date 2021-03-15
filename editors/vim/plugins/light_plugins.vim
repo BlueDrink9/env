@@ -197,9 +197,11 @@ Plug 'https://github.com/junegunn/goyo.vim', {'on' : ['Goyo',]}
 " {]}--- Visual ---
 
 " {[} --- TMUX ---
-Plug 'https://github.com/tmux-plugins/vim-tmux'
-Plug 'https://github.com/christoomey/vim-tmux-navigator'
-Plug 'https://github.com/benmills/vimux'
+if executable('tmux')
+    Plug 'https://github.com/tmux-plugins/vim-tmux'
+    Plug 'https://github.com/christoomey/vim-tmux-navigator'
+    Plug 'https://github.com/preservim/vimux'
+endif
 " Prompt for a command to run
 map <Leader>vp :VimuxPromptCommand<CR>
 " Run last command executed by VimuxRunCommand
