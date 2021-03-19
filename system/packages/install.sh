@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 source "$DOTFILES_DIR/shell/script_functions.sh"
-# Unset to force reloading `pack`
-unset BASH_FUNCTIONS_LOADED
 source "$DOTFILES_DIR/shell/functions.sh"
+# To get access to `pack`
+PATH="$DOTFILES_DIR/shell/scripts:$PATH"
 
 installID="Packages"
 
