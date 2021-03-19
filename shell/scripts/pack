@@ -59,6 +59,10 @@ choosePkgManager(){
             ;;
     esac
 
+    if ! command -v "sudo" >/dev/null 2>&1; then
+      useSudo=false
+    fi
+
     if "$useSudo"; then
         packcmd="sudo ${packcmd}"
     else
