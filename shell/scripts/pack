@@ -3,7 +3,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "$SCRIPT_DIR/../functions.sh"
 
 choosePkgManager(){
-  _options="brew yay pacman pkg apt yum"
+  _options="brew yay pacman apt yum pkg"
   # Not quite posix, but will at least work in both bash and zsh.
   while read option; do
       if command -v "${option}" >/dev/null 2>&1; then
@@ -46,16 +46,16 @@ choosePkgManager(){
             noconfirmcmd="--noconfirm"
             if [ "$packcmd" = "pacman" ]; then useSudo=true; fi
             ;;
-        pkg )
-            # Probably termux, may be freeBSD.
-            noconfirmcmd=""
-            true
-            ;;
         apt )
             useSudo=true
             ;;
         yum )
             useSudo=true
+            ;;
+        pkg )
+            # Probably termux, may be freeBSD.
+            noconfirmcmd=""
+            true
             ;;
     esac
 
