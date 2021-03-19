@@ -19,7 +19,6 @@ expect
 ripgrep
 fd
 rsync
-lastpass-cli
 mosh
 pandoc
 
