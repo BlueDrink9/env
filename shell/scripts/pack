@@ -48,6 +48,7 @@ choosePkgManager(){
             ;;
         pkg )
             # Probably termux, may be freeBSD.
+            noconfirmcmd=""
             true
             ;;
         apt )
