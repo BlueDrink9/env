@@ -1,8 +1,16 @@
 # GUI
 brave
 # brave-browser
-zotero
 keepassxc
+inkscape
+gimp
+# Arch only
+base-devel
+yay
+# From AUR:
+pcloud
+zotero
+etesync-dav
 
 # CLI
 zotero-cli (pip)
