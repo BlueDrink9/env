@@ -9,7 +9,12 @@ SCRIPTDIR="$($SCRIPTDIR_CMD)"
 # SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export DOTFILES_DIR="$SCRIPTDIR"
 
-if [[ $OSTYPE =~ 'darwin' ]]; then
+source "$SCRIPTDIR/shell/functions.sh"
+source "$SCRIPTDIR/shell/script_functions.sh"
+# if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.2 ; then
+source "$SCRIPTDIR/shell/bash/colour_variables.sh"
+
+if substrInStr "darwin" "$OSTYPE"; then
   export XDG_CONFIG_HOME="$HOME/.config"
 fi
 # $XDG_CONFIG_HOME_DEFAULT="$HOME/.config"
@@ -17,10 +22,6 @@ export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 mkdir -p "$XDG_CONFIG_HOME"
 echo "$DOTFILES_DIR" > "$XDG_CONFIG_HOME/.dotfiles_dir"
 # SCRIPT COLORS are kept in this file
-source "$SCRIPTDIR/shell/functions.sh"
-source "$SCRIPTDIR/shell/script_functions.sh"
-# if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.2 ; then
-source "$SCRIPTDIR/shell/bash/colour_variables.sh"
 OK="[ ${Green}OK${NC} ]"
 Error="[ ${Red}ERROR${NC} ]"
 ALL=0
@@ -55,7 +56,7 @@ uninstall() {
       un$installer
     done
 
-    rm -f $XDG_CONFIG_HOME/.dotfiles_dir
+    rm -f "$XDG_CONFIG_HOME/.dotfiles_dir"
     # Remove self
     if askQuestionYN "Delete repo directory?"; then
       rm -rf "$($SCRIPTDIR_CMD)"
@@ -149,20 +150,19 @@ readSettings() {
   main() {
     readSettings
     for installer in $installers; do
-      # $installer ${1:-}
-      echo $installer
+      "$installer" "${1:-}"
     done
     printErr "${Green} Install Complete${NC}"
 
     # Restart shell
-    exec $SHELL
+    exec "$SHELL"
   }
 
 # set default arg to avoid warnings
 arg1=${1:-}
 # echo 'arg' $arg1
 
-if [[ $arg1 = "-u" ]]; then
+if [ "$arg1" = "-u" ]; then
   uninstall
   exit
 fi
@@ -171,24 +171,21 @@ if [[ $arg1 =~ ^--?[aA][lL]{2}?$ ]]; then
   ALL=1
 fi
 
-if [ $OSTYPE == 'linux-gnu' ]; then
 
+if [ "$OSTYPE" = "linux-gnu" ]; then
   printErr "[$Green Linux ${NC}]"
-  main ${1:-}
-
-elif [[ $OSTYPE =~ 'darwin' ]]; then
+elif substrInStr "darwin" "$OSTYPE"; then
   printErr "[$Green OSX ${NC}]"
-  main ${1:-}
-
-elif [[ $OSTYPE == 'msys' ]]; then
+elif [ "$OSTYPE" = "msys" ]; then
   printErr "[$Green Win (git bash) ${NC}]"
   printLine "${Red}Attempting install on Git Bash."
-  main ${1:-}
 else
   printErr "OS not detected..."
   if askQuestionYN "Continue anyway?" ; then
-    main ${1:-}
+    main "${1:-}"
   else
     printErr "Exiting without change."
+    exit
   fi
 fi
+main "${1:-}"
