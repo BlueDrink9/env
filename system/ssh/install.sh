@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 source "$DOTFILES_DIR/shell/script_functions.sh"
 installID="SSH"
+# Can make this a relative path instead since it is being cloned into ~/.ssh anyway.
 installText="Include \"$($SCRIPTDIR_CMD)/config\""
 baseRC="${HOME}/.ssh/config"
 
@@ -8,6 +9,7 @@ eval "$(cat <<END
 do${installID}() {
     printErr "Enabling SSH config..."
     # Note: Includes only added since 7.3p1
+    # Needs to be for Host *, or at start of file. Otherwise include applies to previous host only.
     addTextIfAbsent "Host *
     ${installText}" "${baseRC}"
 

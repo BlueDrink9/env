@@ -32,5 +32,8 @@ mkdir -p "$HOME/bin"
 echo "$shebang" > "$HOME/bin/termux-file-editor"
 echo source "$HOME/.shortcuts/vim" >> "$HOME/bin/termux-file-editor"
 
+# Silence banner
+touch ~/.hushlogin
+
 echo Check https://android.stackexchange.com/questions/37/how-do-i-change-the-name-of-my-android-device to alter the hostname
 unset shebang
