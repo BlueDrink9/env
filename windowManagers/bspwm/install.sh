@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 source "$DOTFILES_DIR/shell/script_functions.sh"
-installID="bspwm"
+installID="Bspwm"
 installText=". \"$($SCRIPTDIR_CMD)/bspwmrc\""
 configDir="${HOME}/.config/bspwm"
 baseRC="${configDir}/bspwmrc"
