@@ -25,6 +25,8 @@ echo "$DOTFILES_DIR" > "$XDG_CONFIG_HOME/.dotfiles_dir"
 OK="[ ${Green}OK${NC} ]"
 Error="[ ${Red}ERROR${NC} ]"
 ALL=0
+# Just does a quick setup of dots.
+LITE=0
 
 source "$DOTFILES_DIR/editors/vim/install.sh"
 source "$DOTFILES_DIR/editors/vscode/install.sh"
@@ -78,72 +80,74 @@ readSettings() {
   # Put $installers after to bump something to the front of the queue.
 
     # Functions must be called "do[X]", with a corresponding "undo[X]" to uninstall.
-    if [ $ALL != 1 ]; then
 
-      # Asks for gitlab login for shared server repo, so put early.
-      if [ "$ALL" = 1 ] || askQuestionYN "$set_up SSH?" ; then
-        installers="$installers doSSH"
-      fi
-      if [ "$ALL" = 1 ] || askQuestionYN "$set_up git credentials?" ; then
-        installers="$installers doGit"
-      fi
+    if [ "$LITE" = 1 ]; then
+      installers="$installers doShell"
+      installers="$installers doVim"
+      installers="$installers doTmux"
+      installers="$installers doGit"
+      return
+    fi
 
-      # TODO make it automatic whether brew or another package manager is
-      # installed. Check for sudo access.
-      if [ "$ALL" = 1 ] || askQuestionYN "$installStr brew?" ; then
+    # Asks for gitlab login for shared server repo, so put early.
+    if [ "$ALL" = 1 ] || askQuestionYN "$set_up SSH?" ; then
+      installers="$installers doSSH"
+    fi
+    if [ "$ALL" = 1 ] || askQuestionYN "$set_up git?" ; then
+      installers="$installers doGit"
+    fi
+
+    # Install brew if OS X or no sudo. Otherwise use normal packages.
+    if [ "$ALL" = 1 ] || askQuestionYN \
+      "$installStr packages (May require sudo and take a while)?" ; then
+      if substrInStr "darwin" "$OSTYPE" || ! sudo -v ; then
         installers="$installers installBrew"
-        if [ "$ALL" = 1 ] || askQuestionYN \
-          "Update brew and install Brewfile packages? (This can take a very long time)" ; then
-                  installers="$installers doPackages"
-        fi
-      elif [ "$ALL" = 1 ] || askQuestionYN "$installStr packages? (May require sudo)?" ; then
-        installers="$installers doPackages"
       fi
+      installers="$installers doPackages"
+    fi
 
-      if [ "$ALL" = 1 ] || askQuestionYN "$installStr fonts?" ; then
-        installers="$installers doFonts"
-      fi
+    if [ "$ALL" = 1 ] || askQuestionYN "$installStr fonts?" ; then
+      installers="$installers doFonts"
+    fi
 
-      # if [ "$ALL" = 1 ] || askQuestionYN "Install VSCode extensions?" ; then
-      #     installers="$installers vscodeExtensions"
-      # fi
-      #
-      if [ "$OSTYPE" = "linux-gnu" ]; then
-        if [ "$ALL" = 1 ] || askQuestionYN "$set_up X?" ; then
-          installers="$installers doX"
-        fi
-      elif [[ $OSTYPE =~ 'darwin' ]]; then
-        if [ "$ALL" = 1 ] || askQuestionYN "$set_up OSX?" ; then
-          installers="$installers doOSX"
-        fi
-      fi
+    # if [ "$ALL" = 1 ] || askQuestionYN "Install VSCode extensions?" ; then
+    #     installers="$installers vscodeExtensions"
+    # fi
 
-      if [ "$ALL" = 1 ] || askQuestionYN "$installStr window manager?" ; then
-        installers="$installers doWM"
+    if [ "$OSTYPE" = "linux-gnu" ]; then
+      if [ "$ALL" = 1 ] || askQuestionYN "$set_up X?" ; then
+        installers="$installers doX"
       fi
+    elif substrInStr "darwin" "$OSTYPE"; then
+      if [ "$ALL" = 1 ] || askQuestionYN "$set_up OSX?" ; then
+        installers="$installers doOSX"
+      fi
+    fi
 
-      if [ "$ALL" = 1 ] || askQuestionYN "$set_up shell?" ; then
-        installers="$installers doShell"
-      fi
-      if [ "$ALL" = 1 ] || askQuestionYN "$set_up vim?" ; then
-        installers="$installers doVim"
-      fi
-      if [ "$ALL" = 1 ] || askQuestionYN "$set_up emacs?" ; then
-        installers="$installers doEmacs"
-      fi
+    if [ "$ALL" = 1 ] || askQuestionYN "$installStr window manager?" ; then
+      installers="$installers doWM"
+    fi
+    if [ "$ALL" = 1 ] || askQuestionYN "$set_up emacs?" ; then
+      installers="$installers doEmacs"
+    fi
 
-      if [ "$ALL" = 1 ] || askQuestionYN "$set_up terminal?" ; then
-        if substrInStr "kitty" "$TERM"; then
-          installers="$installers doKitty"
-        elif substrInStr "Android" "$(uname -a)";  then
-          installers="$installers doTermux"
-        fi
-        if [[ $OSTYPE =~ 'darwin' ]]; then
-          installers="$installers doiTerm2"
-        fi
-        installers="$installers doTmux"
-        installers="$installers doXresources"
+    if [ "$ALL" = 1 ] || askQuestionYN "$set_up terminal?" ; then
+      if substrInStr "kitty" "$TERM"; then
+        installers="$installers doKitty"
+      elif substrInStr "Android" "$(uname -a)";  then
+        installers="$installers doTermux"
       fi
+      if substrInStr "darwin" "$OSTYPE"; then
+        installers="$installers doiTerm2"
+      fi
+      installers="$installers doTmux"
+      installers="$installers doXresources"
+    fi
+    if [ "$ALL" = 1 ] || askQuestionYN "$set_up shell?" ; then
+      installers="$installers doShell"
+    fi
+    if [ "$ALL" = 1 ] || askQuestionYN "$set_up vim?" ; then
+      installers="$installers doVim"
     fi
   }
 
@@ -171,6 +175,9 @@ if [[ $arg1 =~ ^--?[aA][lL]{2}?$ ]]; then
   ALL=1
 fi
 
+if [ "$arg1" = "-l" ]; then
+  LITE=1
+fi
 
 if [ "$OSTYPE" = "linux-gnu" ]; then
   printErr "[$Green Linux ${NC}]"

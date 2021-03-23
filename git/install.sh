@@ -3,6 +3,9 @@ source "$DOTFILES_DIR/shell/script_functions.sh"
 
 doGit() {
   gitSettings
+  if [ "$LITE" = 1 ]; then
+    return
+  fi
   gitCredentialCache
   gitUser "$@"
 }
@@ -23,7 +26,7 @@ gitUser() {
     printErr "Forcing git update."
   elif [[ "$(git config --global user.name)" =~ .+ ]] && [[ $(git config --global user.email) =~ .+ ]]; then
     printErr "$OK Git global user is set."
-    # printErr "Re-run with ( ./install -gu ) to force update."
+    printErr "Re-run with ( ./install -gu ) to force update."
     return 0
   fi
 
