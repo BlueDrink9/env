@@ -78,11 +78,51 @@ readSettings() {
 
     # Functions must be called "do[X]", with a corresponding "undo[X]" to uninstall.
     if [ $ALL != 1 ]; then
-      if [ "$ALL" = 1 ] || askQuestionYN "$set_up shell?" ; then
-        installers="$installers doShell"
-      fi
+
+      # Asks for gitlab login for shared server repo, so put early.
       if [ "$ALL" = 1 ] || askQuestionYN "$set_up SSH?" ; then
         installers="$installers doSSH"
+      fi
+      if [ "$ALL" = 1 ] || askQuestionYN "$set_up git credentials?" ; then
+        installers="$installers doGit"
+      fi
+
+      # TODO make it automatic whether brew or another package manager is
+      # installed. Check for sudo access.
+      if [ "$ALL" = 1 ] || askQuestionYN "$installStr brew?" ; then
+        installers="$installers installBrew"
+        if [ "$ALL" = 1 ] || askQuestionYN \
+          "Update brew and install Brewfile packages? (This can take a very long time)" ; then
+                  installers="$installers doPackages"
+        fi
+      elif [ "$ALL" = 1 ] || askQuestionYN "$installStr packages? (May require sudo)?" ; then
+        installers="$installers doPackages"
+      fi
+
+      if [ "$ALL" = 1 ] || askQuestionYN "$installStr fonts?" ; then
+        installers="$installers doFonts"
+      fi
+
+      # if [ "$ALL" = 1 ] || askQuestionYN "Install VSCode extensions?" ; then
+      #     installers="$installers vscodeExtensions"
+      # fi
+      #
+      if [ "$OSTYPE" = "linux-gnu" ]; then
+        if [ "$ALL" = 1 ] || askQuestionYN "$set_up X?" ; then
+          installers="$installers doX"
+        fi
+      elif [[ $OSTYPE =~ 'darwin' ]]; then
+        if [ "$ALL" = 1 ] || askQuestionYN "$set_up OSX?" ; then
+          installers="$installers doOSX"
+        fi
+      fi
+
+      if [ "$ALL" = 1 ] || askQuestionYN "$installStr window manager?" ; then
+        installers="$installers doWM"
+      fi
+
+      if [ "$ALL" = 1 ] || askQuestionYN "$set_up shell?" ; then
+        installers="$installers doShell"
       fi
       if [ "$ALL" = 1 ] || askQuestionYN "$set_up vim?" ; then
         installers="$installers doVim"
@@ -102,44 +142,6 @@ readSettings() {
         fi
         installers="$installers doTmux"
         installers="$installers doXresources"
-
-      fi
-
-      if [ "$ALL" = 1 ] || askQuestionYN "$installStr fonts?" ; then
-        installers="$installers doFonts"
-      fi
-      # if [ "$ALL" = 1 ] || askQuestionYN "Install VSCode extensions?" ; then
-      #     installers="$installers vscodeExtensions"
-      # fi
-      #
-      if [ "$OSTYPE" = "linux-gnu" ]; then
-        if [ "$ALL" = 1 ] || askQuestionYN "$set_up X?" ; then
-          installers="$installers doX"
-        fi
-      elif [[ $OSTYPE =~ 'darwin' ]]; then
-        if [ "$ALL" = 1 ] || askQuestionYN "$set_up OSX?" ; then
-          installers="$installers doOSX"
-        fi
-      fi
-
-      if [ "$ALL" = 1 ] || askQuestionYN "$installStr window manager?" ; then
-        installers="$installers doWM"
-      fi
-
-      # TODO make it automatic whether brew or another packagae manager is
-      # installed. Check for sudo access.
-      if [ "$ALL" = 1 ] || askQuestionYN "$installStr brew?" ; then
-        installers="$installers installBrew"
-      if [ "$ALL" = 1 ] || askQuestionYN "Update brew and install \
-        Brewfile packages? (This can take a very long time)" ; then
-        installers="$installers doPackages"
-      fi
-      elif [ "$ALL" = 1 ] || askQuestionYN "$installStr packages? (May require sudo)?" ; then
-        installers="doPackages $installers"
-      fi
-
-      if [ "$ALL" = 1 ] || askQuestionYN "$set_up git credentials?" ; then
-        installers="doGit $installers"
       fi
     fi
   }
@@ -147,7 +149,8 @@ readSettings() {
   main() {
     readSettings
     for installer in $installers; do
-      $installer ${1:-}
+      # $installer ${1:-}
+      echo $installer
     done
     printErr "${Green} Install Complete${NC}"
 
