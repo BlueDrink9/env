@@ -9,6 +9,8 @@ eval "$(cat <<END
 do${installID}() {
     printErr "Enabling bspwm config..."
     addTextIfAbsent "${installText}" "${baseRC}"
+    mkdir -p ~/.config/sxhkd
+    touch ~/.config/sxhkd/sxhkdrc
 }
 END
 )"
