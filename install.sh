@@ -132,10 +132,12 @@ readSettings() {
     fi
 
     if [ "$ALL" = 1 ] || askQuestionYN "$set_up terminal?" ; then
-      if substrInStr "kitty" "$TERM"; then
-        installers="$installers doKitty"
-      elif substrInStr "Android" "$(uname -a)";  then
+      # For android, use termux. For unix, use kitty.
+      # (For Win, use Alacritty or Windows Terminal).
+      if substrInStr "Android" "$(uname -a)";  then
         installers="$installers doTermux"
+      elif [ "$OSTYPE" != "msys" ]; then
+        installers="$installers doKitty"
       fi
       if substrInStr "darwin" "$OSTYPE"; then
         installers="$installers doiTerm2"
