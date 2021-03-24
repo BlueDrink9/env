@@ -4,6 +4,8 @@ bspwm
 sxhkd
 tdrop
 kitty
+feh
+picom
 workrave
 keepassxc
 brave
@@ -11,3 +13,4 @@ authy
 pcloud-drive
 signal-desktop
 etesync
+xclip
