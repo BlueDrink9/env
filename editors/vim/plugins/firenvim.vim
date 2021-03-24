@@ -99,7 +99,7 @@ let s:debugMessages = []
 function! s:firenvimSetup()
     " We are in firenvim
     " For debug messages during startup. After startup, use echom.
-    autocmd myPlugins BufEnter * echom join(s:debugMessages, "\n")
+    autocmd myPlugins BufWinEnter * echom join(s:debugMessages, "\n")
     " call add(s:debugMessages, 'setup')
     let g:hasGUI=1
     " Tested to match github default size on osx chrome.

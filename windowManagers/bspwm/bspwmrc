@@ -15,6 +15,7 @@ pgrep sxhkd || \
 # pgrep autokey-gtk || autokey-gtk \
 #    > $HOME/.logs/autokey.log 2> $HOME/.logs/autokey.err &
 #   autokey-run -s "$DOTFILES_DIR"/windowManagers/bspwm/autokey/bindings.py
+#   polybar -c ~/.config/polybar/config.ini mybar
 
 . "$DOTFILES_DIR"/windowManagers/bspwm/rules.sh
 
