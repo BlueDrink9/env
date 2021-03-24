@@ -54,7 +54,7 @@ if [ -n "$DISPLAY" ]; then
     winSpaceToggle="-option grp:win_space_toggle"
     capsLed="-option grp_led:caps"
     colemak="-layout 'us, us' -variant 'colemak,'"
-    setxkbmap $colemak $capsToBS $altWinSwap $winSpaceToggle $capsLed
+    eval "setxkbmap $colemak $capsToBS $altWinSwap $winSpaceToggle $capsLed"
     unset colemak capsToBS altWinSwap winSpaceToggle capsLed
   fi
 
