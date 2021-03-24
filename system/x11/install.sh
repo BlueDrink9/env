@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 source "$DOTFILES_DIR/shell/script_functions.sh"
 
-installID="X"
+installID="X11"
 installText=". \"$($SCRIPTDIR_CMD)/xinitrc\""
 baseRC="${HOME}/.xinitrc"
 
@@ -33,7 +33,8 @@ xsession_setup(){
 END
 )"
 
-installText="#include \"$($SCRIPTDIR_CMD)/xresources\""
+installText="#include <\"$($SCRIPTDIR_CMD)/xresources\">"
+# installText="xrdb -merge \"$($SCRIPTDIR_CMD)/Xresources\""
 baseRC="${HOME}/.Xresources"
 eval "$(cat <<END
 xresources_setup(){

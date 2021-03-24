@@ -17,7 +17,7 @@ if substrInStr "bspwm" "$DESKTOP_SESSION" || \
   # Desktop elements
   runWithLogging albert
   runWithLogging polybar -c ~/.config/polybar/config.ini mybar
-  runWithLogging dunst &
+  runWithLogging dunst
   # latte-dock &
 fi
 

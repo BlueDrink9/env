@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 if [ "$TERM" = "linux" ]; then
     echo -en "\e]P0073642" #black

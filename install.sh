@@ -116,7 +116,7 @@ readSettings() {
 
     if [ "$OSTYPE" = "linux-gnu" ]; then
       if [ "$ALL" = 1 ] || askQuestionYN "$set_up X?" ; then
-        installers="$installers doX"
+        installers="$installers doX11"
       fi
     elif substrInStr "darwin" "$OSTYPE"; then
       if [ "$ALL" = 1 ] || askQuestionYN "$set_up OSX?" ; then

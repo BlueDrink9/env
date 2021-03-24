@@ -3,7 +3,7 @@
 # vim: foldmethod=marker foldmarker={[},{]}
 
 export DOTFILES_DIR="$(cat $HOME/.config/.dotfiles_dir)"
-X_DOTFILES_DIR="$DOTFILES_DIR"/system/X
+X_DOTFILES_DIR="$DOTFILES_DIR"/system/x11
 
 DEFAULT_SESSION=bspwm
 export COLOURSCHEME=solarized_light
