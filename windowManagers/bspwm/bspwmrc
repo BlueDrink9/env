@@ -7,15 +7,7 @@ export SXHKD_SHELL="sh"
 export DOTFILES_DIR="$(cat $HOME/.config/.dotfiles_dir)"
 . "$DOTFILES_DIR"/windowManagers/variables.sh
 # export DOTFILES_DIR="$(cat $HOME/.config/.dotfiles_dir)" && \
-pgrep sxhkd || \
-  sxhkd -m -1 -c "$HOME/.config/sxhkd/sxhkdrc" \
-  "$DOTFILES_DIR"/windowManagers/bspwm/sxhkd/*.sxhkd \
-   > $HOME/.logs/sxhkd.log 2> $HOME/.logs/sxhkd.err &
-# flashfocus &
-# pgrep autokey-gtk || autokey-gtk \
-#    > $HOME/.logs/autokey.log 2> $HOME/.logs/autokey.err &
-#   autokey-run -s "$DOTFILES_DIR"/windowManagers/bspwm/autokey/bindings.py
-#   polybar -c ~/.config/polybar/config.ini mybar
+. "$DOTFILES_DIR"/windowManagers/bspwm/companion_programs.sh
 
 . "$DOTFILES_DIR"/windowManagers/bspwm/rules.sh
 
