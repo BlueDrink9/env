@@ -16,8 +16,3 @@ undo${installID}(){
   }
 END
 )"
-
-# If directly run instead of sourced, do all
-if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
-  do${installID}
-fi

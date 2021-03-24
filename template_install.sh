@@ -9,3 +9,8 @@ installText="source-file $($SCRIPTDIR_CMD)/prog/prog.conf"
 baseRC="${XDG_CONFIG_HOME}/prog/.prog.conf"
 
 source "$DOTFILES_DIR/generic_rc_installer.sh"
+
+# If directly run instead of sourced, do all
+if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
+  do${installID}
+fi
