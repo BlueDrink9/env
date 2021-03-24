@@ -8,7 +8,10 @@ baseRC="${configDir}/bspwmrc"
 eval "$(cat <<END
 do${installID}() {
     printErr "Enabling bspwm config..."
+    # prependTextIfAbsent '#!/bin/sh' "${baseRC}"
+    addTextIfAbsent '#!/bin/sh' "${baseRC}"
     addTextIfAbsent "${installText}" "${baseRC}"
+    chmod u+x "${baseRC}"
     mkdir -p ~/.config/sxhkd
     touch ~/.config/sxhkd/sxhkdrc
 }
