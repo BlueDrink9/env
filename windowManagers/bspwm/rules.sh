@@ -19,3 +19,5 @@ bspc rule -a anbox floating=on
 bspc rule -a Gimp desktop='^8' state=floating follow=on
 # Emacs needs to be forced to start tiling.
 bspc rule -a Emacs state=tiled
+bspc rule -a albert manage=off floating=on border=off focus=on
+bspc rule -a kitty-dropdown sticky=on
