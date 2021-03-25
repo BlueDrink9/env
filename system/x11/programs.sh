@@ -1,15 +1,18 @@
 #!/bin/sh
 runWithLogging(){
-  if command -v "$1" > /dev/null 2>&1; then
-    "$1" >| ~/.logs/"$1".log 2>| ~/.logs/"$1".err &
+  prog="$1"
+  shift
+  if command -v "$prog" > /dev/null 2>&1; then
+    "$prog" $@ >| ~/.logs/"$prog".log 2>| ~/.logs/"$prog".err &
   else
     printf "Program '$1' not started. Not found." >&2
   fi
+  unset prog
 }
 
 runWithLogging redshift-gtk
 runWithLogging workrave
-runWithLogging syncthing-gtk
+runWithLogging syncthing-gtk --minimized
 
 # If running bspwm on its own, start other desktop elements.
 if substrInStr "bspwm" "$DESKTOP_SESSION" || \
