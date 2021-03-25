@@ -128,7 +128,8 @@ prependTextIfAbsent() {
   text="${1:-$default}"
   file="${2:-$default}"
   mkdir -p "$(dirname "$file")"
-  if [ ! -f "$file" ]; then touch "$file"; fi;
+  # Sed needs at least one line to work on, so can't just touch.
+  if [ ! -f "$file" ]; then printf "\n" > "$file"; fi;
   # Check if text exists in file, otherwise append.
   # -i is inplace for GNU sed. Use -i.bak for BSD (OSX) (it creates a .bak
   # file, which we remove).
