@@ -41,6 +41,10 @@ super + grave
 super + shift + q
   qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1
 
+
+ctrl + alt + l
+  xscreensaver-command -lock || qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.lock -1 -1 -1
+
 # program launcher
 # super + @space
 # 	dmenu_run
