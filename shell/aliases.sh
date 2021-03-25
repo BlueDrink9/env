@@ -150,6 +150,8 @@ alias e\?=fuzzyEdit
 alias se="sudoedit"
 alias minivim="vim -u '$DOTFILES_DIR/editors/vim/minirc' -c 'set nocp | inore vk <esc> | inore kv <esc> | nnoremap ; :'"
 alias mininvim="nvim -u '$DOTFILES_DIR/editors/vim/minirc' -c 'set nocp | inore vk <esc> | inore kv <esc> | nnoremap ; :'"
+openVimSession(){ myVim -c "OpenSession $1"; }
+alias os="openVimSession"
 
 # Don't accidentally remove or overwrite files.
 # alias cp="cp -i"
