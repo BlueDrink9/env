@@ -3,7 +3,7 @@ runWithLogging(){
   if command -v "$1" > /dev/null 2>&1; then
     "$1" >| ~/.logs/"$1".log 2>| ~/.logs/"$1".err &
   else
-    printf "Program '$1' not started. Not found." > &2
+    printf "Program '$1' not started. Not found." >&2
   fi
 }
 
