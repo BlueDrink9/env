@@ -1,0 +1,284 @@
+# See https://gitlab.com/o9000/tint2/wikis/Configure for
+# full documentation of the configuration options.
+# Reload with `killall -SIGUSR1 tint2`
+
+#-------------------------------------
+# Gradients/colours {[}
+#-------------------------------------
+# Backgrounds
+# Background 1: Panel
+rounded = 2
+border_width = 0
+border_sides = TBLR
+background_color = #000000 00
+border_color = #000000 100
+background_color_hover = #000000 60
+border_color_hover = #000000 30
+background_color_pressed = #000000 60
+border_color_pressed = #000000 30
+
+# Background 2: Default task, Iconified task
+rounded = 8
+border_width = 1
+border_sides = TBLR
+background_color = #777777 40
+border_color = #777777 30
+background_color_hover = #aaaaaa 22
+border_color_hover = #eaeaea 44
+background_color_pressed = #555555 4
+border_color_pressed = #eaeaea 44
+
+# Background 3: Active task
+rounded = 8
+border_width = 1
+border_sides = TBLR
+background_color = #777777 40
+# Orange
+border_color = #eb7423 80
+background_color_hover = #aaaaaa 22
+border_color_hover = #eaeaea 44
+background_color_pressed = #555555 4
+border_color_pressed = #eaeaea 44
+
+# Background 4: Urgent task
+rounded = 8
+border_width = 1
+border_sides = TBLR
+background_color = #aa4400 100
+border_color = #aa7733 100
+background_color_hover = #cc7700 100
+border_color_hover = #aa7733 100
+background_color_pressed = #555555 4
+border_color_pressed = #aa7733 100
+
+# Background 5: Tooltip
+rounded = 1
+border_width = 2
+border_sides = TBLR
+background_color = #222222 80
+border_color = #444444 100
+
+# Background 6: Desktop labesl and inactive desktop's taskbar.
+rounded = 4
+border_width = 1
+border_sides = TBLR
+background_color = #777777 40
+border_color = #777777 30
+background_color_hover = #aaaaaa 22
+border_color_hover = #eaeaea 44
+background_color_pressed = #555555 4
+border_color_pressed = #eaeaea 44
+
+# Background 7: Active desktop's taskbar
+rounded = 5
+border_width = 1
+border_sides = TBLR
+background_color = #777777 0
+border_color = #ffffff 30
+background_color_hover = #aaaaaa 22
+border_color_hover = #eaeaea 44
+background_color_pressed = #555555 4
+border_color_pressed = #eaeaea 44
+
+# {]}
+
+
+#-------------------------------------
+# Panel
+
+panel_items = T:S
+# panel_items = LTSC
+# Sizes are h v
+# panel_size = 30% 3%
+panel_size = 50% 30
+scale_relative_to_dpi = 1
+# scale_relative_to_screen_height = 1
+panel_shrink = 1
+panel_margin = 0 0
+# horizontal, vertical padding between panel edges and contents; spacing between panel items.
+panel_padding = 3 3 5
+
+# Will disable instead of detecting support.
+disable_transparency = 0
+mouse_effects = 1
+# Shadow under text. Increases readability of light text on light bg, but kinda
+# ugly.
+font_shadow = 0
+# alpha, saturation, brightness.
+mouse_hover_icon_asb = 100 0 10
+mouse_pressed_icon_asb = 100 0 0
+
+autohide = 0
+autohide_show_timeout = 0
+autohide_hide_timeout = 0.5
+autohide_height = 2
+
+# Use bg 1.
+panel_background_id = 1
+# Forward unhandled mouse events to WM.
+wm_menu = 0
+panel_dock = 0
+panel_position = top left horizontal
+# bottom/normal/top
+panel_layer = normal
+panel_monitor = all
+
+# Affects size of maximised windows.
+strut_policy = follow_size
+panel_window_name = tint2
+
+
+#-------------------------------------
+# Separator
+# Have to configure for each `:` in layout.
+separator = new
+separator_background_id = 0
+separator_color = #cccccc 90
+# Empty, line, dots
+separator_style = dots
+# Thickness or diameter.
+separator_size = 4
+# side_padding cap_padding
+separator_padding = 8 0
+
+#-------------------------------------
+# Taskbar
+# Show all desktops'
+taskbar_mode = multi_desktop
+# Hide empty desktops
+taskbar_hide_if_empty = 0
+# Distributes taskbar size of each desktop depending on how many tasks it has.
+taskbar_distribute_size = 1
+taskbar_padding = 0 0 5
+taskbar_background_id = 6
+taskbar_active_background_id = 7
+taskbar_hide_inactive_tasks = 0
+# Run a separate tint2 on the second monitor?
+taskbar_hide_different_monitor = 1
+taskbar_hide_different_desktop = 0
+taskbar_always_show_all_desktop_tasks = 0
+# Show virtual desktop name.
+taskbar_name = 1
+taskbar_name_padding = 0 0
+taskbar_name_background_id = 6
+taskbar_name_active_background_id = 6
+taskbar_name_font_color = #e3e3e3 100
+taskbar_name_active_font_color = #ffffff 100
+# Sort by position in window.
+taskbar_sort_order = center
+task_align = center
+
+#-------------------------------------
+# Task
+task_text = 0
+task_icon = 1
+task_centered = 1
+# Number of blinks on 'get attention' events.
+urgent_nb_of_blink = 100000
+# second number for vertical panels.
+task_maximum_size = 40 35
+task_padding = 0 0 0
+task_tooltip = 1
+task_thumbnail = 1
+task_thumbnail_size = 200
+
+# task_font =
+task_font_color = #ffffff 100
+# task_icon_asb = 100 0 0
+task_background_id = 2
+task_active_background_id = 3
+task_urgent_background_id = 4
+task_iconified_background_id = 2
+# These options for urgent and iconified also exist
+# task_active_font_color = #ffffff 100
+# task_active_icon_asb = 100 0 0
+
+mouse_left = toggle_iconify
+# Collapses? task
+mouse_middle = shade
+mouse_right = close
+mouse_scroll_up = desktop_left
+mouse_scroll_down = desktop_right
+
+
+#-------------------------------------
+# System tray (notification area)
+systray_padding = 0 0 0
+systray_background_id = 0
+# ascending/descending/left2right/right2left
+# Always add icons to the right.
+systray_sort = left2right
+# Automatic sizing.
+systray_icon_size = 0
+systray_icon_asb = 90 0 0
+# Draw on primary monitor.
+systray_monitor = 1
+# Regex for hiding certain icons.
+systray_name_filter =
+
+#-------------------------------------
+# Launcher
+# launcher_padding = 2 4 2
+launcher_padding = 0 0 0
+launcher_background_id = 0
+launcher_icon_background_id = 0
+launcher_icon_size = 24
+launcher_icon_asb = 100 0 0
+# Detects theme automatically unless you override it.
+launcher_icon_theme_override = 0
+# launcher_icon_theme = breeze
+# Notification when starting app from launcher.
+startup_notifications = 0
+launcher_tooltip = 1
+# launcher_item_app = brave-browser.desktop
+
+
+#-------------------------------------
+# Clock
+# line one
+time1_format = %T | %d/%m
+# Line two
+# time2_format = %A %d %B
+time1_timezone =
+time2_timezone =
+clock_font_color = #ffffff 100
+clock_padding = 2 0
+clock_background_id = 0
+clock_tooltip = %l:%M %p %A %e %B %Y
+clock_tooltip_timezone =
+# Lightweight calendar for xfce.
+clock_lclick_command = orage
+clock_rclick_command = thunderbird
+clock_mclick_command =
+clock_uwheel_command =
+clock_dwheel_command =
+
+#-------------------------------------
+# Battery
+# bat1_format = %p
+# bat2_format =
+# battery_tooltip = 1
+# %s %h:%m
+battery_low_status = 20
+battery_low_cmd = xmessage 'Battery low!'
+battery_full_cmd =
+battery_font_color = #ffffff 100
+battery_padding = 1 0
+battery_background_id = 0
+# Hide above 95%
+battery_hide = 95
+battery_lclick_command =
+battery_rclick_command =
+battery_mclick_command =
+battery_uwheel_command =
+battery_dwheel_command =
+ac_connected_cmd =
+ac_disconnected_cmd =
+
+#-------------------------------------
+# Tooltip
+tooltip_show_timeout = 0.5
+tooltip_hide_timeout = 0.1
+tooltip_padding = 7 7
+tooltip_background_id = 5
+tooltip_font_color = #ffffff 100

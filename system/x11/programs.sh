@@ -19,6 +19,7 @@ if substrInStr "bspwm" "$DESKTOP_SESSION" || \
   # Read by bspwm config and tdrop, although bspwm should automatically adjust
   # for panels so may need to remove it from that.
   export PANEL_HEIGHT=20
+  runWithLogging tint2 -c "$DOTFILES_DIR"/desktop_elements/tint2rc
   runWithLogging dunst
   # latte-dock &
 fi
