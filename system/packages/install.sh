@@ -41,6 +41,9 @@ installPackages(){
     # Update
     pack refresh
     installList "$($SCRIPTDIR_CMD)/base/list"
+    if [[ $OSTYPE =~ "darwin1" ]] || [ -n "$DISPLAY" && -z "${isWSL}" ]; then
+        installList "$($SCRIPTDIR_CMD)/base/guilist"
+    fi
     if [[ $OSTYPE =~ "darwin1" ]]; then
         installList "$($SCRIPTDIR_CMD)/OSX/list"
         # Need xcode-8 cmd tools
@@ -48,6 +51,7 @@ installPackages(){
         installList "$($SCRIPTDIR_CMD)/termux/list"
         termux-setup-api
     elif [[ $OSTYPE =~ "linux" && -z "${isWSL}" ]]; then
+        # Linux GUI stuff.
         installList "$($SCRIPTDIR_CMD)/linux/list"
     fi
 }

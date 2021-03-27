@@ -1,0 +1,15 @@
+# hash and blank lines should be ignored.
+# Packages should fail gracefully, if not silently.
+brave
+brave-browser
+pcloud-drive
+kitty
+signal-desktop
+authy
+inkscape
+gimp
+zotero
+# Pip
+zotero-cli
+# Not technically gui but not very useful without a GUI.
+etesync-dav

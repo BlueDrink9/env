@@ -3,14 +3,14 @@ redshift-gtk
 bspwm
 sxhkd
 tdrop
-kitty
 feh
 picom
 workrave
-keepassxc
-brave
-authy
-pcloud-drive
-signal-desktop
 etesync
 xclip
+albert-minimal
+# AUR
+mycroft-gui-git
+mycroft-core
+# Fonts
+otf-san-francisco
