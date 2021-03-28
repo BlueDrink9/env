@@ -21,6 +21,12 @@ super + y
 super + g
 	bspc node -s biggest
 
+# # make sxhkd reload its and bspwm's configuration files:
+super + shift + c
+	pkill -USR1 -x sxhkd; bsp_border_reset
+  bspc wm -r
+  # killall sxhkd && sxhkd -m -1 -c "$HOME/.config/sxhkd/sxhkdrc" "$DOTFILES_DIR"/windowManagers/bspwm/sxhkd/*.sxhkd &
+
 #----------------------------------------
 # state/flags
 #----------------------------------------
@@ -49,11 +55,6 @@ super + g
 # 	bspc desktop -l next
 super + shift + {t,ctrl + t,u,m}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}; bsp_border_reset
-
-# # make sxhkd reload its configuration files:
-super + shift + c
-	pkill -USR1 -x sxhkd; bsp_border_reset
-  # killall sxhkd && sxhkd -m -1 -c "$HOME/.config/sxhkd/sxhkdrc" "$DOTFILES_DIR"/windowManagers/bspwm/sxhkd/*.sxhkd &
 
 super + {minus, plus} 
   bspc node {-g hidden, $(bspc query -N -n .hidden | tail -n1) -g hidden=off}
