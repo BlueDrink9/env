@@ -1,0 +1,16 @@
+# vim:ft=sxhkdrc
+# vim:ft=sh
+# Functional key bindings
+XF86Audio{Stop,Prev,Next,Play}
+        mpc {stop,prev,next,toggle}
+
+# xbacklight has to be installed
+XF86MonBrightness{Up,Down}
+        xbacklight {-inc 10,-dec 10}
+
+# Using ALSA as it is present by default in most cases
+XF86Audio{Raise,Lower}Volume
+        amixer sset Master {5%+,5%-}
+
+XF86AudioMute
+        amixer sset Master toggle
