@@ -20,7 +20,7 @@ bspc_desktop(){
   bspc monitor --add-desktops $i
 }
 
-gap=10
+gap=15
 BSPWM_FOCUSED_COLOUR="#$focused_border_color"
 BSPWM_UNFOCUSED_COLOUR="#$unfocused_border_color"
 BSPWM_MODE_COLOUR="#$manage_border_color"
