@@ -13,3 +13,4 @@ zotero
 zotero-cli
 # Not technically gui but not very useful without a GUI.
 etesync-dav
+copyq

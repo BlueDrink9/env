@@ -21,6 +21,11 @@ if substrInStr "bspwm" "$DESKTOP_SESSION" || \
   export PANEL_HEIGHT=20
   runWithLogging tint2 -c "$DOTFILES_DIR"/desktop_elements/tint2rc
   runWithLogging dunst
+  # With udisks2 daemon, provides GUI handling of removable disks (including
+  # tray icon).
+  runWithLogging udiskie
+  # Clipboard manager.
+  runWithLogging copyq
   # latte-dock &
 fi
 
