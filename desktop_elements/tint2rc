@@ -1,6 +1,9 @@
 # See https://gitlab.com/o9000/tint2/wikis/Configure for
 # full documentation of the configuration options.
 # Reload with `killall -SIGUSR1 tint2`
+# See https://gitlab.com/o9000/tint2/-/wikis/ThirdPartyApplets
+# for examples of more sections you can add, eg volume and network and keyboard
+# layout, or show desktop button.
 
 #-------------------------------------
 # Gradients/colours {[}
