@@ -16,6 +16,9 @@ source "$SCRIPTDIR/shell/bash/colour_variables.sh"
 
 if substrInStr "darwin" "$OSTYPE"; then
   export XDG_CONFIG_HOME="$HOME/.config"
+else
+  setxkbmap us,us -variant "colemak," && \
+    printLine "${Green}Keyboard set to colemak."
 fi
 # $XDG_CONFIG_HOME_DEFAULT="$HOME/.config"
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
@@ -100,6 +103,10 @@ readSettings() {
     # Install brew if OS X or no sudo. Otherwise use normal packages.
     if [ "$ALL" = 1 ] || askQuestionYN \
       "$installStr packages (May require sudo and take a while)?" ; then
+      if sudo -v; then
+        # Keep sudo alive until parent process dies.
+        while true; do sleep 60; sudo -nv; kill -0 "$$" || exit; done 2>/dev/null &
+      fi
       if substrInStr "darwin" "$OSTYPE" || ! sudo -v ; then
         installers="$installers installBrew"
       fi
