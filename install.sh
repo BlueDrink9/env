@@ -104,10 +104,6 @@ readSettings() {
     # Install brew if OS X or no sudo. Otherwise use normal packages.
     if [ "$ALL" = 1 ] || askQuestionYN \
       "$installStr packages (May require sudo and take a while)?" ; then
-      if sudo -v; then
-        # Keep sudo alive until parent process dies.
-        while true; do sleep 60; sudo -nv; kill -0 "$$" || exit; done 2>/dev/null &
-      fi
       if substrInStr "darwin" "$OSTYPE" || ! sudo -v ; then
         installers="$installers installBrew"
       fi

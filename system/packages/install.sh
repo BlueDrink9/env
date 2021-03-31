@@ -38,20 +38,29 @@ installPackages(){
     if grep -qE "(Microsoft|WSL)" "$([ -f /proc/version ] && cat /proc/version)" > /dev/null 2>&1; then
       export isWSL=1
     fi
+    if sudo -v; then
+      # Keep sudo alive until parent process dies.
+      while true; do sleep 60; sudo -nv; kill -0 "$$" || exit; done 2>/dev/null &
+    fi
     # Update
     pack refresh
+    printLine "Installing base packages..."
     installList "$($SCRIPTDIR_CMD)/base/list"
-    if [[ $OSTYPE =~ "darwin1" ]] || [ -n "$DISPLAY" && -z "${isWSL}" ]; then
+    if [[ "$OSTYPE" =~ "darwin1" ]] || [ -n "$DISPLAY" -a -z "${isWSL}" ]; then
+        printLine "Installing base gui packages..."
         installList "$($SCRIPTDIR_CMD)/base/guilist"
     fi
-    if [[ $OSTYPE =~ "darwin1" ]]; then
+    if [[ "$OSTYPE" =~ "darwin1" ]]; then
+        printLine "Installing OSX packages..."
         installList "$($SCRIPTDIR_CMD)/OSX/list"
         # Need xcode-8 cmd tools
     elif [[ "$(uname -a)" =~ "Android" ]]; then
+        printLine "Installing termux packages..."
         installList "$($SCRIPTDIR_CMD)/termux/list"
         termux-setup-api
-    elif [[ $OSTYPE =~ "linux" && -z "${isWSL}" ]]; then
+    elif [[ "$OSTYPE" =~ "linux" && -z "${isWSL}" ]]; then
         # Linux GUI stuff.
+        printLine "Installing linux-specific packages..."
         installList "$($SCRIPTDIR_CMD)/linux/list"
     fi
 }
@@ -65,7 +74,7 @@ installBrew() {
         echo "Brew already installed"
         return
     fi
-	if [[ $OSTYPE =~ 'darwin' ]]; then
+	if [[ "$OSTYPE" =~ 'darwin' ]]; then
 		cd "$HOME" && mkdir -p homebrew && curl --insecure -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew
         export HOMEBREW_PREFIX="$HOME/homebrew"
 	else
