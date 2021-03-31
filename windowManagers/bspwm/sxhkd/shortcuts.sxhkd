@@ -27,7 +27,7 @@ ctrl + alt + k
 ctrl + alt + s
 	signal-desktop --use-tray-icon
 ctrl + alt + j
-	JoplinDesktop.AppImage
+	joplin
 
 # tdrop to create easy dropdown windows.
 # The positional argument should be the name of a program in $PATH (as opposed to the full path to a program) and should not contain any flags (see -f if you want to pass additional flags to the program when running it). It should always be the last argument.
