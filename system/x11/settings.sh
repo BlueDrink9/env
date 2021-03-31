@@ -2,13 +2,14 @@
 # Keyboard setup stuff
 export XKB_DEFAULT_LAYOUT="us,us"
 export XKB_DEFAULT_VARIANT="colemak,"
-export XKB_DEFAULT_OPTIONS="grp:alt_shift_toggle,caps:backspace,grp_led:caps,altwin:swap_alt_win"
+export XKB_DEFAULT_OPTIONS="grp:alt_shift_toggle,caps:backspace,grp_led:caps"
 capsToBS="-option caps:backspace"
 altWinSwap="-option altwin:swap_alt_win"
 winSpaceToggle="-option grp:win_space_toggle"
 capsLed="-option grp_led:caps"
 colemak="-layout 'us, us' -variant 'colemak,'"
-eval "setxkbmap $colemak $capsToBS $altWinSwap $winSpaceToggle $capsLed"
+# Include altWinSwap if using an apple keyboard.
+eval "setxkbmap $colemak $capsToBS $winSpaceToggle $capsLed"
 unset colemak capsToBS altWinSwap winSpaceToggle capsLed
 
 # Don't use wierd x pointer when no active window.
