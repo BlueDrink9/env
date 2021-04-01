@@ -13,6 +13,7 @@ if ([string]::IsNullOrEmpty($mplayer)) {
     $mplayer = 'C:\Program Files\VideoLAN\VLC\vlc.exe'
 }
 cmd /c "ftype audio=$mplayer `"%1`""
+cmd /c "ftype video=$mplayer `"%1`""
 
 ########################################
 ############### Text ################## {[}
@@ -107,6 +108,19 @@ $audioExtensions = @(
 foreach ($ext in $audioExtensions)
 {
     cmd /c "assoc .$ext=audio"
+}
+# {]}
+
+########################################
+############### Video ################## {[}
+########################################
+$videoExtensions = @(
+    "m4v",
+    "mp4"
+)
+foreach ($ext in $videoExtensions)
+{
+    cmd /c "assoc .$ext=video"
 }
 # {]}
 
