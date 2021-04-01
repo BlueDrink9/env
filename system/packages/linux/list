@@ -9,7 +9,10 @@ workrave
 etesync
 xclip
 albert-minimal
+networkmanager-openvpn
+qopenvpn
 # AUR
+openvpn-protonvpn
 mycroft-gui-git
 mycroft-core
 # Fonts

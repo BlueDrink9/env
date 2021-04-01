@@ -47,6 +47,7 @@ ctags
 shellcheck
 curl
 gcc
+openvpn
 topgrade
 
 # proselint # wooah cool. Pip module
