@@ -150,7 +150,7 @@ function! s:firenvimSetup()
     au! myVimrc FocusLost,InsertLeave,BufLeave * ++nested call Autosave()
 
     autocmd myPlugins BufEnter *.txt call s:FirenvimSetPageOptions()
-    # Auto-enter insertmode if the buffer is empty.
+    " Auto-enter insertmode if the buffer is empty.
     autocmd myPlugins BufWinEnter * if line('$') == 1 && getline(1) == ''
                 \ | startinsert | else | stopinsert | endif
 endfunction
