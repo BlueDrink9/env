@@ -47,7 +47,7 @@ bspc config borderless_monocle   true
 bspc config gapless_monocle     false #Default setup uses negative padding, and gapless monocle looks really weird like that
 
 # Don’t replay the click that makes a window focused.
-bspc config swallow_first_click true
+bspc config swallow_first_click false
 # When focusing a window/monitor, put the pointer at its center.
 bspc config pointer_follows_focus false
 # For some reason settings this true prevents using the mouse on the desktop.
