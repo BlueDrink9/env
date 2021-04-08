@@ -2,7 +2,7 @@
 # vim:ft=sh
 #
 #
-# bspwm hotkeys
+# bspwm hotkeys. For version 0.9.10.
 #
 
 # quit bspwm normally
@@ -23,7 +23,8 @@ super + g
 
 # # make sxhkd reload its and bspwm's configuration files:
 super + {ctrl, shift} + c
-  {bspc wm -r; notify-send "Bspwm reloaded", pkill -USR1 -x sxhkd; bsp_border_reset; notify-send "Sxhkd reloaded config"}
+  {bspc wm -r; notify-send "Bspwm reloaded",\
+    pkill -USR1 -x sxhkd; bsp_border_reset; notify-send "Sxhkd reloaded config"}
   # killall sxhkd && sxhkd -m -1 -c "$HOME/.config/sxhkd/sxhkdrc" "$DOTFILES_DIR"/windowManagers/bspwm/sxhkd/*.sxhkd &
 
 #----------------------------------------
@@ -113,19 +114,36 @@ super + shift + bracket{left,right}
 	bspc node --to-desktop {prev,next}
 # Move to desktop and focus on it
 super + ctrl + bracket{left,right}
-  id=$(bspc query --nodes --node); bspc node --to-desktop {prev,next}; bspc desktop --focus {prev,next}; bspc node --focus ${id}
+  bspc node --to-desktop {prev,next} --follow;
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
 # super + bracket{left,right}
   # bspc desktop -f {prev,next}.local
   # bspc desktop focused -r && \
 
-# Swap desktops within current monitor
-super + shift + alt + bracket{left,right}
-  bspc desktop -s {prev,next}
-# Move desktop to different monitor
-super + shift + ctrl + bracket{left,right}
-  bspc desktop -m {prev,next}
+# # Swap desktops within current monitor
+# super + shift + alt + bracket{left,right}
+#   bspc desktop -s {prev,next}
+# # Move desktop to different monitor
+# super + shift + ctrl + bracket{left,right}
+#   bspc desktop -m {prev,next}
+
+### Monitor ### {[}
+
+# focus monitor
+super + alt + bracket{left,right}
+  bspc monitor -f {prev, next}
+super + alt + {h,l}
+  bspc monitor -f {prev, next}
+super + alt + {1,2,3}
+  bspc monitor --focus {1,2,3}
+# send window to monitor {swap shift for ctrl to follow focus}
+super + alt + shift + bracket{left,right}
+  bspc node -m {prev, next}
+super + alt + ctrl + bracket{left,right}
+  bspc node -m {prev, next} --follow
+
+### Monitor ### {]}
 
 # Just numbers is used to launch taskbar shortcuts.
 # focus or send to the given desktop
