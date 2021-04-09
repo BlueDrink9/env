@@ -59,7 +59,7 @@ super + m; v: {plus,minus,m}
   amixer sset Master {5%+,5%-,toggle}
 
 ctrl + alt + l
-  xscreensaver-command -lock || qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.lock -1 -1 -1
+  xdg-screensaver lock
 
 # program launcher
 # super + @space
