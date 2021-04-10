@@ -22,9 +22,8 @@ super + g
 	bspc node -s biggest
 
 # # make sxhkd reload its and bspwm's configuration files:
-super + shift + c
-	pkill -USR1 -x sxhkd; bsp_border_reset; \
-  bspc wm -r
+super + {ctrl, shift} + c
+  {bspc wm -r; notify-send "Bspwm reloaded", pkill -USR1 -x sxhkd; bsp_border_reset; notify-send "Sxhkd reloaded config"}
   # killall sxhkd && sxhkd -m -1 -c "$HOME/.config/sxhkd/sxhkdrc" "$DOTFILES_DIR"/windowManagers/bspwm/sxhkd/*.sxhkd &
 
 #----------------------------------------
