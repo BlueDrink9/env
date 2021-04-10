@@ -45,6 +45,14 @@ super + grave
 super + shift + q
   qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1
 
+super + m; {p,h,b,n}
+  playerctl {play-pause,stop,prev,next}
+
+super + {Down,Left,Right}
+  playerctl {play-pause,prev,next}
+
+super + m; v: {plus,minus,m}
+  amixer sset Master {5%+,5%-,toggle}
 
 ctrl + alt + l
   xscreensaver-command -lock || qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.lock -1 -1 -1
