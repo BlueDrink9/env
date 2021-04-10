@@ -49,6 +49,7 @@ curl
 gcc
 openvpn
 topgrade
+playerctl
 
 # proselint # wooah cool. Pip module
 

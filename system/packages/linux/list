@@ -11,6 +11,7 @@ xclip
 albert-minimal
 networkmanager-openvpn
 lxappearance
+alsa-utils
 qopenvpn
 # AUR
 openvpn-protonvpn
