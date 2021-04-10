@@ -453,7 +453,7 @@ Plug 'https://github.com/radenling/vim-dispatch-neovim'
 "{]}
 
 " {[} ---------- Basic extra filetype support ----------
-Plug 'kovetskiy/sxhkd-vim', {'for': 'sxhkd' }
+Plug 'kovetskiy/sxhkd-vim', {'for': 'sxhkdrc' }
 " Adds syntax highlighting.
 Plug 'vim-scripts/autohotkey-ahk', {'for': 'autohotkey'}
 " Adds indent. Included in polyglot.
