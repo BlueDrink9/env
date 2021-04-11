@@ -3,6 +3,7 @@ runWithLogging(){
   prog="$1"
   shift
   if command -v "$prog" > /dev/null 2>&1; then
+    sleep 10
     "$prog" $@ >| ~/.logs/"$prog".log 2>| ~/.logs/"$prog".err &
   else
     printf "Program '$1' not started. Not found." >&2
@@ -31,9 +32,9 @@ fi
 
 # Run these after the above so that we have a taskbar for syncthing-gtk to sit in.
 # Arbitrarily decide on Wellington
-runWithLogging redshift-gtk -l -41.28664:174.77557 -t 6500:3000 -b 1:0.7
-runWithLogging workrave
-runWithLogging syncthing-gtk --minimized
+runWithLogging redshift-gtk -l -41.28664:174.77557 -t 6500:3000 -b 1:0.7 &
+runWithLogging workrave &
+runWithLogging syncthing-gtk --minimized &
 
 
 # If started by startx, does not get set.
