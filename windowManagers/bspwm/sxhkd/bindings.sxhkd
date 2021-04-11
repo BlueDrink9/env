@@ -58,6 +58,8 @@ super + shift + {t,ctrl + t,u,m}
 
 super + {minus, plus} 
   bspc node {-g hidden, $(bspc query -N -n .hidden | tail -n1) -g hidden=off}
+super {_, + shift} + z
+  bspc node {-g hidden, $(bspc query -N -n .hidden | tail -n1) -g hidden=off}
 
 # #
 # # move/resize
