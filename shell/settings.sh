@@ -99,6 +99,8 @@ elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
   true
 fi
 
+export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
+
 # make less more friendly for non-text input files, see lesspipe(0)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
