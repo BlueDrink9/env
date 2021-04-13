@@ -26,18 +26,26 @@
 
 (setq doom-font (font-spec :family "SauceCodePro NF" :size 16))
 
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-(
- let ((colourscheme (getenv "COLOURSCHEME")))
- (if (or (not colourscheme) (equal "" colourscheme))
-     (setq doom-theme 'doom-one)
-   (progn
-     (setq doom-theme (concat "doom-" colourscheme))
-     )
-   )
- )
+;; ;; There are two ways to load a theme. Both assume the theme is installed and
+;; ;; available. You can either set `doom-theme' or manually load a theme with the
+;; ;; `load-theme' function. This is the default:
+;; Trying to set based on colourscheme. Broken, for strange variable typing reasons I think.
+;; (
+;;  let ((colourscheme (getenv "COLOURSCHEME")))
+;;  (if (or (not colourscheme) (equal "" colourscheme))
+;;      (setq doom-theme 'doom-one)
+;;    (setq colourscheme (s-replace "light" "-light" colourscheme))
+;;    (setq colourscheme (s-replace "dark" "-dark" colourscheme))
+;;    (setq colourscheme (s-replace "_" "-" colourscheme))
+;;    ;; One theme specifies doom-one-light, but dark theme does not.
+;;    (if (string-match-p (regexp-quote "one") colourscheme)
+;;        (setq colourscheme (s-replace "-dark" "" colourscheme)))
+;;    (setq colourscheme (concat "doom-" colourscheme))
+;;    (message "''%s''" colourscheme)
+;;    (setq doom-theme colourscheme)
+;;    )
+;;  )
+(setq doom-theme 'doom-one)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
