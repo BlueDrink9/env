@@ -14,15 +14,20 @@ source "$DOTFILES_DIR/shell/functions.sh"
 eval "$(cat <<END
 do${installID}() {
     printErr "Setting up doom emacs"
-    prependTextIfAbsent "${installText}" "${baseRC}"
     installDoomEmacs
+    prependTextIfAbsent "${installText}" "${baseRC}"
   }
 END
 )"
 
 installDoomEmacs(){
-  # Use emacs.d because that's where packages are installed, and I don't want them taking up backup space in ~/.config
-  git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
+  # Use emacs.d because it's where packages are installed, and I don't want them taking up backup space in ~/.config
+  if [ ! -f ~/.emacs.d/bin/doom ]; then
+    rm -rf ~/.emacs.d
+    git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
+  else
+    git -C ~/.emacs.d pull
+  fi
   ~/.emacs.d/bin/doom install
   # If git bash, set user environment variable $DOOMDIR and $EMACS_SERVER_FILE
   if [[ $OSTYPE == 'msys' ]]; then
