@@ -67,7 +67,7 @@ super {_, + shift} + z
 
 # # expand a window by moving one of its side outward
 # # Semicolon makes this a prefix, colon makes it a mode (leave with esc).
-super + w; r: shift + {Left,Down,Up,Right}
+super + w; s: shift + {Left,Down,Up,Right}
 	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}; bsp_border_reset
 
 # # contract a window by moving one of its side inward
