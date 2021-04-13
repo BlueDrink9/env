@@ -8,6 +8,10 @@
 
 (package! key-chord)
 (package! evil-collection)
+;; String modification functions
+(package! s)
+
+(package! awesome-tab)
 
 ;; (package! smartparens :disable t)
 

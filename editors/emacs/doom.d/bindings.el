@@ -21,10 +21,10 @@
 (map! :desc "go-window-up"    :nv  "C-k" #'evil-window-up)
 (map! :desc "go-window-down"  :nv  "C-j" #'evil-window-down)
 
-(map! :after outline
-      :map outline-mode-map
-      <C-j> nil
-      <C-k> nil)
+;; (map! :after outline
+;;       :map outline-mode-map
+;;       <C-j> nil
+;;       <C-k> nil)
 
 (map! :desc "split window right" :nv  "C-w l" #'evil-window-vsplit)
 (map! :desc "split window down" :nv  "C-w j" #'evil-window-split)
@@ -46,6 +46,7 @@
 ;; (map! :desc "system register" :nv "\"\"\"" #'myevil-use-system-register)
 ;; (map! :nv "C-z" (setq evil-this-register ?+))
 ;; (key-chord-define evil-motion-state-map "''" (setq evil-this-register "+"))
+;; (map! :desc "Paste from clipboard" :i  "<c-v>" #'evil-paste-from-register "+")
 
 ;; (map! :desc "system register" :nv  '""' '"+')
 ;; maps for everywhere (all modes)
@@ -95,6 +96,9 @@
 
 (map! :leader :desc "easymotion down" "j" #'evil-motion-next-line)
 (map! :leader :desc "easymotion up" "k" #'evil-motion-previous-line)
+
+;; y is not a prefix, so this isn't working...
+;; (map! :desc "Toggle spell check" :nv  "y o s" #'flyspell-mode)
 
 ;; (map! :leader
 ;;       (:prefix-map ("a" . "applications")

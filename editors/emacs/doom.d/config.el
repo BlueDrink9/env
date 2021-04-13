@@ -4,6 +4,7 @@
 (load-file (concat script_dir "bindings.el"))
 (load-file (concat script_dir "aliases.el"))
 (load-file (concat script_dir "file-mode-settings.el"))
+(use-package! s)
 ;; Remember, you do not need to run 'doom sync' after modifying this file!
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
@@ -25,6 +26,7 @@
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
 (setq doom-font (font-spec :family "SauceCodePro NF" :size 16))
+(setq doom-variable-pitch-font (font-spec :family "Source Sans Pro" :size 16))
 
 ;; ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -54,9 +56,22 @@
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
+(setq-default word-wrap t)
+(add-hook 'linum-mode (lambda () (face-remap-add-relative 'default '(:family "Monospace"))))
+;; https://stackoverflow.com/questions/9304192/emacs-linum-mode-and-size-of-font-unreadable-line-numbers
+(eval-after-load "linum"
+  '(set-face-attribute 'linum nil 'default '(:family "Monospace")))
+
+;; Temporary, but will be useful for learning my way around.
+(menu-bar-mode 1)
+
 
 ;; Fancy bullets in org mode, heavy plugin.
 (remove-hook 'org-mode-hook #'org-superstar-mode)
+
+   ;; (after! tabbar
+   ;;   (setq org-fontify-quote-and-verse-blocks nil
+   ;;         org-startup-indented nil))
 
    ;; (after! org
    ;;   (setq org-fontify-quote-and-verse-blocks nil
