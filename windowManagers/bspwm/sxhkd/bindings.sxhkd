@@ -170,15 +170,21 @@ super + {o,i}
 #----------------------------------------
 
 # Rotate desktop
-super + {_,shift + }r
+super + {w;} {_,shift + }r
 	bspc node @/ --rotate {90,-90}
+# super + {w;} {_,shift + }r
+# 	bspc node @/ --circulate {forward,backward}
+
+# Flip desktop
+super + w; {_,shift + }f
+	bspc node @/ --flip {horizontal,vertical}
 
 # Make split ratios equal
 super + {w;} equal
 	bspc node @/ --equalize
 
 # Make split ratios balanced
-super + minus
+super + {w;} minus
 	bspc node @/ --balance
 
 
