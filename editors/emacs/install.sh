@@ -28,6 +28,7 @@ installDoomEmacs(){
   else
     git -C ~/.emacs.d pull
   fi
+  ln -s ~/.emacs.d/bin/doom ~/.local/bin/doom
   ~/.emacs.d/bin/doom install
   # If git bash, set user environment variable $DOOMDIR and $EMACS_SERVER_FILE
   if [[ $OSTYPE == 'msys' ]]; then

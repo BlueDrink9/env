@@ -34,7 +34,6 @@
  (if (or (not colourscheme) (equal "" colourscheme))
      (setq doom-theme 'doom-one)
    (progn
-     (message "%s" colourscheme)
      (setq doom-theme (concat "doom-" colourscheme))
      )
    )
