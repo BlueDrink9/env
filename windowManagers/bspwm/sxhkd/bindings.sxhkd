@@ -82,12 +82,15 @@ super + w; r: shift + {Left,Down,Up,Right}
 #   bspc config focused_border_color "$BSPWM_MODE_COLOUR"
 
 #----------------------------------------
-# focus/swap
+# focus/move
 #----------------------------------------
 
 # focus the node in the given direction
-super + {_,shift + }{h,j,k,l}
-	bspc node -{f,s} {west,south,north,east}
+super + {_,shift + ,alt + shift + }{h,j,k,l}
+	bspc node -{f,s,n} {west,south,north,east}
+
+super + w; m; {_, shift + ,alt + shift + }{h,j,k,l}
+	bspc node -{n,s,n} {west,south,north,east}
 
 # focus the node for the given path jump
 # This has a duplicate with a plasma shortcut, I think
@@ -171,7 +174,7 @@ super + {_,shift + }r
 	bspc node @/ --rotate {90,-90}
 
 # Make split ratios equal
-super + equal
+super + {w;} equal
 	bspc node @/ --equalize
 
 # Make split ratios balanced
