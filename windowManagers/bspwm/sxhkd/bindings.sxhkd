@@ -61,9 +61,11 @@ super + {minus, plus}
 super {_, + shift} + z
   bspc node {-g hidden, $(bspc query -N -n .hidden | tail -n1) -g hidden=off}
 
-# #
-# # move/resize
-# #
+
+#----------------------------------------
+# Resize
+#----------------------------------------
+
 
 # # expand a window by moving one of its side outward
 # # Semicolon makes this a prefix, colon makes it a mode (leave with esc).
@@ -85,18 +87,6 @@ super + w; s: shift + {Left,Down,Up,Right}
 # focus/move
 #----------------------------------------
 
-# focus the node in the given direction
-super + {_,shift + ,alt + shift + }{h,j,k,l}
-	bspc node -{f,s,n} {west,south,north,east}
-
-super + w; m; {_, shift + ,alt + shift + }{h,j,k,l}
-	bspc node -{n,s,n} {west,south,north,east}
-
-# focus the node for the given path jump
-# This has a duplicate with a plasma shortcut, I think
-# super + {p,b,comma,period}
-# 	bspc node -f @{parent,brother,first,second}
-
 # Normally duplicated by window manager
 # focus the next/previous node in the current desktop
 # super + {_,shift + }c
@@ -106,54 +96,60 @@ alt + {_,shift + }Tab
 super + {_,shift + }Tab
   bspc node -f {next,prev}.local
 
+# focus the node for the given path jump
+# This has a duplicate with a plasma shortcut, I think
+# super + {p,b,comma,period}
+# 	bspc node -f @{parent,brother,first,second}
+
+# focus/swap/move the node in the given direction
+super + {_,shift + ,alt + shift + }{h,j,k,l}
+	bspc node -{f,s,n} {west,south,north,east}
+super + w; m; {_, shift + ,alt + shift + }{h,j,k,l}
+	bspc node -{n,s,n} {west,south,north,east}
+
 # focus the next/previous desktop in the current monitor
-# Destroys the old one if it is empty first.
-# See https://blog.codezen.org/2015/03/13/on-bspwm-tweaking/ #Named Desktops to see how to create if no new one found.
-# ctrl + alt + {Left,Right}
-# {super + bracket{left,right},ctrl + alt + {Left,Right}}
-# ctrl + alt + {Left,Right}
-#   bspc desktop -f {prev,next}.local
 super + bracket{left,right}
   bspc desktop -f {prev,next}.local
+# Move to desktop
 super + shift + bracket{left,right}
 	bspc node --to-desktop {prev,next}
-# Move to desktop and focus on it
-super + ctrl + bracket{left,right}
-  bspc node --to-desktop {prev,next} --follow;
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
+# Move to desktop and focus on it
+super + ctrl + bracket{left,right}
+  bspc node --to-desktop {prev,next} --follow
+super + ctrl + shift + {1-9,0}
+	bspc node -d '^{1-9,10}' --follow
+# Destroys the old desktop if it is empty first.
+# See https://blog.codezen.org/2015/03/13/on-bspwm-tweaking/ #Named Desktops to see how to create if no new one found.
 # super + bracket{left,right}
   # bspc desktop -f {prev,next}.local
   # bspc desktop focused -r && \
 
-# # Swap desktops within current monitor
-# super + shift + alt + bracket{left,right}
-#   bspc desktop -s {prev,next}
-# # Move desktop to different monitor
-# super + shift + ctrl + bracket{left,right}
-#   bspc desktop -m {prev,next}
-
-### Monitor ### {[}
-
+### Monitor ###
 # focus monitor
 super + alt + bracket{left,right}
   bspc monitor -f {prev, next}
 super + alt + {h,l}
   bspc monitor -f {prev, next}
 super + alt + {1,2,3}
-  bspc monitor --focus {1,2,3}
+  bspc monitor --focus '^{1,2,3}'
 # send window to monitor {swap shift for ctrl to follow focus}
 super + alt + shift + bracket{left,right}
   bspc node -m {prev, next}
 super + alt + ctrl + bracket{left,right}
   bspc node -m {prev, next} --follow
+super + w; m; alt + shift + bracket{left,right}
+  bspc node -m {prev, next}
+super + w; m; alt + ctrl + bracket{left,right}
+  bspc node -m {prev, next} --follow
 
-### Monitor ### {]}
-
-# Just numbers is used to launch taskbar shortcuts.
-# focus or send to the given desktop
-# super + shift {1-9,0}
-# 	bspc node -d '^{1-9,10}'
+# # Swap desktops within current monitor
+super + w; m; shift + {less,greater}
+  bspc desktop -s {prev,next}
+# # Move desktop to different monitor
+super + w; m; alt + shift + {less,greater}
+  bspc desktop -m {prev,next}
 
 # focus the last node/desktop
 # super + {grave,Tab}
@@ -200,9 +196,9 @@ super + n
 super + shift + n
     bspc desktop -r -f prev
 
-#
-# preselect
-#
+#----------------------------------------
+# Preselect
+#----------------------------------------
 
 # preselect the direction
 super + ctrl + {h,j,k,l}
@@ -239,6 +235,13 @@ super + shift + z
     bspc desktop $D –remove;
   fi
 
+# Save layout using 
+# https://github.com/johannesjo/linux-window-session-manager
+super + w; w
+  lwsm save bspwm
+super + w; e
+  lwsm restore bspwm
+
 # # These are no longer recommended in sxhkd. Use bspwm config instead.
 # #
 # # Mouse
@@ -254,9 +257,3 @@ super + shift + z
 # # end move/resize
 # super + @button{1-3}
 #         bspc pointer -u
-# Save layout using 
-# https://github.com/johannesjo/linux-window-session-manager
-super + w; w
-  lwsm save bspwm
-super + w; e
-  lwsm restore bspwm
