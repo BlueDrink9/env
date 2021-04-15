@@ -8,8 +8,8 @@ X_DOTFILES_DIR="$DOTFILES_DIR"/system/x11
 DEFAULT_SESSION=bspwm
 export COLOURSCHEME=solarized_light
 
-. "$X_DOTFILES_DIR"/system_defaults.sh
 . "$DOTFILES_DIR"/shell/XDG_setup.sh
+. "$X_DOTFILES_DIR"/system_defaults.sh
 . "$X_DOTFILES_DIR"/settings.sh
 
 # Sometimes startx doesn't set up dbus stuff properly, apparently.
