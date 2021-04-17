@@ -15,6 +15,7 @@
 ;; Swap ;, :
 (map! :desc "ex" :nv ";" #'evil-ex)
 (map! :desc ";" :nv ":" #'evil-repeat-find-char)
+(map! :desc ";" :nv ":" #'evil-snipe-repeat-forwards)
 
 (map! :desc "go-window-right" :nv  "C-l" #'evil-window-right)
 (map! :desc "go-window-left"  :nv  "C-h" #'evil-window-left)
@@ -46,7 +47,8 @@
 ;; (map! :desc "system register" :nv "\"\"\"" #'myevil-use-system-register)
 ;; (map! :nv "C-z" (setq evil-this-register ?+))
 ;; (key-chord-define evil-motion-state-map "''" (setq evil-this-register "+"))
-;; (map! :desc "Paste from clipboard" :i  "<c-v>" #'evil-paste-from-register "+")
+;; (map! :desc "Paste from clipboard" :i "<c-v>" #'evil-paste-from-register "+")
+;; (map! :desc "Paste from clipboard" :i "<c-v>" (kbd "\"+p"))
 
 ;; (map! :desc "system register" :nv  '""' '"+')
 ;; maps for everywhere (all modes)
@@ -56,9 +58,8 @@
 ;; maps for specific modes
 ;; (evil-define-key 'normal org-mode-map "\<" 'org-metaleft )
 
-(map! :desc "_x" :nv  "x" #'evil-delete-char)
-(map! :desc "_X" :nv  "X" #'evil-backward-char)
-(map! :desc "black hole register delete" :v  "<backspace>" #'evil-delete-char)
+(map! :desc "\"_x" :nv  "x" #'evil-delete-char)
+(map! :desc "\"_X" :nv  "X" #'evil-backward-char)
 (map! :desc "black hole register delete" :v  "<delete>" #'evil-delete-char)
 
 (map! :desc "Toggle fold" :n  "<backspace>" #'+fold/toggle)
@@ -82,7 +83,29 @@
 ; n and N always go the same direction regardless of whether / or ? was used.
 
 ;; Autoexpand brackets when creating functions etc.
-; May need to be a chord.
+(defmacro autobracket (bracCharOpen BracCharClose)
+  (
+    (insert bracCharOpen)
+    (evil-insert-newline-below)
+    (insert bracCharClose)
+    (evil-previous-line)
+    (evil-insert-newline-below)
+    )
+  )
+
+;; ;; May need to be a chord.
+;; Currently working, but isn't typing regular ( when no RET after it.
+;; (map! :desc "Autoexpand bracket" :i
+;;       "( RET" (lambda () (interactive) (autobracket "(" ")")))
+
+               ;; lambda () (interactive)
+               ;;  (insert "(")
+               ;; (evil-insert-newline-below)
+               ;; (insert ")")
+               ;; (evil-previous-line)
+               ;; (evil-insert-newline-below)
+               ;; ))
+
 ;; (map! :desc "Autoexpand bracket" :i  "( <cr>" "(<cr>)<Esc>O")
 ;; inoremap (<CR> (<CR>)<Esc>O
 ;; inoremap {<CR> {<CR>}<Esc>O
@@ -92,16 +115,28 @@
 ;; inoremap [; [<CR>];<Esc>O
 ;; inoremap [, [<CR>],<Esc>O
 
-; Baisc mappings done as of now.
+; Basic mappings done as of now.
 
-(map! :leader :desc "easymotion down" "j" #'evil-motion-next-line)
-(map! :leader :desc "easymotion up" "k" #'evil-motion-previous-line)
-
-;; y is not a prefix, so this isn't working...
-;; (map! :desc "Toggle spell check" :nv  "y o s" #'flyspell-mode)
+;; (map! :leader :desc "easymotion down" "j" #'evil-motion-next-line)
+;; (map! :leader :desc "easymotion up" "k" #'evil-motion-previous-line)
 
 ;; (map! :leader
 ;;       (:prefix-map ("a" . "applications")
 ;;        (:prefix ("j" . "journal")
 ;;         :desc "New journal entry" "j" #'org-journal-new-entry
 ;;         :desc "Search journal entry" "s" #'org-journal-search)))
+
+;; Apparently have to add mapping to every file mode?
+(after! smart-tab
+  (add-hook 'find-file-hook (function (lambda ()
+                                        (local-set-key (kbd "<tab>") 'smart-tab))))
+  )
+
+(map! :desc "Minibuffer only one escape to exit"
+      :map (minibuffer-local-map evil-ex-completion-map evil-ex-search-keymap)
+      :in "<escape>" #'abort-recursive-edit)
+
+;; c-a and c-x need fixing for increment/decrement.
+
+;; bind page up and down to the evil-motion-state-map in order to get them only
+;; functioning in read-only modes.

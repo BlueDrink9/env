@@ -73,7 +73,7 @@
        vc                ; version-control and Emacs, sitting in a tree
 
        :term
-       ;; TODO do OS check. Use vterm on uni, term on win. But note that this doom! section needs to redo doom! sync each time. Shuoldn't affect most OS-specific stuff though...
+       ;; TODO do OS check. Use vterm on unix, term on win. But note that this doom! section needs to redo doom! sync each time. Shuoldn't affect most OS-specific stuff though...
        ;;eshell            ; the elisp shell that works everywhere
        ;;shell             ; simple shell REPL for Emacs
        ;;term              ; basic terminal emulator for Emacs
@@ -81,7 +81,7 @@
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
-       spell             ; tasing you for misspelling mispelling
+       (spell +aspell)             ; tasing you for misspelling mispelling
        grammar           ; tasing grammar mistake every you make
 
        :tools
@@ -151,7 +151,7 @@
        php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
-       python            ; beautiful is better than ugly
+       (python +lsp)            ; beautiful is better than ugly
        qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6
@@ -182,4 +182,5 @@
 
        :config
        ;;literate
-       (default +bindings +smartparens))
+       (default +bindings))
+       ;; (default +bindings +smartparens))

@@ -1,12 +1,19 @@
 ;;; filetype-modes.el -*- lexical-binding: t; -*-
 
-;; Use variable width fonts for all prose filetypes
+;; Use variable width fonts and soft wrap for all prose filetypes
 (dolist (hook '(erc-mode-hook
         LaTeX-mode-hook
         org-mode-hook
         edit-server-start-hook
         markdown-mode-hook))
-  (add-hook hook (lambda () (variable-pitch-mode t))))
+  (add-hook hook (lambda ()
+                   (variable-pitch-mode t)
+                   (visual-line-mode)
+                   )))
+
+;; Use soft wraps instead of hard. Only enable if found to be neccessary.
+;; (remove-hook 'text-mode-hook #'auto-fill-mode)
+;; (add-hook 'message-mode-hook #'word-wrap-mode)
 
 ;; Add underscore to word character definition.
 (modify-syntax-entry ?_ "w")

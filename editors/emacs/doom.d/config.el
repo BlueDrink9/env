@@ -5,6 +5,7 @@
 (load-file (concat script_dir "aliases.el"))
 (load-file (concat script_dir "file-mode-settings.el"))
 (use-package! s)
+(load-file (concat script_dir "spellcheck.el"))
 ;; Remember, you do not need to run 'doom sync' after modifying this file!
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
@@ -53,6 +54,11 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/work/org/")
 
+(setq evil-collection-setup-minibuffer t)
+(setq evil-want-minibuffer t)
+(add-hook 'minibuffer-setup-hook
+      (lambda () (setq truncate-lines nil)))
+
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
@@ -62,9 +68,22 @@
 (eval-after-load "linum"
   '(set-face-attribute 'linum nil 'default '(:family "Monospace")))
 
-;; Temporary, but will be useful for learning my way around.
-(menu-bar-mode 1)
+;; Use " register by default, instead of system. System register is still
+;; accessible via evil + and * registers.
+;; Equivalent of vim `set clipboard=unnamed`.
+(setq select-enable-clipboard nil)
 
+(scroll-bar-mode t)
+(set-scroll-bar-mode 'right)
+;; Temporary, but will be useful for learning my way around.
+(menu-bar-mode t)
+
+;; Doom disables auto-save/backup by default.
+(setq auto-save-default t
+      make-backup-files t)
+
+;; Disable smartparens. Can't be done another way because it is a default package.
+(remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
 
 ;; Fancy bullets in org mode, heavy plugin.
 (remove-hook 'org-mode-hook #'org-superstar-mode)
@@ -72,12 +91,24 @@
    ;; (after! tabbar
    ;;   (setq org-fontify-quote-and-verse-blocks nil
    ;;         org-startup-indented nil))
+(after! evil-snipe
+  (evil-snipe-mode -1))
+;; (after! evil-snipe
+;;   (evil-snipe-override-mode nil))
+;; Use cx for exchange mapping
+(after! evil-exchange
+  (evil-exchange-cx-install))
+;; Only highlight targets when f,F,T,t pressed.
+(after! evil-quickscope
+  (global-evil-quickscope-mode 1)
+  )
 
-   ;; (after! org
-   ;;   (setq org-fontify-quote-and-verse-blocks nil
-   ;;         org-fontify-whole-heading-line nil
-   ;;         org-hide-leading-stars nil
-   ;;         org-startup-indented nil))
+
+;; (after! org
+;;   (setq org-fontify-quote-and-verse-blocks nil
+;;         org-fontify-whole-heading-line nil
+;;         org-hide-leading-stars nil
+;;         org-startup-indented nil))
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;

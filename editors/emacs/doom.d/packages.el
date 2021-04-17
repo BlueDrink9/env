@@ -7,11 +7,15 @@
 ;; Or use 'M-x doom/reload'.
 
 (package! key-chord)
-(package! evil-collection)
+;; (package! evil-collection) ;; included already.
+(package! evil-quickscope)
 ;; String modification functions
 (package! s)
 
+;; Tab bar customisation
 (package! awesome-tab)
+;; Tab key behavior
+(package! smart-tab)
 
 ;; (package! smartparens :disable t)
 
