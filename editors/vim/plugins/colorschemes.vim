@@ -20,17 +20,17 @@ let g:pencil_spell_undercurl = 1
 " undercurl.
 Plug 'NLKNguyen/papercolor-theme'
 let g:PaperColor_Theme_Options = {
-  \   'theme': {
-  \     'default': {
-  \       'allow_bold': '1',
-  \       'allow_italic': '1',
-  \     }
-  \   }
-  \ }
-  " \       'override' : {
-  " \         'SpellBad' : ['underline', 'underline'],
-  " \         'SpellCap' : ['underline', 'underline']
-  " \       }
+      \   'theme': {
+      \     'default': {
+      \       'allow_bold': '1',
+      \       'allow_italic': '1',
+      \     }
+      \   }
+      \ }
+" \       'override' : {
+" \         'SpellBad' : ['underline', 'underline'],
+" \         'SpellCap' : ['underline', 'underline']
+" \       }
 Plug 'https://github.com/morhetz/gruvbox'
 Plug 'https://github.com/jnurmine/Zenburn'
 " CursorColumn a stronger option
@@ -38,10 +38,10 @@ Plug 'https://github.com/jnurmine/Zenburn'
 Plug 'https://github.com/tomasr/molokai'
 Plug 'aonemd/kuroi.vim'
 silent! if &termguicolors || g:hasGUI
-    Plug 'https://github.com/ayu-theme/ayu-vim'
-    " Apparently we can't have all versions. Daft.
-    " Dark version doesn't work easily with airline anyway.
-    let ayucolor="light"
+Plug 'https://github.com/ayu-theme/ayu-vim'
+" Apparently we can't have all versions. Daft.
+" Dark version doesn't work easily with airline anyway.
+let ayucolor="light"
 endif
 Plug 'liuchengxu/space-vim-dark'
 " High contrast themes.
@@ -57,7 +57,16 @@ Plug 'https://github.com/pineapplegiant/spaceduck'
 Plug 'rakr/vim-one'
 Plug 'https://github.com/sainnhe/forest-night'
 let g:one_allow_italics = 1
-" call one#highlight('vimLineComment', 'cccccc', '', 'none')
+function! s:customVimOneColours()
+  " Don't hide window borders. May want to play with colours (fg, bg).
+  call one#highlight('vimLineComment', 'cccccc', '', 'none')
+  " Fix italics and remove colouring from bolded/italic text.
+  " hi clear markdownItalic | hi link markdownItalic htmlItalic
+  " hi clear markdownBold | hi link markdownBold htmlBold
+  call one#highlight('markdownItalic', '', '', 'italic')
+  call one#highlight('markdownBoldItalic', '', '', 'italic,bold')
+endfunction
+autocmd myColourschemes ColorScheme one call <sid>customVimOneColours()
 Plug 'cormacrelf/vim-colors-github'
 " Black backgrounds
 Plug 'fcpg/vim-fahrenheit'
@@ -66,8 +75,8 @@ Plug 'nanotech/jellybeans.vim'
 Plug 'https://github.com/GertjanReynaert/cobalt2-vim-theme'
 let g:jellybeans_use_term_italics = 1
 let g:jellybeans_overrides = {
-\    'background': { 'guibg': '000000' },
-\}
+      \    'background': { 'guibg': '000000' },
+      \}
 
 " {[} ---------- Base16 ----------
 " If using a Base16 terminal theme designed to keep the 16 ANSI colors intact (a "256" variation) and have sucessfully modified your 256 colorspace with base16-shell you'll need to add the following to your ~/.vimrc before the colorscheme declaration.
@@ -123,7 +132,7 @@ endif
 " {]}
 
 " exec so variables are set at the right time (after plugin load).
-autocmd myPlugins User pluginSettingsToExec exec 'colorscheme ' . colorSch
+autocmd myPlugins User pluginSettingsToExec ++nested exec 'colorscheme ' . colorSch
 call add (g:customHLGroups, "MatchParen cterm=bold,underline ctermbg=lightgray")
 call add (g:customHLGroups, "MatchParen gui=bold,underline guibg=gray90")
 " call add (g:customHLGroups, "link MatchParen CursorColumn")
