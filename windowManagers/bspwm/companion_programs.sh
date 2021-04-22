@@ -9,6 +9,9 @@ pgrep sxhkd || \
   "$DOTFILES_DIR"/windowManagers/bspwm/sxhkd/*.sxhkd \
   >| $HOME/.logs/sxhkd.log 2>| $HOME/.logs/sxhkd.err &
 
+# Monitor sxhkd status, eg changing border colour during chains.
+"$DOTFILES_DIR"/windowManagers/bspwm/scripts/sxhkd_status_mon.sh  "${SXHKD_STATUS_FIFO}" &
+
 wallpaper="$HOME/Pictures/wallpaper.jpg"
 if [ -f "$wallpaper" ]; then
   feh --bg-fill "$wallpaper" &
