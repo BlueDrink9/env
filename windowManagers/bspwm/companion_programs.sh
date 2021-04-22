@@ -1,8 +1,13 @@
 #! /bin/sh
+SXHKD_STATUS_FIFO="/run/user/$UID/sxhkd.fifo"
+if [ ! -f "${SXHKD_STATUS_FIFO}" ]; then
+  mkfifo "${SXHKD_STATUS_FIFO}"
+fi
 pgrep sxhkd || \
-  sxhkd -m -1 -c "$HOME/.config/sxhkd/sxhkdrc" \
+  sxhkd -m -1 -s "${SXHKD_STATUS_FIFO}" \
+  -c "$HOME/.config/sxhkd/sxhkdrc" \
   "$DOTFILES_DIR"/windowManagers/bspwm/sxhkd/*.sxhkd \
-   >| $HOME/.logs/sxhkd.log 2>| $HOME/.logs/sxhkd.err &
+  >| $HOME/.logs/sxhkd.log 2>| $HOME/.logs/sxhkd.err &
 
 wallpaper="$HOME/Pictures/wallpaper.jpg"
 if [ -f "$wallpaper" ]; then
