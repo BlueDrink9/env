@@ -92,6 +92,7 @@ else
   alias myVim="vi"
   # unset -f vim
 fi
+export myVim
 
 # Returns some variant on "myVim='alias'"
 # Bash the word 'alias'. Zsh removes quotes.
@@ -109,6 +110,7 @@ liteVim(){ myVim --cmd "let g:liteMode=1" "$@"; }
 alias vi="liteVim"
 nopluginVim(){ myVim --noplugin --cmd "let g:noPlugins=1" "$@"; }
 shelleditor(){ myVim --cmd "let g:liteMode=1" +'set ft=sh' "$@"; }
+export editor IDEVim liteVim nopluginVim shelleditor
 
 # You know it, baby. Shouldn't need to use nano ever.
 # Should also be getting a nice lite nvim where needed.
