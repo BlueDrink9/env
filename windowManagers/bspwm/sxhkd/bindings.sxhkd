@@ -24,7 +24,8 @@ super + g
 # # make sxhkd reload its and bspwm's configuration files:
 super + {ctrl, shift} + c
   {bspc wm -r; notify-send "Bspwm reloaded",\
-    pkill -USR1 -x sxhkd; bsp_border_reset; notify-send "Sxhkd reloaded config"}
+    pkill -USR1 -x sxhkd;  notify-send "Sxhkd reloaded config"}; \
+    bsp_border_reset;
   # killall sxhkd && sxhkd -m -1 -c "$HOME/.config/sxhkd/sxhkdrc" "$DOTFILES_DIR"/windowManagers/bspwm/sxhkd/*.sxhkd &
 
 #----------------------------------------
