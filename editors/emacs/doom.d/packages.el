@@ -17,6 +17,9 @@
 ;; Tab key behavior
 (package! smart-tab)
 
+;; Autosaving
+(package! super-save)
+
 ;; (package! smartparens :disable t)
 
 ;; Consider disabling these packages since they are heavier.
