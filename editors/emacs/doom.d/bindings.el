@@ -6,9 +6,15 @@
 (setq key-chord-two-keys-delay 0.5)
 (key-chord-mode 1)
 (key-chord-define evil-insert-state-map "kv" 'evil-normal-state)
-(key-chord-define evil-insert-state-map "vk" 'evil-normal-state)
+;; (key-chord-define evil-insert-state-map "vk" 'evil-normal-state)
 ; (key-chord-define evil-ex-state-map "kv" 'evil-command-window-ex)
 ; (key-chord-define evil-ex-state-map "vk" 'evil-command-window-ex)
+
+;; ;; Alternative solution using general.el
+;; (general-imap "v"
+;;               (general-key-dispatch 'self-insert-command
+;;                 :timeout 0.5
+;;                 "k" 'evil-normal-state))
 
 ; (map! :desc "ex normal" :x ";" #'evil-ex)
 
@@ -42,13 +48,30 @@
 (map! :desc "Describe key" :nv "C-?" #'describe-key-briefly)
 
 ;; (defun myevil-use-system-register() "" () (evil-use-register "+"))
+;; (general-nmap "\"" (general-key-dispatch
+;;                        "\"" 'evil-use-register "+"))
 
-;; (map! :desc "system register" :nv "\"\"" #'(setq evil-this-register "+"))
+(defun myevil-paste-from-system ()
+  "Paste from system register ('+') "
+  (interactive)
+  (evil-paste-from-register ?+))
+
+(defun myevil-use-system-register-next ()
+  "Sets the register for the next action to the system register"
+  (interactive)
+  ;; (evil-use-register ?+))
+  (setq evil-this-register ?+))
+
+;; (map! :desc "system register" :nv "\"\"" #'(setq evil-this-register ?+))
 ;; (map! :desc "system register" :nv "\"\"\"" #'myevil-use-system-register)
-;; (map! :nv "C-z" (setq evil-this-register ?+))
-;; (key-chord-define evil-motion-state-map "''" (setq evil-this-register "+"))
-;; (map! :desc "Paste from clipboard" :i "<c-v>" #'evil-paste-from-register "+")
-;; (map! :desc "Paste from clipboard" :i "<c-v>" (kbd "\"+p"))
+(map! :desc "Paste from clipboard" :i "C-S-v" #'myevil-paste-from-system)
+
+;; ;; (map! :desc "Use system register next" :nv "b" #'myevil-use-system-register)
+;; (map! :desc "Use system register next" :nv "b" (lambda ()
+;;                                               (interactive)
+;;                                               (evil-use-register ?+)
+;;                                               'evil-paste-after
+;;                                               ))
 
 ;; (map! :desc "system register" :nv  '""' '"+')
 ;; maps for everywhere (all modes)
@@ -58,8 +81,9 @@
 ;; maps for specific modes
 ;; (evil-define-key 'normal org-mode-map "\<" 'org-metaleft )
 
-(map! :desc "\"_x" :nv  "x" #'evil-delete-char)
-(map! :desc "\"_X" :nv  "X" #'evil-backward-char)
+;; Don't add to register on x or X
+(map! :desc "\"_x" :nv  "x" #'delete-forward-char)
+(map! :desc "\"_X" :nv  "X" #'delete-backward-char)
 (map! :desc "black hole register delete" :v  "<delete>" #'evil-delete-char)
 
 (map! :desc "Toggle fold" :n  "<backspace>" #'+fold/toggle)
@@ -92,6 +116,7 @@
     (evil-insert-newline-below)
     )
   )
+;; (general-imap "(" (general-key-dispatch "RET" 'autobracket "(" ")"))
 
 ;; ;; May need to be a chord.
 ;; Currently working, but isn't typing regular ( when no RET after it.

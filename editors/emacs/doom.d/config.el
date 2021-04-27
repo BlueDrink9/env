@@ -54,11 +54,6 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/work/org/")
 
-(setq evil-collection-setup-minibuffer t)
-(setq evil-want-minibuffer t)
-(add-hook 'minibuffer-setup-hook
-      (lambda () (setq truncate-lines nil)))
-
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
@@ -82,6 +77,20 @@
 (setq auto-save-default t
       make-backup-files t)
 
+;; Evil-style bindings in minibuffer (esc, c-n etc)
+(setq evil-collection-setup-minibuffer t)
+(setq evil-want-minibuffer t)
+(add-hook 'minibuffer-setup-hook
+      (lambda () (setq truncate-lines nil)))
+;; (add-hook 'minibuffer-setup-hook 'evil-collection-minibuffer-insert)
+(setq evil-repeat-move-cursor nil)
+(setq evil-cross-lines t)
+(setq evil-split-window-below t)
+(setq evil-vsplit-window-right t)
+;; (setq evil-want-fine-undo "yes")
+(setq evil-kbd-macro-suppress-motion-error "replay")
+(setq evil-disable-insert-state-bindings nil)
+
 ;; Disable smartparens. Can't be done another way because it is a default package.
 (remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
 
@@ -103,6 +112,20 @@
   (global-evil-quickscope-mode 1)
   )
 
+
+;; Include gitgutter jumps in jump list.
+(evil-add-command-properties #'git-gutter:next-hunk :jump t)
+(evil-add-command-properties #'git-gutter:previous-hunk :jump t)
+
+;; Autosaves
+(after! super-save
+  (add-to-list 'super-save-hook-triggers 'evil-insert-state-exit-hook))
+;; (setq super-save-exclude '(".gpg"))
+
+(add-hook 'evil-local-mode-hook 'undo-tree-mode)
+
+;; Persist registers
+(setq savehist-additional-variables '(register-alist))
 
 ;; (after! org
 ;;   (setq org-fontify-quote-and-verse-blocks nil
