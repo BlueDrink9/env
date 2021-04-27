@@ -21,10 +21,10 @@ export focused_border_color="13CA91"  # Teal
 export unfocused_border_color="ca12a7"  # Magenta-purple
 export manage_border_color="ca3512"  # Burnt orange
 
-# Split complementary based on the above purple
-export focused_border_color="07f88f"  # Teal
-export unfocused_border_color="F808E9"  # purple
-export manage_border_color="70f807"  # Lime
+# # Split complementary based on the above purple
+# export focused_border_color="07f88f"  # Teal
+# export unfocused_border_color="F808E9"  # purple
+# export manage_border_color="70f807"  # Lime
 
 # if [ -f "$HOME/.Xresources" ]; then
 #     # Red
