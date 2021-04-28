@@ -184,12 +184,6 @@ if g:airline_powerline_fonts == 0
         let g:airline_symbols = {}
     endif
     " unicode symbols
-    let g:airline#extensions#tabline#left_sep = '▶'
-    let g:airline#extensions#tabline#right_sep = '◀'
-    let g:airline#extensions#tabline#left_sep_alt = '|'
-    let g:airline#extensions#tabline#right_sep_alt = '|'
-    let g:airline_left_sep = '▶'
-    let g:airline_right_sep = '◀'
     let g:airline_symbols.linenr = '☰'
     let g:airline_symbols.maxlinenr = ''
     let g:airline_symbols.columnnr = '∥'
