@@ -81,7 +81,7 @@ var_expand() {
     printf 'var_expand: expected one argument\n' >&2;
     return 1;
   fi
-  eval printf '%s' "\"\${$1?}\""
+  eval printf '%s' "\"\${$1?}\"" 2>/dev/null || printf ""
 }
 
 ensure_latest_shell(){
@@ -295,7 +295,10 @@ set_tmux_termoptions(){
         for _option in ${TERMOPTIONS[*]}; do
           # Refresh term_option shell variables by parsing tmux's global environment
           optval="$(\tmux show-environment -g ${_option} 2>/dev/null)"
-          export "${_option}"="${optval##*=}"
+          # Silence error when tmux is started as a login shell (or close-to).
+          if [ -n "${optval}" ]; then
+            export "${_option}"="${optval##*=}"
+          fi
           unset optval
         done
       else
