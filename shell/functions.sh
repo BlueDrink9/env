@@ -411,6 +411,7 @@ if [ "$TERM" = "xterm-kitty" ] && [ -z "$SSHSESSION" ]; then
     fi
     if [ -n "$theme_path" ]; then
       kitty @ set-colors --all "${theme_path}" # 2>> ~/.logs/kitty.log
+      kitty @ env COLOURSCHEME="${colourscheme}"
       export COLOURSCHEME="${colourscheme}"
     fi
     unset arg colourscheme current_theme theme_path
