@@ -1,6 +1,6 @@
 #! /bin/sh
 SXHKD_STATUS_FIFO="/run/user/$UID/sxhkd.fifo"
-if [ ! -f "${SXHKD_STATUS_FIFO}" ]; then
+if [ ! -e "${SXHKD_STATUS_FIFO}" ]; then
   mkfifo "${SXHKD_STATUS_FIFO}"
 fi
 sxhkd -m -1 -s "${SXHKD_STATUS_FIFO}" \
@@ -11,7 +11,9 @@ sxhkd -m -1 -s "${SXHKD_STATUS_FIFO}" \
 pkill -USR1 -x sxhkd;
 
 # Monitor sxhkd status, eg changing border colour during chains.
-"$DOTFILES_DIR"/windowManagers/bspwm/scripts/sxhkd_status_mon.sh  "${SXHKD_STATUS_FIFO}" &
+if ! pgrep -a sxhkd | grep sxhkd_status_mon.sh; then
+  "$DOTFILES_DIR"/windowManagers/bspwm/scripts/sxhkd_status_mon.sh  "${SXHKD_STATUS_FIFO}" &
+fi
 
 wallpaper="$HOME/Pictures/wallpaper.jpg"
 if [ -f "$wallpaper" ]; then
