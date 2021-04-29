@@ -3,23 +3,11 @@ exec 2> $HOME/.logs/bspwmrc.err
 exec 1> $HOME/.logs/bspwmrc.log
 
 export SXHKD_SHELL="sh"
+export BSPWM_RESIZE_DELTA=30
 
 export DOTFILES_DIR="$(cat $HOME/.config/.dotfiles_dir)"
 . "$DOTFILES_DIR"/windowManagers/variables.sh
-# export DOTFILES_DIR="$(cat $HOME/.config/.dotfiles_dir)" && \
-. "$DOTFILES_DIR"/windowManagers/bspwm/companion_programs.sh
-
-. "$DOTFILES_DIR"/windowManagers/bspwm/rules.sh
-
-#  if [[ $(hostname) == 'myhost' ]]; then
-# bspc monitor -d I II III IV V VI VII VIII IX X
-bspc monitor -d " " " " " "
-
-bspc_desktop(){
-  i=2
-  bspc monitor --add-desktops $i
-}
-
+# {[} BSPWM-specific variables
 gap=15
 BSPWM_FOCUSED_COLOUR="#$focused_border_color"
 BSPWM_UNFOCUSED_COLOUR="#$unfocused_border_color"
@@ -27,10 +15,25 @@ BSPWM_MODE_COLOUR="#$manage_border_color"
 BSPWM_PRESELECT_COLOUR="#$preselect_border_color"
 # bspc config focused_border_color "#247dcc" # dark blue
 # bspc config focused_border_color "#00bcff" # simpler cyan
+# {]} Variables
 
 bsp_border_reset(){
   bspc config focused_border_color "$BSPWM_FOCUSED_COLOUR"
 }
+export bsp_border_reset
+
+bspc_desktop(){
+  i=2
+  bspc monitor --add-desktops $i
+}
+
+. "$DOTFILES_DIR"/windowManagers/bspwm/companion_programs.sh
+
+#  if [[ $(hostname) == 'myhost' ]]; then
+# bspc monitor -d I II III IV V VI VII VIII IX X
+bspc monitor -d " " " " " "
+
+. "$DOTFILES_DIR"/windowManagers/bspwm/rules.sh
 
 #This creates negative padding equal to window gap so that gaps are shown only between windows and not on desktop edges.
 bspc config window_gap $gap;
