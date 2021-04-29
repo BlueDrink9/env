@@ -69,10 +69,20 @@ super {_, + shift} + z
 
 # # expand a window by moving one of its side outward
 # # Semicolon makes this a prefix, colon makes it a mode (leave with esc).
-super + w; s: shift + {Left,Down,Up,Right}
-	bspc node -z {left 20 0,bottom 0 20,top 0 20,right 20 0}
-super + w; s: ctrl + {Left,Down,Up,Right}
-	bspc node -z {left -20 0,bottom 0 -20,top 0 -20,right -20 0}
+# Expand
+super + w; s: shift + {Left,Right,Up,Down}
+  bspc node --resize {\
+  left   -$BSPWM_RESIZE_DELTA 0, \
+  right  $BSPWM_RESIZE_DELTA 0, \
+  top    0 -$BSPWM_RESIZE_DELTA, \
+  bottom 0 $BSPWM_RESIZE_DELTA}
+# Contract
+super + w; s: ctrl + {Left,Right,Up,Down}
+  bspc node --resize {\
+  left   $BSPWM_RESIZE_DELTA 0, \
+  right  -$BSPWM_RESIZE_DELTA 0, \
+  top    0 $BSPWM_RESIZE_DELTA, \
+  bottom 0 -$BSPWM_RESIZE_DELTA}
 
 # # contract a window by moving one of its side inward
 # super + w; ctrl + shift + {Left,Down,Up,Right}
@@ -203,7 +213,7 @@ super + shift + n
 #----------------------------------------
 
 # preselect the direction
-super + ctrl + {h,j,k,l}
+super + w; p; {h,j,k,l}
 	bspc node -p {west,south,north,east}
 
 # preselect the ratio
