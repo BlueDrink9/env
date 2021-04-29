@@ -31,7 +31,7 @@ bspc_desktop(){
 
 #  if [[ $(hostname) == 'myhost' ]]; then
 # bspc monitor -d I II III IV V VI VII VIII IX X
-bspc monitor -d " " " " " "
+bspc monitor -d " " " " " " " "
 
 . "$DOTFILES_DIR"/windowManagers/bspwm/rules.sh
 
