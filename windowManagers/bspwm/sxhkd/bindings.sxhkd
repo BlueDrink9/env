@@ -24,8 +24,7 @@ super + g
 # # make sxhkd reload its and bspwm's configuration files:
 super + {ctrl, shift} + c
   {bspc wm -r; notify-send "Bspwm reloaded",\
-    pkill -USR1 -x sxhkd;  notify-send "Sxhkd reloaded config"}; \
-    bsp_border_reset;
+    pkill -USR1 -x sxhkd;  notify-send "Sxhkd reloaded config"}
   # killall sxhkd && sxhkd -m -1 -c "$HOME/.config/sxhkd/sxhkdrc" "$DOTFILES_DIR"/windowManagers/bspwm/sxhkd/*.sxhkd &
 
 #----------------------------------------
@@ -71,7 +70,9 @@ super {_, + shift} + z
 # # expand a window by moving one of its side outward
 # # Semicolon makes this a prefix, colon makes it a mode (leave with esc).
 super + w; s: shift + {Left,Down,Up,Right}
-	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}; bsp_border_reset
+	bspc node -z {left 20 0,bottom 0 20,top 0 20,right 20 0}
+super + w; s: ctrl + {Left,Down,Up,Right}
+	bspc node -z {left -20 0,bottom 0 -20,top 0 -20,right -20 0}
 
 # # contract a window by moving one of its side inward
 # super + w; ctrl + shift + {Left,Down,Up,Right}
