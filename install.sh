@@ -14,11 +14,12 @@ source "$SCRIPTDIR/shell/script_functions.sh"
 # if  compareVersionNum $BASH_VERSION_CLEAN '>' 4.2 ; then
 source "$SCRIPTDIR/shell/bash/colour_variables.sh"
 
-if substrInStr "darwin" "$OSTYPE"; then
-  export XDG_CONFIG_HOME="$HOME/.config"
-else
+if command -v setxkdmap > /dev/null 2>&1; then
   setxkbmap us,us -variant "colemak," && \
     printLine "${Green}Keyboard set to colemak."
+fi
+if substrInStr "darwin" "$OSTYPE"; then
+  export XDG_CONFIG_HOME="$HOME/.config"
 fi
 # $XDG_CONFIG_HOME_DEFAULT="$HOME/.config"
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
