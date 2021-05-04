@@ -113,7 +113,7 @@ super + {_,shift + }Tab
 # super + {p,b,comma,period}
 # 	bspc node -f @{parent,brother,first,second}
 
-# focus/swap/move the node in the given direction
+# focus,swap, or move/warp the node in the given direction
 super + {_,shift + ,alt + shift + }{h,j,k,l}
 	bspc node -{f,s,n} {west,south,north,east}
 super + w; m; {_, shift + ,alt + shift + }{h,j,k,l}
