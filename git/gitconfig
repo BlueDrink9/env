@@ -32,6 +32,7 @@
   chpab = cherry-pick --abort
   amend = commit --amend
   fpush = push --force
+  enforce = push --force-with-lease
   pushnew = "!git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)"
   merge-feature = merge --no-ff
   mt = mergetool
