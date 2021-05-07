@@ -1,3 +1,4 @@
+Set-PSReadlineOption -EditMode vi
 # Cursor changes size to indicate vi mode!
 function OnViModeChangeSetCursor {
     Param($mode)
