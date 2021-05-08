@@ -45,4 +45,16 @@ if [ -s "${LIQUIDPROMPT_DIR}/liquidprompt" ]; then
   return
 fi
 
+if command -v "starship" > /dev/null && [ -n "$USEPF" ]; then
+  export STARSHIP_CONFIG="${SCRIPT_DIR}/../../prompts/starship.toml"
+  precmd_func(){
+    echo -ne "${WINDOW_TITLE_PATH}"
+    # eval "$PROMPT_COMMAND"
+  }
+  # starship_precmd_user_func="precmd_func"
+  eval "$(starship init bash)"
+  return
+fi
+
+
 . "${SCRIPT_DIR}/custom_prompt.sh"
