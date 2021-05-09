@@ -4,13 +4,13 @@
 # environment variables. Some entries may override variables
 # set by alacritty itself.
 env:
-  TERM_PROGRAM: Alacritty
+  TERM_PROGRAM: alacritty
   # TERM variable
 
-  # This value is used to set the `$TERM` environment variable for
-  # each instance of Alacritty. If it is not present, alacritty will
+  # If this is not present, alacritty will
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
+  # Enforce xterm because remote terminals (eg for ssh) never have alacritty even if the current one does.
   TERM: xterm-256color
 
 window:
