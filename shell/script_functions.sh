@@ -119,6 +119,7 @@ addTextIfAbsent() {
   text="${1:-$default}"
   file="${2:-$default}"
   mkdir -p "$(dirname "$file")"
+  if [ ! -f "$file" ]; then touch "$file"; fi;
   # Check if text exists in file, otherwise append.
   grep -q -F "$text" "$file" > /dev/null 2>&1 || echo "$text" >> "$file"
 }
