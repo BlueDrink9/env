@@ -8,7 +8,7 @@ baseRC="${HOME}/.tmux.conf"
 
 eval "$(cat <<END
 do${installID}() {
-    printErr "Enabling custom tmux setup..."
+    printErr "Enabling custom ${installID} setup..."
     addTextIfAbsent "${installText}" "${baseRC}"
   }
 END
@@ -27,7 +27,7 @@ baseRC="${HOME}/.config/kitty/kitty.conf"
 
 eval "$(cat <<END
 do${installID}() {
-    printErr "Enabling Kitty setup..."
+    printErr "Enabling custom ${installID} setup..."
     addTextIfAbsent "${installText}" "${baseRC}"
     terminal_kitty_install
   }
@@ -51,10 +51,9 @@ END
 )"
 
 installID="iTerm2"
-
 eval "$(cat <<END
 do${installID}() {
-    printErr "Enabling iTerm2 setup..."
+    printErr "Enabling custom ${installID} setup..."
     # Specify the preferences directory
     defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "$($SCRIPTDIR_CMD)/iterm2"
     # Tell iTerm2 to use the custom preferences in the directory
@@ -62,7 +61,6 @@ do${installID}() {
   }
 END
 )"
-
 eval "$(cat <<END
 undo${installID}(){
     true
@@ -70,10 +68,30 @@ undo${installID}(){
 END
 )"
 
+installID="Alacritty"
+installText="import: \n\
+  - $($SCRIPTDIR_CMD)/alacritty/alacritty.yml"
+baseRC="${XDG_CONFIG_HOME:$HOME/.config}/alacritty.yml"
+
+eval "$(cat <<END
+do${installID}() {
+    printErr "Enabling custom ${installID} setup..."
+    addTextIfAbsent "${installText}" "${baseRC}"
+  }
+END
+)"
+
+eval "$(cat <<END
+undo${installID}(){
+    sed -in "s|.*${installText}.*||g" "${baseRC}"
+  }
+END
+)"
+
 installID="Termux"
 eval "$(cat <<END
 do${installID}() {
-    printErr "Enabling Termux setup..."
+    printErr "Enabling custom ${installID} setup..."
     . "$($SCRIPTDIR_CMD)/termux/setup.sh"
   }
 END
@@ -92,5 +110,6 @@ if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
     doTermux
   elif [ "$OSTYPE" != "msys" ]; then
     doKitty
+    doAlacritty
   fi
 fi
