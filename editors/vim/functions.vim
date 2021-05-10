@@ -72,12 +72,12 @@ function! SetGFN(...)
     if a:0 == 1
         " Override current gfn
         set gfn=
-        let l:fontSize = a:1
+        let g:GUIFontSize = a:1
     else
-        let l:fontSize = g:defaultFontSize
+        let g:GUIFontSize = g:defaultFontSize
     endif
     if &guifont == ""
-        let l:formattedFonts = s:formatFontOptions(deepcopy(g:guiFonts), l:fontSize)
+        let l:formattedFonts = s:formatFontOptions(deepcopy(g:guiFonts), g:GUIFontSize)
         " Doesn't work with GTK, doesn't work unless set from GUIEnter
         " autocmd. That makes it pointless, since it's main use is to know
         " what the GUI font will be so smart character choices can be made

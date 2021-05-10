@@ -353,4 +353,19 @@ function! s:remapCtrlBStoCW()
 endfunction
 call s:remapCtrlBStoCW()
 
+function! ChangeGFNSize(change)
+  if !exists("g:GUIFontSize")
+    let g:GUIFontSize = g:defaultFontSize
+  endif
+  let g:GUIFontSize += a:change
+  call SetGFN(g:GUIFontSize)
+endfunction
+if g:hasGUI
+  " These are what get sent in gvim for C-S-+ and C--
+  nnoremap <expr> + ChangeGFNSize(1)
+  " nnoremap <expr>  ChangeGFNSize(-1)
+  " Because above doesn't work
+  nnoremap <expr> - ChangeGFNSize(-1)
+endif
+
 " {]} Misc
