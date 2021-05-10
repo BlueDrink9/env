@@ -131,8 +131,8 @@ function! s:firenvimSetup()
     autocmd myPlugins BufWinEnter * echom join(s:debugMessages, "\n")
     " call add(s:debugMessages, 'setup')
     let g:hasGUI=1
-    " Tested to match github default size on osx chrome.
-    call SetGFN(11)
+    " Tested to match github default size on arch bspwm brave.
+    call SetGFN(9)
     set termguicolors
     call add(g:customHLGroups, 'EndOfBuffer guifg=guibg')
     " colorscheme PaperColor
