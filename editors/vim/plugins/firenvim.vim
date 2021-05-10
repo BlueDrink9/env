@@ -95,6 +95,34 @@ function! s:FirenvimSetPageOptions()
     endif
 endfunction
 
+function! s:FirenvimSetGUIOptions()
+    if &lines < 20
+        let g:loaded_airline = 1
+        silent! AirlineToggle
+        " See neovim #1004
+        " set cmdheight=0
+        set cmdheight=1
+        set laststatus=0
+        set noshowmode
+        set noruler
+        set noshowcmd
+        set shortmess=aWAFtI
+        " Can't afford to hard wrap by mistake.
+        set textwidth=200
+    endif
+    if &columns < 15
+        set nonumber
+        set norelativenumber
+    endif
+    " Get rid of the annoying message at the bottom about the new file being
+    " written, and then start insert mode.
+    " Not working
+    " autocmd myPlugins BufNewFile * silent redraw
+    " autocmd myPlugins BufWrite * call feedkeys(";\<CR>")
+    " autocmd myPlugins BufWritePost * call nvim_input(";<CR>")
+    " This works
+    " call feedkeys("i")
+endfunction
 
 let s:debugMessages = []
 function! s:firenvimSetup()
@@ -120,40 +148,13 @@ function! s:firenvimSetup()
     vnoremap <D-c> "+y
     set colorcolumn=0
 
-    if &lines < 20
-        let g:loaded_airline = 1
-        silent! AirlineToggle
-        " See neovim #1004
-        " set cmdheight=0
-        set cmdheight=1
-        set laststatus=0
-        set noshowmode
-        set noruler
-        set noshowcmd
-        set shortmess=aWAFtI
-        " Can't afford to hard wrap by mistake.
-        set textwidth=200
-    endif
-    if &columns < 15
-        set nonumber
-        set norelativenumber
-    endif
-
-    " Get rid of the annoying message at the bottom about the new file being
-    " written, and then start insert mode.
-    " Not working
-    " autocmd myPlugins BufNewFile * silent redraw
-    " autocmd myPlugins BufWrite * call feedkeys(";\<CR>")
-    " autocmd myPlugins BufWritePost * call nvim_input(";<CR>")
-    " This works
-    " call feedkeys("i")
-
     au! myVimrc FocusLost,InsertLeave,BufLeave * ++nested call Autosave()
 
     autocmd myPlugins BufEnter *.txt call s:FirenvimSetPageOptions()
     " Auto-enter insertmode if the buffer is empty.
     autocmd myPlugins BufWinEnter * if line('$') == 1 && getline(1) == ''
                 \ && bufname() != '' | startinsert | endif
+    autocmd myPlugins UIEnter * call s:FirenvimSetGUIOptions()
 endfunction
 
 function! s:onFirenvimLoad()
