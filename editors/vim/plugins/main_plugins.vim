@@ -483,6 +483,9 @@ if executable("git")
     cabbrev gdf Gdiff
     cabbrev gpsh Git push
     cabbrev gpll Git pull
+    " These are deprecated in fugitive itself.
+    command! -bang -nargs=* Gpush Git push <args>
+    command! -bang -nargs=* Gpull Git pull <args>
     autocmd myPlugins filetype fugitive setlocal nobuflisted
 
     " Async Fugitive (Fugitive uses whatever `Make` is available).
