@@ -23,7 +23,8 @@ super + v
 ctrl + alt + p
   keepassxc
 ctrl + alt + k
-  thunderbird
+  tdrop --auto-detect-wm --wm bspwm \
+    thunderbird
 ctrl + alt + s
   signal-desktop --use-tray-icon
 ctrl + alt + j
