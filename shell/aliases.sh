@@ -186,3 +186,7 @@ if command -v batgrep >/dev/null 2>&1; then
   # rg + bat.
   alias bg="batgrep"
 fi
+
+if command -v thefuck >/dev/null 2>&1; then
+  eval $(thefuck --alias)
+fi
