@@ -172,12 +172,14 @@ endif
 " Easy resize
 nnoremap <S-Right> 5<C-W>>
 nnoremap <S-Up> 3<C-W>+
-nnoremap <C-Down> 3<C-W>-
-nnoremap <C-Left> 5<C-W><
+nnoremap <C-Up> 3<C-W>-
+nnoremap <C-Right> 5<C-W><
 " Since you can't choose which side to expand/contract from, we'll reuse
 " these for now.
-nnoremap <S-Left> 5<C-W><
-nnoremap <S-Down> 3<C-W>-
+nnoremap <S-Left> 5<C-W>>
+nnoremap <S-Down> 3<C-W>+
+nnoremap <C-Down> 3<C-W>-
+nnoremap <C-Left> 5<C-W><
 " Zoom a window into its own tab.
 noremap <silent> <C-w>z :tab split<CR>
 " Kill current buffer. Complete bdel because may use Bdelete, not bdelete.
