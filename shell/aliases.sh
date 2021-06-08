@@ -71,81 +71,44 @@ alias gdiff="git diff --no-index --ignore-space-change --color-words"
 
 alias rg="rg --smart-case"
 
-# Try to set vim to better versions.
-# Will be expanded by functions, but not variables.
-if command -v nvim >/dev/null 2>&1; then
-  alias myVim="nvim"
-elif command -v mvim >/dev/null 2>&1; then
-  # Prefer macvim to gvim.
-  alias myVim="mvim -v"
-elif command -v gvim >/dev/null 2>&1; then
-  alias myVim="gvim -v"
-elif [ -e /usr/bin/gvim ]; then
-  alias myVim="/usr/bin/gvim -v"
-  # xvim (has x11 clipboard support)
-elif [ -e /usr/bin/vimx ]; then
-  alias myVim="/usr/bin/vimx"
-elif command -v vim >/dev/null 2>&1; then
-  alias myVim="vim"
-else
-  # Old reliable caveman
-  alias myVim="vi"
-  # unset -f vim
-fi
-export myVim
 
-# Returns some variant on "myVim='alias'"
-# Bash the word 'alias'. Zsh removes quotes.
-vimAlias="$(alias myVim)"
-# Remove to first =, then remove any quotes.
-vimTmp="${vimAlias#*=}"
-vimTmp="${vimTmp#*\'}"
-MYVIM="${vimTmp%\'*}"
-unset vimAlias vimTmp
-
-editor(){ myVim "$@"; }
+editor="myVim"
 # Much faster startup for vim without plugins, or ide if I need it.
-IDEVim(){ myVim --cmd "let g:ideMode=1" "$@"; }
-liteVim(){ myVim --cmd "let g:liteMode=1" "$@"; }
+IDEVim='myVim --cmd "let g:ideMode=1"'
+liteVim='myVim --cmd "let g:liteMode=1"'
 alias vi="liteVim"
-nopluginVim(){ myVim --noplugin --cmd "let g:noPlugins=1" "$@"; }
-shelleditor(){ myVim --cmd "let g:liteMode=1" +'set ft=sh' "$@"; }
-export editor IDEVim liteVim nopluginVim shelleditor
+nopluginVim='myVim --noplugin --cmd "let g:noPlugins=1"'
+shelleditor='myVim --cmd "let g:liteMode=1" +"set ft=sh"'
 
 # You know it, baby. Shouldn't need to use nano ever.
 # Should also be getting a nice lite nvim where needed.
-export VISUAL=liteVim
-export EDITOR=nopluginVim
-# export EDITOR=liteVim
+export VISUAL="$liteVim"
+export EDITOR="$nopluginVim"
 # Calling edit-and-execute-command in readline to open the editor actually
 # uses `fc` anyway
-export FCEDIT=shelleditor
-# The function trick doesn't work with git, but regular arguments do. Means
-# we don't get the best vim version from the alias though.
+export FCEDIT="$shelleditor"
 # Don't actually need to set ft (git does this for us),
 # but leaving it for specificity.
 # giteditor(){ myVim --cmd "let g:liteMode=1" +'set ft=gitcommit' "$@"; }
-export GIT_EDITOR_CMD="${MYVIM}"' --cmd "let g:liteMode=1" +"set ft=gitcommit"'
-# export GIT_EDITOR_CMD=$(type liteVim | head -n4 | tail -n1)
-export GIT_EDITOR="$GIT_EDITOR_CMD"
+export GIT_EDITOR='myVim --cmd "let g:liteMode=1" +"set ft=gitcommit"'
 # May need to run `sudo update-alternatives --config editor` if this is not
 # working.
 export SUDO_EDITOR=vim
 
 fuzzyEdit(){
-  editor "$(fzf)"
+  $editor "$(fzf)"
 }
 # alias ls="ls -CF --color=auto"
 # ;e and ;q are also defined, but via readline
 alias :q="exit"
 alias :e="myVim"
-alias e="editor"
-alias ide="IDEVim"
-alias le="liteVim"
-alias lle="nopluginVim"
+alias e="$editor"
+alias ide="$IDEVim"
+alias le="$liteVim"
+alias lle="$nopluginVim"
 # For when the system is super super slow.
 alias llle="myVim -u NONE -c 'set nocp | inore vk <esc> | inore kv <esc> | nnoremap ; :'"
-alias view="liteVim -R"
+alias view="$liteVim -R"
 alias e\?=fuzzyEdit
 # alias :Q="exit"
 # alias ZZ="exit"

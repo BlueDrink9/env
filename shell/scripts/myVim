@@ -1,0 +1,21 @@
+#!/bin/sh
+# Try to set vim to better versions.
+# Will be expanded by functions, but not variables.
+if command -v nvim >/dev/null 2>&1; then
+  nvim "$@"
+elif command -v mvim >/dev/null 2>&1; then
+  # Prefer macvim to gvim.
+  mvim -v "$@"
+elif command -v gvim >/dev/null 2>&1; then
+  gvim -v "$@"
+elif [ -e /usr/bin/gvim ]; then
+  /usr/bin/gvim -v "$@"
+elif [ -e /usr/bin/vimx ]; then
+  # xvim (has x11 clipboard support)
+  /usr/bin/vimx "$@"
+elif command -v vim >/dev/null 2>&1; then
+  vim "$@"
+else
+  # Old reliable caveman
+  vi "$@"
+fi
