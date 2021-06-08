@@ -26,6 +26,7 @@ Plug 'https://github.com/glacambre/firenvim', {'tag': '*', 'do': g:firenvim_inst
 let g:firenvim_config = {
     \ 'globalSettings': {
         \ 'alt': 'alphanum',
+        \ 'cmdlineTimeout': 3000,
     \  },
     \ 'localSettings': {
         \ '.*': {
