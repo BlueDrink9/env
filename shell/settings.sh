@@ -75,7 +75,7 @@ export PROMPT_COMMAND="log_command; ${PROMPT_COMMAND}"
 # No init prevents screen being cleared on enter/exit.
 # Window=4 is scrolling buffer.
 # export LESS='--quit-if-one-screen --ignore-case --status-column --HILITE-UNREAD --tabs=4 --window=-4'
-export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --HILITE-UNREAD --tabs=4 --no-init --window=-4 --RAW-CONTROL-CHARS'
+export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --HILITE-UNREAD --tabs=4 --no-init --window=-4 --RAW-CONTROL-CHARS -+S'
 # make less more friendly for non-text input files (eg .gz). See lesspipe(1)
 # Different lesspipe scripts, like GNU source-highlight, give syntax highlighting
 # if type code2color >/dev/null 2>&1; then
