@@ -307,6 +307,7 @@ Plug 'https://github.com/bps/vim-textobj-python'
 Plug 'machakann/vim-sandwich'
 " Gives it tpope-surround mappings.
 autocmd myPlugins User pluginSettingsToExec runtime macros/sandwich/keymap/surround.vim
+vmap s <Plug>(operator-sandwich-add)
 Plug 'https://github.com/easymotion/vim-easymotion'
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 " tab-incrementable search with easymotion dropout feature.
