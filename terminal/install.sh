@@ -34,10 +34,17 @@ do${installID}() {
 END
 )"
 
+download_kitty_theme(){
+  url="$1"
+  downloadFile "$url" "$datadir"/kitty-themes/themes/
+}
+
 terminal_kitty_install(){
     local datadir="${XDG_DATA_HOME:-$HOME/.local/share}"/kitty
     mkdir -p "$datadir"
     git clone --depth 1 https://github.com/dexpota/kitty-themes.git "$datadir"/kitty-themes
+    download_kitty_theme https://raw.githubusercontent.com/sonph/onehalf/master/kitty/onehalf-light.conf
+    download_kitty_theme https://raw.githubusercontent.com/sonph/onehalf/master/kitty/onehalf-dark.conf
     if ! command -v kitty > /dev/null 2>&1; then
       curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
     fi
