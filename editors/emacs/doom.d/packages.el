@@ -12,6 +12,8 @@
 ;; String modification functions
 (package! s)
 
+(package! realgud)
+
 ;; Tab bar customisation
 (package! awesome-tab)
 ;; Tab key behavior
