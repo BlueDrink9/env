@@ -54,9 +54,24 @@ Plug 'https://github.com/vim-scripts/oceandeep'
 Plug 'ashfinal/vim-colors-violet'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'https://github.com/pineapplegiant/spaceduck'
-Plug 'rakr/vim-one'
-Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'https://github.com/sainnhe/forest-night'
+
+Plug 'sonph/onehalf', {'rtp': 'vim/'}
+function! s:onehalfSwapLightDark()
+  if g:colorSch =~? "dark"
+    colorscheme onehalflight
+  else
+    colorscheme onehalfdark
+  endif
+endfunction
+function! s:setOnehalfColourSwapAutocmd()
+  au myColourschemes OptionSet background if g:colorSch =~? "onehalf" | call <sid>onehalfSwapLightDark() | endif
+endfunction
+" When using onehalf, set up an autocmd to change colourscheme when
+" 'background' option is set (e.g. with `yob`)
+au myColourschemes ColorScheme onehalf* call <sid>setOnehalfColourSwapAutocmd() | au! myColourschemes ColorScheme onehalf*
+
+Plug 'rakr/vim-one'
 let g:one_allow_italics = 1
 function! s:customVimOneColours()
   " Don't hide window borders. May want to play with colours (fg, bg).
