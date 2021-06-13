@@ -67,6 +67,11 @@ if !exists ('colorSch')
         let colorSch=substitute(colorSch, '_light', '', '')
         let colorSch=substitute(colorSch, 'light', '', '')
         let colorSch=substitute(colorSch, 'dark', '', '')
+        if $COLOURSCHEME=~?"onehalf"
+          " Onehalf has two colourschemes, onehalflight and onehalfdark,
+          " rather than using background.
+          let colorSch=substitute($COLOURSCHEME, '-', '', '')
+        endif
     else
         let colorSch=s:defaultColorSch
     endif
