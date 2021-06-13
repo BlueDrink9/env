@@ -21,6 +21,18 @@ printErr() {
   >&2 printLine "$@"
 }
 
+downloadFile() {
+  default="no-url-given"
+  url=${1:-default}
+  printErr "Downloading $url ... "
+  if command -v curl > /dev/null 2>&1; then
+    curl -fL -O --remote-header-name "$url" 2> /dev/null
+  else
+    wget -q "$url" 2> /dev/null
+  fi
+  printErr "Done"
+}
+
 getWebItem() {
   default="no-url-given"
   url=${1:-default}
