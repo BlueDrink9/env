@@ -77,7 +77,20 @@ let g:IDE_mappings = {
             \ "snippet_next" : "<c-f>",
             \ "type_definition" : "gy",
             \ "debug_file" : "<leader>dd",
+            \ "debug_show_output" : "<leader>do",
+            \ "debug_reset" : "<leader>dC",
+            \ "debug_hover" : "<leader>d?",
+            \ "debug_continue" : "<leader>dc",
+            \ "debug_restart" : "<leader>dR",
+            \ "debug_step_over" : "<leader>.",
+            \ "debug_step_into" : "<leader>>",
+            \ "debug_step_out" : "<leader><",
+            \ "debug_run_to_here" : "<leader>dh",
+            \ "debug_frame_up" : "<leader>dk",
+            \ "debug_frame_down" : "<leader>dj",
             \ "set_breakpoint" : "<leader>b",
+            \ "set_breakpoint_conditional" : "<leader>dbc",
+            \ "add_breakpoint_functional" : "<leader>dbf",
             \}
 " {]} ------ IDE Mappings ------
 

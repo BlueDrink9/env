@@ -37,11 +37,13 @@ Plug 'https://github.com/jnurmine/Zenburn'
 " au myPlugins colorscheme zenburn hi! link StatusLineNC ColorColumn | hi! link StatusLine ColorColumn
 Plug 'https://github.com/tomasr/molokai'
 Plug 'aonemd/kuroi.vim'
+Plug 'https://github.com/rakr/vim-two-firewatch'
+Plug 'https://github.com/rakr/vim-colors-rakr'
 silent! if &termguicolors || g:hasGUI
-Plug 'https://github.com/ayu-theme/ayu-vim'
-" Apparently we can't have all versions. Daft.
-" Dark version doesn't work easily with airline anyway.
-let ayucolor="light"
+  Plug 'https://github.com/ayu-theme/ayu-vim'
+  " Apparently we can't have all versions. Daft.
+  " Dark version doesn't work easily with airline anyway.
+  let ayucolor="light"
 endif
 Plug 'liuchengxu/space-vim-dark'
 " High contrast themes.
@@ -69,7 +71,7 @@ function! s:setOnehalfColourSwapAutocmd()
 endfunction
 " When using onehalf, set up an autocmd to change colourscheme when
 " 'background' option is set (e.g. with `yob`)
-au myColourschemes ColorScheme onehalf* call <sid>setOnehalfColourSwapAutocmd() | au! myColourschemes ColorScheme onehalf*
+au myPlugins ColorScheme onehalf* call <sid>setOnehalfColourSwapAutocmd() | au! myColourschemes ColorScheme onehalf*
 
 Plug 'rakr/vim-one'
 let g:one_allow_italics = 1

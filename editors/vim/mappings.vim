@@ -235,6 +235,7 @@ nnoremap <C-w>j :call <SID>SplitDown()<CR>
 if has("clipboard") && !IsWSL()
     " In insert or visual mode, use standard cut/copy/paste shortcuts.
     inoremap <C-v> <C-r>+
+    inoremap <C-S-v> <C-r>+
     cnoremap <C-v> <C-r>+
     vnoremap <C-X> "+d
     vnoremap <C-c> "+y
