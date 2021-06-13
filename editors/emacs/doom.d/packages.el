@@ -13,6 +13,7 @@
 (package! s)
 
 (package! realgud)
+(package! dap-mode)
 
 ;; Tab bar customisation
 (package! awesome-tab)

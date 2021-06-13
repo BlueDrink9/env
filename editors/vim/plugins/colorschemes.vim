@@ -55,6 +55,7 @@ Plug 'ashfinal/vim-colors-violet'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'https://github.com/pineapplegiant/spaceduck'
 Plug 'rakr/vim-one'
+Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'https://github.com/sainnhe/forest-night'
 let g:one_allow_italics = 1
 function! s:customVimOneColours()

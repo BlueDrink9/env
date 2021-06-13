@@ -37,6 +37,9 @@ function! s:AirlineColorVarUpdate()
         " Covers solarized variants like solarized8, neosolarized, etc.
         " After base16 so it doesn't catch base16-solarized-*.
         let g:colorSch = "solarized"
+    elseif g:colorSch =~? "onehalf"
+        " Airline theme for onehalflight is still onehalfdark.
+        let g:colorSch = "onehalfdark"
     endif
     " Any schemes not defined for airline
     if exists ('*airline#util#themes()') &&
