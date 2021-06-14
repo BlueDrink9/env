@@ -1,4 +1,4 @@
-" argadd install.sh ~/.vim/vimrc ~/.config/nvim/init.vim vimrc nvimrc settings.vim functions.vim mappings.vim plugins.vim plugins/light_plugins.vim plugins/main_plugins.vim plugins/ide_plugins.vim
+" argadd install.sh ~/.vim/vimrc ~/.config/nvim/init.vim vimrc nvimrc settings.vim functions.vim mappings.vim ide_mappings.vim plugins.vim plugins/light_plugins.vim plugins/main_plugins.vim plugins/ide_plugins.vim
 set nocompatible
 " Use this line to let vim versions < 7.4 pick up .vim/vimrc.
 " runtime vimrc
@@ -89,6 +89,7 @@ let &runtimepath.=',' . s:scriptdir . expand('/runtimepath')
 exec SourceCustoms(
       \ "functions.vim",
       \ "settings.vim",
+      \ "ide_mappings.vim",
       \ "plugins.vim",
       \ "mappings.vim"
       \)
