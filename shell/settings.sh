@@ -39,7 +39,7 @@ export PS3="Select: "
 
 # Check if base16 or kitty scheme has been set, update term and set
 # COLOURSCHEME.
-export PROMPT_COMMAND="theme \$COLOURSCHEME; ${PROMPT_COMMAND}"
+export PROMPT_COMMAND="theme; ${PROMPT_COMMAND}"
 
 export LC_CTYPE="en_US.UTF-8"
 
