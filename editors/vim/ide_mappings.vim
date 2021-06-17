@@ -6,7 +6,8 @@
 let g:IDE_mappings = {
             \ "REPLSend" : "<leader>s",
             \ "REPLSendLine" : "<leader>ss",
-            \ "REPLSendAndInsert" : "<leader>si",
+            \ "REPLSendFile" : "<leader><s-S>",
+            \ "REPLSendAndInsert" : "<leader>s+",
             \ "REPLClear" : "<leader>sc",
             \ "REPLCancel" : "<leader>s<c-c>",
             \ "REPLClose" : "<leader>sx",
