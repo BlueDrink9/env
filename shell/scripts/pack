@@ -3,7 +3,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "$SCRIPT_DIR/../functions.sh"
 
 choosePkgManager(){
-  _options="brew pamac yay pacman pkg apt yum"
+  _options="brew yay pamac pacman pkg apt yum"
   # Not quite posix, but will at least work in both bash and zsh.
   while read option; do
       if command -v "${option}" >/dev/null 2>&1; then
