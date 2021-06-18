@@ -45,6 +45,8 @@ terminal_kitty_install(){
     git clone --depth 1 https://github.com/dexpota/kitty-themes.git "$datadir"/kitty-themes
     download_kitty_theme https://raw.githubusercontent.com/sonph/onehalf/master/kitty/onehalf-light.conf
     download_kitty_theme https://raw.githubusercontent.com/sonph/onehalf/master/kitty/onehalf-dark.conf
+    download_kitty_theme https://raw.githubusercontent.com/srcery-colors/srcery-terminal/master/kitty/srcery_kitty.conf srcery.conf
+    mv "$datadir"/kitty-themes/themes/srcery_kitty.conf "$datadir"/kitty-themes/themes/srcery.conf
     if ! command -v kitty > /dev/null 2>&1; then
       curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
     fi
@@ -78,7 +80,7 @@ END
 installID="Alacritty"
 installText="import: \n\
   - $($SCRIPTDIR_CMD)/alacritty/alacritty.yml"
-baseRC="${XDG_CONFIG_HOME:$HOME/.config}/alacritty.yml"
+baseRC="${XDG_CONFIG_HOME:-$HOME/.config}/alacritty.yml"
 
 eval "$(cat <<END
 do${installID}() {

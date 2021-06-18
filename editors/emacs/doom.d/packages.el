@@ -22,6 +22,26 @@
 
 ;; Autosaving
 (package! super-save)
+(package! auctex)
+
+;; Coloured man pages
+(package! info-colors)
+
+;; Spritz-like speed reading.
+(package! spray)
+
+;; Load huge files in chunks. Lazy-load so disable initially.
+(package! vlf :recipe (:host github :repo "m00natic/vlfi" :files ("*.el")) :disable t)
+
+
+;; (package! org-pretty-table
+;;   :recipe (:host github :repo "Fuco1/org-pretty-table"))
+;; (package! graphviz-dot-mode)
+
+;; Hook into calibre and read ebooks
+;; (package! calibredb)
+;; (package! nov)
+;; https://tecosaur.github.io/emacs-config/config.html#ebooks
 
 ;; (package! smartparens :disable t)
 

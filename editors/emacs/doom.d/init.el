@@ -23,7 +23,11 @@
        company           ; the ultimate code completion backend
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
-       ivy               ; a search engine for love and life
+       (ivy               ; a search engine for love and life
+        +icons
+        +prescient
+        +childframe
+        +fuzzy)
 
        :ui
        ;;deft              ; notational velocity for Emacs
@@ -33,13 +37,13 @@
        ;;(emoji +unicode)  ; 🙂
        ;;fill-column       ; a `fill-column' indicator
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
-       ;;hydra
+       hydra             ; Prefixed/modal key bindings
        indent-guides     ; highlighted indent columns
        ;;ligatures         ; ligatures and symbols to make your code pretty again
        ;;minimap           ; show a map of the code on the side
        modeline          ; snazzy, Atom-inspired modeline, plus API
        nav-flash         ; blink cursor line after big motions
-       ;;neotree           ; a project drawer, like NERDTree for vim
+       neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
        tabs              ; a tab bar for Emacs
@@ -81,15 +85,17 @@
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
-       (spell +aspell)             ; tasing you for misspelling mispelling
+       (spell              ; tasing you for misspelling mispelling
+        +aspell
+        +everywhere)       ; spellcheck comments in programming modes.
        grammar           ; tasing grammar mistake every you make
 
        :tools
        ;;ansible
-       ;;debugger          ; FIXME stepping through code, to help you add bugs
+       debugger          ; FIXME stepping through code, to help you add bugs
        ;;direnv
        ;;docker
-       ;;editorconfig      ; let someone else argue about tabs vs spaces
+       editorconfig      ; Per-project .editorconfig integration.
        ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
        ;;gist              ; interacting with github gists
@@ -98,10 +104,10 @@
        magit             ; a git porcelain for Emacs
        make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
-       ;;pdf               ; pdf enhancements
+       pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
-       ;;rgb               ; creating color strings
-       ;;taskrunner        ; taskrunner for all your projects
+       rgb               ; creating color strings
+       taskrunner        ; taskrunner for all your projects
        ;;terraform         ; infrastructure as code
        tmux              ; an API for interacting with tmux
        ;;upload            ; map local to remote projects via ssh/ftp
@@ -138,7 +144,10 @@
        javascript        ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
-       latex             ; writing papers in Emacs has never been so fun
+       (latex             ; writing papers in Emacs has never been so fun
+        +latexmk
+        +lsp
+        +fold)
        ;;lean
        ;;factor
        ;;ledger            ; an accounting system in Emacs
@@ -147,7 +156,17 @@
        ;;nim               ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
-       org               ; organize your plain life in plain text
+       (org                         ; organize your plain life in plain text
+        +pretty                     ; yessss my pretties! (nice unicode symbols)
+        +dragndrop                  ; drag & drop files/images into org buffers
+        ;;+hugo                     ; use Emacs for hugo blogging
+        +noter                      ; enhanced PDF notetaking
+        +jupyter                    ; ipython/jupyter support for babel
+        +pandoc                     ; export-with-pandoc support
+        +gnuplot                    ; who doesn't like pretty pictures
+        ;;+pomodoro                 ; be fruitful with the tomato technique
+        +present                    ; using org-mode for presentations
+        +roam)                      ; wander around notes
        php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional

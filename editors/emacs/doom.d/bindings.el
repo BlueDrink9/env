@@ -36,10 +36,19 @@
 (map! :desc "split window right" :nv  "C-w l" #'evil-window-vsplit)
 (map! :desc "split window down" :nv  "C-w j" #'evil-window-split)
 
+(map! :map evil-window-map
+      "t"       #'+workspace/new
+      ;; Swapping windows
+      "S-<left>"       #'+evil/window-move-left
+      "S-<down>"       #'+evil/window-move-down
+      "S-<up>"         #'+evil/window-move-up
+      "S-<right>"      #'+evil/window-move-right)
+
 (map! :desc "buf-next" :nv  "<right>" #'next-buffer)
 (map! :desc "buf-next" :nv  "<left>" #'previous-buffer)
-(map! :desc "buf-next" :nv  "<up>" #'workspace/switch-right)
-(map! :desc "buf-next" :nv  "<down>" #'workspace/switch-left)
+;; Unsure if I want tabs or workspaces.
+;; (map! :desc "buf-next" :nv  "<up>" #'tabnext)
+;; (map! :desc "buf-next" :nv  "<down>" #'evil-ex "tabprev")
 
 
 (map! :leader :desc "Comment" :nv "c" #'evilnc-comment-operator)
@@ -65,6 +74,7 @@
 ;; (map! :desc "system register" :nv "\"\"" #'(setq evil-this-register ?+))
 ;; (map! :desc "system register" :nv "\"\"\"" #'myevil-use-system-register)
 (map! :desc "Paste from clipboard" :i "C-S-v" #'myevil-paste-from-system)
+(map! :desc "Paste from clipboard" :i "C-v" #'myevil-paste-from-system)
 
 ;; ;; (map! :desc "Use system register next" :nv "b" #'myevil-use-system-register)
 ;; (map! :desc "Use system register next" :nv "b" (lambda ()
@@ -165,3 +175,19 @@
 
 ;; bind page up and down to the evil-motion-state-map in order to get them only
 ;; functioning in read-only modes.
+
+;; Latex mode mappings
+(map!
+ :map LaTeX-mode-map
+ :localleader
+ :desc "View" "v" #'TeX-view)
+
+;; –output-directory=latexbuild
+
+(map! :leader :desc "Inline code evaluate" :nv "r" #'eval:region)
+;; (map! :leader :desc "Inline code evaluate" :nv "rr" #'eval:region)
+;; (map! :leader :desc "Send to REPL" :v "r" #'eval/send-region-to-repl)
+
+(evil-ex-define-cmd "os" 'doom/load-session) ; Same as sl
+(evil-ex-define-cmd "ss" 'doom/save-session)
+(evil-ex-define-cmd "cs" 'doom/close-session)

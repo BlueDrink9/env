@@ -3,6 +3,7 @@
 (setq script_dir (file-name-directory (or load-file-name buffer-file-name)))
 (load-file (concat script_dir "bindings.el"))
 (load-file (concat script_dir "aliases.el"))
+(load-file (concat script_dir "appearance.el"))
 (load-file (concat script_dir "file-mode-settings.el"))
 (use-package! s)
 (load-file (concat script_dir "spellcheck.el"))
@@ -13,60 +14,21 @@
 ; (setq user-full-name "John Doe"
 ;       user-mail-address "john@doe.com")
 
-;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
-;; are the three important ones:
-;;
-;; + `doom-font'
-;; + `doom-variable-pitch-font'
-;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;;
-;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
-;; font string. You generally only need these two:
-;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
-;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
-
-(setq doom-font (font-spec :family "SauceCodePro NF" :size 16))
-(setq doom-variable-pitch-font (font-spec :family "Source Sans Pro" :size 16))
-
-;; ;; There are two ways to load a theme. Both assume the theme is installed and
-;; ;; available. You can either set `doom-theme' or manually load a theme with the
-;; ;; `load-theme' function. This is the default:
-;; Trying to set based on colourscheme. Broken, for strange variable typing reasons I think.
-;; (
-;;  let ((colourscheme (getenv "COLOURSCHEME")))
-;;  (if (or (not colourscheme) (equal "" colourscheme))
-;;      (setq doom-theme 'doom-one)
-;;    (setq colourscheme (s-replace "light" "-light" colourscheme))
-;;    (setq colourscheme (s-replace "dark" "-dark" colourscheme))
-;;    (setq colourscheme (s-replace "_" "-" colourscheme))
-;;    ;; One theme specifies doom-one-light, but dark theme does not.
-;;    (if (string-match-p (regexp-quote "one") colourscheme)
-;;        (setq colourscheme (s-replace "-dark" "" colourscheme)))
-;;    (setq colourscheme (concat "doom-" colourscheme))
-;;    (message "''%s''" colourscheme)
-;;    (setq doom-theme colourscheme)
-;;    )
-;;  )
-(setq doom-theme 'doom-one)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/work/org/")
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'relative)
-(setq-default word-wrap t)
-(add-hook 'linum-mode (lambda () (face-remap-add-relative 'default '(:family "Monospace"))))
-;; https://stackoverflow.com/questions/9304192/emacs-linum-mode-and-size-of-font-unreadable-line-numbers
-(eval-after-load "linum"
-  '(set-face-attribute 'linum nil 'default '(:family "Monospace")))
+(setq-default major-mode 'org-mode)
 
 ;; Use " register by default, instead of system. System register is still
 ;; accessible via evil + and * registers.
 ;; Equivalent of vim `set clipboard=unnamed`.
 (setq select-enable-clipboard nil)
+
+(setq-default
+ delete-by-moving-to-trash t                      ; Delete files to trash
+ window-combination-resize t                      ; take new window space from all other windows (not just current)
+ x-stretch-cursor t)                              ; Stretch cursor to the glyph width
 
 (scroll-bar-mode t)
 (set-scroll-bar-mode 'right)
@@ -76,6 +38,8 @@
 ;; Doom disables auto-save/backup by default.
 (setq auto-save-default t
       make-backup-files t)
+(setq scroll-margin 2)
+
 
 ;; Evil-style bindings in minibuffer (esc, c-n etc)
 (setq evil-collection-setup-minibuffer t)
@@ -126,6 +90,7 @@
 
 ;; Persist registers
 (setq savehist-additional-variables '(register-alist))
+(setq undo-limit 80000000)  ; 80 Mb
 
 ;; (after! org
 ;;   (setq org-fontify-quote-and-verse-blocks nil
@@ -149,3 +114,58 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+;; Lazy-load
+(use-package! vlf-setup
+  :defer-incrementally vlf-tune vlf-base vlf-write vlf-search vlf-occur vlf-follow vlf-ediff vlf)
+
+;; (use-package! org-pretty-table
+;;   :commands (org-pretty-table-mode global-org-pretty-table-mode))
+
+;; Avy for colemak
+(after! avy
+  ;; home row priorities: 8 6 4 5 - - 1 2 3 7
+  (setq avy-keys '(?n ?e ?i ?s ?t ?r ?i ?a)))
+
+;; More frequent completions
+(after! company
+  (setq company-idle-delay 0.5
+        company-minimum-prefix-length 2)
+  (setq company-show-numbers t)
+  (add-hook 'evil-normal-state-entry-hook #'company-abort)) ;; make aborting less annoying.
+(setq-default history-length 1000)
+(setq-default prescient-history-length 1000)
+
+
+(setq which-key-idle-delay 0.5) ;; Which-key kicks in faster
+
+
+(use-package! spray
+  :commands spray-mode
+  :config
+  (setq spray-wpm 500
+        spray-height 800)
+  (defun spray-mode-hide-cursor ()
+    "Hide or unhide the cursor as is appropriate."
+    (if spray-mode
+        (setq-local spray--last-evil-cursor-state evil-normal-state-cursor
+                    evil-normal-state-cursor '(nil))
+      (setq-local evil-normal-state-cursor spray--last-evil-cursor-state)))
+  (add-hook 'spray-mode-hook #'spray-mode-hide-cursor)
+  (map! :map spray-mode-map
+        "<return>" #'spray-start/stop
+        "j" #'spray-faster
+        "k" #'spray-slower
+        "t" #'spray-time
+        "w" #'spray-forward-word
+        "h" #'spray-forward-word
+        "b" #'spray-backward-word
+        "l" #'spray-backward-word
+        "q" #'spray-quit))
+
+;; make AUCTeX aware of style files and multi-file documents right away
+(setq TeX-auto-save t) ; Parse on save
+(setq TeX-parse-self t) ; Parse on load
+(setq-default TeX-master nil)
+(setf (nth 1 (assoc "LaTeX" TeX-command-list))
+      "%`%l –output-directory=latexbuild -interaction=nonstopmode %(mode)%' %t")
