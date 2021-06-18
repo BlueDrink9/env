@@ -37,6 +37,9 @@ Plug 'https://github.com/jnurmine/Zenburn'
 " au myPlugins colorscheme zenburn hi! link StatusLineNC ColorColumn | hi! link StatusLine ColorColumn
 Plug 'https://github.com/tomasr/molokai'
 Plug 'aonemd/kuroi.vim'
+" Gorgeously coloured dark scheme.
+Plug 'https://github.com/srcery-colors/srcery-vim'
+let g:srcery_italic=1 " Default only 1 in gui
 Plug 'https://github.com/rakr/vim-two-firewatch'
 Plug 'https://github.com/rakr/vim-colors-rakr'
 silent! if &termguicolors || g:hasGUI
