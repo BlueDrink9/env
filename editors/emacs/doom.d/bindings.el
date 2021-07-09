@@ -157,10 +157,13 @@
 ;; (map! :leader :desc "easymotion down" "j" #'evil-motion-next-line)
 ;; (map! :leader :desc "easymotion up" "k" #'evil-motion-previous-line)
 
+;; Git/magit shortcuts
 (map! :leader
       (:prefix ("g")
         :desc "pusH to origin" "h" #'magit-push-current-to-pushremote
         :desc "pull from origin" "p" #'magit-pull-from-pushremote))
+(evil-ex-define-cmd "gc" 'magic-commit-create)
+(evil-ex-define-cmd "gw" 'magit-stage-file)
 
 ;; (map! :leader
 ;;       (:prefix-map ("a" . "applications")

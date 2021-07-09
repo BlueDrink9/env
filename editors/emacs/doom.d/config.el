@@ -169,3 +169,7 @@
 (setq-default TeX-master nil)
 ;; (setf (nth 1 (assoc "LaTeX" TeX-command-list))
 ;;       "%`%l –output-directory=latexbuild -interaction=nonstopmode %(mode)%' %t")
+
+(after! magic
+  (setq magit-commit-ask-to-stage nil)
+  )
