@@ -6,10 +6,12 @@
 (setq key-chord-two-keys-delay 0.5)
 (key-chord-mode 1)
 ;; (key-chord-define evil-insert-state-map "kv" 'evil-normal-state)
-(general-define-key :keymaps 'evil-insert-state-map
-                    (general-chord "kv") 'evil-normal-state
-                    (general-chord "vk") 'evil-normal-state
-                    )
+;; (general-define-key :keymaps 'evil-insert-state-map
+;;                     (general-chord "kv") 'evil-normal-state
+;;                     (general-chord "vk") 'evil-normal-state
+;;                     )
+(map! :desc "Enter normal mode" :i (general-chord "kv") 'evil-normal-state)
+(map! :desc "Enter normal mode" :i (general-chord "vk") 'evil-normal-state)
 ;; (key-chord-define evil-insert-state-map "vk" 'evil-normal-state)
 ; (key-chord-define evil-ex-state-map "kv" 'evil-command-window-ex)
 ; (key-chord-define evil-ex-state-map "vk" 'evil-command-window-ex)
@@ -154,6 +156,11 @@
 
 ;; (map! :leader :desc "easymotion down" "j" #'evil-motion-next-line)
 ;; (map! :leader :desc "easymotion up" "k" #'evil-motion-previous-line)
+
+(map! :leader
+      (:prefix ("g")
+        :desc "pusH to origin" "h" #'magit-push-current-to-pushremote
+        :desc "pull from origin" "p" #'magit-pull-from-pushremote))
 
 ;; (map! :leader
 ;;       (:prefix-map ("a" . "applications")
