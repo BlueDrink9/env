@@ -167,5 +167,5 @@
 (setq TeX-auto-save t) ; Parse on save
 (setq TeX-parse-self t) ; Parse on load
 (setq-default TeX-master nil)
-(setf (nth 1 (assoc "LaTeX" TeX-command-list))
-      "%`%l –output-directory=latexbuild -interaction=nonstopmode %(mode)%' %t")
+;; (setf (nth 1 (assoc "LaTeX" TeX-command-list))
+;;       "%`%l –output-directory=latexbuild -interaction=nonstopmode %(mode)%' %t")

@@ -5,7 +5,11 @@
 ;; Requires KeyChord library
 (setq key-chord-two-keys-delay 0.5)
 (key-chord-mode 1)
-(key-chord-define evil-insert-state-map "kv" 'evil-normal-state)
+;; (key-chord-define evil-insert-state-map "kv" 'evil-normal-state)
+(general-define-key :keymaps 'evil-insert-state-map
+                    (general-chord "kv") 'evil-normal-state
+                    (general-chord "vk") 'evil-normal-state
+                    )
 ;; (key-chord-define evil-insert-state-map "vk" 'evil-normal-state)
 ; (key-chord-define evil-ex-state-map "kv" 'evil-command-window-ex)
 ; (key-chord-define evil-ex-state-map "vk" 'evil-command-window-ex)
@@ -70,20 +74,13 @@
   (interactive)
   ;; (evil-use-register ?+))
   (setq evil-this-register ?+))
+;; (map! :desc "system register" :nv (general-chord "\"\"") #'myevil-use-system-register-next)
 
-;; (map! :desc "system register" :nv "\"\"" #'(setq evil-this-register ?+))
-;; (map! :desc "system register" :nv "\"\"\"" #'myevil-use-system-register)
+;; TODO: Make this not override the unnamed register
+(map! :desc "Use system register next" :nv (general-chord "\"\"") "\"+")
 (map! :desc "Paste from clipboard" :i "C-S-v" #'myevil-paste-from-system)
 (map! :desc "Paste from clipboard" :i "C-v" #'myevil-paste-from-system)
 
-;; ;; (map! :desc "Use system register next" :nv "b" #'myevil-use-system-register)
-;; (map! :desc "Use system register next" :nv "b" (lambda ()
-;;                                               (interactive)
-;;                                               (evil-use-register ?+)
-;;                                               'evil-paste-after
-;;                                               ))
-
-;; (map! :desc "system register" :nv  '""' '"+')
 ;; maps for everywhere (all modes)
 ;; (with-eval-after-load 'evil-maps
   ;; (define-key evil-motion-state-map (kbd "C-?") 'describe-key-briefly)
@@ -96,7 +93,10 @@
 (map! :desc "\"_X" :nv  "X" #'delete-backward-char)
 (map! :desc "black hole register delete" :v  "<delete>" #'evil-delete-char)
 
-(map! :desc "Toggle fold" :n  "<backspace>" #'+fold/toggle)
+;; (map! :desc "Toggle fold" :n  "<backspace>" #'+fold/toggle)
+;; Use the keys (za) rather than the function so that it works with more
+;; evilified minor modes (eg magit).
+(map! :desc "Toggle fold" :n  "<backspace>" "za")
 (map! :desc "Create fold from selection" :v  "<backspace>" #'evil-vimish-fold/create)
 
 (map! :desc "Go to mark" :n  "'" #'evil-goto-mark)
@@ -182,7 +182,6 @@
  :localleader
  :desc "View" "v" #'TeX-view)
 
-;; –output-directory=latexbuild
 
 (map! :leader :desc "Inline code evaluate" :nv "r" #'eval:region)
 ;; (map! :leader :desc "Inline code evaluate" :nv "rr" #'eval:region)
