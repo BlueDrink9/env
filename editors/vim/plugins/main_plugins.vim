@@ -215,12 +215,14 @@ Plug 'https://github.com/sunaku/vim-shortcut'
 " {]} ---------- Misc----------
 
 " {[} ---------- Visual changes ----------
-Plug 'machakann/vim-highlightedyank'
-if !exists('##TextYankPost')
-    map y <Plug>(highlightedyank)
+if !has('nvim-0.5')
+    Plug 'machakann/vim-highlightedyank'
+    if !exists('##TextYankPost')
+        map y <Plug>(highlightedyank)
+    endif
+    " -1 gives persistent highlight until edit or new yank.
+    let g:highlightedyank_highlight_duration = 3000
 endif
-" -1 gives persistent highlight until edit or new yank.
-let g:highlightedyank_highlight_duration = 5000
 " Resizes splits proportionally when changing overall size
 Plug 'https://github.com/vim-scripts/ProportionalResize'
 " {]} ---------- Visual changes ----------

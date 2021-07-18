@@ -635,3 +635,6 @@ au myVimrc InsertLeave * set nopaste
 if $TERM =~ 'kitty'
     let &t_ut=''
 endif
+if has('nvim-0.5')
+  au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=3000, on_visual=true}
+endif
