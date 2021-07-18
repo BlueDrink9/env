@@ -19,9 +19,12 @@ let g:IDE_mappings = {
             \ "codeAction" : "<leader>ia",
             \ "codeActionSelected" : "<leader>iaa",
             \ "codelensAction" : "<leader>ial",
-            \ "complete" : "<plug>Non-existant",
+            \ "complete" : "<c-space>",
+            \ "signature" : "<leader>is",
             \ "definition" : "<leader>id",
             \ "definition2" : "gd",
+            \ "type_definition" : "gD",
+            \ "type_definition2" : "<leader>iD",
             \ "documentation" : "K",
             \ "documentation2" : "gh",
             \ "documentation3" : "<leader>ih",
@@ -29,16 +32,18 @@ let g:IDE_mappings = {
             \ "implementation" : "<leader>ii",
             \ "implementation2" : "gi",
             \ "listErrs" : "<leader>el",
+            \ "diagnostic" : "<leader>i?",
+            \ "diagnostic_next" : "]d",
+            \ "diagnostic_prev" : "[d",
             \ "refactor" : "<leader>ir",
             \ "references" : "<leader>if",
             \ "references2" : "gr",
-            \ "reformat" : "<plug>Non-existant",
+            \ "reformat" : "<leader>irf",
             \ "rename" : "<leader>irr",
             \ "renameModule" : "<leader>irm",
             \ "snippet_expand" : "<c-e>",
             \ "snippet_prev" : "<c-b>",
             \ "snippet_next" : "<c-f>",
-            \ "type_definition" : "gy",
             \ "debug_file" : "<leader>dd",
             \ "debug_show_output" : "<leader>do",
             \ "debug_reset" : "<leader>dC",
@@ -57,3 +62,5 @@ let g:IDE_mappings = {
             \}
 " {]} ------ IDE Mappings ------
 
+" To consider:
+" workspace open file?

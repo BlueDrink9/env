@@ -106,12 +106,15 @@ endfunction
 
 " To remove a Plugged repo using UnPlug 'user/repo'
 function! s:deregister(repo)
-    let repo = substitute(a:repo, '[\/]\+$', '', '')
-    let name = fnamemodify(repo, ':t:s?\.git$??')
+  let repo = substitute(a:repo, '[\/]\+$', '', '')
+  let name = fnamemodify(repo, ':t:s?\.git$??')
+  try
     call remove(g:plugs, name)
     call remove(g:plugs_order, index(g:plugs_order, name))
-endfunction
-command! -nargs=1 -bar UnPlug call s:deregister(<args>)
+  catch E716
+  endtry
+  endfunction
+  command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 
 function! IsPluginUsed(name)
     if has_key(g:plugs, a:name)
