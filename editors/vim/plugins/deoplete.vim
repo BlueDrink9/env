@@ -39,6 +39,7 @@ function! s:setupDeopleteSources()
 endfunction
 
 
+Plug 'https://github.com/deoplete-plugins/deoplete-lsp'
 " Plug 'https://github.com/lionawurscht/deoplete-biblatex'
 Plug 'deoplete-plugins/deoplete-tag'
 function! s:setupDeopleteOptions()

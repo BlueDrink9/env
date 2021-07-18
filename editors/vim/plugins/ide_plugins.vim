@@ -450,8 +450,13 @@ autocmd myPlugins Filetype *
 
 if has("timers")
 
-    " This will be unloaded for CoC.nvim
-    call SourcePluginFile("languageclient-neovim.vim")
+    if has('nvim-0.5')
+        " This will be unloaded for CoC.nvim
+        call SourcePluginFile("nvim-lspconfig.lua")
+    else
+        " This will be unloaded for CoC.nvim
+        call SourcePluginFile("languageclient-neovim.vim")
+    endif
     if has('node')
         " Intellisense engine for vim8 & neovim, full language server protocol support as VSCode.
         " Uses VSCode-specific extensions, too. Seems to Just Work?
