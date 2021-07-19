@@ -319,7 +319,13 @@ autocmd myPlugins User pluginSettingsToExec runtime macros/sandwich/keymap/surro
 vmap s <Plug>(operator-sandwich-add)
 if has('nvim-0.5')
     Plug 'https://github.com/phaazon/hop.nvim'
-    autocmd myPlugins User pluginSettingsToExec lua require'hop'.setup()
+    autocmd myPlugins User pluginSettingsToExec lua require'hop'.setup({ keys = 'arstdhneofplucmkv'})
+lua << EOF
+    vim.api.nvim_set_keymap('n', 'Sl', "<cmd>lua require'hop'.hint_words({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR })<cr>", {})
+    vim.api.nvim_set_keymap('n', 'Sh', "<cmd>lua require'hop'.hint_words({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR })<cr>", {})
+    vim.api.nvim_set_keymap('n', 'Sj', "<cmd>lua require'hop'.hint_lines({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR })<cr>", {})
+    vim.api.nvim_set_keymap('n', 'Sk', "<cmd>lua require'hop'.hint_lines({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR })<cr>", {})
+EOF
 else
     Plug 'https://github.com/easymotion/vim-easymotion'
     let g:EasyMotion_do_mapping = 0 " Disable default mappings
@@ -327,10 +333,10 @@ else
     " map  <leader>/ <Plug>(easymotion-sn)
     " omap <leader>/ <Plug>(easymotion-tn)
     let g:EasyMotion_smartcase = 1
-    map <Leader>l <Plug>(easymotion-lineforward)
-    map <Leader>j <Plug>(easymotion-j)
-    map <Leader>k <Plug>(easymotion-k)
-    map <Leader>h <Plug>(easymotion-linebackward)
+    map Sl <Plug>(easymotion-lineforward)
+    map Sj <Plug>(easymotion-j)
+    map Sk <Plug>(easymotion-k)
+    map Sh <Plug>(easymotion-linebackward)
     let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
     " Cross window boundaries
     nmap <Leader><S-K> <Plug>(easymotion-overwin-line)
