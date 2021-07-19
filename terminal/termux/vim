@@ -2,4 +2,4 @@
 # Gives important variables, etc.
 . $HOME/.bashrc
 cd ~/cloudfiles
-vim "$@"; exit
+myVim "$@"; exit
