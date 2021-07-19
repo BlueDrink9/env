@@ -1,4 +1,6 @@
 vim.cmd("Plug 'https://github.com/neovim/nvim-lspconfig'")
+-- Easy way to install lsps, that integrates well.
+vim.cmd("Plug 'https://github.com/kabouzeid/nvim-lspinstall'")
 
 vim.cmd("autocmd myPlugins User pluginSettingsToExec lua nvim_lspconfig_setup()")
 
@@ -8,6 +10,11 @@ function nvim_lspconfig_setup()
   end
   nvim_lsp = require('lspconfig')
   nvim_lspconfig_server_setup(nvim_lsp)
+  -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
+  require'lspinstall'.post_install_hook = function ()
+    nvim_lspconfig_server_setup() -- reload installed servers
+    vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
+  end
 end
 
 -- Use an on_attach function to only map the following keys
@@ -52,7 +59,9 @@ end
 nvim_lspconfig_server_setup = function(nvim_lsp)
   -- Use a loop to conveniently call 'setup' on multiple servers and
   -- map buffer local keybindings when the language server attaches
-  local servers = { "pyright", "rust_analyzer", "r_language_server", "diagnosticls", "dotls", "jedi_language_server", "texlab", "vimls" }
+  -- local servers = { "pyright", "rust_analyzer", "r_language_server", "diagnosticls", "dotls", "jedi_language_server", "texlab", "vimls" }
+  local servers = require'lspinstall'.installed_servers()
+  require'lspinstall'.setup()
   for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
       on_attach = on_attach,
