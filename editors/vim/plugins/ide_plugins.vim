@@ -15,8 +15,14 @@ if has('nvim-0.5')
     " FZF alternative
     " Plug 'https://github.com/nvim-telescope/telescope.nvim'
 
+endif
+if has('nvim-0.5')
     " Show registers in floating window when you go to use them.
     Plug 'tversteeg/registers.nvim', { 'branch': 'main' }
+else
+    " Show registers in side window when you go to use them.
+    Plug 'junegunn/vim-peekaboo'
+    let g:peekaboo_delay = 200  " ms
 endif
 " Display the indentation context in a window above the code you are
 " looking at (helps understand where you are in a long func/class).
