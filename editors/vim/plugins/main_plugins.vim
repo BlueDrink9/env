@@ -497,9 +497,9 @@ if executable("git")
     cabbrev gupw Gwrite <bar> Gcommit --amend --no-edit
     cabbrev gup Git commit --amend --no-edit
     cabbrev gupe Git commit --amend
-    cabbrev gdf Gdiff
-    cabbrev gpsh Git push
-    cabbrev gpll Git pull
+    cabbrev gd Gdiff
+    cabbrev gps Git push
+    cabbrev gpl Git pull
     " These are deprecated in fugitive itself.
     command! -bang -nargs=* Gpush Git push <args>
     command! -bang -nargs=* Gpull Git pull <args>
