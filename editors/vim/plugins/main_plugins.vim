@@ -524,7 +524,11 @@ if executable("git")
     if has('nvim-0.5')
         " Can stage and all sorts.
         Plug 'https://github.com/lewis6991/gitsigns.nvim'
-        autocmd myPlugins User pluginSettingsToExec lua require('gitsigns').setup()
+        autocmd myPlugins User pluginSettingsToExec lua require('gitsigns').setup({
+                    \ signs = {
+                        \ add = {hl = 'GitSignsAdd', text = '+', numhl='GitSignsAddNr', linehl='GitSignsAddLn'},
+                        \ }
+                        \ })
     else
         " VCS changes shown in sign column.
         Plug 'https://github.com/mhinz/vim-signify'
