@@ -175,7 +175,7 @@ function! BlackenBackgroundColours()
 endfunction
 
 " Usually using termux on amoled screens, so want pure black bg.
-if $ISTERMUX || 1
+if $ISTERMUX
   let colorSch = "srcery"
   call BlackenBackgroundColours()
 endif
