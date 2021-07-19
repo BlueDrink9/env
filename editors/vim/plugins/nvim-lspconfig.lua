@@ -1,6 +1,14 @@
 vim.cmd("Plug 'https://github.com/neovim/nvim-lspconfig'")
 
-local nvim_lsp = require('lspconfig')
+vim.cmd("autocmd myPlugins User pluginSettingsToExec lua nvim_lspconfig_setup()")
+
+function nvim_lspconfig_setup()
+  if vim.g.plugs["nvim_lsp"] == nil then
+    return
+  end
+  nvim_lsp = require('lspconfig')
+  nvim_lspconfig_server_setup(nvim_lsp)
+end
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -41,14 +49,16 @@ local on_attach = function(client, bufnr)
 
 end
 
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-local servers = { "pyright", "rust_analyzer", "r_language_server", "diagnosticls", "dotls", "jedi_language_server", "texlab", "vimls" }
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
-    on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150,
+nvim_lspconfig_server_setup = function(nvim_lsp)
+  -- Use a loop to conveniently call 'setup' on multiple servers and
+  -- map buffer local keybindings when the language server attaches
+  local servers = { "pyright", "rust_analyzer", "r_language_server", "diagnosticls", "dotls", "jedi_language_server", "texlab", "vimls" }
+  for _, lsp in ipairs(servers) do
+    nvim_lsp[lsp].setup {
+      on_attach = on_attach,
+      flags = {
+        debounce_text_changes = 150,
+      }
     }
-  }
+  end
 end
