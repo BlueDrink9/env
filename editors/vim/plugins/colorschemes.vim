@@ -152,6 +152,34 @@ endif
 
 " {]}
 
+function! BlackenBackgroundColours()
+  let l:override_groups = ["Normal",
+        \ "airline_c","airline_c_bold", "airline_c1_inactive",
+        \ "airline_x","airline_x_bold", "airline_x1_inactive",
+        \ "airline_tab",
+        \ "airline_tabmod", "airline_tabmod_unsel",
+        \ "airline_tabfill", "airline_tabsel", "airline_tablabel",
+        \ "airline_tabhid",
+        \ "airline_tabfill_to_airline_tabfill",
+        \ "airline_tabsel_to_airline_tabfill",
+        \ "airline_tab_right",
+        \ "airline_tabsel_right",
+        \ "airline_tab_left",
+        \ "airline_tabsel_left",
+        \ "airline_tabtype",
+        \]
+  for g in l:override_groups
+    call add (g:customHLGroups, g . " ctermbg=black guibg=black")
+  endfor
+  call add (g:customHLGroups, "airline_tabsel cterm=bold gui=bold")
+endfunction
+
+" Usually using termux on amoled screens, so want pure black bg.
+if $ISTERMUX || 1
+  let colorSch = "srcery"
+  call BlackenBackgroundColours()
+endif
+
 " exec so variables are set at the right time (after plugin load).
 autocmd myPlugins User pluginSettingsToExec ++nested exec 'colorscheme ' . colorSch
 call add (g:customHLGroups, "MatchParen cterm=bold,underline ctermbg=lightgray")
