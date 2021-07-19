@@ -9,6 +9,12 @@ augroup myIDE
 augroup end
 
 " {[} ---------- Misc ----------
+if has('nvim-0.5')
+    Plug 'https://github.com/nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    Plug 'nvim-treesitter/playground'
+    " FZF alternative
+    " Plug 'https://github.com/nvim-telescope/telescope.nvim'
+endif
 " Display the indentation context in a window above the code you are
 " looking at (helps understand where you are in a long func/class).
 Plug 'wellle/context.vim'
@@ -409,6 +415,10 @@ endif
 " {]} ---------- IDE----------
 
 " {[} ---------- Debugging ----------
+" if has('nvim-0.5')
+" Plug 'https://github.com/Pocco81/DAPInstall.nvim'
+" Plug 'https://github.com/mfussenegger/nvim-dap'
+    " endif
 " :UnstackFromClipboard to take a stack trace from the clipboard and open the
 " relevant function calls in their own splits
 Plug 'https://github.com/mattboehm/vim-unstack'
@@ -453,6 +463,7 @@ if has("timers")
     if has('nvim-0.5')
         " This will be unloaded for CoC.nvim
         call SourcePluginFile("nvim-lspconfig.lua")
+        call SourcePluginFile("nvim-compe.lua")
     else
         " This will be unloaded for CoC.nvim
         call SourcePluginFile("languageclient-neovim.vim")

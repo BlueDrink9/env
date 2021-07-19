@@ -56,6 +56,10 @@ endif
 " {]} ---------- Module setup ----------
 
 " {[} ---------- Misc ----------
+if has('nvim-0.5')
+    " Prerequisite for many nvim lua plugins.
+    Plug 'nvim-lua/plenary.nvim'
+endif
 
 " Custom text for folds, includes indent level. Integrates with fastfold.
 Plug 'https://github.com/Konfekt/FoldText'
@@ -222,6 +226,9 @@ if !has('nvim-0.5')
     endif
     " -1 gives persistent highlight until edit or new yank.
     let g:highlightedyank_highlight_duration = 3000
+else
+    Plug 'https://github.com/norcalli/nvim-colorizer.lua'
+    au myPlugins user pluginSettingsToExec lua require'colorizer'.setup()
 endif
 " Resizes splits proportionally when changing overall size
 Plug 'https://github.com/vim-scripts/ProportionalResize'
@@ -310,24 +317,29 @@ Plug 'machakann/vim-sandwich'
 " Gives it tpope-surround mappings.
 autocmd myPlugins User pluginSettingsToExec runtime macros/sandwich/keymap/surround.vim
 vmap s <Plug>(operator-sandwich-add)
-Plug 'https://github.com/easymotion/vim-easymotion'
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
-" tab-incrementable search with easymotion dropout feature.
-" map  <leader>/ <Plug>(easymotion-sn)
-" omap <leader>/ <Plug>(easymotion-tn)
-let g:EasyMotion_smartcase = 1
-map <Leader>l <Plug>(easymotion-lineforward)
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-map <Leader>h <Plug>(easymotion-linebackward)
-let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
-" Cross window boundaries
-nmap <Leader><S-K> <Plug>(easymotion-overwin-line)
-nmap <Leader><S-J> <Plug>(easymotion-overwin-line)
-nmap <Leader><S-L> <Plug>(easymotion-overwin-w)
-nmap <Leader><S-H> <Plug>(easymotion-overwin-w)
-" Like sneak
-nnoremap <leader>s <Plug>(easymotion-overwin-f2)
+if has('nvim-0.5')
+    Plug 'https://github.com/phaazon/hop.nvim'
+    autocmd myPlugins User pluginSettingsToExec lua require'hop'.setup()
+else
+    Plug 'https://github.com/easymotion/vim-easymotion'
+    let g:EasyMotion_do_mapping = 0 " Disable default mappings
+    " tab-incrementable search with easymotion dropout feature.
+    " map  <leader>/ <Plug>(easymotion-sn)
+    " omap <leader>/ <Plug>(easymotion-tn)
+    let g:EasyMotion_smartcase = 1
+    map <Leader>l <Plug>(easymotion-lineforward)
+    map <Leader>j <Plug>(easymotion-j)
+    map <Leader>k <Plug>(easymotion-k)
+    map <Leader>h <Plug>(easymotion-linebackward)
+    let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
+    " Cross window boundaries
+    nmap <Leader><S-K> <Plug>(easymotion-overwin-line)
+    nmap <Leader><S-J> <Plug>(easymotion-overwin-line)
+    nmap <Leader><S-L> <Plug>(easymotion-overwin-w)
+    nmap <Leader><S-H> <Plug>(easymotion-overwin-w)
+    " Like sneak
+    nnoremap <leader>s <Plug>(easymotion-overwin-f2)
+endif
 Plug 'bkad/camelcasemotion'
 autocmd myPlugins User pluginSettingsToExec call camelcasemotion#CreateMotionMappings('<leader>m')
 autocmd myPlugins User pluginSettingsToExec call camelcasemotion#CreateMotionMappings('_')
@@ -470,10 +482,12 @@ autocmd myPlugins bufwritepost *.dot if line("$") < 50 | GraphvizCompile | endif
 
 " {[} ---------- Git ----------
 if executable("git")
-    " :Magit to check all sorts of git stuff. Looks really cool. Capitals for
-    " commands, eg [S]tage-toggle, [CC]ommit.
-    Plug 'jreybert/vimagit'
-    " Git wrapper
+    if has('nvim-0.5')
+        Plug 'https://github.com/TimUntersberger/neogit'
+        autocmd myPlugins User pluginSettingsToExec lua require('neogit').setup {}
+        command! Magit Neogit
+    endif
+    " Git wrapper. Includes magit-style functionality under Gstatus
     Plug 'https://github.com/tpope/vim-fugitive'
     " nnoremap <leader>gs :Gstatus<CR> cabbrev gs Gstatus
     cabbrev gs Gstatus
@@ -506,22 +520,29 @@ if executable("git")
     " Commit browser. :GV
     Plug 'junegunn/gv.vim'
 
-    " VCS changes shown in sign column.
-    Plug 'https://github.com/mhinz/vim-signify'
-    " Add VCS systems to this when needed. More will slow buffer loading.
-    let g:signify_vcs_list = [ 'git' ]
-    " Async, so shouldn't be too bad. Ignored if not async.
-    " let g:signify_realtime = 1
-    " Causes a write on cursorhold. PITA, so let's replace it.
-    " autocmd myPlugins User pluginSettingsToExec autocmd! signify CursorHold,CursorHoldI
-    if has('timers')
-        autocmd User Fugitive silent! SignifyRefresh
-        " This seems to be causing an annoying error :/
-        " autocmd myPlugins CursorHold,CursorHoldI,BufEnter,FocusGained call silent! sy#start()
-        " autocmd myPlugins WinEnter call silent! sy#start()
+
+    if has('nvim-0.5')
+        " Can stage and all sorts.
+        Plug 'https://github.com/lewis6991/gitsigns.nvim'
+        autocmd myPlugins User pluginSettingsToExec lua require('gitsigns').setup()
+    else
+        " VCS changes shown in sign column.
+        Plug 'https://github.com/mhinz/vim-signify'
+        " Add VCS systems to this when needed. More will slow buffer loading.
+        let g:signify_vcs_list = [ 'git' ]
+        " Async, so shouldn't be too bad. Ignored if not async.
+        " let g:signify_realtime = 1
+        " Causes a write on cursorhold. PITA, so let's replace it.
+        " autocmd myPlugins User pluginSettingsToExec autocmd! signify CursorHold,CursorHoldI
+        if has('timers')
+            autocmd User Fugitive silent! SignifyRefresh
+            " This seems to be causing an annoying error :/
+            " autocmd myPlugins CursorHold,CursorHoldI,BufEnter,FocusGained call silent! sy#start()
+            " autocmd myPlugins WinEnter call silent! sy#start()
+        endif
+        " let g:signify_update_on_focusgained = 1
+        let g:signify_sign_change = '~'
     endif
-    " let g:signify_update_on_focusgained = 1
-    let g:signify_sign_change = '~'
 
     " Plug 'airblade/vim-gitgutter'
     " " Allows hlcolumn bg to match coloursch
