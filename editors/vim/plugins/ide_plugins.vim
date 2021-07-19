@@ -41,6 +41,9 @@ Plug 'Shougo/context_filetype.vim'
 Plug 'https://github.com/wellle/tmux-complete.vim'
 " Call WhichKey to see mappings starting with a thing.
 Plug 'liuchengxu/vim-which-key'
+if has('nvim-0.5')
+    Plug 'AckslD/nvim-whichkey-setup.lua'
+endif
 " nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
 
 if v:version >= 703
