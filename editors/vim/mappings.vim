@@ -156,11 +156,17 @@ nnoremap <C-k> <C-W>k
 nnoremap <C-h> <C-W>h
 nnoremap <C-l> <C-W>l
 
-" Cycle through buffers
-nnoremap <silent> <Right> :bnext<CR>
-nnoremap <silent> <Left> :bprev<CR>
-nnoremap <silent> <Up> :tabnext<CR>
-nnoremap <silent> <Down> :tabprevious<CR>
+if $ISTERMUXSCREEN
+  nnoremap <tab> :bnext<CR>
+  " Don't remap arrow keys in termux, because they're too useful for the
+  " touch screen.
+else
+  " Cycle through buffers
+  nnoremap <silent> <Right> :bnext<CR>
+  nnoremap <silent> <Left> :bprev<CR>
+  nnoremap <silent> <Up> :tabnext<CR>
+  nnoremap <silent> <Down> :tabprevious<CR>
+endif
 
 if has('nvim') || has('terminal')
   tnoremap <C-h> <c-\><c-n><c-w>h

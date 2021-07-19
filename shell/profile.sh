@@ -41,6 +41,9 @@ if substrInStr "kitty" "$TERM"; then
 elif substrInStr "Android" "$(uname -a)";  then
   # Termux
   export ISTERMUX=1
+  if [ -z "$SSHSESSION" ]; then
+    export ISTERMUXSCREEN=1
+  fi
   export CLIP_PROGRAM_COPY="termux-clipboard-set"
   export CLIP_PROGRAM_PASTE="termux-clipboard-get"
   export HOSTNAME="$(getprop net.hostname)"
