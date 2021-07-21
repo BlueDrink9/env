@@ -319,10 +319,17 @@ if has('nvim-0.5')
     Plug 'https://github.com/phaazon/hop.nvim'
     autocmd myPlugins User pluginSettingsToExec lua require'hop'.setup({ keys = 'arstdhneofplucmkv'})
 lua << EOF
-    vim.api.nvim_set_keymap('n', 'Sl', "<cmd>lua require'hop'.hint_words({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR })<cr>", {})
-    vim.api.nvim_set_keymap('n', 'Sh', "<cmd>lua require'hop'.hint_words({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR })<cr>", {})
-    vim.api.nvim_set_keymap('n', 'Sj', "<cmd>lua require'hop'.hint_lines({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR })<cr>", {})
-    vim.api.nvim_set_keymap('n', 'Sk', "<cmd>lua require'hop'.hint_lines({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR })<cr>", {})
+    function map(mode, keys, mapping, opts)
+        vim.api.nvim_set_keymap(mode, keys, mapping, opts)
+    end
+    v = {'x', 'n'}
+    for i = 1, #v do
+        mode = v[i]
+        map(mode, 'Sl', "<cmd>lua require'hop'.hint_words({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR })<cr>", {})
+        map(mode, 'Sh', "<cmd>lua require'hop'.hint_words({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR })<cr>", {})
+        map(mode, 'Sj', "<cmd>lua require'hop'.hint_lines({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR })<cr>", {})
+        map(mode, 'Sk', "<cmd>lua require'hop'.hint_lines({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR })<cr>", {})
+    end
 EOF
 else
     Plug 'https://github.com/easymotion/vim-easymotion'
@@ -347,6 +354,7 @@ endif
 Plug 'bkad/camelcasemotion'
 autocmd myPlugins User pluginSettingsToExec call camelcasemotion#CreateMotionMappings('<leader>m')
 autocmd myPlugins User pluginSettingsToExec call camelcasemotion#CreateMotionMappings('_')
+autocmd myPlugins User pluginSettingsToExec call camelcasemotion#CreateMotionMappings('S')
 " {]} ---------- Operators ----------
 
 " {[}--- Searching, replacing, finding ---
