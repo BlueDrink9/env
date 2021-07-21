@@ -15,7 +15,10 @@ if has('nvim-0.5')
     " FZF alternative
     " Plug 'https://github.com/nvim-telescope/telescope.nvim'
 
+    Plug 'https://github.com/norcalli/nvim-colorizer.lua'
+    au myPlugins user pluginSettingsToExec lua require'colorizer'.setup()
 endif
+
 if has('nvim-0.5')
     " Show registers in floating window when you go to use them.
     Plug 'tversteeg/registers.nvim', { 'branch': 'main' }

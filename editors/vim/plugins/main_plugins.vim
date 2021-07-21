@@ -219,6 +219,7 @@ Plug 'https://github.com/sunaku/vim-shortcut'
 " {]} ---------- Misc----------
 
 " {[} ---------- Visual changes ----------
+" nvim-0.5 has this built-in
 if !has('nvim-0.5')
     Plug 'machakann/vim-highlightedyank'
     if !exists('##TextYankPost')
@@ -226,9 +227,6 @@ if !has('nvim-0.5')
     endif
     " -1 gives persistent highlight until edit or new yank.
     let g:highlightedyank_highlight_duration = 3000
-else
-    Plug 'https://github.com/norcalli/nvim-colorizer.lua'
-    au myPlugins user pluginSettingsToExec lua require'colorizer'.setup()
 endif
 " Resizes splits proportionally when changing overall size
 Plug 'https://github.com/vim-scripts/ProportionalResize'
