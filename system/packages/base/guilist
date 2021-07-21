@@ -13,6 +13,8 @@ authy
 inkscape
 gimp
 zotero
+# Good email client
+astroid
 # Pip
 zotero-cli
 # Not technically gui but not very useful without a GUI.
