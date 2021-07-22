@@ -62,10 +62,6 @@
 
 (map! :desc "Describe key" :nv "C-?" #'describe-key-briefly)
 
-;; (defun myevil-use-system-register() "" () (evil-use-register "+"))
-;; (general-nmap "\"" (general-key-dispatch
-;;                        "\"" 'evil-use-register "+"))
-
 (defun myevil-paste-from-system ()
   "Paste from system register ('+') "
   (interactive)

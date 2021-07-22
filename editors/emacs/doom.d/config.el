@@ -60,7 +60,26 @@
 (setq evil-disable-insert-state-bindings nil)
 
 ;; Disable smartparens. Can't be done another way because it is a default package.
-(remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
+;; (remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
+;; or: from an old github issue:
+;; (after! smartparens (smartparens-global-mode -1))
+;;
+(sp-local-pair 'lua-mode "function" "end")
+;; Disable autopairing unless before newline
+;; (sp-pair "*" nil :unless sp-point-before-eol-p)
+;; :actions '(wrap autoskip navigate)
+
+;; Insert extra newline between brackets if you add one yourself.
+;; Similar to inoremap (<CR> (<CR>)<Esc>O
+(defun indent-between-pair (&rest _ignored)
+  (newline)
+  (indent-according-to-mode)
+  (forward-line -1)
+  (indent-according-to-mode))
+
+(sp-local-pair 'prog-mode "{" nil :post-handlers '((indent-between-pair "RET")))
+(sp-local-pair 'prog-mode "[" nil :post-handlers '((indent-between-pair "RET")))
+(sp-local-pair 'prog-mode "(" nil :post-handlers '((indent-between-pair "RET")))
 
 ;; Fancy bullets in org mode, heavy plugin.
 (remove-hook 'org-mode-hook #'org-superstar-mode)
@@ -188,3 +207,5 @@
 (map! :n "d" (general-key-dispatch 'evil-delete
                     "r" 'my/evil-replace-with-kill-ring
                     "d" 'evil-delete-whole-line))
+;; This may be more flexible instead of evil-delete-whole-line.
+;; ('evil-change "d")

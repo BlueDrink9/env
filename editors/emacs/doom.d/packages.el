@@ -46,7 +46,7 @@
 ;; (package! nov)
 ;; https://tecosaur.github.io/emacs-config/config.html#ebooks
 
-;; (package! smartparens :disable t)
+(package! smartparens :disable t)
 
 ;; Consider disabling these packages since they are heavier.
 ;; =:ui tabs=, =:ui indent-guides=, =:ui ligatures=, =:editor word-wrap= and =:ui
