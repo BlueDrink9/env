@@ -50,8 +50,8 @@
       "S-<up>"         #'+evil/window-move-up
       "S-<right>"      #'+evil/window-move-right)
 
-(map! :desc "buf-next" :nv  "<right>" #'next-buffer)
-(map! :desc "buf-next" :nv  "<left>" #'previous-buffer)
+(map! :desc "buf-next" :nv  "<right>" #'centaur-tabs-forward)
+(map! :desc "buf-next" :nv  "<left>" #'centaur-tabs-backward)
 ;; Unsure if I want tabs or workspaces.
 ;; (map! :desc "buf-next" :nv  "<up>" #'tabnext)
 ;; (map! :desc "buf-next" :nv  "<down>" #'evil-ex "tabprev")
