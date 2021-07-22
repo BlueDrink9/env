@@ -80,7 +80,7 @@
 
 ;; TODO: Make this not override the unnamed register
 (map! :desc "Use system register next" :nv (general-chord "\"\"") "\"+")
-(map! :desc "Paste from clipboard" :i "C-S-v" #'myevil-paste-from-system)
+(map! :desc "paste from clipboard" :i "C-S-v" #'myevil-paste-from-system)
 (map! :desc "Paste from clipboard" :i "C-v" #'myevil-paste-from-system)
 
 ;; maps for everywhere (all modes)
@@ -118,32 +118,19 @@
 
 ; n and N always go the same direction regardless of whether / or ? was used.
 
-;; Autoexpand brackets when creating functions etc.
-(defmacro autobracket (bracCharOpen BracCharClose)
-  (
-    (insert bracCharOpen)
-    (evil-insert-newline-below)
-    (insert bracCharClose)
-    (evil-previous-line)
-    (evil-insert-newline-below)
-    )
-  )
-;; (general-imap "(" (general-key-dispatch "RET" 'autobracket "(" ")"))
-
-;; ;; May need to be a chord.
-;; Currently working, but isn't typing regular ( when no RET after it.
+;; ;; Autoexpand brackets when creating functions etc.
+;; (defun autobracket (bracCharOpen bracCharClose)
+;;     (insert bracCharOpen)
+;;     (evil-insert-newline-below)
+;;     (insert bracCharClose)
+;;     (evil-previous-line)
+;;     (evil-insert-newline-below)
+;;   )
+;; ;; This mostly works but will not ever trigger properly because key-chord.el cannot bind return key!
 ;; (map! :desc "Autoexpand bracket" :i
-;;       "( RET" (lambda () (interactive) (autobracket "(" ")")))
+;;       (general-chord (concat "(" (kbd "<RET>")))
+;;       (lambda () (interactive) (autobracket "(" ")")))
 
-               ;; lambda () (interactive)
-               ;;  (insert "(")
-               ;; (evil-insert-newline-below)
-               ;; (insert ")")
-               ;; (evil-previous-line)
-               ;; (evil-insert-newline-below)
-               ;; ))
-
-;; (map! :desc "Autoexpand bracket" :i  "( <cr>" "(<cr>)<Esc>O")
 ;; inoremap (<CR> (<CR>)<Esc>O
 ;; inoremap {<CR> {<CR>}<Esc>O
 ;; inoremap {; {<CR>};<Esc>O
@@ -197,6 +184,9 @@
 ;; (map! :leader :desc "Inline code evaluate" :nv "rr" #'eval:region)
 ;; (map! :leader :desc "Send to REPL" :v "r" #'eval/send-region-to-repl)
 
-(evil-ex-define-cmd "os" 'doom/load-session) ; Same as sl
-(evil-ex-define-cmd "ss" 'doom/save-session)
-(evil-ex-define-cmd "cs" 'doom/close-session)
+(evil-ex-define-cmd "os" #'doom/load-session) ; Same as sl
+(evil-ex-define-cmd "ss" #'doom/save-session)
+(evil-ex-define-cmd "cs" #'doom/close-session)
+
+;; gp to open ivy minibuffer for paste history.
+(map! :n "gp" #'counsel-yank-pop)
