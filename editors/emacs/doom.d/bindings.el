@@ -135,6 +135,11 @@
 ;; inoremap [; [<CR>];<Esc>O
 ;; inoremap [, [<CR>],<Esc>O
 
+(evil-define-command my/evil-insert-char (count char)
+  (interactive "<c><C>")
+  (setq count (or count 1))
+  (insert (make-string count char)))
+(map! :desc "Insert a single char before cursor" :n "s" #'my/evil-insert-char)
 
 ;; (map! :leader :desc "easymotion down" "j" #'evil-motion-next-line)
 ;; (map! :leader :desc "easymotion up" "k" #'evil-motion-previous-line)
