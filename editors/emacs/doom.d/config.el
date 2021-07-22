@@ -87,10 +87,7 @@
    ;; (after! tabbar
    ;;   (setq org-fontify-quote-and-verse-blocks nil
    ;;         org-startup-indented nil))
-(after! evil-snipe
-  (evil-snipe-mode -1))
-;; (after! evil-snipe
-;;   (evil-snipe-override-mode nil))
+(remove-hook 'doom-first-input-hook #'evil-snipe-mode)
 ;; Use cx for exchange mapping
 (after! evil-exchange
   (evil-exchange-cx-install))
