@@ -48,6 +48,10 @@
 
 (package! smartparens :disable t)
 
+(package! perspective)
+;; (package! persp-mode)
+(package! projectile)
+
 ;; Consider disabling these packages since they are heavier.
 ;; =:ui tabs=, =:ui indent-guides=, =:ui ligatures=, =:editor word-wrap= and =:ui
 
