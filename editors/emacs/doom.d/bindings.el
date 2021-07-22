@@ -50,8 +50,10 @@
       "S-<up>"         #'+evil/window-move-up
       "S-<right>"      #'+evil/window-move-right)
 
-(map! :desc "buf-next" :nv  "<right>" #'centaur-tabs-forward)
-(map! :desc "buf-next" :nv  "<left>" #'centaur-tabs-backward)
+(map! :desc "buf-next" :n  "<right>" #'centaur-tabs-forward)
+(map! :desc "buf-next" :n  "<left>" #'centaur-tabs-backward)
+(map! :desc "buf-next" :n  "<C-tab>" #'centaur-tabs-forward)
+(map! :desc "buf-next" :n  "<C-iso-lefttab>" #'centaur-tabs-backward)
 ;; Unsure if I want tabs or workspaces.
 ;; (map! :desc "buf-next" :nv  "<up>" #'tabnext)
 ;; (map! :desc "buf-next" :nv  "<down>" #'evil-ex "tabprev")
@@ -62,22 +64,22 @@
 
 (map! :desc "Describe key" :nv "C-?" #'describe-key-briefly)
 
-(defun myevil-paste-from-system ()
+(defun my/evil-paste-from-system ()
   "Paste from system register ('+') "
   (interactive)
   (evil-paste-from-register ?+))
 
-(defun myevil-use-system-register-next ()
+(defun my/evil-use-system-register-next ()
   "Sets the register for the next action to the system register"
   (interactive)
   ;; (evil-use-register ?+))
   (setq evil-this-register ?+))
-;; (map! :desc "system register" :nv (general-chord "\"\"") #'myevil-use-system-register-next)
+;; (map! :desc "system register" :nv (general-chord "\"\"") #'my/evil-use-system-register-next)
 
 ;; TODO: Make this not override the unnamed register
 (map! :desc "Use system register next" :nv (general-chord "\"\"") "\"+")
-(map! :desc "paste from clipboard" :i "C-S-v" #'myevil-paste-from-system)
-(map! :desc "Paste from clipboard" :i "C-v" #'myevil-paste-from-system)
+(map! :desc "paste from clipboard" :i "C-S-v" #'my/evil-paste-from-system)
+(map! :desc "Paste from clipboard" :i "C-v" #'my/evil-paste-from-system)
 
 ;; maps for everywhere (all modes)
 ;; (with-eval-after-load 'evil-maps
@@ -143,6 +145,11 @@
 
 ;; (map! :leader :desc "easymotion down" "j" #'evil-motion-next-line)
 ;; (map! :leader :desc "easymotion up" "k" #'evil-motion-previous-line)
+;; (map! :leader :desc "easymotion right" "l" #'evil-motion-forward-word-begin)
+;; (map! :leader :desc "easymotion left" "h" #'evil-motion-backward-word-begin)
+(after! evil-easymotion
+  (evilem-default-keybindings "S")
+  )
 
 ;; Git/magit shortcuts
 (map! :leader
