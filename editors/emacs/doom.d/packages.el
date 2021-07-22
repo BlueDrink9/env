@@ -46,7 +46,7 @@
 ;; (package! nov)
 ;; https://tecosaur.github.io/emacs-config/config.html#ebooks
 
-(package! smartparens :disable t)
+(package! smartparens)
 
 (package! perspective)
 ;; (package! persp-mode)
