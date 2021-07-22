@@ -27,6 +27,7 @@ installDoomEmacs(){
     git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
   else
     git -C ~/.emacs.d pull
+    ~/.emacs.d/bin/doom upgrade -f
   fi
   ln -s ~/.emacs.d/bin/doom ~/.local/bin/doom
   ~/.emacs.d/bin/doom install
