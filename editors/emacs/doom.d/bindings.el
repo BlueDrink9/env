@@ -139,7 +139,6 @@
 ;; inoremap [; [<CR>];<Esc>O
 ;; inoremap [, [<CR>],<Esc>O
 
-; Basic mappings done as of now.
 
 ;; (map! :leader :desc "easymotion down" "j" #'evil-motion-next-line)
 ;; (map! :leader :desc "easymotion up" "k" #'evil-motion-previous-line)

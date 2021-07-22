@@ -24,6 +24,9 @@
 (package! super-save)
 (package! auctex)
 
+;; Completions
+;; (package! counsel)
+
 ;; Coloured man pages
 (package! info-colors)
 

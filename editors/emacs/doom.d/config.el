@@ -1,5 +1,9 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 ; TODO: insert single char; ex command; unimparied options;
+; TODO: autobracket
+; TODO: jumping to mark should put mark in middle of view
+; TODO: scrolloff
+
 (setq script_dir (file-name-directory (or load-file-name buffer-file-name)))
 (load-file (concat script_dir "bindings.el"))
 (load-file (concat script_dir "aliases.el"))
@@ -170,6 +174,7 @@
 ;; (setf (nth 1 (assoc "LaTeX" TeX-command-list))
 ;;       "%`%l –output-directory=latexbuild -interaction=nonstopmode %(mode)%' %t")
 
-(after! magic
+(after! magit
+  ;; If creating commit with nothing staged, auto-stage current file.
   (setq magit-commit-ask-to-stage nil)
   )
