@@ -42,6 +42,9 @@
               (lambda (face)
                 (set-face-attribute face nil :inherit 'fixed-pitch))
               (list 'font-latex-verbatim-face
+                    'font-lock-keyword-face
+                    ;; 'font-lock-sedate-face
+                    'font-lock-function-name-face
                     'tex-verbatim
                     'font-latex-doctex-documentation-face
                     'font-latex-doctex-preprocessor-face
