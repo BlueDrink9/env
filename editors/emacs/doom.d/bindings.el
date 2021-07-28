@@ -112,6 +112,11 @@
 (map! :desc "Go to alternate file" :n  "SPC a" #'evil-switch-to-windows-last-buffer)
 (map! :desc "Run most recent macro" :n  "Q" #'evil-execute-macro)
 
+;;  by default keeps C-x and c-a for emacs things.
+(map! :desc "Increment number" :n  "C-a" #'evil-numbers/inc-at-pt)
+(map! :desc "Decrement number" :n  "C-x" #'evil-numbers/dec-at-pt)
+(map! :leader :desc "ctrl x replacement" :nv "C-x" #'evilnc-comment-operator)
+
 ;; (map! :desc "CD to current file's dir" :n  "SPC c d" #')
 
 ; n and N always go the same direction regardless of whether / or ? was used.
@@ -198,3 +203,16 @@
 
 ;; gp to open ivy minibuffer for paste history.
 (map! :n "gp" #'counsel-yank-pop)
+
+
+(evil-define-operator my/evil-replace-with-kill-ring (beg end)
+  "Replace with killring action."
+  :move-point nil (interactive "<r>")
+  (save-excursion (delete-region beg end)
+                  (goto-char beg)
+                  (call-interactively 'evil-paste-before 1)))
+(map! :n "d" (general-key-dispatch 'evil-delete
+                    "r" 'my/evil-replace-with-kill-ring
+                    "d" 'evil-delete-whole-line))
+;; This may be more flexible instead of evil-delete-whole-line.
+;; ('evil-change "d")

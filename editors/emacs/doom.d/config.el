@@ -194,15 +194,3 @@
   ;; If creating commit with nothing staged, auto-stage current file.
   (setq magit-commit-ask-to-stage nil)
   )
-
-(evil-define-operator my/evil-replace-with-kill-ring (beg end)
-  "Replace with killring action."
-  :move-point nil (interactive "<r>")
-  (save-excursion (delete-region beg end)
-                  (goto-char beg)
-                  (call-interactively 'evil-paste-before 1)))
-(map! :n "d" (general-key-dispatch 'evil-delete
-                    "r" 'my/evil-replace-with-kill-ring
-                    "d" 'evil-delete-whole-line))
-;; This may be more flexible instead of evil-delete-whole-line.
-;; ('evil-change "d")
