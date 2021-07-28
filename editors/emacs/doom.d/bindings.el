@@ -184,7 +184,8 @@
 (map!
  :map LaTeX-mode-map
  :localleader
- :desc "View" "v" #'TeX-view)
+ :desc "View" "v" #'TeX-view
+ :desc "Compile all" "l" #'TeX-command-run-all)
 
 
 (map! :leader :desc "Inline code evaluate" :nv "r" #'eval:region)
