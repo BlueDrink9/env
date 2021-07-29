@@ -100,7 +100,10 @@
 ;;  by default keeps C-x and c-a for emacs things.
 (map! :desc "Increment number" :n  "C-a" #'evil-numbers/inc-at-pt)
 (map! :desc "Decrement number" :n  "C-x" #'evil-numbers/dec-at-pt)
-(map! :leader :desc "ctrl x replacement" :nv "C-x" #'evilnc-comment-operator)
+;; (defun my/c-x ()
+;;   (interactive)
+;;   (setq unread-command-events (listify-key-sequence (kbd "C-x"))))
+;; (map! :leader :desc "ctrl x replacement" :nv "C-x" #'my/c-x)
 
 ;; (map! :desc "CD to current file's dir" :n  "SPC c d" #')
 
