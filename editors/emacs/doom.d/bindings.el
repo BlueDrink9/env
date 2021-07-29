@@ -3,30 +3,15 @@
 (setq doom-localleader-key "<return>")
 
 ;; Requires KeyChord library
-(setq key-chord-two-keys-delay 0.5)
 (key-chord-mode 1)
-;; (key-chord-define evil-insert-state-map "kv" 'evil-normal-state)
-;; (general-define-key :keymaps 'evil-insert-state-map
-;;                     (general-chord "kv") 'evil-normal-state
-;;                     (general-chord "vk") 'evil-normal-state
-;;                     )
+(setq key-chord-two-keys-delay 0.5)
 (map! :desc "Enter normal mode" :i (general-chord "kv") 'evil-normal-state)
 (map! :desc "Enter normal mode" :i (general-chord "vk") 'evil-normal-state)
-;; (key-chord-define evil-insert-state-map "vk" 'evil-normal-state)
-; (key-chord-define evil-ex-state-map "kv" 'evil-command-window-ex)
-; (key-chord-define evil-ex-state-map "vk" 'evil-command-window-ex)
-
-;; ;; Alternative solution using general.el
-;; (general-imap "v"
-;;               (general-key-dispatch 'self-insert-command
-;;                 :timeout 0.5
-;;                 "k" 'evil-normal-state))
-
-; (map! :desc "ex normal" :x ";" #'evil-ex)
 
 ;; Swap ;, :
 (map! :desc "ex" :nv ";" #'evil-ex)
 (map! :desc ";" :nv ":" #'evil-repeat-find-char)
+;; Snipe gives colour hints.
 (map! :desc ";" :nv ":" #'evil-snipe-repeat-forwards)
 
 (map! :desc "go-window-right" :nv  "C-l" #'evil-window-right)
