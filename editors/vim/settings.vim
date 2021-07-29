@@ -522,7 +522,7 @@ function! s:SetTitle()
     if l:filename == ""
         let &titlestring = 'Vim - New Buffer'
     else
-        let &titlestring = l:preTitle . l:filename . ' [' . expand("%:p") . ']'
+        let &titlestring = l:preTitle . l:filename . ' [' . expand("%:p:h") . ']'
     endif
     set title
 endfunction
