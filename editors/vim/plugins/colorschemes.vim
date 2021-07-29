@@ -89,11 +89,12 @@ function! s:customVimOneColours()
 endfunction
 autocmd myColourschemes ColorScheme one call <sid>customVimOneColours()
 Plug 'cormacrelf/vim-colors-github'
+Plug 'https://github.com/arzg/vim-colors-xcode'
 " Black backgrounds
 Plug 'fcpg/vim-fahrenheit'
 Plug 'vim-scripts/Luinnar'
-Plug 'nanotech/jellybeans.vim'
 Plug 'https://github.com/GertjanReynaert/cobalt2-vim-theme'
+Plug 'nanotech/jellybeans.vim'
 let g:jellybeans_use_term_italics = 1
 let g:jellybeans_overrides = {
       \    'background': { 'guibg': '000000' },
