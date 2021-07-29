@@ -198,5 +198,7 @@
 (map! :n "d" (general-key-dispatch 'evil-delete
                     "r" 'my/evil-replace-with-kill-ring
                     "d" 'evil-delete-whole-line))
+;; v inherits n-mode mappings for d, so explictly map to delete in visual mode.
+(map! :v "d" #'evil-delete)
 ;; This may be more flexible instead of evil-delete-whole-line.
 ;; ('evil-change "d")
