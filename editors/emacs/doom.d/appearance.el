@@ -75,3 +75,20 @@
         centaur-tabs-gray-out-icons 'buffer)
   )
 ;; (setq x-underline-at-descent-line t)
+
+(defun my/title-format ()
+  '(:eval
+    (format "%s %s"
+            (buffer-name)
+            (cond
+             (buffer-file-truename
+              (concat "(" buffer-file-truename ")"))
+             (dired-directory
+              (concat "{" dired-directory "}"))
+             (t
+              "")))
+  ))
+(setq frame-title-format
+      (setq icon-title-format
+            (my/title-format)
+            ))
