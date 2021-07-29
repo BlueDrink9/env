@@ -4,6 +4,8 @@
 " Use <leader>i for ide bits.
 " Use <leader>e for errors/linting/fixing.
 let g:IDE_mappings = {
+            \ "VCSNextHunk" : "<leader>g]",
+            \ "VCSPreviousHunk" : "<leader>g[",
             \ "REPLSend" : "<leader>s",
             \ "REPLSendLine" : "<leader>ss",
             \ "REPLSendFile" : "<leader><s-S>",

@@ -544,6 +544,8 @@ if executable("git")
     else
         " VCS changes shown in sign column.
         Plug 'https://github.com/mhinz/vim-signify'
+        call Nmap(g:IDE_mappings.VCSNextHunk, "<Plug>(signify-next-hunk)")
+        call Vmap(g:IDE_mappings.VCSPreviousHunk, "<Plug>(signify-prev-hunk)")
         " Add VCS systems to this when needed. More will slow buffer loading.
         let g:signify_vcs_list = [ 'git' ]
         " Async, so shouldn't be too bad. Ignored if not async.
