@@ -202,3 +202,6 @@
 (map! :v "d" #'evil-delete)
 ;; This may be more flexible instead of evil-delete-whole-line.
 ;; ('evil-change "d")
+
+(map! :o "a%" 'mark-whole-buffer)
+(map! :o "i%" 'mark-whole-buffer)
