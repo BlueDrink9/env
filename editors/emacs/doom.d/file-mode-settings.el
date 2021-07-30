@@ -5,14 +5,18 @@
           (lambda ()
             (variable-pitch-mode 1)
             (visual-line-mode)
+            ;; (setq doom-modeline-enable-word-count t)
             ))
+;; Exceptions for variable pitch text mode faces.
 (add-hook 'text-mode-hook
           '(lambda ()
              (mapc
               (lambda (face)
                 (set-face-attribute face nil :inherit 'fixed-pitch))
               (list 'line-number
-                    'tex-verbatim
+                    'show-paren-match
+                    'show-paren-mismatch
+                    'sp-show-pair-enclosing
                     ))))
 
 ;; Use soft wraps instead of hard. Only enable if found to be neccessary.
@@ -27,16 +31,24 @@
 
 ;;; Markdown
 (add-hook! 'markdown-mode-hook
-           ( progn
-             (setq markdown-fontify-code-blocks-natively 1)
-             (setq markdown-header-scaling 1)
-             )
-           )
+  ( progn
+    (setq markdown-fontify-code-blocks-natively 1)
+    (setq markdown-header-scaling 1)
+    )
+  )
 (setq markdown-fontify-code-blocks-natively 1)
 (setq markdown-header-scaling 1)
+(add-hook 'markdown-mode-hook
+          '(lambda ()
+             (mapc
+              (lambda (face)
+                (set-face-attribute face nil :inherit 'fixed-pitch))
+              (list 'markdown-inline-code-face
+                    'markdown-code-face
+                    ))))
 
 ;;; LaTeX
-(add-hook 'text-mode-hook
+(add-hook 'latex-mode-hook
           '(lambda ()
              (mapc
               (lambda (face)
