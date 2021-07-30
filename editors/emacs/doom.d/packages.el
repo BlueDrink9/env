@@ -7,6 +7,9 @@
 ;; Or use 'M-x doom/reload'.
 
 (package! key-chord)
+;; Disables a default 'jk' normal state binding. key-chord replaces it more
+;; flexibly anyway.
+(package! evil-escape :disable t)
 ;; (package! evil-collection) ;; included already.
 (package! evil-quickscope)
 ;; String modification functions
