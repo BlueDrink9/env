@@ -1,12 +1,13 @@
 ;;; mappings.el -*- lexical-binding: t; -*-
 
+;; Overridden in some buffers, eg DIRED
 (setq doom-localleader-key "<return>")
 
 ;; Requires KeyChord library
 (key-chord-mode 1)
 (setq key-chord-two-keys-delay 0.5)
-(map! :desc "Enter normal mode" :i (general-chord "kv") 'evil-normal-state)
-(map! :desc "Enter normal mode" :i (general-chord "vk") 'evil-normal-state)
+(map! :desc "Enter normal mode" :i (general-chord "kv") 'evil-normal-state
+      :i (general-chord "vk") 'evil-normal-state)
 
 ;; Swap ;, :
 (map! :nv
@@ -30,11 +31,12 @@
 
 (map! :map evil-window-map
       "t"       #'+workspace/new
-      ;; Swapping windows
-      "S-<left>"       #'+evil/window-move-left
-      "S-<down>"       #'+evil/window-move-down
-      "S-<up>"         #'+evil/window-move-up
-      "S-<right>"      #'+evil/window-move-right)
+      ;; Swapping windows. Defined by default anyway.
+      ;; "S-<left>"       #'+evil/window-move-left
+      ;; "S-<down>"       #'+evil/window-move-down
+      ;; "S-<up>"         #'+evil/window-move-up
+      ;; "S-<right>"      #'+evil/window-move-right
+      )
 
 (map! :n  "<right>" #'centaur-tabs-forward
       :n  "<left>" #'centaur-tabs-backward
@@ -169,7 +171,8 @@
 (map! :desc "Minibuffer only one escape to exit"
       :map (minibuffer-local-map evil-ex-completion-map evil-ex-search-keymap)
       :in "<escape>" #'abort-recursive-edit)
-;; (map! :map minibuffer-local-map "k" #'previous-complete-history-element)
+;; (after! minibuffer
+;;         (map! :map evil-normal-state-local-map "k" #'previous-complete-history-element))
   ;; (add-hook 'find-file-hook (function (lambda ()
   ;;                                       (local-set-key (kbd "<tab>") 'smart-tab))))
 
@@ -214,3 +217,11 @@
 
 (map! :o "a%" 'mark-whole-buffer
       :o "i%" 'mark-whole-buffer)
+
+(add-hook 'dired-mode-hook (lambda ()
+                                       (setq doom-localleader-key "\\")
+                                       (map! "RET" #'dired-find-file
+                                             "RET RET" #'dired-find-file
+                                             "e" #'dired-find-file
+                                             "backspace" #'dired-up-directory)
+                                       ))
