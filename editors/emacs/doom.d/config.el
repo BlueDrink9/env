@@ -190,7 +190,14 @@
 ;; (setf (nth 1 (assoc "LaTeX" TeX-command-list))
 ;;       "%`%l –output-directory=latexbuild -interaction=nonstopmode %(mode)%' %t")
 
-(after! magit
-  ;; If creating commit with nothing staged, auto-stage current file.
-  (setq magit-commit-ask-to-stage nil)
-  )
+;; If creating commit with nothing staged, auto-stage current file.
+(setq magit-commit-ask-to-stage "stage")
+
+;; ;; Permenantly show workspace list in minibuffer line
+;; (after! persp-mode
+;;   (defun display-workspaces-in-minibuffer ()
+;;     (with-current-buffer " *Minibuf-0*"
+;;       (erase-buffer)
+;;       (insert (+workspace--tabline))))
+;;   (run-with-idle-timer 1 t #'display-workspaces-in-minibuffer)
+;;   (+workspace/display))
