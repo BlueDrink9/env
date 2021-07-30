@@ -9,15 +9,16 @@
 (map! :desc "Enter normal mode" :i (general-chord "vk") 'evil-normal-state)
 
 ;; Swap ;, :
-(map! :desc "ex" :nv ";" #'evil-ex)
-(map! :desc ";" :nv ":" #'evil-repeat-find-char)
-;; Snipe gives colour hints.
-(map! :desc ";" :nv ":" #'evil-snipe-repeat-forwards)
+(map! :nv
+      ";" #'evil-ex
+      ;; ":" #'evil-repeat-find-char
+      ;; Snipe gives colour hints.
+      :nv ":" #'evil-snipe-repeat-forwards)
 
-(map! :desc "go-window-right" :nv  "C-l" #'evil-window-right)
-(map! :desc "go-window-left"  :nv  "C-h" #'evil-window-left)
-(map! :desc "go-window-up"    :nv  "C-k" #'evil-window-up)
-(map! :desc "go-window-down"  :nv  "C-j" #'evil-window-down)
+(map! :nv  "C-l" #'evil-window-right
+      :nv  "C-h" #'evil-window-left
+      :nv  "C-k" #'evil-window-up
+      :nv  "C-j" #'evil-window-down)
 
 ;; (map! :after outline
 ;;       :map outline-mode-map
@@ -35,17 +36,19 @@
       "S-<up>"         #'+evil/window-move-up
       "S-<right>"      #'+evil/window-move-right)
 
-(map! :desc "buf-next" :n  "<right>" #'centaur-tabs-forward)
-(map! :desc "buf-next" :n  "<left>" #'centaur-tabs-backward)
-(map! :desc "buf-next" :n  "<C-tab>" #'centaur-tabs-forward)
-(map! :desc "buf-next" :n  "<C-iso-lefttab>" #'centaur-tabs-backward)
+(map! :n  "<right>" #'centaur-tabs-forward
+      :n  "<left>" #'centaur-tabs-backward
+      :n  "<C-tab>" #'centaur-tabs-forward
+      :n  "<C-iso-lefttab>" #'centaur-tabs-backward)
 ;; Unsure if I want tabs or workspaces.
 ;; (map! :desc "buf-next" :nv  "<up>" #'tabnext)
 ;; (map! :desc "buf-next" :nv  "<down>" #'evil-ex "tabprev")
+(map! :nv  "<up>"      #'workspace/switch-left
+      :nv  "<down>"    #'workspace/switch-right)
 
 
-(map! :leader :desc "Comment" :nv "c" #'evilnc-comment-operator)
-(map! :leader :desc "Comment" :nv "C-/" #'evilnc-comment-operator)
+(map! :leader :nv "c" #'evilnc-comment-operator
+      :nv "C-/" #'evilnc-comment-operator)
 
 (map! :desc "Describe key" :nv "C-?" #'describe-key-briefly)
 
@@ -63,8 +66,8 @@
 
 ;; TODO: Make this not override the unnamed register
 (map! :desc "Use system register next" :nv (general-chord "\"\"") "\"+")
-(map! :desc "paste from clipboard" :i "C-S-v" #'my/evil-paste-from-system)
-(map! :desc "Paste from clipboard" :i "C-v" #'my/evil-paste-from-system)
+(map! :desc "Paste from system clipboard" :i "C-S-v" #'my/evil-paste-from-system
+      :i "C-v" #'my/evil-paste-from-system)
 
 ;; maps for everywhere (all modes)
 ;; (with-eval-after-load 'evil-maps
@@ -74,18 +77,18 @@
 ;; (evil-define-key 'normal org-mode-map "\<" 'org-metaleft )
 
 ;; Don't add to register on x or X
-(map! :desc "\"_x" :nv  "x" #'delete-forward-char)
-(map! :desc "\"_X" :nv  "X" #'delete-backward-char)
+(map! :desc "\"_x" :nv  "x" #'delete-forward-char
+      :nv  "X" #'delete-backward-char)
 (map! :desc "black hole register delete" :v  "<delete>" #'evil-delete-char)
 
 ;; (map! :desc "Toggle fold" :n  "<backspace>" #'+fold/toggle)
 ;; Use the keys (za) rather than the function so that it works with more
 ;; evilified minor modes (eg magit).
-(map! :desc "Toggle fold" :n  "<backspace>" "za")
-(map! :desc "Create fold from selection" :v  "<backspace>" #'evil-vimish-fold/create)
+(map! :desc "Toggle fold" :n  "<backspace>" "za"
+      :desc "Create fold from selection" :v  "<backspace>" #'evil-vimish-fold/create)
 
-(map! :desc "Go to mark" :n  "'" #'evil-goto-mark)
-(map! :desc "Go to mark line" :n  "`" #'evil-goto-mark-line)
+(map! :desc "Go to mark" :n  "'" #'evil-goto-mark
+      :desc "Go to mark line" :n  "`" #'evil-goto-mark-line)
 
 ;; (map! :desc "Dot operator without moving" :n  "." #'evil-repeat | evil-goto-mark(".")) ; want to replicate .'.
 
@@ -94,12 +97,12 @@
 
 (map! :desc "Faster redo" :n  "U" #'evil-redo)
 
-(map! :desc "Go to alternate file" :n  "SPC a" #'evil-switch-to-windows-last-buffer)
-(map! :desc "Run most recent macro" :n  "Q" #'evil-execute-macro)
+(map! :desc "Go to alternate file" :n  "SPC a" #'evil-switch-to-windows-last-buffer
+      :desc "Run most recent macro" :n  "Q" #'evil-execute-macro)
 
 ;;  by default keeps C-x and c-a for emacs things.
-(map! :desc "Increment number" :n  "C-a" #'evil-numbers/inc-at-pt)
-(map! :desc "Decrement number" :n  "C-x" #'evil-numbers/dec-at-pt)
+(map! :desc "Increment number" :n  "C-a" #'evil-numbers/inc-at-pt
+      :desc "Decrement number" :n  "C-x" #'evil-numbers/dec-at-pt)
 ;; (defun my/c-x ()
 ;;   (interactive)
 ;;   (setq unread-command-events (listify-key-sequence (kbd "C-x"))))
@@ -139,8 +142,8 @@
 (map! :desc "Easymotion prefix" :n "S" nil)
 (after! evil-easymotion
   (evilem-default-keybindings "S")
-  (map! :n "S l" #'evilem-motion-forward-word-begin)
-  (map! :n "S h" #'evilem-motion-backward-word-begin)
+  (map! :n "S l" #'evilem-motion-forward-word-begin
+        :n "S h" #'evilem-motion-backward-word-begin)
   )
 
 ;; Git/magit shortcuts
@@ -166,6 +169,9 @@
 (map! :desc "Minibuffer only one escape to exit"
       :map (minibuffer-local-map evil-ex-completion-map evil-ex-search-keymap)
       :in "<escape>" #'abort-recursive-edit)
+;; (map! :map minibuffer-local-map "k" #'previous-complete-history-element)
+  ;; (add-hook 'find-file-hook (function (lambda ()
+  ;;                                       (local-set-key (kbd "<tab>") 'smart-tab))))
 
 ;; c-a and c-x need fixing for increment/decrement.
 
@@ -206,5 +212,5 @@
 ;; This may be more flexible instead of evil-delete-whole-line.
 ;; ('evil-change "d")
 
-(map! :o "a%" 'mark-whole-buffer)
-(map! :o "i%" 'mark-whole-buffer)
+(map! :o "a%" 'mark-whole-buffer
+      :o "i%" 'mark-whole-buffer)
