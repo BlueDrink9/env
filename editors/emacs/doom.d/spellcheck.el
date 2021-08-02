@@ -1,6 +1,11 @@
 ;;; spellcheck.el -*- lexical-binding: t; -*-
+;;; Modified to change dict to en_AU, and to change `ispell-local-dictionary` to
+;;; `ispell-dictionary` everywhere.  Also to use ispell-dictionary as variable
+;;; everywhere. May fail and need changing to local-dictionary if you change
+;;; dictionary on the fly.
 ;; (setq ispell-aspell-data-dir "/nix/store/my1hch4x12i5n1ffhlwpb6bpsiajbv3j-aspell-0.60.6.1/lib/aspell/")
 (setq ispell-aspell-dict-dir ispell-aspell-data-dir)
+(setq ispell-dictionary "en_AU")
 ;; Spell check config for programmers.
 ;; http://blog.binchen.org/posts/what-s-the-best-spell-check-set-up-in-emacs.html
 ;; if (aspell installed) { use aspell}
@@ -17,7 +22,7 @@
      ((string-match  "aspell$" ispell-program-name)
       ;; Force the English dictionary for aspell
       ;; Support Camel Case spelling check (tested with aspell 0.6)
-      (setq args (list "--sug-mode=ultra" "--lang=en_GB"))
+      (setq args (list "--sug-mode=ultra" (concat "--lang=" ispell-dictionary)))
       (when run-together
         (cond
          ;; Kevin Atkinson said now aspell supports camel case directly
@@ -33,7 +38,7 @@
           (setq args (append args '("--run-together" "--run-together-limit=16")))))))
      ((string-match "hunspell$" ispell-program-name)
       ;; Force the English dictionary for hunspell
-      (setq args "-d en_GB")))
+      (setq args(concat "-d" ispell-dictionary))))
     args))
 
 (cond
@@ -43,12 +48,11 @@
  ((executable-find "hunspell")
   (setq ispell-program-name "hunspell")
 
-  ;; Please note that `ispell-local-dictionary` itself will be passed to hunspell cli with "-d"
-  ;; it's also used as the key to lookup ispell-local-dictionary-alist
+  ;; Please note that `ispell-dictionary` itself will be passed to hunspell cli with "-d"
+  ;; it's also used as the key to lookup ispell-dictionary-alist
   ;; if we use different dictionary
-  (setq ispell-local-dictionary "en_GB")
-  (setq ispell-local-dictionary-alist
-        '(("en_GB" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_GB") nil utf-8))))
+  (setq ispell-dictionary-alist
+        '((ispell-dictionary "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" (ispell-dictionary)) nil utf-8))))
  (t (setq ispell-program-name nil)))
 
 ;; ispell-cmd-args is useless, it's the list of *extra* arguments we will append to the ispell process when "ispell-word" is called.
