@@ -149,11 +149,11 @@
   (insert (make-string count char)))
 (map! :desc "Insert a single char before cursor" :n "s" #'my/evil-insert-char)
 
-(map! :desc "Easymotion prefix" :n "S" nil)
+(map! :desc "Easymotion prefix" :nv "S" nil)
 (after! evil-easymotion
   (evilem-default-keybindings "S")
-  (map! :n "S l" #'evilem-motion-forward-word-begin
-        :n "S h" #'evilem-motion-backward-word-begin)
+  (map! :nv "S l" #'evilem-motion-forward-word-begin
+        :nv "S h" #'evilem-motion-backward-word-begin)
   )
 
 ;; Git/magit shortcuts
@@ -163,6 +163,8 @@
         :desc "pull from origin" "p" #'magit-pull-from-pushremote))
 (evil-ex-define-cmd "gc" 'magic-commit-create)
 (evil-ex-define-cmd "gw" 'magit-stage-file)
+;; TODO Magit: Allow w navigations, easymotion? For yanking commit diffs.
+;; Overwrite magit c-j and c-k bindings to maintain ability to move windows.
 
 ;; (map! :leader
 ;;       (:prefix-map ("a" . "applications")
@@ -233,3 +235,14 @@
                                              "e" #'dired-find-file
                                              "backspace" #'dired-up-directory)
                                        ))
+
+(defun my/toggle-search-highlight ()
+  (setq evil-ex-substitute-highlight-all (not evil-ex-substitute-highlight-all))
+  (setq evil-ex-search-persistent-highlight (not evil-ex-search-persistent-highlight))
+  ;; (evil-ex-nohighlight)
+  (redraw-display)
+  )
+(map! :leader
+      (:prefix ("t")
+        :desc "Search result highlighting" "h" #'evil-ex-nohighlight))
+        ;; :desc "Search result highlighting" "h" #'my/toggle-search-highlight))
