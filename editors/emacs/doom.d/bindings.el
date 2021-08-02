@@ -1,7 +1,9 @@
 ;;; mappings.el -*- lexical-binding: t; -*-
 
-;; Overridden in some buffers, eg DIRED
-(setq doom-localleader-key "<return>")
+;; ;; Overridden in some buffers, eg DIRED
+;; (setq doom-localleader-key "<return>")
+;; (setq doom-localleader-key "\\")
+;; Leaving spc m (the default) for now.
 
 ;; Requires KeyChord library
 (key-chord-mode 1)
@@ -15,6 +17,12 @@
       ;; ":" #'evil-repeat-find-char
       ;; Snipe gives colour hints.
       :nv ":" #'evil-snipe-repeat-forwards)
+(map! :leader :nv
+      ";" #'counsel-M-x
+      ;; ":" #'evil-repeat-find-char
+      ;; Snipe gives colour hints.
+      :nv ":" #'pp-eval-expression)
+
 
 (map! :nv  "C-l" #'evil-window-right
       :nv  "C-h" #'evil-window-left
@@ -215,8 +223,8 @@
 ;; This may be more flexible instead of evil-delete-whole-line.
 ;; ('evil-change "d")
 
-(map! :o "a%" 'mark-whole-buffer
-      :o "i%" 'mark-whole-buffer)
+(map! :vo "a%" 'mark-whole-buffer
+      :vo "i%" 'mark-whole-buffer)
 
 (add-hook 'dired-mode-hook (lambda ()
                                        (setq doom-localleader-key "\\")
