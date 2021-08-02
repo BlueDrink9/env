@@ -55,6 +55,8 @@
 ;; (package! persp-mode)
 (package! projectile)
 
+;; Allows rebinding whole prefix trees
+(package! rebinder :recipe (:host github :repo "darkstego/rebinder.el"))
 ;; Consider disabling these packages since they are heavier.
 ;; =:ui tabs=, =:ui indent-guides=, =:ui ligatures=, =:editor word-wrap= and =:ui
 
