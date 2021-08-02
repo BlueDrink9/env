@@ -168,13 +168,13 @@
                                         (local-set-key (kbd "<tab>") 'smart-tab))))
   )
 
-(map! :desc "Minibuffer only one escape to exit"
-      :map (minibuffer-local-map evil-ex-completion-map evil-ex-search-keymap)
-      :in "<escape>" #'abort-recursive-edit)
-;; (after! minibuffer
-;;         (map! :map evil-normal-state-local-map "k" #'previous-complete-history-element))
-  ;; (add-hook 'find-file-hook (function (lambda ()
-  ;;                                       (local-set-key (kbd "<tab>") 'smart-tab))))
+;; Minibuffer only one escape to exit, kj to navigate history.
+(map! :map (minibuffer-local-map evil-ex-completion-map evil-ex-search-keymap)
+      :in "<escape>" #'abort-recursive-edit
+      :in "C-c" #'abort-recursive-edit
+      :n "j" #'next-complete-history-element
+      :n "k" #'previous-complete-history-element
+      )
 
 ;; c-a and c-x need fixing for increment/decrement.
 
