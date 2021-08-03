@@ -53,8 +53,8 @@
 ;; Unsure if I want tabs or workspaces.
 ;; (map! :desc "buf-next" :nv  "<up>" #'tabnext)
 ;; (map! :desc "buf-next" :nv  "<down>" #'evil-ex "tabprev")
-(map! :nv  "<up>"      #'workspace/switch-left
-      :nv  "<down>"    #'workspace/switch-right)
+(map! :n  "<up>"      #'+workspace/switch-left
+      :n  "<down>"    #'+workspace/switch-right)
 
 
 (map! :leader :nv "c" #'evilnc-comment-operator
