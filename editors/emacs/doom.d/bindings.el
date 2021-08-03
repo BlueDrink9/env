@@ -261,3 +261,8 @@
       (:prefix ("t")
         :desc "Search result highlighting" "h" #'evil-ex-nohighlight))
         ;; :desc "Search result highlighting" "h" #'my/toggle-search-highlight))
+
+(map! :leader
+      (:prefix ("t")
+        :desc "Super-save autosave" "a" #'super-save-mode))
+        ;; :desc "Search result highlighting" "h" #'my/toggle-search-highlight))
