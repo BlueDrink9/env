@@ -5,11 +5,12 @@
 
 ;; Run '~/.emacs.d/bin/doom sync' on the command line, then restart Emacs. 
 ;; Or use 'M-x doom/reload'.
-
-(package! key-chord)
+(unpin! evil-collection)
 ;; Disables a default 'jk' normal state binding. key-chord replaces it more
 ;; flexibly anyway.
 (package! evil-escape :disable t)
+
+(package! key-chord)
 ;; (package! evil-collection) ;; included already.
 (package! evil-quickscope)
 ;; String modification functions

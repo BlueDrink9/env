@@ -48,8 +48,8 @@
 ;; Evil-style bindings in minibuffer (esc, c-n etc)
 (setq evil-collection-setup-minibuffer t)
 (setq evil-want-minibuffer t)
-(add-hook 'minibuffer-setup-hook
-      (lambda () (setq truncate-lines nil)))
+(add-hook! 'minibuffer-setup-hook
+      (setq truncate-lines nil))
 ;; (add-hook 'minibuffer-setup-hook 'evil-collection-minibuffer-insert)
 (setq evil-repeat-move-cursor nil)
 (setq evil-cross-lines t)
@@ -102,12 +102,13 @@
 
 ;; Autosaves
 (after! super-save
+  (super-save-mode +1)
   (add-to-list 'super-save-hook-triggers 'evil-insert-state-exit-hook))
 ;; (setq super-save-exclude '(".gpg"))
 
 ;; More granular undos (i.e. not just an entire insert)
 (setq evil-want-fine-undo t)
-(add-hook 'evil-local-mode-hook 'undo-tree-mode)
+(add-hook! 'evil-local-mode-hook 'undo-tree-mode)
 ;; Persist registers
 (setq savehist-additional-variables '(register-alist))
 (setq undo-limit 80000000)  ; 80 Mb
@@ -157,7 +158,7 @@
   (setq company-idle-delay 0.5
         company-minimum-prefix-length 2)
   (setq company-show-numbers t)
-  (add-hook 'evil-normal-state-entry-hook #'company-abort)) ;; make aborting less annoying.
+  (add-hook! 'evil-normal-state-entry-hook #'company-abort)) ;; make aborting less annoying.
 (setq-default history-length 1000)
 (setq-default prescient-history-length 1000)
 
@@ -176,7 +177,7 @@
         (setq-local spray--last-evil-cursor-state evil-normal-state-cursor
                     evil-normal-state-cursor '(nil))
       (setq-local evil-normal-state-cursor spray--last-evil-cursor-state)))
-  (add-hook 'spray-mode-hook #'spray-mode-hide-cursor)
+  (add-hook! 'spray-mode-hook #'spray-mode-hide-cursor)
   (map! :map spray-mode-map
         "<return>" #'spray-start/stop
         "j" #'spray-faster
