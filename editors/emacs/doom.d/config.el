@@ -3,6 +3,7 @@
 ; TODO: autobracket
 ; TODO: jumping to mark should put mark in middle of view
 ; TODO: scrolloff
+; TODO: viminfo-style savings (persistend jump list, registers)
 
 (setq script_dir (file-name-directory (or load-file-name buffer-file-name)))
 (load-file (concat script_dir "bindings.el"))
@@ -43,6 +44,12 @@
 (setq auto-save-default t
       make-backup-files t)
 (setq scroll-margin 2)
+;; Autosaves
+(super-save-mode +1)
+(after! super-save
+  (setq super-save-remote-files nil)
+  ;; (setq super-save-exclude '(".gpg"))
+  (add-to-list 'super-save-hook-triggers 'evil-insert-state-exit-hook))
 
 
 ;; Evil-style bindings in minibuffer (esc, c-n etc)
@@ -99,12 +106,6 @@
 ;; Include gitgutter jumps in jump list.
 (evil-add-command-properties #'git-gutter:next-hunk :jump t)
 (evil-add-command-properties #'git-gutter:previous-hunk :jump t)
-
-;; Autosaves
-(after! super-save
-  (super-save-mode +1)
-  (add-to-list 'super-save-hook-triggers 'evil-insert-state-exit-hook))
-;; (setq super-save-exclude '(".gpg"))
 
 ;; More granular undos (i.e. not just an entire insert)
 (setq evil-want-fine-undo t)
