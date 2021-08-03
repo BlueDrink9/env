@@ -118,6 +118,12 @@
 ;;   (setq unread-command-events (listify-key-sequence (kbd "C-x"))))
 ;; (map! :leader :desc "ctrl x replacement" :nv "C-x" #'my/c-x)
 
+(map! :leader :n "u" #'undo-tree-visualize
+      :n "C-u" #'universal-argument)
+;; No real equivalent?
+;; (map! :n "g +" #'undo-tree-visualise-switch-branch-right
+;;       :n "g -" #'undo-tree-visualize-switch-branch-left)
+
 ;; (map! :desc "CD to current file's dir" :n  "SPC c d" #')
 
 ; n and N always go the same direction regardless of whether / or ? was used.
@@ -159,8 +165,8 @@
 ;; Git/magit shortcuts
 (map! :leader
       (:prefix ("g")
-        :desc "pusH to origin" "h" #'magit-push-current-to-pushremote
-        :desc "pull from origin" "p" #'magit-pull-from-pushremote))
+       :desc "pusH to origin" "h" #'magit-push-current-to-pushremote
+       :desc "pull from origin" "p" #'magit-pull-from-pushremote))
 (evil-ex-define-cmd "gc" 'magic-commit-create)
 (evil-ex-define-cmd "gw" 'magit-stage-file)
 ;; TODO Magit: Allow w navigations, easymotion? For yanking commit diffs.
@@ -207,6 +213,7 @@
  :desc "Compile all" "l" #'TeX-command-run-all)
 
 
+;; SPC r is unused in default doom emacs.
 (map! :leader :desc "Inline code evaluate" :nv "r" #'eval:region)
 ;; (map! :leader :desc "Inline code evaluate" :nv "rr" #'eval:region)
 ;; (map! :leader :desc "Send to REPL" :v "r" #'eval/send-region-to-repl)

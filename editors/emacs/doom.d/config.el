@@ -55,7 +55,6 @@
 (setq evil-cross-lines t)
 (setq evil-split-window-below t)
 (setq evil-vsplit-window-right t)
-;; (setq evil-want-fine-undo "yes")
 (setq evil-kbd-macro-suppress-motion-error "replay")
 (setq evil-disable-insert-state-bindings nil)
 
@@ -106,11 +105,17 @@
   (add-to-list 'super-save-hook-triggers 'evil-insert-state-exit-hook))
 ;; (setq super-save-exclude '(".gpg"))
 
+;; More granular undos (i.e. not just an entire insert)
+(setq evil-want-fine-undo t)
 (add-hook 'evil-local-mode-hook 'undo-tree-mode)
-
 ;; Persist registers
 (setq savehist-additional-variables '(register-alist))
 (setq undo-limit 80000000)  ; 80 Mb
+(setq undo-tree-auto-save-history t)
+;; Compressing undo history
+(defadvice undo-tree-make-history-save-file-name
+  (after undo-tree activate)
+  (setq ad-return-value (concat ad-return-value ".gz")))
 
 ;; (after! org
 ;;   (setq org-fontify-quote-and-verse-blocks nil
