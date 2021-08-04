@@ -46,6 +46,18 @@
       ;; "S-<right>"      #'+evil/window-move-right
       )
 
+(map! :n
+      "S-<left>"       #'(lambda () (interactive) (evil-window-increase-width 5))
+      "S-<right>"      #'(lambda () (interactive) (evil-window-increase-width 5))
+      "S-<down>"       #'(lambda () (interactive) (evil-window-increase-height 5))
+      "S-<up>"         #'(lambda () (interactive) (evil-window-increase-height 5))
+      "C-<left>"       #'(lambda () (interactive) (evil-window-decrease-width 5))
+      "C-<right>"      #'(lambda () (interactive) (evil-window-decrease-width 5))
+      "C-<down>"       #'(lambda () (interactive) (evil-window-decrease-height 5))
+      "C-<up>"         #'(lambda () (interactive) (evil-window-decrease-height 5))
+      )
+
+
 (map! :n  "<right>" #'centaur-tabs-forward
       :n  "<left>" #'centaur-tabs-backward
       :n  "<C-tab>" #'centaur-tabs-forward
