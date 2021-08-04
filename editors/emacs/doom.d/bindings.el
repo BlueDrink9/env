@@ -69,8 +69,11 @@
       :n  "<down>"    #'+workspace/switch-right)
 
 
-(map! :leader :nv "c" #'evilnc-comment-operator
-      :nv "C-/" #'evilnc-comment-operator)
+(map! :leader
+      :desc "evilnc-comment-operator" :nv "C-/" #'evilnc-comment-operator
+      :desc "evilnc-comment-operator" :nv "c" #'evilnc-comment-operator)
+;; By default bound to leader-c
+(map! :desc "code" :leader :nv "e" doom-leader-code-map)
 
 (map! :desc "Describe key" :nv "C-?" #'describe-key-briefly)
 
