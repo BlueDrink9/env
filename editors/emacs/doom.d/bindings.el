@@ -1,5 +1,15 @@
 ;;; mappings.el -*- lexical-binding: t; -*-
 
+;; It is important keys are bound after the keymap is loaded.  For local keys,
+;; specify the mode map and include an `:after` entry for the package that
+;; defines that mode.
+;; For mapping evil-local commands, ensure state (:nvio) is specified after the :map
+;; Eg: Map 'r' in normal mode to repeat pytest.
+;; (map! :after python
+;;       :map python-mode-map
+;;       :nv
+;;       "r" #'python-pytest-repeat)
+
 ;; ;; Overridden in some buffers, eg DIRED
 ;; (setq doom-localleader-key "<return>")
 ;; (setq doom-localleader-key "\\")
