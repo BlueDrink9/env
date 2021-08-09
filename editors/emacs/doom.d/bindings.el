@@ -207,9 +207,11 @@
 ;; Overwrite magit c-j and c-k bindings to maintain ability to move windows.
 ;; Add space mapping to cancel commit
 (map! :map git-commit-mode-map
+      :after git-commit
       :desc "confirm commit message"
       :in "C-<return>" 'with-editor-finish)
 (map! :map git-commit-mode-map
+      :after git-commit
       :desc "cancel commit"
       :leader
       :n "C-c" 'with-editor-cancel)
@@ -241,6 +243,7 @@
 
 ;; Latex mode mappings
 (map!
+ :after latex
  :map LaTeX-mode-map
  :localleader
  :desc "View" "v" #'TeX-view
@@ -299,4 +302,3 @@
 (map! :leader
       (:prefix ("t")
         :desc "Super-save autosave" "a" #'super-save-mode))
-        ;; :desc "Search result highlighting" "h" #'my/toggle-search-highlight))
