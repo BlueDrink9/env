@@ -21,6 +21,14 @@
 (map! :desc "Enter normal mode" :i (general-chord "kv") 'evil-normal-state
       :i (general-chord "vk") 'evil-normal-state)
 
+(require 'rebinder)
+;; Replace prefixes C-x and leader c
+;; (map! :n :leader "C-x" (rebinder-dynamic-binding "C-x"))
+;; For some reason using :prefix causes an error with this function.
+(map! :desc "C-x" :n "SPC C-x" (rebinder-dynamic-binding "C-x"))
+(rebinder-hook-to-mode 'evil-normal-state-map 'evil-normal-state-entry-hook)
+(rebinder-hook-to-mode 'evil-visual-state-map 'evil-visual-state-entry-hook)
+
 ;; Swap ;, :
 (map! :nv
       ";" #'evil-ex
@@ -136,14 +144,15 @@
       :desc "Run most recent macro" :n  "Q" #'evil-execute-macro)
 
 ;;  by default keeps C-x and c-a for emacs things.
-(map! :desc "Increment number" :n  "C-a" #'evil-numbers/inc-at-pt
-      :desc "Decrement number" :n  "C-x" #'evil-numbers/dec-at-pt)
+(map! :desc "Increment number" :n  "C-a" #'evil-numbers/inc-at-pt)
+      ;; :desc "Decrement number" :n  "C-x" #'evil-numbers/dec-at-pt)
+(map! :map rebinder-mode-map "C-x" 'evil-numbers/dec-at-pt)
 ;; (defun my/c-x ()
 ;;   (interactive)
 ;;   (setq unread-command-events (listify-key-sequence (kbd "C-x"))))
 ;; (map! :leader :desc "ctrl x replacement" :nv "C-x" #'my/c-x)
 
-(map! :leader :n "u" #'undo-tree-visualize
+(map! :leader :desc "undo-tree-visualise" :n "u" #'undo-tree-visualize
       :n "C-u" #'universal-argument)
 ;; No real equivalent?
 ;; (map! :n "g +" #'undo-tree-visualise-switch-branch-right
