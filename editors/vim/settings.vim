@@ -146,19 +146,25 @@ if g:hasGUI
         let g:ideMode = 0
     endif
     if g:ideMode
-        set guioptions+=ciagmrLtT!
+        set guioptions+=iagmrLtT
         " Larger gvim window
         set lines=999 columns=999
     else
         " Remove menus to speed up startup
         " set guioptions=M
-        set guioptions-=m
-        set guioptions-=tT
+        set guioptions-=mtT
         set guioptions+=M
         " Larger gvim window
         set lines=40 columns=120
     endif
+    " Never use ugly tab page that overrides airline's
     set guioptions-=e
+    " Don't use gui popups for simple questions, use console dialog (ensures
+    " keyboard can always be used)
+    set guioptions+=c
+    " Use terminal window to execute commands
+    set guioptions+=!
+    set guioptions+=p
     " Enables some basic mouse input
     set mouse=a
     set mousemodel="popup_setpos"
