@@ -85,6 +85,9 @@
 ;; (map! :desc "buf-next" :nv  "<down>" #'evil-ex "tabprev")
 (map! :n  "<up>"      #'+workspace/switch-left
       :n  "<down>"    #'+workspace/switch-right)
+(map! :map evil-window-map
+      "]"    #'persp-next
+      "["    #'persp-prev)
 
 
 (map! :leader
