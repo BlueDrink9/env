@@ -23,7 +23,9 @@
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/work/org/")
-(setq-default major-mode 'org-mode)
+
+;; Uses # for comments, generally a good fit for files without a specified file extension.
+(setq-default major-mode 'conf-mode)
 
 ;; Use " register by default, instead of system. System register is still
 ;; accessible via evil + and * registers.
