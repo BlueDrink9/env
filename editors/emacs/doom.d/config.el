@@ -210,3 +210,16 @@
 ;;       (insert (+workspace--tabline))))
 ;;   (run-with-idle-timer 1 t #'display-workspaces-in-minibuffer)
 ;;   (+workspace/display))
+(use-package! pkgbuild-mode
+  :mode "\\PKGBUILD")
+  (use-package! vimrc-mode
+  :mode "\\.vimrc\\'")
+  (use-package! systemd
+  :mode "\\.service\\'")
+  (use-package! sxhkd-mode
+  :mode "\\sxhkdrc\\'")
+(use-package! dockerfile-mode
+  :mode "Dockerfile\\'"
+  :config
+  (put 'dockerfile-image-name 'safe-local-variable #'stringp)
+  )

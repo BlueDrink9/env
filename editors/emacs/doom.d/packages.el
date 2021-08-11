@@ -11,6 +11,9 @@
 (package! evil-escape :disable t)
 
 (package! key-chord)
+;; Allows rebinding whole prefix trees
+(package! rebinder :recipe (:host github :repo "darkstego/rebinder.el"))
+
 ;; (package! evil-collection) ;; included already.
 (package! evil-quickscope)
 ;; String modification functions
@@ -56,8 +59,32 @@
 ;; (package! persp-mode)
 (package! projectile)
 
-;; Allows rebinding whole prefix trees
-(package! rebinder :recipe (:host github :repo "darkstego/rebinder.el"))
+(package! all-the-icons-dired)
+(package! bufler)
+
+(package! dockerfile-mode)
+(package! pkgbuild-mode
+  :recipe (:host github
+            :repo "juergenhoetzel/pkgbuild-mode"))
+(package! vimrc-mode)
+(package! systemd)
+(package! sxhkd-mode
+  :recipe (:host github
+            :repo "ymarco/sxhkd-mode"))
+
+
+;; For working with .Rmd files and better orgmode R support.
+(package! poly-R)
+(package! poly-org)
+
+;; (package! evil-better-visual-line)
+
+;; These are from the official snippets repo.
+(package! yasnippet-snippets
+  :recipe (:host github
+           :repo "AndreaCrotti/yasnippet-snippets"
+           :files ("*")))
+
 ;; Consider disabling these packages since they are heavier.
 ;; =:ui tabs=, =:ui indent-guides=, =:ui ligatures=, =:editor word-wrap= and =:ui
 
