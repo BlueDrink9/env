@@ -31,6 +31,8 @@ endif
 
 
 set encoding=utf-8
+" Need to add M flag before syntax and filetype, because they source menu.vim.
+set guioptions+=M
 " For highlighting, and color schemes
 " Should go before ft plugin on
 syntax on
@@ -146,13 +148,15 @@ if g:hasGUI
         let g:ideMode = 0
     endif
     if g:ideMode
+      echom "menu"
         set guioptions+=iagmrLtT
         " Larger gvim window
         set lines=999 columns=999
     else
         " Remove menus to speed up startup
-        " set guioptions=M
-        set guioptions-=mtT
+        set guioptions-=m
+        set guioptions-=t
+        set guioptions-=T
         set guioptions+=M
         " Larger gvim window
         set lines=40 columns=120
@@ -163,7 +167,7 @@ if g:hasGUI
     " keyboard can always be used)
     set guioptions+=c
     " Use terminal window to execute commands
-    set guioptions+=!
+    " set guioptions+=!
     set guioptions+=p
     " Enables some basic mouse input
     set mouse=a
