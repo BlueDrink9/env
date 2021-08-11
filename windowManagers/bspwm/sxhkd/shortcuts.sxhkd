@@ -29,6 +29,8 @@ ctrl + alt + k
     thunderbird
 ctrl + alt + s
   signal-desktop --use-tray-icon
+shift + alt + s
+  ferdi
 ctrl + alt + j
   joplin
 
