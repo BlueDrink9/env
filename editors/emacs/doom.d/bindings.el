@@ -66,6 +66,23 @@
       ;; "S-<right>"      #'+evil/window-move-right
       )
 
+(map! :n  "<right>" #'centaur-tabs-forward
+      :n  "<left>" #'centaur-tabs-backward
+      :n  "<C-tab>" #'centaur-tabs-forward
+      :n  "<C-iso-lefttab>" #'centaur-tabs-backward)
+;; Unsure if I want tabs or workspaces.
+;; (map! :desc "buf-next" :nv  "<up>" #'tabnext)
+;; (map! :desc "buf-next" :nv  "<down>" #'evil-ex "tabprev")
+(map! :n  "<up>"      #'+workspace/switch-left
+      :n  "<down>"    #'+workspace/switch-right
+)
+(map! :map evil-window-map
+      "["    #'persp-prev
+      "]"    #'persp-next
+      "S-["    #'+workspace/swap-left
+      "S-]"    #'+workspace/swap-right
+      )
+
 (map! :n
       "S-<left>"       #'(lambda () (interactive) (evil-window-increase-width 5))
       "S-<right>"      #'(lambda () (interactive) (evil-window-increase-width 5))
@@ -77,19 +94,6 @@
       "C-<up>"         #'(lambda () (interactive) (evil-window-decrease-height 5))
       )
 
-
-(map! :n  "<right>" #'centaur-tabs-forward
-      :n  "<left>" #'centaur-tabs-backward
-      :n  "<C-tab>" #'centaur-tabs-forward
-      :n  "<C-iso-lefttab>" #'centaur-tabs-backward)
-;; Unsure if I want tabs or workspaces.
-;; (map! :desc "buf-next" :nv  "<up>" #'tabnext)
-;; (map! :desc "buf-next" :nv  "<down>" #'evil-ex "tabprev")
-(map! :n  "<up>"      #'+workspace/switch-left
-      :n  "<down>"    #'+workspace/switch-right)
-(map! :map evil-window-map
-      "]"    #'persp-next
-      "["    #'persp-prev)
 
 
 (map! :leader
