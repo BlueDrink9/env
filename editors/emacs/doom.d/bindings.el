@@ -1,9 +1,10 @@
 ;;; mappings.el -*- lexical-binding: t; -*-
 
 ;; It is important keys are bound after the keymap is loaded.  For local keys,
-;; specify the mode map and include an `:after` entry for the package that
-;; defines that mode.
-;; For mapping evil-local commands, ensure state (:nvio) is specified after the :map
+;; include an `:after` entry for the package that defines that mode, then
+;; specify the mode `:map`.
+;; For mapping evil-local commands, ensure state (:nvio) is specified after
+;; `:after` and `:map`.
 ;; Eg: Map 'r' in normal mode to repeat pytest.
 ;; (map! :after python
 ;;       :map python-mode-map
@@ -22,12 +23,13 @@
       :i (general-chord "vk") 'evil-normal-state)
 
 (require 'rebinder)
+(rebinder-hook-to-mode 'evil-normal-state-map 'evil-normal-state-entry-hook)
+(rebinder-hook-to-mode 'evil-visual-state-map 'evil-visual-state-entry-hook)
 ;; Replace prefixes C-x and leader c
 ;; (map! :n :leader "C-x" (rebinder-dynamic-binding "C-x"))
 ;; For some reason using :prefix causes an error with this function.
-(map! :desc "C-x" :n "SPC C-x" (rebinder-dynamic-binding "C-x"))
-(rebinder-hook-to-mode 'evil-normal-state-map 'evil-normal-state-entry-hook)
-(rebinder-hook-to-mode 'evil-visual-state-map 'evil-visual-state-entry-hook)
+(map! :desc "C-x" :nv "SPC C-x" (rebinder-dynamic-binding "C-x"))
+(map! :desc "C-c" :nv "S-SPC" (rebinder-dynamic-binding "C-c"))
 
 ;; Swap ;, :
 (map! :nv
@@ -284,12 +286,13 @@
       :vo "i%" 'mark-whole-buffer)
 
 (add-hook 'dired-mode-hook (lambda ()
-                                       (setq doom-localleader-key "\\")
-                                       (map! "RET" #'dired-find-file
-                                             "RET RET" #'dired-find-file
-                                             "e" #'dired-find-file
-                                             "backspace" #'dired-up-directory)
-                                       ))
+                             (setq doom-localleader-key "\\")
+                             ))
+(map! :map dired-mode-map
+      "RET" #'dired-find-file
+      "RET RET" #'dired-find-file
+      "e" #'dired-find-file
+      "backspace" #'dired-up-directory)
 
 (defun my/toggle-search-highlight ()
   (setq evil-ex-substitute-highlight-all (not evil-ex-substitute-highlight-all))
