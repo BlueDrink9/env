@@ -286,12 +286,21 @@
 ;; This may be more flexible instead of evil-delete-whole-line.
 ;; ('evil-change "d")
 
-(map! :vo "a%" 'mark-whole-buffer
-      :vo "i%" 'mark-whole-buffer)
+(map! :vo "a%" #'mark-whole-buffer
+      :vo "i%" #'mark-whole-buffer)
 
-(add-hook 'dired-mode-hook (lambda ()
-                             (setq doom-localleader-key "\\")
-                             ))
+(map! :n "C-s" #'+vterm/toggle)
+(map! :map vterm-mode-map
+      :ni "C-s" #'+vterm/toggle)
+;; (add-hook! 'vterm-mode-hook (
+;;   ;; (key-chord-define-local "kv" #'vterm/toggle
+;; ;; key-chord-define-local "hv" #'vterm/toggle
+;;   ;; key-chord-define-local "vk" nil
+;;    ;; key-chord-unset-local "kv"
+;;    ;; key-chord-mode -1
+;;                   ))
+
+(add-hook! 'dired-mode-hook (setq doom-localleader-key "\\"))
 (map! :map dired-mode-map
       "RET" #'dired-find-file
       "RET RET" #'dired-find-file
