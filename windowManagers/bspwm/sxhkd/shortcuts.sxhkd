@@ -19,7 +19,7 @@ super + e
 
 super + v
     gvim
-    ctrl + alt + e
+ctrl + alt + e
     emacs
 
 ctrl + alt + p
