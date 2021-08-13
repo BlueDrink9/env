@@ -128,3 +128,7 @@ fi
 # function redirect(){ exec 2>&8; }
 # trap "redirect;" DEBUG
 # PROMPT_COMMAND='undirect;'
+export MYFLY_KEY_SCHEME=vim
+export MCFLY_FUZZY=true
+export MCFLY_INTERFACE_VIEW=BOTTOM
+export MCFLY_HISTORY_LIMIT=10000
