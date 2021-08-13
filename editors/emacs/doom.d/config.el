@@ -4,6 +4,7 @@
 ; TODO: jumping to mark should put mark in middle of view
 ; TODO: scrolloff
 ; TODO: viminfo-style savings (persistend jump list, registers)
+; TODO: Bacsspace undoes tab
 
 (setq script_dir (file-name-directory (or load-file-name buffer-file-name)))
 (load-file (concat script_dir "bindings.el"))
@@ -210,6 +211,7 @@
 ;;       (insert (+workspace--tabline))))
 ;;   (run-with-idle-timer 1 t #'display-workspaces-in-minibuffer)
 ;;   (+workspace/display))
+
 (use-package! pkgbuild-mode
   :mode "\\PKGBUILD")
   (use-package! vimrc-mode
@@ -223,3 +225,19 @@
   :config
   (put 'dockerfile-image-name 'safe-local-variable #'stringp)
   )
+
+;; For terminal (at least, iterm)
+(after! term-cursor
+  (global-term-cursor-mode))
+
+
+;; IDK if this is even real
+(after! dired-k
+        (setq dired-k-human-readable t))
+;; IDK if this is even real
+(setq +ivy-project-search-engines '(rg))
+
+(after! markdown
+  (use-package! poly-markdown))
+(after! org
+  (use-package! poly-org))

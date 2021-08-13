@@ -14,6 +14,12 @@
 ;; Allows rebinding whole prefix trees
 (package! rebinder :recipe (:host github :repo "darkstego/rebinder.el"))
 
+;; These are from the official snippets repo.
+(package! yasnippet-snippets
+  :recipe (:host github
+           :repo "AndreaCrotti/yasnippet-snippets"
+           :files ("*")))
+
 ;; (package! evil-collection) ;; included already.
 (package! evil-quickscope)
 ;; String modification functions
@@ -72,18 +78,17 @@
   :recipe (:host github
             :repo "ymarco/sxhkd-mode"))
 
-
+;; Combine R and markdown mode in one buffer with polymode
 ;; For working with .Rmd files and better orgmode R support.
+(package! polymode)
 (package! poly-R)
 (package! poly-org)
+(package! poly-markdown)
+
 
 ;; (package! evil-better-visual-line)
 
-;; These are from the official snippets repo.
-(package! yasnippet-snippets
-  :recipe (:host github
-           :repo "AndreaCrotti/yasnippet-snippets"
-           :files ("*")))
+(package! term-cursor :recipe (:host github :repo "h0d/term-cursor.el" :files ("*.el")))
 
 ;; Consider disabling these packages since they are heavier.
 ;; =:ui tabs=, =:ui indent-guides=, =:ui ligatures=, =:editor word-wrap= and =:ui
