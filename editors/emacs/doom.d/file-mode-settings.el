@@ -3,21 +3,10 @@
 ;; Use variable width fonts and soft wrap for all prose filetypes
 (add-hook 'text-mode-hook
           (lambda ()
-            (variable-pitch-mode 1)
+            (mixed-pitch-mode 1)
             (visual-line-mode)
             ;; (setq doom-modeline-enable-word-count t)
             ))
-;; Exceptions for variable pitch text mode faces.
-(add-hook 'text-mode-hook
-          '(lambda ()
-             (mapc
-              (lambda (face)
-                (set-face-attribute face nil :inherit 'fixed-pitch))
-              (list 'line-number
-                    'show-paren-match
-                    'show-paren-mismatch
-                    'sp-show-pair-enclosing
-                    ))))
 
 ;; Use soft wraps instead of hard. Only enable if found to be neccessary.
 ;; (remove-hook 'text-mode-hook #'auto-fill-mode)
@@ -38,45 +27,39 @@
   )
 (setq markdown-fontify-code-blocks-natively 1)
 (setq markdown-header-scaling 1)
-(add-hook 'markdown-mode-hook
-          '(lambda ()
-             (mapc
-              (lambda (face)
-                (set-face-attribute face nil :inherit 'fixed-pitch))
-              (list 'markdown-inline-code-face
-                    'markdown-code-face
-                    ))))
 
-;;; LaTeX
-(add-hook 'latex-mode-hook
-          '(lambda ()
-             (mapc
-              (lambda (face)
-                (set-face-attribute face nil :inherit 'fixed-pitch))
-              (list 'font-latex-verbatim-face
-                    'font-lock-keyword-face
-                    ;; 'font-lock-sedate-face
-                    'font-lock-function-name-face
-                    'tex-verbatim
-                    'font-latex-doctex-documentation-face
-                    'font-latex-doctex-preprocessor-face
-                    'TeX-error-description-help
-                    'TeX-error-description-warning
-                    'TeX-error-description-tex-said
-                    ))))
+;; Auto update toc
+(after! toc-org
+  ;; enable in markdown, too
+  (add-hook 'markdown-mode-hook 'toc-org-mode))
 
-;;; Org
-;; Exclude these faces from using variable-pitch fonts.
-(add-hook 'org-mode-hook
-            '(lambda ()
-               (mapc
-                (lambda (face)
-                  (set-face-attribute face nil :inherit 'fixed-pitch))
-                (list 'org-code
-                      'org-link
-                      'org-block
-                      'org-table
-                      'org-block-begin-line
-                      'org-block-end-line
-                      'org-meta-line
-                      'org-document-info-keyword))))
+;; Emacs for statistics (R)
+(after! ess
+  ;; (require 'ess-site)
+  ;; (require 'ess-mode)
+  ;;   (define-key evil-normal-state-map (kbd "<SPC-e>") 'ess-execute))
+
+  ;; Set ESS options
+  (setq
+   ess-auto-width 'window
+   ess-use-auto-complete nil
+   ess-use-company 't
+   ;; ess-r-package-auto-set-evaluation-env nil
+   inferior-ess-same-window 't
+   ess-indent-with-fancy-comments nil ; don't indent comments
+   ess-eval-visibly t                 ; enable echoing input
+   ;; ess-eval-empty t                   ; don't skip non-code lines.
+   ess-ask-for-ess-directory nil ; start R in the working directory by default
+   ;; ess-R-font-lock-keywords      ; font-lock, but not too much
+   (quote
+    ((ess-R-fl-keyword:modifiers)
+     (ess-R-fl-keyword:fun-defs . t)
+     (ess-R-fl-keyword:keywords . t)
+     (ess-R-fl-keyword:assign-ops  . t)
+     (ess-R-fl-keyword:constants . 1)
+     (ess-fl-keyword:fun-calls . t)
+     (ess-fl-keyword:numbers)
+     (ess-fl-keyword:operators . t)
+     (ess-fl-keyword:delimiters)
+     (ess-fl-keyword:=)
+     (ess-R-fl-keyword:F&T)))))

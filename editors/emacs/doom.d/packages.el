@@ -66,6 +66,7 @@
 (package! projectile)
 
 (package! all-the-icons-dired)
+(package! mixed-pitch)
 (package! bufler)
 
 (package! dockerfile-mode)
