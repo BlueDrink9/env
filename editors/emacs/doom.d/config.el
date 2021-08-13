@@ -161,8 +161,12 @@
 (after! company
   (setq company-idle-delay 0.5
         company-minimum-prefix-length 2)
-  (setq company-show-numbers t)
+  (setq company-show-quick-access t)
   (add-hook! 'evil-normal-state-entry-hook #'company-abort)) ;; make aborting less annoying.
+
+; Floating completion pop-up for company, with icons and documentation!
+(add-hook! company-mode company-box-mode)
+
 (setq-default history-length 1000)
 (setq-default prescient-history-length 1000)
 

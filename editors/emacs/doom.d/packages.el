@@ -65,6 +65,8 @@
 ;; (package! persp-mode)
 (package! projectile)
 
+; Floating completion pop-up for company, with icons and documentation!
+(package! company-box)
 (package! all-the-icons-dired)
 (package! mixed-pitch)
 (package! bufler)

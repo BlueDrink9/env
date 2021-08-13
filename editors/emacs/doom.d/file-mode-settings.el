@@ -8,7 +8,7 @@
             ;; (setq doom-modeline-enable-word-count t)
             ))
 
-;; Use soft wraps instead of hard. Only enable if found to be neccessary.
+;; Use soft wraps instead of hard. Only enable if found to be necessary.
 ;; (remove-hook 'text-mode-hook #'auto-fill-mode)
 ;; (add-hook 'message-mode-hook #'word-wrap-mode)
 
