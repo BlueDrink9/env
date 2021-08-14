@@ -27,6 +27,10 @@ picom --config "$DOTFILES_DIR"/desktop_elements/picom.conf --experimental-backen
 
 "$DOTFILES_DIR"/windowManagers/bspwm/scripts/floating_noborder.sh &
 
+# Daemon tracks which media player has most recent activity, which ensures
+# behavior acts on most expected player.
+playerctld daemon
+
 # flashfocus &
 # pgrep autokey-gtk || autokey-gtk \
 #    > $HOME/.logs/autokey.log 2> $HOME/.logs/autokey.err &
