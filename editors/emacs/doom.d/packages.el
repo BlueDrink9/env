@@ -53,6 +53,10 @@
 ;; (package! org-pretty-table
 ;;   :recipe (:host github :repo "Fuco1/org-pretty-table"))
 ;; (package! graphviz-dot-mode)
+;; Hide markup symbols unless in them.
+(package! org-appear
+  :recipe (:host github
+           :repo "awth13/org-appear"))
 
 ;; Hook into calibre and read ebooks
 ;; (package! calibredb)
