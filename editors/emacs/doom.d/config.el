@@ -201,8 +201,9 @@
 (setq TeX-auto-save t) ; Parse on save
 (setq TeX-parse-self t) ; Parse on load
 (setq-default TeX-master nil)
+(after! latex
 (setf (nth 1 (assoc "LaTeX" TeX-command-list))
-      "%`%l –output-directory=latexbuild -interaction=nonstopmode -outdir=latexbuild %(mode)%' %t")
+      "%`%l –output-directory=latexbuild -interaction=nonstopmode -outdir=latexbuild %(mode)%' %t"))
 ;;       max_print_line=2000 latexmk -verbose -file-line-error -synctex=1
 ;;       -interaction=nonstopmode -pdf -outdir=latexbuild -pvc -e
 
