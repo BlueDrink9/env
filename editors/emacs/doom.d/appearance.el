@@ -15,16 +15,24 @@
 (defun my/font-exists (font)
   "check if font exists"
   (if (null (x-list-fonts font)) nil t))
+
 (setq my/fonts '("SauceCodePro NF" "Source Code Pro"))
 (setq my/proportional-fonts '("Source Sans Pro" "Consolas" "Ariel"))
 
+(catch 'done
 (dolist (font my/fonts)
-        (if (my/font-exists font) (setq doom-font (font-spec :family font :size 16)))
-        )
+  (if (my/font-exists font) (progn
+                             (setq doom-font (font-spec :family font :size 16))
+                             (throw 'done nil)
+                             ))))
 
-(dolist (font my/proportional-fonts)
-        (if (my/font-exists font) (setq doom-font (font-spec :family font :size 16)))
-        )
+
+(catch 'done
+  (dolist (font my/proportional-fonts)
+    (if (my/font-exists font) (progn
+                                (setq doom-variable-pitch-font (font-spec :family font :size 16))
+                                (throw 'done nil)
+                                ))))
 
 ;; ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; ;; available. You can either set `doom-theme' or manually load a theme with the
