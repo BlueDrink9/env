@@ -201,8 +201,10 @@
 (setq TeX-auto-save t) ; Parse on save
 (setq TeX-parse-self t) ; Parse on load
 (setq-default TeX-master nil)
-;; (setf (nth 1 (assoc "LaTeX" TeX-command-list))
-;;       "%`%l –output-directory=latexbuild -interaction=nonstopmode %(mode)%' %t")
+(setf (nth 1 (assoc "LaTeX" TeX-command-list))
+      "%`%l –output-directory=latexbuild -interaction=nonstopmode -outdir=latexbuild %(mode)%' %t")
+;;       max_print_line=2000 latexmk -verbose -file-line-error -synctex=1
+;;       -interaction=nonstopmode -pdf -outdir=latexbuild -pvc -e
 
 ;; If creating commit with nothing staged, auto-stage current file.
 (setq magit-commit-ask-to-stage "stage")
