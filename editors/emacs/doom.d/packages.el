@@ -69,7 +69,7 @@
 (package! company-box)
 (package! all-the-icons-dired)
 (package! mixed-pitch)
-(package! bufler)
+;; (package! bufler)
 
 (package! dockerfile-mode)
 (package! pkgbuild-mode
