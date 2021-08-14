@@ -51,6 +51,7 @@ super + shift + q
   qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1
 
 # Media and volume controls
+# XF86AudioNext
 super + m; {space,h,p,n}
   playerctl {play-pause,stop,prev,next}
 

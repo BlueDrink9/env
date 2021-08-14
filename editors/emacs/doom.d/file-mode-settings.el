@@ -32,6 +32,8 @@
 (after! toc-org
   ;; enable in markdown, too
   (add-hook 'markdown-mode-hook 'toc-org-mode))
+;; Set default latex packages for org doc
+;; (after! org (add-to-list 'org-latex-default-packages-alist ...))
 
 ;; Emacs for statistics (R)
 (after! ess

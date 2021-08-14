@@ -247,3 +247,6 @@
   (use-package! poly-markdown))
 (after! org
   (use-package! poly-org))
+
+;; Hides markup symbols until you enter the word
+(add-hook! org-mode :append #'org-appear-mode)
