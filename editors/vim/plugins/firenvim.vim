@@ -77,6 +77,7 @@ function! s:FirenvimSetPageOptions()
     elseif l:bufname =~? 'stackexchange.com' || l:bufname =~? 'stackoverflow.com'
         set ft=markdown
     elseif l:bufname =~? 'slack.com' || l:bufname =~? 'gitter.im'
+                \ || l:bufname =~? 'webchat.kde.org'
         set ft=markdown
         setlocal norelativenumber
         setlocal nonumber
