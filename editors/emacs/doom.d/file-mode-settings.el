@@ -41,6 +41,25 @@
   ;; (require 'ess-mode)
   ;;   (define-key evil-normal-state-map (kbd "<SPC-e>") 'ess-execute))
 
+;;; LaTeX
+;; (setq org-latex-pdf-process (list "latexmk -shell-escape -f -pdfxe %f"))
+(add-hook 'latex-mode-hook
+          '(lambda ()
+             (mapc
+              (lambda (face)
+                (set-face-attribute face nil :inherit 'fixed-pitch))
+              (list 'font-latex-verbatim-face
+                    'font-lock-keyword-face
+                    ;; 'font-lock-sedate-face
+                    'font-lock-function-name-face
+                    'tex-verbatim
+                    'font-latex-doctex-documentation-face
+                    'font-latex-doctex-preprocessor-face
+                    'TeX-error-description-help
+                    'TeX-error-description-warning
+                    'TeX-error-description-tex-said
+                    ))))
+
   ;; Set ESS options
   (setq
    ess-auto-width 'window

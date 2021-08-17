@@ -31,7 +31,8 @@
 ;; Tab bar customisation
 (package! awesome-tab)
 ;; Tab key behavior
-(package! smart-tab)
+;; (package! smart-tab)
+(package! smart-tab :recipe (:host git.genehack.net :repo "genehack/smart-tab" :files ("*.el")))
 
 ;; Autosaving
 (package! super-save)
@@ -68,6 +69,7 @@
 ; Floating completion pop-up for company, with icons and documentation!
 (package! company-box)
 (package! all-the-icons-dired)
+
 (package! mixed-pitch)
 ;; (package! bufler)
 
@@ -92,6 +94,8 @@
 ;; (package! evil-better-visual-line)
 
 (package! term-cursor :recipe (:host github :repo "h0d/term-cursor.el" :files ("*.el")))
+
+(package! forge)
 
 ;; Consider disabling these packages since they are heavier.
 ;; =:ui tabs=, =:ui indent-guides=, =:ui ligatures=, =:editor word-wrap= and =:ui

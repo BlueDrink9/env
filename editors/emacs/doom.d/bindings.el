@@ -231,15 +231,14 @@
 ;; TODO Magit: Allow w navigations, easymotion? For yanking commit diffs.
 ;; Overwrite magit c-j and c-k bindings to maintain ability to move windows.
 ;; Add space mapping to cancel commit
-(map! :map git-commit-mode-map
-      :after git-commit
+(map! :after git-commit
+      :map git-commit-mode-map
       :desc "confirm commit message"
-      :in "C-<return>" 'with-editor-finish)
-(map! :map git-commit-mode-map
-      :after git-commit
-      :desc "cancel commit"
-      :leader
-      :n "C-c" 'with-editor-cancel)
+       "C-<return>" 'with-editor-finish)
+;; (map! :mode git-commit-major-mode
+;;       :desc "cancel commit"
+;;       :leader
+;;       :n "C-c" 'with-editor-cancel)
 
 ;; (map! :leader
 ;;       (:prefix-map ("a" . "applications")
@@ -248,10 +247,13 @@
 ;;         :desc "Search journal entry" "s" #'org-journal-search)))
 
 ;; Apparently have to add mapping to every file mode?
-(after! smart-tab
-  (add-hook 'find-file-hook (function (lambda ()
-                                        (local-set-key (kbd "<tab>") 'smart-tab))))
-  )
+;; (after! smart-tab
+  ;; (add-hook 'find-file-hook (function (lambda ()
+  ;; (map! :i "TAB" 'smart-tab))
+  ;; )))
+  ;; )
+;; :map company-active-map
+;; :i "<tab>" #'company-complete-common
 
 ;; Minibuffer only one escape to exit, kj to navigate history.
 (map! :map (minibuffer-local-map evil-ex-completion-map evil-ex-search-keymap)
@@ -294,34 +296,69 @@
   (save-excursion (delete-region beg end)
                   (goto-char beg)
                   (call-interactively 'evil-paste-before 1)))
-(map! :n "d" (general-key-dispatch 'evil-delete
-                    "r" 'my/evil-replace-with-kill-ring
-                    "d" 'evil-delete-whole-line))
+(map! :n "d" (general-key-dispatch #'evil-delete
+               "d" #'evil-delete-whole-line
+               "r" #'my/evil-replace-with-kill-ring))
 ;; v inherits n-mode mappings for d, so explictly map to delete in visual mode.
 (map! :v "d" #'evil-delete)
 ;; This may be more flexible instead of evil-delete-whole-line.
 ;; ('evil-change "d")
 
-(map! :vo "a%" #'mark-whole-buffer
-      :vo "i%" #'mark-whole-buffer)
+(map! :vo "a%" #'+evil:whole-buffer-txtobj
+      :vo "i%" #'+evil:whole-buffer-txtobj)
 
 (map! :n "C-s" #'+vterm/toggle)
 (map! :map vterm-mode-map
       :ni "C-s" #'+vterm/toggle)
-;; (add-hook! 'vterm-mode-hook (
-;;   ;; (key-chord-define-local "kv" #'vterm/toggle
-;; ;; key-chord-define-local "hv" #'vterm/toggle
-;;   ;; key-chord-define-local "vk" nil
-;;    ;; key-chord-unset-local "kv"
-;;    ;; key-chord-mode -1
-;;                   ))
+
+;; ;; This doesn't re-enable it on buffer change though!
+;; (defun my/vterm-disable-key-chord ()
+;;   "Counter-act `key-chord-mode' global minor mode."
+;;   (add-hook 'after-change-major-mode-hook
+;;             (lambda () (key-chord-mode 0))
+;;             :append :local))
+;; (add-hook 'vterm-mode-hook 'my/vterm-disable-key-chord)
+
+;; (defun my/vterm-key-chord-toggle ()
+;;   (if (eq major-mode 'vterm-mode)
+;;       (key-chord-mode -1)
+;;     (print "hello")
+;;     (key-chord-mode 1))
+;;   )
+;; ;;   This hook is run after every major mode change so really isn't an ideal way
+;; ;;   to fix this.
+;; (add-hook 'change-major-mode-hook #'my/vterm-key-chord-toggle)
+;; ;; (add-hook! 'vterm-mode-hook ()
+;; ;;   )
+
+;; (add-hook! 'vterm-mode-hook ()
+;;   ;; (key-chord-mode -1)
+;; (evil-local-set-key 'insert (general-chord "kv") #'+vterm/toggle)
+;; (evil-local-set-key 'insert (general-chord "vk") #'+vterm/toggle)
+;; )
+;; (after! vterm
+;;  (key-chord-define vterm-mode-map "kv"  #'+vterm/toggle)
+;; )
+;; (map!
+;;  :map vterm-mode-map
+;;       :i "<key-chord> [ ? v ? k]" nil
+;;       :i "<key-chord> k v" nil
+;;       :i "<key-chord> k" nil
+;;       ;; :i (general-chord "vk") nil
+;;       :i "k" #'self-insert-command
+;;       :i "v" #'self-insert-command
+;;       )
 
 (add-hook! 'dired-mode-hook (setq doom-localleader-key "\\"))
 (map! :map dired-mode-map
       "RET" #'dired-find-file
-      "RET RET" #'dired-find-file
       "e" #'dired-find-file
       "backspace" #'dired-up-directory)
+
+(map! :n "y" (general-key-dispatch #'evil-yank
+                "y" #'evil-collection-magit-yank-whole-line
+                "o" doom-leader-toggle-map))
+(map! :v "y" #'evil-yank)
 
 (defun my/toggle-search-highlight ()
   (setq evil-ex-substitute-highlight-all (not evil-ex-substitute-highlight-all))
@@ -331,13 +368,74 @@
   )
 (map! :leader
       (:prefix ("t")
-        :desc "Search result highlighting" "h" #'evil-ex-nohighlight))
-        ;; :desc "Search result highlighting" "h" #'my/toggle-search-highlight))
-
-(map! :leader
-      (:prefix ("t")
+        :desc "whitespace-mode" "l" #'whitespace-mode
+        :desc "Center text in window" "=" #'centered-window-mode-toggle
+        :desc "Search result highlighting" "h" #'evil-ex-nohighlight
         :desc "Super-save autosave" "a" #'super-save-mode))
 
-(map! :leader
-      (:prefix ("t")
-        :desc "whitespace-mode" "l" #'whitespace-mode))
+
+(after! helm
+  ;; I want backspace to go up a level, like ivy
+  (add-hook! 'helm-find-files-after-init-hook
+    (map! :map helm-find-files-map
+          "<DEL>" #'helm-find-files-up-one-level)))
+
+(map! :localleader
+      :map markdown-mode-map
+      :prefix ("i" . "Insert")
+      :desc "Blockquote"    "q" 'markdown-insert-blockquote
+      :desc "Bold"          "b" 'markdown-insert-bold
+      :desc "Code"          "c" 'markdown-insert-code
+      :desc "Emphasis"      "e" 'markdown-insert-italic
+      :desc "Footnote"      "f" 'markdown-insert-footnote
+      :desc "Code Block"    "s" 'markdown-insert-gfm-code-block
+      :desc "Image"         "i" 'markdown-insert-image
+      :desc "Link"          "l" 'markdown-insert-link
+      :desc "List Item"     "n" 'markdown-insert-list-item
+      :desc "Pre"           "p" 'markdown-insert-pre
+      (:prefix ("h" . "Headings")
+        :desc "One"   "1" 'markdown-insert-atx-1
+        :desc "Two"   "2" 'markdown-insert-atx-2
+        :desc "Three" "3" 'markdown-insert-atx-3
+        :desc "Four"  "4" 'markdown-insert-atx-4
+        :desc "Five"  "5" 'markdown-insert-atx-5
+        :desc "Six"   "6" 'markdown-insert-atx-6))
+
+;; (after! org (map! :localleader
+;;       :map org-mode-map
+;;       :desc "Eval Block" "e" 'ober-eval-block-in-repl
+;;       (:prefix "o"
+;;         :desc "Tags" "t" 'org-set-tags
+;;         :desc "Roam Bibtex" "b" 'orb-note-actions
+;;         (:prefix ("p" . "Properties")
+;;           :desc "Set" "s" 'org-set-property
+;;           :desc "Delete" "d" 'org-delete-property
+;;           :desc "Actions" "a" 'org-property-action
+;;           )
+;;         )
+;;       (:prefix ("i" . "Insert")
+;;         :desc "Link/Image" "l" 'org-insert-link
+;;         :desc "Item" "o" 'org-toggle-item
+;;         :desc "Citation" "c" 'org-ref-helm-insert-cite-link
+;;         :desc "Footnote" "f" 'org-footnote-action
+;;         :desc "Table" "t" 'org-table-create-or-convert-from-region
+;;         :desc "Screenshot" "s" 'org-download-screenshot
+;;         (:prefix ("b" . "Math")
+;;          :desc "Bold" "f" 'org-make-bold-math
+;;          :desc "Blackboard" "b" 'org-make-blackboard-math
+;;          :desc "Vert" "v" 'org-make-vert-math
+;;          )
+;;         (:prefix ("h" . "Headings")
+;;           :desc "Normal" "h" 'org-insert-heading
+;;           :desc "Todo" "t" 'org-insert-todo-heading
+;;           (:prefix ("s" . "Subheadings")
+;;             :desc "Normal" "s" 'org-insert-subheading
+;;             :desc "Todo" "t" 'org-insert-todo-subheading
+;;             )
+;;           )
+;;         (:prefix ("e" . "Exports")
+;;           :desc "Dispatch" "d" 'org-export-dispatch
+;;           )
+;;         )
+;;       )
+;;   )
