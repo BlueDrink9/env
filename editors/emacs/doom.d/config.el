@@ -1,9 +1,18 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-; TODO: insert single char; ex command; unimparied options;
+; TODO: auto-completion behavior: tab to force completion to nearest substring,
+; tab to cycle menu if open, c-e to accept. Auto-accept if not a snippet (ie if
+; cycling stops, that is the thing in buffer.)
 ; TODO: autobracket
 ; TODO: jumping to mark should put mark in middle of view
 ; TODO: scrolloff
 ; TODO: viminfo-style savings (persistend jump list, registers)
+; TODO: pop-up terminal on C-s
+; TODO: visual line k gk (may be package). Also investigate visual-line-mode full stop. Do I want code to wrap? Yes, and movements should act on actual line, not visual. But for prose, movements should act on visual. So want global-visual-line-mode, I think. Doom has word-wrap module... what do?
+; TODO: Listchars?
+; TODO: binding to enable subword mode if not enabled. Hook evil-motion to remove hook and disable mode again.
+; TODO: create exceptions for text-mode using prop-width. Add yaml to exceptions (for some reason it inherits from text-mode.)
+; TODO: magit c-k change buffers
+;
 
 (setq script_dir (file-name-directory (or load-file-name buffer-file-name)))
 (load-file (concat script_dir "bindings.el"))
@@ -47,9 +56,10 @@
       make-backup-files t)
 (setq scroll-margin 2)
 ;; Autosaves
-(super-save-mode +1)
+;; (super-save-mode +1)
 (after! super-save
-  (setq super-save-remote-files nil)
+  ;; (setq super-save-remote-files nil)
+  (super-save-mode 1)
   ;; (setq super-save-exclude '(".gpg"))
   (add-to-list 'super-save-hook-triggers 'evil-insert-state-exit-hook))
 
@@ -89,13 +99,12 @@
 (sp-local-pair 'prog-mode "[" nil :post-handlers '((indent-between-pair "RET")))
 (sp-local-pair 'prog-mode "(" nil :post-handlers '((indent-between-pair "RET")))
 
-;; Fancy bullets in org mode, heavy plugin.
+;; Fancy bullets in org mode, heavy plugin so remove.
 (remove-hook 'org-mode-hook #'org-superstar-mode)
+  (setq smart-tab-using-hippie-expand t)
 
-   ;; (after! tabbar
-   ;;   (setq org-fontify-quote-and-verse-blocks nil
-   ;;         org-startup-indented nil))
 (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
+
 ;; Use cx for exchange mapping
 (after! evil-exchange
   (evil-exchange-cx-install))
@@ -210,6 +219,29 @@
 ;;       (insert (+workspace--tabline))))
 ;;   (run-with-idle-timer 1 t #'display-workspaces-in-minibuffer)
 ;;   (+workspace/display))
+
+
+;; (setq LaTeX-command-style '(("" "%(PDF)%(latex) -file-line-error %S%(PDFout)")))
+;;     (setq auctex-latexmk-inherit-TeX-PDF-mode t)
+
+;; (setq +latex-viewers '(pdf-tools))
+;;
+;; Undo the helm text enlargement in childframes
+(setq +helm-posframe-text-scale 0)
+
+;; This supresses the output window for async commands.
+(defun async-shell-command-no-window
+    (command)
+  (interactive)
+  (let
+      ((display-buffer-alist
+        (list
+         (cons
+          "\\*Async Shell Command\\*.*"
+          (cons #'display-buffer-no-window nil)))))
+    (async-shell-command
+     command)))
+
 (use-package! pkgbuild-mode
   :mode "\\PKGBUILD")
   (use-package! vimrc-mode
@@ -223,3 +255,4 @@
   :config
   (put 'dockerfile-image-name 'safe-local-variable #'stringp)
   )
+

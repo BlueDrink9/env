@@ -48,6 +48,7 @@
                     ))))
 
 ;;; LaTeX
+;; (setq org-latex-pdf-process (list "latexmk -shell-escape -f -pdfxe %f"))
 (add-hook 'latex-mode-hook
           '(lambda ()
              (mapc

@@ -25,7 +25,8 @@
 ;; Tab bar customisation
 (package! awesome-tab)
 ;; Tab key behavior
-(package! smart-tab)
+;; (package! smart-tab)
+(package! smart-tab :recipe (:host git.genehack.net :repo "genehack/smart-tab" :files ("*.el")))
 
 ;; Autosaving
 (package! super-save)
@@ -60,7 +61,7 @@
 (package! projectile)
 
 (package! all-the-icons-dired)
-(package! bufler)
+;; (package! bufler)
 
 (package! dockerfile-mode)
 (package! pkgbuild-mode
@@ -84,6 +85,8 @@
   :recipe (:host github
            :repo "AndreaCrotti/yasnippet-snippets"
            :files ("*")))
+
+(package! forge)
 
 ;; Consider disabling these packages since they are heavier.
 ;; =:ui tabs=, =:ui indent-guides=, =:ui ligatures=, =:editor word-wrap= and =:ui
