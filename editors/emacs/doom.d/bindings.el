@@ -28,8 +28,24 @@
 ;; Replace prefixes C-x and leader c
 ;; (map! :n :leader "C-x" (rebinder-dynamic-binding "C-x"))
 ;; For some reason using :prefix causes an error with this function.
-(map! :desc "C-x" :nv "SPC C-x" (rebinder-dynamic-binding "C-x"))
+(map! :desc "C-x" :leader "z" (rebinder-dynamic-binding "C-x"))
 (map! :desc "C-c" :nv "S-SPC" (rebinder-dynamic-binding "C-c"))
+;; (map! :desc "C-x" :nv "SPC z" #'Control-X-prefix)
+;; (map! :desc "C-c" :nv "S-SPC" #'mode-specific-command-prefix)
+(which-key-add-key-based-replacements "SPC z" "C-x")
+(which-key-add-key-based-replacements "S-SPC" "C-c")
+;; (map! :desc "C-c" :nv "S-SPC" (setq unread-command-events
+;;            (listify-key-sequence (kbd "C-c"))))
+
+(defun my/evil-collection-translations (_mode mode-keymaps &rest _rest)
+  (evil-collection-translate-key 'normal mode-keymaps
+    ;; these need to be unbound first; this needs to be in same statement
+    (kbd "C-j") nil
+    (kbd "C-k") nil
+    (kbd "M-j") (kbd "C-j")
+    (kbd "M-k") (kbd "C-k")
+    ))
+(add-hook! 'evil-collection-setup-hook #'my/evil-collection-translations)
 
 ;; Swap ;, :
 (map! :nv
