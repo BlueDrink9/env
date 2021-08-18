@@ -154,3 +154,6 @@ fi
 if command -v thefuck >/dev/null 2>&1; then
   eval $(thefuck --alias)
 fi
+
+# For AUR packages
+alias srcinfo='makepkg --printsrcinfo > .SRCINFO'
