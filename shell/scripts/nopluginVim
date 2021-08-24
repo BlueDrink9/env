@@ -1,0 +1,2 @@
+#!/bin/sh
+myVim --noplugin --cmd "let g:noPlugins=1" "$@"

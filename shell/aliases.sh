@@ -76,15 +76,15 @@ alias rg="rg --smart-case"
 editor="myVim"
 # Much faster startup for vim without plugins, or ide if I need it.
 IDEVim='myVim --cmd "let g:ideMode=1"'
-liteVim='myVim --cmd "let g:liteMode=1"'
 alias vi="liteVim"
-nopluginVim='myVim --noplugin --cmd "let g:noPlugins=1"'
-shelleditor='myVim --cmd "let g:liteMode=1" +"set ft=sh"'
+# liteVim and nopluginVim have been moved to dedicated scripts, for
+# discoverability outside shell.
+shelleditor='liteVim +"set ft=sh"'
 
 # You know it, baby. Shouldn't need to use nano ever.
 # Should also be getting a nice lite nvim where needed.
-export VISUAL="$liteVim"
-export EDITOR="$nopluginVim"
+export VISUAL="myVim"
+export EDITOR="liteVim"
 # Calling edit-and-execute-command in readline to open the editor actually
 # uses `fc` anyway
 export FCEDIT="$shelleditor"
@@ -105,11 +105,11 @@ alias :q="exit"
 alias :e="myVim"
 alias e="$editor"
 alias ide="$IDEVim"
-alias le="$liteVim"
-alias lle="$nopluginVim"
+alias le="$iteVim"
+alias lle="nopluginVim"
 # For when the system is super super slow.
 alias llle="myVim -u NONE -c 'set nocp | inore vk <esc> | inore kv <esc> | nnoremap ; :'"
-alias view="$liteVim -R"
+alias view="liteVim -R"
 alias e\?=fuzzyEdit
 # alias :Q="exit"
 # alias ZZ="exit"
@@ -133,7 +133,7 @@ alias lightColours="base16Reset"
 # Preview images in terminal, even over ssh.
 alias icat="kitty +kitten icat"
 
-alias dotfe="editor \"${DOTFILES_DIR}\"/shell/aliases.sh \"${DOTFILES_DIR}\"/shell/functions.sh"
+alias dotfe="$editor \"${DOTFILES_DIR}\"/shell/aliases.sh \"${DOTFILES_DIR}\"/shell/functions.sh"
 alias stowlocal="stow --dir=\"$HOME/.local/packages\" --target=\"$HOME/.local\""
 
 alias packi="pack install"

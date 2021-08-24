@@ -87,7 +87,12 @@ bindkey '^N' down-history
 # `v` is already mapped to visual mode, so we need to use a different key to
 # open Vim
 autoload edit-command-line; zle -N edit-command-line
-bindkey -M vicmd "^V" edit-command-line
+quick-edit-command-line(){
+  VISUAL="$FCEDIT" edit-command-line
+}
+zle -N quick-edit-command-line
+bindkey -M vicmd "^V" quick-edit-command-line
+bindkey -M vicmd "!" quick-edit-command-line
 
 # Expand history automatically on !!
 bindkey ' ' magic-space
