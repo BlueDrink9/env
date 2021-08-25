@@ -83,6 +83,20 @@ super + w; s: ctrl + {Left,Right,Up,Down}
   right  -$BSPWM_RESIZE_DELTA 0, \
   top    0 $BSPWM_RESIZE_DELTA, \
   bottom 0 -$BSPWM_RESIZE_DELTA}
+super + shift + {Left,Right,Up,Down}
+  bspc node --resize {\
+  left   -$BSPWM_RESIZE_DELTA 0, \
+  right  $BSPWM_RESIZE_DELTA 0, \
+  top    0 -$BSPWM_RESIZE_DELTA, \
+  bottom 0 $BSPWM_RESIZE_DELTA}
+# Contract
+super + shift + {Left,Right,Up,Down}
+  bspc node --resize {\
+  left   $BSPWM_RESIZE_DELTA 0, \
+  right  -$BSPWM_RESIZE_DELTA 0, \
+  top    0 $BSPWM_RESIZE_DELTA, \
+  bottom 0 -$BSPWM_RESIZE_DELTA}
+
 
 # # contract a window by moving one of its side inward
 # super + w; ctrl + shift + {Left,Down,Up,Right}
@@ -114,9 +128,9 @@ super + {_,shift + }Tab
 # 	bspc node -f @{parent,brother,first,second}
 
 # focus,swap, or move/warp the node in the given direction
-super + {_,shift + ,alt + shift + }{h,j,k,l}
+super + {_,shift + ,ctrl + }{h,j,k,l}
 	bspc node -{f,s,n} {west,south,north,east}
-super + w; m; {_, shift + ,alt + shift + }{h,j,k,l}
+super + w; m; {_, shift + ,ctrl + }{h,j,k,l}
 	bspc node -{n,s,n} {west,south,north,east}
 
 # focus the next/previous desktop in the current monitor
@@ -138,7 +152,24 @@ super + ctrl + shift + {1-9,0}
   # bspc desktop -f {prev,next}.local
   # bspc desktop focused -r && \
 
-### Monitor ###
+#----------------------------------------
+# Desktop
+#----------------------------------------
+
+# # Swap desktops within current monitor
+super + w; m; shift + {less,greater}
+  bspc desktop -s {prev,next}
+# Create a new desktop
+super + n
+    bspc monitor --add-desktops ' '
+# Delete current desktop
+super + shift + n
+    bspc desktop -r -f prev
+
+#----------------------------------------
+# Monitor
+#----------------------------------------
+
 # focus monitor
 super + alt + bracket{left,right}
   bspc monitor -f {prev, next}
@@ -156,9 +187,6 @@ super + w; m; alt + shift + bracket{left,right}
 super + w; m; alt + ctrl + bracket{left,right}
   bspc node -m {prev, next} --follow
 
-# # Swap desktops within current monitor
-super + w; m; shift + {less,greater}
-  bspc desktop -s {prev,next}
 # # Move desktop to different monitor
 super + w; m; alt + shift + {less,greater}
   bspc desktop -m {prev,next}
@@ -196,17 +224,6 @@ super + {w;} minus
 	bspc node @/ --balance
 
 
-#----------------------------------------
-# Desktop
-#----------------------------------------
-
-
-# Create a new desktop
-super + n
-    bspc monitor --add-desktops ' '
-# Delete current desktop
-super + shift + n
-    bspc desktop -r -f prev
 
 #----------------------------------------
 # Preselect
