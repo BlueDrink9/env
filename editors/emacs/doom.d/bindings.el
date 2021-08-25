@@ -312,3 +312,7 @@
 (map! :leader
       (:prefix ("t")
         :desc "Super-save autosave" "a" #'super-save-mode))
+
+(map! :leader
+      (:prefix ("t")
+        :desc "whitespace-mode" "l" #'whitespace-mode))
