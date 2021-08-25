@@ -1,17 +1,22 @@
 #! /bin/sh
-SXHKD_STATUS_FIFO="/run/user/$UID/sxhkd.fifo"
+SXHKD_STATUS_FIFO="/run/user/${UID}${DISPLAY}/sxhkd.fifo"
 if [ ! -e "${SXHKD_STATUS_FIFO}" ]; then
   mkfifo "${SXHKD_STATUS_FIFO}"
 fi
-sxhkd -m -1 -s "${SXHKD_STATUS_FIFO}" \
-  -c "$HOME/.config/sxhkd/sxhkdrc" \
-  "$DOTFILES_DIR"/windowManagers/bspwm/sxhkd/*.sxhkd \
-  >| $HOME/.logs/sxhkd.log 2>| $HOME/.logs/sxhkd.err &
-# Ensure reload config
-pkill -USR1 -x sxhkd;
+
+if ! pgrep -a "^sxhkd$" | grep "${SXHKD_STATUS_FIFO}" > /dev/null 2>&1; then
+  sxhkd -m -1 -s "${SXHKD_STATUS_FIFO}" \
+    -c "$HOME/.config/sxhkd/sxhkdrc" \
+    "$DOTFILES_DIR"/windowManagers/bspwm/sxhkd/*.sxhkd \
+    >| $HOME/.logs/sxhkd.log 2>| $HOME/.logs/sxhkd.err &
+else
+  # Ensure reload config if already running
+  pkill -USR1 -x sxhkd;
+fi
 
 # Monitor sxhkd status, eg changing border colour during chains.
-if ! pgrep -a sxhkd | grep sxhkd_status_mon.sh; then
+# For some reason pgrep won't accept the last couple of letters?
+if ! pgrep "sxhkd_status_mo?.??" > /dev/null 2>&1; then
   "$DOTFILES_DIR"/windowManagers/bspwm/scripts/sxhkd_status_mon.sh  "${SXHKD_STATUS_FIFO}" &
 fi
 
