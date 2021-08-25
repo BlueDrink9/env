@@ -53,6 +53,7 @@ get_session(){
         *) dbus_args+=($DEFAULT_SESSION) ;;
     esac
 
+    export DESKTOP_SESSION="${dbus_args[*]}"
     echo "dbus-launch ${dbus_args[*]}"
 }
 
