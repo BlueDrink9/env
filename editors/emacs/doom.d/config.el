@@ -2,10 +2,8 @@
 ; TODO: insert single char; ex command; unimparied options;
 ; TODO: autobracket
 ; TODO: jumping to mark should put mark in middle of view
-; TODO: scrolloff
 ; TODO: viminfo-style savings (persistend jump list, registers)
 ; TODO: Bacsspace undoes tab
-
 (setq script_dir (file-name-directory (or load-file-name buffer-file-name)))
 (load-file (concat script_dir "bindings.el"))
 (load-file (concat script_dir "aliases.el"))
@@ -46,7 +44,8 @@
 ;; Doom disables auto-save/backup by default.
 (setq auto-save-default t
       make-backup-files t)
-(setq scroll-margin 2)
+;; Scroll-off
+(setq scroll-margin 5)
 ;; Autosaves
 (super-save-mode +1)
 (after! super-save
@@ -251,3 +250,5 @@
 
 ;; Hides markup symbols until you enter the word
 (add-hook! org-mode :append #'org-appear-mode)
+
+(setq backward-delete-char-untabify-method "hungry")
