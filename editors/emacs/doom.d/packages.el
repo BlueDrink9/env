@@ -95,7 +95,7 @@
 (package! minibuffer-complete-cycle)
 
 ; Floating completion pop-up for company, with icons and documentation!
-;; (package! company-box)
+(package! company-box)
 (package! company-fuzzy)
 ;; Fuzzy response matching library
 (package! liquidmetal)

@@ -182,14 +182,14 @@
   ;; (setq company-show-quick-access 'left)
   (add-hook! 'evil-normal-state-entry-hook #'company-abort)
   (setq company-fuzzy-sorting-backend 'liquidmetal)
-  ;; Not workign with doom atm.
+  ;; Doesn't work with company-tng :(
   ;; (global-company-fuzzy-mode 1)
   (company-statistics-mode)
   ) ;; make aborting less annoying.
 ;; Accept when certain characters entered.
 ;; (setq company-auto-commit t)
 ; Floating completion pop-up for company, with icons and documentation!
-;; (add-hook! company-mode company-box-mode)
+(add-hook! 'company-mode-hook #'company-box-mode)
 
 ;; Tab cycles through minibuffer completion options.
 (setq minibuffer-complete-cycle t)
