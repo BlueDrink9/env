@@ -237,7 +237,7 @@
 (map! :after git-commit
       :map git-commit-mode-map
       :desc "confirm commit message"
-       "C-<return>" 'with-editor-finish)
+      "C-<return>" 'with-editor-finish)
 ;; (map! :mode git-commit-major-mode
 ;;       :desc "cancel commit"
 ;;       :leader
@@ -251,10 +251,7 @@
 
 ;; Apparently have to add mapping to every file mode?
 ;; (after! smart-tab
-;; (add-hook 'find-file-hook (function (lambda ()
-;; (map! :i "TAB" 'smart-tab))
-;; )))
-;; )
+;;   (add-hook! 'find-file-hook (map! :i "TAB" 'smart-tab)))
 ;; Eventually will want to change this to something that first tries local buffer expansion, I think.
 (map! :i "C-e" #'company-complete-common)
 (map! (:map company-active-map
@@ -279,9 +276,24 @@
       :i "TAB" #'minibuffer-complete
       )
 
+(defun my/ivy-tab-and-go-next ()
+  (progn)
+    (ivy-partial)
+    (ivy-next-line)
+    )
+(defun my/ivy-tab-and-go-prev ()
+  (progn)
+    (ivy-partial)
+    (ivy-previous-line)
+    )
 (map! :map (ivy-minibuffer-map)
+      :in "<escape>" #'minibuffer-keyboard-quit
       ;; Useful in normal mode sometimes if I want to use j/k to navigate.
       :ni "C-e" #'ivy-insert-current
+      :n "J" #'ivy-next-history-element
+      :n "K" #'ivy-previous-history-element
+      :in "TAB" #'ivy-next-line
+      :in "<backtab>" #'ivy-previous-line
       )
 
 ;; c-a and c-x need fixing for increment/decrement.

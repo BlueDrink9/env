@@ -48,7 +48,7 @@
 ;; Word wrap
 (set-default 'truncate-lines nil)
 (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
-
+(setq +word-wrap-extra-indent 'single)
 
 
 ;; Doom disables auto-save/backup by default.
@@ -106,7 +106,11 @@
 
 ;; Fancy bullets in org mode, heavy plugin so remove.
 (remove-hook 'org-mode-hook #'org-superstar-mode)
-  (setq smart-tab-using-hippie-expand t)
+
+;; (after! smart-tab
+;;   (setq smart-tab-using-hippie-expand t)
+;;   (global-smart-tab-mode 1)
+;;   )
 
 (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
 
@@ -175,12 +179,16 @@
 (after! company
   ;; Tab and go setup. Uses a company frontend that cycles full completions with
   ;; the tab key, same as vim.
-  (company-tng-configure-default)
   (setq company-idle-delay 0
         company-selection-wrap-around t
         company-minimum-prefix-length 1)
   ;; (setq company-show-quick-access 'left)
-  (add-hook! 'evil-normal-state-entry-hook #'company-abort)) ;; make aborting less annoying.
+  (add-hook! 'evil-normal-state-entry-hook #'company-abort)
+  (setq company-fuzzy-sorting-backend 'liquidmetal)
+  ;; Not workign with doom atm.
+  ;; (global-company-fuzzy-mode 1)
+  (company-statistics-mode)
+  ) ;; make aborting less annoying.
 ;; Accept when certain characters entered.
 ;; (setq company-auto-commit t)
 ; Floating completion pop-up for company, with icons and documentation!
