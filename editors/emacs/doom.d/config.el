@@ -1,7 +1,4 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-; TODO: auto-completion behavior: tab to force completion to nearest substring,
-; tab to cycle menu if open, c-e to accept. Auto-accept if not a snippet (ie if
-; cycling stops, that is the thing in buffer.)
 ; TODO: autobracket
 ; TODO: jumping to mark should put mark in middle of view
 ; TODO: viminfo-style savings (persistend jump list, registers)
@@ -307,3 +304,29 @@
 (add-hook! org-mode :append #'org-appear-mode)
 
 (setq backward-delete-char-untabify-method 'hungry)
+
+(define-minor-mode visual-line-motion-mode
+  "Toggle visual-line-motion-mode
+Interactively with no argument, this command toggles the mode.
+A positive prefix argument enables the mode, any other prefix
+argument disables it.  From Lisp, argument omitted or nil enables
+the mode, `toggle' toggles the state.
+
+When visual-line-motion-mode is enabled, evil motions operate on visual lines
+rather than file lines."
+  :init-value nil
+  :global nil
+  ;; evil respects visual-line-mode, but not truncate-lines. In other words, enabling visual-line-mode (aka word-wrap-mode) will enable visual line motions (j=gj)
+  ;; Maybe eventually swap out doom's word-wrap-mode for plain visual-line-mode or something else.
+  (if visual-line-motion-mode
+      (progn
+        ;; (toggle-truncate-lines 0)
+        ;; (+word-wrap-mode t)
+        (visual-line-mode t)
+        )
+    (progn
+      ;; (toggle-truncate-lines t)
+      ;; (+word-wrap-mode nil)
+      (visual-line-mode nil)
+      ))
+  )
