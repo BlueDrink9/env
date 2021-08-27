@@ -255,8 +255,17 @@
   ;; (map! :i "TAB" 'smart-tab))
   ;; )))
   ;; )
-;; :map company-active-map
-;; :i "<tab>" #'company-complete-common
+;; Eventually will want to change this to something that first tries local buffer expansion, I think.
+(map! :i "TAB" #'company-complete-common)
+(map! (:map company-active-map
+       "C-e" #'company-complete-selection
+       "C-n" #'evil-complete-next
+       ;; Shfit tab
+       "<C-iso-lefttab>" #'company-select-previous
+       "C-/" #'counsel-company  ; search results
+       ;; "RET" #'newline-and-indent
+       ;; "<return>" #'newline-and-indent
+       ))
 
 ;; Minibuffer only one escape to exit, kj to navigate history.
 (map! :map (minibuffer-local-map evil-ex-completion-map evil-ex-search-keymap)
