@@ -69,6 +69,18 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 # zinit light trapd00r/zsh-syntax-highlighting-filetypes
 # ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets root)
 
+# zinit light Aloxaf/fzf-tab
+# # disable sort when completing `git checkout`
+# zstyle ':completion:*:git-checkout:*' sort false
+# # set descriptions format to enable group support
+# zstyle ':completion:*:descriptions' format '[%d]'
+# # set list-colors to enable filename colorizing
+# zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# # preview directory's content with exa when completing cd
+# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1 --color=always $realpath'
+# # switch group using `,` and `.`
+# zstyle ':fzf-tab:*' switch-group ',' '.'
+
 # Load before syntax highlighting
 # Search history for current line.
 # zinit ice wait lucid
