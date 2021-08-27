@@ -189,6 +189,10 @@
 ;; Tab cycles through minibuffer completion options.
 (setq minibuffer-complete-cycle t)
 
+(setq ivy-re-builders-alist
+      '((t . ivy--regex-fuzzy)))
+
+
 (setq-default history-length 1000)
 (setq-default prescient-history-length 1000)
 (setq which-key-idle-delay 0.5) ;; Which-key kicks in faster
