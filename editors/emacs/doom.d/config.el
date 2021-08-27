@@ -192,7 +192,7 @@
 ;; Accept when certain characters entered.
 ;; (setq company-auto-commit t)
 ; Floating completion pop-up for company, with icons and documentation!
-(add-hook! company-mode company-box-mode)
+;; (add-hook! company-mode company-box-mode)
 
 ;; Tab cycles through minibuffer completion options.
 (setq minibuffer-complete-cycle t)

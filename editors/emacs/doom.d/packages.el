@@ -31,8 +31,7 @@
 ;; Tab bar customisation
 (package! awesome-tab)
 ;; Tab key behavior
-;; (package! smart-tab)
-(package! smart-tab :recipe (:host git.genehack.net :repo "genehack/smart-tab" :files ("*.el")))
+;; (package! smart-tab :recipe (:host git.genehack.net :repo "genehack/smart-tab" :files ("*.el")))
 
 ;; Autosaving
 (package! super-save)
@@ -66,8 +65,6 @@
 
 (package! smartparens)
 
-; Floating completion pop-up for company, with icons and documentation!
-(package! company-box)
 (package! all-the-icons-dired)
 
 (package! mixed-pitch)
@@ -96,6 +93,14 @@
 (package! term-cursor :recipe (:host github :repo "h0d/term-cursor.el" :files ("*.el")))
 
 (package! minibuffer-complete-cycle)
+
+; Floating completion pop-up for company, with icons and documentation!
+;; (package! company-box)
+(package! company-fuzzy)
+;; Fuzzy response matching library
+(package! liquidmetal)
+(package! company-statistics)
+
 
 (package! forge)
 ;; Consider disabling these packages since they are heavier.
