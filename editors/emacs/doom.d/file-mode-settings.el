@@ -4,7 +4,8 @@
 (add-hook 'text-mode-hook
           (lambda ()
             (mixed-pitch-mode 1)
-            (visual-line-mode)
+            ;; (visual-line-motion-mode t)
+            ;; (+word-wrap-mode t)
             ;; (setq doom-modeline-enable-word-count t)
             ))
 

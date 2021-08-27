@@ -53,6 +53,7 @@
       ;; ":" #'evil-repeat-find-char
       ;; Snipe gives colour hints.
       :nv ":" #'evil-snipe-repeat-forwards)
+;; (evil-collection-swap-key nil 'evil-motion-state-map ";" ":")
 (map! :leader :nv
       ";" #'counsel-M-x
       ;; ":" #'evil-repeat-find-char

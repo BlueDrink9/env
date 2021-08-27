@@ -14,6 +14,8 @@
 ;;      Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
 ;;      directory (for easy access to its source code).
 
+;; Has to be set before evil loads.
+(setq evil-respect-visual-line-mode t)
 (doom! :input
        ;;chinese
        ;;japanese
@@ -203,3 +205,4 @@
        ;;literate
        (default +bindings))
        ;; (default +bindings +smartparens))
+

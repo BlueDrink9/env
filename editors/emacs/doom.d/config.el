@@ -45,6 +45,11 @@
 (set-scroll-bar-mode 'right)
 ;; Temporary, but will be useful for learning my way around.
 (menu-bar-mode t)
+;; Word wrap
+(set-default 'truncate-lines nil)
+(setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
+
+
 
 ;; Doom disables auto-save/backup by default.
 (setq auto-save-default t
@@ -72,6 +77,10 @@
 (setq evil-vsplit-window-right t)
 (setq evil-kbd-macro-suppress-motion-error "replay")
 (setq evil-disable-insert-state-bindings nil)
+;; Needs to be set in init.el, before evil loads.
+;; Also currently has an issue with deleting the newline on cc/dd, see doom#2447
+;; (setq evil-respect-visual-line-mode t)
+(setq evil-collection-want-unimpaired-p t)
 
 ;; Disable smartparens. Can't be done another way because it is a default package.
 ;; (remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
