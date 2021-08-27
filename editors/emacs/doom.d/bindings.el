@@ -275,6 +275,14 @@
       :n "j" #'next-complete-history-element
       :n "k" #'previous-complete-history-element
       )
+(map! :map (minibuffer-local-completion-map evil-ex-completion-map)
+      :i "TAB" #'minibuffer-complete
+      )
+
+(map! :map (ivy-minibuffer-map)
+      ;; Useful in normal mode sometimes if I want to use j/k to navigate.
+      :ni "C-e" #'ivy-insert-current
+      )
 
 ;; c-a and c-x need fixing for increment/decrement.
 

@@ -95,8 +95,9 @@
 
 (package! term-cursor :recipe (:host github :repo "h0d/term-cursor.el" :files ("*.el")))
 
-(package! forge)
+(package! minibuffer-complete-cycle)
 
+(package! forge)
 ;; Consider disabling these packages since they are heavier.
 ;; =:ui tabs=, =:ui indent-guides=, =:ui ligatures=, =:editor word-wrap= and =:ui
 

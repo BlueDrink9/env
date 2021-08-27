@@ -170,24 +170,27 @@
   ;; home row priorities: 8 6 4 5 - - 1 2 3 7
   (setq avy-keys '(?n ?e ?i ?s ?t ?r ?i ?a)))
 
-;; More frequent completions
+;; Auto-select if fewer than 6 completion candidates. Not used by company, it seems.
+(setq completion-cycle-threshold 6)
 (after! company
-  (setq company-idle-delay 0.2
-        company-minimum-prefix-length 2)
-  (setq company-show-quick-access t)
+  ;; Tab and go setup. Uses a company frontend that cycles full completions with
+  ;; the tab key, same as vim.
+  (company-tng-configure-default)
+  (setq company-idle-delay 0
+        company-selection-wrap-around t
+        company-minimum-prefix-length 1)
+  ;; (setq company-show-quick-access 'left)
   (add-hook! 'evil-normal-state-entry-hook #'company-abort)) ;; make aborting less annoying.
-
+;; Accept when certain characters entered.
+;; (setq company-auto-commit t)
 ; Floating completion pop-up for company, with icons and documentation!
 (add-hook! company-mode company-box-mode)
 
+;; Tab cycles through minibuffer completion options.
+(setq minibuffer-complete-cycle t)
+
 (setq-default history-length 1000)
 (setq-default prescient-history-length 1000)
-;; Auto-select if fewer than 6 completion candidates. Not used by company, it seems.
-(setq completion-cycle-threshold 6)
-(company-tng-configure-default)
-(setq company-selection-wrap-around t)
-;; Accept when certain characters entered.
-;; (setq company-auto-commit t)
 (setq which-key-idle-delay 0.5) ;; Which-key kicks in faster
 
 
