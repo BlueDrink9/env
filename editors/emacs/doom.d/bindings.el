@@ -223,10 +223,12 @@
   )
 
 ;; Git/magit shortcuts
-(map! :leader
-      (:prefix ("g")
+(map! (:map doom-leader-git-map
        :desc "pusH to origin" "h" #'magit-push-current-to-pushremote
-       :desc "pull from origin" "p" #'magit-pull-from-pushremote))
+       :desc "pull from origin" "p" #'magit-pull-from-pushremote
+       :desc "Amend commit" :prefix "c" "a" #'magit-commit-amend
+       :desc "Extend commit" :prefix "c" "e" #'magit-commit-extend
+       ))
 (evil-ex-define-cmd "gc" 'magic-commit-create)
 (evil-ex-define-cmd "gw" 'magit-stage-file)
 ;; TODO Magit: Allow w navigations, easymotion? For yanking commit diffs.
