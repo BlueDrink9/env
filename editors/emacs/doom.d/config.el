@@ -185,6 +185,7 @@
 ;; Auto-select if fewer than 6 completion candidates. Not used by company, it seems.
 (setq completion-cycle-threshold 6)
 (company-tng-configure-default)
+(setq company-selection-wrap-around t)
 ;; Accept when certain characters entered.
 ;; (setq company-auto-commit t)
 (setq which-key-idle-delay 0.5) ;; Which-key kicks in faster

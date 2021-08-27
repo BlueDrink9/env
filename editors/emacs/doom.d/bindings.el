@@ -251,21 +251,22 @@
 
 ;; Apparently have to add mapping to every file mode?
 ;; (after! smart-tab
-  ;; (add-hook 'find-file-hook (function (lambda ()
-  ;; (map! :i "TAB" 'smart-tab))
-  ;; )))
-  ;; )
+;; (add-hook 'find-file-hook (function (lambda ()
+;; (map! :i "TAB" 'smart-tab))
+;; )))
+;; )
 ;; Eventually will want to change this to something that first tries local buffer expansion, I think.
 (map! :i "C-e" #'company-complete-common)
 (map! (:map company-active-map
        "C-e" #'company-complete-selection
        "C-n" #'evil-complete-next
+       "TAB" #'company-select-next
        ;; Shfit tab
-       "<C-iso-lefttab>" #'company-select-previous
-       "C-/" #'counsel-company  ; search results
-       ;; "RET" #'newline-and-indent
-       ;; "<return>" #'newline-and-indent
-       ))
+      "<C-iso-lefttab>" #'company-select-previous
+      "C-/" #'counsel-company  ; search results
+      "RET" #'newline-and-indent
+      "<return>" #'newline-and-indent
+      ))
 
 ;; Minibuffer only one escape to exit, kj to navigate history.
 (map! :map (minibuffer-local-map evil-ex-completion-map evil-ex-search-keymap)
