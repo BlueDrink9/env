@@ -265,6 +265,14 @@
       "<return>" #'newline-and-indent
       ))
 
+(after! yasnippet
+  (map! :map yas-minor-mode-map "C-e" 'yas-expand)
+  (map! :map yas-keymap "C-e" 'yas-next-field-or-maybe-expand)
+  (dolist (keymap (list yas-minor-mode-map yas-keymap))
+    (map! :map keymap "TAB" nil)
+    (map! :map keymap "<tab>" nil))
+  )
+
 ;; Minibuffer only one escape to exit, kj to navigate history.
 (map! :map (minibuffer-local-map evil-ex-completion-map evil-ex-search-keymap)
       :in "<escape>" #'abort-recursive-edit
