@@ -256,7 +256,7 @@
   ;; )))
   ;; )
 ;; Eventually will want to change this to something that first tries local buffer expansion, I think.
-(map! :i "TAB" #'company-complete-common)
+(map! :i "C-e" #'company-complete-common)
 (map! (:map company-active-map
        "C-e" #'company-complete-selection
        "C-n" #'evil-complete-next
