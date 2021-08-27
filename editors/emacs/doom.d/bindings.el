@@ -371,6 +371,9 @@
         :desc "whitespace-mode" "l" #'whitespace-mode
         :desc "Center text in window" "=" #'centered-window-mode-toggle
         :desc "Search result highlighting" "h" #'evil-ex-nohighlight
+        :desc "word wrap" "w" #'toggle-truncate-lines
+        ;; evil respects visual-line-mode, but not truncate-lines. In other words, enabling visual-line-mode (aka word-wrap-mode) will enable visual line motions (j=gj)
+        :desc "wrapped line motion" "g" #'visual-line-mode
         :desc "Super-save autosave" "a" #'super-save-mode))
 
 
