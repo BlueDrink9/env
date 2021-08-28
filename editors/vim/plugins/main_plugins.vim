@@ -502,7 +502,7 @@ if executable("git")
     " Git wrapper. Includes magit-style functionality under Gstatus
     Plug 'https://github.com/tpope/vim-fugitive'
     " nnoremap <leader>gs :Gstatus<CR> cabbrev gs Gstatus
-    cabbrev gs Gstatus
+    cabbrev gs Git
     cabbrev gw Gwrite
     cabbrev gc Gwrite <bar> Git commit
     cabbrev gco Git commit

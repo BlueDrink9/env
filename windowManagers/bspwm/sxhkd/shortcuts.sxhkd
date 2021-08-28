@@ -5,7 +5,7 @@
 ctrl + alt + t
   kitty
 
-ctrl + r
+super + r
   rofi -show combi
 
 ctrl + alt + b
