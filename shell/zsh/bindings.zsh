@@ -114,6 +114,10 @@ fi
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
+bindkey -M vicmd " /" fzf-history-widget
+bindkey -M vicmd " c" fzf-cd-widget
+bindkey -M vicmd " f" fzf-file-widget
+
 # Vim-surround
 autoload -Uz surround
 zle -N delete-surround surround
