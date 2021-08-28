@@ -106,8 +106,9 @@ if [[ $#BUFFER -eq 0 ]]; then
   BUFFER="fg"
   zle accept-line
 else
-  zleush-input
-  zle clear-screen
+  zle push-input
+  BUFFER="fg"
+  zle accept-line
 fi
 }
 zle -N fancy-ctrl-z
