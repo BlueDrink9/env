@@ -3,7 +3,7 @@
 configuration {
 	theme: "/usr/share/rofi/themes/purple.rasi";
 	modi: "combi,window,drun,run,file-browser,ssh,p:rofi-power-menu,calc,p:rofi-wifi-menu,p:rofi-mpd";
-	combi-modi: "window,drun,run,file-browser,p:rofi-power-menu";
+	combi-modi: "window,drun,run,file-browser";
 	font: "SFNS Display 15";
 	show-icons: true;
 	fixed-num-lines: true;
@@ -14,12 +14,10 @@ configuration {
 	sidebar-mode: true;
 	disable-history: false;
 	max-history-size: 25;
-  levenshtein-sort: true;
 	sorting-method: "fzf";
   parse-hosts: true;
   parse-known-hosts: true;
   cache-dir: "$XDG_CACHE_HOME/rofi";
-  steal-focus: true;
 /*	drun-categories: ;*/
 	drun-show-actions: true;
 
