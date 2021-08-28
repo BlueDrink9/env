@@ -1,15 +1,26 @@
 #!/bin/sh
 
-# del() {
-  fileToDel="$1"
-  fileDir="$(dirname \"${fileToDel}\")"
+if command -v gio > /dev/null; then
+  for f in "$@"
+  do
+    gio trash -f "$f"
+  done
+
+elif command -v gvfs-trash > /dev/null; then
+  for f in "$@"
+  do
+    gvfs-trash "$f"
+  done
+
+else
   if [ $OSTYPE = 'linux-gnu' ]; then
     TRASHDIR=${HOME}/.local/share/Trash/files
   elif [[ $OSTYPE =~ 'darwin' ]]; then
     TRASHDIR=${HOME}/.Trash
   fi
-  mkdir -p "${TRASHDIR}/$fileDir"
-  # Safer than rm
-  mv "$fileToDel" "${TRASHDIR}/$fileToDel"
-# }
+  for f in "$@"
+  do
+    mv "$f" "$TRASHDIR"
+  done
 
+fi
