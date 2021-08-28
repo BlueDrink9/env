@@ -5,6 +5,9 @@
 ctrl + alt + t
   kitty
 
+ctrl + r
+  rofi -show combi
+
 ctrl + alt + b
     brave || \
     xdg-open /usr/share/applications/brave-browser.desktop || \
