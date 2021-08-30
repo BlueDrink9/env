@@ -1,13 +1,17 @@
 ;;; filetype-modes.el -*- lexical-binding: t; -*-
 
 ;; Use variable width fonts and soft wrap for all prose filetypes
-(add-hook 'text-mode-hook
-          (lambda ()
+;; TODO exclude text mode when evil-collection-magit-toggle-text-mode minor mode is active
+(add-hook! 'text-mode-hook
             (mixed-pitch-mode 1)
             ;; (visual-line-motion-mode t)
             ;; (+word-wrap-mode t)
             ;; (setq doom-modeline-enable-word-count t)
-            ))
+            )
+; Inherits from text-mode
+(add-hook! 'yaml-mode-hook
+            (mixed-pitch-mode 0)
+            )
 
 ;; Use soft wraps instead of hard. Only enable if found to be necessary.
 ;; (remove-hook 'text-mode-hook #'auto-fill-mode)
@@ -21,10 +25,8 @@
 
 ;;; Markdown
 (add-hook! 'markdown-mode-hook
-  ( progn
     (setq markdown-fontify-code-blocks-natively 1)
     (setq markdown-header-scaling 1)
-    )
   )
 (setq markdown-fontify-code-blocks-natively 1)
 (setq markdown-header-scaling 1)
