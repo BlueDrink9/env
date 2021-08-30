@@ -348,14 +348,19 @@
 (map! :vo "a%" #'+evil:whole-buffer-txtobj
       :vo "i%" #'+evil:whole-buffer-txtobj)
 
+;;; Vterm
 (map! :n "C-s" #'+vterm/toggle)
-(map! :map vterm-mode-map
-      :ni "C-s" #'+vterm/toggle)
-
 (map! :after vterm
       :map vterm-mode-map
+      :ni "C-s" #'+vterm/toggle
+      ;; Undo the key chord (!) so that kv is passed to shell to enter the shell
+      ;; normal mode.
       :i (general-chord "kv") "kv"
-      :i (general-chord "vk") "vk")
+      :i (general-chord "vk") "vk"
+      ;; shift+space catches most vterm C-c bindings.
+      :ni "C-c" #'vterm-send-C-c
+      )
+
 
 (add-hook! 'dired-mode-hook (setq doom-localleader-key "\\"))
 (map! :map dired-mode-map
