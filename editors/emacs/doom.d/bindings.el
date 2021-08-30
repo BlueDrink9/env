@@ -352,43 +352,10 @@
 (map! :map vterm-mode-map
       :ni "C-s" #'+vterm/toggle)
 
-;; ;; This doesn't re-enable it on buffer change though!
-;; (defun my/vterm-disable-key-chord ()
-;;   "Counter-act `key-chord-mode' global minor mode."
-;;   (add-hook 'after-change-major-mode-hook
-;;             (lambda () (key-chord-mode 0))
-;;             :append :local))
-;; (add-hook 'vterm-mode-hook 'my/vterm-disable-key-chord)
-
-;; (defun my/vterm-key-chord-toggle ()
-;;   (if (eq major-mode 'vterm-mode)
-;;       (key-chord-mode -1)
-;;     (print "hello")
-;;     (key-chord-mode 1))
-;;   )
-;; ;;   This hook is run after every major mode change so really isn't an ideal way
-;; ;;   to fix this.
-;; (add-hook 'change-major-mode-hook #'my/vterm-key-chord-toggle)
-;; ;; (add-hook! 'vterm-mode-hook ()
-;; ;;   )
-
-;; (add-hook! 'vterm-mode-hook ()
-;;   ;; (key-chord-mode -1)
-;; (evil-local-set-key 'insert (general-chord "kv") #'+vterm/toggle)
-;; (evil-local-set-key 'insert (general-chord "vk") #'+vterm/toggle)
-;; )
-;; (after! vterm
-;;  (key-chord-define vterm-mode-map "kv"  #'+vterm/toggle)
-;; )
-;; (map!
-;;  :map vterm-mode-map
-;;       :i "<key-chord> [ ? v ? k]" nil
-;;       :i "<key-chord> k v" nil
-;;       :i "<key-chord> k" nil
-;;       ;; :i (general-chord "vk") nil
-;;       :i "k" #'self-insert-command
-;;       :i "v" #'self-insert-command
-;;       )
+(map! :after vterm
+      :map vterm-mode-map
+      :i (general-chord "kv") "kv"
+      :i (general-chord "vk") "vk")
 
 (add-hook! 'dired-mode-hook (setq doom-localleader-key "\\"))
 (map! :map dired-mode-map
