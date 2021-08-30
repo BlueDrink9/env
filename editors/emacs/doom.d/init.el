@@ -28,7 +28,7 @@
        (ivy               ; a search engine for love and life
         +icons
         +prescient
-        +childframe
+        ;; +childframe
         +fuzzy)
 
        :ui
