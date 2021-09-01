@@ -142,7 +142,7 @@ function! s:firenvimSetup()
     colorscheme github
     set background=light
 
-    inoremap <C-CR> <Esc>:wq<cr>
+    noremap <C-CR> <Esc>:w<CR>:call firenvim#press_keys("<LT>C-CR>")<CR>ggdG:q!
     nnoremap <C-z> :call firenvim#hide_frame()<cr>
     nnoremap <Esc><Esc><Esc> :call firenvim#focus_page()<CR>
     " Cmd + v on osx
