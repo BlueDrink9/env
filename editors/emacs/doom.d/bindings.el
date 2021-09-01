@@ -189,18 +189,31 @@
 ; n and N always go the same direction regardless of whether / or ? was used.
 
 ;; ;; Autoexpand brackets when creating functions etc.
-;; (defun autobracket (bracCharOpen bracCharClose)
-;;     (insert bracCharOpen)
-;;     (evil-insert-newline-below)
-;;     (insert bracCharClose)
-;;     (evil-previous-line)
-;;     (evil-insert-newline-below)
-;;   )
+(defun autobracket (bracCharOpen bracCharClose)
+    (insert bracCharOpen)
+    (evil-insert-newline-below)
+    (insert bracCharClose)
+    (evil-previous-line)
+    (evil-insert-newline-below)
+    (evil-indent-line)
+  )
 ;; ;; This mostly works but will not ever trigger properly because key-chord.el cannot bind return key!
 ;; (map! :desc "Autoexpand bracket" :i
 ;;       (general-chord (concat "(" (kbd "<RET>")))
 ;;       (lambda () (interactive) (autobracket "(" ")")))
 
+(map! :desc "Autoexpand bracket" :i
+      (general-chord "{;")
+      (lambda () (interactive) (autobracket "{" "};")))
+(map! :desc "Autoexpand bracket" :i
+      (general-chord "{,")
+      (lambda () (interactive) (autobracket "{" "},")))
+(map! :desc "Autoexpand bracket" :i
+      (general-chord "[;")
+      (lambda () (interactive) (autobracket "[" "];")))
+(map! :desc "Autoexpand bracket" :i
+      (general-chord "[,")
+      (lambda () (interactive) (autobracket "[" "],")))
 ;; inoremap (<CR> (<CR>)<Esc>O
 ;; inoremap {<CR> {<CR>}<Esc>O
 ;; inoremap {; {<CR>};<Esc>O
