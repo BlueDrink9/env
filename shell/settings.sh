@@ -145,3 +145,10 @@ export MYFLY_KEY_SCHEME=vim
 export MCFLY_FUZZY=true
 export MCFLY_INTERFACE_VIEW=BOTTOM
 export MCFLY_HISTORY_LIMIT=10000
+
+# Cache pip wheels when built. Especially useful for tox, which installs pip
+# packages a lot.
+export STANDARD_CACHE_DIR="${XDG_CACHE_HOME:-${HOME}/.cache}/pip"
+export WHEELHOUSE="${STANDARD_CACHE_DIR}/wheelhouse"
+export PIP_FIND_LINKS="file://${WHEELHOUSE}"
+export PIP_WHEEL_DIR="${WHEELHOUSE}"
