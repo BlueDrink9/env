@@ -164,7 +164,7 @@ super + n
     bspc monitor --add-desktops ' '
 # Delete current desktop
 super + shift + n
-    bspc desktop -r -f prev
+    bspc desktop --remove
 
 #----------------------------------------
 # Monitor
