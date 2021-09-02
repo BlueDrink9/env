@@ -411,6 +411,9 @@
     (map! :map helm-find-files-map
           "<DEL>" #'helm-find-files-up-one-level)))
 
+(map! :map evil-inner-text-objects-map "," #'evil-inner-arg)
+(map! :map evil-outer-text-objects-map "," #'evil-outer-arg)
+
 (map! :localleader
       :map markdown-mode-map
       :prefix ("i" . "Insert")
