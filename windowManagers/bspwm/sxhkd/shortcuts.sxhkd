@@ -55,7 +55,8 @@ super + shift + q
 
 # Media and volume controls
 super + m; s
-  snap run spotify || gtk-launch spotify || spotify
+  notify-send "Opening Spotify..." \
+    snap run spotify || gtk-launch spotify || spotify
 
 # XF86AudioNext
 super + m; {space,h,p,n}
