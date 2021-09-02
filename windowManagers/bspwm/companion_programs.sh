@@ -1,6 +1,7 @@
 #! /bin/sh
-SXHKD_STATUS_FIFO="/run/user/${UID}${DISPLAY}/sxhkd.fifo"
+SXHKD_STATUS_FIFO="/run/user/${UID}/display${DISPLAY}/sxhkd.fifo"
 if [ ! -e "${SXHKD_STATUS_FIFO}" ]; then
+  mkdir -p "$(dirname "${SXHKD_STATUS_FIFO}")"
   mkfifo "${SXHKD_STATUS_FIFO}"
 fi
 
