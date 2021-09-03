@@ -95,6 +95,7 @@
   )
 ;; (setq x-underline-at-descent-line t)
 
+
 (defun my/title-format ()
   '(:eval
     (format "%s %s"
@@ -111,3 +112,14 @@
       (setq icon-title-format
             (my/title-format)
             ))
+
+(define-globalized-minor-mode my/global-lsp-headerline-breadcrumb-mode lsp-headerline-breadcrumb-mode
+  (lambda () (lsp-headerline-breadcrumb-mode 1)))
+(after! lsp-mode
+  (my/global-lsp-headerline-breadcrumb-mode 1)
+  )
+;; (add-hook! 'text-mode-hook
+;;   (lsp-headerline-breadcrumb-mode 0)
+;;   )
+;; Can also include project, file, and path if you want to.
+(setq lsp-headerline-breadcrumb-segments '(symbols))
