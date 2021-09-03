@@ -90,8 +90,8 @@
 ;; Unsure if I want tabs or workspaces.
 ;; (map! :desc "buf-next" :nv  "<up>" #'tabnext)
 ;; (map! :desc "buf-next" :nv  "<down>" #'evil-ex "tabprev")
-(map! :n  "<up>"      #'+workspace/switch-left
-      :n  "<down>"    #'+workspace/switch-right
+(map! :n  "<up>"      #'+workspace/switch-right
+      :n  "<down>"    #'+workspace/switch-left
 )
 (map! :map evil-window-map
       "["    #'persp-prev
