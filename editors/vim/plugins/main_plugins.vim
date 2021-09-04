@@ -731,25 +731,29 @@ autocmd myPlugins FileType markdown command! PasteImage silent call mdip#Markdow
 " {]} ---------- Prose----------
 
 " {[} ---------- Terminal ----------
-" REPL (send motions, lines etc)
-Plug 'kassio/neoterm'
-" Split instead of replacing buffer.
-let g:neoterm_default_mod='belowright'
-let g:neoterm_size=10  " Rows
-" Autostart repl on command
-let g:neoterm_auto_repl_cmd=1
-" Don't use shell as intermediary, open REPL directly.
-let g:neoterm_direct_open_repl=1
-" Use tab neoterm instead of most recent.
-let g:neoterm_term_per_tab=1
-" start in insert mode
-let g:neoterm_autoinsert=1
-let g:neoterm_autoscroll=1
-call Nmap(g:IDE_mappings.REPLSend, "<Plug>(neoterm-repl-send)")
-call Vmap(g:IDE_mappings.REPLSend, "<Plug>(neoterm-repl-send)")
-call Nmap(g:IDE_mappings.REPLSendLine, "<Plug>(neoterm-repl-send-line)")
-call Nmap(g:IDE_mappings.REPLClear, ":Tclear<cr>")
-call Nmap(g:IDE_mappings.REPLClose, ":Tclose<cr>")
+if has('nvim-5.0')
+    Plug 'https://github.com/michaelb/sniprun'
+    function! s:sniprunSetup()
+lua << EOF
+        require'sniprun'.setup({
+        --" you can combo different display modes as desired
+        display = {
+            "Classic",                    -- "display results in the command-line  area
+            "VirtualTextOk",              -- "display ok results as virtual text (multiline is shortened)
+
+            "VirtualTextErr",          -- "display error results as virtual text
+            -- "TempFloatingWindow",      -- "display results in a floating window
+            -- "LongTempFloatingWindow",  -- "same as above, but only long results. To use with VirtualText__
+            -- "Terminal"                 -- "display results in a vertical split
+        },
+        })
+EOF
+        " call Nmap(g:IDE_mappings.g:IDE_mappings.REPLSendLine, "<Plug>SnipRun")
+        " call Nmap(g:IDE_mappings.g:IDE_mappings.REPLSend, "<Plug>SnipRunOperator")
+        " call Vmap(g:IDE_mappings.g:IDE_mappings.REPLSend, "<Plug>SnipRun")
+    endfunction
+    autocmd myPlugins User pluginSettingsToExec call <sid>sniprunSetup()
+endif
 
 " Useful for REPL, but can also send the commands back to the other window.
 " Also dot repeatable.

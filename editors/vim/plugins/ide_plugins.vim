@@ -158,10 +158,26 @@ endif
 " {]} ---------- Tags----------
 
 " {[} ---------- Snippits ----------
-Plug 'https://github.com/honza/vim-snippets' " Library of snippets
-" Only requires 7.4, but recommends this.
-if has("nvim") || v:version >= 800
-    Plug 'Shougo/neosnippet.vim'
+    " Snippet libs
+Plug 'https://github.com/honza/vim-snippets'
+Plug 'https://github.com/rafamadriz/friendly-snippets'
+if has('nvim-0.5')
+" if has('nvim') || v:version >= 800
+
+    Plug 'https://github.com/hrsh7th/vim-vsnip', {'on': [] }
+    Plug 'hrsh7th/vim-vsnip-integ', {'on': [] }
+    call LoadPluginOnInsertEnter('vim-vsnip')
+    call LoadPluginOnInsertEnter('vim-vsnip-integ')
+    call Imap(g:IDE_mappings.snippet_expand, "<Plug>(vsnip-expand-or-jump)")
+    call Vmap(g:IDE_mappings.snippet_expand, "<Plug>(vsnip-expand-or-jump)")
+    " Preview snippets
+    Plug 'octaltree/virtualsnip', { 'do': 'make', 'on': [] }
+    call LoadPluginOnInsertEnter('virtualsnip')
+
+elseif has('nvim') || v:version >= 740
+    " Only requires 7.4, but recommends 8.
+    Plug 'Shougo/neosnippet.vim', {'on': [] }
+    call LoadPluginOnInsertEnter('neosnippet.vim')
     Plug 'Shougo/neosnippet-snippets'
     let g:neosnippet#enable_snipmate_compatibility=1
     " let g:neosnippet#enable_conceal_markers=0
