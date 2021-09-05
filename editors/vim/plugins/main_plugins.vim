@@ -512,6 +512,14 @@ if executable("git")
     cabbrev gd Gdiff
     cabbrev gps Git push
     cabbrev gpl Git pull
+    " mappings to emulate doom magit
+    nnoremap <leader>gg :Git status<cr>
+    nnoremap <leader>gs :Gwrite<cr>
+    nnoremap <leader>gcc :Gwrite <bar>  Git commit<cr>
+    nnoremap <leader>gcc :Gwrite <bar>  Git commit<cr>
+    nnoremap <leader>gce :Gwrite <bar> Git commit --amend --no-edit<cr>
+    nnoremap <leader>gl :Git pull<cr>
+    nnoremap <leader>gp :Git push<cr>
     " These are deprecated in fugitive itself.
     command! -bang -nargs=* Gpush Git push <args>
     command! -bang -nargs=* Gpull Git pull <args>

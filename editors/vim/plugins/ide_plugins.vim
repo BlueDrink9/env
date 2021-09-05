@@ -43,9 +43,10 @@ Plug 'Shougo/context_filetype.vim'
 " Autocomplete from other tmux panes' text
 Plug 'https://github.com/wellle/tmux-complete.vim'
 " Call WhichKey to see mappings starting with a thing.
-Plug 'liuchengxu/vim-which-key'
 if has('nvim-0.5')
     Plug 'AckslD/nvim-whichkey-setup.lua'
+else
+    Plug 'liuchengxu/vim-which-key'
 endif
 " nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
 
