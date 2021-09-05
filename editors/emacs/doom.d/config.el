@@ -235,6 +235,7 @@
 
 ;; If creating commit with nothing staged, auto-stage current file.
 (setq magit-commit-ask-to-stage "stage")
+(setq git-commit-major-mode 'markdown-mode)
 
 ;; ;; Permenantly show workspace list in minibuffer line
 ;; (after! persp-mode
