@@ -51,6 +51,7 @@ alias .....="cd ../../../.."
 alias cd..="cd .."
 
 alias g="git"
+alias mg="magit"
 alias ga="git add"
 alias gca="git commit -a"
 alias gc="git commit"
@@ -118,6 +119,9 @@ alias minivim="vim -u '$DOTFILES_DIR/editors/vim/minirc' -c 'set nocp | inore vk
 alias mininvim="nvim -u '$DOTFILES_DIR/editors/vim/minirc' -c 'set nocp | inore vk <esc> | inore kv <esc> | nnoremap ; :'"
 openVimSession(){ myVim -c "OpenSession $1"; }
 alias os="openVimSession"
+alias em="myEmacs"
+alias emw="emacs"
+alias emc="emacsclient"
 
 # Don't accidentally remove or overwrite files.
 # alias cp="cp -i"
