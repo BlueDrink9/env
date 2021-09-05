@@ -317,7 +317,7 @@ cnoremap \>s/ \>smagic/
 nnoremap zQ ZQ
 " nnoremap q; :q
 " Because c-] doesn't work on colemak for some reason
-nnoremap <leader>t <c-]>
+nnoremap gt <c-]>
 " Reset screen entirely (inc highlights)
 nnoremap <leader>cl :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 " These apply only in vimdiff mode.

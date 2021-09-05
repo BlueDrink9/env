@@ -150,6 +150,8 @@ Plug 'https://github.com/tpope/vim-unimpaired'
 let g:nremap = {"[e": "", "]e": ""}
 let g:xremap = {"[e": "", "]e": ""}
 let g:oremap = {"[e": "", "]e": ""}
+" Mimic doom emacs. "Toggle"
+nmap <leader>t yo
 " cx to select an object, then cx again to swap it with first thing.
 Plug 'https://github.com/tommcdo/vim-exchange'
 " Do replace, because cr is used for abolish. Yr is unused atm?

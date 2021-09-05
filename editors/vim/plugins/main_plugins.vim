@@ -506,7 +506,7 @@ if executable("git")
     cabbrev gw Gwrite
     cabbrev gc Gwrite <bar> Git commit
     cabbrev gco Git commit
-    cabbrev gupw Gwrite <bar> Gcommit --amend --no-edit
+    cabbrev gupw Gwrite <bar> Git commit --amend --no-edit
     cabbrev gup Git commit --amend --no-edit
     cabbrev gupe Git commit --amend
     cabbrev gd Gdiff
