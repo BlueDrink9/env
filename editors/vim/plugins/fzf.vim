@@ -9,8 +9,9 @@ Plug 'junegunn/fzf.vim'
 
 " Fuzzy search list of buffers
 nnoremap <silent> <leader><space> :Buffers<CR>
+call Nnoremap(g:IDE_mappings.FuzzyBuffers, ":Buffers<CR>")
 " Files
-nnoremap <silent> <leader><CR> :FZF<CR>
+call Nnoremap(g:IDE_mappings.FuzzyOpenFile, ":FZF<CR>")
 " Search lines in current buffer.
 nnoremap <silent> <leader>/ :BLines<CR>
 " Search lines in all buffers.
@@ -38,3 +39,8 @@ if g:hasGUI
                 \ 'header':  ['fg', 'Comment'] }
 endif
 " {]} Use proper fzf colours in gvim
+
+if has('nvim') || has('terminal')
+  au myPlugins TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
+  au myPlugins FileType fzf tunmap <buffer> <Esc>
+endif
