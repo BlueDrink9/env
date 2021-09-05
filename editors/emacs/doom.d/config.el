@@ -3,8 +3,8 @@
 ; TODO: jumping to mark should put mark in middle of view
 ; TODO: viminfo-style savings (persistend jump list, registers)
 ; TODO: Bacsspace undoes tab
-; TODO: binding to enable subword mode if not enabled. Hook evil-motion to remove hook and disable mode again.
-; TODO: create exceptions for text-mode using prop-width. Add yaml to exceptions (for some reason it inherits from text-mode.)
+; TODO: binding to enable subword mode if not enabled. Hook evil-motion to remove hook and disable mode again. (Camelcasemotion)
+; magit mappings to replace c-C? Or just create another mapping that sends c-C all the time. But a shortcut for magit to do c-c c-c or c-c c-k would be helpful.
 
 (setq script_dir (file-name-directory (or load-file-name buffer-file-name)))
 (load-file (concat script_dir "bindings.el"))
@@ -189,7 +189,8 @@
 ;; Accept when certain characters entered.
 ;; (setq company-auto-commit t)
 ; Floating completion pop-up for company, with icons and documentation!
-(add-hook! 'company-mode-hook #'company-box-mode)
+; Seems to break tng
+;; (add-hook! 'company-mode-hook #'company-box-mode)
 
 ;; Tab cycles through minibuffer completion options.
 (setq minibuffer-complete-cycle t)
