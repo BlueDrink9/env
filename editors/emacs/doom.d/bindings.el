@@ -11,6 +11,9 @@
 ;;       :nv
 ;;       "r" #'python-pytest-repeat)
 
+;; Unbound leader keys: d j k l
+
+
 ;; ;; Overridden in some buffers, eg DIRED
 ;; (setq doom-localleader-key "<return>")
 ;; (setq doom-localleader-key "\\")
@@ -30,6 +33,8 @@
 ;; For some reason using :prefix causes an error with this function.
 (map! :desc "C-x" :leader "z" (rebinder-dynamic-binding "C-x"))
 (map! :desc "C-c" :nv "S-SPC" (rebinder-dynamic-binding "C-c"))
+(map! :desc "C-c" :leader "v" "C-c")
+(map! :desc "C-k" :leader "<backspace>" "C-c")
 ;; (map! :desc "C-x" :nv "SPC z" #'Control-X-prefix)
 ;; (map! :desc "C-c" :nv "S-SPC" #'mode-specific-command-prefix)
 (which-key-add-key-based-replacements "SPC z" "C-x")
