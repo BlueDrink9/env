@@ -146,14 +146,10 @@ endif
 " Bunch of neat mappings, it's a tpope. Esp [n and ]n, for SCM conflict marks.
 " And [<space> for addign newlines.
 Plug 'https://github.com/tpope/vim-unimpaired'
-" I want to use ]e (normally this) for errors.
-nmap <silent> ]m <Plug>unimpairedMoveDown
-nmap <silent> [m <Plug>unimpairedMoveUp
- let g:nremap = {"[e": "", "]e": ""}
- let g:xremap = {"[e": "", "]e": ""}
- let g:oremap = {"[e": "", "]e": ""}
-" nunmap <silent> ]e
-" nunmap <silent> [e
+" I want to use ]e (normally move lines up and down) for errors.
+let g:nremap = {"[e": "", "]e": ""}
+let g:xremap = {"[e": "", "]e": ""}
+let g:oremap = {"[e": "", "]e": ""}
 " cx to select an object, then cx again to swap it with first thing.
 Plug 'https://github.com/tommcdo/vim-exchange'
 " Do replace, because cr is used for abolish. Yr is unused atm?
