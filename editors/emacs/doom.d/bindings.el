@@ -404,6 +404,11 @@
        :desc "line numbers" "n" #'doom/toggle-line-numbers
        :desc "Super-save autosave" "a" #'super-save-mode))
 
+;; Override evil-unimpaired, return to what doom uses.
+(add-hook! 'evil-collection-setup-hook
+  (map! :nv :map evil-collection-unimpaired-mode-map "]e" #'next-error)
+  (map! :map evil-collection-unimpaired-mode-map :nv "[e" #'previous-error)
+  )
 
 (after! helm
   ;; I want backspace to go up a level, like ivy
