@@ -1,0 +1,7 @@
+#!/bin/sh
+# Use xterm-direct to convince doom emacs to use truecolor
+if [ "$COLORTERM" = "truecolor" ]; then
+    TERM=xterm-direct emacs --no-window-system $@
+else
+    emacs --no-window-system $@
+fi

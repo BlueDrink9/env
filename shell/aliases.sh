@@ -60,7 +60,7 @@ alias gs="git status"
 alias gpl="git pull &"
 alias gpsh="git push &"
 alias dif="git diff --ignore-space-change --color-words"
-alias magit="emacs --no-window-system --eval='(magit-status)'"
+alias magit="myEmacs --no-window-system --eval='(magit-status)'"
 
 # Custom function with logic for different address formats
 alias gcl="git_clone"
