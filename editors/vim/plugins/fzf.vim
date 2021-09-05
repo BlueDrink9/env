@@ -41,6 +41,10 @@ endif
 " {]} Use proper fzf colours in gvim
 
 if has('nvim') || has('terminal')
-  au myPlugins TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
+  if has('nvim')
+    au myPlugins TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
+  else
+    au myPlugins TerminalOpen * tnoremap <buffer> <Esc> <c-\><c-n>
+  endif
   au myPlugins FileType fzf tunmap <buffer> <Esc>
 endif
