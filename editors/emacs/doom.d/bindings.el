@@ -402,11 +402,13 @@
        ;; evil respects visual-line-mode, but not truncate-lines. In other words, enabling visual-line-mode (aka word-wrap-mode) will enable visual line motions (j=gj)
        :desc "wrapped line motion" "g" #'visual-line-mode
        :desc "line numbers" "n" #'doom/toggle-line-numbers
+       :desc "Subword mode" "m" #'subword-mode
+       :desc "Superword mode" "M" #'superword-mode
        :desc "Super-save autosave" "a" #'super-save-mode))
 
 ;; Override evil-unimpaired, return to what doom uses.
 (add-hook! 'evil-collection-setup-hook
-  (map! :nv :map evil-collection-unimpaired-mode-map "]e" #'next-error)
+  (map! :map evil-collection-unimpaired-mode-map :nv "]e" #'next-error)
   (map! :map evil-collection-unimpaired-mode-map :nv "[e" #'previous-error)
   )
 
