@@ -140,6 +140,8 @@
 
 ;; TODO: Make this not override the unnamed register
 (map! :desc "Use system register next" :nv (general-chord "\"\"") "\"+")
+;; Cannot have 3-key chords :(
+;; (map! :desc "Use black hole register next" :nv (general-chord "\"\"\"") "\"_")
 (map! :desc "Paste from system clipboard" :i "C-S-v" #'my/evil-paste-from-system
       :i "C-v" #'my/evil-paste-from-system)
 
@@ -260,6 +262,13 @@
 ;;       :desc "cancel commit"
 ;;       :leader
 ;;       :n "C-c" 'with-editor-cancel)
+(map! :after magit
+      :map magit-status-mode-map
+      "J" #'magit-section-forward
+      "K" #'magit-section-backward
+      ":" #'magit-git
+      "?" #'evil-search-backward
+      )
 
 ;; (map! :leader
 ;;       (:prefix-map ("a" . "applications")
@@ -337,7 +346,7 @@
 
 
 ;; SPC r is unused in default doom emacs.
-(map! :leader :desc "Inline code evaluate" :nv "r" #'eval:region)
+;; (map! :leader :desc "Inline code evaluate" :nv "r" #'eval:region)
 ;; (map! :leader :desc "Inline code evaluate" :nv "rr" #'eval:region)
 ;; (map! :leader :desc "Send to REPL" :v "r" #'eval/send-region-to-repl)
 
@@ -380,7 +389,7 @@
       )
 
 
-(add-hook! 'dired-mode-hook (setq doom-localleader-key "\\"))
+;; (add-hook! 'dired-mode-hook (setq doom-localleader-key "\\"))
 (map! :map dired-mode-map
       "RET" #'dired-find-file
       "e" #'dired-find-file
@@ -404,7 +413,9 @@
        :desc "whitespace-mode" "l" #'whitespace-mode
        :desc "Center text in window" "=" #'centered-window-mode-toggle
        :desc "word wrap" "w" #'toggle-truncate-lines
-       ;; evil respects visual-line-mode, but not truncate-lines. In other words, enabling visual-line-mode (aka word-wrap-mode) will enable visual line motions (j=gj)
+       ;; evil respects visual-line-mode, but not truncate-lines. In other
+       ;; words, enabling visual-line-mode (aka word-wrap-mode) will enable
+       ;; visual line motions (j=gj)
        :desc "wrapped line motion" "g" #'visual-line-mode
        :desc "line numbers" "n" #'doom/toggle-line-numbers
        :desc "Subword mode" "m" #'subword-mode
