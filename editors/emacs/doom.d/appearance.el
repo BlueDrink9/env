@@ -19,20 +19,22 @@
 (setq my/fonts '("SauceCodePro NF" "Source Code Pro"))
 (setq my/proportional-fonts '("Source Sans Pro" "Consolas" "Ariel"))
 
-(catch 'done
-(dolist (font my/fonts)
-  (if (my/font-exists font) (progn
-                             (setq doom-font (font-spec :family font :size 16))
-                             (throw 'done nil)
-                             ))))
+(when (display-graphic-p)
+  (catch 'done
+    (dolist (font my/fonts)
+      (if (my/font-exists font) (progn
+                                  (setq doom-font (font-spec :family font :size 16))
+                                  (throw 'done nil)
+                                  ))))
 
 
-(catch 'done
-  (dolist (font my/proportional-fonts)
-    (if (my/font-exists font) (progn
-                                (setq doom-variable-pitch-font (font-spec :family font :size 16))
-                                (throw 'done nil)
-                                ))))
+  (catch 'done
+    (dolist (font my/proportional-fonts)
+      (if (my/font-exists font) (progn
+                                  (setq doom-variable-pitch-font (font-spec :family font :size 16))
+                                  (throw 'done nil)
+                                  ))))
+  )
 
 ;; ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -123,3 +125,11 @@
 ;;   )
 ;; Can also include project, file, and path if you want to.
 (setq lsp-headerline-breadcrumb-segments '(symbols))
+
+(scroll-bar-mode t)
+(set-scroll-bar-mode 'right)
+;; Temporary, but will be useful for learning my way around.
+(if (display-graphic-p)
+    (menu-bar-mode t)
+    (menu-bar-mode 0)
+  )

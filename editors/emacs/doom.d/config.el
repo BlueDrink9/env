@@ -38,10 +38,6 @@
  window-combination-resize t                      ; take new window space from all other windows (not just current)
  x-stretch-cursor t)                              ; Stretch cursor to the glyph width
 
-(scroll-bar-mode t)
-(set-scroll-bar-mode 'right)
-;; Temporary, but will be useful for learning my way around.
-(menu-bar-mode t)
 ;; Word wrap
 (set-default 'truncate-lines nil)
 (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
