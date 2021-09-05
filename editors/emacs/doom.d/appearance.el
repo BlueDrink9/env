@@ -133,3 +133,7 @@
     (menu-bar-mode t)
     (menu-bar-mode 0)
   )
+
+
+;; Restore modeline to popups
+(plist-put +popup-defaults :modeline t)

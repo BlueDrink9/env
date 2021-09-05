@@ -252,16 +252,11 @@
 (evil-ex-define-cmd "gc" 'magic-commit-create)
 (evil-ex-define-cmd "gw" 'magit-stage-file)
 ;; TODO Magit: Allow w navigations, easymotion? For yanking commit diffs.
-;; Overwrite magit c-j and c-k bindings to maintain ability to move windows.
 ;; Add space mapping to cancel commit
 (map! :after git-commit
       :map git-commit-mode-map
-      :desc "confirm commit message"
-      "C-<return>" 'with-editor-finish)
-;; (map! :mode git-commit-major-mode
-;;       :desc "cancel commit"
-;;       :leader
-;;       :n "C-c" 'with-editor-cancel)
+      :desc "confirm commit message" "C-<return>" 'with-editor-finish
+      :desc "cancel commit" :leader "<backspace>" 'with-editor-cancel)
 (map! :after magit
       :map magit-status-mode-map
       "J" #'magit-section-forward
