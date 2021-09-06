@@ -328,3 +328,5 @@ rather than file lines."
       (visual-line-mode nil)
       ))
   )
+;; This breaks powerline symbols in vterm if not nil. See doom#5160
+(setq doom-emoji-fallback-font-families nil)
