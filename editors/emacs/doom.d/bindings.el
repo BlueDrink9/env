@@ -249,8 +249,10 @@
        :desc "Amend commit" :prefix "c" "a" #'magit-commit-amend
        :desc "Extend commit" :prefix "c" "e" #'magit-commit-extend
        ))
-(evil-ex-define-cmd "gc" 'magic-commit-create)
-(evil-ex-define-cmd "gw" 'magit-stage-file)
+(evil-ex-define-cmd "gc" #'magic-commit-create)
+(evil-ex-define-cmd "gw" #'magit-stage-file)
+(evil-ex-define-cmd "gup" #'magit-commit-extend)
+
 ;; TODO Magit: Allow w navigations, easymotion? For yanking commit diffs.
 ;; Add space mapping to cancel commit
 (map! :after git-commit
