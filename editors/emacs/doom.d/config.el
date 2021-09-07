@@ -50,12 +50,11 @@
 ;; Scroll-off
 (setq scroll-margin 5)
 ;; Autosaves
-;; (super-save-mode +1)
 (after! super-save
   ;; (setq super-save-remote-files nil)
-  (super-save-mode 1)
   ;; (setq super-save-exclude '(".gpg"))
   (add-to-list 'super-save-hook-triggers 'evil-insert-state-exit-hook))
+(super-save-mode 1)
 
 
 ;; Evil-style bindings in minibuffer (esc, c-n etc)
