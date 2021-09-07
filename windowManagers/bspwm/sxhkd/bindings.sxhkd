@@ -165,6 +165,9 @@ super + n
 # Delete current desktop
 super + shift + n
     bspc desktop --remove
+# Useful after a secondary monitor is disconnected
+super + alt + x
+    bspc monitor --remove
 
 #----------------------------------------
 # Monitor
