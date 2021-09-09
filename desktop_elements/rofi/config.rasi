@@ -2,8 +2,10 @@
  * */
 configuration {
 	theme: "/usr/share/rofi/themes/purple.rasi";
-	modi: "combi,window,drun,run,file-browser,ssh,p:rofi-power-menu,calc,p:rofi-wifi-menu,p:rofi-mpd";
-	combi-modi: "window,drun,run,file-browser";
+	/* modi: "combi,window,drun,run,file-browser,ssh,p:rofi-power-menu,calc,p:rofi-wifi-menu,p:rofi-mpd"; */
+	/* combi-modi: "window,drun,run,file-browser"; */
+	modi: "combi,window,drun,run,ssh,p:rofi-power-menu,calc,p:rofi-wifi-menu,p:rofi-mpd";
+	combi-modi: "window,drun,run";
 	font: "SFNS Display 15";
 	show-icons: true;
 	fixed-num-lines: true;
@@ -14,10 +16,13 @@ configuration {
 	sidebar-mode: true;
 	disable-history: false;
 	max-history-size: 25;
+	async-pre-read: 1;
 	sorting-method: "fzf";
   parse-hosts: true;
   parse-known-hosts: true;
   cache-dir: "$XDG_CACHE_HOME/rofi";
+	drun-use-desktop-cache: true;
+	/* drun-reload-desktop-cache: false; */
 /*	drun-categories: ;*/
 	drun-show-actions: true;
 
@@ -71,8 +76,6 @@ configuration {
 /*	matching-negate-char: '-' /* unsupported */;*/
 /*	cache-dir: ;*/
 /*	window-thumbnail: false;*/
-/*	drun-use-desktop-cache: false;*/
-/*	drun-reload-desktop-cache: false;*/
 /*	normalize-match: false;*/
 /*	display-window: ;*/
 /*	display-windowcd: ;*/
