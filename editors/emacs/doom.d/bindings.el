@@ -81,6 +81,10 @@
 
 (map! :map evil-window-map
       "t"       #'+workspace/new
+      "<"       #'centaur-tabs-move-current-tab-to-left
+      ">"       #'centaur-tabs-move-current-tab-to-right
+      "<home>"       #'centaur-tabs-select-beg-tab
+      "<end>"       #'centaur-tabs-select-end-tab
       ;; Swapping windows. Defined by default anyway.
       ;; "S-<left>"       #'+evil/window-move-left
       ;; "S-<down>"       #'+evil/window-move-down
