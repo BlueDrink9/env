@@ -281,9 +281,8 @@
   (put 'dockerfile-image-name 'safe-local-variable #'stringp)
   )
 
-;; For terminal (at least, iterm)
-(after! term-cursor
-  (global-term-cursor-mode))
+;; For terminal to have shape-changing cursors.
+(global-term-cursor-mode)
 
 
 ;; IDK if this is even real

@@ -23,6 +23,8 @@ super + e
 super + v
     gvim
 ctrl + alt + e
+    emacsclient --create-frame --alternate-editor=""
+ctrl + alt + shift + e
     emacs
 
 ctrl + alt + p

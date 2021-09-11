@@ -1,7 +1,10 @@
 #!/bin/sh
+myEmacsC(){
+    emacsclient --create-frame --alternate-editor='' -nw "$@"
+}
 # Use xterm-direct to convince doom emacs to use truecolor
 if [ "$COLORTERM" = "truecolor" ]; then
-    TERM=xterm-direct emacs --no-window-system $@
+    TERM=xterm-direct myEmacsC "$@"
 else
-    emacs --no-window-system $@
+    myEmacsC "$@"
 fi

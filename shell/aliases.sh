@@ -61,7 +61,7 @@ alias gs="git status"
 alias gpl="git pull &"
 alias gpsh="git push &"
 alias dif="git diff --ignore-space-change --color-words"
-alias magit="myEmacs --no-window-system --eval='(magit-status)'"
+alias magit="myEmacs --eval '(magit-status)'"
 
 # Custom function with logic for different address formats
 alias gcl="git_clone"
@@ -121,7 +121,8 @@ openVimSession(){ myVim -c "OpenSession $1"; }
 alias os="openVimSession"
 alias em="myEmacs"
 alias emw="emacs"
-alias emc="emacsclient"
+alias emc="myEmacsclient"
+alias ec='emacsclient --no-wait --create-frame --alternate-editor=""'
 
 # Don't accidentally remove or overwrite files.
 # alias cp="cp -i"
