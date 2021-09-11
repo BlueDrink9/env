@@ -1,43 +1,59 @@
 # vim:ft=sxhkdrc
 # vim:ft=sh
 
-# terminal emulator
-ctrl + alt + t
-  kitty
-
-super + r
-  rofi -show combi
-
-ctrl + alt + b
+# -- Execute --
+# terminal, notes, mail, passwords, Facebook messages
+super + e; {t,n,m,p,f}
+  {kitty,joplin,tutanota-desktop,keepassxc,ferdi}
+# ide
+super + e; {_,shift+}i
+  {emacsclient --create-frame --alternate-editor="", emacs}
+# vim (lite, IDE)
+super + e; {_,shift+,alt+}v
+    gvim{_,--cmd="let g:liteMode=1",--cmd="let g:ideMode=1"}
+# Signal/secure messages
+super + e; s
+  signal-desktop --use-tray-icon
+# Calender
+super + e; c
+  tdrop --auto-detect-wm --wm bspwm \
+    thunderbird
+# file Explorer
+super + e; e
+  xdg-open ~ || \
+    dolphin
+# Internet browser
+super + e; b
     brave || \
     xdg-open /usr/share/applications/brave-browser.desktop || \
     xdg-open ~/usr/share/applications/brave-browser.desktop || \
     gtk-launch brave-browser.desktop
 
-# ctrl + alt + e
-# 	dolphin
-super + e
-  xdg-open ~ || \
-    dolphin
+# terminal emulator
+ctrl + alt + t
+  kitty
 
 super + v
     gvim
-ctrl + alt + e
-    emacsclient --create-frame --alternate-editor=""
-ctrl + alt + shift + e
-    emacs
 
-ctrl + alt + p
-  keepassxc
 ctrl + alt + k
   tdrop --auto-detect-wm --wm bspwm \
     thunderbird
-ctrl + alt + s
-  signal-desktop --use-tray-icon
-shift + alt + s
-  ferdi
-ctrl + alt + j
-  joplin
+# super + e
+#   xdg-open ~ || \
+#     dolphin
+
+ctrl + alt + l
+  xdg-screensaver lock
+
+# program launcher
+super + r
+  rofi -show combi
+# super + @space
+# 	dmenu_run
+#   rofi -show combi
+# super + r
+# 	dmenu_run
 
 # tdrop to create easy dropdown windows.
 # The positional argument should be the name of a program in $PATH (as opposed to the full path to a program) and should not contain any flags (see -f if you want to pass additional flags to the program when running it). It should always be the last argument.
@@ -72,12 +88,3 @@ super + {Down,Left,Right}
 
 super + m; v: {plus,minus,m}
   amixer sset Master {5%+,5%-,toggle}
-
-ctrl + alt + l
-  xdg-screensaver lock
-
-# program launcher
-# super + @space
-# 	dmenu_run
-# super + r
-# 	dmenu_run
