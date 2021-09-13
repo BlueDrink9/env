@@ -17,6 +17,7 @@ nnoremap <silent> <leader>/ :BLines<CR>
 " Search lines in all buffers.
 nnoremap <silent> <leader>f :Lines<CR>
 nnoremap <silent> <leader>ft :Tags<CR>
+nnoremap <silent> <leader>; :Commands<CR>
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
 command! MRUFZF :History
