@@ -19,7 +19,7 @@
 (setq my/fonts '("SauceCodePro NF" "Source Code Pro"))
 (setq my/proportional-fonts '("Source Sans Pro" "Consolas" "Ariel"))
 
-(when (display-graphic-p)
+(defun my/font-setup ()
   (catch 'done
     (dolist (font my/fonts)
       (if (my/font-exists font) (progn
@@ -35,6 +35,25 @@
                                   (throw 'done nil)
                                   ))))
   )
+
+
+;; GUI-specific settings. Have to set with a frame hook so that emacsclient runs
+;; the correct code when starting a frame either in terminal or GUI.
+(defun my/GUI-frame-setup (frame)
+  (when (display-graphic-p frame)
+    (my/font-setup)
+    ;; Temporary, but will be useful for learning my way around.
+    (menu-bar-mode t)
+    (menu-bar-mode 0)
+    )
+  )
+;; Run for already-existing frames
+(mapc 'my/GUI-frame-setup (frame-list))
+;; Run when a new frame is created
+(add-hook 'after-make-frame-functions 'my/GUI-frame-setup)
+
+;; This breaks powerline symbols in vterm if not nil. See doom#5160
+(setq doom-emoji-fallback-font-families nil)
 
 ;; ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -128,12 +147,6 @@
 
 (scroll-bar-mode t)
 (set-scroll-bar-mode 'right)
-;; Temporary, but will be useful for learning my way around.
-(if (display-graphic-p)
-    (menu-bar-mode t)
-    (menu-bar-mode 0)
-  )
-
 
 ;; Restore modeline to popups
 (plist-put +popup-defaults :modeline t)
