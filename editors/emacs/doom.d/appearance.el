@@ -109,9 +109,9 @@
   (centaur-tabs-mode -1)
   (setq centaur-tabs-height 26
         centaur-tabs-set-icons t
-        centaur-tabs-modified-marker "o"
+        centaur-tabs-modified-marker "*"
         centaur-tabs-close-button "×"
-        centaur-tabs-set-bar 'above
+        centaur-tabs-set-bar 'over
         centaur-tabs-gray-out-icons 'buffer)
   )
 ;; (setq x-underline-at-descent-line t)

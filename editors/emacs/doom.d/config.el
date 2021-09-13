@@ -342,9 +342,3 @@ rather than file lines."
   )
   (set-popup-rule! "^\\*doom:\\(?:v?term\\|e?shell\\)-popup" :side 'bottom :size 0.2)
   (set-popup-rule! "^\\*doom:vterm" :side 'bottom :size 0.2)
-
-;; This breaks powerline symbols in vterm if not nil. See doom#5160
-(setq doom-emoji-fallback-font-families nil)
-
-;; Nice line over currently active tab.
-(setq centaur-tabs-set-bar 'over)
