@@ -42,6 +42,7 @@
 ;; (map! :desc "C-c" :nv "S-SPC" (setq unread-command-events
 ;;            (listify-key-sequence (kbd "C-c"))))
 
+;;;###autoload
 (defun my/evil-collection-translations (_mode mode-keymaps &rest _rest)
   (evil-collection-translate-key 'normal mode-keymaps
     ;; these need to be unbound first; this needs to be in same statement
@@ -130,11 +131,13 @@
 
 (map! :desc "Describe key" :nv "C-?" #'describe-key-briefly)
 
+;;;###autoload
 (defun my/evil-paste-from-system ()
   "Paste from system register ('+') "
   (interactive)
   (evil-paste-from-register ?+))
 
+;;;###autoload
 (defun my/evil-use-system-register-next ()
   "Sets the register for the next action to the system register"
   (interactive)
@@ -200,6 +203,7 @@
 ; n and N always go the same direction regardless of whether / or ? was used.
 
 ;; ;; Autoexpand brackets when creating functions etc.
+;;;###autoload
 (defun autobracket (bracCharOpen bracCharClose)
     (insert bracCharOpen)
     (evil-insert-newline-below)
@@ -312,11 +316,13 @@
       :i "TAB" #'minibuffer-complete
       )
 
+;;;###autoload
 (defun my/ivy-tab-and-go-next ()
   (progn)
     (ivy-partial)
     (ivy-next-line)
     )
+;;;###autoload
 (defun my/ivy-tab-and-go-prev ()
   (progn)
     (ivy-partial)
@@ -401,6 +407,7 @@
                 "o" doom-leader-toggle-map))
 (map! :v "y" #'evil-yank)
 
+;;;###autoload
 (defun my/toggle-search-highlight ()
   (setq evil-ex-substitute-highlight-all (not evil-ex-substitute-highlight-all))
   (setq evil-ex-search-persistent-highlight (not evil-ex-search-persistent-highlight))
