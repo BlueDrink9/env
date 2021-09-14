@@ -37,10 +37,26 @@
 (map! :desc "C-k" :leader "<backspace>" "C-c")
 ;; (map! :desc "C-x" :nv "SPC z" #'Control-X-prefix)
 ;; (map! :desc "C-c" :nv "S-SPC" #'mode-specific-command-prefix)
+;; (map! :desc "C-c" :nv "S-SPC" mode-specific-map)
+;; (map! :desc "God-mode C-c" :nv "S-SPC" #'evil-execute-in-god-state)
+(map! :map evil-god-state-map "<escape>" 'evil-god-state-bail)
 (which-key-add-key-based-replacements "SPC z" "C-x")
 (which-key-add-key-based-replacements "S-SPC" "C-c")
 ;; (map! :desc "C-c" :nv "S-SPC" (setq unread-command-events
 ;;            (listify-key-sequence (kbd "C-c"))))
+
+;;;###autoload
+(defun my/get-current-C-c-map ()
+  (interactive)
+  "Keymap for both global and current local C-c prefix bindings"
+  (let ((map (make-sparse-keymap)))
+    (set-keymap-parent map
+        (make-composed-keymap mode-specific-map
+                              (lookup-key (current-local-map) (kbd "C-c"))))
+    map))
+(map! :desc "C-c" :nv "S-SPC" #'my/get-current-C-c-map)
+
+
 
 ;;;###autoload
 (defun my/evil-collection-translations (_mode mode-keymaps &rest _rest)
