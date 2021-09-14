@@ -12,6 +12,8 @@
 (package! key-chord)
 ;; Allows rebinding whole prefix trees
 (package! rebinder :recipe (:host github :repo "darkstego/rebinder.el"))
+;; String modification functions
+(package! s)
 
 ;; These are from the official snippets repo.
 (package! yasnippet-snippets
@@ -22,8 +24,25 @@
 
 ;; (package! evil-collection) ;; included already.
 (package! evil-quickscope)
-;; String modification functions
-(package! s)
+(package! evil-smartparens)
+;; (package! evil-better-visual-line)
+(package! evil-god-state)
+
+(package! god-mode)
+
+
+(package! smartparens)
+
+;; Completions
+;; (package! counsel)
+; Floating completion pop-up for company, with icons and documentation!
+(package! company-box)
+(package! company-fuzzy)
+;; Fuzzy response matching library
+(package! liquidmetal)
+(package! company-statistics)
+(package! flx)
+
 
 (package! realgud)
 (package! dap-mode)
@@ -33,7 +52,10 @@
 
 ;; Autosaving
 (package! super-save)
-(package! auctex)
+
+(package! all-the-icons-dired)
+(package! mixed-pitch)
+;; (package! bufler)
 
 ;; Coloured man pages
 (package! info-colors)
@@ -44,6 +66,8 @@
 ;; Load huge files in chunks. Lazy-load so disable initially.
 (package! vlf :recipe (:host github :repo "m00natic/vlfi" :files ("*.el")) :disable t)
 
+(package! forge)
+(package! auctex)
 
 ;; (package! org-pretty-table
 ;;   :recipe (:host github :repo "Fuco1/org-pretty-table"))
@@ -57,13 +81,6 @@
 ;; (package! calibredb)
 ;; (package! nov)
 ;; https://tecosaur.github.io/emacs-config/config.html#ebooks
-
-(package! smartparens)
-
-(package! all-the-icons-dired)
-
-(package! mixed-pitch)
-;; (package! bufler)
 
 (package! dockerfile-mode)
 (package! pkgbuild-mode
@@ -82,26 +99,10 @@
 (package! poly-org)
 (package! poly-markdown)
 
-
-;; (package! evil-better-visual-line)
-
 (package! term-cursor :recipe (:host github :repo "h0d/term-cursor.el" :files ("*.el")))
 
 (package! minibuffer-complete-cycle)
 
-;; Completions
-;; (package! counsel)
-; Floating completion pop-up for company, with icons and documentation!
-(package! company-box)
-(package! company-fuzzy)
-;; Fuzzy response matching library
-(package! liquidmetal)
-(package! company-statistics)
-
-(package! flx)
-
-
-(package! forge)
 ;; Consider disabling these packages since they are heavier.
 ;; =:ui tabs=, =:ui indent-guides=, =:ui ligatures=, =:editor word-wrap= and =:ui
 
