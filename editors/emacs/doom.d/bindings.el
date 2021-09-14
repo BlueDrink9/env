@@ -221,13 +221,13 @@
 ;; ;; Autoexpand brackets when creating functions etc.
 ;;;###autoload
 (defun autobracket (bracCharOpen bracCharClose)
-    (insert bracCharOpen)
-    (evil-insert-newline-below)
-    (insert bracCharClose)
-    (evil-previous-line)
-    (evil-insert-newline-below)
-    (evil-indent-line)
-  )
+  (interactive)
+  (insert bracCharOpen)
+  (evil-insert-newline-below)
+  (insert bracCharClose)
+  (evil-previous-line)
+  (evil-insert-newline-below)
+  (evil-indent-line))
 ;; ;; This mostly works but will not ever trigger properly because key-chord.el cannot bind return key!
 ;; (map! :desc "Autoexpand bracket" :i
 ;;       (general-chord (concat "(" (kbd "<RET>")))
@@ -334,16 +334,14 @@
 
 ;;;###autoload
 (defun my/ivy-tab-and-go-next ()
-  (progn)
-    (ivy-partial)
-    (ivy-next-line)
-    )
+  (interactive)
+  (ivy-partial)
+  (ivy-next-line))
 ;;;###autoload
 (defun my/ivy-tab-and-go-prev ()
-  (progn)
-    (ivy-partial)
-    (ivy-previous-line)
-    )
+  (interactive)
+  (ivy-partial)
+  (ivy-previous-line))
 (map! :map (ivy-minibuffer-map)
       :in "<escape>" #'minibuffer-keyboard-quit
       ;; Useful in normal mode sometimes if I want to use j/k to navigate.
@@ -425,11 +423,11 @@
 
 ;;;###autoload
 (defun my/toggle-search-highlight ()
+  (interactive)
   (setq evil-ex-substitute-highlight-all (not evil-ex-substitute-highlight-all))
   (setq evil-ex-search-persistent-highlight (not evil-ex-search-persistent-highlight))
   ;; (evil-ex-nohighlight)
-  (redraw-display)
-  )
+  (redraw-display))
 (map! :leader
       (:prefix "t"
        ;; :map doom-leader-toggle-map
