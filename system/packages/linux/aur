@@ -1,0 +1,10 @@
+# Needs thunderbird < 79 for some reason
+# thunderbird-tbsync
+# Or do I want the lite version for this?
+thunderbird-extension-tbkeys
+thunderbird-conversations
+thunderbird-dark-reader
+# thunderbird-shrunked
+# Not yet on aur
+# thunderbird-markdown-here-revival
+# thunderbird-tbsync-provider-caldav

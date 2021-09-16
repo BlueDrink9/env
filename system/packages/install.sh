@@ -22,14 +22,13 @@ END
 )"
 
 installList(){
-    list="$1"
-    while read -r package; do
-        if [ "${package:0:1}" != "#" ]; then
-            export HOMEBREW_NO_AUTO_UPDATE=1
-            export PACK_NOCONFIRM=1
-            pack install $package
-        fi
-    done < "$list"
+  list="$1"
+  # Strip out comments first
+  grep -v '^\s*#' "$list" | while read -r package; do
+    export HOMEBREW_NO_AUTO_UPDATE=1
+    export PACK_NOCONFIRM=1
+    pack install $package
+  done
 }
 
 installPackages(){
@@ -62,6 +61,8 @@ installPackages(){
         # Linux GUI stuff.
         printLine "Installing linux-specific packages..."
         installList "$($SCRIPTDIR_CMD)/linux/list"
+        grep -v '^\s*#' "$($SCRIPTDIR_CMD)/linux/aur" | xargs yay -S --noconfirm
+         
     fi
 }
 

@@ -15,8 +15,9 @@ gimp
 zotero
 # Good email client
 astroid
-# Pip
-zotero-cli
+thunderbird
+# for thunderbird - tray icon
+birdtray
 # Not technically gui but not very useful without a GUI.
 etesync-dav
 copyq
