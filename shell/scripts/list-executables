@@ -1,0 +1,8 @@
+#!/bin/sh
+# Use sh because the syntax for listing PATH doesn't always work in zsh.
+# Great for piping to fzf
+for d in ${PATH//:/ } ; do
+    for f in $d/* ; do
+        test -x $f && test -f $f && echo $f
+    done
+done

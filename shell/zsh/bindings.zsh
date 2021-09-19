@@ -11,7 +11,7 @@ bindkey -M viins '^[' vi-cmd-mode
 export KEYTIMEOUT=20  # Default 40 (400 ms).
 
 # Change cursor shape for different vi modes.
-function zle-keymap-select {
+zle-keymap-select () {
   if [[ ${KEYMAP} == vicmd ]] ||
      [[ $1 = 'block' ]]; then
     echo -ne "${term_block_cursor}"
@@ -114,9 +114,18 @@ fi
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
-bindkey -M vicmd " /" fzf-history-widget
-bindkey -M vicmd " c" fzf-cd-widget
-bindkey -M vicmd " f" fzf-file-widget
+# Space/leader bindings
+leader=" "
+bindkey -M vicmd "${leader}/" fzf-history-widget
+bindkey -M vicmd "${leader}c" fzf-cd-widget
+bindkey -M vicmd "${leader}f" fzf-file-widget
+# Emulates doom M-x
+fuzzy-search-executables-widget () {
+  fuzzy-search-executables "$@"
+}
+zle -N fuzzy-search-executables-widget
+bindkey -M vicmd "${leader};" fuzzy-search-executables-widget
+unset leader
 
 # Vim-surround
 autoload -Uz surround
