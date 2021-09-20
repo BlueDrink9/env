@@ -209,9 +209,11 @@ super + {o,i}
 #----------------------------------------
 
 # Rotate desktop
-super + {w;} {_,shift + }r
-	bspc node @/ --rotate {90,-90}
-# super + {w;} {_,shift + }r
+# TODO: Automatically add `@/` if only one node is selected
+super + w; {_,alt + }{_,shift + }r
+	bspc node {@/,_} --rotate {90,-90}
+# Basically just moving nodes, not really helpful.
+# super + {w;} {_,shift + }c
 # 	bspc node @/ --circulate {forward,backward}
 
 # Flip desktop
@@ -219,11 +221,11 @@ super + w; {_,shift + }f
 	bspc node @/ --flip {horizontal,vertical}
 
 # Make split ratios equal
-super + {w;} equal
+super + w; equal
 	bspc node @/ --equalize
 
 # Make split ratios balanced
-super + {w;} minus
+super + w; minus
 	bspc node @/ --balance
 
 
@@ -233,7 +235,7 @@ super + {w;} minus
 #----------------------------------------
 
 # preselect the direction
-super + w; p; {h,j,k,l}
+super + w; {h,j,k,l}
 	bspc node -p {west,south,north,east}
 
 # preselect the ratio
