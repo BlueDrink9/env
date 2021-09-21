@@ -48,6 +48,9 @@ ctrl + alt + k
 ctrl + alt + l
   xdg-screensaver lock
 
+alt + shift + 4
+  spectacle --region
+
 # program launcher
 super + r
   rofi -show combi
