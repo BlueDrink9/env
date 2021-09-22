@@ -22,7 +22,15 @@
        ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
-       (company +tng)           ; the ultimate code completion backend
+       (company           ; the ultimate code completion backend
+        ;; Floating completion pop-up for company, with icons and documentation!
+        ;; +childframe ;; incompatible with tng :( which is a shame, because
+        ;; otherwise company is misplaced with varible-pitch fonts. ;; Uses
+        ;; company-box.
+        ;; Tab-n-go. Emulates vim's style of completion, where nothing completes
+        ;; but tab cycles full completions. No key needed to 'accept' the
+        ;; completion.
+        +tng)
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        (ivy               ; a search engine for love and life

@@ -183,6 +183,8 @@
   ;; Doesn't work with company-tng :(
   ;; (global-company-fuzzy-mode 1)
   (company-statistics-mode)
+  (company-posframe-mode)
+  (setq company-posframe-font doom-font)
   ) ;; make aborting less annoying.
 ;; Accept when certain characters entered.
 ;; (setq company-auto-commit t)

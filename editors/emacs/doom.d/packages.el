@@ -35,8 +35,8 @@
 
 ;; Completions
 ;; (package! counsel)
-; Floating completion pop-up for company, with icons and documentation!
-(package! company-box)
+;; Use child frame for emacs. Compatible with tng, in contrast to box.
+(package! company-posframe)
 (package! company-fuzzy)
 ;; Fuzzy response matching library
 (package! liquidmetal)
