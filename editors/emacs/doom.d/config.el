@@ -37,6 +37,9 @@
  delete-by-moving-to-trash t                      ; Delete files to trash
  window-combination-resize t                      ; take new window space from all other windows (not just current)
  x-stretch-cursor t)                              ; Stretch cursor to the glyph width
+(setq enable-dir-local-variables t)
+;; Will ask about varibles it doesn't know about.
+(setq enable-local-variables t)
 
 ;; Word wrap
 (set-default 'truncate-lines nil)
