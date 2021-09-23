@@ -27,4 +27,7 @@ zle -N bracketed-paste bracketed-paste-magic
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
+# Use bash completions as well when available?
+autoload -Uz bashcompinit
+bashcompinit
 
