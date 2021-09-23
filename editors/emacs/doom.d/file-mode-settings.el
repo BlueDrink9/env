@@ -38,6 +38,54 @@
 ;; Set default latex packages for org doc
 ;; (after! org (add-to-list 'org-latex-default-packages-alist ...))
 
+(after! company-bibtex
+  ;; Allow completion with \cite
+  (setq company-bibtex-org-citation-regex (format "%s\\|%s"
+                                                  company-bibtex-org-citation-regex company-bibtex-latex-citation-regex))
+  )
+;; company-bibtex completion backend function doesn't load automatically, so
+;; have to trigger it to laod for the relevant modes.
+(use-package! company-bibtex
+  :hook (org-mode latex-mode))
+;; (use-package! company-bibtex
+;;   :commands company-bibtex)
+;; (dolist (mode (list 'org-mode 'latex-mode))
+;;   ;; Have to trigger this in order to autoload company-bibtex
+;;   (add-hook mode ((ignore-errors (company-bibtex)))))
+
+;; Set bibliography from a locally-defined variable.
+;; Put the following in a `.dir-locals.el` file in the directory you are working in.
+;; ((text-mode . ((local-bib-path . "../../2021_Masters.bib"))))
+
+(defun update-bibliography-path (local-bib-path)
+  (setq-local company-bibtex-bibliography local-bib-path)
+  ;; (add-to-list reftex-default-bibliography local-bib-path)
+  (setq-local reftex-bib-path local-bib-path)
+  (setq-local reftex-default-bibliography '(local-bib-path))
+  ;; (add-to-list bibtex-completion-bibliography local-bib-path))
+  )
+;; (update-bibliography-path local-bib-path)
+
+;; (dolist (hook (list 'org-mode-hook 'latex-mode-hook))
+;;   (add-hook! hook
+(add-hook! 'org-mode-hook
+    (unless (not (boundp 'local-bib-path))
+      (update-bibliography-path 'local-bib-path)))
+(add-hook! 'latex-mode-hook
+    (unless (not (boundp 'local-bib-path))
+      (update-bibliography-path 'local-bib-path)))
+;; (mapc (lambda (hook)
+;;         (add-hook hook
+;;           (unless (not (boundp 'local-bib-path))
+;;              (update-bibliography-path 'local-bib-path))))
+;;       '(org-mode-hook latex-mode-hook))
+;; If we want to set them manually in a .dir-locals.el file, need to mark them
+;; as safe.
+(put 'company-bibtex-bibliography 'safe-local-variable #'stringp)
+(put 'reftex-default-bibliography 'safe-local-variable #'stringp)
+(put 'bibtex-completion-bibliography 'safe-local-variable #'stringp)
+(put 'local-bib-path 'safe-local-variable #'stringp)
+
 ;; Emacs for statistics (R)
 (after! ess
   ;; (require 'ess-site)

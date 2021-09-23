@@ -22,7 +22,8 @@
            :files ("*")))
 (package! ivy-yasnippet)
 
-;; (package! evil-collection) ;; included already.
+;; included already, but things like unimpaired aren't.
+(package! evil-collection)
 (package! evil-quickscope)
 (package! evil-smartparens)
 ;; (package! evil-better-visual-line)
@@ -42,6 +43,9 @@
 (package! liquidmetal)
 (package! company-statistics)
 (package! flx)
+(package! company-bibtex)
+;; Completion from buffer based on common usage. Sets capf
+(package! pabbrev)
 
 
 (package! realgud)
@@ -98,6 +102,9 @@
 (package! poly-R)
 (package! poly-org)
 (package! poly-markdown)
+
+(package! org-ref)
+(package! ivy-bibtex)
 
 (package! term-cursor :recipe (:host github :repo "h0d/term-cursor.el" :files ("*.el")))
 

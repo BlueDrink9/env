@@ -183,9 +183,11 @@
   ;; Doesn't work with company-tng :(
   ;; (global-company-fuzzy-mode 1)
   (company-statistics-mode)
-  (company-posframe-mode)
-  (setq company-posframe-font doom-font)
-  ) ;; make aborting less annoying.
+  ;; Again, has the same posframe issue of getting the wrong focus.
+  ;; (company-posframe-mode)
+  ;; (setq company-posframe-font doom-font)
+  )
+;; make aborting less annoying.
 ;; Accept when certain characters entered.
 ;; (setq company-auto-commit t)
 ; Floating completion pop-up for company, with icons and documentation!
@@ -347,3 +349,6 @@ rather than file lines."
   )
   (set-popup-rule! "^\\*doom:\\(?:v?term\\|e?shell\\)-popup" :side 'bottom :size 0.2)
   (set-popup-rule! "^\\*doom:vterm" :side 'bottom :size 0.2)
+
+(after! company-bibtex
+  (add-to-list 'company-backends 'company-bibtex))
