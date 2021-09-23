@@ -31,6 +31,22 @@
 (setq markdown-fontify-code-blocks-natively 1)
 (setq markdown-header-scaling 1)
 
+
+;;; Org
+
+(setq org-export-publishing-directory "./build")
+(defun org-export-output-file-name-modified (orig-fun extension &optional subtreep pub-dir)
+  (unless pub-dir
+    (setq pub-dir "build")
+    (unless (file-directory-p pub-dir)
+      (make-directory pub-dir)))
+  (apply orig-fun extension subtreep pub-dir nil))
+(advice-add 'org-export-output-file-name :around #'org-export-output-file-name-modified)
+;; (setq org-publish-project-alist
+;;   '(("all" :components ("html" "pdf")
+;;      :publishing-directory "build")))
+
+
 ;; Auto update toc
 (after! toc-org
   ;; enable in markdown, too
@@ -56,7 +72,6 @@
 ;; Set bibliography from a locally-defined variable.
 ;; Put the following in a `.dir-locals.el` file in the directory you are working in.
 ;; ((text-mode . ((local-bib-path . "../../2021_Masters.bib"))))
-
 (defun update-bibliography-path (local-bib-path)
   (setq-local company-bibtex-bibliography local-bib-path)
   ;; (add-to-list reftex-default-bibliography local-bib-path)
@@ -64,8 +79,6 @@
   (setq-local reftex-default-bibliography '(local-bib-path))
   ;; (add-to-list bibtex-completion-bibliography local-bib-path))
   )
-;; (update-bibliography-path local-bib-path)
-
 ;; (dolist (hook (list 'org-mode-hook 'latex-mode-hook))
 ;;   (add-hook! hook
 (add-hook! 'org-mode-hook
