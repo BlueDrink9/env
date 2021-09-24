@@ -44,6 +44,7 @@
 (package! company-statistics)
 (package! flx)
 (package! company-bibtex)
+(package! company-flx)
 ;; Completion from buffer based on common usage. Sets capf
 (package! pabbrev)
 

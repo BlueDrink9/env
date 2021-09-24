@@ -183,9 +183,8 @@
   ;; Doesn't work with company-tng :(
   ;; (global-company-fuzzy-mode 1)
   (company-statistics-mode)
-  ;; Again, has the same posframe issue of getting the wrong focus.
-  ;; (company-posframe-mode)
-  ;; (setq company-posframe-font doom-font)
+  (setq company-posframe-font doom-font)
+  (company-flx-mode +1)
   )
 ;; make aborting less annoying.
 ;; Accept when certain characters entered.
@@ -193,6 +192,8 @@
 ; Floating completion pop-up for company, with icons and documentation!
 ; Seems to break tng
 ;; (add-hook! 'company-mode-hook #'company-box-mode)
+(after! company-bibtex
+  (add-to-list 'company-backends 'company-bibtex))
 
 ;; Tab cycles through minibuffer completion options.
 (setq minibuffer-complete-cycle t)
@@ -349,6 +350,3 @@ rather than file lines."
   )
   (set-popup-rule! "^\\*doom:\\(?:v?term\\|e?shell\\)-popup" :side 'bottom :size 0.2)
   (set-popup-rule! "^\\*doom:vterm" :side 'bottom :size 0.2)
-
-(after! company-bibtex
-  (add-to-list 'company-backends 'company-bibtex))
