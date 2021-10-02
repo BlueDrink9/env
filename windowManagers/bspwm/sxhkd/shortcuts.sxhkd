@@ -2,9 +2,9 @@
 # vim:ft=sh
 
 # -- Execute --
-# terminal, notes, mail, passwords, Facebook messages
-super + e; {t,n,m,p,f}
-  {kitty,joplin,tutanota-desktop,keepassxc,ferdi}
+# terminal, notes, mail, passwords, Facebook messages, OTP Authenticator
+super + e; {t,n,m,p,f,a}
+  {kitty,joplin,tutanota-desktop,keepassxc,ferdi,authy}
 # ide
 super + e; {_,shift+}i
   {emacsclient --create-frame --alternate-editor="", emacs}
