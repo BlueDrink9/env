@@ -101,7 +101,8 @@
        :checkers
        syntax              ; tasing you for every semicolon you forget
        (spell              ; tasing you for misspelling mispelling
-        +aspell
+        +flyspell
+        ;; +aspell
         +everywhere)       ; spellcheck comments in programming modes.
        grammar           ; tasing grammar mistake every you make
 
