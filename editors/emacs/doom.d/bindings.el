@@ -77,7 +77,7 @@
       :nv ":" #'evil-snipe-repeat-forwards)
 ;; (evil-collection-swap-key nil 'evil-motion-state-map ";" ":")
 (map! :leader :nv
-      ";" #'counsel-M-x
+      ";" #'execute-extended-command
       ;; ":" #'evil-repeat-find-char
       ;; Snipe gives colour hints.
       :nv ":" #'pp-eval-expression)
@@ -308,7 +308,7 @@
        "TAB" #'company-select-next
        ;; Shfit tab
       "<C-iso-lefttab>" #'company-select-previous
-      "C-/" #'counsel-company  ; search results
+      ;; "C-/" #'counsel-company  ; search results
       "RET" #'newline-and-indent
       "<return>" #'newline-and-indent
       ))
@@ -332,24 +332,14 @@
       :i "TAB" #'minibuffer-complete
       )
 
-;;;###autoload
-(defun my/ivy-tab-and-go-next ()
-  (interactive)
-  (ivy-partial)
-  (ivy-next-line))
-;;;###autoload
-(defun my/ivy-tab-and-go-prev ()
-  (interactive)
-  (ivy-partial)
-  (ivy-previous-line))
-(map! :map (ivy-minibuffer-map)
+(map! :map (vertico-map)
       :in "<escape>" #'minibuffer-keyboard-quit
       ;; Useful in normal mode sometimes if I want to use j/k to navigate.
-      :ni "C-e" #'ivy-insert-current
-      :n "J" #'ivy-next-history-element
-      :n "K" #'ivy-previous-history-element
-      :in "TAB" #'ivy-next-line
-      :in "<backtab>" #'ivy-previous-line
+      :ni "C-e" #'vertico-insert
+      ;; :n "J" #'vertico-next-history-element
+      ;; :n "K" #'vertico-previous-history-element
+      :in "TAB" #'vertico-next
+      :in "<backtab>" #'vertico-previous
       )
 
 ;; c-a and c-x need fixing for increment/decrement.
@@ -376,7 +366,7 @@
 (evil-ex-define-cmd "cs" #'doom/close-session)
 
 ;; gp to open ivy minibuffer for paste history.
-(map! :n "gp" #'counsel-yank-pop)
+(map! :n "gp" #'consult-yank-pop)
 
 
 (evil-define-operator my/evil-replace-with-kill-ring (beg end)

@@ -20,7 +20,7 @@
   :recipe (:host github
            :repo "AndreaCrotti/yasnippet-snippets"
            :files ("*")))
-(package! ivy-yasnippet)
+;; (package! ivy-yasnippet)
 
 ;; included already, but things like unimpaired aren't.
 (package! evil-collection)
@@ -105,7 +105,7 @@
 (package! poly-markdown)
 
 (package! org-ref)
-(package! ivy-bibtex)
+;; (package! ivy-bibtex)
 
 (package! term-cursor :recipe (:host github :repo "h0d/term-cursor.el" :files ("*.el")))
 

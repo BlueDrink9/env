@@ -33,11 +33,13 @@
         +tng)
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
-       (ivy               ; a search engine for love and life
-        +icons
-        +prescient
-        ;; +childframe
-        +fuzzy)
+       ;; (ivy               ; a search engine for love and life
+       ;;  +icons
+       ;;  +prescient
+       ;;  ;; +childframe
+       ;;  +fuzzy)
+       (vertico             ; the search engine of the future
+        +icons)
 
        :ui
        ;;deft              ; notational velocity for Emacs
