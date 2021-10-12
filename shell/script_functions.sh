@@ -140,6 +140,7 @@ prependTextIfAbsent() {
   default="invalid text or filename"
   text="${1:-$default}"
   file="${2:-$default}"
+  linenum="${3:-1}"
   mkdir -p "$(dirname "$file")"
   # Sed needs at least one line to work on, so can't just touch.
   if [ ! -f "$file" ]; then printf "\n" > "$file"; fi;
@@ -147,7 +148,7 @@ prependTextIfAbsent() {
   # -i is inplace for GNU sed. Use -i.bak for BSD (OSX) (it creates a .bak
   # file, which we remove).
   grep -q -F "$text" "$file" > /dev/null 2>&1 || \
-    sed -i.bak "1s;^;$text\n;" "$file"
+    sed -i.bak "$linenum i$text\n" "$file"
   rm "$file".bak > /dev/null 2>&1 || true
 }
 
