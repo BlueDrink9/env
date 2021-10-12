@@ -14,8 +14,9 @@ source "$DOTFILES_DIR/shell/functions.sh"
 eval "$(cat <<END
 do${installID}() {
     printErr "Setting up doom emacs"
-    installDoomEmacs
-    prependTextIfAbsent "${installText}" "${baseRC}"
+    # installDoomEmacs
+  # Put on second line, so that lexical binding still works.
+    prependTextIfAbsent "${installText}" "${baseRC}" 2
   }
 END
 )"
