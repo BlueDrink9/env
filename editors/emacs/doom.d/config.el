@@ -180,8 +180,7 @@
   ;; (setq company-show-quick-access 'left)
   (add-hook! 'evil-normal-state-entry-hook #'company-abort)
   (setq company-fuzzy-sorting-backend 'liquidmetal)
-  ;; Doesn't work with company-tng :(
-  ;; (global-company-fuzzy-mode 1)
+  (global-company-fuzzy-mode 1)
   (company-statistics-mode)
   (setq company-posframe-font doom-font)
   (company-flx-mode +1)
