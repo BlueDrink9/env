@@ -157,9 +157,9 @@
 ;;         org-hide-leading-stars nil
 ;;         org-startup-indented nil))
 
-;; Lazy-load
-(use-package! vlf-setup
-  :defer-incrementally vlf-tune vlf-base vlf-write vlf-search vlf-occur vlf-follow vlf-ediff vlf)
+;; Lazy-load. Seems to be interferring with doom-reload.
+;; (use-package! vlf-setup
+;;   :defer-incrementally vlf-tune vlf-base vlf-write vlf-search vlf-occur vlf-follow vlf-ediff vlf)
 
 ;; (use-package! org-pretty-table
 ;;   :commands (org-pretty-table-mode global-org-pretty-table-mode))

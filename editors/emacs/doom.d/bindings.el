@@ -77,7 +77,7 @@
       :nv ":" #'evil-snipe-repeat-forwards)
 ;; (evil-collection-swap-key nil 'evil-motion-state-map ";" ":")
 (map! :leader :nv
-      ";" #'execute-extended-command
+      ";" #'execute-extended-command  ;; Vertico
       ;; ":" #'evil-repeat-find-char
       ;; Snipe gives colour hints.
       :nv ":" #'pp-eval-expression)
