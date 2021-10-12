@@ -111,6 +111,9 @@
 
 (package! minibuffer-complete-cycle)
 
+;; Bisect config bugs
+(package! bug-hunter)
+
 ;; Consider disabling these packages since they are heavier.
 ;; =:ui tabs=, =:ui indent-guides=, =:ui ligatures=, =:editor word-wrap= and =:ui
 
