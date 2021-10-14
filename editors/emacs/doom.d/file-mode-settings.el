@@ -7,6 +7,7 @@
             ;; (visual-line-motion-mode t)
             ;; (+word-wrap-mode t)
             ;; (setq doom-modeline-enable-word-count t)
+            (wc-mode 1)
             )
 ; Inherits from text-mode
 (add-hook! 'yaml-mode-hook

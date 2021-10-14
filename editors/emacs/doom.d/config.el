@@ -350,3 +350,11 @@ rather than file lines."
   (dolist (new (list
                 '(ess-r-mode ess-eval-region)))
     (add-to-list 'evil-extra-operator-eval-modes-alist new)))
+
+(after! wc-mode
+  (setq wc-modeline-format "WC[%tw:%ktc]")
+  (setq wc-idle-wait 2))
+
+;; Put ess stuff in modeline
+(add-hook! 'inferior-ess-mode-hook
+        (add-to-list 'mode-line-process '(:eval (nth ess--busy-count ess-busy-strings))))

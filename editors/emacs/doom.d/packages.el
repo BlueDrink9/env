@@ -152,3 +152,5 @@
 ;; Bisect config bugs
 (package! bug-hunter)
 
+;; Word count
+(package! wc-mode)
