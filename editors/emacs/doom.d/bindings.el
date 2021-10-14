@@ -401,6 +401,12 @@
       :ni "C-c" #'vterm-send-C-c
       )
 
+(add-hook! 'comint-mode-hook
+  (map! :nv  "C-l" #'evil-window-right
+        :nv  "C-h" #'evil-window-left
+        :nv  "C-k" #'evil-window-up
+        :nv  "C-j" #'evil-window-down))
+
 
 ;; (add-hook! 'dired-mode-hook (setq doom-localleader-key "\\"))
 (map! :map dired-mode-map
