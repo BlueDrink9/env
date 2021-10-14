@@ -490,6 +490,7 @@ Plug 'https://github.com/lervag/vim-rmarkdown', {'for': 'rmd'}
 Plug 'https://github.com/liuchengxu/graphviz.vim', {'for': 'dot'}
 " Autocompile dotfile on write if fewer than 50 lines.
 autocmd myPlugins bufwritepost *.dot if line("$") < 50 | GraphvizCompile | endif
+Plug 'https://github.com/jceb/vim-orgmode', {'for': 'org'}
 " {]} ---------- Basic extra filetype support ----------
 
 " {[} ---------- Git ----------
