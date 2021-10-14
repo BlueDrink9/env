@@ -343,3 +343,10 @@ rather than file lines."
   )
   (set-popup-rule! "^\\*doom:\\(?:v?term\\|e?shell\\)-popup" :side 'bottom :size 0.2)
   (set-popup-rule! "^\\*doom:vterm" :side 'bottom :size 0.2)
+
+
+(after! evil-extra-operator
+  (global-evil-extra-operator-mode 1)
+  (dolist (new (list
+                '(ess-r-mode ess-eval-region)))
+    (add-to-list 'evil-extra-operator-eval-modes-alist new)))

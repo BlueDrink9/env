@@ -145,6 +145,8 @@
 ;; By default bound to leader-c
 (map! :desc "code" :leader :nv "e" doom-leader-code-map)
 
+(map! :map doom-leader-code-map :m "e" 'evil-operator-eval)
+
 (map! :desc "Describe key" :nv "C-?" #'describe-key-briefly)
 
 ;;;###autoload

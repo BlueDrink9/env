@@ -28,6 +28,8 @@
 (package! evil-smartparens)
 ;; (package! evil-better-visual-line)
 (package! evil-god-state)
+;; Adds a few extra operators, chiefly evil-operator-eval
+(package! evil-extra-operator)
 
 (package! god-mode)
 
