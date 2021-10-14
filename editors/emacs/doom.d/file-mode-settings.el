@@ -99,12 +99,6 @@
 (put 'bibtex-completion-bibliography 'safe-local-variable #'stringp)
 (put 'local-bib-path 'safe-local-variable #'stringp)
 
-;; Emacs for statistics (R)
-(after! ess
-  ;; (require 'ess-site)
-  ;; (require 'ess-mode)
-  ;;   (define-key evil-normal-state-map (kbd "<SPC-e>") 'ess-execute))
-
 ;;; LaTeX
 ;; (setq org-latex-pdf-process (list "latexmk -shell-escape -f -pdfxe %f"))
 (add-hook 'latex-mode-hook
@@ -124,8 +118,14 @@
                     'TeX-error-description-tex-said
                     ))))
 
+;; Emacs for statistics (R)
+(after! ess
+  ;; (require 'ess-site)
+  ;; (require 'ess-mode)
+  ;;   (define-key evil-normal-state-map (kbd "<SPC-e>") 'ess-execute))
   ;; Set ESS options
   (setq
+   ess-ask-for-ess-directory nil ; start R in the working directory by default
    ess-auto-width 'window
    ess-use-auto-complete nil
    ess-use-company 't
@@ -134,17 +134,5 @@
    ess-indent-with-fancy-comments nil ; don't indent comments
    ess-eval-visibly t                 ; enable echoing input
    ;; ess-eval-empty t                   ; don't skip non-code lines.
-   ess-ask-for-ess-directory nil ; start R in the working directory by default
    ;; ess-R-font-lock-keywords      ; font-lock, but not too much
-   (quote
-    ((ess-R-fl-keyword:modifiers)
-     (ess-R-fl-keyword:fun-defs . t)
-     (ess-R-fl-keyword:keywords . t)
-     (ess-R-fl-keyword:assign-ops  . t)
-     (ess-R-fl-keyword:constants . 1)
-     (ess-fl-keyword:fun-calls . t)
-     (ess-fl-keyword:numbers)
-     (ess-fl-keyword:operators . t)
-     (ess-fl-keyword:delimiters)
-     (ess-fl-keyword:=)
-     (ess-R-fl-keyword:F&T)))))
+   ))
