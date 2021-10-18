@@ -86,6 +86,9 @@
 ;; Completion from buffer based on common usage. Sets capf
 (package! pabbrev)
 
+;; Ranked fuzzy matching completion style (for vertico)
+(package! hotfuzz)
+
 
 (package! realgud)
 (package! dap-mode)

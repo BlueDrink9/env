@@ -167,7 +167,7 @@
 
 (after! vertico
   (use-package! hotfuzz
-    (setq completion-styles '(hotfuzz substring))))
+    :init (setq completion-styles '(hotfuzz substring))))
 
 ;; Avy for colemak
 (after! avy
