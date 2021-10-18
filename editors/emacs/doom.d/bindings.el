@@ -196,10 +196,10 @@
 ;; Insertmode deletes create an undopoint first
 ;; inoremap <c-u> <c-g>u<c-u>
 
-(map! :desc "Faster redo" :n  "U" #'evil-redo)
-
-(map! :desc "Go to alternate file" :n  "SPC a" #'evil-switch-to-windows-last-buffer
+(map! :desc "Faster redo" :n  "U" #'evil-redo
       :desc "Run most recent macro" :n  "Q" #'evil-execute-macro)
+
+(map! :leader :desc "Go to alternate file" :n  "a" #'evil-switch-to-windows-last-buffer)
 
 ;;  by default keeps C-x and c-a for emacs things.
 (map! :desc "Increment number" :n  "C-a" #'evil-numbers/inc-at-pt)
