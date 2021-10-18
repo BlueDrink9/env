@@ -83,10 +83,21 @@
       :nv ":" #'pp-eval-expression)
 
 
-(map! :nv  "C-l" #'evil-window-right
+;; Don't allow any package to override these keymaps.
+(map! :map 'override
+      :nv  "C-l" #'evil-window-right
       :nv  "C-h" #'evil-window-left
       :nv  "C-k" #'evil-window-up
       :nv  "C-j" #'evil-window-down)
+
+;; And yet, some insist on it.
+(after! ranger
+  (map! :map ranger-normal-mode-map
+        "C-l" #'evil-window-right
+        "C-h" #'evil-window-left
+        "C-k" #'evil-window-up
+        "C-j" #'evil-window-down))
+
 
 ;; (map! :after outline
 ;;       :map outline-mode-map
@@ -126,7 +137,7 @@
       "S-]"    #'+workspace/swap-right
       )
 
-(map! :n
+(map! :map 'override :n
       "S-<left>"       #'(lambda () (interactive) (evil-window-increase-width 5))
       "S-<right>"      #'(lambda () (interactive) (evil-window-increase-width 5))
       "S-<down>"       #'(lambda () (interactive) (evil-window-increase-height 5))
@@ -400,13 +411,6 @@
       ;; shift+space catches most vterm C-c bindings.
       :ni "C-c" #'vterm-send-C-c
       )
-
-(add-hook! 'comint-mode-hook
-  (map! :nv  "C-l" #'evil-window-right
-        :nv  "C-h" #'evil-window-left
-        :nv  "C-k" #'evil-window-up
-        :nv  "C-j" #'evil-window-down))
-
 
 ;; (add-hook! 'dired-mode-hook (setq doom-localleader-key "\\"))
 (map! :map dired-mode-map
