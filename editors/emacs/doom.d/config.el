@@ -29,7 +29,7 @@
 (load-file (concat script_dir "appearance.el"))
 (load-file (concat script_dir "file-mode-settings.el"))
 (use-package! s)
-(load-file (concat script_dir "spellcheck.el"))
+;; (load-file (concat script_dir "spellcheck.el"))
 ;; Remember, you do not need to run 'doom sync' after modifying this file!
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
@@ -163,6 +163,11 @@
 
 ;; (use-package! org-pretty-table
 ;;   :commands (org-pretty-table-mode global-org-pretty-table-mode))
+;;
+
+(after! vertico
+  (use-package! hotfuzz
+    (setq completion-styles '(hotfuzz substring))))
 
 ;; Avy for colemak
 (after! avy
