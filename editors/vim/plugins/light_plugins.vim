@@ -162,6 +162,9 @@ nmap dR <Plug>ReplaceWithRegisterLine
 " Causes delay on yank op.
 " xmap yr  <Plug>ReplaceWithRegisterVisual
 xmap R  <Plug>ReplaceWithRegisterVisual
+" Operator for start/end of text object. For example, d]i) deletes from the
+" cursor to the end of the current parenthetical term
+Plug 'tommcdo/vim-ninja-feet'
 " {]}--- Operators ---
 
 " {[}--- Visual changes ---

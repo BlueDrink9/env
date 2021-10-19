@@ -4,7 +4,7 @@
 # -- Execute --
 # terminal, notes, mail, passwords, Facebook messages, OTP Authenticator
 super + e; {t,n,m,p,f,a}
-  {kitty,joplin,tutanota-desktop,keepassxc,ferdi,authy}
+  {kitty,joplin-desktop || joplin,tutanota-desktop,keepassxc,ferdi,authy}
 # ide
 super + e; {_,shift+}i
   {emacsclient --create-frame --alternate-editor="", emacs}
