@@ -157,3 +157,8 @@
 
 ;; Word count
 (package! wc-mode)
+
+;; Colourschemes
+(package! solo-jazz-theme)
+(package! lab-themes)
+(package! base16-theme)
