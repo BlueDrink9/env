@@ -120,10 +120,10 @@
 ;; Fancy bullets in org mode, heavy plugin so remove.
 (remove-hook 'org-mode-hook #'org-superstar-mode)
 
-;; (after! smart-tab
-;;   (setq smart-tab-using-hippie-expand t)
-;;   (global-smart-tab-mode 1)
-;;   )
+(after! smart-tab
+  (setq smart-tab-using-hippie-expand t)
+  (global-smart-tab-mode 1)
+  )
 
 (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
 
@@ -196,7 +196,11 @@
   (company-statistics-mode)
   (setq company-posframe-font doom-font)
   (company-flx-mode +1)
-  )
+
+  (add-to-list 'hippie-expand-try-functions-list (lambda (arg) (call-interactively 'company-complete)))
+  ;; lsp-mode will override this
+  (set-company-backend! 'prog-mode
+    '(:separate company-capf company-yasnippet company-dabbrev company-ispell)))
 ;; make aborting less annoying.
 ;; Accept when certain characters entered.
 ;; (setq company-auto-commit t)
@@ -205,6 +209,8 @@
 ;; (add-hook! 'company-mode-hook #'company-box-mode)
 (after! company-bibtex
   (add-to-list 'company-backends 'company-bibtex))
+;; Consider using instead. Prepends, rather than appends.
+;; (set-company-backend! '(latex-mode, org-mode) 'company-bibtex)
 
 ;; Tab cycles through minibuffer completion options.
 (setq minibuffer-complete-cycle t)

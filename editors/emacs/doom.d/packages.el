@@ -94,7 +94,7 @@
 (package! dap-mode)
 
 ;; Tab key behavior
-;; (package! smart-tab :recipe (:host git.genehack.net :repo "genehack/smart-tab" :files ("*.el")))
+(package! smart-tab :recipe (:host nil :repo "https://git.genehack.net/genehack/smart-tab" :files ("*.el")))
 
 ;; Autosaving
 (package! super-save)
