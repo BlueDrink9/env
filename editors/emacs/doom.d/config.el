@@ -44,6 +44,7 @@
 
 ;; Uses # for comments, generally a good fit for files without a specified file extension.
 (setq-default major-mode 'conf-mode)
+(setq-default initial-major-mode 'conf-mode)
 
 ;; Use " register by default, instead of system. System register is still
 ;; accessible via evil + and * registers.
@@ -164,6 +165,12 @@
 ;; (use-package! org-pretty-table
 ;;   :commands (org-pretty-table-mode global-org-pretty-table-mode))
 ;;
+
+;; If complete, TAB first tries to indent the current line, and if the line
+;; was already indented, then try to complete the thing at point.
+;; If nil, hitting TAB indents the current line if point is at the left margin
+;; or in the line's indentation, otherwise it inserts a "real" TAB character.
+(setq tab-always-indent 'complete)
 
 (after! vertico
   (use-package! hotfuzz
