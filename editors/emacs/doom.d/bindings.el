@@ -310,9 +310,14 @@
 ;;         :desc "New journal entry" "j" #'org-journal-new-entry
 ;;         :desc "Search journal entry" "s" #'org-journal-search)))
 
-;; Apparently have to add mapping to every file mode?
+;; ;; Apparently have to add mapping to every file mode?
+;; Getting overridden by company for some reason.
 ;; (after! smart-tab
-;;   (add-hook! 'find-file-hook (map! :i "TAB" 'smart-tab)))
+;;   (dolist (tab (list "TAB" "<tab>"))
+;;     (map! :i tab 'smart-tab)
+;;     (map! :map smart-tab-mode-map tab 'nil)
+;;     (add-hook! 'find-file-hook (map! :i tab 'smart-tab))))
+
 ;; Eventually will want to change this to something that first tries local buffer expansion, I think.
 (map! :i "C-e" #'company-complete-common)
 (map! (:map company-active-map
@@ -320,19 +325,21 @@
        "C-n" #'evil-complete-next
        "TAB" #'company-select-next
        ;; Shfit tab
-      "<C-iso-lefttab>" #'company-select-previous
-      ;; "C-/" #'counsel-company  ; search results
-      "RET" #'newline-and-indent
-      "<return>" #'newline-and-indent
-      ))
+       "<C-iso-lefttab>" #'company-select-previous
+       ;; "C-/" #'counsel-company  ; search results
+       "RET" #'newline-and-indent
+       "<return>" #'newline-and-indent
+       ))
 
 (after! yasnippet
   (map! :map yas-minor-mode-map "C-e" 'yas-expand)
   (map! :map yas-keymap "C-e" 'yas-next-field-or-maybe-expand)
   (dolist (keymap (list yas-minor-mode-map yas-keymap))
-    (map! :map keymap "TAB" nil)
-    (map! :map keymap "<tab>" nil))
-  )
+    (dolist (tab (list "TAB" "<tab>"))
+      (map! :i tab 'nil)))
+
+;; (dolist (tab (list "TAB" "<tab>"))
+;;   (map! :i tab #'hippie-expand))
 
 ;; Minibuffer only one escape to exit, kj to navigate history.
 (map! :map (minibuffer-local-map evil-ex-completion-map evil-ex-search-keymap)
@@ -460,6 +467,10 @@
 
 (map! :map evil-inner-text-objects-map "," #'evil-inner-arg)
 (map! :map evil-outer-text-objects-map "," #'evil-outer-arg)
+
+(map! :i "M-/" #'hippie-expand)
+
+(map! :nv "gx" #'browse-url)
 
 (map! :localleader
       :map markdown-mode-map
