@@ -50,12 +50,17 @@ All systems for arranging views should behave in as similar a fashion as possibl
 | Pane        | Window                                 | Split           |
 | Window*     | Tab within tabbed window               | unlisted buffer |
 | Session     | Desktop/workspace                      | Tab             |
+| Client? | Monitor                      | Client?             |
 
 `*` Windows and sessions behave very similarly in tmux, so this doesn't quite work perfectly.
 
 Mappings for manipulating/moving between these 3 should be as similar as possible, just with a different prefix/modifier key, with some exceptions.
 Operations that are often repeated several times, like resizing or rearranging views, should use a different mode if possible.
 Operations that occur rarely can be on prefixes, or use modes if need be. Modes should create a visual change when active, and be exitable with `esc` or pressing the mode key again.
+
+Arrow keys are used for resizing, generally.
+
+Brackets `[]` are used for moving between sessions/clients. Angle brackets `<>` are used for swapping between sessions/clients.
 
 Operations that change state are usually modified with `shift`
 
