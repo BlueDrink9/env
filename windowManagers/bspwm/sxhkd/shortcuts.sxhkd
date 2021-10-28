@@ -73,9 +73,6 @@ super + grave
       --pre-create-hook='export COLOURSCHEME="Solarized_Dark"; clear' \
       --class=kitty-dropdown --program-flags "--class kitty-dropdown" kitty
 
-super + shift + q
-  qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1
-
 # Media and volume controls
 super + m; s
   notify-send "Opening Spotify..." \
@@ -93,3 +90,11 @@ super + {Down,Left,Right}
 
 super + m; v: {plus,minus,m}
   amixer sset Master {5%+,5%-,toggle}
+
+
+# Dismiss notification with keyboard
+super + \
+  wired --drop latest
+
+super + shift + q
+  qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1
