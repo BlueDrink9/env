@@ -336,7 +336,7 @@
   (map! :map yas-keymap "C-e" 'yas-next-field-or-maybe-expand)
   (dolist (keymap (list yas-minor-mode-map yas-keymap))
     (dolist (tab (list "TAB" "<tab>"))
-      (map! :i tab 'nil)))
+      (map! :i tab 'nil))))
 
 ;; (dolist (tab (list "TAB" "<tab>"))
 ;;   (map! :i tab #'hippie-expand))
