@@ -472,6 +472,12 @@
 
 (map! :nv "gx" #'browse-url)
 
+(dolist (tab (list "TAB" "<tab>"))
+  (map! :after markdown
+        :map markdown-mode-map
+        :i
+        tab nil))
+
 (map! :localleader
       :map markdown-mode-map
       :prefix ("i" . "Insert")
