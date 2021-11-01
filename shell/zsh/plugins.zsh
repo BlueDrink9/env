@@ -45,7 +45,7 @@ zinit light liangguohuan/zsh-dircolors-solarized
 export DIRCOLORTHEME='dircolors.ansi-universal'
 
 # zinit ice wait lucid
-zinit light zdharma/fast-syntax-highlighting
+zinit light zdharma-continuum/fast-syntax-highlighting
 
 # This speeds up pasting w/ autosuggest
 # https://github.com/zsh-users/zsh-autosuggestions/issues/238

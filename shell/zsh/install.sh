@@ -20,7 +20,7 @@ installZSHPlugins(){
   printErr "Downloading zinit..."
   local DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zinit"
   mkdir -p "$DIR"
-  git clone --depth 1 https://github.com/zdharma/zinit "$DIR"/bin
+  git clone --depth 1 https://github.com/zdharma-continuum/zinit "$DIR"/bin
   zsh -i -c exit
 }
 
