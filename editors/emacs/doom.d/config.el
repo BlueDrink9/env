@@ -28,6 +28,7 @@
 (load-file (concat script_dir "aliases.el"))
 (load-file (concat script_dir "appearance.el"))
 (load-file (concat script_dir "file-mode-settings.el"))
+(load-file (concat script_dir "../abbrev_defs.el"))
 (use-package! s)
 ;; (load-file (concat script_dir "spellcheck.el"))
 ;; Remember, you do not need to run 'doom sync' after modifying this file!
@@ -41,6 +42,10 @@
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/work/org/")
+
+(setq abbrev-file-name             ;; tell emacs where to read abbrev
+      (concat script_dir "../abbrev_defs"))
+(add-hook 'doom-first-input-hook #'abbrev-mode)
 
 ;; Uses # for comments, generally a good fit for files without a specified file extension.
 (setq-default major-mode 'conf-mode)

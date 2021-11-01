@@ -13,7 +13,6 @@
 
 ;; Unbound leader keys: d j k l
 
-
 ;; ;; Overridden in some buffers, eg DIRED
 ;; (setq doom-localleader-key "<return>")
 ;; (setq doom-localleader-key "\\")
