@@ -45,6 +45,8 @@ Session.vim
 # OSX office backups
 ~$*
 
+.auctex-auto
+
 # Temporary
 .netrwhist
 *~

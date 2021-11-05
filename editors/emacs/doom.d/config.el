@@ -251,6 +251,7 @@
 ;; make AUCTeX aware of style files and multi-file documents right away
 (setq TeX-auto-save t) ; Parse on save
 (setq TeX-parse-self t) ; Parse on load
+(setq TeX-command-extra-options "-output-directory=./latexbuild")
 (setq-default TeX-master nil)
 (after! latex
 (setf (nth 1 (assoc "LaTeX" TeX-command-list))
