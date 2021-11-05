@@ -100,24 +100,9 @@
 (put 'bibtex-completion-bibliography 'safe-local-variable #'stringp)
 (put 'local-bib-path 'safe-local-variable #'stringp)
 
-;;; LaTeX
-;; (setq org-latex-pdf-process (list "latexmk -shell-escape -f -pdfxe %f"))
-(add-hook 'latex-mode-hook
-          '(lambda ()
-             (mapc
-              (lambda (face)
-                (set-face-attribute face nil :inherit 'fixed-pitch))
-              (list 'font-latex-verbatim-face
-                    'font-lock-keyword-face
-                    ;; 'font-lock-sedate-face
-                    'font-lock-function-name-face
-                    'tex-verbatim
-                    'font-latex-doctex-documentation-face
-                    'font-latex-doctex-preprocessor-face
-                    'TeX-error-description-help
-                    'TeX-error-description-warning
-                    'TeX-error-description-tex-said
-                    ))))
+;; ;;; LaTeX
+;; (add-hook! 'latex-mode-hook
+;; )
 
 ;; Emacs for statistics (R)
 (after! ess
