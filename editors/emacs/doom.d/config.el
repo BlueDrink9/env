@@ -178,6 +178,10 @@
 (setq tab-always-indent 'complete)
 
 (after! vertico
+  ;; Case insensitve searching
+  (setq read-file-name-completion-ignore-case t
+        read-buffer-completion-ignore-case t
+        completion-ignore-case t)
   (use-package! hotfuzz
     :init (setq completion-styles '(hotfuzz substring))))
 
