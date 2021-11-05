@@ -15,8 +15,8 @@ super + e; {_,shift+,alt+}v
 super + e; s
   signal-desktop --use-tray-icon
 # Calender
-  # Runs thunderbird automatically, and toggles the window display.
 super + e; c
+  # Runs thunderbird automatically, and toggles the window display.
   birdtray -t
 # file Explorer
 super + e; e
@@ -28,19 +28,23 @@ super + e; b
     xdg-open /usr/share/applications/brave-browser.desktop || \
     xdg-open ~/usr/share/applications/brave-browser.desktop || \
     gtk-launch brave-browser.desktop
-# Office: write, spreadsheet, present
-super + e; o; {w,s,p}
-  {lowriter,localc,loimpress}
+        # Office: write, spreadsheet, present, images, Image manipulation.
+super + e; o; {w,s,p,i,shift+I}
+  {lowriter,localc,loimpress,inkscape,gimp}
+# references (Zotero)
+super + e; z
+  zotero
 
 # terminal emulator
 ctrl + alt + t
-  kitty
+kitty
 
 super + v
-    gvim
+  gvim
 
 ctrl + alt + k
   birdtray -t
+
 # super + e
 #   xdg-open ~ || \
 #     dolphin
