@@ -125,6 +125,20 @@
 ;; Fancy bullets in org mode, heavy plugin so remove.
 (remove-hook 'org-mode-hook #'org-superstar-mode)
 
+;; (after! org
+;;   (setq org-fontify-quote-and-verse-blocks nil
+;;         org-fontify-whole-heading-line nil
+;;         org-hide-leading-stars nil
+;;         org-startup-indented nil))
+
+;; (use-package! org-pretty-table
+;;   :commands (org-pretty-table-mode global-org-pretty-table-mode))
+;;
+
+;; Hides markup symbols until you enter the word
+(add-hook! org-mode #'org-appear-mode)
+
+
 (after! smart-tab
   (setq smart-tab-using-hippie-expand t)
   (global-smart-tab-mode 1)
@@ -157,19 +171,9 @@
   (after undo-tree activate)
   (setq ad-return-value (concat ad-return-value ".gz")))
 
-;; (after! org
-;;   (setq org-fontify-quote-and-verse-blocks nil
-;;         org-fontify-whole-heading-line nil
-;;         org-hide-leading-stars nil
-;;         org-startup-indented nil))
-
 ;; Lazy-load. Seems to be interferring with doom-reload.
 ;; (use-package! vlf-setup
 ;;   :defer-incrementally vlf-tune vlf-base vlf-write vlf-search vlf-occur vlf-follow vlf-ediff vlf)
-
-;; (use-package! org-pretty-table
-;;   :commands (org-pretty-table-mode global-org-pretty-table-mode))
-;;
 
 ;; If complete, TAB first tries to indent the current line, and if the line
 ;; was already indented, then try to complete the thing at point.
@@ -324,9 +328,6 @@
   (use-package! poly-markdown))
 (after! org
   (use-package! poly-org))
-
-;; Hides markup symbols until you enter the word
-(add-hook! org-mode :append #'org-appear-mode)
 
 (setq backward-delete-char-untabify-method 'hungry)
 
