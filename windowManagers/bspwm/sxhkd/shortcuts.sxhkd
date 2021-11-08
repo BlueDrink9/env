@@ -17,7 +17,10 @@ super + e; s
 # Calender
 super + e; c
   # Runs thunderbird automatically, and toggles the window display.
-  birdtray -t
+  birdtray -t && \
+  sleep 2 && \
+  xdotool search --class Thunderbird key --clearmodifiers ctrl+shift+c
+
 # file Explorer
 super + e; e
   xdg-open ~ || \
@@ -37,7 +40,7 @@ super + e; z
 
 # terminal emulator
 ctrl + alt + t
-kitty
+  kitty
 
 super + v
   gvim
