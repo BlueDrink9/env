@@ -125,19 +125,9 @@
 ;; Fancy bullets in org mode, heavy plugin so remove.
 (remove-hook 'org-mode-hook #'org-superstar-mode)
 
-;; (after! org
-;;   (setq org-fontify-quote-and-verse-blocks nil
-;;         org-fontify-whole-heading-line nil
-;;         org-hide-leading-stars nil
-;;         org-startup-indented nil))
-
 ;; (use-package! org-pretty-table
 ;;   :commands (org-pretty-table-mode global-org-pretty-table-mode))
 ;;
-
-;; Hides markup symbols until you enter the word
-(add-hook! org-mode #'org-appear-mode)
-
 
 (after! smart-tab
   (setq smart-tab-using-hippie-expand t)

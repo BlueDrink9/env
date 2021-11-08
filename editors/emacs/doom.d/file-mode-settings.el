@@ -47,6 +47,25 @@
 ;;   '(("all" :components ("html" "pdf")
 ;;      :publishing-directory "build")))
 
+(after! org
+  (setq org-ellipsis "↴"))
+;;   (setq org-fontify-quote-and-verse-blocks nil
+;;         org-fontify-whole-heading-line nil
+;;         org-hide-leading-stars nil
+;;         org-startup-indented nil))
+
+;; Hides markup symbols until you enter the word
+(add-hook! org-mode #'org-appear-mode)
+(setq org-appear-autolinks t
+      org-appear-autosubmarkers t
+      org-appear-autoentities t
+      org-appear-autokeywords t
+      org-appear-delay 0)
+;; The same, but for latex fragment previews
+(add-hook! org-mode #'org-fragtog-mode)
+
+
+
 
 ;; Auto update toc
 (after! toc-org
