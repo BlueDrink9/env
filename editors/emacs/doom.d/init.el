@@ -228,5 +228,5 @@
 
        :config
        ;;literate
-       ;; (default +bindings))
-       (default +bindings +smartparens))
+       (default +bindings))
+       ;; (default +bindings +smartparens))

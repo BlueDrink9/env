@@ -61,7 +61,7 @@
 ;; included already, but things like unimpaired aren't.
 (package! evil-collection)
 (package! evil-quickscope)
-(package! evil-smartparens)
+;; (package! evil-smartparens)
 ;; (package! evil-better-visual-line)
 (package! evil-god-state)
 ;; Adds a few extra operators, chiefly evil-operator-eval
@@ -70,7 +70,6 @@
 (package! god-mode)
 
 
-(package! smartparens)
 
 ;; Completions
 ;; (package! counsel)

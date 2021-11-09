@@ -103,7 +103,7 @@
 ;; Disable smartparens. Can't be done another way because it is a default package.
 ;; (remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
 ;; or: from an old github issue:
-;; (after! smartparens (smartparens-global-mode -1))
+(after! smartparens (smartparens-global-mode -1))
 ;;
 (sp-local-pair 'lua-mode "function" "end")
 ;; Disable autopairing unless before newline
@@ -313,11 +313,10 @@
 ;; IDK if this is even real
 (after! dired-k
         (setq dired-k-human-readable t))
-
-(after! markdown
-  (use-package! poly-markdown))
-(after! org
-  (use-package! poly-org))
+(use-package! poly-markdown
+  :after markdown)
+(use-package! poly-org
+  :after org)
 
 (setq backward-delete-char-untabify-method 'hungry)
 
