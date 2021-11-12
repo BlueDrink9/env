@@ -45,6 +45,7 @@ let s:disabled_sites=[
             \ 'messenger.com*',
             \ 'twitter.com*',
             \ 'roll20.com*',
+            \ 'habitica.com*',
             \ ]
 for site in s:disabled_sites
     let s:fc[site] = { 'priority': 1, 'selector': '', 'takeover': 'never' }
