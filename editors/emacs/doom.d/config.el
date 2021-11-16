@@ -124,6 +124,8 @@
 
 ;; Fancy bullets in org mode, heavy plugin so remove.
 (remove-hook 'org-mode-hook #'org-superstar-mode)
+;; Syntax-highlighting in code blocks
+(setq org-src-fontify-natively t)
 
 ;; (use-package! org-pretty-table
 ;;   :commands (org-pretty-table-mode global-org-pretty-table-mode))
