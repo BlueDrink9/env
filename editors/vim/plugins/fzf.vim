@@ -21,6 +21,7 @@ nnoremap <silent> <leader>; :Commands<CR>
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
 command! MRUFZF :History
+nnoremap <silent> <leader>fr :History<CR>
 
 " {[} Use proper fzf colours in gvim
 if g:hasGUI
