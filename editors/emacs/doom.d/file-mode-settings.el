@@ -47,8 +47,9 @@
 ;;   '(("all" :components ("html" "pdf")
 ;;      :publishing-directory "build")))
 
+(setq org-ellipsis "↴")
 (after! org
-  (setq org-ellipsis "↴"))
+  (flyspell-mode t))
 ;;   (setq org-fontify-quote-and-verse-blocks nil
 ;;         org-fontify-whole-heading-line nil
 ;;         org-hide-leading-stars nil
