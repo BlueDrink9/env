@@ -17,7 +17,7 @@ function resolution() {
  
 bspc control --subscribe | while read line; do
   X=94
-  [[ $(bspc query –monitors –desktop focused) = DVI-1 ]] || X=$(pitch) # alternatively X=$(resolution)
+  [ "$(bspc query –monitors –desktop focused)" = "DVI-1" ] || X=$(pitch) # alternatively X=$(resolution)
   W=$(bspc query –desktop focused –windows | wc -l)
   G=$(binary) # alternatively G=$(linear 10)
   [[ $G -lt 1 ]] && G=1

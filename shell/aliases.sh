@@ -10,18 +10,20 @@ if [ -n "$ISTERMUX" ]; then
   alias su="tsu"
 fi
 
-if [[ "$OSTYPE" =~ "darwin" ]]; then  # OSX specific stuff
-  alias setssdir="defaults write com.apple.screencapture location"
-  notify(){
-    osascript -e 'display notification '"$1"' with title "Custom notification"'
-  }
+case "${OSTYPE}" in
+  (*darwin*)
+    # OSX specific stuff
+    alias setssdir="defaults write com.apple.screencapture location"
+    notify(){
+      osascript -e 'display notification '"$1"' with title "Custom notification"'
+    }
   alias ls="ls -Fh -G"
   alias grep="grep --color=auto"
   alias sudoedit="sudo -e"
   # ls and grep should use colours automatically because CLICOLOR is set.
   # Apparently though, don't!
 
-elif [[ "$OSTYPE" =~ "linux" ]]; then  # Linux specific stuff
+  ;;(*linux*)
   alias ls="ls -Fh --color=auto"
   # enable color support of ls and also add handy aliases
   alias dir='dir --color=auto'
@@ -29,7 +31,8 @@ elif [[ "$OSTYPE" =~ "linux" ]]; then  # Linux specific stuff
   alias grep='grep --color=auto'
   alias fgrep='fgrep --color=auto'
   alias egrep='egrep --color=auto'
-fi
+  ;;(*) true ;;
+esac
 
 if command -v lsd >/dev/null 2>&1 && [ "$USENF" = 1 ]; then
   alias ls="lsd"

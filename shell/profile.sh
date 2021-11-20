@@ -73,13 +73,16 @@ if [ -z "$SSHSESSION" ]; then
 fi
 
 if [ -z "$HOMEBREW_PREFIX" ]; then
-  if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
-    export HOMEBREW_PREFIX="$HOME/homebrew"
-  elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
-    # Linuxbrew paths
-    export HOMEBREW_PREFIX="$HOME/.linuxbrew"
-    export HOMEBREW_REPOSITORY="$HOMEBREW_PREFIX/Homebrew"
-  fi
+  case "${OSTYPE}" in
+    (*darwin*)
+      # OSX specific stuff
+      export HOMEBREW_PREFIX="$HOME/homebrew"
+      ;;(*linux*)
+      # Linuxbrew paths
+      export HOMEBREW_PREFIX="$HOME/.linuxbrew"
+      export HOMEBREW_REPOSITORY="$HOMEBREW_PREFIX/Homebrew"
+      ;;(*) true ;;
+  esac
   if [ ! -d "$HOMEBREW_PREFIX" ]; then
     unset HOMEBREW_PREFIX
   fi
@@ -136,7 +139,7 @@ case $- in
     if command -v 'tmux'>/dev/null && [ -z "$NOTMUX" ]; then
       # Check HAVE_LOADED_BASH so that if you detach and bash gets upgraded,
       # you don't jump straight back into tmux.
-      if [ -z "$TMUX" ] && [[ ! $TERM =~ screen ]] && \
+      if [ -z "$TMUX" ] && ! substrInStr "screen" "$TERM" && \
         [ -z "$HAVE_LOADED_SHELL" ]; then
         # PNAME="$(ps -o comm= $PPID)";
         # useTmuxFor="login sshd gnome-terminal init wslbridge-backe"

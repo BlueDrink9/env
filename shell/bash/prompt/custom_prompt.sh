@@ -32,7 +32,7 @@ set_bash_prompt () {
     export USER=$(id -u -n)
   fi
   # If root, use red for name.
-  if [[ $EUID -eq 0 ]]; then
+  if [ "$EUID" = 0 ]; then
     userCol="${pred}"
   else
     userCol="${pblue}"
