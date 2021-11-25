@@ -12,6 +12,8 @@ super + alt + Escape
 # close and kill
 super + {_,shift + }x
 	bspc node -{c,k}
+super + {_,shift + }q
+	bspc node -{c,k}
 
 # send the newest marked node to the newest preselected node
 super + y
@@ -23,6 +25,9 @@ super + g
 
 # # make sxhkd reload its and bspwm's configuration files:
 super + {ctrl, shift} + c
+  {bspc wm -r; notify-send "Bspwm reloaded",\
+    pkill -USR1 --exact sxhkd;  notify-send "Sxhkd reloaded config"}
+super + w; {super +,_} c
   {bspc wm -r; notify-send "Bspwm reloaded",\
     pkill -USR1 --exact sxhkd;  notify-send "Sxhkd reloaded config"}
   # killall sxhkd && sxhkd -m -1 -c "$HOME/.config/sxhkd/sxhkdrc" "$DOTFILES_DIR"/windowManagers/bspwm/sxhkd/*.sxhkd &
@@ -157,11 +162,11 @@ super + ctrl + shift + {1-9,0}
 #----------------------------------------
 
 # Create a new desktop
-super + n
-    bspc monitor --add-desktops ' '
+super + {n,d}
+  bspc monitor --add-desktops ' '{,}
 # Delete current desktop
-super + shift + n
-    bspc desktop --remove
+super + shift + {n,d}
+    bspc desktop --remove{,}
 # Swap desktops within current monitor or across monitors
 # Presumably want to focus the new position, or at least switch to showing it in the case of switching monitors...
 super + w; m; shift + {_,alt +} {less,greater}
