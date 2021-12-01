@@ -161,18 +161,17 @@ super + ctrl + shift + {1-9,0}
 # Desktop
 #----------------------------------------
 
-# Create a new desktop
-super + {n,d}
-  bspc monitor --add-desktops ' '{,}
-super + w; {n,d}
-  bspc monitor --add-desktops ' '{,}
-# Delete current desktop
-super + shift + {n,d}
-    bspc desktop --remove{,}
 # Swap desktops within current monitor or across monitors
 # Presumably want to focus the new position, or at least switch to showing it in the case of switching monitors...
 super + w; m; shift + {_,alt +} {less,greater}
-  bspc desktop {--swap,--to-monitor} {prev,next}
+  bspc desktop {--swap,--to-monitor} {prev,next} bspc monitor --remove
+# Create a new desktop
+super + {w; ,_}{n,d}
+  bspc monitor --add-desktops ' '{_,_}{_,_}
+# Delete current desktop
+super + shift + {n,d}
+    bspc desktop --remove{,}
+
 
 #----------------------------------------
 # Monitor
@@ -201,8 +200,6 @@ super + w; m; alt + ctrl + bracket{left,right}
 # Swap monitors entirely
 super + w; m; alt + ctrl + shift + {less,greater}
   bspc monitor --swap {prev,next}
-
-
 
 # focus the last node/desktop
 # super + {grave,Tab}
