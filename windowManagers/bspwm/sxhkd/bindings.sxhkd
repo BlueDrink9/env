@@ -164,6 +164,8 @@ super + ctrl + shift + {1-9,0}
 # Create a new desktop
 super + {n,d}
   bspc monitor --add-desktops ' '{,}
+super + w; {n,d}
+  bspc monitor --add-desktops ' '{,}
 # Delete current desktop
 super + shift + {n,d}
     bspc desktop --remove{,}
