@@ -148,7 +148,6 @@ if g:hasGUI
         let g:ideMode = 0
     endif
     if g:ideMode
-      echom "menu"
         set guioptions+=iagmrLtT
         " Larger gvim window
         set lines=999 columns=999
