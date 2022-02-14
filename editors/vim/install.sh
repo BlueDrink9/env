@@ -27,6 +27,7 @@ doVim(){
       # git bash on windows, so lets also add a windows rc.
       # Using the vimfiles dir messes up creating vimfiles because it uses vimrc dir as home.
       addTextIfAbsent "so $(cygpath.exe -w "$($SCRIPTDIR_CMD)/vimrc")" "${HOME}/vimfiles/vimrc"
+      addTextIfAbsent "so $(cygpath.exe -w "$($SCRIPTDIR_CMD)/vimrc")" "${HOME}/_vimrc"
       # addTextIfAbsent "so $(cygpath.exe -w "$($SCRIPTDIR_CMD)/vimrc")" "${HOME}/vimrc"
     fi
     addTextIfAbsent "so $($SCRIPTDIR_CMD)/nvimrc" "${HOME}/.config/nvim/init.vim"
