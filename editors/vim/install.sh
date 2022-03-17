@@ -23,14 +23,16 @@ undoVimPlugins(){
 doVim(){
     printErr "Enabling vim setup..."
     addTextIfAbsent "so $($SCRIPTDIR_CMD)/vimrc" "${HOME}/.vimrc"
+    addTextIfAbsent "so $($SCRIPTDIR_CMD)/nvimrc" "${HOME}/.config/nvim/init.vim"
     if [[ $OSTYPE == 'msys' ]]; then
       # git bash on windows, so lets also add a windows rc.
       # Using the vimfiles dir messes up creating vimfiles because it uses vimrc dir as home.
       addTextIfAbsent "so $(cygpath.exe -w "$($SCRIPTDIR_CMD)/vimrc")" "${HOME}/vimfiles/vimrc"
       addTextIfAbsent "so $(cygpath.exe -w "$($SCRIPTDIR_CMD)/vimrc")" "${HOME}/_vimrc"
-      # addTextIfAbsent "so $(cygpath.exe -w "$($SCRIPTDIR_CMD)/vimrc")" "${HOME}/vimrc"
+      winNvimDir="${HOME}/AppData/Local/nvim/"
+      mkdir -p "${winNvimDir}"
+      addTextIfAbsent "so $(cygpath.exe -w "$($SCRIPTDIR_CMD)/nvimrc")" "${winNvimDir}/init.nvim"
     fi
-    addTextIfAbsent "so $($SCRIPTDIR_CMD)/nvimrc" "${HOME}/.config/nvim/init.vim"
     doVimPlugins
     addTextIfAbsent "so $(realpath "$(${SCRIPTDIR_CMD})/../ideavimrc")" "${HOME}/.ideavimrc"
     printErr "Done setting up vim"
