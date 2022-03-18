@@ -90,6 +90,7 @@ endfunction
 autocmd myColourschemes ColorScheme one call <sid>customVimOneColours()
 Plug 'cormacrelf/vim-colors-github'
 Plug 'https://github.com/arzg/vim-colors-xcode'
+Plug 'https://github.com/mvpopuk/inspired-github.vim'
 " Black backgrounds
 Plug 'fcpg/vim-fahrenheit'
 Plug 'vim-scripts/Luinnar'
