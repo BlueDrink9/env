@@ -9,13 +9,13 @@
 	cup = commit --amend --no-edit
 	cupa = commit --all --amend --no-edit
   # diff = diff --ignore-space-change
-  # Word=- and character-level diffs.
-  diffw = diff --ignore-space-change --color-words
-  diffc = diff --ignore-space-change --color-words=.
-  # For doc files using pandoc?
-  # for docx (word) filesa
-  # Or for word-by-word diffs?
-  wdiff = diff --word-diff=color --unified=1
+  # Word- and character-level diffs. Colour words can take regex, here used to
+  # fake char-level diff. Plain diff shows the diffs with markup in-line as
+  # well as characters.
+  wdiff = diff --ignore-space-change --word-diff=plain --color-words
+  cdiff = diff --ignore-space-change --word-diff=plain --color-words=.
+  diffw = diff --ignore-space-change --word-diff=porcelain --color-words
+  diffc = diff --ignore-space-change --word-diff=porcelain --color-words=.
   unstage = reset HEAD
   reload = checkout --
   # Way nicer and more compact way to view logs. Pass -p to see line differences.
