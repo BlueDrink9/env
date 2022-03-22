@@ -14,8 +14,10 @@
   # well as characters.
   wdiff = diff --ignore-space-change --word-diff=plain --color-words
   cdiff = diff --ignore-space-change --word-diff=plain --color-words=.
+  csvdiff = diff --ignore-space-change --word-diff=plain --color-words='[^,]+'
   diffw = diff --ignore-space-change --word-diff=porcelain --color-words
   diffc = diff --ignore-space-change --word-diff=porcelain --color-words=.
+  diffcsv = diff --ignore-space-change --word-diff=porcelain --color-words='[^,]+'
   unstage = reset HEAD
   reload = checkout --
   # Way nicer and more compact way to view logs. Pass -p to see line differences.
