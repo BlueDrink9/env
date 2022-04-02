@@ -33,18 +33,9 @@ cd $scriptdir
     # Reload path.
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 }
-if(-not(Get-Command "boxstarter" -ErrorAction SilentlyContinue)){
-    choco install Boxstarter -y
-}
 choco feature enable -n=allowGlobalConfirmation
 
 $scriptdir | out-file -filepath $env:APPDATA\dotfiles_win_setup_dir.txt
-Import-Module Boxstarter.Chocolatey
-$Boxstarter.RebootOk=$true
-$Boxstarter.NoPassword=$true
-$Boxstarter.AutoLogin=$true
-Install-BoxstarterPackage -PackageName "$scriptdir\boxstarter-main.ps1" -Credential $cred
-
 
 # Setup powershell
 if (!(Test-Path $profile)) {
@@ -61,3 +52,7 @@ function addTextIfAbsent{
 addTextIfAbsent $sourceText $powershellRCPath
 # Trust plugin store to avoid having to manually confirm each plugin installation.
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+
+git-bash -c '$(cygpath -u "'"$scriptdir"'")/install.sh -l'
+
+. "$scriptdir\boxstarter_setup.ps1"

@@ -6,4 +6,6 @@ $scriptdir = get-content -path $env:APPDATA\dotfiles_win_setup_dir.txt
 . "$scriptdir\remove-default-apps.ps1"
 . "$scriptdir\doPackages.ps1"
 . "$scriptdir\fileAssociations.ps1"
-remove-item -path $env:APPDATA\dotfiles_win_setup_dir.txt
+# remove-item -path $env:APPDATA\dotfiles_win_setup_dir.txt
+$DesktopPath = [Environment]::GetFolderPath("Desktop")
+remove-item -path "$DesktopPath/cached_password"
