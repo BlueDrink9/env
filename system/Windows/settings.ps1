@@ -311,8 +311,65 @@ $LockScreenUrl = "LockScreenImageUrl"
 $StatusValue = "1"
 
 # https://wallpapercave.com/wp/cETFpUH.jpg
-$LockScreenImageValue = "$home\Pictures\Wallpapers\Colourful jungle river 1080.jpg"
+$LockScreenImageValue = "[environment]::getfolderpath("MyPictures") \Wallpapers\Colourful jungle river 1080.jpg"
 
-  New-ItemProperty -Path $RegKeyPath -Name $LockScreenStatus -Value $StatusValue -PropertyType DWORD -Force | Out-Null
-  New-ItemProperty -Path $RegKeyPath -Name $LockScreenUrl -Value $LockScreenImageValue -PropertyType STRING -Force | Out-Null
-  New-ItemProperty -Path $RegKeyPath -Name $LockScreenPath -Value $LockScreenImageValue -PropertyType STRING -Force | Out-Null
+New-ItemProperty -Path $RegKeyPath -Name $LockScreenStatus -Value $StatusValue -PropertyType DWORD -Force | Out-Null
+New-ItemProperty -Path $RegKeyPath -Name $LockScreenUrl -Value $LockScreenImageValue -PropertyType STRING -Force | Out-Null
+New-ItemProperty -Path $RegKeyPath -Name $LockScreenPath -Value $LockScreenImageValue -PropertyType STRING -Force | Out-Null
+
+
+
+## Set accent colours =============
+$RegPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent"
+#Accent Color Menu Key
+$AccentColorMenuKey = @{
+	Key   = 'AccentColorMenu';
+	Type  = "DWORD";
+	Value = '0xff228B22'
+}
+#Start Color Menu Key
+$StartMenuKey = @{
+	Key   = 'StartColorMenu';
+	Type  = "DWORD";
+	Value = '0xff3EB559'
+}
+$MotionAccentIdKey = @{
+	Key   = 'MotionAccentId_v1.00';
+	Type  = "DWORD";
+	Value = '0x000000db'
+}
+$keys = @($AccentColorMenuKey, $StartMenuKey, $MotionAccentIdKey)
+foreach ($k in $keys) {
+    Set-Regkey -Path $RegPath -Name $k.Key -Value $k.Value
+}
+# $AccentPaletteKey = @{
+# 	Key   = 'AccentPalette';
+# 	Type  = "BINARY";
+# 	Value = '51,6b,84,ff,43,59,6e,ff,3a,4c,5e,ff,30,3f,4e,ff,26,33,3f,ff,1d,26,2f,ff,0f,14,19,ff,88,17,98,00'
+# }
+# $hexified = $AccentPaletteKey.Value.Split(',') | ForEach-Object { "0x$_" }
+# restart explorer to reload colours
+Stop-Process -ProcessName explorer -Force -ErrorAction SilentlyContinue
+
+
+## Nightlight/ Blue light settings. https://github.com/jaapbrasser/SharedScripts/blob/master/Set-BlueLight/Set-BlueLight.ps1
+
+$Path = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\CloudStore\Store\Cache\DefaultAccount\{0}\Current'
+$BlueLightOption = @{
+    Off          = [byte[]](2,0,0,0,147,250,216,91,185,109,210,1,0,0,0,0,67,66,1,0,208,10,2,198,20,202,236,227,222,149,183,155,233,1,0)
+        On           = [byte[]](2,0,0,0,128,208,150,171,186,109,210,1,0,0,0,0,67,66,1,0,16,0,208,10,2,198,20,221,137,219,220,170,183,155,233,1,0)
+        AutoOn       = [byte[]](2,0,0,0,89,63,239,213,232,109,210,1,0,0,0,0,67,66,1,0,2,1,202,20,14,21,0,202,30,14,7,0,207,40,188,62,202,50,14,16,46,54,0,202,60,14,8,46,46,0,0)
+        AutoOff      = [byte[]](2,0,0,0,175,164,252,55,235,109,210,1,0,0,0,0,67,66,1,0,202,20,14,21,0,202,30,14,7,0,207,40,188,62,202,50,14,16,46,54,0,202,60,14,8,46,46,0,0)
+        NoShift      = [byte[]](2,0,0,0,255,124,43,3,82,107,210,1,0,0,0,0,67,66,1,0,2,1,202,20,14,21,0,202,30,14,7,0,207,40,168,70,202,50,14,16,46,49,0,202,60,14,8,46,47,0,0)
+        MinimumShift = [byte[]](2,0,0,0,224,193,179,114,82,107,210,1,0,0,0,0,67,66,1,0,2,1,202,20,14,21,0,202,30,14,7,0,207,40,236,57,202,50,14,16,46,49,0,202,60,14,8,46,47,0,0)
+        MediumShift  = [byte[]](2,0,0,0,49,229,185,33,82,107,210,1,0,0,0,0,67,66,1,0,2,1,202,20,14,21,0,202,30,14,7,0,207,40,200,42,202,50,14,16,46,49,0,202,60,14,8,46,47,0,0)
+        LargeShift   = [byte[]](2,0,0,0,22,255,5,128,82,107,210,1,0,0,0,0,67,66,1,0,2,1,202,20,14,21,0,202,30,14,7,0,207,40,138,27,202,50,14,16,46,49,0,202,60,14,8,46,47,0,0)
+        MaximumShift = [byte[]](2,0,0,0,199,91,231,198,81,107,210,1,0,0,0,0,67,66,1,0,2,1,202,20,14,21,0,202,30,14,7,0,207,40,208,15,202,50,14,16,46,49,0,202,60,14,8,46,47,0,0)
+}
+Set-RegKey -path $Path -f '$$windows.data.bluelightreduction.settings' -value $BlueLightOption.AutoOn
+Set-RegKey -path $Path -f '$$windows.data.bluelightreduction.settings' -Value $BlueLightOption.$MaximumShift
+
+
+Start-Process "ms-settings:Display\Blue light settings"
+
+
