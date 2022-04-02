@@ -8,6 +8,14 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 
 Set-ExecutionPolicy Unrestricted -Force
 
+$DesktopPath = [Environment]::GetFolderPath("Desktop")
+$pwCache="$DesktopPath/cached_password"
+# Asks for user input (password) so should be run early
+read-host -AsSecureString | ConvertFrom-SecureString | Out-File "$pwCache"
+# $cred=Get-Credential $env:UserDomain\$env:UserName
+$cred = New-Object System.Management.Automation.PSCredential ($env:Username, $Password) 
+
+
 # $scriptpath = $MyInvocation.MyCommand.Path
 # $scriptdir = Split-Path $scriptpath
 $scriptdir = $PSScriptRoot
@@ -16,11 +24,14 @@ cd $scriptdir
 
 # Install chocolatey
 # if(-not(powershell choco -v 2>&1 | out-null)){
-if(-not(Get-Command "choco" -ErrorAction SilentlyContinue)){
+  if(-not(Get-Command "choco" -ErrorAction SilentlyContinue)){
+    # Check if admin
+    if-not([Security.Principal.WindowsIdentity]::GetCurrent().Groups -contains 'S-1-5-32-544'){
+      $env:ChocolateyInstall="$env:USERPROFILE\Applications\chocolatey"
+    }
     Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
     # Reload path.
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
-
 }
 if(-not(Get-Command "boxstarter" -ErrorAction SilentlyContinue)){
     choco install Boxstarter -y
@@ -32,7 +43,6 @@ Import-Module Boxstarter.Chocolatey
 $Boxstarter.RebootOk=$true
 $Boxstarter.NoPassword=$true
 $Boxstarter.AutoLogin=$true
-$cred=Get-Credential domain\username
 Install-BoxstarterPackage -PackageName "$scriptdir\boxstarter-main.ps1" -Credential $cred
 
 
