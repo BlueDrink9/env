@@ -1,3 +1,6 @@
+# Download and run debloater
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Sycnex/Windows10Debloater/master/Windows10SysPrepDebloater.ps1'))
+
 #--- Uninstall unecessary applications that come with Windows out of the box ---
 #DISABLE All BLOATWARE EXCEPT STORE
 # Get-AppxPackage -AllUsers | where-object {$_.name –notlike "*store*"} | Remove-AppxPackage

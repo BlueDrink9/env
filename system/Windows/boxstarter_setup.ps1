@@ -2,6 +2,7 @@ if(-not(Get-Command "boxstarter" -ErrorAction SilentlyContinue)){
     choco install Boxstarter -y
 }
 Import-Module Boxstarter.Chocolatey
+$env:PSModulePath = [System.Environment]::GetEnvironmentVariable("PSModulePath","Machine")
 $Boxstarter.RebootOk=$true
 $Boxstarter.NoPassword=$true
 $Boxstarter.AutoLogin=$true

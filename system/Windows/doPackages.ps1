@@ -5,9 +5,6 @@ pushd $localscriptdir
 # Make registry drive for HKEY_CLASSES_ROOT hive
 New-PSDrive -PSProvider registry -Root HKEY_CLASSES_ROOT -Name HKCR
 
-# Download and run debloater
-Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Sycnex/Windows10Debloater/master/Windows10SysPrepDebloater.ps1'))
-
 function ChocoUpgradeAndRefresh($package){
     # Need to specify cache to avoid recursive dir issue. See
     # https://github.com/chocolatey/boxstarter/issues/241
@@ -16,12 +13,12 @@ function ChocoUpgradeAndRefresh($package){
     refreshenv
 }
 
-function InstallPackagesFromFile($packageFile, installFunc=ChocoUpgradeAndRefresh){
+function InstallPackagesFromFile($packageFile, $installFunc=$function:ChocoUpgradeAndRefresh){
     # Read file skipping # comments and blank lines.
     Get-Content -Path "$packageFile"  | Where { $_ -notmatch '^#.*' -and $_ -notmatch '^\s*$' } | foreach-object {
         # Preserve spaces to pass options. Not working.
         $package=$_
-        installFunc($package)
+        $installFunc.invoke($package)
   #       Invoke-Command -ScriptBlock {
   # param([string[]]$words) $words -join ' '
   # } -ArgumentList $array
@@ -46,7 +43,7 @@ start-process "https://www.microsoft.com/en-nz/p/app-installer/9nblggh4nns1"
 # app-installer
 start-sleep -s 15
 Get-ChildItem "packages/" -filter "*.cfg" | foreach-object {
-    InstallPackagesFromFile("packages/$_", winget)
+    InstallPackagesFromFile "packages/$_"  winget
 }
 
 

@@ -1,3 +1,6 @@
+
+# git-bash -c '$(cygpath -u "'"$scriptdir"'")/install.sh -l'
+& 'C:\Program Files\Git\git-bash.exe' -c "~/env/install.sh -l"
 # Boxstarter-specific commands
 Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowFileExtensions -EnableShowRecentFilesInQuickAccess -EnableShowFrequentFoldersInQuickAccess -EnableExpandToOpenFolder -EnableShowRibbon
 Disable-BingSearch
@@ -14,7 +17,7 @@ function createNewRegKey($path){
         New-Item $path -Force;
     }
 }
-function Set-RegKey($path, $name, $value, $Type="DWORD", $PropertyType="DWORD"){
+function Set-RegKey($path, $name="Data", $value, $Type="DWORD", $PropertyType="DWORD"){
     createNewRegKey($path)
     If ($Null -eq (Get-ItemProperty -Path $path -Name $name -ErrorAction SilentlyContinue)) {
         New-ItemProperty -Path $Path -Name $name -Value $Value -PropertyType $PropertyType -Force
@@ -50,8 +53,12 @@ foreach ($userpath in $userpaths)
     Set-ItemProperty -Path "$userpath\Toggle" -Name "Language Hotkey" -Value '3'
     Set-ItemProperty -Path "$userpath\Toggle" -Name "Layout Hotkey" -Value '3'
 }
-Set-WinDefaultInputMethodOverride -InputTip "1409:a0000409"
-
+$ll=new-winuserlanguagelist en-US
+$ll[0].inputmethodtips[0] = "1409:A0000409"
+Set-WinDefaultInputMethodOverride -InputTip "1409:A0000409"
+$ll.Add('en-NZ')
+Set-WinUserLanguageList -LanguageList $ll -Force
+Set-WinDefaultInputMethodOverride -InputTip "1409:A0000409"
 
 
 #--- Windows Settings ---
@@ -84,7 +91,12 @@ Set-Regkey -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanc
 # Better File Explorer
 Set-Regkey -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name NavPaneExpandToCurrentFolder -Value 1		
 Set-Regkey -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name NavPaneShowAllFolders -Value 1		
+
 Set-Regkey -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name MMTaskbarMode -Value 2
+Set-Regkey -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name ShowTaskViewButton -Value 0
+Set-Regkey -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name ShowCortanaButton -Value 0
+Set-Regkey -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer -Name HideSCAMeetNow -Value 1
+Set-Regkey -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Feeds -Name ShellFeedsTaskbarViewMode -Value 2
 
 # These make "Quick Access" behave much closer to the old "Favorites"
 # Disable Quick Access: Recent Files
@@ -269,8 +281,9 @@ foreach ($path in $paths)
 {
     foreach ($folderID in $folderIDs)
     {
-        Remove-Item -Path "$path\$folderID"
-        "$path\$folderID"
+	If (Test-Path "$Path\$folderID") {
+            Remove-Item -Path "$path\$folderID"
+	}
     }
 }
 
@@ -310,7 +323,7 @@ $LockScreenUrl = "LockScreenImageUrl"
 $StatusValue = "1"
 
 # https://wallpapercave.com/wp/cETFpUH.jpg
-$LockScreenImageValue = "[environment]::getfolderpath("MyPictures") \Wallpapers\Colourful jungle river 1080.jpg"
+$LockScreenImageValue = [environment]::getfolderpath("MyPictures") + "\Wallpapers\Colourful jungle river 1080.jpg"
 
 New-ItemProperty -Path $RegKeyPath -Name $LockScreenStatus -Value $StatusValue -PropertyType DWORD -Force | Out-Null
 New-ItemProperty -Path $RegKeyPath -Name $LockScreenUrl -Value $LockScreenImageValue -PropertyType STRING -Force | Out-Null
@@ -347,28 +360,41 @@ foreach ($k in $keys) {
 # 	Value = '51,6b,84,ff,43,59,6e,ff,3a,4c,5e,ff,30,3f,4e,ff,26,33,3f,ff,1d,26,2f,ff,0f,14,19,ff,88,17,98,00'
 # }
 # $hexified = $AccentPaletteKey.Value.Split(',') | ForEach-Object { "0x$_" }
+
+# Show Accent on Title bars, task bars
+Set-RegKey -Path 'HKLM:\SOFTWARE\Microsoft\Windows\DWM' -Name 'ColorPrevalence' -Value 2
 # restart explorer to reload colours
 Stop-Process -ProcessName explorer -Force -ErrorAction SilentlyContinue
 
 
-## Nightlight/ Blue light settings. https://github.com/jaapbrasser/SharedScripts/blob/master/Set-BlueLight/Set-BlueLight.ps1
-
-$Path = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\CloudStore\Store\Cache\DefaultAccount\{0}\Current'
-$BlueLightOption = @{
-    Off          = [byte[]](2,0,0,0,147,250,216,91,185,109,210,1,0,0,0,0,67,66,1,0,208,10,2,198,20,202,236,227,222,149,183,155,233,1,0)
-        On           = [byte[]](2,0,0,0,128,208,150,171,186,109,210,1,0,0,0,0,67,66,1,0,16,0,208,10,2,198,20,221,137,219,220,170,183,155,233,1,0)
-        AutoOn       = [byte[]](2,0,0,0,89,63,239,213,232,109,210,1,0,0,0,0,67,66,1,0,2,1,202,20,14,21,0,202,30,14,7,0,207,40,188,62,202,50,14,16,46,54,0,202,60,14,8,46,46,0,0)
-        AutoOff      = [byte[]](2,0,0,0,175,164,252,55,235,109,210,1,0,0,0,0,67,66,1,0,202,20,14,21,0,202,30,14,7,0,207,40,188,62,202,50,14,16,46,54,0,202,60,14,8,46,46,0,0)
-        NoShift      = [byte[]](2,0,0,0,255,124,43,3,82,107,210,1,0,0,0,0,67,66,1,0,2,1,202,20,14,21,0,202,30,14,7,0,207,40,168,70,202,50,14,16,46,49,0,202,60,14,8,46,47,0,0)
-        MinimumShift = [byte[]](2,0,0,0,224,193,179,114,82,107,210,1,0,0,0,0,67,66,1,0,2,1,202,20,14,21,0,202,30,14,7,0,207,40,236,57,202,50,14,16,46,49,0,202,60,14,8,46,47,0,0)
-        MediumShift  = [byte[]](2,0,0,0,49,229,185,33,82,107,210,1,0,0,0,0,67,66,1,0,2,1,202,20,14,21,0,202,30,14,7,0,207,40,200,42,202,50,14,16,46,49,0,202,60,14,8,46,47,0,0)
-        LargeShift   = [byte[]](2,0,0,0,22,255,5,128,82,107,210,1,0,0,0,0,67,66,1,0,2,1,202,20,14,21,0,202,30,14,7,0,207,40,138,27,202,50,14,16,46,49,0,202,60,14,8,46,47,0,0)
-        MaximumShift = [byte[]](2,0,0,0,199,91,231,198,81,107,210,1,0,0,0,0,67,66,1,0,2,1,202,20,14,21,0,202,30,14,7,0,207,40,208,15,202,50,14,16,46,49,0,202,60,14,8,46,47,0,0)
+## Nightlight/ Blue light settings. 
+Function Set-BlueLight {
+    [CmdletBinding()]
+    Param (
+        [Parameter(Mandatory=$true)] [ValidateRange(0, 23)] [int]$StartHour,
+        [Parameter(Mandatory=$true)] [ValidateSet(0, 15, 30, 45)] [int]$StartMinutes,
+        [Parameter(Mandatory=$true)] [ValidateRange(0, 23)] [int]$EndHour,
+        [Parameter(Mandatory=$true)] [ValidateSet(0, 15, 30, 45)] [int]$EndMinutes,
+        [Parameter(Mandatory=$true)] [bool]$Enabled,
+        [Parameter(Mandatory=$true)] [ValidateRange(1200, 6500)] [int]$NightColorTemperature
+    )
+    $data = (2, 0, 0, 0)
+    $data += [BitConverter]::GetBytes((Get-Date).ToFileTime())
+    $data += (0, 0, 0, 0, 0x43, 0x42, 1, 0)
+    If ($Enabled) {$data += (2, 1)}
+    $data += (0xCA, 0x14, 0x0E)
+    $data += $StartHour
+    $data += 0x2E
+    $data += $StartMinutes
+    $data += (0, 0xCA, 0x1E, 0x0E)
+    $data += $EndHour
+    $data += 0x2E
+    $data += $EndMinutes
+    $data += (0, 0xCF, 0x28)
+    $tempHi = [Math]::Floor($NightColorTemperature / 64)
+    $tempLo = (($NightColorTemperature - ($tempHi * 64)) * 2) + 128
+    $data += ($tempLo, $tempHi)
+    $data += (0xCA, 0x32, 0, 0xCA, 0x3C, 0, 0)
+    Set-ItemProperty -Path 'HKLM:\Software\Microsoft\Windows\CurrentVersion\CloudStore\Store\Cache\DefaultAccount\$$windows.data.bluelightreduction.settings\Current' -Name 'Data' -Value ([byte[]]$data) -Type Binary
 }
-Set-RegKey -path $Path -f '$$windows.data.bluelightreduction.settings' -value $BlueLightOption.AutoOn
-Set-RegKey -path $Path -f '$$windows.data.bluelightreduction.settings' -Value $BlueLightOption.$MaximumShift
-
-
-Start-Process "ms-settings:Display\Blue light settings"
-
-
+Set-Bluelight 20 30 07 00 $true 2300

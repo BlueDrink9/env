@@ -11,9 +11,10 @@ Set-ExecutionPolicy Unrestricted -Force
 $DesktopPath = [Environment]::GetFolderPath("Desktop")
 $pwCache="$DesktopPath/cached_password"
 # Asks for user input (password) so should be run early
-read-host -AsSecureString | ConvertFrom-SecureString | Out-File "$pwCache"
+$password = Read-Host "Enter user Password" -AsSecureString
+write $password |  ConvertFrom-SecureString | Out-File "$pwCache"
 # $cred=Get-Credential $env:UserDomain\$env:UserName
-$cred = New-Object System.Management.Automation.PSCredential ($env:Username, $Password) 
+$cred = New-Object System.Management.Automation.PSCredential ($env:Username, $password) 
 
 
 # $scriptpath = $MyInvocation.MyCommand.Path
@@ -33,13 +34,14 @@ cd $scriptdir
     # Reload path.
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 }
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 choco feature enable -n=allowGlobalConfirmation
 
 $scriptdir | out-file -filepath $env:APPDATA\dotfiles_win_setup_dir.txt
 
 # Setup powershell
 if (!(Test-Path $profile)) {
-  New-Item -path $profile -type file –force
+  New-Item -path $profile -type file -force
 }
 $powershellRCPath="$profile"
 $sourceText=". ${scriptdir}..\..\shell\powershell\powershellrc.ps1"
@@ -53,6 +55,5 @@ addTextIfAbsent $sourceText $powershellRCPath
 # Trust plugin store to avoid having to manually confirm each plugin installation.
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 
-git-bash -c '$(cygpath -u "'"$scriptdir"'")/install.sh -l'
 
 . "$scriptdir\boxstarter_setup.ps1"
