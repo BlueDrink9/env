@@ -14,11 +14,10 @@ function createNewRegKey($path){
         New-Item $path -Force;
     }
 }
-
-function Set-RegKey($path, $name, $value, $type="DWORD"){
+function Set-RegKey($path, $name, $value, $Type="DWORD", $PropertyType="DWORD"){
     createNewRegKey($path)
     If ($Null -eq (Get-ItemProperty -Path $path -Name $name -ErrorAction SilentlyContinue)) {
-        New-ItemProperty -Path $Path -Name $name -Value $Value -PropertyType $Type -Force
+        New-ItemProperty -Path $Path -Name $name -Value $Value -PropertyType $PropertyType -Force
     } Else {
         Set-ItemProperty -Path $Path -Name $name -Value $Value -Force
     }

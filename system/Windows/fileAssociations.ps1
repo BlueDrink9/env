@@ -3,6 +3,24 @@
 # Won't ever work. Gets gvim.bat in sys32.
 # $editor = "$(Get-Command gvim).Path"
 
+# Duplicated from settings, is that necessary?
+function createNewRegKey($path){
+    if(!(Test-Path $path)){
+        # This deletes the contents of the key, which is why we test it exists first.
+        New-Item $path -Force;
+    }
+}
+function Set-RegKey($path, $name, $value, $Type="DWORD", $PropertyType="DWORD"){
+    createNewRegKey($path)
+    If ($Null -eq (Get-ItemProperty -Path $path -Name $name -ErrorAction SilentlyContinue)) {
+        New-ItemProperty -Path $Path -Name $name -Value $Value -PropertyType $PropertyType -Force
+    } Else {
+        Set-ItemProperty -Path $Path -Name $name -Value $Value -Force
+    }
+}
+
+
+
 if ([string]::IsNullOrEmpty($editor)) {
     $editor = 'C:\tools\vim\latest\gvim.exe'
 }
@@ -92,7 +110,7 @@ if (-not (test-path "HKLM:\Software\Classes\Python.File\Shell\Edit\command")) {
 # Set edit menu command.
 foreach ($ft in $plaintextEditMenuFTs)
 {
-    New-ItemProperty -Path "HKLM:\Software\Classes\$ft\Shell\Edit\command" -Name "(Default)" -PropertyType String -Value "`"$editor`" `"%1`""
+    Set-regkey -Path "HKLM:\Software\Classes\$ft\Shell\Edit\command" -Name "(Default)" -PropertyType String -Value "`"$editor`" `"%1`""
 }
 # {]}
 
