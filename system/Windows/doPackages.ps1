@@ -5,6 +5,9 @@ pushd $localscriptdir
 # Make registry drive for HKEY_CLASSES_ROOT hive
 New-PSDrive -PSProvider registry -Root HKEY_CLASSES_ROOT -Name HKCR
 
+# Download and run debloater
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Sycnex/Windows10Debloater/master/Windows10SysPrepDebloater.ps1'))
+
 function ChocoUpgradeAndRefresh($package){
     # Need to specify cache to avoid recursive dir issue. See
     # https://github.com/chocolatey/boxstarter/issues/241
@@ -13,12 +16,15 @@ function ChocoUpgradeAndRefresh($package){
     refreshenv
 }
 
-function InstallPackagesFromFile($packageFile){
+function InstallPackagesFromFile($packageFile, installFunc=ChocoUpgradeAndRefresh){
     # Read file skipping # comments and blank lines.
     Get-Content -Path "$packageFile"  | Where { $_ -notmatch '^#.*' -and $_ -notmatch '^\s*$' } | foreach-object {
         # Preserve spaces to pass options. Not working.
         $package=$_
-        ChocoUpgradeAndRefresh($package)
+        installFunc($package)
+  #       Invoke-Command -ScriptBlock {
+  # param([string[]]$words) $words -join ' '
+  # } -ArgumentList $array
     }
 }
 
@@ -32,6 +38,17 @@ function AddToPath($path){
 Get-ChildItem "packages/" -filter "*.conf" | foreach-object {
     InstallPackagesFromFile("packages/$_")
 }
+# Need to try and open the winget page to install it properly prior to win 11
+start-process ms-windows-store:
+start-sleep -s 5
+start-process "https://www.microsoft.com/en-nz/p/app-installer/9nblggh4nns1"
+# winget
+# app-installer
+start-sleep -s 15
+Get-ChildItem "packages/" -filter "*.cfg" | foreach-object {
+    InstallPackagesFromFile("packages/$_", winget)
+}
+
 
 # # Downloads ubuntu for use
 # # ========================
@@ -64,14 +81,14 @@ $VerNumsToNatural = { [regex]::Replace($_, '\d+', { $args[0].Value.PadLeft(20) }
 # Get dirlist, Sort with helper and check the output is natural result
 $latestVimDir = gci $ToolsVimDir | sort $VerNumsToNatural -Descending | select -First 1
 
-# Won't ever work. Gets gvim.bat in sys32.
-# $source=$(Get-Command gvim).Path | split-path
 $source=$latestVimDir.fullname
 New-Item -ItemType SymbolicLink -Path $linkname -Target $source
+
 
 # Use latest path for 'edit with vim' context menu command.
 $RegKeyPath = "HKCR:\*\shell\Vim\Command"
 Set-Item -Path "$RegKeyPath" -Value "`"$linkname\gvim.exe`" `"%1`""
+
 
 # Add miniconda to path
 # $oldpath = (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).path
