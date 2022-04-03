@@ -11,7 +11,11 @@ function OnViModeChangeSetCursor {
         Write-Host -NoNewLine "$Esc[5 q"
     }
 }
-Set-PSReadLineOption -ViModeIndicator Script -ViModeChangeHandler $Function:OnViModeChangeSetCursor
+if($host.version.major -gt 7){
+  Set-PSReadLineOption -ViModeIndicator Script -ViModeChangeHandler $Function:OnViModeChangeSetCursor
+}else{
+  Set-PSReadLineOption -ViModeIndicator Cursor
+}
 
 
 Set-PSReadLineKeyHandler -vimode insert -Chord "k" -ScriptBlock { mapTwoLetterNormal 'k' 'v' }
