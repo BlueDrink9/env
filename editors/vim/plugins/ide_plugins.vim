@@ -84,10 +84,15 @@ if has("timers")
     Plug 'https://github.com/w0rp/ale'
     let g:ale_sign_error = 'X'
     let g:ale_sign_warning = '!'
+    let g:ale_change_sign_column_color = 1
     let g:ale_max_signs = 50
-    let g:ale_echo_delay = 50
-    " Downside is having to restart vim if you install a new linter.
+    let g:ale_echo_delay = 200
+    " Faster but have to restart vim if you install a new linter.
     let g:ale_cache_executable_check_failures = 1
+    if executable('nice')
+        " Don't run linters at the expense of general system
+        let g:ale_command_wrapper = 'nice -n5 %*'
+    endif
     " let g:ale_open_list=1 " Auto-open error lsit
     autocmd myPlugins User pluginSettingsToExec nmap <silent> ]e <Plug>(ale_next_wrap)
     autocmd myPlugins User pluginSettingsToExec nmap <silent> [e <Plug>(ale_previous_wrap)

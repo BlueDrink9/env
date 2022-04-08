@@ -160,6 +160,12 @@ if g:hasGUI
         " Larger gvim window
         set lines=40 columns=120
     endif
+    " nvim-qt options. Not working, needs to be set on uiconnect
+    if exists(':GuiTabline')
+        GuiTabline 0
+        GuiPopupmenu 0
+        GuiScrollBar 1
+    endif
     " Never use ugly tab page that overrides airline's
     set guioptions-=e
     " Don't use gui popups for simple questions, use console dialog (ensures
