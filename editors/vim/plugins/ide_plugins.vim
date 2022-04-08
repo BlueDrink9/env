@@ -93,7 +93,11 @@ endif
 
 " {[} ---------- Linting ----------
 " if v:version >= 800
-if has("timers")
+if has('nvim-0.5')
+    " Haven't configured yet.
+    Plug 'https://github.com/mfussenegger/nvim-lint'
+    au BufWritePost <buffer> lua require('lint').try_lint()
+elseif has("timers")
     " Async linting
     Plug 'https://github.com/w0rp/ale'
     let g:ale_sign_error = 'X'
@@ -321,35 +325,37 @@ endif
 " {]} ------ Python ------
 
 " {[} ---------- R ----------
-if !has('nvim') && !has('job')
-    " Unmaintained version that doesn't need vim 8
-    Plug 'jcfaria/vim-r-plugin'
-else
-    call SourcePluginFile("nvim-R.vim")
-endif
-" R output is highlighted with current colorscheme
-let g:rout_follow_colorscheme = 1
-" Always split horizontally.
-let R_rconsole_width = 0
-let R_rconsole_height = 15
+if executable('R')
+    if !has('nvim') && !has('job')
+        " Unmaintained version that doesn't need vim 8
+        Plug 'jcfaria/vim-r-plugin'
+    else
+        call SourcePluginFile("nvim-R.vim")
+    endif
+    " R output is highlighted with current colorscheme
+    let g:rout_follow_colorscheme = 1
+    " Always split horizontally.
+    let R_rconsole_width = 0
+    let R_rconsole_height = 15
 
-" let R_min_editor_width = 99
-" R commands in R output are highlighted
-let g:Rout_more_colors = 1
-let R_esc_term = 0
-let R_assign = 3
-let R_latex_build_dir = 'latexbuild'
-" This seems to no longer be permitted, despite still being in the
-" docs...
-" let R_openhtml = 2 " Reload, or open if not.
-let R_openhtml = 1 " Always open
-let g:markdown_fenced_languages = ['r', 'python']
-let g:rmd_fenced_languages = ['r', 'python']
-" {[} Mappings
-" let R_user_maps_only = 1
-" {]} Mappings
-" Requires ncm2
-" Plug 'https://github.com/gaalcaras/ncm-R'
+    " let R_min_editor_width = 99
+    " R commands in R output are highlighted
+    let g:Rout_more_colors = 1
+    let R_esc_term = 0
+    let R_assign = 3
+    let R_latex_build_dir = 'latexbuild'
+    " This seems to no longer be permitted, despite still being in the
+    " docs...
+    " let R_openhtml = 2 " Reload, or open if not.
+    let R_openhtml = 1 " Always open
+    let g:markdown_fenced_languages = ['r', 'python']
+    let g:rmd_fenced_languages = ['r', 'python']
+    " {[} Mappings
+    " let R_user_maps_only = 1
+    " {]} Mappings
+    " Requires ncm2
+    " Plug 'https://github.com/gaalcaras/ncm-R'
+endif
 " {]} ---------- R ----------
 
 " {[} ------ C ------
