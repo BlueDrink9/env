@@ -77,6 +77,16 @@ endif
 " Plug 'https://github.com/tpope/vim-endwise'
 " {]} ---------- Misc ----------
 
+" {[} ---------- LSP ----------
+" These would be unloaded for CoC.nvim, which does completion and LSP
+" Deoplete and ale will use them though.
+if has('nvim-0.5')
+    call SourcePluginFile("nvim-lspconfig.lua")
+else
+    call SourcePluginFile("languageclient-neovim.vim")
+endif
+" {]} ---------- LSP ----------
+
 " {[} ---------- Linting ----------
 " if v:version >= 800
 if has("timers")
@@ -495,20 +505,19 @@ autocmd myPlugins Filetype *
 " plugins.
 " let s:syntaxKeywords = OmniSyntaxList( [] )
 
+let s:fallback_completion = 1
 if has("timers")
-
+    let s:fallback_completion = 0
     if has('nvim-0.5')
-        " This will be unloaded for CoC.nvim
-        call SourcePluginFile("nvim-lspconfig.lua")
-        call SourcePluginFile("nvim-compe.lua")
-    else
-        " This will be unloaded for CoC.nvim
-        call SourcePluginFile("languageclient-neovim.vim")
-    endif
-    if has('node')
+        call SourcePluginFile("nvim-cmp.lua")
+        " Super speedy, but slightly more complex requirements
+        " https://github.com/ms-jpq/coq_nvim
+
+    elseif has('node')
         " Intellisense engine for vim8 & neovim, full language server protocol support as VSCode.
         " Uses VSCode-specific extensions, too. Seems to Just Work?
         call SourcePluginFile("coc.nvim.vim")
+
     elseif has("python3")
         if executable("cmake")
             " Awesome code completion, but requires specific installations and
@@ -518,30 +527,33 @@ if has("timers")
         " Fallback to deoplete if YCM hasn't installed properly.
         if HasNvimPythonModule() && !exists("g:YCM_Installed")
             call SourcePluginFile("deoplete.vim")
+        elseif has("python")
+            " Async completion engine, doesn't need extra installation.
+            Plug 'maralla/completor.vim'
+            " Use TAB to complete when typing words, else inserts TABs as usual.  Uses
+            " dictionary, source files, and completor to find matching words to complete.
+
+            " Check the plugin has loaded correctly before overriding
+            " completion command.
+            function! s:completorSetCompletionCommand()
+                if exists('completor#do')
+                    let g:completionCommand = "\<C-R>=completor#do('complete')\<CR>"
+                endif
+            endfunc
+            autocmd myPlugins User pluginSettingsToExec call s:completorSetCompletionCommand()
+            let g:completor_auto_trigger = 1
+        else
+            let s:fallback_completion = 1
         endif
-
-    elseif has("python")
-        " Async completion engine, doesn't need extra installation.
-        Plug 'maralla/completor.vim'
-        " Use TAB to complete when typing words, else inserts TABs as usual.  Uses
-        " dictionary, source files, and completor to find matching words to complete.
-
-        " Check the plugin has loaded correctly before overriding
-        " completion command.
-        function! s:completorSetCompletionCommand()
-            if exists('completor#do')
-                let g:completionCommand = "\<C-R>=completor#do('complete')\<CR>"
-            endif
-        endfunc
-        autocmd myPlugins User pluginSettingsToExec call s:completorSetCompletionCommand()
-        let g:completor_auto_trigger = 1
-
+    else
+        let s:fallback_completion = 1
     endif
-elseif has("python3") && executable("cmake")
-    " Awesome code completion, but requires specific installations and
-    " compiling a binary.
-    call SourcePluginFile("ycm.vim")
-else
+    " elseif has("python3") && executable("cmake")
+    "     " Awesome code completion, but requires specific installations and
+    "     " compiling a binary.
+    "     call SourcePluginFile("ycm.vim")
+endif
+if s:fallback_completion == 1
     Plug 'https://github.com/lifepillar/vim-mucomplete'
     let g:mucomplete#enable_auto_at_startup = 1
     " Only pause after no typing for [updatetime]
