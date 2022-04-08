@@ -70,8 +70,6 @@ if v:version > 704
 endif
 " Relative line numbers only in focussed buffer & not in insert mode.
 Plug 'ericbn/vim-relativize'
-" Needs manual activation. :RainbowParen, :RainbowParen!
-Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
 " :GhostTextStart/Stop
 if has('nvim') && has('python3')
     Plug 'raghur/vim-ghost', {'do': ':GhostInstall', 'on': 'GhostStart'}
@@ -79,8 +77,6 @@ elseif has("channel") && has('python')
     " :GhostStart/Stop
     Plug 'atkenny15/vim-ghosttext', {'on': 'GhostStart'}
 endif
-" ga on char shows all representations, not just dec oct hex.
-Plug 'https://github.com/tpope/vim-characterize'
 " For whatever reason, supertab just isn't mapping anything.
 " Plug 'https://github.com/metalelf0/supertab' " Fork with a failing feature removed
 let g:SuperTabDefaultCompletionType = "context"
@@ -464,10 +460,10 @@ endif
 
 "{[} Running/executing
 " Run shell commands async (uses python)
-Plug 'https://github.com/joonty/vim-do'
+" Plug 'https://github.com/joonty/vim-do'
 Plug 'https://github.com/thinca/vim-quickrun'
 " Select code to execute.
-Plug 'https://github.com/JarrodCTaylor/vim-shell-executor'
+" Plug 'https://github.com/JarrodCTaylor/vim-shell-executor'
 " Async make, autoset compiler and makeprg from filetype plugin (view quickfix with :COpen)
 Plug 'https://github.com/tpope/vim-dispatch'
 call Nnoremap(g:IDE_mappings.make, ":w <bar> Dispatch<cr>")
@@ -495,11 +491,6 @@ Plug 'https://github.com/jceb/vim-orgmode', {'for': 'org'}
 
 " {[} ---------- Git ----------
 if executable("git")
-    if has('nvim-0.5')
-        Plug 'https://github.com/TimUntersberger/neogit'
-        autocmd myPlugins User pluginSettingsToExec lua require('neogit').setup {}
-        command! Magit Neogit
-    endif
     " Git wrapper. Includes magit-style functionality under Gstatus
     Plug 'https://github.com/tpope/vim-fugitive'
     " nnoremap <leader>gs :Gstatus<CR> cabbrev gs Gstatus
@@ -534,12 +525,14 @@ if executable("git")
     endif
     " Enhances working with branches in fugitive
     Plug 'sodapopcan/vim-twiggy'
+    " TODO fugitive mapping to bb?
     " github wrapper
     if v:version > 701
         Plug 'https://github.com/tpope/vim-rhubarb'
     endif
     " Commit browser. :GV
     Plug 'junegunn/gv.vim'
+    command! Glog :GV<CR>
 
 
     if has('nvim-0.5')

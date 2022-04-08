@@ -75,6 +75,10 @@ endif
 " Auto-add 'end' statements, eg endif.
 " Has odd bug with prose fts.
 " Plug 'https://github.com/tpope/vim-endwise'
+" ga on char shows all representations, not just dec oct hex.
+Plug 'https://github.com/tpope/vim-characterize'
+" Needs manual activation. :RainbowParen, :RainbowParen!
+Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
 " {]} ---------- Misc ----------
 
 " {[} ---------- LSP ----------
@@ -253,6 +257,7 @@ endif
 " functions, and doc strings
 Plug 'jeetsukumaran/vim-pythonsense'
 if HasPython()
+    Plug 'https://github.com/Vimjas/vim-python-pep8-indent'
     Plug 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
     let g:pymode_options_max_line_length = 0
     let g:pymode_rope = 1
@@ -260,8 +265,13 @@ if HasPython()
     let g:pymode_lint_on_write = 1
     let g:pymode_lint_unmodified = 1
     let g:pymode_lint = 1
+    let g:pymode_motion = 1
     let g:pymode_rope_rename_bind = g:IDE_mappings.rename
     let g:pymode_rope_rename_module_bind = g:IDE_mappings.renameModule
+    let g:pymode_run_bind = g:IDE_mappings.REPLSend
+    let g:pymode_breakpoint_bind = g:IDE_mappings.set_breakpoint
+    let g:pymode_lint_ignore = ["C0301"]
+
 
     if has('python3')
         " if has('nvim')
@@ -289,7 +299,6 @@ if HasPython()
     let g:jedi#usages_command = g:IDE_mappings.references
     let g:jedi#completions_command = "Tab"
     let g:jedi#rename_command = g:IDE_mappings.rename
-    Plug 'https://github.com/Vimjas/vim-python-pep8-indent'
 endif
 
 " Pip install jupytext. Converts notebooks to text format.
@@ -349,7 +358,7 @@ let g:cpp_class_decl_highlight = 1
 let g:cpp_member_variable_highlight = 1
 Plug 'https://github.com/WolfgangMehner/c-support', {'for': ['c', 'cpp'] }
 let g:C_Ctrl_j = 'off'
-Plug 'https://github.com/dragfire/Improved-Syntax-Highlighting-Vim'
+" Plug 'https://github.com/dragfire/Improved-Syntax-Highlighting-Vim'
 " For extensive cpp IDE stuff.
 " a.vim incompat with replacement provided here.
 
@@ -405,17 +414,27 @@ if executable("git")
     " Move cursor into popup for easier scrolling. Can manually do it by
     " running command a second time.
     let g:git_messenger_always_into_popup=v:true
+    if has('nvim-0.5')
+        Plug 'https://github.com/TimUntersberger/neogit'
+        autocmd myPlugins User pluginSettingsToExec lua require('neogit').setup {}
+        command! Magit Neogit
+        nnoremap <space>gg :Neogit<CR>
+    else
+        Plug 'https://github.com/jreybert/vimagit'
+        nnoremap <space>gg :Magit<CR>
+    endif
 endif
 " {]} ---------- Git----------
 
 " {[} ---------- IDE ----------
-Plug 'https://github.com/janko/vim-test'
-Plug 'https://github.com/mh21/errormarker.vim'
-let &errorformat="%f:%l:%c: %t%*[^:]:%m,%f:%l: %t%*[^:]:%m," . &errorformat
-let errormarker_disablemappings = 1
-cabbrev er ErrorAtCursor
+if v:version < 708
+    Plug 'https://github.com/janko/vim-test'
+    Plug 'https://github.com/mh21/errormarker.vim'
+    let &errorformat="%f:%l:%c: %t%*[^:]:%m,%f:%l: %t%*[^:]:%m," . &errorformat
+    let errormarker_disablemappings = 1
+    cabbrev er ErrorAtCursor
+endif
 Plug 'ryanoasis/vim-devicons'
-Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 " Look up documtenation for word under cursor with gk
 Plug 'https://github.com/keith/investigate.vim'
 " Quickly compile small files with :SCCompile
@@ -449,9 +468,6 @@ let test#strategy = "dispatch"
 " Doesn't state any requirements in readme...
 Plug 'https://github.com/sbdchd/neoformat'
 nnoremap g= :Neoformat<CR>
-" :Minimap to create a special buffer that gives an outline of the current
-" file, synced to where you scroll. Uses drawille library (braille unicode)
-Plug 'https://github.com/severin-lemaignan/vim-minimap'
 
 if has("patch-8.1-1880") && has('nvim')
     " Gives behaviour like completeopt=popup for neovim.

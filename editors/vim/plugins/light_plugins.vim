@@ -47,8 +47,6 @@ let g:fastfold_fold_command_suffixes =
 nnoremap <BS> :<C-u>FastFoldUpdate<cr>za
 let g:fastfold_minlines = 700
 
-Plug 'https://github.com/freitass/todo.txt-vim'
-
 " Allows plugin maps to use '.' to repeat
 Plug 'https://github.com/tpope/vim-repeat'
 
@@ -170,9 +168,8 @@ Plug 'tommcdo/vim-ninja-feet'
 " {[}--- Visual changes ---
 if v:version >= 702
     " Highlight f and t chars to get where you want.
-    " TODO monitor progress of this branch. May be updated soon.
-    " Plug 'unblevable/quick-scope'
-    Plug 'https://github.com/bradford-smith94/quick-scope'
+    Plug 'unblevable/quick-scope'
+    " Plug 'https://github.com/bradford-smith94/quick-scope'
     " Trigger a highlight in the appropriate direction when pressing these keys:
     let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 endif
