@@ -383,4 +383,7 @@ if g:hasGUI
   nnoremap <expr> - ChangeGFNSize(-1)
 endif
 
+" Replace visual selection with its evaluation result
+vnoremap <silent> <c-r>= c<C-r>=<C-r>"<CR><ESC>
+
 " {]} Misc
