@@ -61,7 +61,7 @@
   eol      = lf
 
 [merge]
-  conflictstyle = diff3
+  conflictstyle = zdiff3
   # tool = vimdiff
   # tool = vimdiff4
   # tool = fugative
