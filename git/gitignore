@@ -318,6 +318,7 @@ typings/
 __pycache__/
 *.py[cod]
 *$py.class
+.pylint.d/
 
 # C extensions
 *.so
