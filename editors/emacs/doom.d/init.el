@@ -14,6 +14,14 @@
 ;;      Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
 ;;      directory (for easy access to its source code).
 
+       ;; Use vterm on unix, term on win (may fail for different compilations of emacs).
+       (if (eq system-type 'windows-nt)
+           (setq my/doom-term 'eshell)            ; the elisp shell that works everywhere
+         (setq my/doom-term 'vterm)             ; the best terminal emulation in Emacs
+         )
+       ;;shell             ; simple shell REPL for Emacs
+       ;;term              ; basic terminal emulator for Emacs
+
 ;; Has to be set before evil loads.
 (setq evil-respect-visual-line-mode t)
 (doom! :input
@@ -91,12 +99,7 @@
        (undo +tree)              ; persistent, smarter undo for your inevitable mistakes
        vc                ; version-control and Emacs, sitting in a tree
 
-       :term
-       ;; TODO do OS check. Use vterm on unix, term on win. But note that this doom! section needs to redo doom! sync each time. Shuoldn't affect most OS-specific stuff though...
-       ;;eshell            ; the elisp shell that works everywhere
-       ;;shell             ; simple shell REPL for Emacs
-       ;;term              ; basic terminal emulator for Emacs
-       vterm             ; the best terminal emulation in Emacs
+       :term 'my/doom-term
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
