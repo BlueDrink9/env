@@ -259,6 +259,20 @@
 ;;       max_print_line=2000 latexmk -verbose -file-line-error -synctex=1
 ;;       -interaction=nonstopmode -pdf -outdir=latexbuild -pvc -e
 
+(if (eq system-type 'windows-nt)
+    ;; WORKAROUND https://github.com/magit/magit/issues/2395
+    (define-derived-mode magit-staging-mode magit-status-mode "Magit staging"
+      "Mode for showing staged and unstaged changes."
+      :group 'magit-status)
+  (defun magit-staging-refresh-buffer ()
+    (magit-insert-section (status)
+      (magit-insert-untracked-files)
+      (magit-insert-unstaged-changes)
+      (magit-insert-staged-changes)))
+  (defun magit-staging ()
+    (interactive)
+    (magit-mode-setup #'magit-staging-mode)))
+
 ;; If creating commit with nothing staged, auto-stage current file.
 (setq magit-commit-ask-to-stage "stage")
 (setq git-commit-major-mode 'markdown-mode)
