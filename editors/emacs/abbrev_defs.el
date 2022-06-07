@@ -45,7 +45,7 @@ It is used for the advicing `" (symbol-name fun) "'.")
  '(define-mode-abbrev abbrev--before-point))
 
 (add-hook 'abbrev-mode-hook #'T-abbrev-mode-hook-fun)
-(setq abbrev-additional-chars '((t ?[ ?])))
+(setq abbrev-additional-chars '((t ?\[ ?\])))
 
 (defun my/insert-current-iso-date ()
   "insert iso date"

@@ -81,6 +81,8 @@ $latestVimDir = gci $ToolsVimDir | sort $VerNumsToNatural -Descending | select -
 $source=$latestVimDir.fullname
 New-Item -ItemType SymbolicLink -Path $linkname -Target $source
 
+# For DOOM emacs
+[System.Environment]::SetEnvironmentVariable("EMACS_SERVER_FILE", "${env:HOME}\.emacs.d\server\server", [System.EnvironmentVariableTarget]::User)
 
 # Use latest path for 'edit with vim' context menu command.
 $RegKeyPath = "HKCR:\*\shell\Vim\Command"
