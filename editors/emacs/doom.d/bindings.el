@@ -317,28 +317,46 @@
 ;;     (map! :map smart-tab-mode-map tab 'nil)
 ;;     (add-hook! 'find-file-hook (map! :i tab 'smart-tab))))
 
-;; Eventually will want to change this to something that first tries local buffer expansion, I think.
-(map! :i "C-e" #'company-complete-common)
-(map! (:map company-active-map
-       "C-e" #'company-complete-selection
-       "C-n" #'evil-complete-next
-       "TAB" #'company-select-next
-       ;; Shfit tab
-       "<C-iso-lefttab>" #'company-select-previous
-       ;; "C-/" #'counsel-company  ; search results
-       "RET" #'newline-and-indent
-       "<return>" #'newline-and-indent
-       ))
-
-(after! yasnippet
-  (map! :map yas-minor-mode-map "C-e" 'yas-expand)
-  (map! :map yas-keymap "C-e" 'yas-next-field-or-maybe-expand)
-  (dolist (keymap (list yas-minor-mode-map yas-keymap))
-    (dolist (tab (list "TAB" "<tab>"))
-      (map! :i tab 'nil))))
-
 ;; (dolist (tab (list "TAB" "<tab>"))
 ;;   (map! :i tab #'hippie-expand))
+(map! :i "C-/" #'hippie-expand)
+
+
+(map! :map (vertico-map)
+      :in "<escape>" #'minibuffer-keyboard-quit
+      ;; Useful in normal mode sometimes if I want to use j/k to navigate.
+      :ni "C-e" #'vertico-insert
+      ;; :n "J" #'vertico-next-history-element
+      ;; :n "K" #'vertico-previous-history-element
+      :in "TAB" #'vertico-next
+      :in "<backtab>" #'vertico-previous
+      )
+
+;; Eventually will want to change this to something that first tries local buffer expansion, I think.
+(after! company
+  (map! :i "C-e" #'company-complete-common)
+  (map! (:map company-active-map
+              "C-e" #'company-complete-selection
+              "C-n" #'evil-complete-next
+              "C-p" #'evil-complete-previous
+              "TAB" #'company-select-next
+              ;; Shfit tab
+              "<C-iso-lefttab>" #'company-select-previous
+              ;; "C-/" #'counsel-company  ; search results
+              "RET" #'newline-and-indent
+              "<return>" #'newline-and-indent
+              )))
+
+(after! corfu
+  (map! :i "C-e" #'corfu-complete)
+  (map! (:map corfu-map
+              [evil-escape] #'corfu-quit
+              "TAB" #'corfu-next
+              "C-n" #'corfu-next
+              "C-p" #'corfu-previous
+              "RET" #'newline-and-indent
+              "<return>" #'newline-and-indent
+              "S-TAB" #'corfu-previous)))
 
 ;; Minibuffer only one escape to exit, kj to navigate history.
 (map! :map (minibuffer-local-map evil-ex-completion-map evil-ex-search-keymap)
@@ -351,15 +369,12 @@
       :i "TAB" #'minibuffer-complete
       )
 
-(map! :map (vertico-map)
-      :in "<escape>" #'minibuffer-keyboard-quit
-      ;; Useful in normal mode sometimes if I want to use j/k to navigate.
-      :ni "C-e" #'vertico-insert
-      ;; :n "J" #'vertico-next-history-element
-      ;; :n "K" #'vertico-previous-history-element
-      :in "TAB" #'vertico-next
-      :in "<backtab>" #'vertico-previous
-      )
+(after! yasnippet
+  (map! :map yas-minor-mode-map "C-e" 'yas-expand)
+  (map! :map yas-keymap "C-e" 'yas-next-field-or-maybe-expand)
+  (dolist (keymap (list yas-minor-mode-map yas-keymap))
+    (dolist (tab (list "TAB" "<tab>"))
+      (map! :i tab 'nil))))
 
 ;; c-a and c-x need fixing for increment/decrement.
 

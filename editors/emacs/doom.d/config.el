@@ -22,6 +22,10 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+;;
+;; add-hook! takes either a quoted hook func, list, or unquoted major mode!
+
+;; (unless (server-running-p) (server-start))
 
 (setq script_dir (file-name-directory (or load-file-name buffer-file-name)))
 (load-file (concat script_dir "bindings.el"))
@@ -178,6 +182,9 @@
   (setq read-file-name-completion-ignore-case t
         read-buffer-completion-ignore-case t
         completion-ignore-case t)
+  (use-package! fussy
+    :init (setq fussy-score-fn 'fussy-hotfuzz-score)
+           (push 'fussy completion-styles))
   (use-package! hotfuzz
     :init (setq completion-styles '(hotfuzz substring))))
 
@@ -186,18 +193,25 @@
   ;; home row priorities: 8 6 4 5 - - 1 2 3 7
   (setq avy-keys '(?n ?e ?i ?s ?t ?r ?i ?a)))
 
-;; Auto-select if fewer than 6 completion candidates. Not used by company, it seems.
+;; Auto-select if fewer than n completion candidates. Not used by company, it seems.
 (setq completion-cycle-threshold 6)
 (after! company
   ;; Tab and go setup. Uses a company frontend that cycles full completions with
   ;; the tab key, same as vim.
   (setq company-idle-delay 0
         company-selection-wrap-around t
-        company-minimum-prefix-length 1)
+        company-minimum-prefix-length 1
+
+        ;; recommended for company-fuzzy
+        company-require-match nil            ; Don't require match, so you can still move your cursor as expected.
+        company-tooltip-align-annotations t  ; Align annotation to the right side.
+        company-eclim-auto-save nil          ; Stop eclim auto save.
+        company-dabbrev-downcase nil        ; No downcase when completion.
+        )
   ;; (setq company-show-quick-access 'left)
   (add-hook! 'evil-normal-state-entry-hook #'company-abort)
   (setq company-fuzzy-sorting-backend 'liquidmetal)
-  (global-company-fuzzy-mode 1)
+  (setq company-fuzzy-show-annotation 1)
   (company-statistics-mode)
   (setq company-posframe-font doom-font)
   (company-flx-mode +1)
@@ -205,7 +219,23 @@
   (add-to-list 'hippie-expand-try-functions-list (lambda (arg) (call-interactively 'company-complete)))
   ;; lsp-mode will override this
   (set-company-backend! 'prog-mode
-    '(:separate company-capf company-yasnippet company-dabbrev company-ispell)))
+    '(:separate company-capf company-yasnippet company-dabbrev company-ispell))
+  (set-company-backend! 'text-mode
+    '(:separate company-capf company-yasnippet company-dabbrev company-ispell))
+  (add-hook! 'lsp-configure-hook
+    (add-to-list 'lsp-company-backends 'company-dabbrev))
+
+  ;; Enable downcase only when completing the completion. Reccomended for fuzzy
+  (defun jcs--company-complete-selection--advice-around (fn)
+    "Advice execute around `company-complete-selection' command."
+    (let ((company-dabbrev-downcase t))
+      (call-interactively fn)))
+  (advice-add 'company-complete-selection :around #'jcs--company-complete-selection--advice-around)
+  ;; do after configuring company-backends, so don't use global.
+  ;; (add-hook! 'company-mode-hook
+  ;;   (company-fuzzy-mode 1)))
+)
+
 ;; make aborting less annoying.
 ;; Accept when certain characters entered.
 ;; (setq company-auto-commit t)
@@ -224,6 +254,59 @@
 (setq-default prescient-history-length 1000)
 (setq which-key-idle-delay 0.5) ;; Which-key kicks in faster
 
+(after! corfu
+  (setq corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+  (setq corfu-auto t)                 ;; Enable auto completion
+  (setq corfu-scroll-margin 5)        ;; Use scroll margin
+  (setq corfu-preselect-first nil) ;; Disable candidate preselection (for TNG)
+  (setq corfu-separator ?\s)          ;; Orderless field separator
+  (setq corfu-quit-no-match 'separator) ;; Exit autocomplete on space if no match
+  (global-corfu-mode)
+
+  ;; (add-hook! 'eshell-mode-hook
+  ;;   (setq-local corfu-auto nil))
+  (add-hook! 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer))
+(defun corfu-enable-in-minibuffer ()
+  "Enable Corfu in the minibuffer if `completion-at-point' is bound."
+  (when (where-is-internal #'completion-at-point (list (current-local-map)))
+    ;; (setq-local corfu-auto nil) Enable/disable auto completion
+    (corfu-mode 1)))
+(defun corfu-enable-always-in-minibuffer ()
+  "Enable Corfu in the minibuffer if Vertico/Mct are not active."
+  (unless (or (bound-and-true-p mct--active)
+              (bound-and-true-p vertico--input))
+    ;; (setq-local corfu-auto nil) Enable/disable auto completion
+    (corfu-mode 1)))
+
+(after! cape
+   (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  ;;(add-to-list 'completion-at-point-functions #'cape-history)
+  (add-to-list 'completion-at-point-functions #'cape-keyword)
+  (add-to-list 'completion-at-point-functions #'cape-symbol)
+  ;;(add-to-list 'completion-at-point-functions #'cape-line)
+  ;;(add-to-list 'completion-at-point-functions #'cape-sgml)
+  ;;(add-to-list 'completion-at-point-functions #'cape-rfc1345)
+  ;;(add-to-list 'completion-at-point-functions #'cape-abbrev)
+  (add-hook! text-mode-hook
+    (add-to-list 'completion-at-point-functions #'cape-tex)
+    (add-to-list 'completion-at-point-functions #'cape-ispell)
+    (add-to-list 'completion-at-point-functions #'cape-dict))
+  )
+
+;; (setq hippie-expand-try-functions-list
+;;       '(
+;;         try-expand-dabbrev
+;;         try-expand-dabbrev-all-buffers
+;;         ;; try-expand-dabbrev-from-kill
+;;         try-complete-lisp-symbol-partially
+;;         try-complete-lisp-symbol
+;;         try-complete-file-name-partially
+;;         try-complete-file-name
+;;         ;; try-expand-all-abbrevs
+;;         ;; try-expand-list
+;;         ;; try-expand-line
+;;         ))
 
 (use-package! spray
   :commands spray-mode
@@ -366,7 +449,7 @@ rather than file lines."
   (require 'dap-python)
   )
 
-(add-hook! realgud-short-key-mode-hook
+(add-hook! 'realgud-short-key-mode-hook
           (map! :n :leader "d" realgud:shortkey-mode-map))
 
 

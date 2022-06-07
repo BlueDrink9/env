@@ -76,18 +76,28 @@
 ;; Use child frame for emacs. Compatible with tng, in contrast to box.
 (package! company-posframe)
 (package! company-fuzzy)
-;; Fuzzy response matching library
-(package! liquidmetal)
 (package! company-statistics)
-(package! flx)
 (package! company-bibtex)
 (package! company-flx)
-;; Completion from buffer based on common usage. Sets capf
-(package! pabbrev)
+
+;; ;; Vertico & family
+;; ;;
+;; ;; Autocomplete window
+;; (package! corfu)
+;; (package! cape)
+
+;; Fuzzy response matching library
+(package! liquidmetal)
+(package! flx)
 
 ;; Ranked fuzzy matching completion style (for vertico)
 (package! hotfuzz)
+(package! fussy)
 
+;; Completion from buffer based on common usage. Sets capf
+(package! pabbrev)
+;; Like an autocomplete package but just for buffer text
+;; (package! fancy-dabbrev)
 
 (package! realgud)
 (package! dap-mode)
