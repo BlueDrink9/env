@@ -1,4 +1,3 @@
-
 vim.cmd("Plug 'hrsh7th/cmp-nvim-lsp'")
 vim.cmd("Plug 'hrsh7th/cmp-buffer'")
 vim.cmd("Plug 'hrsh7th/cmp-path'")
@@ -32,6 +31,12 @@ function nvim_cmp_setup(cmp)
     --   max_height = math.floor(vim.o.lines * 0.3),
     --   min_height = 1,
     -- },
+
+    snippet = {
+      expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body)
+      end,
+    },
 
     sources = {
         {
