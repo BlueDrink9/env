@@ -84,7 +84,8 @@
   ;; (setq super-save-remote-files nil)
   ;; (setq super-save-exclude '(".gpg"))
   (add-to-list 'super-save-hook-triggers 'evil-insert-state-exit-hook))
-(super-save-mode 1)
+(add-hook! 'change-major-mode-hook
+  (super-save-mode 1))
 
 
 ;; Evil-style bindings in minibuffer (esc, c-n etc)
@@ -222,8 +223,8 @@
     '(:separate company-capf company-yasnippet company-dabbrev company-ispell))
   (set-company-backend! 'text-mode
     '(:separate company-capf company-yasnippet company-dabbrev company-ispell))
-  (add-hook! 'lsp-configure-hook
-    (add-to-list 'lsp-company-backends 'company-dabbrev))
+  ;; (add-hook! 'lsp-configure-hook
+  ;;   (add-to-list 'lsp-company-backends 'company-dabbrev))
 
   ;; Enable downcase only when completing the completion. Reccomended for fuzzy
   (defun jcs--company-complete-selection--advice-around (fn)
@@ -231,10 +232,11 @@
     (let ((company-dabbrev-downcase t))
       (call-interactively fn)))
   (advice-add 'company-complete-selection :around #'jcs--company-complete-selection--advice-around)
-  ;; do after configuring company-backends, so don't use global.
-  ;; (add-hook! 'company-mode-hook
-  ;;   (company-fuzzy-mode 1)))
-)
+  ;; (defun my/company-init-backends-h--advice-after ()
+  ;;   "Reset company-fuzzy after company backends modified"
+  ;;   (company-fuzzy-mode 1))
+  ;; (advice-add '+company-init-backends-h :after #'my/company-init-backends-h--advice-after))
+  )
 
 ;; make aborting less annoying.
 ;; Accept when certain characters entered.
