@@ -232,11 +232,12 @@
     (let ((company-dabbrev-downcase t))
       (call-interactively fn)))
   (advice-add 'company-complete-selection :around #'jcs--company-complete-selection--advice-around)
-  ;; (defun my/company-init-backends-h--advice-after ()
-  ;;   "Reset company-fuzzy after company backends modified"
-  ;;   (company-fuzzy-mode 1))
-  ;; (advice-add '+company-init-backends-h :after #'my/company-init-backends-h--advice-after))
-  )
+  (defun my/company-init-backends-h--advice-after ()
+    "Reset company-fuzzy after company backends modified"
+    (company-fuzzy-mode 1)
+    (setq-local company-backends '(company-fuzzy-all-other-backends)))
+  (advice-add '+company-init-backends-h :after #'my/company-init-backends-h--advice-after)
+  (advice-add '+lsp-init-company-backends-h :after #'my/company-init-backends-h--advice-after))
 
 ;; make aborting less annoying.
 ;; Accept when certain characters entered.
