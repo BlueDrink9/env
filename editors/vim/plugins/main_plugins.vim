@@ -505,7 +505,7 @@ if executable("git")
     cabbrev gps Git push
     cabbrev gpl Git pull
     " mappings to emulate doom magit
-    nnoremap <leader>gg :Git status<cr>
+    nnoremap <leader>gg :Git<cr>
     nnoremap <leader>gs :Gwrite<cr>
     nnoremap <leader>gcc :Gwrite <bar>  Git commit<cr>
     nnoremap <leader>gcc :Gwrite <bar>  Git commit<cr>
