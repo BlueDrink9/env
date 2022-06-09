@@ -1,0 +1,156 @@
+# vim: set ft=python:
+"""
+Pyvim configuration. Save to file to: ~/.pyvimrc
+"""
+from prompt_toolkit.application import run_in_terminal
+from prompt_toolkit.filters import vi_insert_mode, vi_navigation_mode, vi_selection_mode
+from prompt_toolkit.key_binding.key_processor import KeyPress
+from prompt_toolkit.keys import Keys
+from pyvim.commands import commands as cmd
+from subprocess import call
+import six
+from pathlib import Path
+from importlib.machinery import SourceFileLoader
+
+
+# scriptdir = Path(__file__).parent
+
+# SourceFileLoader("settings", r"C:/Users/si718424/env/editors/pyvim/pyvimrc").load_module().configure
+# from mypyvimrc import settings
+# import bindings
+
+__all__ = (
+    'configure',
+)
+
+
+def settings(editor):
+    editor.show_line_numbers = True
+    editor.relative_number = True
+    editor.wrap_lines = True
+    editor.highlight_search = True
+    editor.incsearch = True
+    editor.ignore_case = True
+    editor.expand_tab = True  # (:set expandtab)
+    editor.tabstop = 4  # (:set tabstop=4)
+    editor.scroll_offset = 3
+    editor.colorcolumn = [88]
+    editor.show_ruler = True
+
+    editor.show_wildmenu = True
+    # editor.display_unprintable_characters = True # (:set list)
+    # Use Jedi for autocompletion of Python files. (:set jedi)
+    editor.enable_jedi = True
+
+
+    # Apply colorscheme. (:colorscheme emacs)
+    # https://pygments.org/styles/
+    editor.use_colorscheme('monokai')
+
+
+def bindings(editor):
+    # Add custom key bindings:
+    # https://github.com/prompt-toolkit/pyvim/blob/master/pyvim/key_bindings.py#L125
+    # https://github.com/prompt-toolkit/pyvim/blob/master/pyvim/commands/commands.py
+
+    for b in [('k', 'v'), ('v', 'k')]:
+        @editor.add_key_binding(*b, filter=vi_insert_mode)
+        def _(event):
+            event.cli.key_processor.feed(KeyPress(Keys.Escape))
+
+    @editor.add_key_binding(";", filter=vi_navigation_mode)
+    def _(event):
+        editor.enter_command_mode()
+
+    # @editor.add_key_binding(":", filter=vi_navigation_mode)
+    # def _(event):
+    #     event.cli.key_processor.feed(KeyPress(";"))
+
+    for key, command in [
+            ("left", cmd._bp),
+            ("right", cmd._bn),
+            ("up", cmd.tab_next),
+            ("down", cmd.tab_previous),
+            ]:
+        @editor.add_key_binding(key, filter=vi_navigation_mode)
+        def _(event):
+            try:
+                command(editor, force=True)
+            except Exception:
+                command(editor)
+            editor.sync_with_prompt_toolkit()
+
+    for k in ["h", "j", "k", "l"]:
+        @editor.add_key_binding(f"c-{k}", filter=vi_navigation_mode)
+        def _(event):
+            editor.window_arrangement.cycle_focus()
+            editor.sync_with_prompt_toolkit()
+
+    @editor.add_key_binding("c-w", "l", filter=vi_navigation_mode)
+    def _(event):
+        cmd.vertical_split(editor, None)
+        editor.sync_with_prompt_toolkit()
+
+    @editor.add_key_binding("c-w", "j", filter=vi_navigation_mode)
+    def _(event):
+        cmd.horizontal_split(editor, None)
+        editor.sync_with_prompt_toolkit()
+
+    @editor.add_key_binding("space", "c", "c", filter=vi_navigation_mode)
+    def comment_python_line(event):
+        event.cli.key_processor.feed(KeyPress("I"))
+        event.cli.key_processor.feed(KeyPress("#"))
+        event.cli.key_processor.feed(KeyPress(" "))
+        event.cli.key_processor.feed(KeyPress(Keys.Escape))
+
+    @editor.add_key_binding("space", "c", "u", filter=vi_navigation_mode)
+    def uncomment_python_line(event):
+        event.cli.key_processor.feed(KeyPress("0"))
+        event.cli.key_processor.feed(KeyPress("x"))
+        event.cli.key_processor.feed(KeyPress("x"))
+
+
+
+    @editor.add_key_binding(Keys.F9)
+    def save_and_execute_python_file(event):
+        """
+        F9: Execute the current Python file.
+        """
+        # Save buffer first.
+        editor_buffer = editor.current_editor_buffer
+
+        if editor_buffer is not None:
+            if editor_buffer.location is None:
+                editor.show_message("File doesn't have a filename. Please save first.")
+                return
+            else:
+                editor_buffer.write()
+
+        # Now run the Python interpreter. But use
+        # `CommandLineInterface.run_in_terminal` to go to the background and
+        # not destroy the window layout.
+        def execute():
+            call(['python3', editor_buffer.location])
+            six.moves.input('Press enter to continue...')
+
+        run_in_terminal(execute)
+
+
+
+def configure(editor):
+    """
+    Configuration function. We receive a ``pyvim.editor.Editor`` instance as
+    argument that we can manipulate in here.
+    """
+    # with (scriptdir / "settings.py").open() as infile: exec(infile.read())
+    # with (scriptdir / "bindings.py").open() as infile: exec(infile.read())
+    # Decided against splitting this into multiple files, because the places
+    # where I have to use pyvim are places where it will be harder to get env
+    # repo to, so it will be better to have a single file I can copy in.
+    settings(editor)
+    bindings(editor)
+
+
+
+# with open("C:\Users\si718424\env\editors\pyvimrc") as infile:
+#     exec(infile.read())
