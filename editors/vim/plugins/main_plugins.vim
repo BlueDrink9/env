@@ -334,10 +334,10 @@ else
     " map  <leader>/ <Plug>(easymotion-sn)
     " omap <leader>/ <Plug>(easymotion-tn)
     let g:EasyMotion_smartcase = 1
-    map Sl <Plug>(easymotion-lineforward)
-    map Sj <Plug>(easymotion-j)
-    map Sk <Plug>(easymotion-k)
-    map Sh <Plug>(easymotion-linebackward)
+    map ,l <Plug>(easymotion-lineforward)
+    map ,j <Plug>(easymotion-j)
+    map ,k <Plug>(easymotion-k)
+    map ,h <Plug>(easymotion-linebackward)
     let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
     " Cross window boundaries
     nmap <Leader><S-K> <Plug>(easymotion-overwin-line)
@@ -351,6 +351,7 @@ Plug 'bkad/camelcasemotion'
 autocmd myPlugins User pluginSettingsToExec call camelcasemotion#CreateMotionMappings('<leader>m')
 autocmd myPlugins User pluginSettingsToExec call camelcasemotion#CreateMotionMappings('_')
 autocmd myPlugins User pluginSettingsToExec call camelcasemotion#CreateMotionMappings('S')
+autocmd myPlugins User pluginSettingsToExec call camelcasemotion#CreateMotionMappings(',')
 " {]} ---------- Operators ----------
 
 " {[}--- Searching, replacing, finding ---
