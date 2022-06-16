@@ -258,7 +258,7 @@ Plug 'jeetsukumaran/vim-pythonsense'
 if HasPython()
     Plug 'https://github.com/Vimjas/vim-python-pep8-indent'
     Plug 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
-    let g:pymode_options_max_line_length = 0
+    let g:pymode_options_max_line_length = 88
     let g:pymode_rope = 1
     let g:pymode_lint_message = 1
     let g:pymode_lint_on_write = 1
@@ -269,7 +269,8 @@ if HasPython()
     let g:pymode_rope_rename_module_bind = g:IDE_mappings.renameModule
     let g:pymode_run_bind = g:IDE_mappings.REPLSend
     let g:pymode_breakpoint_bind = g:IDE_mappings.set_breakpoint
-    let g:pymode_lint_ignore = ["C0301"]
+    let g:pymode_lint_ignore = ["C0301", "E501"]
+    let g:pymode_trim_whitespaces = 0
 
 
     if has('python3')
