@@ -160,9 +160,10 @@ nmap <Plug>SpeedDatingFallbackDown <Plug>(CtrlXA-CtrlX)
 " Could go in prose... but maybe I'll use it more later.
 Plug 'https://github.com/junegunn/vim-easy-align'
 " Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
+" Clashes with getting ascii/vim-characterize
+" xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
+" nmap ga <Plug>(EasyAlign)
 
 if v:version >= 703
     " Vim hexedit. Low dependency, interface as you'd expect. Pretty
