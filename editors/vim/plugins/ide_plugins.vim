@@ -1,8 +1,6 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
 
-" AI-powered completion and snippets for python. Very cool-looking.
-" https://github.com/kiteco/vim-plugin
 let s:scriptdir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 augroup myIDE
     au!
@@ -530,15 +528,22 @@ autocmd myPlugins Filetype *
 let s:fallback_completion = 1
 if has("timers")
     let s:fallback_completion = 0
-    if has('nvim-0.5')
+    if has('node')
+        " Intellisense engine for vim8 & neovim, full language server protocol support as VSCode.
+        " Uses VSCode-specific extensions, too. Seems to Just Work?
+        call SourcePluginFile("coc.nvim.vim")
+
+        if has("nvim")
+            Plug 'https://github.com/github/copilot.vim'
+            imap <silent><script><expr> <C-L> copilot#Accept("\<CR>")
+            let g:copilot_no_tab_map = v:true
+        endif
+
+    elseif has('nvim-0.5')
         call SourcePluginFile("nvim-cmp.lua")
         " Super speedy, but slightly more complex requirements
         " https://github.com/ms-jpq/coq_nvim
 
-    elseif has('node')
-        " Intellisense engine for vim8 & neovim, full language server protocol support as VSCode.
-        " Uses VSCode-specific extensions, too. Seems to Just Work?
-        call SourcePluginFile("coc.nvim.vim")
 
     elseif has("python3")
         if executable("cmake")
