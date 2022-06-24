@@ -108,38 +108,6 @@ if executable('cscope')
 endif
 " {]} ---------- Tags----------
 
-" {[} ---------- Snippits ----------
-    " Snippet libs
-Plug 'https://github.com/honza/vim-snippets'
-Plug 'https://github.com/rafamadriz/friendly-snippets'
-if has('nvim-0.5')
-" if has('nvim') || v:version >= 800
-
-    Plug 'https://github.com/hrsh7th/vim-vsnip', {'on': [] }
-    Plug 'hrsh7th/vim-vsnip-integ', {'on': [] }
-    call LoadPluginOnInsertEnter('vim-vsnip')
-    call LoadPluginOnInsertEnter('vim-vsnip-integ')
-    Plug 'octaltree/virtualsnip', { 'do': 'make', 'on': [] }
-    call LoadPluginOnInsertEnter('virtualsnip')
-
-elseif has('nvim') || v:version >= 740
-    " Only requires 7.4, but recommends 8.
-    Plug 'Shougo/neosnippet.vim', {'on': [] }
-    call LoadPluginOnInsertEnter('neosnippet.vim')
-    Plug 'Shougo/neosnippet-snippets'
-elseif HasPython() && v:version >= 704
-    Plug 'https://github.com/SirVer/ultisnips' " Snippit engine
-else
-    " {[} ---------- Snipmate ----------
-    Plug 'https://github.com/tomtom/tlib_vim.git'
-    Plug 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
-    Plug 'https://github.com/garbas/vim-snipmate'
-    " {]} ---------- Snipmate ----------
-endif
-" way smaller engine than ultisnips, not really much func. Can't use snip libs.
-" Plug 'https://github.com/joereynolds/vim-minisnip'
-" {]} ---------- Snippits----------
-
 " {[} ---------- Lang-specific ----------
 " {[} ------ Python ------
 " provides text objects and motions for Python classes, methods,
@@ -395,6 +363,38 @@ if s:fallback_completion == 1
 endif
 
 " {]} ---------- Completion----------
+
+" {[} ---------- Snippits ----------
+    " Snippet libs
+Plug 'https://github.com/honza/vim-snippets'
+Plug 'https://github.com/rafamadriz/friendly-snippets'
+if has('nvim-0.5')
+" if has('nvim') || v:version >= 800
+
+    Plug 'https://github.com/hrsh7th/vim-vsnip', {'on': [] }
+    Plug 'hrsh7th/vim-vsnip-integ', {'on': [] }
+    call LoadPluginOnInsertEnter('vim-vsnip')
+    call LoadPluginOnInsertEnter('vim-vsnip-integ')
+    Plug 'octaltree/virtualsnip', { 'do': 'make', 'on': [] }
+    call LoadPluginOnInsertEnter('virtualsnip')
+
+elseif has('nvim') || v:version >= 740
+    " Only requires 7.4, but recommends 8.
+    Plug 'Shougo/neosnippet.vim', {'on': [] }
+    call LoadPluginOnInsertEnter('neosnippet.vim')
+    Plug 'Shougo/neosnippet-snippets'
+elseif HasPython() && v:version >= 704
+    Plug 'https://github.com/SirVer/ultisnips' " Snippit engine
+else
+    " {[} ---------- Snipmate ----------
+    Plug 'https://github.com/tomtom/tlib_vim.git'
+    Plug 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
+    Plug 'https://github.com/garbas/vim-snipmate'
+    " {]} ---------- Snipmate ----------
+endif
+" way smaller engine than ultisnips, not really much func. Can't use snip libs.
+" Plug 'https://github.com/joereynolds/vim-minisnip'
+" {]} ---------- Snippits----------
 
 " {[} ---------- Neosettings ----------
 " " https://github.com/kepbod/ivim/blob/master/vimrc

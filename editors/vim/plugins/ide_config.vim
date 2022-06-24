@@ -124,61 +124,6 @@ if IsPluginUsed("cscope.vim")
 endif
 " {]} ---------- Tags----------
 
-" {[} ---------- Snippits ----------
-if IsPluginUsed("vim-vsnip")
-    call Imap(g:IDE_mappings.snippet_expand, "<Plug>(vsnip-expand-or-jump)")
-    call Vmap(g:IDE_mappings.snippet_expand, "<Plug>(vsnip-expand-or-jump)")
-endif
-
-if IsPluginUsed("neosnippet-snippets")
-    let g:neosnippet#enable_snipmate_compatibility=1
-    " let g:neosnippet#enable_conceal_markers=0
-    call Imap(g:IDE_mappings.snippet_expand, "<Plug>(neosnippet_expand_or_jump)")
-    call Vmap(g:IDE_mappings.snippet_expand, "<Plug>(neosnippet_expand_or_jump)")
-    call Imap(g:IDE_mappings.snippet_next, "<Plug>(neosnippet_jump)")
-    call Vmap(g:IDE_mappings.snippet_next, "<Plug>(neosnippet_jump)")
-    " imap <expr><TAB>
-    "             \ pumvisible() ? "\<C-n>" :
-    "             \ neosnippet#expandable_or_jumpable() ?
-    "             \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-    " smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-    "             \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-endif
-if IsPluginUsed("ultisnips")
-    let g:UltiSnipsExpandTrigger = g:IDE_mappings.snippet_expand
-    let g:UltiSnipsJumpForwardTrigger = g:IDE_mappings.snippet_next
-    let g:UltiSnipsJumpBackwardTrigger = g:IDE_mappings.snippet_prev
-    " Disable autotrigger
-    " au myIDE VimEnter * au! UltiSnips_AutoTrigger
-    " augroup ultisnips
-    "     au!
-    "     " Load default/all snippets
-    "     autocmd BufEnter * UltiSnipsAddFiletypes alltypes
-    " augroup end
-    " Maybe use these to map <CR> to trigger in future?
-    " autocmd! User UltiSnipsEnterFirstSnippet
-    " autocmd User UltiSnipsEnterFirstSnippet call CustomInnerKeyMapper()
-    " autocmd! User UltiSnipsExitLastSnippet
-    " autocmd User UltiSnipsExitLastSnippet call CustomInnerKeyUnmapper()
-    "
-endif
-" {[} ---------- Snipmate ----------
-if IsPluginUsed("vim-snipmate")
-    let g:snipMate = {}
-    let g:snipMate['description_in_completion'] = 1
-    let g:snipMate['no_match_completion_feedkeys_chars'] = ''
-    " Load default/all snippets
-    autocmd myIDE BufEnter * SnipMateLoadScope alltypes
-    imap <C-F> <Plug>snipMateNextOrTrigger
-    smap <C-F> <Plug>snipMateNextOrTrigger
-    imap <C-E> <Plug>snipMateTrigger
-    smap <C-E> <Plug>snipMateTrigger
-    imap <C-B> <Plug>snipMateBack
-    smap <C-B> <Plug>snipMateBack
-endif
-" {]} ---------- Snipmate ----------
-" {]} ---------- Snippits----------
-
 " {[} ---------- Lang-specific ----------
 " {[} ------ Python ------
 if IsPluginUsed("python-mode")
@@ -393,3 +338,59 @@ if IsPluginUsed("vim-mucomplete")
     set completeopt+=menuone,noselect
 endif
 " {]} ---------- Completion----------
+"
+" {[} ---------- Snippits ----------
+if IsPluginUsed("vim-vsnip")
+    call Imap(g:IDE_mappings.snippet_expand, "<Plug>(vsnip-expand-or-jump)")
+    call Vmap(g:IDE_mappings.snippet_expand, "<Plug>(vsnip-expand-or-jump)")
+endif
+
+if IsPluginUsed("neosnippet-snippets")
+    let g:neosnippet#enable_snipmate_compatibility=1
+    " let g:neosnippet#enable_conceal_markers=0
+    call Imap(g:IDE_mappings.snippet_expand, "<Plug>(neosnippet_expand_or_jump)")
+    call Vmap(g:IDE_mappings.snippet_expand, "<Plug>(neosnippet_expand_or_jump)")
+    call Imap(g:IDE_mappings.snippet_next, "<Plug>(neosnippet_jump)")
+    call Vmap(g:IDE_mappings.snippet_next, "<Plug>(neosnippet_jump)")
+    " imap <expr><TAB>
+    "             \ pumvisible() ? "\<C-n>" :
+    "             \ neosnippet#expandable_or_jumpable() ?
+    "             \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+    " smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+    "             \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+endif
+if IsPluginUsed("ultisnips")
+    let g:UltiSnipsExpandTrigger = g:IDE_mappings.snippet_expand
+    let g:UltiSnipsJumpForwardTrigger = g:IDE_mappings.snippet_next
+    let g:UltiSnipsJumpBackwardTrigger = g:IDE_mappings.snippet_prev
+    " Disable autotrigger
+    " au myIDE VimEnter * au! UltiSnips_AutoTrigger
+    " augroup ultisnips
+    "     au!
+    "     " Load default/all snippets
+    "     autocmd BufEnter * UltiSnipsAddFiletypes alltypes
+    " augroup end
+    " Maybe use these to map <CR> to trigger in future?
+    " autocmd! User UltiSnipsEnterFirstSnippet
+    " autocmd User UltiSnipsEnterFirstSnippet call CustomInnerKeyMapper()
+    " autocmd! User UltiSnipsExitLastSnippet
+    " autocmd User UltiSnipsExitLastSnippet call CustomInnerKeyUnmapper()
+    "
+endif
+" {[} ---------- Snipmate ----------
+if IsPluginUsed("vim-snipmate")
+    let g:snipMate = {}
+    let g:snipMate['description_in_completion'] = 1
+    let g:snipMate['no_match_completion_feedkeys_chars'] = ''
+    " Load default/all snippets
+    autocmd myIDE BufEnter * SnipMateLoadScope alltypes
+    imap <C-F> <Plug>snipMateNextOrTrigger
+    smap <C-F> <Plug>snipMateNextOrTrigger
+    imap <C-E> <Plug>snipMateTrigger
+    smap <C-E> <Plug>snipMateTrigger
+    imap <C-B> <Plug>snipMateBack
+    smap <C-B> <Plug>snipMateBack
+endif
+" {]} ---------- Snipmate ----------
+" {]} ---------- Snippits----------
+
