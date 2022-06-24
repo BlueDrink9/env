@@ -5,7 +5,12 @@
 " Use <leader>e for errors/linting/fixing.
 let g:IDE_mappings = {
             \ "FuzzyBuffers" : "<leader>,",
+            \ "FuzzyCommands" : "<leader>;",
             \ "FuzzyOpenFile" : "<leader><leader>",
+            \ "FuzzyOldFiles" : "<leader>fr",
+            \ "FuzzySearchBuffer" : "<leader>/",
+            \ "FuzzySearchBuffers" : "<leader>f",
+            \ "FuzzyTags" : "<leader>it",
             \ "VCSNextHunk" : "<leader>g]",
             \ "VCSPreviousHunk" : "<leader>g[",
             \ "REPLSend" : "<leader>s",

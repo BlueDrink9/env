@@ -13,15 +13,14 @@ call Nnoremap(g:IDE_mappings.FuzzyBuffers, ":Buffers<CR>")
 " Files
 call Nnoremap(g:IDE_mappings.FuzzyOpenFile, ":FZF<CR>")
 " Search lines in current buffer.
-nnoremap <silent> <leader>/ :BLines<CR>
-" Search lines in all buffers.
-nnoremap <silent> <leader>f :Lines<CR>
-nnoremap <silent> <leader>ft :Tags<CR>
-nnoremap <silent> <leader>; :Commands<CR>
+call Nnoremap(g:IDE_mappings.FuzzySearchBuffer, ":BLines<CR>")
+call Nnoremap(g:IDE_mappings.FuzzySearchBuffers, ":Lines<CR>")
+call Nnoremap(g:IDE_mappings.FuzzyTags, ":Tags<CR>")
+call Nnoremap(g:IDE_mappings.FuzzyCommands, ":Commands<CR>")
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
 command! MRUFZF :History
-nnoremap <silent> <leader>fr :History<CR>
+call Nnoremap(g:IDE_mappings.FuzzyOldFiles, ":History<CR>")
 
 " {[} Use proper fzf colours in gvim
 if g:hasGUI
