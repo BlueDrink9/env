@@ -165,6 +165,7 @@ exec 'source ' . s:localPlugins
 
 call plug#end()
 
+call SourcePluginFile("light_config.vim")
 silent doautocmd User pluginSettingsToExec
 
 " HLGroups get cleared by colourschemes when changing. This resets them.
