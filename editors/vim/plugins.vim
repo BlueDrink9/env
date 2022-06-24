@@ -166,8 +166,12 @@ exec 'source ' . s:localPlugins
 call plug#end()
 
 call SourcePluginFile("light_config.vim")
-call SourcePluginFile("main_config.vim")
-call SourcePluginFile("ide_config.vim")
+if !g:liteMode
+  call SourcePluginFile("main_config.vim")
+    if g:ideMode
+      call SourcePluginFile("ide_config.vim")
+    endif
+endif
 silent doautocmd User pluginSettingsToExec
 
 " HLGroups get cleared by colourschemes when changing. This resets them.
