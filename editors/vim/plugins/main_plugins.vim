@@ -520,7 +520,7 @@ if executable("git")
     autocmd myPlugins filetype fugitive setlocal nobuflisted
 
     " Async Fugitive (Fugitive uses whatever `Make` is available).
-    if exists('g:hasAsyncrun') && g:hasAsyncrun
+    if IsPluginUsed("asyncrun.vim")
         autocmd myPlugins User pluginSettingsToExec command!
                     \ -bang -nargs=* -complete=file
                     \ Make AsyncRun -program=make @ <args>

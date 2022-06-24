@@ -94,7 +94,7 @@ if has('nvim-0.5')
     au BufWritePost <buffer> lua require('lint').try_lint()
 elseif has("timers")
     " Async linting
-    Plug 'https://github.com/w0rp/ale'
+    Plug 'https://github.com/dense-analysis/ale'
     let g:ale_sign_error = 'X'
     let g:ale_sign_warning = '!'
     let g:ale_change_sign_column_color = 1

@@ -27,14 +27,10 @@ Plug 'https://github.com/tpope/vim-repeat'
 Plug 'https://github.com/wsdjeg/vim-fetch'
 " For switching between header and alt files
 " Plug 'vim-scripts/a.vim'
-" if v:version >= 800 || has("patch-7.4.1829")
 if has("timers")
     " Commands sent to shell with AsyncRun appear in qf window.
     " use AsyncRun! to prevent autoscroll.
     Plug 'https://github.com/skywind3000/asyncrun.vim'
-    let g:hasAsyncrun = 1
-else
-    let g:hasAsyncrun = 0
 endif
 " Confirms opening empty file on tabcomplete
 Plug 'https://github.com/EinfachToll/DidYouMean'
