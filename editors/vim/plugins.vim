@@ -103,6 +103,11 @@ let g:plugindir = PathExpand(s:scriptdir . "/" . "plugins")
 function! SourcePluginFile(name)
     exec 'source ' . g:plugindir . '/' . a:name
 endfunction
+function! SourcePluginFileIfUsed(name)
+    if IsPluginUsed(a:name)
+        call SourcePluginFile(a:name)
+    endif
+endfunction
 
 " To remove a Plugged repo using UnPlug 'user/repo'
 function! s:deregister(repo)
@@ -154,7 +159,8 @@ call SourcePluginFile("colorschemes.vim")
 call SourcePluginFile("light_plugins.vim")
 if !g:liteMode
     call SourcePluginFile("main_plugins.vim")
-    call SourcePluginFile("statusbar.vim")
+    Plug 'https://github.com/vim-airline/vim-airline-themes'
+    Plug 'https://github.com/vim-airline/vim-airline'
     if g:ideMode
         call SourcePluginFile("ide_plugins.vim")
     endif
@@ -167,7 +173,10 @@ call plug#end()
 
 call SourcePluginFile("light_config.vim")
 if !g:liteMode
-  call SourcePluginFile("main_config.vim")
+    call SourcePluginFile("main_config.vim")
+    if IsPluginUsed("vim-airline")
+      call SourcePluginFile("statusbar.vim")
+    endif
     if g:ideMode
       call SourcePluginFile("ide_config.vim")
     endif

@@ -6,12 +6,6 @@ augroup myIDE
     au!
 augroup end
 
-function! s:SourcePluginFileIfUsed(name)
-    if IsPluginUsed(a:name)
-        call SourcePluginFile(a:name)
-    endif
-endfunction
-
 " {[} ---------- Misc ----------
 call s:SourcePluginFileIfUsed("telescope.lua")
 if IsPluginUsed("nvim-colorizer.lua")
@@ -43,9 +37,9 @@ endif
 " These would be unloaded for CoC.nvim, which does completion and LSP
 " Deoplete and ale will use them though.
 if has('nvim-0.5')
-    call s:SourcePluginFileIfUsed("nvim-lspconfig.lua")
+    call SourcePluginFileIfUsed("nvim-lspconfig.lua")
 else
-    call s:SourcePluginFileIfUsed("languageclient-neovim.vim")
+    call SourcePluginFileIfUsed("languageclient-neovim.vim")
 endif
 " {]} ---------- LSP ----------
 
@@ -237,7 +231,7 @@ endif
 " {]} ------ Python ------
 
 " {[} ---------- R ----------
-call s:SourcePluginFileIfUsed("nvim-R.vim")
+call SourcePluginFileIfUsed("nvim-R.vim")
 if IsPluginUsed("vim-r-plugin")
     " R output is highlighted with current colorscheme
     let g:rout_follow_colorscheme = 1
@@ -345,7 +339,7 @@ if IsPluginUsed("float-preview.nvim")
     let g:float_preview#docked = 0
 endif
 
-call s:SourcePluginFileIfUsed("treesitter.lua")
+call SourcePluginFileIfUsed("treesitter.lua")
 " {]} ---------- IDE----------
 
 " {[} ---------- Debugging ----------
@@ -355,7 +349,7 @@ if IsPluginUsed("vim-unstack")
     " Top to bottom splits
     let g:unstack_layout = "portrait"
 endif
-call s:SourcePluginFileIfUsed("vimspector.vim")
+call SourcePluginFileIfUsed("vimspector.vim")
 " {]} ---------- Debugging ----------
 
 " {[} ---------- Completion ----------
@@ -370,17 +364,17 @@ if IsPluginUsed("SyntaxComplete")
     " let s:syntaxKeywords = OmniSyntaxList( [] )
 endif
 
-call s:SourcePluginFileIfUsed("coc.nvim.vim")
+call SourcePluginFileIfUsed("coc.nvim.vim")
 
 if IsPluginUsed("copilot.vim")
     imap <silent><script><expr> <C-L> copilot#Accept("\<CR>")
     let g:copilot_no_tab_map = v:true
 endif
 
-call s:SourcePluginFileIfUsed("nvim-cmp.lua")
+call SourcePluginFileIfUsed("nvim-cmp.lua")
 
-call s:SourcePluginFileIfUsed("ycm.vim")
-call s:SourcePluginFileIfUsed("deoplete.vim")
+call SourcePluginFileIfUsed("ycm.vim")
+call SourcePluginFileIfUsed("deoplete.vim")
 
 if IsPluginUsed("completor.vim")
     " Use TAB to complete when typing words, else inserts TABs as usual.  Uses

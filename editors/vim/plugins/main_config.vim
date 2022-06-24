@@ -301,9 +301,7 @@ if IsPluginUsed("ctrlp.vim")
         let g:ctrlp_extensions = ['tag', 'buffertag', 'rtscript']
     endif
 endif
-if IsPluginUsed("fzf")
-    call SourcePluginFile("fzf.vim")
-endif
+call SourcePluginFileIfUsed("fzf.vim")
 " {]}--- Fuzzy finder ---
 " {]}--- Searching, replacing, finding ---
 
@@ -633,9 +631,7 @@ if exists('g:vscode')
     call SourcePluginFile("vscode-neovim.vim")
 endif
 
-if IsPluginUsed("firenvim")
-    call SourcePluginFile("firenvim.vim")
-endif
+call SourcePluginFileIfUsed("firenvim.vim")
 
 " {]} Neovim UIs/integrations
 

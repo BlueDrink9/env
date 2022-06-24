@@ -13,8 +13,6 @@ if exists("g:gui_oni")
 endif
 
 " {[} ---------- Airline ----------
-Plug 'https://github.com/vim-airline/vim-airline-themes'
-Plug 'https://github.com/vim-airline/vim-airline'
 
 if IsPluginUsed("asyncrun.vim")
     " Async errors appear in airline.
