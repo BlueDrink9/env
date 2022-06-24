@@ -368,7 +368,8 @@ endif
     " Snippet libs
 Plug 'https://github.com/honza/vim-snippets'
 Plug 'https://github.com/rafamadriz/friendly-snippets'
-if has('nvim-0.5')
+if has('nvim-0.5') && !IsPluginUsed("coc.nvim")
+    " Coc only support ultisips, neosnippet
 " if has('nvim') || v:version >= 800
 
     Plug 'https://github.com/hrsh7th/vim-vsnip', {'on': [] }

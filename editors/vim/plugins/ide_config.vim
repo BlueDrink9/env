@@ -36,9 +36,13 @@ endif
 " These would be unloaded for CoC.nvim, which does completion and LSP
 " Deoplete and ale will use them though.
 if has('nvim-0.5')
-    call SourcePluginFileIfUsed("nvim-lspconfig.lua")
+    if IsPluginUsed("nvim-lspconfig")
+        call SourcePluginFile("nvim-lspconfig.lua")
+    endif
 else
-    call SourcePluginFileIfUsed("languageclient-neovim.vim")
+    if IsPluginUsed("languageclient-neovim")
+        call SourcePluginFile("languageclient-neovim.vim")
+    endif
 endif
 " {]} ---------- LSP ----------
 
@@ -175,7 +179,9 @@ endif
 " {]} ------ Python ------
 
 " {[} ---------- R ----------
-call SourcePluginFileIfUsed("nvim-R.vim")
+if IsPluginUsed("nvim-R")
+    call SourcePluginFile("nvim-R.vim")
+endif
 if IsPluginUsed("vim-r-plugin")
     " R output is highlighted with current colorscheme
     let g:rout_follow_colorscheme = 1
@@ -283,7 +289,9 @@ if IsPluginUsed("float-preview.nvim")
     let g:float_preview#docked = 0
 endif
 
-call SourcePluginFileIfUsed("treesitter.lua")
+if IsPluginUsed("treesitter")
+    call SourcePluginFile("treesitter.lua")
+endif
 " {]} ---------- IDE----------
 
 " {[} ---------- Debugging ----------
@@ -293,7 +301,9 @@ if IsPluginUsed("vim-unstack")
     " Top to bottom splits
     let g:unstack_layout = "portrait"
 endif
-call SourcePluginFileIfUsed("vimspector.vim")
+if IsPluginUsed("vimspector")
+    call SourcePluginFile("vimspector.vim")
+endif
 " {]} ---------- Debugging ----------
 
 " {[} ---------- Completion ----------
@@ -308,17 +318,25 @@ if IsPluginUsed("SyntaxComplete")
     " let s:syntaxKeywords = OmniSyntaxList( [] )
 endif
 
-call SourcePluginFileIfUsed("coc.nvim.vim")
+if IsPluginUsed("coc.nvim")
+    call SourcePluginFile("coc.nvim.vim")
+endif
 
 if IsPluginUsed("copilot.vim")
     imap <silent><script><expr> <C-L> copilot#Accept("\<CR>")
     let g:copilot_no_tab_map = v:true
 endif
 
-call SourcePluginFileIfUsed("nvim-cmp.lua")
+if IsPluginUsed("nvim-cmp")
+    call SourcePluginFile("nvim-cmp.lua")
+endif
 
-call SourcePluginFileIfUsed("ycm.vim")
-call SourcePluginFileIfUsed("deoplete.vim")
+if IsPluginUsed("ycm")
+    call SourcePluginFile("ycm.vim")
+endif
+if IsPluginUsed("deoplete")
+    call SourcePluginFile("deoplete.vim")
+endif
 
 if IsPluginUsed("completor.vim")
     " Use TAB to complete when typing words, else inserts TABs as usual.  Uses
@@ -348,10 +366,12 @@ endif
 if IsPluginUsed("neosnippet-snippets")
     let g:neosnippet#enable_snipmate_compatibility=1
     " let g:neosnippet#enable_conceal_markers=0
-    call Imap(g:IDE_mappings.snippet_expand, "<Plug>(neosnippet_expand_or_jump)")
-    call Vmap(g:IDE_mappings.snippet_expand, "<Plug>(neosnippet_expand_or_jump)")
-    call Imap(g:IDE_mappings.snippet_next, "<Plug>(neosnippet_jump)")
-    call Vmap(g:IDE_mappings.snippet_next, "<Plug>(neosnippet_jump)")
+    if !IsPluginUsed("coc.nvim")
+        call Imap(g:IDE_mappings.snippet_expand, "<Plug>(neosnippet_expand_or_jump)")
+        call Vmap(g:IDE_mappings.snippet_expand, "<Plug>(neosnippet_expand_or_jump)")
+        call Imap(g:IDE_mappings.snippet_next, "<Plug>(neosnippet_jump)")
+        call Vmap(g:IDE_mappings.snippet_next, "<Plug>(neosnippet_jump)")
+    endif
     " imap <expr><TAB>
     "             \ pumvisible() ? "\<C-n>" :
     "             \ neosnippet#expandable_or_jumpable() ?
@@ -360,9 +380,11 @@ if IsPluginUsed("neosnippet-snippets")
     "             \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 endif
 if IsPluginUsed("ultisnips")
-    let g:UltiSnipsExpandTrigger = g:IDE_mappings.snippet_expand
-    let g:UltiSnipsJumpForwardTrigger = g:IDE_mappings.snippet_next
-    let g:UltiSnipsJumpBackwardTrigger = g:IDE_mappings.snippet_prev
+    if !IsPluginUsed("coc.nvim")
+        let g:UltiSnipsExpandTrigger = g:IDE_mappings.snippet_expand
+        let g:UltiSnipsJumpForwardTrigger = g:IDE_mappings.snippet_next
+        let g:UltiSnipsJumpBackwardTrigger = g:IDE_mappings.snippet_prev
+    endif
     " Disable autotrigger
     " au myIDE VimEnter * au! UltiSnips_AutoTrigger
     " augroup ultisnips

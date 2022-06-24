@@ -103,11 +103,6 @@ let g:plugindir = PathExpand(s:scriptdir . "/" . "plugins")
 function! SourcePluginFile(name)
     exec 'source ' . g:plugindir . '/' . a:name
 endfunction
-function! SourcePluginFileIfUsed(name)
-    if IsPluginUsed(a:name)
-        call SourcePluginFile(a:name)
-    endif
-endfunction
 
 " To remove a Plugged repo using UnPlug 'user/repo'
 function! s:deregister(repo)

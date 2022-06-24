@@ -11,9 +11,9 @@ let g:vista_default_executive = "coc"
 let g:coc_config_home=g:plugindir
 
 let s:coc_disabled_fts = "'
-            \placeholder,
-            \placeholder
-            \'"
+      \placeholder,
+      \placeholder
+      \'"
 exec 'autocmd myIDE filetype ' . s:coc_disabled_fts . 'let b:coc_enabled=0'
 
 " Installed automatically by coc on startup!
@@ -21,33 +21,32 @@ exec 'autocmd myIDE filetype ' . s:coc_disabled_fts . 'let b:coc_enabled=0'
 " sh uses bash-language-server
 " Consider re-adding coc-git for ability to stage chunks. Disable signifyr
 let g:coc_global_extensions = [
-            \ "coc-syntax",
-            \ "coc-dictionary",
-            \ "coc-snippets",
-            \ "coc-omni",
-            \ "coc-diagnostic",
-            \ "coc-tag",
-            \ "coc-gitignore",
-            \ "coc-lists",
-            \ "coc-sh",
-            \ "coc-vimlsp",
-            \ "coc-bibtex",
-            \ "coc-vimtex",
-            \ "coc-pyright",
-            \ "coc-jedi",
-            \ "coc-java",
-            \ "coc-clangd",
-            \ "coc-r-lsp"
-            \ ]
-            " \ "coc-tabnine"
-            " latex lsp
-            " \ "coc-texlab",
-            "
-if IsPluginUsed('ultisnips.vim')
-  call add(g:coc_global_extensions, "coc-ultisnips")
-endif
+      \ "coc-syntax",
+      \ "coc-dictionary",
+      \ "coc-snippets",
+      \ "coc-omni",
+      \ "coc-diagnostic",
+      \ "coc-tag",
+      \ "coc-gitignore",
+      \ "coc-lists",
+      \ "coc-sh",
+      \ "coc-vimlsp",
+      \ "coc-bibtex",
+      \ "coc-vimtex",
+      \ "coc-pyright",
+      \ "coc-jedi",
+      \ "coc-java",
+      \ "coc-clangd",
+      \ "coc-r-lsp"
+      \ ]
+" \ "coc-tabnine"
+" latex lsp
+" \ "coc-texlab",
+"
 if IsPluginUsed('neosnippet.vim')
   call add(g:coc_global_extensions, "coc-neosnippet")
+elseif IsPluginUsed('ultisnips.vim')
+  call add(g:coc_global_extensions, "coc-ultisnips")
 endif
 
 function! s:show_documentation()
