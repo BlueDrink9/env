@@ -108,6 +108,10 @@ inoremap <C-BS> <C-w>
 cnoremap <C-BS> <C-w>
 " See s:remapCtrlBStoCW() for mappings in terminal. Not set here because
 " they aren't 'basic'.
+
+" Save/load entire buffer to/from clipboard
+nnoremap <F5> :%y+<CR>
+nnoremap <F9> :%d<CR>"+P
 " {]} Basic mappings
 
 " {[} Abbreviations and commands
