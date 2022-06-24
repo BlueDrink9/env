@@ -302,6 +302,7 @@ if IsPluginUsed("ctrlp.vim")
     endif
 endif
 call SourcePluginFileIfUsed("fzf.vim")
+call SourcePluginFileIfUsed("telescope.lua")
 " {]}--- Fuzzy finder ---
 " {]}--- Searching, replacing, finding ---
 

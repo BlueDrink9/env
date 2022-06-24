@@ -7,7 +7,6 @@ augroup myIDE
 augroup end
 
 " {[} ---------- Misc ----------
-call s:SourcePluginFileIfUsed("telescope.lua")
 if IsPluginUsed("nvim-colorizer.lua")
     lua require'colorizer'.setup()
 endif

@@ -9,7 +9,6 @@ augroup end
 " {[} ---------- Misc ----------
 if has('nvim-0.5')
     Plug 'nvim-lua/plenary.nvim'
-    Plug 'nvim-telescope/telescope.nvim'
 endif
 if has('nvim-0.7')
     Plug 'https://github.com/norcalli/nvim-colorizer.lua'
