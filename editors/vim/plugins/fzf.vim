@@ -35,11 +35,4 @@ if g:hasGUI
 endif
 " {]} Use proper fzf colours in gvim
 
-if has('nvim') || has('terminal')
-  if has('nvim')
-    au myPlugins TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
-  else
-    au myPlugins TerminalOpen * tnoremap <buffer> <Esc> <c-\><c-n>
-  endif
-  au myPlugins FileType fzf tunmap <buffer> <Esc>
-endif
+autocmd myPlugins User MappingOverrides tnoremap <expr> <Esc> (&filetype == "fzf") ? "<Esc>" : "<c-\><c-n>"

@@ -93,6 +93,7 @@ exec SourceCustoms(
       \ "plugins.vim",
       \ "mappings.vim"
       \)
+silent doautocmd User MappingOverrides
 if !exists('g:colors_name') && exists('g:fallbackColorSch')
     exec 'colorscheme ' . g:fallbackColorSch
 endif
