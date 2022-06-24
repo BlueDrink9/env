@@ -1,14 +1,6 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
 
-Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
-let g:ale_enabled = 0
-let g:LanguageClient_autoStart = 0
-UnPlug 'autozimu/LanguageClient-neovim'
-UnPlug 'neovim/nvim-lspconfig'
-UnPlug 'davidhalter/jedi-vim'
-UnPlug 'python-mode/python-mode'
-
 " Use coc instead of ctags.
 " This may mean tags aren't included, which would be a bug.
 let g:vista_default_executive = "coc"
@@ -68,8 +60,8 @@ endfunction
 
 " {[} Mappings
 " use <Plug>(coc-diagnostic-next) for all diagnostics.
-autocmd myPlugins User pluginSettingsToExec nmap <silent> ]e <Plug>(coc-diagnostic-next-error)
-autocmd myPlugins User pluginSettingsToExec nmap <silent> [e <Plug>(coc-diagnostic-prev-error)
+nmap <silent> ]e <Plug>(coc-diagnostic-next-error)
+nmap <silent> [e <Plug>(coc-diagnostic-prev-error)
 " Unimpaired makes remapping tricky.
 let g:nremap = {"]e": "<Plug>(coc-diagnostic-next-error)","[e": "<Plug>(coc-diagnostic-prev-error)" }
 

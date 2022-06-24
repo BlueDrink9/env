@@ -1,11 +1,6 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
 
-" Just install all available plugins for now...
-Plug 'https://github.com/puremourning/vimspector', { 'do': ':!./install_gadget.py --all --disable-tcl' }
-" Easier python debugging
-Plug 'sagi-z/vimspectorpy', { 'do': { -> vimspectorpy#update() } }
-
 " See readme. Similar to visual studio, but F-keys only, no shifts or
 " controls.
 let g:vimspector_enable_mappings = 'HUMAN'

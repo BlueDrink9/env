@@ -1,9 +1,4 @@
-vim.cmd("Plug 'hrsh7th/cmp-nvim-lsp'")
-vim.cmd("Plug 'hrsh7th/cmp-buffer'")
-vim.cmd("Plug 'hrsh7th/cmp-path'")
-vim.cmd("Plug 'hrsh7th/nvim-cmp'")
-vim.cmd("Plug 'hrsh7th/cmp-vsnip'")
-vim.cmd("autocmd myPlugins User pluginSettingsToExec lua nvim_cmp_setup(require('cmp'))")
+nvim_cmp_setup(require('cmp'))
 -- https://github.com/ray-x/lsp_signature.nvim
 vim.o.completeopt = "menuone,noselect"
 function nvim_cmp_setup(cmp)

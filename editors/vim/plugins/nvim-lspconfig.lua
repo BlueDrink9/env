@@ -1,21 +1,12 @@
-vim.cmd("Plug 'https://github.com/neovim/nvim-lspconfig'")
--- Easy way to install lsps, that integrates well.
-vim.cmd("Plug 'https://github.com/kabouzeid/nvim-lspinstall'")
-vim.cmd("Plug 'https://github.com/williamboman/nvim-lsp-installer'")
-
-vim.cmd("autocmd myPlugins User pluginSettingsToExec lua nvim_lspconfig_setup()")
-
-function nvim_lspconfig_setup()
-  if vim.g.plugs["nvim_lsp"] == nil then
-    return
-  end
-  nvim_lsp = require('lspconfig')
-  nvim_lspconfig_server_setup(nvim_lsp)
-  -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
-  require'lspinstall'.post_install_hook = function ()
-    nvim_lspconfig_server_setup() -- reload installed servers
-    vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
-  end
+if vim.g.plugs["nvim_lsp"] == nil then
+  return
+end
+nvim_lsp = require('lspconfig')
+nvim_lspconfig_server_setup(nvim_lsp)
+-- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
+require'lspinstall'.post_install_hook = function ()
+  nvim_lspconfig_server_setup() -- reload installed servers
+  vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
 end
 
 -- Use an on_attach function to only map the following keys

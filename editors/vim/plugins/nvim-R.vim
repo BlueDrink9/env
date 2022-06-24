@@ -1,6 +1,5 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
-Plug 'jalvesaq/Nvim-R'
 " Autostart when entering r files, if not already running.
 " From plugin docs.
 autocmd FileType r if string(g:SendCmdToR) == "function('SendCmdToR_fake')" | call StartR("R") | call <SID>SetnvimRShortcuts() | endif

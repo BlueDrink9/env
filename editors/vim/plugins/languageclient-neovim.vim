@@ -1,15 +1,4 @@
 
-if has('win32')
-    Plug 'autozimu/LanguageClient-neovim', {
-                \ 'branch': 'next',
-                \ 'do': 'powershell -executionpolicy bypass -File install.ps1',
-                \ }
-else
-    Plug 'autozimu/LanguageClient-neovim', {
-                \ 'branch': 'next',
-                \ 'do': 'bash install.sh',
-                \ }
-endif
 " On windows, the binary is an exe, so windows and WSL plugins can share
 " a folder and have different binary names.
 command! LanguageClientUpdateAndInstallBinary PlugInstall! LanguageClient-neovim
