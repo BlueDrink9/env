@@ -8,9 +8,9 @@ augroup end
 
 " {[} ---------- Misc ----------
 if has('nvim-0.5')
-    call SourcePluginFile("treesitter.lua")
-    " FZF alternative
-    " Plug 'https://github.com/nvim-telescope/telescope.nvim'
+    call SourcePluginFile("telescope.lua")
+endif
+if has('nvim-0.7')
     Plug 'https://github.com/norcalli/nvim-colorizer.lua'
     au myPlugins user pluginSettingsToExec lua require'colorizer'.setup()
 endif
@@ -474,6 +474,10 @@ if has("patch-8.1-1880") && has('nvim')
     " Gives behaviour like completeopt=popup for neovim.
     Plug 'https://github.com/ncm2/float-preview.nvim'
     let g:float_preview#docked = 0
+endif
+
+if has('nvim-0.7')
+    call SourcePluginFile("treesitter.lua")
 endif
 
 " {]} ---------- IDE----------
