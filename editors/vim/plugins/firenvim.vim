@@ -3,20 +3,6 @@
 " plugin firenvim in chrome and firefox.
 " Open textframes in nvim, similar to wasavi.
 
-" Installation {[}
-
-" if has('win32')
-"     let s:startup_prologue='"set LITE_SYSTEM=1"'
-" else
-"     let s:startup_prologue='"export LITE_SYSTEM=1"'
-" endif
-let s:startup_prologue=''
-let g:firenvim_install=":call firenvim#install(0, " . s:startup_prologue . ")"
-" Only on tags/releases, because updates may require the extension to be
-" updated.
-Plug 'https://github.com/glacambre/firenvim', {'tag': '*', 'do': g:firenvim_install}
-" Installation {]}
-
 " Configured as json, basically.
 " disable by default. Manually activate with chrome binding.
 " Use alt:all to always capture alt instead of sending a special key.
@@ -169,4 +155,4 @@ endfunction
 " Fix odd bug that sometimes stops firenvim loading the text if setting a
 " colourscheme from a plugin. Will be overridden in setup anyway.
 let g:colorSch='default'
-autocmd myPlugins User pluginSettingsToExec call s:onFirenvimLoad()
+call s:onFirenvimLoad()

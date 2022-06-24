@@ -1,12 +1,6 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
 
-" PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run the install
-" script
-Plug 'junegunn/fzf', { 'dir': '~/.local/packages/fzf', 'do': './install --all' }
-" Adds some vim-specific fzf commands.
-Plug 'junegunn/fzf.vim'
-
 " Fuzzy search list of buffers
 nnoremap <silent> <leader><space> :Buffers<CR>
 call Nnoremap(g:IDE_mappings.FuzzyBuffers, ":Buffers<CR>")

@@ -552,3 +552,25 @@
 ;;       )
 ;;   )
 
+ ;; (defhydra my/hydra-scroll-mode (global-map "M-r")
+ ;;    ("d" #'evil-scroll-down)
+ ;;    ("f" )
+ ;;    ("b" )
+ ;;    ("p" )
+ ;;    )
+
+;; Imitate abolish.vim's coersion
+;; Cycle between snake case, camel case, etc.
+;; (map! "crs" 'string-inflection-cycle)
+;; (map! :n "crm" 's-upper-camelcase)        ;; Force to MixedCase
+;; (map! :n "crc" 's-lower-camelcase)  ;; Force to camelCase
+;; ;; (map! :n "cru" 'string-inflection-lower-camelcase)  ;; Force to SNAKE_UPPERCASE
+;; (map! :n "crs" 'string-inflection-underscore) ;; Force to snake_case
+;; (map! :n "cr<space>" 's-split-words) ;; Force to space case
+;; (map! :n "cr-" 'string-inflection-underscore) ;; Force to dash-case
+;; (string-inflection-underscore-function "EmacsLisp")           ; => "emacs_lisp"
+;; (string-inflection-pascal-case-function "emacs_lisp")         ; => "EmacsLisp"
+;; (string-inflection-camelcase-function "emacs_lisp")           ; => "emacsLisp"
+;; (string-inflection-upcase-function "emacs_lisp")              ; => "EMACS_LISP"
+;; (string-inflection-kebab-case-function "emacs_lisp")          ; => "emacs-lisp"
+;; (string-inflection-capital-underscore-function "emacs_lisp")  ; => "Emacs_Lisp"
