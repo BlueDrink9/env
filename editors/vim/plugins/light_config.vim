@@ -115,8 +115,12 @@ endif
 if IsPluginUsed("vim-ReplaceWithRegister")
     nmap dr  <Plug>ReplaceWithRegisterOperator
     nmap drr <Plug>ReplaceWithRegisterLine
-    nmap dR <Plug>ReplaceWithRegisterLine
 endif
+if IsPluginUsed("vim-operator-replace")
+    nmap dr  <Plug>(operator-replace)
+    nmap drr 0<Plug>(operator-replace)$
+endif
+
 
 if IsPluginUsed("vim-ReplaceWithRegister")
     " Causes delay on yank op.

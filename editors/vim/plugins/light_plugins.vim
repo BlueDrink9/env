@@ -69,7 +69,10 @@ Plug 'https://github.com/tpope/vim-unimpaired'
 " cx to select an object, then cx again to swap it with first thing.
 Plug 'https://github.com/tommcdo/vim-exchange'
 " Do replace, because cr is used for abolish. Yr is unused atm?
-Plug 'https://github.com/inkarkat/vim-ReplaceWithRegister'
+" Plug 'https://github.com/inkarkat/vim-ReplaceWithRegister'
+Plug 'https://github.com/kana/vim-operator-user'
+Plug 'https://github.com/kana/vim-operator-replace'
+
 " Operator for start/end of text object. For example, d]i) deletes from the
 " cursor to the end of the current parenthetical term
 Plug 'tommcdo/vim-ninja-feet'
