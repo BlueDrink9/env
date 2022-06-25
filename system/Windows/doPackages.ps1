@@ -66,6 +66,8 @@ colortool.exe -b solarized_dark.itermcolors
 # cinst Microsoft-Hyper-V-All -source windowsFeatures
 
 Install-Module -Force OpenSSHUtils -Scope AllUsers
+Install-Module -Force Microsoft.PowerShell.SecretManagement -Scope AllUsers
+Install-Module -Force SecretManagement.JustinGrote.CredMan -Scope AllUsers
 
 # Create symlink folder for latest version of vim
 # ===============================================
