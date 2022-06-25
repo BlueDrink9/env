@@ -131,19 +131,39 @@ endif
 " {[} ---------- Lang-specific ----------
 " {[} ------ Python ------
 if IsPluginUsed("python-mode")
+    let g:pymode_options = 0
     let g:pymode_options_max_line_length = 88
-    let g:pymode_rope = 1
+    " let g:pymode_rope = 1
+    " let g:pymode_lint = 1
     let g:pymode_lint_message = 1
     let g:pymode_lint_on_write = 1
     let g:pymode_lint_unmodified = 1
-    let g:pymode_lint = 1
-    let g:pymode_motion = 1
+    let g:pymode_lint_on_fly = 1
+    let g:pymode_lint_ignore = ["C0301", "E501"]
+    let g:pymode_lint_sort = ['E', 'C', 'I']
+    let g:pymode_folding = 1
+    let g:pymode_syntax_slow_sync = 0
+    let g:pymode_trim_whitespaces = 0
+    let g:pymode_rope_complete_on_dot = 0
+
     let g:pymode_rope_rename_bind = g:IDE_mappings.rename
     let g:pymode_rope_rename_module_bind = g:IDE_mappings.renameModule
     let g:pymode_run_bind = g:IDE_mappings.REPLSend
     let g:pymode_breakpoint_bind = g:IDE_mappings.set_breakpoint
-    let g:pymode_lint_ignore = ["C0301", "E501"]
-    let g:pymode_trim_whitespaces = 0
+    let g:pymode_rope_prefix = g:IDE_mappings.codeAction
+    let g:pymode_rope_goto_definition_bind = g:IDE_mappings.definition2
+    " let g:pymode_rope_extract_method_bind = g:IDE_mappings.extract_method
+    " Jump to definition in current window
+    let g:pymode_rope_goto_definition_cmd = 'e'
+
+    " Folding can be slow so recalculating during every character entered is
+    " foolish
+    augroup unset_folding_in_insert_mode
+        autocmd!
+        autocmd InsertEnter *.py setlocal foldmethod=marker
+        autocmd InsertLeave *.py setlocal foldmethod=expr
+    augroup END
+
 endif
 
 let g:SimpylFold_docstring_preview = 1
