@@ -271,11 +271,11 @@
   (insert (make-string count char)))
 (map! :desc "Insert a single char before cursor" :n "s" #'my/evil-insert-char)
 
-(map! :desc "Easymotion prefix" :nvo "S" nil)
+(map! :desc "Easymotion prefix" :nvo "," nil)
 (after! evil-easymotion
-  (evilem-default-keybindings "S")
-  (map! :nvo "S l" #'evilem-motion-forward-word-begin
-        :nvo "S h" #'evilem-motion-backward-word-begin)
+  (evilem-default-keybindings ",")
+  (map! :nvo ", l" #'evilem-motion-forward-word-begin
+        :nvo ", h" #'evilem-motion-backward-word-begin)
   )
 
 ;; Git/magit shortcuts
@@ -483,6 +483,8 @@
 (map! :map evil-outer-text-objects-map "," #'evil-outer-arg)
 
 (map! :i "M-/" #'hippie-expand)
+
+;; (map! :nv "S" #'my/evil-motion-subword-once)
 
 (map! :nv "gx" #'browse-url)
 
