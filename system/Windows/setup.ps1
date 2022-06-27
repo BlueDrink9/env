@@ -39,19 +39,8 @@ choco feature enable -n=allowGlobalConfirmation
 
 $scriptdir | out-file -filepath $env:APPDATA\dotfiles_win_setup_dir.txt
 
-# Setup powershell
-if (!(Test-Path $profile)) {
-  New-Item -path $profile -type file -force
-}
-$powershellRCPath="$profile"
-$sourceText=". ${scriptdir}..\..\shell\powershell\powershellrc.ps1"
-function addTextIfAbsent{
-    param($text, $file)
-    if (!(Select-String -Path $file -Pattern $text -SimpleMatch -Quiet)) {
-            Add-Content $file $text
-    }
-}
-addTextIfAbsent $sourceText $powershellRCPath
+. "${scriptdir}..\..\shell\powershell\install.ps1"
+
 # Trust plugin store to avoid having to manually confirm each plugin installation.
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 
