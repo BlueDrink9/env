@@ -8,7 +8,6 @@ export BSPWM_RESIZE_DELTA=30
 export DOTFILES_DIR="$(cat $HOME/.config/.dotfiles_dir)"
 . "$DOTFILES_DIR"/windowManagers/variables.sh
 # {[} BSPWM-specific variables
-gap=15
 BSPWM_FOCUSED_COLOUR="#$focused_border_color"
 BSPWM_UNFOCUSED_COLOUR="#$unfocused_border_color"
 BSPWM_MODE_COLOUR="#$manage_border_color"
@@ -36,11 +35,12 @@ bspc monitor -d " " " " " " " "
 . "$DOTFILES_DIR"/windowManagers/bspwm/rules.sh
 
 #This creates negative padding equal to window gap so that gaps are shown only between windows and not on desktop edges.
+gap=15
 bspc config window_gap $gap;
 bspc config left_padding -$gap
 bspc config right_padding -$gap
-bspc config bottom_padding -$gap
-bspc config top_padding $(($PANEL_HEIGHT-$gap))
+bspc config bottom_padding $(($PANEL_HEIGHT-$gap))
+bspc config top_padding -$gap
 unset gap
 
 bspc config split_ratio          0.52
