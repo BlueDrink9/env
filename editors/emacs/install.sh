@@ -28,7 +28,7 @@ installDoomEmacs(){
     git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
   else
     git -C ~/.emacs.d pull
-    ~/.emacs.d/bin/doom upgrade -f
+    ~/.emacs.d/bin/doom upgrade
   fi
   ln -s ~/.emacs.d/bin/doom ~/.local/bin/doom
   ~/.emacs.d/bin/doom install
@@ -50,4 +50,5 @@ END
 # If directly run instead of sourced, do all
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
   do${installID}
+  installDoomEmacs
 fi

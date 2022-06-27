@@ -28,6 +28,7 @@ super + e; e
 # Internet browser
 super + e; b
     brave || \
+    brave-browser || \
     xdg-open /usr/share/applications/brave-browser.desktop || \
     xdg-open ~/usr/share/applications/brave-browser.desktop || \
     gtk-launch brave-browser.desktop
