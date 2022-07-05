@@ -1,85 +1,84 @@
-nvim_cmp_setup(require('cmp'))
 -- https://github.com/ray-x/lsp_signature.nvim
 vim.o.completeopt = "menuone,noselect"
-function nvim_cmp_setup(cmp)
-  cmp.setup {
-    --   completion = {
-    --       autocomplete = true,
-    --   },
-    -- enabled = true;
-    -- autocomplete = true;
-    -- debug = false;
-    -- min_length = 1;
-    -- preselect = 'enable';
-    -- throttle_time = 80;
-    -- source_timeout = 200;
-    -- resolve_timeout = 800;
-    -- incomplete_delay = 400;
-    -- max_abbr_width = 100;
-    -- max_kind_width = 100;
-    -- max_menu_width = 100;
-    -- documentation = {
-    --   border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
-    --   winhighlight = "NormalFloat:cmpDocumentation,FloatBorder:CompeDocumentationBorder",
-    --   max_width = 120,
-    --   min_width = 60,
-    --   max_height = math.floor(vim.o.lines * 0.3),
-    --   min_height = 1,
-    -- },
+local cmp = require'cmp'
+cmp.setup({
+  --   completion = {
+  --       autocomplete = true,
+  --   },
+  -- enabled = true;
+  -- autocomplete = true;
+  -- debug = false;
+  -- min_length = 1;
+  -- preselect = 'enable';
+  -- throttle_time = 80;
+  -- source_timeout = 200;
+  -- resolve_timeout = 800;
+  -- incomplete_delay = 400;
+  -- max_abbr_width = 100;
+  -- max_kind_width = 100;
+  -- max_menu_width = 100;
+  -- documentation = {
+  --   border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
+  --   winhighlight = "NormalFloat:cmpDocumentation,FloatBorder:CompeDocumentationBorder",
+  --   max_width = 120,
+  --   min_width = 60,
+  --   max_height = math.floor(vim.o.lines * 0.3),
+  --   min_height = 1,
+  -- },
 
-    snippet = {
-      expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
-      end,
-    },
+  snippet = {
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body)
+      -- require('luasnip').lsp_expand(args.body)
+    end,
+  },
 
-    sources = {
-        {
-            name = 'buffer',
-            option = {
-                keyword_length = 2,
-            },
-            sorting = {
-                comparators = {
-                    function(...) return cmp_buffer:compare_locality(...) end,
-                }
-            }
-        },
-        { name = 'nvim_lsp' },
-        { name = 'vsnip' },
-        { name = 'path' },
-        { name = 'cmdline' },
-    },
+  sources = {
+      {
+          name = 'buffer',
+          option = {
+              keyword_length = 2,
+          },
+          sorting = {
+              comparators = {
+                  function(...) return cmp_buffer:compare_locality(...) end,
+              }
+          }
+      },
+      { name = 'nvim_lsp' },
+      { name = 'vsnip' },
+      { name = 'path' },
+      { name = 'cmdline' },
+  },
 
-    mapping = {
-        ['<C-e>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-        ['<C-e>'] = cmp.mapping.confirm({ select = true }),
-        ["<Tab>"] = cmp.mapping.select_next_item({behavior=cmp.SelectBehavior.Insert}),
-        ["<S-Tab>"] = cmp.mapping.select_prev_item({behavior=cmp.SelectBehavior.Insert}),
-
-    }
+  mapping = {
+      ['<C-e>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+      ['<C-e>'] = cmp.mapping.confirm({ select = true }),
+      ["<Tab>"] = cmp.mapping.select_next_item({behavior=cmp.SelectBehavior.Insert}),
+      ["<S-Tab>"] = cmp.mapping.select_prev_item({behavior=cmp.SelectBehavior.Insert}),
 
   }
-  -- vim.cmd("inoremap <silent><expr> <Tab> cmp#complete()")
-  -- vim.cmd("inoremap <silent><expr> <C-e> cmp#confirm('<c-e>')")
 
-  if vim.g.plugs["nvim_lsp"] ~= nil then
-    nvim_cmp_setup_lsp()
-  end
+})
+-- vim.cmd("inoremap <silent><expr> <Tab> cmp#complete()")
+-- vim.cmd("inoremap <silent><expr> <C-e> cmp#confirm('<c-e>')")
 
-  require'cmp'.setup.cmdline(':', {
-    sources = {
-      { name = 'cmdline' }
-    }
-  })
-
-  require'cmp'.setup.cmdline('/', {
-    sources = {
-      { name = 'buffer' }
-    }
-  })
-
+if vim.g.plugs["nvim_lsp"] ~= nil then
+  nvim_cmp_setup_lsp()
 end
+
+cmp.setup.cmdline(':', {
+  sources = {
+    { name = 'cmdline' }
+  }
+})
+
+cmp.setup.cmdline('/', {
+  sources = {
+    { name = 'buffer' }
+  }
+
+})
 
 nvim_cmp_setup_lsp = function()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
