@@ -112,6 +112,8 @@ cnoremap <C-BS> <C-w>
 " Save/load entire buffer to/from clipboard
 nnoremap <F5> :%y+<CR>
 nnoremap <F9> :%d<CR>"+P
+nnoremap <C-F5> :%y+<CR>
+nnoremap <C-F9> :%d<CR>"+P
 " {]} Basic mappings
 
 " {[} Abbreviations and commands
