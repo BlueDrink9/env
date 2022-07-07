@@ -177,6 +177,8 @@ Plug 'https://github.com/PeterRincker/vim-argumentative'
 Plug 'https://github.com/kana/vim-textobj-user'
 " See https://github.com/kana/vim-textobj-user/wiki for more, esp for
 " lang-specific.
+" Add text object for whole buffer
+Plug 'https://github.com/kana/vim-textobj-entire'
 " Expands what a sentence/word is for prose.
 Plug 'https://github.com/reedes/vim-textobj-sentence', { 'for': g:proseFileTypes }
 " av/iv for lines continued by \
