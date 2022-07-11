@@ -309,7 +309,7 @@ if IsPluginUsed("float-preview.nvim")
     let g:float_preview#docked = 0
 endif
 
-if IsPluginUsed("treesitter")
+if IsPluginUsed("nvim-treesitter")
     call SourcePluginFile("treesitter.lua")
 endif
 " {]} ---------- IDE----------
