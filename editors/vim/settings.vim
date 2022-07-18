@@ -356,7 +356,8 @@ function! Autosave()
     " autowrite is set.
     if bufname('%') != '' && &ro != 1 && &modifiable == 1 && &autowrite
         " If no changes, don't touch modified timestamp.
-        silent! update
+        " Don't trigger autocmds.
+        noa silent! update
     endif
 endfunction
 augroup autosave
