@@ -134,7 +134,7 @@ if IsPluginUsed("python-mode")
     let g:pymode_options = 0
     let g:pymode_options_max_line_length = 88
     " let g:pymode_rope = 1
-    " let g:pymode_lint = 1
+    let g:pymode_lint = 1
     let g:pymode_lint_message = 1
     let g:pymode_lint_on_write = 1
     let g:pymode_lint_unmodified = 1
