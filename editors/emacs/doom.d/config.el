@@ -201,37 +201,44 @@
   ;; the tab key, same as vim.
   (setq company-idle-delay 0
         company-selection-wrap-around t
-        company-minimum-prefix-length 1
+        company-minimum-prefix-length 1)
 
-        ;; recommended for company-fuzzy
+;; recommended for company-fuzzy
+  (setq
         company-require-match nil            ; Don't require match, so you can still move your cursor as expected.
         company-tooltip-align-annotations t  ; Align annotation to the right side.
         company-eclim-auto-save nil          ; Stop eclim auto save.
-        company-dabbrev-downcase nil        ; No downcase when completion.
-        )
-  ;; (setq company-show-quick-access 'left)
-  (add-hook! 'evil-normal-state-entry-hook #'company-abort)
-  (setq company-fuzzy-sorting-backend 'liquidmetal)
-  (setq company-fuzzy-show-annotation 1)
-  (company-statistics-mode)
-  (setq company-posframe-font doom-font)
-  (company-flx-mode +1)
-
-  (add-to-list 'hippie-expand-try-functions-list (lambda (arg) (call-interactively 'company-complete)))
-  ;; lsp-mode will override this
-  (set-company-backend! 'prog-mode
-    '(:separate company-capf company-yasnippet company-dabbrev company-ispell))
-  (set-company-backend! 'text-mode
-    '(:separate company-capf company-yasnippet company-dabbrev company-ispell))
-  ;; (add-hook! 'lsp-configure-hook
-  ;;   (add-to-list 'lsp-company-backends 'company-dabbrev))
-
+        company-dabbrev-downcase nil)        ; No downcase when completion.
   ;; Enable downcase only when completing the completion. Reccomended for fuzzy
   (defun jcs--company-complete-selection--advice-around (fn)
     "Advice execute around `company-complete-selection' command."
     (let ((company-dabbrev-downcase t))
       (call-interactively fn)))
   (advice-add 'company-complete-selection :around #'jcs--company-complete-selection--advice-around)
+  (add-hook! company-fuzzy-mode-hook
+    (add-to-list 'company-fuzzy-history-backends 'company-yasnippet))
+
+  ;; (setq company-show-quick-access 'left)
+  (add-hook! 'evil-normal-state-entry-hook #'company-abort)
+  (setq company-fuzzy-sorting-backend 'liquidmetal)
+  (setq company-fuzzy-passthrough-backends '(company-yasnippet))
+
+  ;; Prioritize prefix matches, then do fuzzy
+  (setq company-fuzzy-prefix-on-top t)
+  (setq company-fuzzy-show-annotation 1)
+  (company-statistics-mode)
+  (setq company-posframe-font doom-font)
+  ;; (company-flx-mode +1)
+
+  (add-to-list 'hippie-expand-try-functions-list (lambda (arg) (call-interactively 'company-complete)))
+  ;; lsp-mode will override this
+  (set-company-backend! 'prog-mode
+    '(:separate company-capf company-dabbrev company-yasnippet company-ispell))
+  (set-company-backend! 'text-mode
+    '(:separate company-capf company-dabbrev company-ispell company-yasnippet))
+  ;; (add-hook! 'lsp-configure-hook
+  ;;   (add-to-list 'lsp-company-backends 'company-dabbrev))
+
   (defun my/company-init-backends-h--advice-after ()
     "Reset company-fuzzy after company backends modified"
     (company-fuzzy-mode 1)
@@ -478,3 +485,13 @@ rather than file lines."
 ;; Put ess stuff in modeline
 (add-hook! 'inferior-ess-mode-hook
         (add-to-list 'mode-line-process '(:eval (nth ess--busy-count ess-busy-strings))))
+
+;; Subword motion (and superword!)
+;; Bind key to function that:
+;; sets subword mode, and adds hook to (evil-motion-state-exit-hook). Hook disables subword mode.
+(defun my/evil-motion-subword-once ()
+  (interactive)
+  (setq previous_mode 'subword-mode)
+  (subword-mode 1)
+  (add-hook! 'evil-motion-state-exit-hook
+    (subword-mode 'previous_mode)))
