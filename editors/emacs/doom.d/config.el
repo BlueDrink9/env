@@ -215,13 +215,13 @@
     (let ((company-dabbrev-downcase t))
       (call-interactively fn)))
   (advice-add 'company-complete-selection :around #'jcs--company-complete-selection--advice-around)
-  (add-hook! company-fuzzy-mode-hook
-    (add-to-list 'company-fuzzy-history-backends 'company-yasnippet))
+  ;; (add-hook! company-fuzzy-mode-hook
+  ;;   (add-to-list 'company-fuzzy-history-backends 'company-yasnippet))
+  ;; (setq company-fuzzy-passthrough-backends '(company-yasnippet)
 
   ;; (setq company-show-quick-access 'left)
   (add-hook! 'evil-normal-state-entry-hook #'company-abort)
   (setq company-fuzzy-sorting-backend 'liquidmetal)
-  (setq company-fuzzy-passthrough-backends '(company-yasnippet))
 
   ;; Prioritize prefix matches, then do fuzzy
   (setq company-fuzzy-prefix-on-top t)
