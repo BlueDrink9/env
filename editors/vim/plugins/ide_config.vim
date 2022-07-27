@@ -155,6 +155,7 @@ if IsPluginUsed("python-mode")
     " let g:pymode_rope_extract_method_bind = g:IDE_mappings.extract_method
     " Jump to definition in current window
     let g:pymode_rope_goto_definition_cmd = 'e'
+    call Nnoremap(g:IDE_mappings.lintBuffer, ":PymodeLint<CR>")
 
     " Folding can be slow so recalculating during every character entered is
     " foolish
