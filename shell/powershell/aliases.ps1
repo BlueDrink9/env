@@ -10,12 +10,12 @@ function gupa { git commit --amend --no-edit --all }
 function gupe { git commit --amend }
 
 # Allows pip to auto-update, and ensures you use the right version of pip for the current environment
-function pip {'python -m pip'}
+function pip {python -m pip $args}
 function gdiff { git diff --ignore-space-change --color-words --no-index }
 Set-Alias e nvim
-function liteEdit {nvim --cmd "let g:liteMode=1"}
+function liteEdit {nvim --cmd "let g:liteMode=1" $args}
 Set-Alias le liteEdit
-function ide {nvim --cmd "let g:ideMode=1"}
+function ide {nvim --cmd "let g:ideMode=1" $args}
 Set-Alias time measure-command
 Set-Alias fopen explorer.exe
 function envupd { git -C "$DOTFILES_DIR" pull }
