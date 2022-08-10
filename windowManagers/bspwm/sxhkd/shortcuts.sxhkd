@@ -74,9 +74,9 @@ super + r
 # -s dropdown starts tmux session 'dropdown'.
 # -m means monitor-aware, requires xrandr. Breaks my config for whatever reason.
 super + grave
-    PANEL_HEIGHT="${PANEL_HEIGHT:-2}" \
     tdrop --auto-detect-wm --wm bspwm \
-      --height 40% --y-offset="${PANEL_HEIGHT}" \
+      --height 40% \
+      --y-offset=0 \
       --session="dropdown" \
       --pre-create-hook='export COLOURSCHEME="Solarized_Dark"; clear' \
       --class=kitty-dropdown --program-flags "--class kitty-dropdown" kitty
