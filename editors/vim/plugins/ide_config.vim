@@ -138,7 +138,7 @@ if IsPluginUsed("python-mode")
     let g:pymode_lint_message = 1
     let g:pymode_lint_on_write = 1
     let g:pymode_lint_unmodified = 1
-    let g:pymode_lint_on_fly = 1
+    let g:pymode_lint_on_fly = 0  " lints on InsertLeave
     let g:pymode_lint_ignore = ["C0301", "E501"]
     let g:pymode_lint_sort = ['E', 'C', 'I']
     let g:pymode_folding = 1
@@ -161,8 +161,8 @@ if IsPluginUsed("python-mode")
     " foolish
     augroup unset_folding_in_insert_mode
         autocmd!
-        autocmd InsertEnter *.py setlocal foldmethod=marker
-        autocmd InsertLeave *.py setlocal foldmethod=expr
+        autocmd InsertEnter *.py noa setlocal foldmethod=marker
+        autocmd InsertLeave *.py noa setlocal foldmethod=expr
     augroup END
 
 endif
@@ -179,7 +179,7 @@ if IsPluginUsed("jedi-vim")
     let g:jedi#goto_definitions_command = g:IDE_mappings.definition
     let g:jedi#documentation_command = g:IDE_mappings.documentation
     let g:jedi#usages_command = g:IDE_mappings.references
-    let g:jedi#completions_command = "Tab"
+    let g:jedi#completions_command = "<C-e>"
     let g:jedi#rename_command = g:IDE_mappings.rename
 endif
 
