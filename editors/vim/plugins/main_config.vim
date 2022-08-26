@@ -580,22 +580,42 @@ EOF
     call <sid>sniprunSetup()
 endif
 
-" if IsPluginUsed("vim-terminal-help")
-" which key will be used to toggle terminal window, default to <m-=>.
-" Will be mapped while using term, so choose carefully. 
-let g:terminal_key="<c-S>"
-" initialize working dir: 0 for unchanged, 1 for file path and 2 for project root.
-let g:terminal_cwd=1
-" how to open the file in vim? default to tab drop.
-" let g:terminal_edit="e"
-" set to term to kill term session when exiting vim.
-let g:terminal_kill="term"
-" set to 0 to hide terminal buffer in the buffer list
-let g:terminal_list=0
-" Don't set up alt key for use. Fixes wierd strings in macvim terminal.
-let g:terminal_skip_key_init=1
-if has("win32")
-    let g:terminal_shell="powershell"
+if IsPluginUsed("toggleterm.nvim")
+lua << EOF
+    require("toggleterm").setup{
+    open_mapping = [[<c-s>]],
+    direction = 'horizontal',
+    start_in_insert = true,
+    insert_mappings = false,
+    terminal_mappings = true,
+    persist_mode = true,
+    close_on_exit = true,
+    auto_scroll = false,
+    }
+    if vim.fn.has("win32") then
+        require("toggleterm").setup{shell="powershell.exe"}
+    end
+-- :ToggleTermSendVisualSelection 
+EOF
+endif
+
+if IsPluginUsed("vim-terminal-help")
+    " which key will be used to toggle terminal window, default to <m-=>.
+    " Will be mapped while using term, so choose carefully. 
+    let g:terminal_key="<c-S>"
+    " initialize working dir: 0 for unchanged, 1 for file path and 2 for project root.
+    let g:terminal_cwd=1
+    " how to open the file in vim? default to tab drop.
+    " let g:terminal_edit="e"
+    " set to term to kill term session when exiting vim.
+    let g:terminal_kill="term"
+    " set to 0 to hide terminal buffer in the buffer list
+    let g:terminal_list=0
+    " Don't set up alt key for use. Fixes wierd strings in macvim terminal.
+    let g:terminal_skip_key_init=1
+    if has("win32")
+        let g:terminal_shell="powershell.exe"
+    endif
 endif
 " {]} ---------- Terminal ----------
 

@@ -373,8 +373,12 @@ endif
 " Example config in readme.
 " https://github.com/axvr/zepl.vim
 
-" Convenient hide/show term buffer, $drop to open file with vim
-Plug 'skywind3000/vim-terminal-help'
+" if has('nvim')
+"     Plug 'https://github.com/akinsho/toggleterm.nvim'
+" else
+    " Convenient hide/show term buffer, $drop to open file with vim
+    Plug 'skywind3000/vim-terminal-help'
+" endif
 " {]} ---------- Terminal ----------
 
 " {[} ---------- NerdTree Project/file drawer ----------
