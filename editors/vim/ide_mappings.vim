@@ -22,7 +22,7 @@ let g:IDE_mappings = {
             \ "REPLClear" : "<leader>sc",
             \ "REPLCancel" : "<leader>s<c-c>",
             \ "REPLClose" : "<leader>sx",
-            \ "lintBuffer" : "il",
+            \ "lintBuffer" : "<leader>il",
             \ "make" : "m<cr>",
             \ "make2" : "<leader>im",
             \ "make3" : "m<space>",
