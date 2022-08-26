@@ -40,6 +40,8 @@ if has('nvim-0.5')
 endif
 Plug 'liuchengxu/vim-which-key'
 " nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+" gS/gJ to split/join things onto separate/same lines.
+Plug 'https://github.com/AndrewRadev/splitjoin.vim'
 
 if v:version >= 703
     " visually show indentation
