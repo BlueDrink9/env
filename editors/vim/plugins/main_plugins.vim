@@ -288,7 +288,11 @@ Plug 'https://github.com/hnamikaw/vim-autohotkey', {'for': 'autohotkey'}
 Plug 'https://github.com/PProvost/vim-ps1', {'for': 'ps1'}
 Plug 'https://github.com/lervag/vim-rmarkdown', {'for': 'rmd'}
 Plug 'https://github.com/liuchengxu/graphviz.vim', {'for': 'dot'}
-Plug 'https://github.com/jceb/vim-orgmode', {'for': 'org'}
+if has("nvim")
+    Plug 'https://github.com/nvim-orgmode/orgmode', {'for': 'org'}
+else
+    Plug 'https://github.com/jceb/vim-orgmode', {'for': 'org'}
+endif
 " {]} ---------- Basic extra filetype support ----------
 
 " {[} ---------- Git ----------

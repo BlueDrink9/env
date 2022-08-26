@@ -159,11 +159,11 @@ if IsPluginUsed("python-mode")
 
     " Folding can be slow so recalculating during every character entered is
     " foolish
-    augroup unset_folding_in_insert_mode
-        autocmd!
-        autocmd InsertEnter *.py noa setlocal foldmethod=marker
-        autocmd InsertLeave *.py noa setlocal foldmethod=expr
-    augroup END
+    " augroup unset_folding_in_insert_mode
+    "     autocmd!
+    "     autocmd InsertEnter *.py noa setlocal foldmethod=marker
+    "     autocmd InsertLeave *.py noa setlocal foldmethod=expr
+    " augroup END
 
 endif
 
