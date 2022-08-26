@@ -31,7 +31,8 @@
   )
 (setq markdown-fontify-code-blocks-natively 1)
 (setq markdown-header-scaling 1)
-
+;; Clear the annoying text insert on new markdown files.
+(set-file-template! 'markdown-mode)
 
 ;;; Org
 
