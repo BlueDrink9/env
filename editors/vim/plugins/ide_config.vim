@@ -30,6 +30,13 @@ if IsPluginUsed("echodoc.vim")
     let g:echodoc#enable_at_startup = 1
     let g:echodoc#type = 'signature'
 endif
+
+if IsPluginUsed("nvim-whichkey-setup.lua")
+endif
+if IsPluginUsed("vim-which-key")
+    nnoremap <leader> :<C-U>WhichKey '<leader>'<CR>
+    vnoremap <leader> :<C-U>WhichKeyVisual '<leader>'<CR>
+endif
 " {]} ---------- Misc ----------
 
 " {[} ---------- LSP ----------

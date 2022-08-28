@@ -31,13 +31,13 @@ require('telescope').load_extension('changes')
 
 require("telescope").load_extension("command_center")
 
-if vim.fn.IsPluginUsed("telescope-dap.nvim") then
+if vim.fn.IsPluginUsed("telescope-dap.nvim") == 1 then
    require('telescope').load_extension('dap')
 end
-if vim.fn.IsPluginUsed("telescope-vimspector.nvim") then
+if vim.fn.IsPluginUsed("telescope-vimspector.nvim") == 1 then
    require("telescope").load_extension("vimspector")
 end
-if vim.fn.IsPluginUsed("telescope-coc.nvim") then
+if vim.fn.IsPluginUsed("telescope-coc.nvim") == 1 then
    require("telescope").setup({
          extensions = {
             coc = {
