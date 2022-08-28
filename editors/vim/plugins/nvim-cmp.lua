@@ -56,8 +56,10 @@ cmp.setup({
       ['<C-e>'] = cmp.mapping.confirm({ select = true }),
       ["<Tab>"] = cmp.mapping.select_next_item({behavior=cmp.SelectBehavior.Insert}),
       ["<S-Tab>"] = cmp.mapping.select_prev_item({behavior=cmp.SelectBehavior.Insert}),
+      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
 
-  }
+  },
 
 })
 -- vim.cmd("inoremap <silent><expr> <Tab> cmp#complete()")
@@ -68,17 +70,18 @@ if vim.g.plugs["nvim_lsp"] ~= nil then
 end
 
 cmp.setup.cmdline(':', {
-  sources = {
-    { name = 'cmdline' }
-  }
+    sources = cmp.config.sources({
+        { name = 'path' }
+    }, {
+        { name = 'cmdline' }
+    })
 })
-
 cmp.setup.cmdline('/', {
-  sources = {
-    { name = 'buffer' }
-  }
-
+    sources = {
+        { name = 'buffer' }
+    }
 })
+
 
 nvim_cmp_setup_lsp = function()
   local capabilities = vim.lsp.protocol.make_client_capabilities()

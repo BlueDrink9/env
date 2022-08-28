@@ -15,10 +15,10 @@ require('neogen').setup {}
 vim.cmd("command! Annotate lua require('neogen').generate()")
 
 require('nvim-treesitter.configs').setup {
-    ensure_installed = {
-        "lua",
-        "python",
-    },
+    -- ensure_installed = {
+    --     "lua",
+    --     "python",
+    -- },
     endwise = { enable = true, },
     highlight = {
       enable = true,
