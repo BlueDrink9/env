@@ -243,8 +243,11 @@ endif
 
 " Maybe ide candidates...
 " {[}--- Fuzzy finder ---
+if has('nvim')  " needs > 0.7
+    Plug 'nvim-telescope/telescope.nvim', { 'tag': '*' }
+    Plug 'https://github.com/nvim-lua/plenary.nvim'
 " fzf only works in terminal, use ctrlp otherwise
-if g:hasGUI && !has('terminal')
+elseif g:hasGUI && !has('terminal')
     Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 else
     " PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run the install

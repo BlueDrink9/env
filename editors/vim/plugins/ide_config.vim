@@ -126,6 +126,10 @@ if IsPluginUsed("cscope.vim")
     nnoremap <leader>if :call cscope#findInteractive(expand('<cword>'))<CR>
     " nnoremap <leader>l :call ToggleLocationList()<CR>
 endif
+
+if IsPluginUsed('symbols-outline.nvim')
+    lua require("symbols-outline").setup()
+endif
 " {]} ---------- Tags----------
 
 " {[} ---------- Lang-specific ----------

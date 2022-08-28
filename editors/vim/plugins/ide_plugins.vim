@@ -8,22 +8,13 @@ augroup end
 
 " {[} ---------- Misc ----------
 if has('nvim-0.5')
+    " Dependency for a lot of plugins
     Plug 'nvim-lua/plenary.nvim'
 endif
 if has('nvim-0.7')
     Plug 'https://github.com/norcalli/nvim-colorizer.lua'
 endif
 
-if has('nvim-0.5')
-    " Show registers in floating window when you go to use them.
-    Plug 'tversteeg/registers.nvim', { 'branch': 'main' }
-else
-    " Show registers in side window when you go to use them.
-    Plug 'junegunn/vim-peekaboo'
-endif
-" Display the indentation context in a window above the code you are
-" looking at (helps understand where you are in a long func/class).
-Plug 'wellle/context.vim'
 " Plug 'rhysd/vim-grammarous', { 'for': g:proseFileTypes }
 " Brilliant for projects with lots of similar files. Check out config
 Plug 'https://github.com/tpope/vim-projectionist'
@@ -34,12 +25,7 @@ Plug 'Shougo/context_filetype.vim'
 " Plug 'https://github.com/Townk/vim-autoclose'
 " Autocomplete from other tmux panes' text
 Plug 'https://github.com/wellle/tmux-complete.vim'
-" Call WhichKey to see mappings starting with a thing.
-if has('nvim-0.5')
-    Plug 'AckslD/nvim-whichkey-setup.lua'
-endif
-Plug 'liuchengxu/vim-which-key'
-" nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+
 " gS/gJ to split/join things onto separate/same lines.
 Plug 'https://github.com/AndrewRadev/splitjoin.vim'
 
@@ -59,6 +45,38 @@ Plug 'https://github.com/tpope/vim-characterize'
 " Needs manual activation. :RainbowParen, :RainbowParen!
 Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
 " {]} ---------- Misc ----------
+
+"{[} Searching and code info
+if IsPluginUsed("telescope.nvim")
+    Plug 'fcying/telescope-ctags-outline.nvim'
+    Plug 'LinArcX/telescope-changes.nvim'
+    Plug 'FeiyouG/command_center.nvim'
+endif
+
+if has('nvim-0.5')
+    " Show registers in floating window when you go to use them.
+    Plug 'tversteeg/registers.nvim', { 'branch': 'main' }
+else
+    " Show registers in side window when you go to use them.
+    Plug 'junegunn/vim-peekaboo'
+endif
+" Display the indentation context in a window above the code you are
+" looking at (helps understand where you are in a long func/class).
+Plug 'wellle/context.vim'
+
+" Call WhichKey to see mappings starting with a thing.
+if has('nvim-0.5')
+    Plug 'AckslD/nvim-whichkey-setup.lua'
+endif
+Plug 'liuchengxu/vim-which-key'
+" nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+if has('nvim-0.5')
+    " Leader ? to get searchable (if using telescope) list of commands with
+    " keybindings.
+    Plug 'sudormrfbin/cheatsheet.nvim'
+    Plug 'nvim-lua/popup.nvim'
+endif
+"{]} Searching and code info
 
 " {[} ---------- LSP ----------
 " These would be unloaded for CoC.nvim, which does completion and LSP
@@ -107,6 +125,9 @@ endif
 if executable('cscope')
     " Automates the process of creating and connecting to database.
     Plug 'vim-scripts/cscope.vim'
+endif
+if has("nvim-0.5")
+    Plug 'simrat39/symbols-outline.nvim'
 endif
 " {]} ---------- Tags----------
 
@@ -279,6 +300,9 @@ endif
 " if has('nvim-0.5')
 " Plug 'https://github.com/Pocco81/DAPInstall.nvim'
 " Plug 'https://github.com/mfussenegger/nvim-dap'
+" if IsPluginUsed("telescope.nvim")
+" Plug 'https://github.com/nvim-telescope/telescope-dap.nvim'
+" endif
 " endif
 " :UnstackFromClipboard to take a stack trace from the clipboard and open the
 " relevant function calls in their own splits
@@ -289,6 +313,10 @@ if has("patch-8.1-1264") || has('nvim')
     Plug 'https://github.com/puremourning/vimspector', { 'do': ':!./install_gadget.py --all --disable-tcl' }
     " Easier python debugging
     Plug 'sagi-z/vimspectorpy', { 'do': { -> vimspectorpy#update() } }
+    if IsPluginUsed("telescope.nvim")
+        Plug 'nvim-telescope/telescope-vimspector.nvim'
+    endif
+
 
 else
     if has("python3")
@@ -325,7 +353,9 @@ if has("timers")
         UnPlug 'neovim/nvim-lspconfig'
         UnPlug 'davidhalter/jedi-vim'
         UnPlug 'python-mode/python-mode'
-
+        if IsPluginUsed("telescope.nvim")
+            Plug 'fannheyward/telescope-coc.nvim'
+        endif
 
         if has("nvim")
             Plug 'https://github.com/github/copilot.vim'
@@ -337,6 +367,7 @@ if has("timers")
         Plug 'hrsh7th/cmp-path'
         Plug 'hrsh7th/nvim-cmp'
         Plug 'hrsh7th/cmp-vsnip'
+        Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
         " Super speedy, but slightly more complex requirements
         " https://github.com/ms-jpq/coq_nvim
 
