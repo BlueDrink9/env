@@ -49,6 +49,8 @@ cmp.setup({
       { name = 'vsnip' },
       { name = 'path' },
       { name = 'cmdline' },
+      { name = 'nvim_lsp_signature_help' },
+
   },
 
   mapping = {
@@ -62,13 +64,6 @@ cmp.setup({
   },
 
 })
--- vim.cmd("inoremap <silent><expr> <Tab> cmp#complete()")
--- vim.cmd("inoremap <silent><expr> <C-e> cmp#confirm('<c-e>')")
-
-if vim.g.plugs["nvim_lsp"] ~= nil then
-  nvim_cmp_setup_lsp()
-end
-
 cmp.setup.cmdline(':', {
     sources = cmp.config.sources({
         { name = 'path' }
@@ -81,7 +76,13 @@ cmp.setup.cmdline('/', {
         { name = 'buffer' }
     }
 })
+-- vim.cmd("inoremap <silent><expr> <Tab> cmp#complete()")
+-- vim.cmd("inoremap <silent><expr> <C-e> cmp#confirm('<c-e>')")
 
+
+if vim.g.plugs["nvim_lsp"] ~= nil then
+  nvim_cmp_setup_lsp()
+end
 
 nvim_cmp_setup_lsp = function()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
