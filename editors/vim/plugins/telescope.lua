@@ -1,8 +1,14 @@
 local maps = vim.api.nvim_get_var('IDE_mappings')
+vim.api.nvim_set_keymap(
+   'n',
+   maps.FuzzySearchBuffers,
+   ":lua require'telescope.builtin'.live_grep({grep_open_files = true})<CR>",
+   { noremap = true, silent = true, expr = false }
+   )
 telescope_mappings = {
    find_files = maps.FuzzyOpenFile,
    live_grep = maps.FuzzySearchFiles,
-   buffers = maps.FuzzySearchBuffers,
+   buffers = maps.FuzzyBuffers,
    tags = maps.FuzzyTags,
    commands = maps.FuzzyCommands,
    lsp_workspace_symbols = maps.FuzzyLspTags,
