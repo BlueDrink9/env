@@ -42,10 +42,6 @@ super + w; {super +,_} c
 # super + w; Escape
 #   xdotool key Escape; bsp_border_reset
 
-# # set the window state
-# super + w; shift + {t,ctrl + t,u,m}
-# 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}; bsp_border_reset
-
 # super + w; p
 # 	bspc node -g sticky; bsp_border_reset
 # # set the node flags
@@ -59,6 +55,9 @@ super + w; {super +,_} c
 # super + shift + m
 # 	bspc desktop -l next
 super + shift + {t,ctrl + t,u,m}
+	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}; bsp_border_reset
+# # set the window state
+super + w; shift + {t,ctrl + t,
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}; bsp_border_reset
 
 super + {minus, plus} 
@@ -225,7 +224,7 @@ super + w; {_,alt + }{_,shift + }r
 
 # Flip desktop
 super + w; {_,shift + }f
-	bspc node @/ --flip {horizontal,vertical}
+	bspc node @/ --flip {vertical,horizontal}
 
 # Make split ratios equal
 super + w; equal
