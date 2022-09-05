@@ -107,30 +107,15 @@
   textconv=pandoc --to=markdown
   prompt = false
 
-# Default colours are consistently sensible. Never really seem to need to
-# change anything.
-# [color]
-  # ui = auto
-  # branch = auto
-  # diff = auto
-  # status = auto
-  # advice = auto
-  # push = always
-# [color "diff"]
-#   commit = green
-#   meta = yellow
-#   frag = cyan
-#   old = red
-#   new = green
-#   whitespace = red reverse
-# [color "branch"]
-#   current = yellow reverse
-#   local = yellow
-#   remote = green
-# [color "remote"]
-#   error = red bold
-#   warning = yellow bold
-#   hint = yellow
-#   success = green
-# [color "status"]
-#   unmerged = red
+[advice]
+  # Tells you non-fastforwarding pushes need to force or pull first
+  pushNonFastForward = false
+  # Gives commands for unstaging/checking out files
+  statusHints        = false
+  # Reminder to stash/commit changes if a conflict would occur
+  # commitBeforeMerge  = false
+  # Reminder about how to resolve/fix conflicts
+  # resolveConflict    = false
+  # Skip warnings about automatic name setting from domain email
+  # implicitIdentity   = false
+  # detachedHead       = false
