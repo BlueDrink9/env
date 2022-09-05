@@ -67,6 +67,17 @@ function! ExecutePlugMapping(mapping)
     execute "normal \<Plug>" . a:mapping
 endfunction
 
+function! IsCCompilerAvailable()
+    " -- CCompilers = { vim.fn.getenv("CC"), "cc", "gcc", "clang", "cl", "zig" }
+    let l:CCompilers = [ "cc", "gcc", "clang", "cl", "zig" ]
+    for compiler in l:CCompilers
+        if executable(compiler)
+            return v:true
+        endif
+    endfor
+    return v:false
+endfunction
+
 function! SetGFN(...)
     " If given an arg, use it as fontSize.
     if a:0 == 1
@@ -74,6 +85,7 @@ function! SetGFN(...)
         set gfn=
         let g:GUIFontSize = a:1
     else
+
         let g:GUIFontSize = g:defaultFontSize
     endif
     if &guifont == ""

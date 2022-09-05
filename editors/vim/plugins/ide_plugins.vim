@@ -268,16 +268,7 @@ function check_treesitter_installable()
             return false
         end
     end
-    CCompilers = { vim.fn.getenv("CC"), "cc", "gcc", "clang", "cl", "zig" }
-    CCompilers = { "cc", "gcc", "clang", "cl", "zig" }
-    cc = false
-    for _, compiler in pairs(CCompilers) do
-        if fn.executable(compiler) == 1 then
-            cc = true
-            break
-        end
-    end
-    if not cc then
+    if not fn.IsCCompilerAvailable() then
         return false
     end
     return true

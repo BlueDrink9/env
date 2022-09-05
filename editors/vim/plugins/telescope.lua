@@ -23,6 +23,7 @@ for f, map in pairs(telescope_mappings) do
       )
 end
 
+
 require('telescope').setup{
    defaults = {
       mappings = {
@@ -32,6 +33,7 @@ require('telescope').setup{
       },
    },
 }
+
 
 require('telescope').load_extension('changes')
 
@@ -43,11 +45,14 @@ end
 if vim.fn.IsPluginUsed("telescope-vimspector.nvim") == 1 then
    require("telescope").load_extension("vimspector")
 end
+if vim.fn.IsPluginUsed("telescope-fzf-native.nvim") == 1 then
+   require("telescope").load_extension("fzf")
+end
 if vim.fn.IsPluginUsed("telescope-coc.nvim") == 1 then
    require("telescope").setup({
          extensions = {
             coc = {
-               theme = 'ivy',
+               -- theme = 'ivy',
                prefer_locations = true, -- always use Telescope locations to preview definitions/declarations/implementations etc
             }
          },

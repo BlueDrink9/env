@@ -246,6 +246,13 @@ endif
 if has('nvim')  " needs > 0.7
     Plug 'nvim-telescope/telescope.nvim', { 'tag': '*' }
     Plug 'https://github.com/nvim-lua/plenary.nvim'
+    if IsCCompilerAvailable()
+        if executable("make")
+            Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+        elseif executable("cmake")
+            Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
+        endif
+    endif
 " fzf only works in terminal, use ctrlp otherwise
 elseif g:hasGUI && !has('terminal')
     Plug 'https://github.com/ctrlpvim/ctrlp.vim'
