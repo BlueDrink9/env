@@ -68,7 +68,7 @@ gitCredentialCache() {
       fi
     done
     printErr "Git will remember your credentials for $REPLY minutes ($(( REPLY * 60 )) seconds)."
-    git config --global credential.helper "cache --timeout=$(( REPLY * 60 ))"
+    git config --global credential.helper "cache --timeout $(( REPLY * 60 ))"
   fi
 }
 
