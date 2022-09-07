@@ -20,19 +20,11 @@ vnoremap ; :
 nnoremap : ;
 vnoremap : ;
 
-" Make entering escape in terminals non-impossible.
-if has('nvim') || has('terminal')
-  tnoremap <Esc> <C-\><C-n>
-  tnoremap <C-v><Esc> <Esc>
-  tnoremap <C-q><Esc> <Esc>
-endif
-
 " x and X shouldn't overwrite the damn paste register!
 nnoremap x "_x
 nnoremap X "_X
-" Toggle/create folds with backspace.
+" Toggle folds with backspace.
 nnoremap <backspace> za
-vnoremap <backspace> zf
 " Quicker access to system and unnamed registers
 " (" is default register anyway, so never need "")
 nnoremap "" "+
@@ -40,10 +32,9 @@ vnoremap "" "+
 nnoremap """ "-
 vnoremap """ "-
 " black hole register delete
-vmap <backspace> "_d
-vmap <del> "_d
-vmap x "_d
-vmap X "_d
+vnoremap <backspace> "_d
+vnoremap <del> "_d
+vnoremap x "_d
 "Faster scrolling
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
@@ -52,7 +43,6 @@ nnoremap ' `
 nnoremap ` '
 " Consistent with D, C
 nnoremap Y y$
-vnoremap Y $y
 " Remember cursor location and reformat file
 nnoremap g= gg=G$()
 nnoremap gQ gggqG$()
@@ -122,7 +112,6 @@ nnoremap <C-F9> :%d<CR>"+P
 " Abbreviations are used in insert and command modes unless specified.
 abbrev <expr> [d] strftime("%Y-%m-%d")
 abbrev <expr> [t] strftime("%H:%M")
-cnoreabbrev H helpgrep
 cnoreabbrev hg helpgrep
 cnoreabbrev vg vimgrep
 cnoreabbrev H vert h
@@ -145,19 +134,14 @@ command! -bang -nargs=* Profile profile start $HOME/.logs/vim_profile <bar> prof
 command! -bang -nargs=* SudoSave w !sudo tee % > /dev/null
 cmap W! SudoSave
 " Quickly edit macros
-nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
-command! -bang -nargs=* Macros <c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
+" command! -bang -nargs=* MacroEdit c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 command! MRU browse oldfiles
 
 " {]} Abbreviations
 
 " {[} Window management
-" leader w opens new vert window, switches to it
-nnoremap <leader>w <C-w>v<C-w>l
 " Edit current buffer with a new tab
-nnoremap <C-w>t :tab sb<cr>
-" No idea wtf this was meant to do...
-" nnoremap <C-w><S-R> <W-w> <C-r>
+nnoremap <C-w>t :tab split<cr>
 " Easier way to move between windows
 nnoremap <C-j> <C-W>j
 nnoremap <C-k> <C-W>k
@@ -194,13 +178,8 @@ nnoremap <S-Left> 5<C-W>>
 nnoremap <S-Down> 3<C-W>+
 nnoremap <C-Down> 3<C-W>-
 nnoremap <C-Left> 5<C-W><
-" Zoom a window into its own tab.
-noremap <silent> <C-w>z :tab split<CR>
-" Kill current buffer. Complete bdel because may use Bdelete, not bdelete.
-noremap <silent> <C-w>x :bdel<tab><CR>
-" if has("gui")
-"     " If window id of last window is 1, assume only one window present
-"     if winnr($) == 1
+" Kill current buffer. Tab-complete bdel because may use Bdelete if available, not bdelete.
+noremap <silent> <C-w>x :bdelete<tab><CR>
 
 " {[} Open windows to the left, right, up, down, like in tmux
 function! s:SaveSplitSide()
@@ -251,14 +230,17 @@ if has("clipboard") && !IsWSL()
     inoremap <C-v> <C-r>+
     inoremap <C-S-v> <C-r>+
     cnoremap <C-v> <C-r>+
+    cnoremap <C-S-v> <C-r>+
     vnoremap <C-X> "+d
     vnoremap <C-c> "+y
     " vnoremap <C-v> "+P  " Clobbers block visual
     " In normal mode, use ctrl+q
     nnoremap <C-q> "+P
 
-    " Workarounds are now set using vim-fakeclip, light plugin.
+    " Clipboardless workarounds are now set using vim-fakeclip, light plugin.
 endif
+" Use CTRL-Q to do what CTRL-V used to do in insert
+inoremap <C-Q> <C-V>
 
 " {]} Clipboard
 
@@ -278,12 +260,17 @@ autocmd myVimrc bufwinenter * if ! &modifiable || &readonly | call Pager() | end
 " {]} pager
 
 " {[} Misc
+" Make entering escape in terminals non-impossible.
+if has('nvim') || has('terminal')
+  tnoremap <Esc> <C-\><C-n>
+  tnoremap <C-v><Esc> <Esc>
+  tnoremap <C-q><Esc> <Esc>
+endif
+
 
 if maparg(g:IDE_mappings.make, 'n') ==? ""
   call Nnoremap(g:IDE_mappings.make, ":w <bar> make<cr>")
 endif
-" Use CTRL-Q to do what CTRL-V used to do in insert
-inoremap <C-Q> <C-V>
 
 " Complete vim commands in cmd window.
 " autocmd myVimrc CmdwinEnter * inoremap <buffer> <C-Space> <C-x><C-v>
@@ -299,19 +286,17 @@ endfunction
 " Insert mode in cmdwin returns to actual cmd mode with current text.
 autocmd myVimrc CmdwinEnter * call s:cmdWinMappings()
 
-" c-y to move completion to next level.
-cnoremap <C-y> <c-]><TAB>
+" move completion to next level.
+cnoremap <C-e> <c-]><TAB>
 " When autocompleting, start another file completion at this level.
-inoremap <C-y> <c-y><c-x><c-f>
-
+inoremap <expr> <C-y> pumvisible() ? "<c-y><c-x><c-f>" : "C-y"
 " Wildmenu: I use tab/s-tab for moving, so want to keep left/right.
 cnoremap <Left> <Space><BS><Left>
 cnoremap <Right> <Space><BS><Right>
 
 " CTRL-A is Select all in insert mode, s is in visual
 " Use f text obj plugin instead. Can manually do it if no plugins.
-" inoremap <C-a> <C-o>gg<C-o><S-V>G
-" vnoremap s <esc>gg<S-V>G
+inoremap <a> <C-o>gg<C-o><S-V>G
 " Spellcheck with completion list
 " nnoremap <leader>s ea<C-X><C-S>
 " Rm spellcheck
@@ -321,13 +306,10 @@ nnoremap / /\v
 vnoremap / /\v
 cnoremap %s/ %smagic/
 cnoremap \>s/ \>smagic/
-" fix typos I often make
-nnoremap zQ ZQ
-" nnoremap q; :q
 " Because c-] doesn't work on colemak for some reason
 nnoremap gt <c-]>
 " Reset screen entirely (inc highlights)
-nnoremap <leader>cl :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+command! Clear nohlsearch <bar> diffupdate <bar> syntax sync fromstart <bar> norm! <c-l>
 " These apply only in vimdiff mode.
 " nnoremap <expr> <C-J> &diff ? ']c' : '<C-W>j'
 if &diff
