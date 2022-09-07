@@ -26,6 +26,40 @@ if IsPluginUsed("indentLine")
     let g:indentLine_setConceal = 0
     " let g:indentLine_setColors=0
 endif
+if IsPluginUsed("indent-blankline.nvim")
+    for hl in [
+                \ "IndentBlanklineIndent1 guifg=Red gui=nocombine",
+                \ "IndentBlanklineIndent2 guifg=Yellow gui=nocombine",
+                \ "IndentBlanklineIndent3 guifg=Green gui=nocombine",
+                \ "IndentBlanklineIndent4 guifg=Blue gui=nocombine",
+                \ "IndentBlanklineIndent5 guifg=Purple gui=nocombine",
+                \ ]
+        call add(g:customHLGroups, hl)
+    endfor
+lua << EOF
+    require("indent_blankline").setup {
+        char = "┆",
+        char_blankline = "",
+        show_first_indent_level = false,
+        char_highlight_list = {
+            "IndentBlanklineIndent1",
+            "IndentBlanklineIndent2",
+            "IndentBlanklineIndent3",
+            "IndentBlanklineIndent4",
+            "IndentBlanklineIndent5",
+        },
+    }
+    if vim.fn.IsPluginUsed("nvim-treesitter") == 1 then
+        require("indent_blankline").setup {
+            indent_blankline_use_treesitter = true,
+            -- May be a touch slow
+            show_current_context = true,
+            show_current_context_start = true,
+            indent_blankline_show_current_context_start_on_current_line = false,
+        }
+    end
+EOF
+endif
 if IsPluginUsed("echodoc.vim")
     let g:echodoc#enable_at_startup = 1
     let g:echodoc#type = 'signature'

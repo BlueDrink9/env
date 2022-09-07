@@ -31,7 +31,11 @@ Plug 'https://github.com/AndrewRadev/splitjoin.vim'
 
 if v:version >= 703
     " visually show indentation
-    Plug 'https://github.com/Yggdroot/indentLine'
+    if has("nvim")
+        Plug 'https://github.com/lukas-reineke/indent-blankline.nvim'
+    else
+        Plug 'https://github.com/Yggdroot/indentLine'
+    endif
 endif
 if exists("v:completed_item")
     " Shows function args from completion in cmd line.
