@@ -35,10 +35,6 @@ require('telescope').setup{
 }
 
 
-require('telescope').load_extension('changes')
-
-require("telescope").load_extension("command_center")
-
 if vim.fn.IsPluginUsed("telescope-dap.nvim") == 1 then
    require('telescope').load_extension('dap')
 end
@@ -75,7 +71,13 @@ require('telescope').setup{
    },
 }
 
-require('telescope').load_extension('ctags_outline')
+if vim.fn.IsPluginUsed("telescope-changes.nvim") == 1 then
+-- if vim.fn.IsPluginUsed("command_center.nvim") == 1 then
+   require('telescope').load_extension('changes')
+   require("telescope").load_extension("command_center")
+   require('telescope').load_extension('ctags_outline')
+end
+
 -- show current buf outline
 -- require('telescope').extensions.ctags_outline.outline()
 -- :Telescope ctags_outline outline
