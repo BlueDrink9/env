@@ -91,16 +91,18 @@ nnoremap <expr> N  'nN'[v:searchforward]
 " Cd to current file
 nnoremap <leader>cd :lcd %:p:h<CR>:pwd<CR>
 " Autocomplete from tags
-inoremap <c-]> <c-x><c-]>
+" inoremap <c-]> <c-x><c-]>
 " Quickly re-run last macro with one key (also stop accidentally entering Ex).
 nnoremap Q @@
 " Used as a weird undo. Good candidate for remapping.
 nnoremap U <c-r>
-" Good candidates...
+
+" Good candidates for remapping...
 " nnoremap <CR> ...
 " nnoremap _ ...
 " nnoremap - ...
 " nnoremap + ...
+" nnoremap R ...
 " Select last paste/change.
 nnoremap gp `[v`]
 
@@ -346,10 +348,10 @@ function! s:remapCtrlBStoCW()
             inoremap <C-_> <C-w>
             cnoremap <C-_> <C-w>
         elseif has('nvim') && $TERM ==? "vtpcon"
-            " Windows console vim gets ^H for normal backspace.
+            " Windows terminal console vim gets ^H for ctrl backspace.
             " Nvim sets term in this case, normal vim doesn't.
-            inoremap <BS> <C-w>
-            cnoremap <BS> <C-w>
+            inoremap <c-h> <C-w>
+            cnoremap <c-h> <C-w>
         elseif has('nvim') && $TERM ==? "cygwin"
             " This seems to be the case with Windows Terminal and git commits.
             inoremap <BS> <C-w>
