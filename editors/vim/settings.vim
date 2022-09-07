@@ -336,8 +336,12 @@ set backup
 set writebackup
 exec 'set directory=' . CreateVimDir("swap") . '//'
 exec 'set viewdir=' . CreateVimDir("views") . '//'
-if v:version >= 703
-    exec 'set undodir=' . CreateVimDir("undo") . '//'
+if has('persistent_undo')
+    if has('nvim')
+        exec 'set undodir=' . CreateVimDir("nvimundo") . '//'
+    else
+        exec 'set undodir=' . CreateVimDir("undo") . '//'
+    endif
     " Create undo file for inter-session undo
     set undofile
 endif
