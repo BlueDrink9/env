@@ -88,11 +88,6 @@ if IsPluginUsed("vim-mundo")
     cabbrev undo MundoToggle
 endif
 
-if IsPluginUsed("incsearch.vim")
-    map /  <Plug>(incsearch-forward)
-    map ?  <Plug>(incsearch-backward)
-    map g/ <Plug>(incsearch-stay)
-endif
 if IsPluginUsed("vim-CtrlXA")
     nmap <Plug>SpeedDatingFallbackUp   <Plug>(CtrlXA-CtrlA)
     nmap <Plug>SpeedDatingFallbackDown <Plug>(CtrlXA-CtrlX)

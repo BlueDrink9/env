@@ -99,8 +99,6 @@ Plug 'https://github.com/simnalamburt/vim-mundo'
 
 " Way better search and replace, also case coersion
 Plug 'https://github.com/tpope/vim-abolish'
-" Improves incremental search to match everythign that it should.
-Plug 'https://github.com/haya14busa/incsearch.vim'
 if v:version < 800 && !has('nvim')
     " Autoset Paste/nopaste
     Plug 'https://github.com/ConradIrwin/vim-bracketed-paste'
