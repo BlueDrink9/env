@@ -5,9 +5,11 @@ get_plasma_panel_height(){
     config="$HOME/.config/plasmashellrc"
     if [ -f "$config" ]; then
         # Probably won't work for multiple panels, but it'll do for now
-        line=$(grep thickness "$config")
-        height=$(echo "$line" | cut -d "=" -f 2 | head -n1)
-        echo $height
+        lines=$(grep thickness "$config")
+        height=$(echo "$lines" | cut -d "=" -f 2 | head -n1)
+    fi
+    if [ -n "$height" ]; then
+        echo "$height"
     else
         echo $fallback
     fi
