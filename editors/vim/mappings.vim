@@ -85,7 +85,9 @@ nnoremap <leader>cd :lcd %:p:h<CR>:pwd<CR>
 " Quickly re-run last macro with one key (also stop accidentally entering Ex).
 nnoremap Q @@
 " Used as a weird undo. Good candidate for remapping.
-nnoremap U <c-r>
+" nnoremap U <c-r>
+" Include flags when redoing last :s command with &. Nvim default.
+nnoremap & <Cmd>&&<CR>
 
 " Good candidates for remapping...
 " nnoremap <CR> ...
