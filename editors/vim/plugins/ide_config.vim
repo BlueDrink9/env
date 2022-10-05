@@ -114,19 +114,19 @@ lua << EOF
     local null_ls = require 'null-ls'
     require ('mason-null-ls').setup({
         ensure_installed = {
-        'vint',
-        'luacheck',
-        'stylua',
-        'pylint',
-        'shellcheck',
-        'jq',
-        'proselint',
+           'vint',
+           'luacheck',
+           'stylua',
+           'pylint',
+           'shellcheck',
+           'jq',
+           'proselint',
         }
     })
 
     require 'mason-null-ls'.setup_handlers {
         function(source_name)
-          -- null_ls.register(null_ls.builtins.diagnostics.[source_name])
+          null_ls.register(null_ls.builtins.diagnostics[source_name])
         end,
         stylua = function()
           null_ls.register(null_ls.builtins.formatting.stylua)
@@ -143,7 +143,6 @@ lua << EOF
          null_ls.builtins.completion.spell,
          null_ls.builtins.hover.printenv,
       }
-
     })
 EOF
 endif
