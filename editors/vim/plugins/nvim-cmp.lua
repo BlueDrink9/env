@@ -94,24 +94,30 @@ cmp.setup.cmdline('/', {
 -- vim.cmd("inoremap <silent><expr> <C-e> cmp#confirm('<c-e>')")
 
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-  properties = {
-    'documentation',
-    'detail',
-    'additionalTextEdits',
-  }
-}
+if vim.g.plugs["nvim_lsp"] ~= nil then
+  nvim_cmp_setup_lsp()
+end
 
-local nvim_lsp = require('lspconfig')
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-local servers = { "pyright", "rust_analyzer", "r_language_server", "diagnosticls", "dotls", "jedi_language_server", "texlab", "vimls" }
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
-    capabilities = capabilities,
+nvim_cmp_setup_lsp = function()
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  capabilities.textDocument.completion.completionItem.resolveSupport = {
+    properties = {
+      'documentation',
+      'detail',
+      'additionalTextEdits',
+    }
   }
+
+  local nvim_lsp = require('lspconfig')
+  -- Use a loop to conveniently call 'setup' on multiple servers and
+  -- map buffer local keybindings when the language server attaches
+  local servers = { "pyright", "rust_analyzer", "r_language_server", "diagnosticls", "dotls", "jedi_language_server", "texlab", "vimls" }
+  for _, lsp in ipairs(servers) do
+    nvim_lsp[lsp].setup {
+      capabilities = capabilities,
+    }
+  end
 end
 
 
