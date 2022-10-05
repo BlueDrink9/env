@@ -1,6 +1,34 @@
 if vim.g.plugs["nvim_lsp"] == nil then
    return
 end
+
+local maps = vim.api.nvim_get_var('IDE_mappings')
+-- Mappings.
+-- See `:help vim.lsp.*` for documentation on any of the below functions
+local lsp_nbufmaps = {
+   ['<space>wa'] = 'buf.add_workspace_folder()',
+   [maps.implementation] = 'buf.declaration()',
+   [maps.implementation2] = 'buf.declaration()',
+   [maps.definition] = 'buf.definition()',
+   [maps.documentation] = 'buf.hover()',
+   [maps.documentation2] = 'buf.hover()',
+   [maps.documentation3] = 'buf.hover()',
+   [maps.implementation] = 'buf.implementation()',
+   [maps.implementation2] = 'buf.implementation()',
+   [maps.type_definition] = 'buf.type_definition()',
+   [maps.type_definition2] = 'buf.type_definition()',
+   [maps.rename] = 'buf.rename()',
+   [maps.codeAction] = 'buf.code_action()',
+   [maps.references] = 'buf.references()',
+   [map.diagnostic] = 'diagnostic.show_line_diagnostics()',
+   [maps.diagnostic_next] = 'diagnostic.goto_prev()',
+   [maps.diagnostic_prev] = 'diagnostic.goto_next()',
+   [maps.reformat] = 'buf.formatting()',
+--  ['<space>wr'] = 'buf.remove_workspace_folder()',
+--  ['<space>wl'] = '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))',
+--  ['<space>q'] = 'diagnostic.set_loclist()',
+}
+
 nvim_lsp = require('lspconfig')
 nvim_lspconfig_server_setup(nvim_lsp)
 -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
@@ -20,31 +48,9 @@ local on_attach = function(client, bufnr)
 
    -- Mappings.
    local opts = { noremap=true, silent=true }
-   local maps = vim.api.nvim_get_var('IDE_mappings')
-
-   -- See `:help vim.lsp.*` for documentation on any of the below functions
-   buf_set_keymap('n', maps.implementation, '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-   buf_set_keymap('n', maps.implementation2, '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-   buf_set_keymap('n', maps.definition, '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-   buf_set_keymap('n', maps.documentation, '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-   buf_set_keymap('n', maps.documentation2, '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-   buf_set_keymap('n', maps.documentation3, '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-   buf_set_keymap('n', maps.implementation, '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-   buf_set_keymap('n', maps.implementation2, '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-   buf_set_keymap('n', maps.signature, '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-   -- buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-   -- buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-   -- buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-   buf_set_keymap('n', maps.type_definition, '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-   buf_set_keymap('n', maps.type_definition2, '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-   buf_set_keymap('n', maps.rename, '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-   buf_set_keymap('n', maps.codeAction, '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-   buf_set_keymap('n', maps.references, '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-   buf_set_keymap('n', map.diagnostic, '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-   buf_set_keymap('n', maps.diagnostic_next, '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-   buf_set_keymap('n', maps.diagnostic_prev, '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-   -- buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-   buf_set_keymap("n", maps.reformat, "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+   for key, cmd in pairs(to_bufmap) do
+      buf_set_keymap('n', key, "<cmd>lua vim.lsp." .. cmd .. "()<CR>", opts)
+   end
 
 end
 
