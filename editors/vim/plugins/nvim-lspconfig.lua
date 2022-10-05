@@ -1,7 +1,3 @@
-if vim.g.plugs["nvim_lsp"] == nil then
-   return
-end
-
 local maps = vim.api.nvim_get_var('IDE_mappings')
 -- Mappings.
 -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -20,7 +16,7 @@ local lsp_nbufmaps = {
    [maps.rename] = 'buf.rename()',
    [maps.codeAction] = 'buf.code_action()',
    [maps.references] = 'buf.references()',
-   [map.diagnostic] = 'diagnostic.show_line_diagnostics()',
+   [maps.diagnostic] = 'diagnostic.show_line_diagnostics()',
    [maps.diagnostic_next] = 'diagnostic.goto_prev()',
    [maps.diagnostic_prev] = 'diagnostic.goto_next()',
    [maps.reformat] = 'buf.formatting()',
@@ -30,12 +26,8 @@ local lsp_nbufmaps = {
 }
 
 nvim_lsp = require('lspconfig')
-nvim_lspconfig_server_setup(nvim_lsp)
--- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
-require'lspinstall'.post_install_hook = function ()
-   nvim_lspconfig_server_setup() -- reload installed servers
-   vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
-end
+require("mason").setup()
+
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -51,33 +43,25 @@ local on_attach = function(client, bufnr)
    for key, cmd in pairs(to_bufmap) do
       buf_set_keymap('n', key, "<cmd>lua vim.lsp." .. cmd .. "()<CR>", opts)
    end
-
 end
 
-nvim_lspconfig_server_setup = function(nvim_lsp)
-   local lsp_installer = require("nvim-lsp-installer")
-   lsp_installer.settings({
-         ui = {
-            icons = {
-               server_installed = "✓",
-               server_pending = "➜",
-               server_uninstalled = "✗"
-            }
-         }
-      })
-   -- Register a handler that will be called for each installed server when it's ready (i.e. when installation is finished
-   -- or if the server is already installed).
-   lsp_installer.on_server_ready(function(server)
-      local opts = {}
 
-      -- (optional) Customize the options passed to the server
-      -- if server.name == "tsserver" then
-      --     opts.root_dir = function() ... end
-      -- end
+local lsp_installer = require("mason-lspconfig")
 
-      -- This setup() function will take the provided server configuration and decorate it with the necessary properties
-      -- before passing it onwards to lspconfig.
-      -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-      server:setup(opts)
-   end)
-end
+lsp_installer.setup({
+      -- ensure_installed = { "pylsp" },
+   })
+
+-- Register a handler that will be called for each installed server when it's
+-- ready (i.e. when installation is finished or if the server is already
+-- installed).
+lsp_installer.setup_handlers{
+   function (server_name) -- default handler (optional)
+      require("lspconfig")[server_name].setup {}
+   end,
+
+   -- (optional) Customize the options passed to the server
+   -- ["rust_analyzer"] = function ()
+   --    require("rust-tools").setup {}
+   -- end
+}

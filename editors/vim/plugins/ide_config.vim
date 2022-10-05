@@ -7,6 +7,20 @@ augroup myIDE
 augroup end
 
 " {[} ---------- Misc ----------
+if IsPluginUsed("mason")
+lua << EOF
+   require("mason").setup({
+         ui = {
+            icons = {
+               package_installed = "✓",
+               package_pending = "➜",
+               package_uninstalled = "✗"
+            }
+         }
+      })
+EOF
+endif
+
 if IsPluginUsed("nvim-colorizer.lua")
     lua require'colorizer'.setup()
 endif

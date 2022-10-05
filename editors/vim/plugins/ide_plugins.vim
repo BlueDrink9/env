@@ -10,6 +10,8 @@ augroup end
 if has('nvim-0.5')
     " Dependency for a lot of plugins
     Plug 'nvim-lua/plenary.nvim'
+    " For installing LSPs (and other packages)
+    Plug 'https://github.com/williamboman/mason.nvim'
 endif
 if has('nvim-0.7')
     Plug 'https://github.com/norcalli/nvim-colorizer.lua'
@@ -87,8 +89,7 @@ endif
 " Deoplete and ale will use them though.
 if has('nvim-0.5')
     Plug 'https://github.com/neovim/nvim-lspconfig'
-    Plug 'https://github.com/kabouzeid/nvim-lspinstall'
-    Plug 'https://github.com/williamboman/nvim-lsp-installer'
+    Plug 'https://github.com/williamboman/mason-lspconfig.nvim'
 else
     if has('win32')
         Plug 'autozimu/LanguageClient-neovim', {
