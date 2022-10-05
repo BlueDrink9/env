@@ -28,6 +28,19 @@ endif
 if IsPluginUsed("nvim-colorizer.lua")
     lua require'colorizer'.setup()
 endif
+" if IsPluginUsed("noice.nvim")
+" lua << EOF
+"    require'noice'.setup()
+"       cmdline = {
+"          view = "cmdline",  -- or "cmdline_popup" for fancy.
+"       },
+"       popupmenu = {
+"          enabled = true,
+"       }
+"    }
+" EOF
+endif
+
 
 if IsPluginUsed("vim-peekaboo")
     let g:peekaboo_delay = 200  " ms

@@ -19,6 +19,13 @@ endif
 if has('nvim-0.7')
     Plug 'https://github.com/norcalli/nvim-colorizer.lua'
 endif
+" if has('nvim-0.8')
+"     " Replaces message display
+"     Plug 'https://github.com/folke/noice.nvim'
+"     Plug 'rcarriga/nvim-notify'
+"     Plug 'MunifTanjim/nui.nvim'
+" endif
+
 
 " Plug 'rhysd/vim-grammarous', { 'for': g:proseFileTypes }
 " Brilliant for projects with lots of similar files. Check out config
