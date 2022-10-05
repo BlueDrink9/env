@@ -10,8 +10,11 @@ augroup end
 if has('nvim-0.5')
     " Dependency for a lot of plugins
     Plug 'nvim-lua/plenary.nvim'
+
     " For installing LSPs (and other packages)
     Plug 'https://github.com/williamboman/mason.nvim'
+    Plug 'https://github.com/RubixDev/mason-update-all'
+    Plug 'https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim'
 endif
 if has('nvim-0.7')
     Plug 'https://github.com/norcalli/nvim-colorizer.lua'
@@ -110,6 +113,9 @@ endif
 if has('nvim-0.5')
     " Haven't configured yet.
     Plug 'https://github.com/mfussenegger/nvim-lint'
+    " Integrates linters with Nvim lsp
+    Plug 'https://github.com/jose-elias-alvarez/null-ls.nvim'
+    Plug 'https://github.com/jayp0521/mason-null-ls.nvim'
 elseif has("timers")
     " Async linting
     Plug 'https://github.com/dense-analysis/ale'
@@ -296,6 +302,7 @@ endif
 " if has('nvim-0.5')
 " Plug 'https://github.com/Pocco81/DAPInstall.nvim'
 " Plug 'https://github.com/mfussenegger/nvim-dap'
+" Plug 'https://github.com/jayp0521/mason-nvim-dap.nvim'
 " if IsPluginUsed("telescope.nvim")
 " Plug 'https://github.com/nvim-telescope/telescope-dap.nvim'
 " endif

@@ -18,6 +18,10 @@ lua << EOF
             }
          }
       })
+   require('mason-update-all').setup()
+   require('mason-tool-installer').setup()
+   -- nvim --headless -c 'autocmd User MasonUpdateAllComplete quitall' -c 'MasonUpdateAll'
+
 EOF
 endif
 
@@ -104,6 +108,44 @@ endif
 " {[} ---------- Linting ----------
 if IsPluginUsed("nvim-lint")
     au BufWritePost <buffer> lua require('lint').try_lint()
+endif
+if IsPluginUsed("null-ls.nvim")
+lua << EOF
+    local null_ls = require 'null-ls'
+    require ('mason-null-ls').setup({
+        ensure_installed = {
+        'vint',
+        'luacheck',
+        'stylua',
+        'pylint',
+        'shellcheck',
+        'jq',
+        'proselint',
+        }
+    })
+
+    require 'mason-null-ls'.setup_handlers {
+        function(source_name)
+          -- null_ls.register(null_ls.builtins.diagnostics.[source_name])
+        end,
+        stylua = function()
+          null_ls.register(null_ls.builtins.formatting.stylua)
+        end,
+        jq = function()
+          null_ls.register(null_ls.builtins.formatting.jq)
+        end
+    }
+
+    -- will setup any installed and configured sources above
+    null_ls.setup({
+      sources = {
+         null_ls.builtins.code_actions.refactoring,
+         null_ls.builtins.completion.spell,
+         null_ls.builtins.hover.printenv,
+      }
+
+    })
+EOF
 endif
 
 if IsPluginUsed("ale")
