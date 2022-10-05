@@ -93,6 +93,10 @@ endif
 if has('nvim-0.5')
     Plug 'https://github.com/neovim/nvim-lspconfig'
     Plug 'https://github.com/williamboman/mason-lspconfig.nvim'
+    " Nice visuals
+    Plug 'https://github.com/folke/trouble.nvim'
+    " Create appropriate colours for old colourschemes
+    Plug 'https://github.com/folke/lsp-colors.nvim'
 else
     if has('win32')
         Plug 'autozimu/LanguageClient-neovim', {
