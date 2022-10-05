@@ -69,3 +69,19 @@ lsp_installer.setup_handlers{
       vim.cmd("silent! au! myPymode")
    end
 }
+
+require("trouble").setup {
+   action_keys = { -- key mappings for actions in the trouble list
+      toggle_fold = {"zA", "za", "<BS>"},
+   },
+   auto_close = true,
+   use_diagnostic_signs = true, -- enabling this will use the signs defined in your lsp client
+   icons = function()
+      if os.gentenv("USENF") == 1 then
+         return true
+      else
+         return false
+      end
+   end,
+
+}
