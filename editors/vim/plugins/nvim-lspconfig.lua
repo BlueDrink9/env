@@ -61,7 +61,11 @@ lsp_installer.setup_handlers{
    end,
 
    -- (optional) Customize the options passed to the server
-   -- ["rust_analyzer"] = function ()
-   --    require("rust-tools").setup {}
-   -- end
+   ["pylsp"] = function ()
+      require('lspconfig').pylsp.setup {}
+      -- vim.cmd("UnPlug 'davidhalter/jedi-vim'")
+      -- vim.cmd("let g:jedi#auto_initialization = 0")
+      vim.cmd("let g:pymode = 0")
+      vim.cmd("silent! au! myPymode")
+   end
 }

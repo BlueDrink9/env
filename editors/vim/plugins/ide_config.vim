@@ -214,7 +214,11 @@ if IsPluginUsed("python-mode")
     " let g:pymode_rope_extract_method_bind = g:IDE_mappings.extract_method
     " Jump to definition in current window
     let g:pymode_rope_goto_definition_cmd = 'e'
-    autocmd myIDE FileType python exec 'nnoremap <buffer> ' . g:IDE_mappings.lintBuffer . " :PymodeLint<CR>"
+    augroup myPymode
+        au!
+        autocmd FileType python exec 'nnoremap <buffer> ' . g:IDE_mappings.lintBuffer . " :PymodeLint<CR>"
+    augroup END
+
 
     " Folding can be slow so recalculating during every character entered is
     " foolish
