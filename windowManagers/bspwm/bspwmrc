@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 exec 2> $HOME/.logs/bspwmrc.err
 exec 1> $HOME/.logs/bspwmrc.log
 

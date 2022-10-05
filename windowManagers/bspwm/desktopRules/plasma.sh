@@ -32,4 +32,3 @@ bspc rule -a mplayer2       state=floating, border=off
 # bspc config top_padding 0
 # Enough to avoid taskbar
 bspc config bottom_padding $PANEL_HEIGHT
-
