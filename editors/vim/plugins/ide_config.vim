@@ -39,7 +39,7 @@ endif
 "       }
 "    }
 " EOF
-endif
+" endif
 
 
 if IsPluginUsed("vim-peekaboo")
