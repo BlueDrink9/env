@@ -1,6 +1,7 @@
 -- https://github.com/ray-x/lsp_signature.nvim
 vim.o.completeopt = "menuone,noselect"
 local cmp = require'cmp'
+mappings = cmp.mapping
 cmp.setup({
   --   completion = {
   --       autocomplete = true,
@@ -54,12 +55,12 @@ cmp.setup({
   },
 
   mapping = {
-      ['<C-e>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-      ['<C-e>'] = cmp.mapping.confirm({ select = true }),
-      ["<Tab>"] = cmp.mapping.select_next_item({behavior=cmp.SelectBehavior.Insert}),
-      ["<S-Tab>"] = cmp.mapping.select_prev_item({behavior=cmp.SelectBehavior.Insert}),
-      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+      ['<C-e>'] = mappings(mappings.complete(), { 'i', 'c' }),
+      ['<C-e>'] = mappings.confirm({ select = true }),
+      ["<Tab>"] = mappings(mappings.select_next_item({behavior=cmp.SelectBehavior.Insert}), { 'i', 'c' }),
+      ["<S-Tab>"] = mappings(mappings.select_prev_item({behavior=cmp.SelectBehavior.Insert}), { 'i', 'c' }),
+      ['<C-b>'] = mappings(mappings.scroll_docs(-4), { 'i' }),
+      ['<C-f>'] = mappings(mappings.scroll_docs(4), { 'i' }),
 
   },
 
