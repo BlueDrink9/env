@@ -74,7 +74,6 @@ cmp.setup({
       ["<S-Tab>"] = mappings(mappings.select_prev_item({behavior=cmp.SelectBehavior.Insert}), { 'i', 'c' }),
       ['<C-b>'] = mappings(mappings.scroll_docs(-4), { 'i' }),
       ['<C-f>'] = mappings(mappings.scroll_docs(4), { 'i' }),
-
   },
 
 })
@@ -90,36 +89,6 @@ cmp.setup.cmdline('/', {
         { name = 'buffer' }
     }
 })
--- vim.cmd("inoremap <silent><expr> <Tab> cmp#complete()")
--- vim.cmd("inoremap <silent><expr> <C-e> cmp#confirm('<c-e>')")
-
-
-nvim_cmp_setup_lsp = function()
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-  capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = {
-      'documentation',
-      'detail',
-      'additionalTextEdits',
-    }
-  }
-
-  local lsp_installer = require("mason-lspconfig")
-  local nvim_lsp = require('lspconfig')
-  -- Use a loop to conveniently call 'setup' on multiple servers and
-  -- map buffer local keybindings when the language server attaches
-  local servers = lsp_installer.get_installed_servers()
-  print(servers)
-  for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup {
-      capabilities = capabilities,
-    }
-  end
-end
-if vim.g.plugs["nvim-lspconfig"] ~= nil then
-  nvim_cmp_setup_lsp()
-end
 
 
 -- get_bufnrs = function()

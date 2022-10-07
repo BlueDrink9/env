@@ -29,8 +29,20 @@ nvim_lsp = require('lspconfig')
 require("mason").setup()
 
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
+if vim.g.plugs["nvim-cmp"] ~= nil then
+  local nvim_cmp_capabilities = vim.lsp.protocol.make_client_capabilities()
+  nvim_cmp_capabilities.textDocument.completion.completionItem.snippetSupport = true
+  nvim_cmp_capabilities.textDocument.completion.completionItem.resolveSupport = {
+    properties = {
+      'documentation',
+      'detail',
+      'additionalTextEdits',
+    }
+  }
+end
+
+-- Use an on_attach function to only map keys etc after the language server
+-- attaches to the current buffer
 local on_attach = function(client, bufnr)
    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -39,9 +51,9 @@ local on_attach = function(client, bufnr)
    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
    -- Mappings.
-   local opts = { noremap=true, silent=true }
-   for key, cmd in pairs(to_bufmap) do
-      buf_set_keymap('n', key, "<cmd>lua vim.lsp." .. cmd .. "()<CR>", opts)
+   for key, cmd in pairs(lsp_nbufmaps) do
+      buf_set_keymap('n', key, "<cmd>lua vim.lsp." .. cmd .. "()<CR>",
+         { noremap=true, silent=true })
    end
 end
 
@@ -52,23 +64,29 @@ lsp_installer.setup({
       -- ensure_installed = { "pylsp" },
    })
 
+
+local default_handler = function (server_name)
+   require("lspconfig")[server_name].setup {
+      on_attach = on_attach,
+      capabilities = nvim_cmp_capabilities
+   }
+end
+
 -- Register a handler that will be called for each installed server when it's
 -- ready (i.e. when installation is finished or if the server is already
 -- installed).
-lsp_installer.setup_handlers{
-   function (server_name) -- default handler (optional)
-      require("lspconfig")[server_name].setup {}
-   end,
+lsp_installer.setup_handlers({
+      default_handler,
 
    -- (optional) Customize the options passed to the server
    ["pylsp"] = function ()
-      require('lspconfig').pylsp.setup {}
+      default_handler("pylsp")
       -- vim.cmd("UnPlug 'davidhalter/jedi-vim'")
       vim.cmd("let g:jedi#auto_initialization = 0")
       vim.cmd("let g:pymode = 0")
       vim.cmd("silent! au! myPymode")
    end
-}
+})
 
 require("trouble").setup {
    action_keys = { -- key mappings for actions in the trouble list
@@ -83,5 +101,4 @@ require("trouble").setup {
          return false
       end
    end,
-
 }
