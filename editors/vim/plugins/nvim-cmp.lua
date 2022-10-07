@@ -2,6 +2,21 @@
 vim.o.completeopt = "menuone,noselect"
 local cmp = require'cmp'
 mappings = cmp.mapping
+
+get_bufnrs_to_complete_from = function()
+  -- Include all visible buffers, not just default of current one.
+  local bufs = {}
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    buf = vim.api.nvim_win_get_buf(win)
+    local byte_size = vim.api.nvim_buf_get_offset(
+      buf, vim.api.nvim_buf_line_count(buf))
+    if byte_size < 1024 * 1024 then -- 1 Megabyte max
+      bufs[buf] = true
+    end
+  end
+  return vim.tbl_keys(bufs)
+end
+
 cmp.setup({
   --   completion = {
   --       autocomplete = true,
@@ -35,31 +50,19 @@ cmp.setup({
   },
 
   sources = {
+     { name = 'nvim_lsp' },
      {
         name = 'buffer',
         option = {
            keyword_length = 2,
-           get_bufnrs = function()
-              -- Include all visible buffers, not just default of current one.
-              local bufs = {}
-              for _, win in ipairs(vim.api.nvim_list_wins()) do
-                 buf = vim.api.nvim_win_get_buf(win)
-                 local byte_size = vim.api.nvim_buf_get_offset(
-                    buf, vim.api.nvim_buf_line_count(buf))
-                 if byte_size < 1024 * 1024 then -- 1 Megabyte max
-                    bufs[buf] = true
-                 end
-              end
-              return vim.tbl_keys(bufs)
-           end,
-        },
+           get_bufnrs = get_bufnrs_to_complete_from,
+         },
         sorting = {
            comparators = {
               function(...) return cmp_buffer:compare_locality(...) end,
            }
         }
      },
-     { name = 'nvim_lsp' },
      { name = 'vsnip' },
      { name = 'path' },
      { name = 'cmdline' },
@@ -77,6 +80,7 @@ cmp.setup({
   },
 
 })
+
 cmp.setup.cmdline(':', {
     sources = cmp.config.sources({
         { name = 'path' }
@@ -84,21 +88,12 @@ cmp.setup.cmdline(':', {
         { name = 'cmdline' }
     })
 })
+
 cmp.setup.cmdline('/', {
     sources = {
         { name = 'buffer' }
     }
 })
-
-
--- get_bufnrs = function()
---     local buf = vim.api.nvim_get_current_buf()
---     local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
---     if byte_size > 1024 * 1024 then -- 1 Megabyte max
---         return {}
---     end
---     return { buf }
--- end
 
 
 -- -- Tab and S-Tab keys need to be mapped to <C-n> and <C-p> when completion menu is visible. Following example will use Tab and S-Tab (shift+tab) to navigate completion menu and jump between vim-vsnip placeholders when possible:
