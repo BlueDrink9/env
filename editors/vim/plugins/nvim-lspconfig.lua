@@ -1,4 +1,4 @@
-local maps = vim.api.nvim_get_var('IDE_mappings')
+local maps = vim.g.IDE_mappings
 -- Mappings.
 -- See `:help vim.lsp.*` for documentation on any of the below functions
 local lsp_nbufmaps = {
@@ -20,9 +20,9 @@ local lsp_nbufmaps = {
    [maps.diagnostic_next] = 'diagnostic.goto_prev()',
    [maps.diagnostic_prev] = 'diagnostic.goto_next()',
    [maps.reformat] = 'buf.formatting()',
+   [maps.listErrs] = 'diagnostic.set_loclist()',
 --  ['<space>wr'] = 'buf.remove_workspace_folder()',
 --  ['<space>wl'] = '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))',
---  ['<space>q'] = 'diagnostic.set_loclist()',
 }
 
 nvim_lsp = require('lspconfig')
