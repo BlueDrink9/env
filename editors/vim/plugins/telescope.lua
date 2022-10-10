@@ -1,4 +1,5 @@
 local maps = vim.api.nvim_get_var('IDE_mappings')
+local telescope = require("telescope")
 vim.api.nvim_set_keymap(
    'n',
    maps.FuzzySearchBuffers,
@@ -24,7 +25,7 @@ for f, map in pairs(telescope_mappings) do
 end
 
 
-require('telescope').setup{
+telescope.setup{
    defaults = {
       mappings = {
          i = {
@@ -36,16 +37,16 @@ require('telescope').setup{
 
 
 if vim.fn.IsPluginUsed("telescope-dap.nvim") == 1 then
-   require('telescope').load_extension('dap')
+   telescope.load_extension('dap')
 end
 if vim.fn.IsPluginUsed("telescope-vimspector.nvim") == 1 then
-   require("telescope").load_extension("vimspector")
+   telescope.load_extension("vimspector")
 end
 if vim.fn.IsPluginUsed("telescope-fzf-native.nvim") == 1 then
-   require("telescope").load_extension("fzf")
+   telescope.load_extension("fzf")
 end
 if vim.fn.IsPluginUsed("telescope-coc.nvim") == 1 then
-   require("telescope").setup({
+   telescope.setup({
          extensions = {
             coc = {
                -- theme = 'ivy',
@@ -53,11 +54,23 @@ if vim.fn.IsPluginUsed("telescope-coc.nvim") == 1 then
             }
          },
       })
-   require('telescope').load_extension('coc')
+   telescope.load_extension('coc')
+end
+
+if vim.fn.IsPluginUsed("refactoring.nvim") == 1 then
+   telescope.load_extension('refactoring')
+   for _, mode in pairs({'v', 'n'}) do
+      vim.api.nvim_set_keymap(
+         mode,
+         maps.refactor,
+         ":lua require('telescope').extensions.refactoring.refactors()<CR>",
+         { noremap = true, silent = true, expr = false }
+         )
+   end
 end
 
 -- https://github.com/fcying/telescope-ctags-outline.nvim
-require('telescope').setup{
+telescope.setup{
    extensions = {
       ctags_outline = {
          --ctags option
@@ -73,14 +86,14 @@ require('telescope').setup{
 
 if vim.fn.IsPluginUsed("telescope-changes.nvim") == 1 then
 -- if vim.fn.IsPluginUsed("command_center.nvim") == 1 then
-   require('telescope').load_extension('changes')
-   require("telescope").load_extension("command_center")
-   require('telescope').load_extension('ctags_outline')
+   telescope.load_extension('changes')
+   telescope.load_extension("command_center")
+   telescope.load_extension('ctags_outline')
 end
 
 -- show current buf outline
--- require('telescope').extensions.ctags_outline.outline()
+-- telescope.extensions.ctags_outline.outline()
 -- :Telescope ctags_outline outline
 
 -- show all opened buf outline(use current buf filetype)
--- require('telescope').extensions.ctags_outline.outline({buf='all'})
+-- telescope.extensions.ctags_outline.outline({buf='all'})
