@@ -16,7 +16,7 @@ local lsp_nbufmaps = {
    [maps.rename] = 'buf.rename()',
    [maps.codeAction] = 'buf.code_action()',
    [maps.references] = 'buf.references()',
-   [maps.diagnostic] = 'diagnostic.show_line_diagnostics()',
+   [maps.diagnostic] = 'diagnostic.open_float()',
    [maps.diagnostic_next] = 'diagnostic.goto_prev()',
    [maps.diagnostic_prev] = 'diagnostic.goto_next()',
    [maps.reformat] = 'buf.formatting()',
@@ -50,6 +50,9 @@ local on_attach = function(client, bufnr)
    --Enable completion triggered by <c-x><c-o>
    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
+  -- Auto-show diagnostics on pause over them.
+  vim.cmd [[autocmd CursorHold,CursorHoldI <buffer> * lua vim.diagnostic.open_float(nil, {focus=false})]]
+
    -- Mappings.
    for key, cmd in pairs(lsp_nbufmaps) do
       buf_set_keymap('n', key, "<cmd>lua vim.lsp." .. cmd .. "()<CR>",
@@ -82,9 +85,9 @@ lsp_installer.setup_handlers({
    ["pylsp"] = function ()
       default_handler("pylsp")
       -- vim.cmd("UnPlug 'davidhalter/jedi-vim'")
-      vim.cmd("let g:jedi#auto_initialization = 0")
-      vim.cmd("let g:pymode = 0")
-      vim.cmd("silent! au! myPymode")
+      vim.cmd [[let g:jedi#auto_initialization = 0]]
+      vim.cmd [[let g:pymode = 0]]
+      vim.cmd [[silent! au! myPymode"]]
    end
 })
 
