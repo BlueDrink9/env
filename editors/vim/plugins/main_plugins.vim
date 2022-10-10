@@ -301,6 +301,7 @@ if has("nvim")
 else
     Plug 'https://github.com/jceb/vim-orgmode', {'for': 'org'}
 endif
+Plug 'https://github.com/Jorengarenar/vim-SQL-UPPER',  {'for': 'sql'}
 " {]} ---------- Basic extra filetype support ----------
 
 " {[} ---------- Git ----------
