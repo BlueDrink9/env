@@ -49,9 +49,9 @@ cmp.setup({
     end,
   },
 
-  sources = cmp.config.sources(
-     {{ name = 'nvim_lsp' }},
-     {{
+  sources = cmp.config.sources({
+        { name = 'nvim_lsp' },
+        {
            name = 'buffer',
            option = {
               keyword_length = 2,
@@ -62,13 +62,13 @@ cmp.setup({
                  function(...) return cmp_buffer:compare_locality(...) end,
               }
            }
-     }},
-     {{ name = 'vsnip' }},
-     {{ name = 'path' }},
-     {{ name = 'cmdline' }},
-     {{ name = 'nvim_lsp_signature_help' }},
-     {{ name = 'vim-dadbod-completion' }},
-     {{
+        },
+        { name = 'vsnip' },
+        { name = 'path' },
+        { name = 'cmdline' },
+        { name = 'nvim_lsp_signature_help' },
+        { name = 'vim-dadbod-completion' },
+        {
            name = 'spell',
            option = {
               keep_all_entries = false,
@@ -76,13 +76,15 @@ cmp.setup({
                  return true
               end,
            },
-     }}
-  ),
-
+        },
+     }),
 
   mapping = {
       ['<C-e>'] = mappings(mappings.complete(), { 'i', 'c' }),
-      ['<C-e>'] = mappings.confirm({ select = true }),
+      ['<C-e>'] = mappings.confirm({ select = false }),
+      -- Because I tab and go, the current selection when I push space is already the one I want. But this _is_ useful for snippets, because they will be expanded, not just selected.
+      ['<space>'] = mappings.confirm({ select = false }),
+      ['<return>'] = mappings.confirm({ select = false }),
       ["<Tab>"] = mappings(mappings.select_next_item({behavior=cmp.SelectBehavior.Insert}), { 'i', 'c' }),
       ["<S-Tab>"] = mappings(mappings.select_prev_item({behavior=cmp.SelectBehavior.Insert}), { 'i', 'c' }),
       ['<C-b>'] = mappings(mappings.scroll_docs(-4), { 'i' }),
@@ -92,17 +94,17 @@ cmp.setup({
 })
 
 cmp.setup.cmdline(':', {
-    sources = cmp.config.sources(
-        {{ name = 'path' }},
-        {{ name = 'cmdline' }}
-    )
+    sources = cmp.config.sources({
+        { name = 'path' },
+        { name = 'cmdline' }
+    })
 })
 
 cmp.setup.cmdline('/', {
-    sources = cmp.config.sources(
-       {{ name = 'buffer' }},
-       {{ name = 'nvim_lsp_document_symbol' }}
-    )
+    sources = cmp.config.sources({
+       { name = 'buffer' },
+       { name = 'nvim_lsp_document_symbol' }
+    })
 })
 
 
