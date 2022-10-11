@@ -1,1 +1,10 @@
-{}
+{
+  "init": {
+    "prefix": ["init"],
+    "body": [
+      "def __init__(self, ${1:arg}):",
+      "self.${1} = ${1}"
+    ],
+    "description": "Class __init__ method"
+  }
+}

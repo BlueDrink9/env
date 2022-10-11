@@ -1,4 +1,6 @@
 {
+
+
   "Modeline": {
     "prefix": ["modeline"],
     "body": [
@@ -7,4 +9,8 @@
     ],
     "description": "Add my foldmarker and tabwidth modeline"
   }
+
+
+
+
 }
