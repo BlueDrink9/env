@@ -1,0 +1,10 @@
+{
+  "Modeline": {
+    "prefix": ["modeline"],
+    "body": [
+      "$LINE_COMMENT vim: set tw=78 ts=${1:4} sw=${1}",
+      "$LINE_COMMENT vim: foldmethod=marker foldmarker={[},{]}"
+    ],
+    "description": "Add my foldmarker and tabwidth modeline"
+  }
+}
