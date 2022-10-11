@@ -564,14 +564,18 @@ lua << EOF
 
             "VirtualTextErr",          -- "display error results as virtual text
             -- "TempFloatingWindow",      -- "display results in a floating window
-            -- "LongTempFloatingWindow",  -- "same as above, but only long results. To use with VirtualText__
+            "LongTempFloatingWindow",  -- "same as above, but only long results. To use with VirtualText__
             -- "Terminal"                 -- "display results in a vertical split
+            "TerminalWithCode",        --# display results and code history in a vertical split
             },
             })
 EOF
-    " call Nmap(g:IDE_mappings.g:IDE_mappings.REPLSendLine, "<Plug>SnipRun")
-    " call Nmap(g:IDE_mappings.g:IDE_mappings.REPLSend, "<Plug>SnipRunOperator")
-    " call Vmap(g:IDE_mappings.g:IDE_mappings.REPLSend, "<Plug>SnipRun")
+    call Nmap(g:IDE_mappings.g:IDE_mappings.REPLSendLine, "<Plug>SnipRun")
+    call Vmap(g:IDE_mappings.g:IDE_mappings.REPLSend, "<Plug>SnipRun")
+    call Nmap(g:IDE_mappings.g:IDE_mappings.REPLSend, "<Plug>SnipRunOperator")
+    call Nmap(g:IDE_mappings.g:IDE_mappings.REPLCancel, "<Plug>SnipReset")
+    call Nmap(g:IDE_mappings.g:IDE_mappings.REPLClear, "<Plug>SnipClose")
+    call Nmap(g:IDE_mappings.g:IDE_mappings.REPLClose, "<Plug>SnipClose")
     call <sid>sniprunSetup()
 endif
 
