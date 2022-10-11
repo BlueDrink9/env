@@ -4,7 +4,7 @@ local cmp = require'cmp'
 mappings = cmp.mapping
 
 get_bufnrs_to_complete_from = function()
-  -- Include all visible buffers, not just default of current one.
+  -- Include all visible buffers (not just default of current one) below a certain size.
   local bufs = {}
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     buf = vim.api.nvim_win_get_buf(win)
@@ -49,26 +49,36 @@ cmp.setup({
     end,
   },
 
-  sources = {
-     { name = 'nvim_lsp' },
-     {
-        name = 'buffer',
-        option = {
-           keyword_length = 2,
-           get_bufnrs = get_bufnrs_to_complete_from,
-         },
-        sorting = {
-           comparators = {
-              function(...) return cmp_buffer:compare_locality(...) end,
+  sources = cmp.config.sources(
+     {{ name = 'nvim_lsp' }},
+     {{
+           name = 'buffer',
+           option = {
+              keyword_length = 2,
+              get_bufnrs = get_bufnrs_to_complete_from,
+           },
+           sorting = {
+              comparators = {
+                 function(...) return cmp_buffer:compare_locality(...) end,
+              }
            }
-        }
-     },
-     { name = 'vsnip' },
-     { name = 'path' },
-     { name = 'cmdline' },
-     { name = 'nvim_lsp_signature_help' },
+     }},
+     {{ name = 'vsnip' }},
+     {{ name = 'path' }},
+     {{ name = 'cmdline' }},
+     {{ name = 'nvim_lsp_signature_help' }},
+     {{ name = 'vim-dadbod-completion' }},
+     {{
+           name = 'spell',
+           option = {
+              keep_all_entries = false,
+              enable_in_context = function()
+                 return true
+              end,
+           },
+     }}
+  ),
 
-  },
 
   mapping = {
       ['<C-e>'] = mappings(mappings.complete(), { 'i', 'c' }),
@@ -82,17 +92,17 @@ cmp.setup({
 })
 
 cmp.setup.cmdline(':', {
-    sources = cmp.config.sources({
-        { name = 'path' }
-    }, {
-        { name = 'cmdline' }
-    })
+    sources = cmp.config.sources(
+        {{ name = 'path' }},
+        {{ name = 'cmdline' }}
+    )
 })
 
 cmp.setup.cmdline('/', {
-    sources = {
-        { name = 'buffer' }
-    }
+    sources = cmp.config.sources(
+       {{ name = 'buffer' }},
+       {{ name = 'nvim_lsp_document_symbol' }}
+    )
 })
 
 
