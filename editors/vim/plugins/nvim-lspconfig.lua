@@ -2,27 +2,30 @@ local maps = vim.g.IDE_mappings
 -- Mappings.
 -- See `:help vim.lsp.*` for documentation on any of the below functions
 local lsp_nbufmaps = {
-   ['<space>wa'] = 'buf.add_workspace_folder()',
-   [maps.implementation] = 'buf.declaration()',
-   [maps.implementation2] = 'buf.declaration()',
-   [maps.definition] = 'buf.definition()',
-   [maps.documentation] = 'buf.hover()',
-   [maps.documentation2] = 'buf.hover()',
-   [maps.documentation3] = 'buf.hover()',
-   [maps.implementation] = 'buf.implementation()',
-   [maps.implementation2] = 'buf.implementation()',
-   [maps.type_definition] = 'buf.type_definition()',
-   [maps.type_definition2] = 'buf.type_definition()',
-   [maps.rename] = 'buf.rename()',
-   [maps.codeAction] = 'buf.code_action()',
-   [maps.references] = 'buf.references()',
-   [maps.diagnostic] = 'diagnostic.open_float()',
-   [maps.diagnostic_next] = 'diagnostic.goto_prev()',
-   [maps.diagnostic_prev] = 'diagnostic.goto_next()',
-   [maps.reformat] = 'buf.formatting()',
-   [maps.listErrs] = 'diagnostic.set_loclist()',
---  ['<space>wr'] = 'buf.remove_workspace_folder()',
---  ['<space>wl'] = '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))',
+  ['<space>wa'] = 'buf.add_workspace_folder()',
+  [maps.implementation] = 'buf.declaration()',
+  [maps.implementation2] = 'buf.declaration()',
+  [maps.definition] = 'buf.definition()',
+  [maps.documentation] = 'buf.hover()',
+  [maps.documentation2] = 'buf.hover()',
+  [maps.documentation3] = 'buf.hover()',
+  [maps.implementation] = 'buf.implementation()',
+  [maps.implementation2] = 'buf.implementation()',
+  [maps.type_definition] = 'buf.type_definition()',
+  [maps.type_definition2] = 'buf.type_definition()',
+  [maps.rename] = 'buf.rename()',
+  [maps.codeAction] = 'buf.code_action()',
+  [maps.references] = 'buf.references()',
+  [maps.reformat] = 'buf.formatting()',
+  --  ['<space>wr'] = 'buf.remove_workspace_folder()',
+  --  ['<space>wl'] = '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders))()',
+}
+
+local diagnostic_nbufmaps = {
+  [maps.listErrs] = 'set_loclist()',
+  [maps.diagnostic] = 'open_float(nil, {focus=false})',
+  [maps.diagnostic_prev] = 'goto_prev()',
+  [maps.diagnostic_next] = 'goto_next()',
 }
 
 nvim_lsp = require('lspconfig')
@@ -51,13 +54,18 @@ local on_attach = function(client, bufnr)
    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Auto-show diagnostics on pause over them.
-  vim.cmd [[autocmd CursorHold,CursorHoldI <buffer> * lua vim.diagnostic.open_float(nil, {focus=false})]]
+  vim.cmd [[autocmd myIDE CursorHold,CursorHoldI <buffer> lua vim.diagnostic.open_float(nil, {focus=false})]]
 
-   -- Mappings.
-   for key, cmd in pairs(lsp_nbufmaps) do
-      buf_set_keymap('n', key, "<cmd>lua vim.lsp." .. cmd .. "()<CR>",
-         { noremap=true, silent=true })
-   end
+  -- Mappings.
+  prefixes = {lsp="vim.lsp.", diag="vim.diagnostic."}
+  to_map_tables = {lsp=lsp_nbufmaps, diag=diagnostic_nbufmaps}
+  for k, table in pairs(to_map_tables) do
+    for key, cmd in pairs(table) do
+      local rhs = "<cmd>lua " .. prefixes[k] .. cmd .. "<CR>"
+      buf_set_keymap('n', key, rhs,
+        { noremap=true, silent=true })
+    end
+  end
 end
 
 
