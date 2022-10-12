@@ -2,10 +2,10 @@ local maps = vim.g.IDE_mappings
 -- Mappings.
 -- See `:help vim.lsp.*` for documentation on any of the below functions
 local lsp_nbufmaps = {
-  ['<space>wa'] = 'buf.add_workspace_folder()',
   [maps.implementation] = 'buf.declaration()',
   [maps.implementation2] = 'buf.declaration()',
   [maps.definition] = 'buf.definition()',
+  [maps.definition2] = 'buf.definition()',
   [maps.documentation] = 'buf.hover()',
   [maps.documentation2] = 'buf.hover()',
   [maps.documentation3] = 'buf.hover()',
@@ -16,8 +16,10 @@ local lsp_nbufmaps = {
   [maps.rename] = 'buf.rename()',
   [maps.codeAction] = 'buf.code_action()',
   [maps.references] = 'buf.references()',
+  [maps.references2] = 'buf.references()',
   [maps.reformat] = 'buf.formatting()',
-  --  ['<space>wr'] = 'buf.remove_workspace_folder()',
+  -- ['<space>wa'] = 'buf.add_workspace_folder()',
+  -- ['<space>wr'] = 'buf.remove_workspace_folder()',
   --  ['<space>wl'] = '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders))()',
 }
 
