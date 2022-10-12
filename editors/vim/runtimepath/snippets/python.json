@@ -6,5 +6,35 @@
       "self.${1} = ${1}"
     ],
     "description": "Class __init__ method"
+  },
+
+  "Pandas import": {
+    "prefix": ["pd"],
+    "body": [
+      "import pandas as pd"
+    ]
+  },
+
+  "Numpy import": {
+    "prefix": ["np"],
+    "body": [
+      "import numpy as np"
+    ]
+  },
+
+  "Matplotlib and seaborn import": {
+    "prefix": ["plt", "sns"],
+    "body": [
+      "from matplotlib import pyplot as plt",
+      "import seaborn as sns"
+    ]
+  },
+
+  "Path import": {
+    "prefix": ["pathlib"],
+    "body": [
+      "from pathlib import Path"
+    ]
   }
+
 }
