@@ -39,8 +39,9 @@ gap=15
 bspc config window_gap $gap;
 bspc config left_padding -$gap
 bspc config right_padding -$gap
-bspc config bottom_padding $(($PANEL_HEIGHT-$gap))
 bspc config top_padding -$gap
+# Enough to avoid taskbar, but without leaving a gap at the bottom.
+bspc config bottom_padding $(($PANEL_HEIGHT-$gap))
 unset gap
 
 bspc config split_ratio          0.52
