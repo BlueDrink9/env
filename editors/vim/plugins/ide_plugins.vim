@@ -7,6 +7,9 @@ augroup myIDE
 augroup end
 
 " {[} ---------- Misc ----------
+" for databases. Use with :Db (URL)
+Plug 'https://github.com/tpope/vim-dadbod'
+Plug 'https://github.com/kristijanhusak/vim-dadbod-completion'
 if has('nvim-0.5')
     " Dependency for a lot of plugins
     Plug 'nvim-lua/plenary.nvim'
@@ -382,6 +385,8 @@ if has("timers")
         Plug 'hrsh7th/nvim-cmp'
         Plug 'hrsh7th/cmp-vsnip'
         Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
+        Plug 'hrsh7th/cmp-nvim-lsp-document-symbol'
+        Plug 'https://github.com/f3fora/cmp-spell'
         " Super speedy, but slightly more complex requirements
         " https://github.com/ms-jpq/coq_nvim
 
@@ -412,10 +417,12 @@ endif
 " {]} ---------- Completion----------
 
 " {[} ---------- Snippits ----------
-    " Snippet libs
+" Snippet libs
 Plug 'https://github.com/honza/vim-snippets'
 Plug 'https://github.com/rafamadriz/friendly-snippets'
-if has('nvim-0.5') && !IsPluginUsed("coc.nvim")
+Plug 'https://github.com/ylcnfrht/vscode-python-snippet-pack'
+
+if has('nvim-0.5') && !IsPluginUsed('coc.nvim')
     " Coc only support ultisips, neosnippet
 " if has('nvim') || v:version >= 800
 
