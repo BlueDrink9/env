@@ -25,7 +25,7 @@ cmp.setup({
   -- autocomplete = true;
   -- debug = false;
   -- min_length = 1;
-  -- preselect = 'enable';
+  preselect = cmp.PreselectMode.None;
   -- throttle_time = 80;
   -- source_timeout = 200;
   -- resolve_timeout = 800;
@@ -40,6 +40,9 @@ cmp.setup({
   --   min_width = 60,
   --   max_height = math.floor(vim.o.lines * 0.3),
   --   min_height = 1,
+  -- },
+  -- view = {
+  --   entries = {name = 'custom', selection_order = 'near_cursor' }
   -- },
 
   snippet = {
