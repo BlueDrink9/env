@@ -107,6 +107,7 @@ if has('nvim-0.5')
     Plug 'https://github.com/folke/trouble.nvim'
     " Create appropriate colours for old colourschemes
     Plug 'https://github.com/folke/lsp-colors.nvim'
+    Plug 'https://github.com/Hrle97/nvim.diagnostic_virtual_text_config'
 else
     if has('win32')
         Plug 'autozimu/LanguageClient-neovim', {

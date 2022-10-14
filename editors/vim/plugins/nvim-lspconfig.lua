@@ -115,3 +115,5 @@ require("trouble").setup {
       end
    end,
 }
+
+require("nvim.diagnostic_virtual_text_config").setup {}
