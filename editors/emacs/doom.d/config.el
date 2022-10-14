@@ -203,7 +203,9 @@
         company-selection-wrap-around t
         company-minimum-prefix-length 1)
 
-;; recommended for company-fuzzy
+  ;; (setq company-posframe-font doom-font)
+  (setq company-frontends '(company-tng-frontend company-box-frontend))
+  ;; recommended for company-fuzzy
   (setq
         company-require-match nil            ; Don't require match, so you can still move your cursor as expected.
         company-tooltip-align-annotations t  ; Align annotation to the right side.
@@ -227,7 +229,6 @@
   (setq company-fuzzy-prefix-on-top t)
   (setq company-fuzzy-show-annotation 1)
   (company-statistics-mode)
-  (setq company-posframe-font doom-font)
   ;; (company-flx-mode +1)
 
   (add-to-list 'hippie-expand-try-functions-list (lambda (arg) (call-interactively 'company-complete)))

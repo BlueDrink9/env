@@ -73,8 +73,8 @@
 
 ;; Completions
 ;; (package! counsel)
-;; Use child frame for emacs. Compatible with tng, in contrast to box.
-(package! company-posframe)
+;; (package! company-posframe)
+(package! company-box)
 (package! company-fuzzy)
 (package! company-statistics)
 (package! company-bibtex)
