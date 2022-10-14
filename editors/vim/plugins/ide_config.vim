@@ -7,7 +7,7 @@ augroup myIDE
 augroup end
 
 " {[} ---------- Misc ----------
-if IsPluginUsed("mason")
+if IsPluginUsed('mason')
 lua << EOF
    require("mason").setup({
          ui = {
@@ -25,7 +25,7 @@ lua << EOF
 EOF
 endif
 
-if IsPluginUsed("nvim-colorizer.lua")
+if IsPluginUsed('nvim-colorizer.lua')
     lua require'colorizer'.setup()
 endif
 " if IsPluginUsed("noice.nvim")
@@ -42,22 +42,22 @@ endif
 " endif
 
 
-if IsPluginUsed("vim-peekaboo")
+if IsPluginUsed('vim-peekaboo')
     let g:peekaboo_delay = 200  " ms
 endif
-if IsPluginUsed("context.vim")
+if IsPluginUsed('context.vim')
     let g:context_filetype_blacklist = []
     let g:context_add_autocmds = 1
 endif
 
-if IsPluginUsed("indentLine")
+if IsPluginUsed('indentLine')
     let g:indentLine_enabled=1
     let g:indentLine_char="┆"
     " Don't override my conceal settings.
     let g:indentLine_setConceal = 0
     " let g:indentLine_setColors=0
 endif
-if IsPluginUsed("indent-blankline.nvim")
+if IsPluginUsed('indent-blankline.nvim')
     for hl in [
                 \ "IndentBlanklineIndent1 guifg=Red gui=nocombine",
                 \ "IndentBlanklineIndent2 guifg=Yellow gui=nocombine",
@@ -80,7 +80,7 @@ lua << EOF
             "IndentBlanklineIndent5",
         },
     }
-    if vim.fn.IsPluginUsed("nvim-treesitter") == 1 then
+    if vim.fn.IsPluginUsed('nvim-treesitter') == 1 then
         require("indent_blankline").setup {
             indent_blankline_use_treesitter = true,
             -- May be a touch slow
@@ -91,14 +91,14 @@ lua << EOF
     end
 EOF
 endif
-if IsPluginUsed("echodoc.vim")
+if IsPluginUsed('echodoc.vim')
     let g:echodoc#enable_at_startup = 1
     let g:echodoc#type = 'signature'
 endif
 
-if IsPluginUsed("nvim-whichkey-setup.lua")
+if IsPluginUsed('nvim-whichkey-setup.lua')
 endif
-if IsPluginUsed("vim-which-key")
+if IsPluginUsed('vim-which-key')
     nnoremap <leader> :<C-U>WhichKey '<leader>'<CR>
     vnoremap <leader> :<C-U>WhichKeyVisual '<leader>'<CR>
 endif
@@ -108,21 +108,21 @@ endif
 " These would be unloaded for CoC.nvim, which does completion and LSP
 " Deoplete and ale will use them though.
 if has('nvim-0.5')
-    if IsPluginUsed("nvim-lspconfig")
+    if IsPluginUsed('nvim-lspconfig')
         call SourcePluginFile("nvim-lspconfig.lua")
     endif
 else
-    if IsPluginUsed("languageclient-neovim")
+    if IsPluginUsed('languageclient-neovim')
         call SourcePluginFile("languageclient-neovim.vim")
     endif
 endif
 " {]} ---------- LSP ----------
 
 " {[} ---------- Linting ----------
-if IsPluginUsed("nvim-lint")
+if IsPluginUsed('nvim-lint')
     au BufWritePost <buffer> lua require('lint').try_lint()
 endif
-if IsPluginUsed("null-ls.nvim")
+if IsPluginUsed('null-ls.nvim')
 lua << EOF
     local null_ls = require 'null-ls'
     require ('mason-null-ls').setup({
@@ -160,7 +160,7 @@ lua << EOF
 EOF
 endif
 
-if IsPluginUsed("ale")
+if IsPluginUsed('ale')
     let g:ale_sign_error = 'X'
     let g:ale_sign_warning = '!'
     let g:ale_change_sign_column_color = 1
@@ -181,7 +181,7 @@ if IsPluginUsed("ale")
     " let g:ale_linters = {'r': []}
 endif
 
-if IsPluginUsed("syntastic.git")
+if IsPluginUsed('syntastic.git')
     let g:syntastic_cpp_compiler_options="-std=c++11"
     "  Airline handles status stuff (or should)
     " set statusline+=%#warningmsg#
@@ -209,7 +209,7 @@ endif
 " {]} ---------- Linting----------
 
 " {[} ---------- Tags ----------
-if IsPluginUsed("vista.vim")
+if IsPluginUsed('vista.vim')
     " Stay in current window when opening vista.
     " let g:vista_stay_on_open = 0
     let s:tagbarOpenCmd="Vista!!"
@@ -221,7 +221,7 @@ if IsPluginUsed("vista.vim")
                 \ }
     let g:vista_fzf_preview = ['right:50%']
 endif
-if IsPluginUsed("tagbar")
+if IsPluginUsed('tagbar')
     let s:tagbarOpenCmd="TagbarToggle"
     " Uncomment to open tagbar automatically whenever possible
     " autocmd myIDE BufEnter * nested :call tagbar#autoopen(0)
@@ -231,7 +231,7 @@ if exists("s:tagbarOpenCmd")
     exec 'nnoremap <leader>tt :' . s:tagbarOpenCmd . '<cr>'
 endif
 
-if IsPluginUsed("cscope.vim")
+if IsPluginUsed('cscope.vim')
     nnoremap <leader>if :call cscope#findInteractive(expand('<cword>'))<CR>
     " nnoremap <leader>l :call ToggleLocationList()<CR>
 endif
@@ -243,7 +243,7 @@ endif
 
 " {[} ---------- Lang-specific ----------
 " {[} ------ Python ------
-if IsPluginUsed("python-mode")
+if IsPluginUsed('python-mode')
     let g:pymode_options = 0
     let g:pymode_options_max_line_length = 88
     " let g:pymode_rope = 1
@@ -286,7 +286,7 @@ endif
 
 let g:SimpylFold_docstring_preview = 1
 
-if IsPluginUsed("jedi-vim")
+if IsPluginUsed('jedi-vim')
     if IsPluginUsed('deoplete.nvim')
         let g:jedi#completions_enabled = 0
     endif
@@ -300,7 +300,7 @@ if IsPluginUsed("jedi-vim")
     let g:jedi#rename_command = g:IDE_mappings.rename
 endif
 
-if IsPluginUsed("jupytext.vim")
+if IsPluginUsed('jupytext.vim')
     let g:jupytext_fmt = 'py:percent'
     function! s:jupytextSetup()
         " Use py:percent folding instead of SimpylFold python folding.
@@ -317,10 +317,10 @@ endif
 " {]} ------ Python ------
 
 " {[} ---------- R ----------
-if IsPluginUsed("nvim-R")
+if IsPluginUsed('nvim-R')
     call SourcePluginFile("nvim-R.vim")
 endif
-if IsPluginUsed("vim-r-plugin")
+if IsPluginUsed('vim-r-plugin')
     " R output is highlighted with current colorscheme
     let g:rout_follow_colorscheme = 1
     " Always split horizontally.
@@ -348,18 +348,18 @@ endif
 " {]} ---------- R ----------
 
 " {[} ------ C ------
-if IsPluginUsed("vim-cpp-enhanced-highlight")
+if IsPluginUsed('vim-cpp-enhanced-highlight')
     let g:cpp_class_decl_highlight = 1
     let g:cpp_member_variable_highlight = 1
 endif
-if IsPluginUsed("c-support")
+if IsPluginUsed('c-support')
     let g:C_Ctrl_j = 'off'
 endif
 " {]} ------ C ------
 
 
 " Advanced markdown formatting. Lots of features.
-if IsPluginUsed("mkdx")
+if IsPluginUsed('mkdx')
     let g:mkdx#settings = {
                 \ 'enter':          { 'shift': 1 },
                 \ 'map':            { 'prefix': '<localleader>', 'enable': 1 },
@@ -374,7 +374,7 @@ endif
 " {]} ---------- Lang-specific ----------
 
 " {[} ---------- Git ----------
-if IsPluginUsed("git-messenger.vim")
+if IsPluginUsed('git-messenger.vim')
     let g:git_messenger_no_default_mappings=v:true
     " Include diff for all files in commit. Could be 'current'
     let g:git_messenger_include_diff="all"
@@ -382,23 +382,23 @@ if IsPluginUsed("git-messenger.vim")
     " running command a second time.
     let g:git_messenger_always_into_popup=v:true
 endif
-if IsPluginUsed("neogit")
+if IsPluginUsed('neogit')
     lua require('neogit').setup {}
     command! Magit Neogit
     nnoremap <space>gg :Neogit<CR>
 endif
-if IsPluginUsed("vimagit")
+if IsPluginUsed('vimagit')
     nnoremap <space>gg :Magit<CR>
 endif
 " {]} ---------- Git----------
 
 " {[} ---------- IDE ----------
-if IsPluginUsed("errormarker.vim")
+if IsPluginUsed('errormarker.vim')
     let &errorformat="%f:%l:%c: %t%*[^:]:%m,%f:%l: %t%*[^:]:%m," . &errorformat
     let errormarker_disablemappings = 1
     cabbrev er ErrorAtCursor
 endif
-if IsPluginUsed("vim-startify")
+if IsPluginUsed('vim-startify')
     let g:startify_session_dir = CreateVimDir("sessions")
     let g:startify_lists = [
                 \ { 'type': 'sessions',  'header': ['   Sessions']       },
@@ -414,41 +414,41 @@ if IsPluginUsed("vim-startify")
     let g:startify_custom_header = 'startify#fortune#boxed()'
 endif
 
-if IsPluginUsed("vim-test")
+if IsPluginUsed('vim-test')
     " make test commands execute using dispatch.vim
-    let test#strategy = "dispatch"
+    let test#strategy = 'dispatch'
 endif
 
-if IsPluginUsed("neoformat")
+if IsPluginUsed('neoformat')
     nnoremap g= :Neoformat<CR>
 endif
 
-if IsPluginUsed("float-preview.nvim")
+if IsPluginUsed('float-preview.nvim')
     let g:float_preview#docked = 0
 endif
 
-if IsPluginUsed("nvim-treesitter")
-    call SourcePluginFile("treesitter.lua")
+if IsPluginUsed('nvim-treesitter')
+    call SourcePluginFile('treesitter.lua')
 endif
 " {]} ---------- IDE----------
 
 " {[} ---------- Debugging ----------
-if IsPluginUsed("vim-unstack")
+if IsPluginUsed('vim-unstack')
     " IDK what mapping to use here.
-    let g:unstack_mapkey="<F2>"
+    let g:unstack_mapkey='<F2>'
     " Top to bottom splits
-    let g:unstack_layout = "portrait"
+    let g:unstack_layout = 'portrait'
 endif
-if IsPluginUsed("vimspector")
-    call SourcePluginFile("vimspector.vim")
+if IsPluginUsed('vimspector')
+    call SourcePluginFile('vimspector.vim')
 endif
 " {]} ---------- Debugging ----------
 
 " {[} ---------- Completion ----------
 
-if IsPluginUsed("SyntaxComplete")
+if IsPluginUsed('SyntaxComplete')
     autocmd myPlugins Filetype *
-                \	if &omnifunc == "" |
+                \	if &omnifunc == '' |
                 \		setlocal omnifunc=syntaxcomplete#Complete |
                 \	endif
     " This function gives list of completion items, for use in other
@@ -456,38 +456,38 @@ if IsPluginUsed("SyntaxComplete")
     " let s:syntaxKeywords = OmniSyntaxList( [] )
 endif
 
-if IsPluginUsed("coc.nvim")
-    call SourcePluginFile("coc.nvim.vim")
+if IsPluginUsed('coc.nvim')
+    call SourcePluginFile('coc.nvim.vim')
 endif
 
-if IsPluginUsed("copilot.vim")
-    imap <silent><script><expr> <C-L> copilot#Accept("\<CR>")
+if IsPluginUsed('copilot.vim')
+    imap <silent><script><expr> <C-L> copilot#Accept('\<CR>')
     let g:copilot_no_tab_map = v:true
 endif
 
-if IsPluginUsed("nvim-cmp")
-    call SourcePluginFile("nvim-cmp.lua")
+if IsPluginUsed('nvim-cmp')
+    call SourcePluginFile('nvim-cmp.lua')
 endif
 
-if IsPluginUsed("ycm")
-    call SourcePluginFile("ycm.vim")
+if IsPluginUsed('ycm')
+    call SourcePluginFile('ycm.vim')
 endif
-if IsPluginUsed("deoplete")
-    call SourcePluginFile("deoplete.vim")
+if IsPluginUsed('deoplete')
+    call SourcePluginFile('deoplete.vim')
 endif
 
-if IsPluginUsed("completor.vim")
+if IsPluginUsed('completor.vim')
     " Use TAB to complete when typing words, else inserts TABs as usual.  Uses
     " dictionary, source files, and completor to find matching words to complete.
 
     " Check the plugin has loaded correctly before overriding
     " completion command.
     if exists('completor#do')
-        let g:completionCommand = "\<C-R>=completor#do('complete')\<CR>"
+        let g:completionCommand = '\<C-R>=completor#do("complete")\<CR>'
     endif
     let g:completor_auto_trigger = 1
 endif
-if IsPluginUsed("vim-mucomplete")
+if IsPluginUsed('vim-mucomplete')
     let g:mucomplete#enable_auto_at_startup = 1
     " Only pause after no typing for [updatetime]
     let g:mucomplete#delayed_completion = 1
@@ -496,20 +496,20 @@ endif
 " {]} ---------- Completion----------
 "
 " {[} ---------- Snippits ----------
-if IsPluginUsed("vim-vsnip")
-    call Imap(g:IDE_mappings.snippet_expand, "<Plug>(vsnip-expand-or-jump)")
-    call Vmap(g:IDE_mappings.snippet_expand, "<Plug>(vsnip-expand-or-jump)")
-    let g:vsnip_snippet_dir = PathExpand(s:scriptdir . "/../runtimepath/snippets")
+if IsPluginUsed('vim-vsnip')
+    call Imap(g:IDE_mappings.snippet_expand, '<Plug>(vsnip-expand-or-jump)')
+    call Vmap(g:IDE_mappings.snippet_expand, '<Plug>(vsnip-expand-or-jump)')
+    let g:vsnip_snippet_dir = PathExpand(s:scriptdir . '/../runtimepath/snippets')
 endif
 
-if IsPluginUsed("neosnippet-snippets")
+if IsPluginUsed('neosnippet-snippets')
     let g:neosnippet#enable_snipmate_compatibility=1
     " let g:neosnippet#enable_conceal_markers=0
-    if !IsPluginUsed("coc.nvim")
-        call Imap(g:IDE_mappings.snippet_expand, "<Plug>(neosnippet_expand_or_jump)")
-        call Vmap(g:IDE_mappings.snippet_expand, "<Plug>(neosnippet_expand_or_jump)")
-        call Imap(g:IDE_mappings.snippet_next, "<Plug>(neosnippet_jump)")
-        call Vmap(g:IDE_mappings.snippet_next, "<Plug>(neosnippet_jump)")
+    if !IsPluginUsed('coc.nvim')
+        call Imap(g:IDE_mappings.snippet_expand, '<Plug>(neosnippet_expand_or_jump)')
+        call Vmap(g:IDE_mappings.snippet_expand, '<Plug>(neosnippet_expand_or_jump)')
+        call Imap(g:IDE_mappings.snippet_next, '<Plug>(neosnippet_jump)')
+        call Vmap(g:IDE_mappings.snippet_next, '<Plug>(neosnippet_jump)')
     endif
     " imap <expr><TAB>
     "             \ pumvisible() ? "\<C-n>" :
@@ -518,8 +518,8 @@ if IsPluginUsed("neosnippet-snippets")
     " smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
     "             \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 endif
-if IsPluginUsed("ultisnips")
-    if !IsPluginUsed("coc.nvim")
+if IsPluginUsed('ultisnips')
+    if !IsPluginUsed('coc.nvim')
         let g:UltiSnipsExpandTrigger = g:IDE_mappings.snippet_expand
         let g:UltiSnipsJumpForwardTrigger = g:IDE_mappings.snippet_next
         let g:UltiSnipsJumpBackwardTrigger = g:IDE_mappings.snippet_prev
@@ -539,7 +539,7 @@ if IsPluginUsed("ultisnips")
     "
 endif
 " {[} ---------- Snipmate ----------
-if IsPluginUsed("vim-snipmate")
+if IsPluginUsed('vim-snipmate')
     let g:snipMate = {}
     let g:snipMate['description_in_completion'] = 1
     let g:snipMate['no_match_completion_feedkeys_chars'] = ''
