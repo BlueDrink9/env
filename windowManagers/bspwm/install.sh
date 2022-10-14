@@ -14,9 +14,21 @@ do${installID}() {
     chmod u+x "${baseRC}"
     mkdir -p ~/.config/sxhkd
     touch ~/.config/sxhkd/sxhkdrc
+    replace_plasma_wm
 }
 END
 )"
+
+replace_plasma_wm(){
+  # Required for KDE 5.25 and newer.
+  # Taken from https://maxnatt.gitlab.io/posts/kde-plasma-with-i3wm/#kde-525-and-newer
+  user_sysd_dir="$XDG_CONFIG_HOME/systemd/user/"
+  mkdir -p "$user_sysd_dir"
+  cp "$($SCRIPTDIR_CMD)/plasma_wm_replace/plasma-bspwm.service" "$user_sysd_dir"
+  systemctl --user mask plasma-kwin_x11.service
+  systemctl --user daemon-reload
+  systemctl --user enable plasma-bspwm.service
+}
 
 eval "$(cat <<END
 undo${installID}(){

@@ -32,7 +32,8 @@ super + e; b
     xdg-open /usr/share/applications/brave-browser.desktop || \
     xdg-open ~/usr/share/applications/brave-browser.desktop || \
     gtk-launch brave-browser.desktop
-        # Office: write, spreadsheet, present, images, Image manipulation.
+
+# Office: write, spreadsheet, present, images, Image manipulation.
 super + e; o; {w,s,p,i,shift+I}
   {lowriter,localc,loimpress,inkscape,gimp}
 # references (Zotero)
