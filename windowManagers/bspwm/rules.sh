@@ -25,6 +25,6 @@ bspc rule -a kitty-dropdown   sticky=on
 
 # _NET_WM_STATE(ATOM) = _NET_WM_STATE_ABOVE, _NET_WM_STATE_STAYS_ON_TOP
 # bspc rule -a zoom manage=off floating=on
-if [ "$XDG_SESSION_DESKTOP" = "plasmax11" ]; then
+if [ "$XDG_SESSION_DESKTOP" = "plasmax11" ] || [ "$XDG_SESSION_DESKTOP" = "KDE" ]; then
     . "$DOTFILES_DIR"/windowManagers/bspwm/desktopRules/plasma.sh
 fi
