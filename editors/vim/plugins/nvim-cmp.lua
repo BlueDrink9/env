@@ -1,6 +1,7 @@
 -- https://github.com/ray-x/lsp_signature.nvim
 vim.o.completeopt = "menuone,noselect"
 local cmp = require'cmp'
+local cmp_buffer = require('cmp_buffer')
 mappings = cmp.mapping
 
 get_bufnrs_to_complete_from = function()
@@ -60,11 +61,6 @@ cmp.setup({
               keyword_length = 2,
               get_bufnrs = get_bufnrs_to_complete_from,
            },
-           sorting = {
-              comparators = {
-                 function(...) return cmp_buffer:compare_locality(...) end,
-              }
-           }
         },
         { name = 'vsnip' },
         { name = 'path' },
@@ -80,6 +76,11 @@ cmp.setup({
               end,
            },
         },
+        sorting = {
+           comparators = {
+              function(...) return cmp_buffer:compare_locality(...) end,
+           }
+        }
      }),
 
   mapping = {
