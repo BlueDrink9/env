@@ -35,7 +35,7 @@ require("mason").setup()
 
 
 if vim.g.plugs["nvim-cmp"] ~= nil then
-  local nvim_cmp_capabilities = vim.lsp.protocol.make_client_capabilities()
+  nvim_cmp_capabilities = vim.lsp.protocol.make_client_capabilities()
   nvim_cmp_capabilities.textDocument.completion.completionItem.snippetSupport = true
   nvim_cmp_capabilities.textDocument.completion.completionItem.resolveSupport = {
     properties = {
@@ -70,6 +70,10 @@ local on_attach = function(client, bufnr)
   end
 end
 
+-- require("nvim.diagnostic_virtual_text_config").setup {}
+vim.diagnostic.config({
+    virtual_text = false,
+  })
 
 local lsp_installer = require("mason-lspconfig")
 
@@ -108,12 +112,10 @@ require("trouble").setup {
    auto_close = true,
    use_diagnostic_signs = true, -- enabling this will use the signs defined in your lsp client
    icons = function()
-      if os.gentenv("USENF") == 1 then
+      if os.getenv("USENF") == 1 then
          return true
       else
          return false
       end
    end,
 }
-
-require("nvim.diagnostic_virtual_text_config").setup {}
