@@ -36,15 +36,15 @@ local diagnostic_nbufmaps = {
   [maps.diagnostic_next] = 'goto_next()',
 }
 
-nvim_lsp = require('lspconfig')
+require('lspconfig')
 require("mason").setup()
 
 
 if vim.g.plugs["nvim-cmp"] ~= nil then
-  nvim_cmp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+  Nvim_cmp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-  nvim_cmp_capabilities.textDocument.completion.completionItem.snippetSupport = true
-  nvim_cmp_capabilities.textDocument.completion.completionItem.resolveSupport = {
+  Nvim_cmp_capabilities.textDocument.completion.completionItem.snippetSupport = true
+  Nvim_cmp_capabilities.textDocument.completion.completionItem.resolveSupport = {
     properties = {
       'documentation',
       'detail',
@@ -66,8 +66,8 @@ local on_attach = function(client, bufnr)
   vim.cmd [[autocmd myIDE CursorHold,CursorHoldI <buffer> lua vim.diagnostic.open_float(nil, {focus=false})]]
 
   -- Mappings.
-  prefixes = {lsp="vim.lsp.", diag="vim.diagnostic."}
-  to_map_tables = {lsp=lsp_nbufmaps, diag=diagnostic_nbufmaps}
+  local prefixes = {lsp="vim.lsp.", diag="vim.diagnostic."}
+  local to_map_tables = {lsp=lsp_nbufmaps, diag=diagnostic_nbufmaps}
   for k, table in pairs(to_map_tables) do
     for key, cmd in pairs(table) do
       local rhs = "<cmd>lua " .. prefixes[k] .. cmd .. "<CR>"
@@ -92,7 +92,7 @@ lsp_installer.setup({
 local default_handler = function (server_name)
    require("lspconfig")[server_name].setup {
       on_attach = on_attach,
-      capabilities = nvim_cmp_capabilities
+      capabilities = Nvim_cmp_capabilities
    }
 end
 
@@ -115,7 +115,7 @@ lsp_installer.setup_handlers({
      local server_name = "sumneko_lua"
      require("lspconfig")[server_name].setup {
        on_attach = on_attach,
-       capabilities = nvim_cmp_capabilities,
+       capabilities = Nvim_cmp_capabilities,
        settings = {
          Lua = {
            diagnostics = {

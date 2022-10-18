@@ -2,13 +2,13 @@
 vim.o.completeopt = "menuone,noselect"
 local cmp = require'cmp'
 local cmp_buffer = require('cmp_buffer')
-mappings = cmp.mapping
+Mappings = cmp.mapping
 
-get_bufnrs_to_complete_from = function()
+Get_bufnrs_to_complete_from = function()
   -- Include all visible buffers (not just default of current one) below a certain size.
   local bufs = {}
   for _, win in ipairs(vim.api.nvim_list_wins()) do
-    buf = vim.api.nvim_win_get_buf(win)
+    local buf = vim.api.nvim_win_get_buf(win)
     local byte_size = vim.api.nvim_buf_get_offset(
       buf, vim.api.nvim_buf_line_count(buf))
     if byte_size < 1024 * 1024 then -- 1 Megabyte max
@@ -59,7 +59,7 @@ cmp.setup({
            name = 'buffer',
            option = {
               keyword_length = 2,
-              get_bufnrs = get_bufnrs_to_complete_from,
+              get_bufnrs = Get_bufnrs_to_complete_from,
            },
         },
         { name = 'vsnip' },
@@ -84,15 +84,15 @@ cmp.setup({
      }),
 
   mapping = {
-      ['<C-e>'] = mappings(mappings.complete(), { 'i', 'c' }),
-      ['<C-e>'] = mappings.confirm({ select = false }),
+      ['<C-e>'] = Mappings(Mappings.complete(), { 'i', 'c' }),
+      ['<C-e>'] = Mappings.confirm({ select = false }),
       -- Because I tab and go, the current selection when I push space is already the one I want. But this _is_ useful for snippets, because they will be expanded, not just selected.
-      ['<space>'] = mappings.confirm({ select = false }),
-      ['<return>'] = mappings.confirm({ select = false }),
-      ["<Tab>"] = mappings(mappings.select_next_item({behavior=cmp.SelectBehavior.Insert}), { 'i', 'c' }),
-      ["<S-Tab>"] = mappings(mappings.select_prev_item({behavior=cmp.SelectBehavior.Insert}), { 'i', 'c' }),
-      ['<C-b>'] = mappings(mappings.scroll_docs(-4), { 'i' }),
-      ['<C-f>'] = mappings(mappings.scroll_docs(4), { 'i' }),
+      ['<space>'] = Mappings.confirm({ select = false }),
+      ['<return>'] = Mappings.confirm({ select = false }),
+      ["<Tab>"] = Mappings(Mappings.select_next_item({behavior=cmp.SelectBehavior.Insert}), { 'i', 'c' }),
+      ["<S-Tab>"] = Mappings(Mappings.select_prev_item({behavior=cmp.SelectBehavior.Insert}), { 'i', 'c' }),
+      ['<C-b>'] = Mappings(Mappings.scroll_docs(-4), { 'i' }),
+      ['<C-f>'] = Mappings(Mappings.scroll_docs(4), { 'i' }),
   },
 
 })

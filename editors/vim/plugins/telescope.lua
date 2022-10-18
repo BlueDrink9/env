@@ -6,7 +6,7 @@ vim.api.nvim_set_keymap(
    ":lua require'telescope.builtin'.live_grep({grep_open_files = true})<CR>",
    { noremap = true, silent = true, expr = false }
    )
-telescope_mappings = {
+local telescope_mappings = {
    find_files = maps.FuzzyOpenFile,
    live_grep = maps.FuzzySearchFiles,
    buffers = maps.FuzzyBuffers,
