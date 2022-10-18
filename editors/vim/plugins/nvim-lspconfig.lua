@@ -109,8 +109,24 @@ lsp_installer.setup_handlers({
       vim.cmd [[let g:jedi#auto_initialization = 0]]
       vim.cmd [[let g:pymode = 0]]
       vim.cmd [[silent! au! myPymode"]]
-   end
-})
+   end,
+
+   ["sumneko_lua"] = function ()
+     local server_name = "sumneko_lua"
+     require("lspconfig")[server_name].setup {
+       on_attach = on_attach,
+       capabilities = nvim_cmp_capabilities,
+       settings = {
+         Lua = {
+           diagnostics = {
+             -- Get the language server to recognize the `vim` global
+             globals = {'vim'},
+           },
+         },
+       },
+     }
+   end,
+ })
 
 require("trouble").setup {
    action_keys = { -- key mappings for actions in the trouble list
