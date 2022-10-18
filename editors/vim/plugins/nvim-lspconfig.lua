@@ -41,7 +41,8 @@ require("mason").setup()
 
 
 if vim.g.plugs["nvim-cmp"] ~= nil then
-  nvim_cmp_capabilities = vim.lsp.protocol.make_client_capabilities()
+  nvim_cmp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+
   nvim_cmp_capabilities.textDocument.completion.completionItem.snippetSupport = true
   nvim_cmp_capabilities.textDocument.completion.completionItem.resolveSupport = {
     properties = {
