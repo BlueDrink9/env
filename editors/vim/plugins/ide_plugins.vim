@@ -421,7 +421,7 @@ endif
 " Snippet libs
 Plug 'https://github.com/honza/vim-snippets'
 Plug 'https://github.com/rafamadriz/friendly-snippets'
-Plug 'https://github.com/ylcnfrht/vscode-python-snippet-pack'
+Plug 'https://github.com/ericsia/vscode-python-snippet-pack-2.0'
 
 if has('nvim-0.5') && !IsPluginUsed('coc.nvim')
     " Coc only support ultisips, neosnippet

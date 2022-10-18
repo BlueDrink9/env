@@ -1,3 +1,9 @@
+-- This config is designed to set up and use LSPs automatically, so long as the
+-- required server is installed. If the server is installed, no additional
+-- config is required unless modifying behaviour specific to that server.
+-- Additionally, installation is made trivial by Mason's :LspInstall, which
+-- installs a relevant server for the current filetype.
+
 local maps = vim.g.IDE_mappings
 -- Mappings.
 -- See `:help vim.lsp.*` for documentation on any of the below functions
