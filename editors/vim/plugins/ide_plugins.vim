@@ -314,19 +314,22 @@ endif
 " {]} ---------- IDE----------
 
 " {[} ---------- Debugging ----------
-" if has('nvim-0.5')
-" Plug 'https://github.com/Pocco81/DAPInstall.nvim'
-" Plug 'https://github.com/mfussenegger/nvim-dap'
-" Plug 'https://github.com/jayp0521/mason-nvim-dap.nvim'
-" if IsPluginUsed("telescope.nvim")
-" Plug 'https://github.com/nvim-telescope/telescope-dap.nvim'
-" endif
-" endif
 " :UnstackFromClipboard to take a stack trace from the clipboard and open the
 " relevant function calls in their own splits
 Plug 'https://github.com/mattboehm/vim-unstack'
+if has('nvim-0.7')
+    Plug 'https://github.com/mfussenegger/nvim-dap'
+    Plug 'https://github.com/jayp0521/mason-nvim-dap.nvim'
+    Plug 'rcarriga/nvim-dap-ui'
+    if IsPluginUsed("telescope.nvim")
+        Plug 'https://github.com/nvim-telescope/telescope-dap.nvim'
+    endif
+    if IsPluginUsed("nvim-treesitter")
+        Plug 'theHamsta/nvim-dap-virtual-text'
+        Plug 'mfussenegger/nvim-dap-python'
+    endif
 " Vimspector requires vim 8.1 with this patch.
-if has("patch-8.1-1264") || has('nvim')
+elseif has("patch-8.1-1264") || has('nvim')
     " Just install all available plugins for now...
     Plug 'https://github.com/puremourning/vimspector', { 'do': ':!./install_gadget.py --all --disable-tcl' }
     " Easier python debugging
@@ -334,21 +337,6 @@ if has("patch-8.1-1264") || has('nvim')
     if IsPluginUsed("telescope.nvim")
         Plug 'nvim-telescope/telescope-vimspector.nvim'
     endif
-
-
-else
-    if has("python3")
-        if has("nvim")
-            Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
-        else
-            " Vdebug for python, pyhp, perl, ruby
-            silent! Plug 'https://github.com/vim-vdebug/vdebug'
-        endif
-    elseif has("python2")
-        Plug 'https://github.com/vim-vdebug/vdebug', {'tag': 'v1.5.2'}
-    endif
-    " vebugger for gdb, lldb, jdb, pdb, rubydebug, node inspect.
-    " plug 'https://github.com/idanarye/vim-vebugger'
 endif
 " {]} ---------- Debugging ----------
 

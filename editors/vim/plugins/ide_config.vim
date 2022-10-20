@@ -439,6 +439,9 @@ if IsPluginUsed('vim-unstack')
     " Top to bottom splits
     let g:unstack_layout = 'portrait'
 endif
+if IsPluginUsed('nvim-dap')
+    call SourcePluginFile('nvim-dap.lua')
+endif
 if IsPluginUsed('vimspector')
     call SourcePluginFile('vimspector.vim')
 endif
