@@ -370,8 +370,8 @@ Plug 'ferrine/md-img-paste.vim', {'for': 'markdown'}
 " {]} ---------- Prose----------
 
 " {[} ---------- Terminal ----------
-if has('nvim-5.0')
-    Plug 'https://github.com/michaelb/sniprun'
+if has('nvim') && !has('win32')
+    Plug 'https://github.com/michaelb/sniprun', {'do': 'bash install.sh'}
 endif
 
 " Useful for REPL, but can also send the commands back to the other window.
