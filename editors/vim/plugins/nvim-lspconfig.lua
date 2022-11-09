@@ -36,6 +36,10 @@ local diagnostic_nbufmaps = {
   [maps.diagnostic_next] = 'goto_next()',
 }
 
+local lsp_flags = {
+   debounce_text_changes = 200,
+}
+
 require('lspconfig')
 require("mason").setup()
 
@@ -100,7 +104,8 @@ lsp_installer.setup({
 local default_handler = function (server_name)
    require("lspconfig")[server_name].setup {
       on_attach = on_attach,
-      capabilities = Nvim_cmp_capabilities
+      capabilities = Nvim_cmp_capabilities,
+      flags = lsp_flags,
    }
 end
 
@@ -125,12 +130,8 @@ lsp_installer.setup_handlers({
        on_attach = on_attach,
        capabilities = Nvim_cmp_capabilities,
        settings = {
-         Lua = {
-           diagnostics = {
-             -- Get the language server to recognize the `vim` global
-             globals = {'vim'},
-           },
-         },
+         -- Get the language server to recognize the `vim` global
+         Lua = { diagnostics = { globals = {'vim'}, }, },
        },
      }
    end,

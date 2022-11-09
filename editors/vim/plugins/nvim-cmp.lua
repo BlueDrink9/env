@@ -45,6 +45,10 @@ cmp.setup({
   -- view = {
   --   entries = {name = 'custom', selection_order = 'near_cursor' }
   -- },
+  performance = {
+    debounce = 200,
+    throttle = 20,
+  },
 
   snippet = {
     expand = function(args)
