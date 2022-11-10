@@ -361,3 +361,50 @@ function! ToggleAutoWrite()
     endif
 endfunction
 nnoremap yoa <cmd>call ToggleAutoWrite()<cr>
+
+
+" Define command alias for at start of  command line mode only.
+" https://github.com/vim-scripts/cmdalias.vim/blob/master/plugin/cmdalias.vim
+command! -nargs=+ Alias :call CmdAlias(<f-args>)
+function! CmdAlias(lhs, ...)
+  if !exists('g:cmdaliasCmdPrefixes')
+    let g:cmdaliasCmdPrefixes = 'verbose debug silent redir'
+  endif
+  let lhs = a:lhs
+  " if lhs !~ '^\w\+$'
+  "   echohl ErrorMsg | echo 'Only word characters are supported on <lhs>' | echohl NONE
+  "   return
+  " endif
+  " if a:0 > 0
+    let rhs = a:1
+  " else
+  "   echohl ErrorMsg | echo 'No <rhs> specified for alias' | echohl NONE
+  "   return
+  " endif
+  " if has_key(s:aliases, rhs)
+  "   echohl ErrorMsg | echo "Another alias can't be used as <rhs>" | echohl NONE
+  "   return
+  " endif
+  if a:0 > 1
+    let flags = join(a:000[1:], ' ').' '
+  else
+    let flags = ''
+  endif
+  exec 'cnoreabbr <expr> '.flags.a:lhs.
+  \ " <SID>ExpandAlias('".lhs."', '".rhs."')"
+endfunction
+
+function! s:ExpandAlias(lhs, rhs)
+  if getcmdtype() == ":"
+    " Determine if we are at the start of the command-line.
+    " getcmdpos() is 1-based.
+    let partCmd = strpart(getcmdline(), 0, getcmdpos())
+    let prefixes = ['^'] + map(split(g:cmdaliasCmdPrefixes, ' '), '"^".v:val."!\\?"." "')
+    for prefix in prefixes
+      if partCmd =~ prefix.a:lhs.'$'
+        return a:rhs
+      endif
+    endfor
+  endif
+  return a:lhs
+endfunction

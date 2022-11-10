@@ -156,9 +156,9 @@ if IsPluginUsed("vim-session")
     let g:session_autosave_silent = 1
     let g:session_autoload = 'no' " Could also be 'prompt'
     let g:session_verbose_messages = 0 " Affects load/save prompts
-    cabbrev cs CloseSession
-    cabbrev os OpenSession
-    cabbrev ss SaveSession
+    Alias cs CloseSession
+    Alias os OpenSession
+    Alias ss SaveSession
 endif
 " {]} View and session
 
