@@ -229,8 +229,9 @@ nnoremap <C-w>j :call <SID>SplitDown()<CR>
 " On WSL, xclip exists but we don't want to use it.
 if has("clipboard") && !IsWSL()
     " In insert or visual mode, use standard cut/copy/paste shortcuts.
-    inoremap <C-v> <C-r>+
-    inoremap <C-S-v> <C-r>+
+    " c-g u is to create an undo point first.
+    inoremap <C-v> <c-g>u<C-r>+
+    inoremap <C-S-v> <c-g>u<C-r>+
     cnoremap <C-v> <C-r>+
     cnoremap <C-S-v> <C-r>+
     vnoremap <C-X> "+d
