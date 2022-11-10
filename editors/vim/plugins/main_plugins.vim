@@ -92,6 +92,7 @@ endif
 Plug 'https://github.com/tomtom/tcomment_vim'
 
 Plug 'jeetsukumaran/vim-markology', {'on': ['MarkologyEnable', 'MarkologyToggle']}
+" https://github.com/chentoast/marks.nvim
 "
 " Adds a bunch of unix-mapped filesystem ops from vim
 Plug 'https://github.com/tpope/vim-eunuch'

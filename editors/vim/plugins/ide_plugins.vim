@@ -22,12 +22,12 @@ endif
 if has('nvim-0.7')
     Plug 'https://github.com/norcalli/nvim-colorizer.lua'
 endif
-" if has('nvim-0.8')
-"     " Replaces message display
-"     Plug 'https://github.com/folke/noice.nvim'
-"     Plug 'rcarriga/nvim-notify'
-"     Plug 'MunifTanjim/nui.nvim'
-" endif
+if has('nvim-0.8')
+    " Replaces message display
+    Plug 'https://github.com/folke/noice.nvim'
+    Plug 'rcarriga/nvim-notify'
+    Plug 'MunifTanjim/nui.nvim'
+endif
 
 
 " Plug 'rhysd/vim-grammarous', { 'for': g:proseFileTypes }
@@ -108,6 +108,7 @@ if has('nvim-0.5')
     " Create appropriate colours for old colourschemes
     Plug 'https://github.com/folke/lsp-colors.nvim'
     Plug 'https://github.com/Hrle97/nvim.diagnostic_virtual_text_config'
+    Plug 'https://github.com/kosayoda/nvim-lightbulb'
 else
     if has('win32')
         Plug 'autozimu/LanguageClient-neovim', {

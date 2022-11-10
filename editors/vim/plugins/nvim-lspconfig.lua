@@ -75,6 +75,13 @@ local on_attach = function(client, bufnr)
      buffer = bufnr,
      callback = function() vim.diagnostic.open_float(nil, {focus=false}) end,
     })
+   vim.api.nvim_create_autocmd(
+    { "CursorHold", "CursorHoldI"},
+    {
+     group = "lsp_on_attach",
+     buffer = bufnr,
+     callback = require('nvim-lightbulb').update_lightbulb,
+    })
 
 
   -- Mappings.
@@ -136,6 +143,12 @@ lsp_installer.setup_handlers({
      }
    end,
  })
+
+-- Instead of showing signs, change the colour of the numbercolumn.
+-- vim.fn.sign_define("LspDiagnosticsSignError", {text = "", numhl = "LspDiagnosticsDefaultError"})
+-- vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "", numhl = "LspDiagnosticsDefaultWarning"})
+-- vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "", numhl = "LspDiagnosticsDefaultInformation"})
+-- vim.fn.sign_define("LspDiagnosticsSignHint", {text = "", numhl = "LspDiagnosticsDefaultHint"})
 
 require("trouble").setup {
    action_keys = { -- key mappings for actions in the trouble list

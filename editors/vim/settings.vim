@@ -255,7 +255,7 @@ if has('nvim')
 endif
 
 if has('nvim-0.4')
-    set signcolumn=auto:5
+    set signcolumn=auto:4
 endif
 " Highlight search results. Use :noh to undo
 " set hlsearch
