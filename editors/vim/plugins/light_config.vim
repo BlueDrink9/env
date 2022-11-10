@@ -130,7 +130,9 @@ endif
 " {]}--- Operators ---
 
 " {[}--- Visual changes ---
-if IsPluginUsed("quick-scope")
+if IsPluginUsed("eyeliner.nvim")
+    lua require'eyeliner'.setup { highlight_on_key = true }
+elseif IsPluginUsed("quick-scope")
     " Trigger a highlight in the appropriate direction when pressing these keys:
     let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 endif

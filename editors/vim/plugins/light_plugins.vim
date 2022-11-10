@@ -79,10 +79,11 @@ Plug 'tommcdo/vim-ninja-feet'
 " {]}--- Operators ---
 
 " {[}--- Visual changes ---
-if v:version >= 702
+if has('nvim')
+    Plug 'https://github.com/jinh0/eyeliner.nvim'
+elseif v:version >= 702
     " Highlight f and t chars to get where you want.
     Plug 'unblevable/quick-scope'
-    " Plug 'https://github.com/bradford-smith94/quick-scope'
 endif
 if v:version >= 703
     Plug 'https://github.com/ntpeters/vim-better-whitespace'
