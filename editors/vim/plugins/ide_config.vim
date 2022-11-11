@@ -28,15 +28,34 @@ endif
 if IsPluginUsed('nvim-colorizer.lua')
     lua require'colorizer'.setup()
 endif
+if IsPluginUsed('nvim-notify')
+lua << EOF
+require'notify'.setup({
+   stages = "static",
+})
+EOF
+endif
 if IsPluginUsed('noice.nvim')
 lua << EOF
    require'noice'.setup({
-      cmdline = {
-         view = "cmdline",  -- or "cmdline_popup" for fancy.
-      },
+      -- cmdline = {
+         -- view = "cmdline",  -- or "cmdline_popup" for fancy.
+      -- },
       popupmenu = {
          enabled = true,
-      }
+      },
+      presets = {
+         command_palette = true,
+         long_message_to_split = true,
+      },
+      messages = {
+        view_search = False,
+      },
+      lsp = {
+          progress = {
+            enabled = false,
+          }
+       }
    })
 EOF
 endif
