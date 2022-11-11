@@ -79,7 +79,7 @@ cnoremap <C-o>A <End>
 nnoremap <expr> n  'Nn'[v:searchforward]
 nnoremap <expr> N  'nN'[v:searchforward]
 " Cd to current file
-nnoremap <leader>cd :lcd %:p:h<CR>:pwd<CR>
+nnoremap <leader>cd <cmd>lcd %:p:h<CR>:pwd<CR>
 " Autocomplete from tags
 " inoremap <c-]> <c-x><c-]>
 " Quickly re-run last macro with one key (also stop accidentally entering Ex).
@@ -104,10 +104,10 @@ cnoremap <C-BS> <C-w>
 " they aren't 'basic'.
 
 " Save/load entire buffer to/from clipboard
-nnoremap <F5> :%y+<CR>
-nnoremap <F9> :%d<CR>"+P
-nnoremap <C-F5> :%y+<CR>
-nnoremap <C-F9> :%d<CR>"+P
+nnoremap <F5> <cmd>%y+<CR>
+nnoremap <F9> <cmd>%d<CR>"+P
+nnoremap <C-F5> <cmd>%y+<CR>
+nnoremap <C-F9> <cmd>%d<CR>"+P
 " {]} Basic mappings
 
 " {[} Abbreviations and commands
@@ -143,7 +143,7 @@ command! MRU browse oldfiles
 
 " {[} Window management
 " Edit current buffer with a new tab
-nnoremap <C-w>t :tab split<cr>
+nnoremap <C-w>t <cmd>tab split<cr>
 " Easier way to move between windows
 nnoremap <C-j> <C-W>j
 nnoremap <C-k> <C-W>k
@@ -151,15 +151,15 @@ nnoremap <C-h> <C-W>h
 nnoremap <C-l> <C-W>l
 
 if $ISTERMUXSCREEN
-  nnoremap <tab> :bnext<CR>
+  nnoremap <tab> <cmd>bnext<CR>
   " Don't remap arrow keys in termux, because they're too useful for the
   " touch screen.
 else
   " Cycle through buffers
-  nnoremap <silent> <Right> :bnext<CR>
-  nnoremap <silent> <Left> :bprev<CR>
-  nnoremap <silent> <Up> :tabnext<CR>
-  nnoremap <silent> <Down> :tabprevious<CR>
+  nnoremap <silent> <Right> <cmd>bnext<CR>
+  nnoremap <silent> <Left> <cmd>bprev<CR>
+  nnoremap <silent> <Up> <cmd>tabnext<CR>
+  nnoremap <silent> <Down> <cmd>tabprevious<CR>
 endif
 
 if has('nvim') || has('terminal')
@@ -181,7 +181,7 @@ nnoremap <S-Down> 3<C-W>+
 nnoremap <C-Down> 3<C-W>-
 nnoremap <C-Left> 5<C-W><
 " Kill current buffer. Tab-complete bdel because may use Bdelete if available, not bdelete.
-noremap <silent> <C-w>x :bdelete<tab><CR>
+noremap <silent> <C-w>x <cmd>bdelete<tab><CR>
 
 " {[} Open windows to the left, right, up, down, like in tmux
 function! s:SaveSplitSide()
@@ -272,7 +272,7 @@ endif
 
 
 if maparg(g:IDE_mappings.make, 'n') ==? ""
-  call Nnoremap(g:IDE_mappings.make, ":w <bar> make<cr>")
+  call Nnoremap(g:IDE_mappings.make, "<cmd>w <bar> make<cr>")
 endif
 
 " Complete vim commands in cmd window.
@@ -316,10 +316,10 @@ command! Clear nohlsearch <bar> diffupdate <bar> syntax sync fromstart <bar> nor
 " These apply only in vimdiff mode.
 " nnoremap <expr> <C-J> &diff ? ']c' : '<C-W>j'
 if &diff
-    nnoremap <Leader>1 :diffget LOCAL<CR>
-    nnoremap <Leader>2 :diffget BASE<CR>
-    nnoremap <Leader>3 :diffget REMOTE<CR>
-    nnoremap du :diffupdate<CR>
+    nnoremap <Leader>1 <cmd>diffget LOCAL<CR>
+    nnoremap <Leader>2 <cmd>diffget BASE<CR>
+    nnoremap <Leader>3 <cmd>diffget REMOTE<CR>
+    nnoremap du <cmd>diffupdate<CR>
     cabbrev refresh diffupdate
 endif
 

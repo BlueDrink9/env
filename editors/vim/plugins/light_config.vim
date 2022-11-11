@@ -35,7 +35,7 @@ if IsPluginUsed("FastFold")
     let g:python_fold = 1
     let g:fastfold_fold_command_suffixes =
                 \ ['x','X','a','A','o','O','c','C','r','R','m','M','i','n','N']
-    nnoremap <BS> :<C-u>FastFoldUpdate<cr>za
+    nnoremap <BS> <cmd><C-u>FastFoldUpdate<cr>za
     let g:fastfold_minlines = 700
 endif
 
@@ -159,9 +159,9 @@ endif
 " {[} --- TMUX ---
 if IsPluginUsed("vim-tmux")
     " Prompt for a command to run
-    map <Leader>vp :VimuxPromptCommand<CR>
+    map <Leader>vp <cmd>VimuxPromptCommand<CR>
     " Run last command executed by VimuxRunCommand
-    map <Leader>vl :VimuxRunLastCommand<CR>
+    map <Leader>vl <cmd>VimuxRunLastCommand<CR>
 endif
 " {]} TMUX
 

@@ -66,14 +66,14 @@ if IsPluginUsed("tcomment_vim")
     " default '<leader>_'. Maps in select mode. I don't use it.
     let g:tcomment_mapleader2=''
     let g:tcomment#blank_lines=0
-    xnoremap <C-/>  :Tcomment<CR>
-    nnoremap <C-/>  :TcommentBlock<CR>
-    onoremap <C-/>  :Tcomment<CR>
+    xnoremap <C-/>  <cmd>Tcomment<CR>
+    nnoremap <C-/>  <cmd>TcommentBlock<CR>
+    onoremap <C-/>  <cmd>Tcomment<CR>
 endif
 if IsPluginUsed("vim-showmarks.git")
     " More advanced version of showmarks. Lots of mappings, eg m]
     Plug 'jeetsukumaran/vim-markology', {'on': ['MarkologyEnable', 'MarkologyToggle']}
-    nnoremap m? :MarkologyEnable<cr>
+    nnoremap m? <cmd>MarkologyEnable<cr>
     let g:markology_enable=0
     let g:markology_ignore_type="hpq"
     let g:markology_include=
@@ -124,7 +124,7 @@ endif
 
 " Zoom window to tab, and out again
 if IsPluginUsed("zoomwintab.vim")
-    nnoremap <c-w>z :ZoomWinTabToggle<cr>
+    nnoremap <c-w>z <cmd>ZoomWinTabToggle<cr>
 endif
 " {]} ---------- Misc----------
 
@@ -240,20 +240,20 @@ if IsPluginUsed("vim-grepper")
 endif
 if IsPluginUsed("FlyGrep.vim")
     cabbrev bsearch FlyGrep
-    nnoremap <leader>/ :FlyGrep<CR>
+    nnoremap <leader>/ <cmd>FlyGrep<CR>
     let g:FlyGrep_input_delay = 200  " ms. default 500
 endif
 " x - exclude. i - include. t - toggle. Capital X I T for all.
 if IsPluginUsed("far.vim")
     command! Replace Farp
     " Project replace.
-    " nnoremap <leader>pr :Farp<CR>
+    " nnoremap <leader>pr <cmd>Farp<CR>
     function! s:farMappings()
-        nnoremap <buffer><silent> q :call g:far#close_preview_window()<cr>
-        nnoremap <buffer><silent> <bs> :call g:far#change_collapse_under_cursor(-1)<cr>
-        nnoremap <buffer><silent> <c-CR> :Fardo<CR>
-        nnoremap <buffer><silent> W :Refar<CR>
-        nnoremap <buffer><silent> r :Fardo<CR>
+        nnoremap <buffer><silent> q <cmd>call g<cmd>far#close_preview_window()<cr>
+        nnoremap <buffer><silent> <bs> <cmd>call g<cmd>far#change_collapse_under_cursor(-1)<cr>
+        nnoremap <buffer><silent> <c-CR> <cmd>Fardo<CR>
+        nnoremap <buffer><silent> W <cmd>Refar<CR>
+        nnoremap <buffer><silent> r <cmd>Fardo<CR>
     endfunction
     autocmd myPlugins FileType far call s:farMappings()
     let g:far#default_mappings=1
@@ -318,9 +318,9 @@ endif
 
 "{[} Running/executing
 if IsPluginUsed("vim-dispatch")
-    call Nnoremap(g:IDE_mappings.make, ":w <bar> Dispatch<cr>")
+    call Nnoremap(g:IDE_mappings.make, "<cmd>w <bar> Dispatch<cr>")
     let g:dispatch_no_maps = 1
-    call Nmap(g:IDE_mappings.make, ":Make<CR>")
+    call Nmap(g:IDE_mappings.make, "<cmd>Make<CR>")
 endif
 "{]}
 
@@ -333,7 +333,7 @@ endif
 
 " {[} ---------- Git ----------
 if IsPluginUsed("vim-fugitive")
-    " nnoremap <leader>gs :Gstatus<CR> cabbrev gs Gstatus
+    " nnoremap <leader>gs <cmd>Gstatus<CR> cabbrev gs Gstatus
     cabbrev gs Git
     cabbrev gw Gwrite
     cabbrev gc Gwrite <bar> Git commit
@@ -345,13 +345,13 @@ if IsPluginUsed("vim-fugitive")
     cabbrev gps Git push
     cabbrev gpl Git pull
     " mappings to emulate doom magit
-    nnoremap <leader>gg :Git<cr>
-    nnoremap <leader>gs :Gwrite<cr>
-    nnoremap <leader>gcc :Gwrite <bar>  Git commit<cr>
-    nnoremap <leader>gcc :Gwrite <bar>  Git commit<cr>
-    nnoremap <leader>gce :Gwrite <bar> Git commit --amend --no-edit<cr>
-    nnoremap <leader>gl :Git pull<cr>
-    nnoremap <leader>gp :Git push<cr>
+    nnoremap <leader>gg <cmd>Git<cr>
+    nnoremap <leader>gs <cmd>Gwrite<cr>
+    nnoremap <leader>gcc <cmd>Gwrite <bar>  Git commit<cr>
+    nnoremap <leader>gcc <cmd>Gwrite <bar>  Git commit<cr>
+    nnoremap <leader>gce <cmd>Gwrite <bar> Git commit --amend --no-edit<cr>
+    nnoremap <leader>gl <cmd>Git pull<cr>
+    nnoremap <leader>gp <cmd>Git push<cr>
     " These are deprecated in fugitive itself.
     command! -bang -nargs=* Gpush Git push <args>
     command! -bang -nargs=* Gpull Git pull <args>
@@ -419,8 +419,8 @@ if IsPluginUsed("vim-conflicted")
         " TODO: integrate with airline.
         set stl+=%{ConflictedVersion()}
         " Resolve and move to next conflicted file.
-        nnoremap ]m :GitNextConflict<cr>
-        nnoremap [m :GitPrevConflict<cr>
+        nnoremap ]m <cmd>GitNextConflict<cr>
+        nnoremap [m <cmd>GitPrevConflict<cr>
     endfunction
     let g:diffget_local_map = 'gl'
     let g:diffget_upstream_map = 'gu'
@@ -517,7 +517,7 @@ if IsPluginUsed("vimtex")
 
     function! SetVimtexMappings()
         " Ensure clean doesn't immediately get overridden...
-        nnoremap <buffer> <localleader>lc :VimtexStop<cr>:VimtexClean<cr>
+        nnoremap <buffer> <localleader>lc <cmd>VimtexStop<bar>VimtexClean<cr>
     endfunction
     " autocmd myPlugins Filetype *tex set foldmethod=expr
     autocmd myPlugins Filetype tex :call SetVimtexMappings()
@@ -655,7 +655,7 @@ if IsPluginUsed("nerdtree.git")
     autocmd myPlugins bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
     cabbrev nt NERDTreeToggle
-    " nnoremap _ :NERDTreeToggle<CR>
+    " nnoremap _ <cmd>NERDTreeToggle<CR>
 endif
 " {]} ---------- NerdTree ----------
 

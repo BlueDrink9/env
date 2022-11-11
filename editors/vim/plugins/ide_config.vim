@@ -118,8 +118,8 @@ endif
 if IsPluginUsed('nvim-whichkey-setup.lua')
 endif
 if IsPluginUsed('vim-which-key')
-    nnoremap <leader> :<C-U>WhichKey '<leader>'<CR>
-    vnoremap <leader> :<C-U>WhichKeyVisual '<leader>'<CR>
+    nnoremap <leader> <cmd>WhichKey '<leader>'<CR>
+    vnoremap <leader> <cmd>WhichKeyVisual '<leader>'<CR>
 endif
 " {]} ---------- Misc ----------
 
@@ -247,12 +247,12 @@ if IsPluginUsed('tagbar')
 endif
 if exists("s:tagbarOpenCmd")
     exec 'cabbrev tb ' . s:tagbarOpenCmd
-    exec 'nnoremap <leader>tt :' . s:tagbarOpenCmd . '<cr>'
+    exec 'nnoremap <leader>tt <cmd>' . s:tagbarOpenCmd . '<cr>'
 endif
 
 if IsPluginUsed('cscope.vim')
-    nnoremap <leader>if :call cscope#findInteractive(expand('<cword>'))<CR>
-    " nnoremap <leader>l :call ToggleLocationList()<CR>
+    nnoremap <leader>if <cmd>call cscope#findInteractive(expand('<cword>'))<CR>
+    " nnoremap <leader>l <cmd>call ToggleLocationList()<CR>
 endif
 
 if IsPluginUsed('symbols-outline.nvim')
@@ -289,7 +289,7 @@ if IsPluginUsed('python-mode')
     let g:pymode_rope_goto_definition_cmd = 'e'
     augroup myPymode
         au!
-        autocmd FileType python exec 'nnoremap <buffer> ' . g:IDE_mappings.lintBuffer . " :PymodeLint<CR>"
+        autocmd FileType python exec 'nnoremap <buffer> ' . g:IDE_mappings.lintBuffer . " <cmd>PymodeLint<CR>"
     augroup END
 
 
@@ -404,10 +404,10 @@ endif
 if IsPluginUsed('neogit')
     lua require('neogit').setup {}
     command! Magit Neogit
-    nnoremap <space>gg :Neogit<CR>
+    nnoremap <space>gg <cmd>Neogit<CR>
 endif
 if IsPluginUsed('vimagit')
-    nnoremap <space>gg :Magit<CR>
+    nnoremap <space>gg <cmd>Magit<CR>
 endif
 " {]} ---------- Git----------
 
@@ -439,7 +439,7 @@ if IsPluginUsed('vim-test')
 endif
 
 if IsPluginUsed('neoformat')
-    nnoremap g= :Neoformat<CR>
+    nnoremap g= <cmd>Neoformat<CR>
 endif
 
 if IsPluginUsed('float-preview.nvim')
