@@ -309,6 +309,8 @@ EOF
         Plug 'https://github.com/ThePrimeagen/refactoring.nvim'
         Plug 'https://github.com/danymat/neogen'
         Plug 'https://github.com/RRethy/nvim-treesitter-endwise'
+        Plug 'https://github.com/JoosepAlviste/nvim-ts-context-commentstring'
+
     endif
 endif
 

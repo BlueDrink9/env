@@ -171,7 +171,7 @@ lua << EOF
     -- will setup any installed and configured sources above
     null_ls.setup({
       sources = {
-         null_ls.builtins.code_actions.refactoring,
+         -- null_ls.builtins.code_actions.refactoring,
          null_ls.builtins.completion.spell,
          null_ls.builtins.hover.printenv,
       }
