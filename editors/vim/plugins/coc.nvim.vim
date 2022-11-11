@@ -99,6 +99,12 @@ call Imap(g:IDE_mappings.snippetExpand, "<Plug>(coc-snippets-expand-jump)")
 
 inoremap <expr><Plug>MyCocRefresh coc#refresh()
 let g:SuperTabDefaultCompletionType = "<Plug>MyCocRefresh"
+" CoC uses custom popup now so have to do this...
+inoremap <silent><expr> <TAB>
+\ coc#pum#visible() ? coc#pum#next(1):
+\ <SID>check_back_space() ? "\<Tab>" :
+\ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 " {]} Mappings
 
 " hi CocErrorSign link WarningMsg
