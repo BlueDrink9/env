@@ -38,9 +38,13 @@ endif
 if IsPluginUsed('noice.nvim')
 lua << EOF
    require'noice'.setup({
-      -- cmdline = {
+      cmdline = {
          -- view = "cmdline",  -- or "cmdline_popup" for fancy.
-      -- },
+         -- Sent to nui.nvim's input popup
+         input = {
+            -- input:map("n", "<esc>", input.input_props.on_close, { noremap = true })
+         }
+      },
       popupmenu = {
          enabled = true,
       },
@@ -57,6 +61,17 @@ lua << EOF
           }
        }
    })
+   -- override my normal mapping to ctrl-f, since noice can handle it like normal
+   -- vim.api.nvim_create_autocmd(
+   -- "VimEnter",
+   --  {
+   --   group = "myIDE",
+   --   buffer = bufnr,
+   --   callback = function()
+   --      vim.api.nvim_set_keymap('c', "kv", "<esc>", { noremap=true, silent=true })
+   --      vim.api.nvim_set_keymap('c', "vk", "<esc>", { noremap=true, silent=true })
+   --   end,
+   --  })
 EOF
 endif
 
