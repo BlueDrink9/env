@@ -116,7 +116,9 @@ if IsPluginUsed("pfp-vim")
     command! HexEditFull :PfpParse<CR>
 endif
 
-if IsPluginUsed("detectindent")
+if IsPluginUsed("guess-indent.nvim")
+    lua require('guess-indent').setup {}
+elseif IsPluginUsed("detectindent")
     let g:detectindent_preferred_expandtab = &expandtab
     let g:detectindent_preferred_indent = &shiftwidth
     au myPlugins BufReadPost * silent! :DetectIndent

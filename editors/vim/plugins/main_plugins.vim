@@ -133,11 +133,15 @@ endif
 
 " Limelight Looks really nice, esp for prose. Highlight slightly current paragraph.
 Plug 'junegunn/limelight.vim', { 'for': g:proseFileTypes, 'on': 'Limelight' }
-" Alternative is vim-sleuth, which seems overzealous.
-" This plugin has several forks. I am using the most updated one, but may be
-" worth playing with them.
-" Has a number of settings related to getting better accuracy.
-Plug 'https://github.com/idbrii/detectindent'
+if has('nvim')
+    Plug 'https://github.com/NMAC427/guess-indent.nvim'
+else
+    " Alternative is vim-sleuth, which seems overzealous.
+    " This plugin has several forks. I am using the most updated one, but may be
+    " worth playing with them.
+    " Has a number of settings related to getting better accuracy.
+    Plug 'https://github.com/idbrii/detectindent'
+endif
 
 " Zoom window to tab, and out again
 Plug 'https://github.com/troydm/zoomwintab.vim'
