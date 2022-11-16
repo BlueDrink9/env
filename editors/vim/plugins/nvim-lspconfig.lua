@@ -8,25 +8,25 @@ local maps = vim.g.IDE_mappings
 -- Mappings.
 -- See `:help vim.lsp.*` for documentation on any of the below functions
 local lsp_nbufmaps = {
-  [maps.implementation] = 'buf.declaration()',
-  [maps.implementation2] = 'buf.declaration()',
-  [maps.definition] = 'buf.definition()',
-  [maps.definition2] = 'buf.definition()',
-  [maps.documentation] = 'buf.hover()',
-  [maps.documentation2] = 'buf.hover()',
-  [maps.documentation3] = 'buf.hover()',
-  [maps.implementation] = 'buf.implementation()',
-  [maps.implementation2] = 'buf.implementation()',
-  [maps.type_definition] = 'buf.type_definition()',
-  [maps.type_definition2] = 'buf.type_definition()',
-  [maps.rename] = 'buf.rename()',
-  [maps.codeAction] = 'buf.code_action()',
-  [maps.references] = 'buf.references()',
-  [maps.references2] = 'buf.references()',
-  [maps.reformat] = 'buf.formatting()',
-  -- ['<space>wa'] = 'buf.add_workspace_folder()',
-  -- ['<space>wr'] = 'buf.remove_workspace_folder()',
-  --  ['<space>wl'] = '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders))()',
+   [maps.implementation] = 'buf.declaration()',
+   [maps.implementation2] = 'buf.declaration()',
+   [maps.definition] = 'buf.definition()',
+   [maps.definition2] = 'buf.definition()',
+   [maps.documentation] = 'buf.hover()',
+   [maps.documentation2] = 'buf.hover()',
+   [maps.documentation3] = 'buf.hover()',
+   [maps.implementation] = 'buf.implementation()',
+   [maps.implementation2] = 'buf.implementation()',
+   [maps.type_definition] = 'buf.type_definition()',
+   [maps.type_definition2] = 'buf.type_definition()',
+   [maps.rename] = 'buf.rename()',
+   [maps.codeAction] = 'buf.code_action()',
+   [maps.references] = 'buf.references()',
+   [maps.references2] = 'buf.references()',
+   [maps.reformat] = 'buf.formatting()',
+   -- ['<space>wa'] = 'buf.add_workspace_folder()',
+   -- ['<space>wr'] = 'buf.remove_workspace_folder()',
+   --  ['<space>wl'] = '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders))()',
 }
 
 local diagnostic_nbufmaps = {
@@ -132,17 +132,30 @@ lsp_installer.setup_handlers({
    end,
 
    ["sumneko_lua"] = function ()
-     local server_name = "sumneko_lua"
-     require("lspconfig")[server_name].setup {
-       on_attach = on_attach,
-       capabilities = Nvim_cmp_capabilities,
-       settings = {
-         -- Get the language server to recognize the `vim` global
-         Lua = { diagnostics = { globals = {'vim'}, }, },
-       },
-     }
+      local server_name = "sumneko_lua"
+      require("lspconfig")[server_name].setup {
+         on_attach = on_attach,
+         capabilities = Nvim_cmp_capabilities,
+         settings = {
+            -- Get the language server to recognize the `vim` global
+            Lua = { diagnostics = { globals = {'vim'}, }, },
+         },
+      }
    end,
- })
+   ["sqls"] = function()
+      require('lspconfig').sqls.setup{
+         on_attach = function(client, bufnr)
+            require('sqls').on_attach(client, bufnr)
+            vim.api.nvim_buf_set_keymap(
+               bufnr, '', maps.REPLSend, "<Plug>(sqls-execute-query)",
+               { noremap=true, silent=true })
+            vim.api.nvim_buf_set_keymap(
+               bufnr, 'n', maps.REPLSendLine, "0<Plug>(sqls-execute-query)$",
+               { noremap=true, silent=true })
+         end
+      }
+   end
+})
 
 -- Instead of showing signs, change the colour of the numbercolumn.
 -- vim.fn.sign_define("LspDiagnosticsSignError", {text = "", numhl = "LspDiagnosticsDefaultError"})

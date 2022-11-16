@@ -18,19 +18,23 @@ require('neogen').setup {}
 vim.cmd("command! Annotate lua require('neogen').generate()")
 
 require('nvim-treesitter.configs').setup {
-   -- ensure_installed = {
-   --     "lua",
-   --     "python",
-   -- },
+   ensure_installed = {
+       "vim",
+       "lua",
+       "python",
+       "sql",
+   },
    endwise = { enable = true, },
+   indent = { enable = true },
    highlight = {
-      enable = true,
+      -- enable = true,
       -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
       -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
       -- Using this option may slow down your editor, and you may see some duplicate highlights.
       -- Instead of true it can also be a list of languages
       -- additional_vim_regex_highlighting = false,
    },
+   -- set foldexpr=nvim_treesitter#foldexpr()
 }
 
 require'nvim-treesitter.configs'.setup {

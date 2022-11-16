@@ -427,6 +427,9 @@ endif
 " {]} ---------- Git----------
 
 " {[} ---------- IDE ----------
+if IsPluginUsed('vim-dadbod')
+    let g:db_ui_save_location = g:vimfilesDir
+endif
 if IsPluginUsed('errormarker.vim')
     let &errorformat="%f:%l:%c: %t%*[^:]:%m,%f:%l: %t%*[^:]:%m," . &errorformat
     let errormarker_disablemappings = 1

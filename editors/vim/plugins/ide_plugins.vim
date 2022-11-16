@@ -7,9 +7,6 @@ augroup myIDE
 augroup end
 
 " {[} ---------- Misc ----------
-" for databases. Use with :Db (URL)
-Plug 'https://github.com/tpope/vim-dadbod'
-Plug 'https://github.com/kristijanhusak/vim-dadbod-completion'
 if has('nvim-0.5')
     " Dependency for a lot of plugins
     Plug 'nvim-lua/plenary.nvim'
@@ -109,6 +106,7 @@ if has('nvim-0.5')
     Plug 'https://github.com/folke/lsp-colors.nvim'
     Plug 'https://github.com/Hrle97/nvim.diagnostic_virtual_text_config'
     Plug 'https://github.com/kosayoda/nvim-lightbulb'
+    Plug 'https://github.com/nanotee/sqls.nvim'
 else
     if has('win32')
         Plug 'autozimu/LanguageClient-neovim', {
@@ -257,6 +255,10 @@ endif
 " {]} ---------- Git----------
 
 " {[} ---------- IDE ----------
+" for databases. Use with :Db (URL)
+Plug 'https://github.com/tpope/vim-dadbod'
+Plug 'https://github.com/kristijanhusak/vim-dadbod-completion'
+Plug 'https://github.com/kristijanhusak/vim-dadbod-ui'
 if v:version < 708
     Plug 'https://github.com/janko/vim-test'
     Plug 'https://github.com/mh21/errormarker.vim'
