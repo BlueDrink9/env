@@ -146,6 +146,7 @@ lsp_installer.setup_handlers({
       require('lspconfig').sqls.setup{
          on_attach = function(client, bufnr)
             require('sqls').on_attach(client, bufnr)
+            on_attach(client, bufnr)
             vim.api.nvim_buf_set_keymap(
                bufnr, '', maps.REPLSend, "<Plug>(sqls-execute-query)",
                { noremap=true, silent=true })
