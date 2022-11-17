@@ -6,8 +6,8 @@
 " {[} Mappings
 
 " Not going to work because vscode-neovim doesn't do imaps
-inoremap kv :call VSCodeCall("vscode-neovim.escape") | echom "k v"
-inoremap vk :call VSCodeCall("vscode-neovim.escape")
+" inoremap kv :call VSCodeCall("vscode-neovim.escape")
+" inoremap vk :call VSCodeCall("vscode-neovim.escape")
 
 let s:nmappings = {
       \ g:IDE_mappings.definition: 'editor.action.goToDeclaration',
@@ -28,9 +28,9 @@ let s:nmappings = {
       \ g:IDE_mappings.GitCommit: 'git.commit',
       \ g:IDE_mappings.GitStage: 'git.stage',
       \ g:IDE_mappings.GitAmend: 'git.commitStagedAmend',
-      \ g:IDE_mappings.DebugFile: 'workbench.action.debug.run',
+      \ g:IDE_mappings.debugFile: 'workbench.action.debug.run',
       \ }
-      \ g:IDE_mappings.definition: 'editor.action.revealDefinition',
+      " \ g:IDE_mappings.definition: 'editor.action.revealDefinition',
       " \ g:IDE_mappings.type_definition: 'editor.action.revealDeclaration',
       " \ g:IDE_mappings.fix: 'editor.action.quickFix',
 
