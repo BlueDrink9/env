@@ -5,32 +5,70 @@
 " other event, to prevent my mappings overriding these ones.
 " {[} Mappings
 
+" Not going to work because vscode-neovim doesn't do imaps
 inoremap kv :call VSCodeCall("vscode-neovim.escape") | echom "k v"
 inoremap vk :call VSCodeCall("vscode-neovim.escape")
+
+let s:nmappings = {
+      \ g:IDE_mappings.definition: 'editor.action.goToDeclaration',
+      \ g:IDE_mappings.definition2: 'editor.action.peakDefinition',
+      \ g:IDE_mappings.type_definition: 'editor.action.goToTypeDefinition',
+      \ g:IDE_mappings.hover: 'editor.action.showHover',
+      \ g:IDE_mappings.refactor: 'editor.action.refactor',
+      \ g:IDE_mappings.rename: 'editor.action.rename',
+      \ g:IDE_mappings.diagnostic: 'workbench.action.showErrorsWarnings',
+      \ g:IDE_mappings.fix: 'editor.action.autoFix',
+      \ g:IDE_mappings.codeAction: 'editor.action.quickFix',
+      \ g:IDE_mappings.references: 'editor.action.findReferences',
+      \ g:IDE_mappings.references2: 'editor.action.findReferences',
+      \ g:IDE_mappings.FuzzyOpenFile: 'workbench.action.quickOpen',
+      \ g:IDE_mappings.FuzzyTags: 'workbench.action.showAllSymbols',
+      \ g:IDE_mappings.FuzzyCommands: 'workbench.action.showCommands',
+      \ g:IDE_mappings.FuzzyOldFiles: 'workbench.action.openRecent',
+      \ g:IDE_mappings.GitCommit: 'git.commit',
+      \ g:IDE_mappings.GitStage: 'git.stage',
+      \ g:IDE_mappings.GitAmend: 'git.commitStagedAmend',
+      \ g:IDE_mappings.DebugFile: 'workbench.action.debug.run',
+      \ }
+      \ g:IDE_mappings.definition: 'editor.action.revealDefinition',
+      " \ g:IDE_mappings.type_definition: 'editor.action.revealDeclaration',
+      " \ g:IDE_mappings.fix: 'editor.action.quickFix',
+
+let s:vmappings = {
+      \ g:IDE_mappings.FuzzyCommands: "workbench.action.showCommands",
+      \ g:IDE_mappings.GitStage: "git.stageSelectedRanges",
+      \ g:IDE_mappings.GitUnstage: "git.unstageSelectedRanges",
+      \ }
+
+for [key, value] in items(s:nmappings)
+  exec 'nnoremap ' . key . "<Cmd>call VSCodeNotify('" . value . "')<CR>"
+endfor
+for [key, value] in items(s:vmappings)
+  exec 'vnoremap ' . key . "<Cmd>call VSCodeNotifyVisual('" . value . "')<CR>"
+endfor
+
 
 " {[} Window management
 " leader w opens new vert window, switches to it
 nnoremap <leader>w <C-w>v<C-w>l
 " Edit current buffer with a new tab
 nnoremap <C-w>t :tab sb<cr>
-" No idea wtf this was meant to do...
-" nnoremap <C-w><S-R> <W-w> <C-r>
 " Easier way to move between windows
-nnoremap <C-h> <Cmd>call VSCodeCall("workbench.action.focusLeftGroup")<CR>
-nnoremap <C-l> <Cmd>call VSCodeCall("workbench.action.focusRightGroup")<CR>
-nnoremap <C-k> <Cmd>call VSCodeCall("workbench.action.focusAboveGroup")<CR>
-nnoremap <C-j> <Cmd>call VSCodeCall("workbench.action.focusBelowGroup")<CR>
+nnoremap <C-h> <Cmd>call VSCodeNotify("workbench.action.focusLeftGroup")<CR>
+nnoremap <C-l> <Cmd>call VSCodeNotify("workbench.action.focusRightGroup")<CR>
+nnoremap <C-k> <Cmd>call VSCodeNotify("workbench.action.focusAboveGroup")<CR>
+nnoremap <C-j> <Cmd>call VSCodeNotify("workbench.action.focusBelowGroup")<CR>
 
 " {[} Open windows to the left, right, up, down, like in tmux
-nnoremap <C-w>h <Cmd>call VSCodeCall("workbench.action.splitEditorLeft")<CR>
-nnoremap <C-w>l <Cmd>call VSCodeCall("workbench.action.splitEditorRight")<CR>
-nnoremap <C-w>k <Cmd>call VSCodeCall("workbench.action.splitEditorUp")<CR>
-nnoremap <C-w>j <Cmd>call VSCodeCall("workbench.action.splitEditorDown")<CR>
+nnoremap <C-w>h <Cmd>call VSCodeNotify("workbench.action.splitEditorLeft")<CR>
+nnoremap <C-w>l <Cmd>call VSCodeNotify("workbench.action.splitEditorRight")<CR>
+nnoremap <C-w>k <Cmd>call VSCodeNotify("workbench.action.splitEditorUp")<CR>
+nnoremap <C-w>j <Cmd>call VSCodeNotify("workbench.action.splitEditorDown")<CR>
 " {]} Open windows to the left, right, up, down.
 
 " Cycle through buffers
-nnoremap <silent> <Right> :call VSCodeCall("workbench.action.nextEditor")<CR>
-nnoremap <silent> <Left> :call VSCodeCall("workbench.action.previousEditor")<CR>
+nnoremap <silent> <Right> :call VSCodeNotify("workbench.action.nextEditor")<CR>
+nnoremap <silent> <Left> :call VSCodeNotify("workbench.action.previousEditor")<CR>
 nnoremap <silent> <Up> :tabnext<CR>
 nnoremap <silent> <Down> :tabprevious<CR>
 

@@ -28,6 +28,7 @@ let g:IDE_mappings = {
             \ 'make3' : 'm<space>',
             \ 'allActions' : '<leader>ia',
             \ 'allCommands' : '<leader>ic',
+            \ 'hover' : '<leader>ih',
             \ 'codeAction' : '<leader>ia',
             \ 'codeActionSelected' : '<leader>iaa',
             \ 'codelensAction' : '<leader>ial',
@@ -39,7 +40,6 @@ let g:IDE_mappings = {
             \ 'type_definition2' : '<leader>iD',
             \ 'documentation' : 'K',
             \ 'documentation2' : 'gh',
-            \ 'documentation3' : '<leader>ih',
             \ 'fix' : '<leader>ef',
             \ 'implementation' : '<leader>ii',
             \ 'implementation2' : 'gi',
@@ -75,7 +75,15 @@ let g:IDE_mappings = {
             \ 'set_breakpoint_conditional' : '<leader>dbc',
             \ 'add_breakpoint_functional' : '<leader>dbf',
             \ 'breakpoint_list' : '<leader>dbl',
+            \ 'GitCommit' : '<leader>gcc',
+            \ 'GitAmend' : '<leader>gce',
+            \ 'GitStage' : '<leader>gs',
+            \ 'GitStageFile' : '<leader>gS',
+            \ 'GitUnstage' : '<leader>gu',
+            \ 'GitUnstageFile' : '<leader>gU',
             \}
+            " \ 'declaration' : 'gD',
+
 " {]} ------ IDE Mappings ------
 
 " To consider:
