@@ -34,10 +34,12 @@ let s:nmappings = {
       " \ g:IDE_mappings.type_definition: 'editor.action.revealDeclaration',
       " \ g:IDE_mappings.fix: 'editor.action.quickFix',
 
+" 'tab' is just to sync the visual selection with vscode.
 let s:vmappings = {
-      \ g:IDE_mappings.FuzzyCommands: "workbench.action.showCommands",
-      \ g:IDE_mappings.GitStage: "git.stageSelectedRanges",
-      \ g:IDE_mappings.GitUnstage: "git.unstageSelectedRanges",
+      \ '<tab>': '',
+      \ g:IDE_mappings.FuzzyCommands: 'workbench.action.showCommands',
+      \ g:IDE_mappings.GitStage: 'git.stageSelectedRanges',
+      \ g:IDE_mappings.GitUnstage: 'git.unstageSelectedRanges',
       \ }
 
 for [key, value] in items(s:nmappings)
