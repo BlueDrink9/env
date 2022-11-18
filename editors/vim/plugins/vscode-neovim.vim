@@ -29,6 +29,8 @@ let s:nmappings = {
       \ g:IDE_mappings.GitStage: 'git.stage',
       \ g:IDE_mappings.GitAmend: 'git.commitStagedAmend',
       \ g:IDE_mappings.debugFile: 'workbench.action.debug.run',
+      \ '<c-s>': 'workbench.action.terminal.toggleTerminal',
+      \ '<leader>a': 'workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup',
       \ }
       " \ g:IDE_mappings.definition: 'editor.action.revealDefinition',
       " \ g:IDE_mappings.type_definition: 'editor.action.revealDeclaration',
