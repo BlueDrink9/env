@@ -1,14 +1,13 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
 
-" TODO: Do most of these as a function and autocmd on uienter or some
-" other event, to prevent my mappings overriding these ones.
 " {[} Mappings
 
 " Not going to work because vscode-neovim doesn't do imaps
 " inoremap kv :call VSCodeCall("vscode-neovim.escape")
 " inoremap vk :call VSCodeCall("vscode-neovim.escape")
 
+function VSCodeMaps()
 let s:nmappings = {
       \ g:IDE_mappings.definition: 'editor.action.goToDeclaration',
       \ g:IDE_mappings.definition2: 'editor.action.peakDefinition',
@@ -38,17 +37,17 @@ let s:nmappings = {
 
 " 'tab' is just to sync the visual selection with vscode.
 let s:vmappings = {
-      \ '<tab>': '',
+      \ '<tab>': '""',
       \ g:IDE_mappings.FuzzyCommands: 'workbench.action.showCommands',
       \ g:IDE_mappings.GitStage: 'git.stageSelectedRanges',
       \ g:IDE_mappings.GitUnstage: 'git.unstageSelectedRanges',
       \ }
 
 for [key, value] in items(s:nmappings)
-  exec 'nnoremap ' . key . "<Cmd>call VSCodeNotify('" . value . "')<CR>"
+  exec 'nnoremap ' . key . " <Cmd>call VSCodeNotify('" . value . "')<CR>"
 endfor
 for [key, value] in items(s:vmappings)
-  exec 'vnoremap ' . key . "<Cmd>call VSCodeNotifyVisual('" . value . "')<CR>"
+  exec 'vnoremap ' . key . " <Cmd>call VSCodeNotifyVisual('" . value . "', 1)<CR>"
 endfor
 
 
@@ -101,6 +100,9 @@ nnoremap / /
 
 nnoremap n n
 nnoremap N N
+
+endfunction
+au myVimrc User MappingOverrides call VSCodeMaps()
 
 " {]} Mappings
 
