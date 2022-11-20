@@ -14,7 +14,6 @@ local lsp_nbufmaps = {
    [maps.definition2] = 'buf.definition()',
    [maps.documentation] = 'buf.hover()',
    [maps.documentation2] = 'buf.hover()',
-   [maps.documentation3] = 'buf.hover()',
    [maps.implementation] = 'buf.implementation()',
    [maps.implementation2] = 'buf.implementation()',
    [maps.type_definition] = 'buf.type_definition()',

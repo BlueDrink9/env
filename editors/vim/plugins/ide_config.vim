@@ -296,10 +296,10 @@ if IsPluginUsed('python-mode')
     let g:pymode_rope_rename_bind = g:IDE_mappings.rename
     let g:pymode_rope_rename_module_bind = g:IDE_mappings.renameModule
     let g:pymode_run_bind = g:IDE_mappings.REPLSend
-    let g:pymode_breakpoint_bind = g:IDE_mappings.set_breakpoint
+    let g:pymode_breakpoint_bind = g:IDE_mappings.setBreakpoint
     let g:pymode_rope_prefix = g:IDE_mappings.codeAction
     let g:pymode_rope_goto_definition_bind = g:IDE_mappings.definition2
-    " let g:pymode_rope_extract_method_bind = g:IDE_mappings.extract_method
+    " let g:pymode_rope_extract_method_bind = g:IDE_mappings.extractMethod
     " Jump to definition in current window
     let g:pymode_rope_goto_definition_cmd = 'e'
     augroup myPymode
@@ -537,8 +537,8 @@ endif
 "
 " {[} ---------- Snippits ----------
 if IsPluginUsed('vim-vsnip')
-    call Imap(g:IDE_mappings.snippet_expand, '<Plug>(vsnip-expand-or-jump)')
-    call Vmap(g:IDE_mappings.snippet_expand, '<Plug>(vsnip-expand-or-jump)')
+    call Imap(g:IDE_mappings.snippetExpand, '<Plug>(vsnip-expand-or-jump)')
+    call Vmap(g:IDE_mappings.snippetExpand, '<Plug>(vsnip-expand-or-jump)')
     let g:vsnip_snippet_dir = PathExpand(s:scriptdir . '/../runtimepath/snippets')
 endif
 
