@@ -58,9 +58,6 @@ function! s:show_documentation()
 endfunction
 
 " {[} Mappings
-" use <Plug>(coc-diagnostic-next) for all diagnostics.
-nmap <silent> ]e <Plug>(coc-diagnostic-next-error)
-nmap <silent> [e <Plug>(coc-diagnostic-prev-error)
 " Unimpaired makes remapping tricky.
 let g:nremap = {"]e": "<Plug>(coc-diagnostic-next-error)","[e": "<Plug>(coc-diagnostic-prev-error)" }
 
@@ -86,6 +83,8 @@ call Vmap(g:IDE_mappings.codeActionSelected, "<Plug>(coc-codeaction-selected)")
 call Nmap(g:IDE_mappings.codelensAction, "<Plug>(coc-codelens-action)")
 " Use <leader>e for errors/linting/fixing.
 call Nmap(g:IDE_mappings.fix, "<Plug>(coc-fix-current)")
+call Nmap(g:IDE_mappings.diagnostic_next, "<plug>(coc-diagnostic-next-error)")
+call Nmap(g:IDE_mappings.diagnostic_prev, "<plug>(coc-diagnostic-prev-error)")
 " List errors
 exec 'nnoremap <silent> ' . g:IDE_mappings.listErrs . ' :<C-u>CocList locationlist<cr>'
 exec 'nnoremap <silent> ' . g:IDE_mappings.documentation . ':call s:show_documentation()<CR>'
@@ -93,7 +92,9 @@ exec 'nnoremap <silent> ' . g:IDE_mappings.documentation2 . ':call s:show_docume
 
 let g:coc_snippet_next = g:IDE_mappings.snippetNext
 let g:coc_snippet_prev = g:IDE_mappings.snippetPrev
-" call Inoremap(g:IDE_mappings.snippetExpand, ":call coc#_select_confirm()")
+" If we have tabbed to a snippet, can press space to expand it. Can't figure
+" out how to include a literal space after...
+inoremap <expr><space> coc#expandable() && coc#pum#visible() ? coc#pum#confirm() : ' '
 call Imap(g:IDE_mappings.snippetExpand, "<Plug>(coc-snippets-expand-jump)")
 
 function! s:check_back_space() abort
@@ -112,8 +113,11 @@ inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 " let g:SuperTabDefaultCompletionType = "<Plug>MyCocRefresh"
 " let g:completionCommand = <SID>cocTabOrComplete()
 
+inoremap <cr> <cr>
 
 " {]} Mappings
+
+" au myIDE CursorHold,CursorHoldI * call CocAction('diagnosticInfo')
 
 " hi CocErrorSign link WarningMsg
 " hi CocWaringSign link WarningMsg

@@ -1,7 +1,9 @@
 {
-    "suggest.enablePreview": true,
+    // Don't autoselect first completion item.
+    "suggest.noselect": true,
     "suggest.echodocSupport": true,
     // "diagnostic.displayByAle": true,
+    "diagnostic.virtualText": false,
     "diagnostic.errorSign": "X",
     "diagnostic.warningSign": "!",
     // idk what the differences are here.
