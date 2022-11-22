@@ -83,8 +83,8 @@ call Vmap(g:IDE_mappings.codeActionSelected, "<Plug>(coc-codeaction-selected)")
 call Nmap(g:IDE_mappings.codelensAction, "<Plug>(coc-codelens-action)")
 " Use <leader>e for errors/linting/fixing.
 call Nmap(g:IDE_mappings.fix, "<Plug>(coc-fix-current)")
-call Nmap(g:IDE_mappings.diagnostic_next, "<plug>(coc-diagnostic-next-error)")
-call Nmap(g:IDE_mappings.diagnostic_prev, "<plug>(coc-diagnostic-prev-error)")
+call Nmap(g:IDE_mappings.diagnosticNext, "<plug>(coc-diagnostic-next-error)")
+call Nmap(g:IDE_mappings.diagnosticPrev, "<plug>(coc-diagnostic-prev-error)")
 " List errors
 exec 'nnoremap <silent> ' . g:IDE_mappings.listErrs . ' :<C-u>CocList locationlist<cr>'
 exec 'nnoremap <silent> ' . g:IDE_mappings.documentation . ':call s:show_documentation()<CR>'
