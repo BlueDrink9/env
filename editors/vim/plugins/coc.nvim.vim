@@ -64,7 +64,7 @@ nmap <silent> [e <Plug>(coc-diagnostic-prev-error)
 " Unimpaired makes remapping tricky.
 let g:nremap = {"]e": "<Plug>(coc-diagnostic-next-error)","[e": "<Plug>(coc-diagnostic-prev-error)" }
 
-let g:coc_snippet_next = "<c-f>"
+" let g:coc_snippet_next = "<c-f>"
 let g:coc_snippet_prev = "<c-b>"
 
 " Use <leader>i for IDE.
@@ -90,21 +90,29 @@ call Nmap(g:IDE_mappings.fix, "<Plug>(coc-fix-current)")
 exec 'nnoremap <silent> ' . g:IDE_mappings.listErrs . ' :<C-u>CocList locationlist<cr>'
 exec 'nnoremap <silent> ' . g:IDE_mappings.documentation . ':call s:show_documentation()<CR>'
 exec 'nnoremap <silent> ' . g:IDE_mappings.documentation2 . ':call s:show_documentation()<CR>'
-exec 'nnoremap <silent> ' . g:IDE_mappings.documentation3 . ':call s:show_documentation()<CR>'
 
 let g:coc_snippet_next = g:IDE_mappings.snippetNext
 let g:coc_snippet_prev = g:IDE_mappings.snippetPrev
 " call Inoremap(g:IDE_mappings.snippetExpand, ":call coc#_select_confirm()")
 call Imap(g:IDE_mappings.snippetExpand, "<Plug>(coc-snippets-expand-jump)")
 
-inoremap <expr><Plug>MyCocRefresh coc#refresh()
-let g:SuperTabDefaultCompletionType = "<Plug>MyCocRefresh"
-" CoC uses custom popup now so have to do this...
-inoremap <silent><expr> <TAB>
-\ coc#pum#visible() ? coc#pum#next(1):
-\ <SID>check_back_space() ? "\<Tab>" :
-\ coc#refresh()
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+function! s:cocTabOrComplete()
+  return coc#pum#visible() ? coc#pum#next(1):
+        \ <SID>check_back_space() ? "\<Tab>" :
+        \ coc#refresh()
+endfunction
+inoremap <expr><Plug>MyCocRefresh <SID>cocTabOrComplete()
+inoremap <silent><expr> <TAB> <SID>cocTabOrComplete()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+" let g:SuperTabDefaultCompletionType = "<Plug>MyCocRefresh"
+" let g:completionCommand = <SID>cocTabOrComplete()
+
+
 " {]} Mappings
 
 " hi CocErrorSign link WarningMsg
