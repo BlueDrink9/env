@@ -16,8 +16,8 @@ local lsp_nbufmaps = {
    [maps.documentation2] = 'buf.hover()',
    [maps.implementation] = 'buf.implementation()',
    [maps.implementation2] = 'buf.implementation()',
-   [maps.type_definition] = 'buf.type_definition()',
-   [maps.type_definition2] = 'buf.type_definition()',
+   [maps.typeDefinition] = 'buf.type_definition()',
+   [maps.typeDefinition2] = 'buf.type_definition()',
    [maps.rename] = 'buf.rename()',
    [maps.codeAction] = 'buf.code_action()',
    [maps.references] = 'buf.references()',
@@ -31,8 +31,8 @@ local lsp_nbufmaps = {
 local diagnostic_nbufmaps = {
   [maps.listErrs] = 'set_loclist()',
   [maps.diagnostic] = 'open_float(nil, {focus=false})',
-  [maps.diagnostic_prev] = 'goto_prev()',
-  [maps.diagnostic_next] = 'goto_next()',
+  [maps.diagnosticPrev] = 'goto_prev()',
+  [maps.diagnosticNext] = 'goto_next()',
 }
 
 local lsp_flags = {
