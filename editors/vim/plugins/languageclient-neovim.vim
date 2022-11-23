@@ -6,7 +6,7 @@ command! LanguageClientUpdateAndInstallBinary PlugInstall! LanguageClient-neovim
 function! s:SetLSPShortcuts()
     call Nnoremap(g:IDE_mappings.definition, ":call LanguageClient#textDocument_definition()<CR>")
     call Nnoremap(g:IDE_mappings.definition2, ":call LanguageClient#textDocument_definition()<CR>")
-    call Nnoremap(g:IDE_mappings.type_definition, ":call LanguageClient#textDocument_typeDefinition()<CR>")
+    call Nnoremap(g:IDE_mappings.typeDefinition, ":call LanguageClient#textDocument_typeDefinition()<CR>")
     call Nnoremap(g:IDE_mappings.rename, ":call LanguageClient#textDocument_rename()<CR>")
     call Nnoremap(g:IDE_mappings.reformat, ":call LanguageClient#textDocument_formatting()<CR>")
     call Nnoremap(g:IDE_mappings.references, ":call LanguageClient#textDocument_references()<CR>")

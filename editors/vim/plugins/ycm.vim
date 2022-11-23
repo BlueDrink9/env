@@ -43,7 +43,7 @@ let g:ycm_key_detailed_diagnostics = g:IDE_mappings.codelensAction
 function! s:SetShortcuts()
     call Nnoremap(g:IDE_mappings.definition, ":YcmCompleter GoTo<CR>")
     call Nnoremap(g:IDE_mappings.definition2, ":YcmCompleter GoTo<CR>")
-    call Nnoremap(g:IDE_mappings.type_definition, ":YcmCompleter GoToType<CR>")
+    call Nnoremap(g:IDE_mappings.typeDefinition, ":YcmCompleter GoToType<CR>")
     call Nnoremap(g:IDE_mappings.rename, ":YcmCompleter RefactorRename<CR>")
     call Nnoremap(g:IDE_mappings.reformat, ":YcmCompleter Format<CR>")
     call Nnoremap(g:IDE_mappings.references, ":YcmCompleter GoToReferences<CR>")

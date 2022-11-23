@@ -11,7 +11,7 @@ function VSCodeMaps()
 let s:nmappings = {
       \ g:IDE_mappings.definition: 'editor.action.goToDeclaration',
       \ g:IDE_mappings.definition2: 'editor.action.peakDefinition',
-      \ g:IDE_mappings.type_definition: 'editor.action.goToTypeDefinition',
+      \ g:IDE_mappings.typeDefinition: 'editor.action.goToTypeDefinition',
       \ g:IDE_mappings.hover: 'editor.action.showHover',
       \ g:IDE_mappings.refactor: 'editor.action.refactor',
       \ g:IDE_mappings.rename: 'editor.action.rename',

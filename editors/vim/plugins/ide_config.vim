@@ -560,9 +560,9 @@ if IsPluginUsed('neosnippet-snippets')
 endif
 if IsPluginUsed('ultisnips')
     if !IsPluginUsed('coc.nvim')
-        let g:UltiSnipsExpandTrigger = g:IDE_mappings.snippet_expand
-        let g:UltiSnipsJumpForwardTrigger = g:IDE_mappings.snippet_next
-        let g:UltiSnipsJumpBackwardTrigger = g:IDE_mappings.snippet_prev
+        let g:UltiSnipsExpandTrigger = g:IDE_mappings.snippetExpand
+        let g:UltiSnipsJumpForwardTrigger = g:IDE_mappings.snippetNext
+        let g:UltiSnipsJumpBackwardTrigger = g:IDE_mappings.snippetPrev
     endif
     " Disable autotrigger
     " au myIDE VimEnter * au! UltiSnips_AutoTrigger
