@@ -15,7 +15,7 @@ let s:nmappings = {
       \ g:IDE_mappings.hover: 'editor.action.showHover',
       \ g:IDE_mappings.refactor: 'editor.action.refactor',
       \ g:IDE_mappings.rename: 'editor.action.rename',
-      \ g:IDE_mappings.diagnostic: 'workbench.action.showErrorsWarnings',
+      \ g:IDE_mappings.diagnostic: 'editor.action.showHover',
       \ g:IDE_mappings.fix: 'editor.action.autoFix',
       \ g:IDE_mappings.codeAction: 'editor.action.quickFix',
       \ g:IDE_mappings.references: 'editor.action.findReferences',

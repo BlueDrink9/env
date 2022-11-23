@@ -1,5 +1,61 @@
 // Place your key bindings in this file to override the defaultsauto[]
 [
+	{
+		"key": "left",
+		"command": "workbench.action.previousEditor",
+		"when": "editorTextFocus && neovim.mode == 'normal'"
+	},
+	{
+		"key": "right",
+		"command": "workbench.action.nextEditor",
+		"when": "editorTextFocus && neovim.mode == 'normal'"
+	},
+	{
+		"key": "ctrl+k",
+		"command": "workbench.action.navigateUp",
+		"when": "terminalFocus"
+	},
+	{
+		"key": "ctrl+j",
+		"command": "workbench.action.navigateDown",
+		"when": "terminalFocus"
+	},
+	{
+		"key": "ctrl+h",
+		"command": "workbench.action.navigateLeft",
+		"when": "terminalFocus"
+	},
+	{
+		"key": "ctrl+l",
+		"command": "workbench.action.navigateRight",
+		"when": "terminalFocus"
+	},
+    // Tab complete like vim - cycle between candidates with Tab
+    {
+        "key": "tab",
+        "command": "selectNextQuickFix",
+        "when": "editorFocus && quickFixWidgetVisible"
+    },
+    {
+        "key": "shift+tab",
+        "command": "selectPrevQuickFix",
+        "when": "editorFocus && quickFixWidgetVisible"
+    },
+    {
+        "key": "ctrl+e",
+        "command": "acceptSelectedSuggestion",
+        "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
+    },
+    {
+        "key": "tab",
+        "command": "selectNextSuggestion",
+        "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
+    },
+    {
+        "key": "shift+tab",
+        "command": "selectPrevSuggestion",
+        "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
+    },
     {
         "key": "ctrl+n",
         "command": "-workbench.action.files.newUntitledFile"
