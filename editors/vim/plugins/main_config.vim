@@ -461,8 +461,7 @@ if IsPluginUsed("vim-pencil")
                 \ 'texMath',
                 \ ]
 
-    " TODO check that SetProseOptions is run at the right times.
-    function! SetProseOptions()
+    function! s:setProseOptions()
         " Add dictionary completion. Requires setting 'dictionary' option.
         setlocal complete+=k
         " Default spelling lang is En, I want en_nz.
@@ -477,7 +476,13 @@ if IsPluginUsed("vim-pencil")
         unmap <buffer> <down>
         setl ai
     endfunction
-    exec 'autocmd myPlugins Filetype ' . join(g:proseFileTypes, ",") . ' call SetProseOptions()'
+    function! s:prepareProseOptionSet()
+        augroup setProseOptions
+            au!
+            autocmd cursorhold <buffer> call <sid>setProseOptions() | au! setProseOptions
+    endfunction
+
+    exec 'autocmd myPlugins Filetype ' . join(g:proseFileTypes, ",") . ' call <sid>prepareProseOptionSet()'
 endif
 
 " {[} ---------- Vimtex ----------
@@ -553,6 +558,7 @@ if IsPluginUsed("bullets.vim")
                 \ 'gitcommit',
                 \ 'scratch'
                 \]
+    let g:bullets_enable_in_empty_buffers = 0
 endif
 if IsPluginUsed("md-img-paste.vim")
     autocmd myPlugins FileType markdown command! PasteImage silent call mdip#MarkdownClipboardImage()<CR>

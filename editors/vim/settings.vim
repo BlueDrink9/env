@@ -492,7 +492,7 @@ function! s:SetSpellFile()
   endif
 endfunction
 " set spellfile=$HOME/.vim-spell-en.utf-8.add
-au myVimrc BufEnter * call s:SetSpellFile()
+au myVimrc BufEnter * call <sid>SetSpellFile()
 "Uses dictionary and source files to find matching words to complete.
 "See help completion for source,
 "Note: usual completion is on <C-n> but more trouble to press all the time.
@@ -559,7 +559,7 @@ function! s:SetTitle()
     set title
 endfunction
 
-autocmd myVimrc BufEnter,Bufwrite * call s:SetTitle()
+autocmd myVimrc BufEnter,Bufwrite * call <sid>SetTitle()
 
 " Autoset new unnamed buffers to scratch
 autocmd myVimrc BufEnter {} setlocal ft=scratch
