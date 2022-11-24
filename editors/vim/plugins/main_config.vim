@@ -31,9 +31,11 @@ function! PythonInstallModule(module)
 endfunction
 
 " Should pick up from either python types.
-if has('nvim') && !(has("python") || has("python3"))
-    " Needed for neovim python support.
-    call PythonInstallModule('neovim')
+if !exists('g:skipPythonInstall')
+    if has('nvim') && !(has("python") || has("python3"))
+        " Needed for neovim python support.
+        call PythonInstallModule('neovim')
+    endif
 endif
 " {]} ---------- Module setup ----------
 
@@ -502,17 +504,19 @@ if IsPluginUsed("vimtex")
         let g:vimtex_view_general_options_latexmk = '-reuse-instance'
     endif
     if has('python3')
-        let s:pythonUserBase = system("python3 -c 'import site; print(site.USER_BASE, end=\"\")'")
-        let $PATH=$PATH . ":" . PathExpand(s:pythonUserBase . "/bin")
+        " may need to add python site module bin to PATH if not already.
+        " python3 -c 'import site; print(site.USER_BASE, end=\"\")'
         if has('nvim') && !has('clientserver')
-            if !executable('nvr')
-                " Currently won't download with conda. Doesn't support 3.7.
-                if exists('g:pyInstaller') && !g:pyInstaller =~ "conda"
-                    call PythonInstallModule("neovim-remote")
-                endif
-            endif
+            " May require specific configuration
             if executable('nvr')
                 let g:vimtex_compiler_progname="nvr"
+            else
+                augroup vimtexWarning
+                    au!
+                    autocmd Filetype tex
+                            \echom 'nvr not on PATH, so vimtex cannot do compiler callbacks. Install it with pip or conda'
+                            \ | au! vimtexWarning
+                augroup end
             endif
         endif
     endif
