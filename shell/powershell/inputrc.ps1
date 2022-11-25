@@ -34,22 +34,31 @@ function replaceWithExit {
 }
 Set-PSReadLineKeyHandler -Chord ";" -ScriptBlock { mapTwoLetterFunc ';' 'q' -func $function:replaceWithExit }
 
+[void][System.Reflection.Assembly]::LoadWithPartialName('System.Windows.Forms')
 function mapTwoLetterFunc($a,$b,$func) {
   if ([Microsoft.PowerShell.PSConsoleReadLine]::InViInsertMode()) {
-    $key = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
-    if ($key.Character -eq $b) {
-        &$func
+
+    $key = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown").character
+    if ($key -eq $b) {
+      &$func
     } else {
       [Microsoft.Powershell.PSConsoleReadLine]::Insert("$a")
       # Representation of modifiers (like shift) when ReadKey uses IncludeKeyDown
-      if ($key.Character -eq 0x00) {
+      if ($key -eq 0x00) {
         return
       } else {
-        # Insert func above converts escape characters to their literals, e.g.
-        # converts return to ^M. This doesn't.
-        $wshell = New-Object -ComObject wscript.shell
-        $wshell.SendKeys("{$($key.Character)}")
-      }
+         # Insert func converts escape characters to their literals, e.g.
+         # converts return to ^M. jo we check if key matches regex for a control
+         # character. If it does, use a method that sends the keystroke instead.
+         # The downsides of this are that keystrokes are picked up by eg
+         # autohotkey scripts, which is why it is undesirable for regular keys.
+        if ($key -match '\p{C}') {
+          [System.Windows.Forms.SendKeys]::SendWait("$key")
+        } else {
+          [Microsoft.Powershell.PSConsoleReadLine]::Insert("$key")
+        }
+
+        }
     }
   }
 }
