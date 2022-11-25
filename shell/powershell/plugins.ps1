@@ -11,6 +11,8 @@ Plugin PSReadline  # Included by default after v3.
 
 Plugin TabExpansionPlusPlus  # A little heavy.
 # Plugin PSUtil  # Hurts startup time a lot
+# Command-line intellisense based on PowerShell auto-completion
+Plugin CompletionPredictor
 
 # Coloured LS output
 Plugin Get-ChildItemColor

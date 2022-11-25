@@ -76,6 +76,10 @@ Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadlineOption -ShowToolTips
 Set-PSReadlineOption -CompletionQueryItems 100
 Set-PSReadlineOption -BellStyle None
+
+# virtualtext suggestion from history. Can also suggest as a list if you want.
+Set-PSReadlineOption -PredictionSource HistoryAndPlugin
+Set-PSReadlineKeyHandler -Chord "Ctrl+e" -Function AcceptSuggestion
 # Set-PSDebug -Trace 0
 
 # Don't colour command name yellow!
