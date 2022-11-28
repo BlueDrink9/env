@@ -23,7 +23,10 @@ Sequence(cmdmap) {
         if (max_sequence_len < StrLen(keys))
             max_sequence_len := StrLen(keys)
     }
-    Input command, % "L" max_sequence_len,, % SubStr(matchlist, 2)
+    ; C: allows shifted keys.
+    ; M: allows modified keys (but sets the result to the actual character code
+    ; sent, so beware when checking against it.).
+    Input command, % "L" max_sequence_len "C M",, % SubStr(matchlist, 2)
     if command := cmdmap[command]
         Run % command
 }
