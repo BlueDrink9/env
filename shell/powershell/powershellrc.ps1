@@ -19,18 +19,4 @@ if (Get-Command "starship" -ErrorAction SilentlyContinue) {
     Invoke-Expression (&starship init powershell)
 }
 
-# Set up async (well, actually just delayed) plugin loading
-$Runspace = [runspacefactory]::CreateRunspace()
-$PowerShell = [powershell]::Create()
-$PowerShell.runspace = $Runspace
-$Runspace.Open()
-[void]$PowerShell.AddScript({
-    Start-Sleep -Seconds 1
-})
-$AsyncObject = $PowerShell.BeginInvoke()
-$null = Register-ObjectEvent -InputObject $Powershell -EventName InvocationStateChanged -Action {
-    . $scriptdir/plugins.ps1
-    # Clean up after async bits
-    $Data = $PowerShell.EndInvoke($AsyncObject)
-    $PowerShell.Dispose()
-}
+. $scriptdir/plugins.ps1
