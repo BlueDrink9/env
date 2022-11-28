@@ -1,0 +1,6 @@
+- name: grindstone
+  identifier:
+    kind: exe
+    id: grindstone.exe
+  options:
+    - tray_and_multi_window
