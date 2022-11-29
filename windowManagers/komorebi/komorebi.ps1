@@ -10,21 +10,28 @@ komorebic.exe watch-configuration "enable"
 
 # optionally, if you want a different colour for stacks of windows
 # komorebic.exe active-window-border-colour [R G B] --window-kind stack
-:
-$gap=1
+
+$inner_gap=10  # container
+$outer_gap=0  # workspace
 # komorebic.exe container-padding 0 <WORKSPACE_INDEX> $gap
-for ($i = 0; $i -lt 10; $i++){
-    komorebic.exe workspace-padding 0 $i $gap
+$n_mon=4
+$n_ws=14
+for ($mon = 0; $mon -lt $n_mon; $mon++){
+    for ($ws = 0; $ws -lt $n_ws; $ws++){
+        komorebic.exe workspace-padding $mon $ws $outer_gap
+        komorebic.exe container-padding $mon $ws $inner_gap
+    }
 }
+
+# Configure the invisible border dimensions
+komorebic.exe invisible-borders 7 0 27 10
+komorebic.exe work-area-offset 0 0 $n_ws 0
 
 komorebic.exe mouse-follows-focus disable
 komorebic.exe focus-follows-mouse disable
 
-komorebic.exe ensure-workspaces 0 4
-
-# Configure the invisible border dimensions
-komorebic.exe invisible-borders 0 0 0 0
-komorebic.exe work-area-offset 0 0 14 0
+# not sure I like their workspace implementation. Might just stick to using virtual desktops.
+komorebic.exe ensure-workspaces 0 1
 
 # Configure the 1st workspace
 # komorebic.exe workspace-name 0 0 I
