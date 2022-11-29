@@ -1,5 +1,5 @@
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
-; #Warn  ; Enable warnings to assist with detecting common errors.
+#Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #KeyHistory 0
@@ -12,55 +12,61 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #include %A_scriptdir%\..\..\autohotkey\hotkey_sequence.ahk
 
 directionMap := {l: "right", h: "left", k: "up", j: "down"}
-WSDirectionMap := {"[": "previous", "]": "next"}
 hotkeyPrefixes := {"": "Focus"
   ,"+": "Move"
   ,"^": "Send"}
 cycleTargetHotkeyPrefix := {"": "Workspace", "!": "Monitor"}
 cycleDirectionMap := {"[": "previous", "]": "next"}
 
+SplitModAndDirkey(ThisHotkey, byref modifiers, byref dirKey){
+  ; Removes the # from the start of the key, then sets modifiers to the
+  ; remaining modifiers keys (e.g. '+!'), and dirKey to the final keypress.
+  StringReplace, thisHotkey, thisHotkey, #,, All
+  dirKey := SubStr(thisHotkey, 0, 1) ; last character
+  modifiers := SubStr(thisHotkey,1,-1) ; all but last char
+}
+
 ; focus,swap, or move/warp the node in the given direction.
 ; Expects keys like #h or #+h. If it is shifted (+), will move.
 ; Otherwise, focuses.
 FocusOrMoveDirection(){
-  StringReplace, thisHotkey, A_ThisHotkey, #,, All
-  dirKey := SubStr(thisHotkey, 0, 1)
-  modifiers := SubStr(thisHotkey, -1)
+  global directionMap, hotkeyPrefixes
+  SplitModAndDirkey(A_ThisHotkey, modifiers, dirKey)
   command := hotkeyPrefixes[modifiers]
   %command%(directionMap[dirKey])
 }
 
 CycleDirection(){
+  global cycleDirectionMap, cycleTargetHotkeyPrefix
   StringReplace, thisHotkey, A_ThisHotkey, #,, All
-  dirKey := SubStr(thisHotkey, 0, 1)
-  modifiers := SubStr(thisHotkey, -1)
+  SplitModAndDirkey(A_ThisHotkey, modifiers, dirKey)
   command := "Cycle" + cycleTargetHotkeyPrefix[modifiers]
   %command%(cycleDirectionMap[dirKey])
 }
 
 FocusOrMoveWorkspaceNumber(){
+  global hotkeyPrefixes
   StringReplace, spaceNum, A_ThisHotkey, #,, All
-  spaceNum := SubStr(thisHotkey, 0, 1)
-  modifiers := SubStr(thisHotkey, -1)
+  SplitModAndDirkey(A_ThisHotkey, modifiers, spaceNum)
   FocusAndMove := false
   command := hotkeyPrefixes[modifiers] + "Workspace"
   %command%(spaceNum)
 }
 
-for _, dirKey in ["h", "l", "k", "j"] {
+for _, key in ["h", "l", "k", "j"] {
   ; focus
-  Hotkey, #%dirKey%, FocusOrMoveDirection
+  Hotkey, #%key%, FocusOrMoveDirection
   ; move
-  Hotkey, #+%dirKey%, FocusOrMoveDirection
+  Hotkey, #+%key%, FocusOrMoveDirection
 }
 
-for _, dirKey in ["[", "]"] {
+for _, key in ["[", "]"] {
   ; desktop/workspace
-  Hotkey, #%dirKey%, CycleDirection
+  Hotkey, #%key%, CycleDirection
   ; monitor
-  Hotkey, #!%dirKey%, CycleDirection
-  ; Hotkey, #+%dirKey%, FocusOrMoveWorkspaceDirection
-  ; Hotkey, #+!%dirKey%, FocusOrMoveWorkspaceDirection
+  Hotkey, #!%key%, CycleDirection
+  ; Hotkey, #+%key%, FocusOrMoveWorkspaceDirection
+  ; Hotkey, #+!%key%, FocusOrMoveWorkspaceDirection
 }
 
 loop, 9{
