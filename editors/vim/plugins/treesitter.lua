@@ -21,7 +21,15 @@ require('nvim-treesitter.configs').setup {
    ensure_installed = {
        "vim",
        "lua",
+       "bash",
+       -- "powershell", -- not available yet
+       "markdown",
+       "make",
+       "json",
+       "yaml",
+       "toml",
        "python",
+       "r",
        "sql",
    },
    endwise = { enable = true, },
