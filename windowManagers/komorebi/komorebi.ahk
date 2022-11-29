@@ -6,12 +6,9 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance Force
 #NoTrayIcon
 
-configDir := A_MyDocuments "\..\.config\komorebi"
-; convenience function library
-#include %A_MyDocuments%\..\.config\komorebi\komorebic.lib.ahk
-; Crowd-sourced app configs
-#include %A_MyDocuments%\..\.config\komorebi\komorebi.generated.ahk
-; #include %configDir%\komorebi.generated.ahk
+#include %A_scriptdir%\include_libs.ahk
+
+#inputlevel 1
 
 resetBorderColour(){
   ; this is a nice blue colour #42A5F5
@@ -21,4 +18,6 @@ resetBorderColour()
 
 run komorebic.exe complete-configuration
 
+; #include %A_MyDocuments%\..\.config\komorebi\komorebi_before.ahk
 #include %A_ScriptDir%\bindings.ahk
+#include %A_MyDocuments%\..\.config\komorebi\komorebi_after.ahk

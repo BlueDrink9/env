@@ -7,6 +7,13 @@ remove-item "$sourceFile" | out-null
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/LGUG2Z/komorebi-application-specific-configuration/master/applications.yaml" `
 -OutFile "$sourceFile"
 
+# Generate empty local configs if there isn't one.
+$configDir="$Env:KOMOREBI_CONFIG_HOME"
+if (!(Test-Path "$configDir/komorebi_after.ahk")){
+  New-Item -path "$configDir" -name "komorebi_before.ahk" -type "file"
+  New-Item -path "$configDir" -name "komorebi_after.ahk" -type "file"
+}
+
 # Generate application-specific config in config dir
 komorebic.exe ahk-app-specific-configuration "$sourceFile" $PSScriptRoot\application_specific_config_overrides.yaml
 

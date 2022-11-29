@@ -6,10 +6,8 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance Force
 ; #NoTrayIcon Since if you're running this script directly, you're debugging
 
-; convenience function library
-#include %A_MyDocuments%\..\.config\komorebi\komorebic.lib.ahk
 
-#include %A_scriptdir%\..\..\autohotkey\hotkey_sequence.ahk
+#include %A_scriptdir%\include_libs.ahk
 
 directionMap := {l: "right", h: "left", k: "up", j: "down"}
 hotkeyPrefixes := {"": "Focus"
@@ -60,23 +58,23 @@ for _, key in ["h", "l", "k", "j"] {
   Hotkey, #+%key%, FocusOrMoveDirection
 }
 
-for _, key in ["[", "]"] {
-  ; desktop/workspace
-  Hotkey, #%key%, CycleDirection
-  ; monitor
-  Hotkey, #!%key%, CycleDirection
-  ; Hotkey, #+%key%, FocusOrMoveWorkspaceDirection
-  ; Hotkey, #+!%key%, FocusOrMoveWorkspaceDirection
-}
+; for _, key in ["[", "]"] {
+;   ; desktop/workspace
+;   Hotkey, #%key%, CycleDirection
+;   ; monitor
+;   Hotkey, #!%key%, CycleDirection
+;   ; Hotkey, #+%key%, FocusOrMoveWorkspaceDirection
+;   ; Hotkey, #+!%key%, FocusOrMoveWorkspaceDirection
+; }
 
-loop, 9{
-  ; focus
-  Hotkey, #%A_index%, FocusOrMoveWorkspaceNumber
-  ; move
-  Hotkey, #+%A_index%, FocusOrMoveWorkspaceNumber
-  ; focus and move
-  Hotkey, #+^%A_index%, FocusOrMoveWorkspaceNumber
-}
+; loop, 9{
+;   ; focus
+;   Hotkey, #%A_index%, FocusOrMoveWorkspaceNumber
+;   ; move
+;   Hotkey, #+%A_index%, FocusOrMoveWorkspaceNumber
+;   ; focus and move
+;   Hotkey, #+^%A_index%, FocusOrMoveWorkspaceNumber
+; }
 
 ; Probably actually generally useful
 #x::send !{F4}
@@ -103,7 +101,7 @@ return
 #+t::toggleTiling()
 #+f::toggleFloat()
 
-#n::NewWorkspace()
+; #n::NewWorkspace()
 
 #r::FlipLayout("horizontal-and-vertical")
 ; #r::FlipLayout("horizontal")
