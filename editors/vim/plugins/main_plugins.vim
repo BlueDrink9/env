@@ -326,7 +326,7 @@ if executable("git")
     Plug 'junegunn/gv.vim'
 
 
-    if has('nvim-0.5')
+    if has('nvim-0.7')
         " Can stage and all sorts.
         Plug 'https://github.com/lewis6991/gitsigns.nvim'
     else

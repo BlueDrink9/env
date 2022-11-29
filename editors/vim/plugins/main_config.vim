@@ -375,17 +375,21 @@ if IsPluginUsed("vim-fugitive")
                 \ Make AsyncRun -program=make @ <args>
     endif
 endif
-" Enhances working with branches in fugitive
-if IsPluginUsed("gv.vim")
+" Enhances working with branches in fugitive "
+if IsPluginUsed('gv.vim')
     command! Glog :GV<CR>
 endif
 
-if IsPluginUsed("gitsigns.nvim")
-    lua require('gitsigns').setup({
-                \ signs = {
-                \ add = {hl = 'GitSignsAdd', text = '+', numhl='GitSignsAddNr', linehl='GitSignsAddLn'},
-                \ }
-                \ })
+if IsPluginUsed('gitsigns.nvim')
+lua << EOF
+require('gitsigns').setup({
+    signs = {
+        add = {hl = 'GitSignsAdd', text = '+', numhl='GitSignsAddNr', linehl='GitSignsAddLn'},
+    },
+    signcolumn = true,
+    numhl      = true,
+})
+EOF
 endif
 
 if IsPluginUsed("vim-signify")
@@ -403,8 +407,29 @@ if IsPluginUsed("vim-signify")
         " autocmd myPlugins CursorHold,CursorHoldI,BufEnter,FocusGained call silent! sy#start()
         " autocmd myPlugins WinEnter call silent! sy#start()
     endif
+
+    autocmd User SignifyHunk call s:show_current_hunk()
+
+    function! s:show_current_hunk() abort
+        let h = sy#util#get_hunk_stats()
+        if !empty(h)
+            echo printf('[Hunk %d/%d]', h.current_hunk, h.total_hunks)
+        endif
+    endfunction
+
     " let g:signify_update_on_focusgained = 1
+    let g:signify_sign_show_count = 1
     let g:signify_sign_change = '~'
+    " Looks good and is effective with colour highlighting. Not too
+    " distracting.
+    let g:signify_sign_add                  = '┃'
+    let g:signify_sign_delete               = '┃'
+    let g:signify_sign_change               = '┃'
+
+    if hlexists('LineNr')
+        let g:signify_number_highlight = 1
+        let g:signify_priority = 1
+    endif
 endif
 
 if IsPluginUsed("vim-gitgutter")
