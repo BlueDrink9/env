@@ -313,6 +313,8 @@ EOF
         Plug 'https://github.com/RRethy/nvim-treesitter-endwise'
         Plug 'nvim-treesitter/nvim-treesitter-context'
         UnPlug 'context.vim'
+        Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+        UnPlug 'vim-argumentative'
         Plug 'https://github.com/JoosepAlviste/nvim-ts-context-commentstring'
 
     endif

@@ -43,3 +43,63 @@ require'nvim-treesitter.configs'.setup {
    }
 }
 require'treesitter-context'.setup{}
+
+require'nvim-treesitter.configs'.setup {
+  textobjects = {
+    select = {
+      enable = true,
+      -- Automatically jump forward to textobj, similar to targets.vim
+      lookahead = true,
+      keymaps = {
+        ["a,"] = "@parameter.outer",
+        ["i,"] = "@parameter.inner",
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+        -- { query = "@class.inner", desc = "Select inner part of a class region" }
+      },
+      selection_modes = {
+        ['@parameter.outer'] = 'v', -- charwise
+        ['@function.outer'] = 'V', -- linewise
+        ['@class.outer'] = 'V',
+      },
+      -- Can also be a function which gets passed a table with the keys
+      -- * query_string: eg '@function.inner'
+      -- * selection_mode: eg 'v'
+      -- and should return true of false
+      include_surrounding_whitespace = true,
+    },
+    swap = {
+      enable = true,
+      swap_next = {
+         [">,"] = "@parameter.inner",
+      },
+      swap_previous = {
+         ["<,"] = "@parameter.inner",
+      },
+      },
+   },
+   move = {
+      enable = true,
+      set_jumps = true,
+      goto_next_start = {
+         ["]m"] = "@function.outer",
+         ["]]"] = { query = "@class.outer", desc = "Go to next class start" },
+         ["],"] = { query = "@parameter.inner", desc = "Go to next argument" },
+      },
+      goto_next_end = {
+         ["]M"] = "@function.outer",
+         ["]["] = "@class.outer",
+      },
+      goto_previous_start = {
+         ["[m"] = "@function.outer",
+         ["[["] = "@class.outer",
+         ["[,"] = { query = "@parameter.inner", desc = "Go to previous argument" },
+      },
+      goto_previous_end = {
+         ["[M"] = "@function.outer",
+         ["[]"] = "@class.outer",
+      },
+   },
+}
