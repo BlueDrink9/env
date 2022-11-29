@@ -316,6 +316,10 @@ EOF
         Plug 'nvim-treesitter/nvim-treesitter-textobjects'
         UnPlug 'vim-argumentative'
         Plug 'https://github.com/JoosepAlviste/nvim-ts-context-commentstring'
+        -- Two treesitter splitjoin alternatives. In development, poor docs.
+        -- Plug 'https://github.com/Wansmer/treesj'
+        -- Plug 'https://github.com/aarondiel/spread.nvim'
+        -- UnPlug 'splitjoin.vim'
 
     endif
 endif
