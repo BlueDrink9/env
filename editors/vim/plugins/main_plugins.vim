@@ -308,7 +308,6 @@ if has("nvim")
     Plug 'https://github.com/salkin-mada/openscad.nvim', {'for': 'scad'}
 else
     Plug 'https://github.com/jceb/vim-orgmode', {'for': 'org'}
-    Plug 'https://github.com/sirtaj/vim-openscad', {'for': 'scad'}
 endif
 " {]} ---------- Basic extra filetype support ----------
 
