@@ -129,7 +129,6 @@ cabbrev ide let g:ideMode=1 <bar> so $MYVIMRC
 command! -bang -nargs=* PathCopy let @+ = expand("%:p")
 " Word under cursor.
 cabbrev <cw> <cword>
-command! -bang -nargs=* Profile profile start $HOME/.logs/vim_profile <bar> profile func *
 " :W! sudo saves the file
 " (useful for handling the permission-denied error)
 " File needs to already exist.

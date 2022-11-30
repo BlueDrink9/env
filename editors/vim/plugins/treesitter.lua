@@ -37,7 +37,7 @@ require('nvim-treesitter.configs').setup {
    indent = { enable = true },
    highlight = {
       enable = true,
-      additional_vim_regex_highlighting = [],
+      -- additional_vim_regex_highlighting = [],
    },
 }
 vim.opt.foldexpr="nvim_treesitter#foldexpr()"
@@ -50,39 +50,39 @@ require'nvim-treesitter.configs'.setup {
 require'treesitter-context'.setup{}
 
 require'nvim-treesitter.configs'.setup {
-  textobjects = {
-    select = {
-      enable = true,
-      -- Automatically jump forward to textobj, similar to targets.vim
-      lookahead = true,
-      keymaps = {
-        ["a,"] = "@parameter.outer",
-        ["i,"] = "@parameter.inner",
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
-        -- { query = "@class.inner", desc = "Select inner part of a class region" }
+   textobjects = {
+      select = {
+         enable = true,
+         -- Automatically jump forward to textobj, similar to targets.vim
+         lookahead = true,
+         keymaps = {
+           ["a,"] = "@parameter.outer",
+           ["i,"] = "@parameter.inner",
+           ["af"] = "@function.outer",
+           ["if"] = "@function.inner",
+           ["ac"] = "@class.outer",
+           ["ic"] = "@class.inner",
+           -- { query = "@class.inner", desc = "Select inner part of a class region" }
+         },
+         selection_modes = {
+            ['@parameter.outer'] = 'v', -- charwise
+            ['@function.outer'] = 'V', -- linewise
+            ['@class.outer'] = 'V',
+         },
+         -- Can also be a function which gets passed a table with the keys
+         -- * query_string: eg '@function.inner'
+         -- * selection_mode: eg 'v'
+         -- and should return true of false
+         include_surrounding_whitespace = true,
       },
-      selection_modes = {
-        ['@parameter.outer'] = 'v', -- charwise
-        ['@function.outer'] = 'V', -- linewise
-        ['@class.outer'] = 'V',
-      },
-      -- Can also be a function which gets passed a table with the keys
-      -- * query_string: eg '@function.inner'
-      -- * selection_mode: eg 'v'
-      -- and should return true of false
-      include_surrounding_whitespace = true,
-    },
-    swap = {
-      enable = true,
-      swap_next = {
-         [">,"] = "@parameter.inner",
-      },
-      swap_previous = {
-         ["<,"] = "@parameter.inner",
-      },
+      swap = {
+         enable = true,
+         swap_next = {
+            [">,"] = "@parameter.inner",
+         },
+         swap_previous = {
+            ["<,"] = "@parameter.inner",
+         },
       },
    },
    move = {

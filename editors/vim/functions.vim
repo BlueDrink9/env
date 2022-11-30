@@ -408,3 +408,14 @@ function! s:ExpandAlias(lhs, rhs)
   endif
   return a:lhs
 endfunction
+
+function! s:Profile()
+    let logfile = '$HOME/.logs/vim_profile.log'
+    exec 'profile start ' . logfile
+    profile func *
+    profile! file *
+    echom 'writing profile log to ' . logfile
+    echom 'Run ProfileStop to end and write log'
+endfunction
+command! Profile call <sid>Profile()
+command! ProfileStop profile stop
