@@ -8,38 +8,18 @@ if IsPluginUsed("asyncrun.vim")
 endif
 
 function! s:AirlineColorVarUpdate()
-    let s:restoreCS = g:colorSch
-    " All airline themes are lowercase, but not all theme names are. For
-    " example, PaperColor.
-    let g:colorSch= tolower(g:colorSch)
-    if g:colorSch =~ "base16"
-        " Strips off the 'base16-' bit.
-        " let g:colorSch = g:colorSch[7:]
-        " Only takes the second bit between hyphens.
-        " let g:colorSch = split(g:colorSch,"-")[1]
-        let g:colorSch = "base16"
-    elseif g:colorSch =~? "solarized"
-        " Covers solarized variants like solarized8, neosolarized, etc.
-        " After base16 so it doesn't catch base16-solarized-*.
-        let g:colorSch = "solarized"
-    endif
-    " Any schemes not defined for airline
-    if exists ('*airline#util#themes()') &&
-                \ (index(airline#util#themes(g:colorSch), g:colorSch) == -1)
-        let g:colorSch = "default"
-    endif
-    if g:colorSch == "default"
-        " let g:colorSch = &background
+    let s:colorSch = ColorschemeToAirlineTheme(g:colorSch)
+    if s:colorSch == "default"
+        " let s:colorSch = &background
         " If theme is unset, Airline will pick from theme highlight colours to
         " get a nice match.
         if exists('g:airline_theme')
             unlet g:airline_theme
         endif
     else
-        let g:airline_theme=g:colorSch
+        let g:airline_theme=s:colorSch
     endif
-    exec 'let g:airline_' . g:colorSch . '_bg="' . &background . '"'
-    let g:colorSch=s:restoreCS
+    exec 'let g:airline_' . s:colorSch . '_bg="' . &background . '"'
 endfunction
 
 call s:AirlineColorVarUpdate()
@@ -56,41 +36,16 @@ if g:remoteSession
     let g:webdevicons_enable=0
 endif
 " Env variables, can be set by ssh client on login if it supports PL.
-if $USENF==1
+if g:useNerdFont == 1
     let g:airline_powerline_fonts=1
     let g:webdevicons_enable=1
-elseif $USEPF==1
+elseif g:usePLFont == 1
     let g:airline_powerline_fonts=1
-elseif $USEPF==0
+elseif g:usePLFont == 0
     let g:airline_powerline_fonts=0
-elseif $USENF==0
+elseif g:useNerdFont == 0
     let g:airline_powerline_fonts=0
     let g:webdevicons_enable=0
-endif
-" Check if either of these have been specifically disabled or enabled.
-" airline_powerline gets set by default.
-if !exists('g:webdevicons_enable')
-" if !exists('g:airline_powerline_fonts') || !exists('g:webdevicons_enable')
-    " Automatically check for powerline compatible font installed locally
-    " (unix) or to system (windows)
-    " If we are (probably) using a powerline compatible font, set it so.
-    " If a nerd font is found, assume powerline-compat, as well as devicons.
-
-    " Exists by default :/
-    " if !exists('g:airline_powerline_fonts')
-    if g:usePLFont
-        let g:airline_powerline_fonts = 1
-    else
-        let g:airline_powerline_fonts = 0
-    endif
-    " endif
-
-    if g:useNerdFont == 0
-        if !exists('g:webdevicons_enable')
-            " disable devicons and dependents.
-            let g:webdevicons_enable = 0
-        endif
-    endif
 endif
 
 " if exists('g:airline_powerline_fonts') && g:airline_powerline_fonts == 0
