@@ -38,3 +38,7 @@ endfunction
 if IsPluginUsed("vim-airline")
     call SourcePluginFile("airline.vim")
 endif
+
+if IsPluginUsed("lualine.nvim")
+    call SourcePluginFile("lualine.lua")
+endif
