@@ -168,10 +168,11 @@ call plug#end()
 
 call SourcePluginFile("light_config.vim")
 if !g:liteMode
+    " Check if we can use powerline/nerd font symbols.
+    " Sets g:useNerdFont || g:usePLFont
+    call SourcePluginFile("symbol_check.vim")
     call SourcePluginFile("main_config.vim")
-    if IsPluginUsed("vim-airline")
-      call SourcePluginFile("statusbar.vim")
-    endif
+    call SourcePluginFile("statusbar.vim")
     if g:ideMode
       call SourcePluginFile("ide_config.vim")
     endif
