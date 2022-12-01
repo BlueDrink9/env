@@ -16,13 +16,13 @@ elseif $USENF==0
     let g:useNerdFont = 0
 elseif g:hasGUI
     let s:guiUsesNerdFont = 
-                \ &guifont =~ "Nerd" ||
-                \ &guifont =~ "Meslo" ||
-                \ &guifont =~ "Sauce"
+                \ &guifont =~? "Nerd" ||
+                \ &guifont =~? "Meslo" ||
+                \ &guifont =~? "Sauce"
 
     let s:guiUsesPLFont = s:guiUsesNerdFont || 
-                \ &guifont =~ "Powerline" ||
-                \ &guifont =~ "Source\\ Code\\ Pro"
+                \ &guifont =~? "Powerline" ||
+                \ &guifont =~? "Source\\ Code\\ Pro"
 
     let g:usePLFont = s:guiUsesPLFont
     let g:useNerdFont = s:guiUsesNerdFont
