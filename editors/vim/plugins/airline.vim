@@ -88,9 +88,6 @@ if !exists('g:webdevicons_enable')
     if g:useNerdFont == 0
         if !exists('g:webdevicons_enable')
             " disable devicons and dependents.
-            let g:NERDTreeDisableFileExtensionHighlight = 1
-            let g:NERDTreeDisableExactMatchHighlight = 1
-            let g:NERDTreeDisablePatternMatchHighlight = 1
             let g:webdevicons_enable = 0
         endif
     endif

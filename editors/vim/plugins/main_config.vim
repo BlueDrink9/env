@@ -701,6 +701,11 @@ if IsPluginUsed("nerdtree.git")
 
     cabbrev nt NERDTreeToggle
     " nnoremap _ <cmd>NERDTreeToggle<CR>
+    if g:useNerdFont
+        let g:NERDTreeDisableFileExtensionHighlight = 1
+        let g:NERDTreeDisableExactMatchHighlight = 1
+        let g:NERDTreeDisablePatternMatchHighlight = 1
+    endif
 endif
 " {]} ---------- NerdTree ----------
 
