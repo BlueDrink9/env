@@ -52,10 +52,10 @@ local config = {
    extensions = {},
 }
 
-if not vim.g.useNerdFont or not vim.fn.IsPluginUsed('nvim-web-devicons') then
+if vim.g.useNerdFont == 0 or not vim.fn.IsPluginUsed('nvim-web-devicons') then
    config.options.icons_enabled = false
 end
-if not vim.g.usePLFont then
+if vim.g.usePLFont == 0 then
    config.options.component_separators = { left = '', right = ''}
    config.options.section_separators = { left = '', right = ''}
 end

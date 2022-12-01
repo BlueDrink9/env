@@ -9,6 +9,11 @@ if $USENF==1
     let g:useNerdFont = 1
 elseif $USEPF==1
     let g:usePLFont = 1
+elseif $USEPF==0
+    let g:usePLFont = 0
+    let g:useNerdFont = 0
+elseif $USENF==0
+    let g:useNerdFont = 0
 elseif g:hasGUI
     let s:guiUsesNerdFont = 
                 \ &guifont =~ "Nerd" ||
