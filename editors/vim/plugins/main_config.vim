@@ -639,19 +639,21 @@ endif
 
 if IsPluginUsed("toggleterm.nvim")
 lua << EOF
-    require("toggleterm").setup{
+    opts ={
     open_mapping = [[<c-s>]],
     direction = 'horizontal',
     start_in_insert = true,
     insert_mappings = false,
     terminal_mappings = true,
     persist_mode = true,
-    close_on_exit = true,
+    close_on_exit = false, -- Otherwise may miss startup errors
     auto_scroll = false,
+    shell = vim.o.shell,
     }
-    if vim.fn.has("win32") then
-        require("toggleterm").setup{shell="powershell.exe"}
+    if vim.fn.has("win32") == 1 then
+        opts.shell = "powershell.exe"
     end
+    require("toggleterm").setup(opts)
 -- :ToggleTermSendVisualSelection 
 EOF
 endif

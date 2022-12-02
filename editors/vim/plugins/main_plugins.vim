@@ -389,12 +389,12 @@ endif
 " Example config in readme.
 " https://github.com/axvr/zepl.vim
 
-" if has('nvim')
-"     Plug 'https://github.com/akinsho/toggleterm.nvim'
-" else
+if has('nvim')
+    Plug 'https://github.com/akinsho/toggleterm.nvim'
+else
     " Convenient hide/show term buffer, $drop to open file with vim
     Plug 'skywind3000/vim-terminal-help'
-" endif
+endif
 " {]} ---------- Terminal ----------
 
 " {[} ---------- NerdTree Project/file drawer ----------
