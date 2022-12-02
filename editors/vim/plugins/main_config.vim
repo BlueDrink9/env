@@ -240,7 +240,11 @@ if IsPluginUsed("vim-grepper")
     let g:grepper = {
                 \ 'tools': ['rg', 'ag', 'ack', 'findstr', 'pt', 'git', 'grep'],
                 \ }
-    cabbrev bfind Grepper -query
+    cabbrev bfind Grepper -query -noprompt
+    nnoremap <leader>*  :Grepper -cword -noprompt<cr>
+    command! -nargs=1 Grep Grepper -noprompt -query <args>
+    command! -nargs=1 Rg Grepper-noprompt -query <args>
+
 endif
 if IsPluginUsed("FlyGrep.vim")
     cabbrev bsearch FlyGrep
