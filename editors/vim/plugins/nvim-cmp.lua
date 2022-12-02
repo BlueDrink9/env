@@ -65,6 +65,11 @@ cmp.setup({
               keyword_length = 2,
               get_bufnrs = Get_bufnrs_to_complete_from,
            },
+        sorting = {
+           comparators = {
+              function(...) return cmp_buffer:compare_locality(...) end,
+           },
+        }
         },
         { name = 'vsnip' },
         { name = 'path' },
@@ -88,9 +93,10 @@ cmp.setup({
      }),
 
   mapping = {
-      ['<C-e>'] = Mappings(Mappings.complete(), { 'i', 'c' }),
+      -- ['<C-e>'] = Mappings(Mappings.complete(), { 'i', 'c' }),
       ['<C-e>'] = Mappings.confirm({ select = false }),
-      -- Because I tab and go, the current selection when I push space is already the one I want. But this _is_ useful for snippets, because they will be expanded, not just selected.
+      -- Because I tab and go, the current selection when I push space is already the one I want.
+      -- But this _is_ useful for snippets, because they will be expanded, not just selected.
       ['<space>'] = Mappings.confirm({ select = false }),
       ['<return>'] = Mappings.confirm({ select = false }),
       ["<Tab>"] = Mappings(Mappings.select_next_item({behavior=cmp.SelectBehavior.Insert}), { 'i', 'c' }),
