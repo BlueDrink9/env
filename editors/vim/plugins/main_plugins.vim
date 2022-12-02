@@ -377,18 +377,6 @@ Plug 'ferrine/md-img-paste.vim', {'for': 'markdown'}
 " {]} ---------- Prose----------
 
 " {[} ---------- Terminal ----------
-if has('nvim') && !has('win32')
-    Plug 'https://github.com/michaelb/sniprun', {'do': 'bash install.sh'}
-endif
-
-" Useful for REPL, but can also send the commands back to the other window.
-" Also dot repeatable.
-" Have to specify direction to send, however.
-" https://github.com/KKPMW/vim-sendtowindow
-" Super lightweight, have to specify command for each filetype.
-" Example config in readme.
-" https://github.com/axvr/zepl.vim
-
 if has('nvim')
     Plug 'https://github.com/akinsho/toggleterm.nvim'
 else

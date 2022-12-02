@@ -595,3 +595,79 @@ endif
 " {]} ---------- Snipmate ----------
 " {]} ---------- Snippits----------
 
+" {[} ---------- REPL ----------
+if IsPluginUsed("sniprun")
+lua << EOF
+require'sniprun'.setup({
+    --" you can combo different display modes as desired
+    display = {
+        "Classic",                    -- "display results in the command-line  area
+        "VirtualTextOk",              -- "display ok results as virtual text (multiline is shortened)
+
+        "VirtualTextErr",          -- "display error results as virtual text
+        -- "TempFloatingWindow",      -- "display results in a floating window
+        "LongTempFloatingWindow",  -- "same as above, but only long results. To use with VirtualText__
+        -- "Terminal"                 -- "display results in a vertical split
+        "TerminalWithCode",        --# display results and code history in a vertical split
+    },
+})
+local idemaps = vim.g.IDE_mappings
+local sniprunfile_keep_position = "<cmd>let b:caret=winsaveview()" ..
+                                " <bar> %SnipRun" ..
+                                " <bar> call winrestview(b:caret)<CR>"
+local maps = {
+    [idemaps.REPLSendLine] = '<Plug>SnipRun',
+    [idemaps.REPLSend] = '<Plug>SnipRunOperator',
+    [idemaps.REPLCancel] = '<Plug>SnipReset',
+    [idemaps.REPLClear] = '<Plug>SnipClose',
+    [idemaps.REPLClose] = '<Plug>SnipClose',
+    [idemaps.REPLSendFile] = sniprunfile_keep_position,
+}
+for key, cmd in pairs(maps) do
+    vim.api.nvim_set_keymap('n', key, cmd, {silent = false})
+end
+vim.api.nvim_set_keymap('v', idemaps.REPLSend, "<Plug>SnipRun",  {silent = true})
+EOF
+endif
+
+if IsPluginUsed("iron.nvim")
+    lua << EOF
+    local iron = require'iron.core'
+    local idemaps = vim.g.IDE_mappings
+    local view = require("iron.view")
+    iron.setup({
+    config = {
+        -- Whether a repl should be discarded or not
+        scratch_repl = true,
+        repl_definition = {
+            sh = {
+                command = {"bash"}
+            }
+            },
+            repl_open_cmd = view.split.horizontal.belowright(0.15),
+            },
+            keymaps = {
+                send_motion = idemaps.REPLSend,
+                visual_send = idemaps.REPLSend,
+                send_file = idemaps.REPLSendFile,
+                send_line = idemaps.REPLSendLine,
+                -- send_mark = idemaps.REPLSend,
+                -- mark_motion = idemaps.REPLSend,
+                -- mark_visual = idemaps.REPLSend,
+                -- remove_mark = idemaps.REPLSend,
+                -- cr = idemaps.REPLSend,
+                interrupt = idemaps.REPLCancel,
+                exit = idemaps.REPLClose,
+                clear = idemaps.REPLClear,
+                },
+                highlight = {
+                    italic = true
+                    },
+                    ignore_blank_lines = false,
+    })
+    vim.keymap.set('n', '<space>s<c-s>', '<cmd>IronFocus<cr>')
+
+
+EOF
+endif
+" {]} ---------- REPL ----------

@@ -454,30 +454,22 @@ endif
 " Plug 'https://github.com/joereynolds/vim-minisnip'
 " {]} ---------- Snippits----------
 
-" {[} ---------- Neosettings ----------
-" " https://github.com/kepbod/ivim/blob/master/vimrc
-" if has('lua') && v:version > 703
-"     Plug 'Shougo/neocomplete.vim' " Auto completion framework
-"     let g:neocomplete#enable_at_startup=1
-"     let g:neocomplete#data_directory=CreateVimDir('neocache')
-"     let g:neocomplete#enable_auto_delimiter=1
-"     " Use <C-E> to close popup
-"     inoremap <expr><C-E> neocomplete#cancel_popup()
-"     inoremap <expr><CR> delimitMate#WithinEmptyPair() ?
-"                 \ "\<C-R>=delimitMate#ExpandReturn()\<CR>" :
-"                 \ pumvisible() ? neocomplete#close_popup() : "\<CR>""
-"     if !exists('g:neocomplete#force_omni_input_patterns')
-"         let g:neocomplete#force_omni_input_patterns={}
-"     endif
-"     let g:neocomplete#force_omni_input_patterns.python=
-"                 \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
-" else
-"     Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-"     " Use honza snippets instead of these defaults
-"     let g:neosnippet#snippets_directory=CreateVimDir('Plugins/vim-snippets')
-        " imap <expr><TAB> pumvisible() ? "\<C-n>" :
-        "             \ neosnippet#expandable_or_jumpable() ?
-        "             \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-        " inoremap <expr><CR> pumvisible() ? deoplete#mappings#close_popup() : "\<CR>"
+" {[} ---------- REPL ----------
+" Not really working very well
+" if has('nvim') && !has('win32')
+"     Plug 'https://github.com/michaelb/sniprun', {'do': 'bash install.sh'}
 " endif
-" {]} ---------- Neosettings----------
+
+if has('nvim-0.5')
+    Plug 'https://github.com/hkupty/iron.nvim'
+endif
+
+" Useful for REPL, but can also send the commands back to the other window.
+" Also dot repeatable.
+" Have to specify direction to send, however.
+" https://github.com/KKPMW/vim-sendtowindow
+" Super lightweight, have to specify command for each filetype.
+" Example config in readme.
+" https://github.com/axvr/zepl.vim
+
+" {]} ---------- REPL ----------

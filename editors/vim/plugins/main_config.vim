@@ -603,39 +603,6 @@ endif
 " {]} ---------- Prose----------
 
 " {[} ---------- Terminal ----------
-if IsPluginUsed("sniprun")
-lua << EOF
-require'sniprun'.setup({
-    --" you can combo different display modes as desired
-    display = {
-        "Classic",                    -- "display results in the command-line  area
-        "VirtualTextOk",              -- "display ok results as virtual text (multiline is shortened)
-
-        "VirtualTextErr",          -- "display error results as virtual text
-        -- "TempFloatingWindow",      -- "display results in a floating window
-        "LongTempFloatingWindow",  -- "same as above, but only long results. To use with VirtualText__
-        -- "Terminal"                 -- "display results in a vertical split
-        "TerminalWithCode",        --# display results and code history in a vertical split
-    },
-})
-local idemaps = vim.g.IDE_mappings
-local sniprunfile_keep_position = "<cmd>let b:caret=winsaveview()" ..
-                                " <bar> %SnipRun" ..
-                                " <bar> call winrestview(b:caret)<CR>"
-local maps = {
-    [idemaps.REPLSendLine] = '<Plug>SnipRun',
-    [idemaps.REPLSend] = '<Plug>SnipRunOperator',
-    [idemaps.REPLCancel] = '<Plug>SnipReset',
-    [idemaps.REPLClear] = '<Plug>SnipClose',
-    [idemaps.REPLClose] = '<Plug>SnipClose',
-    [idemaps.REPLSendFile] = sniprunfile_keep_position,
-}
-for key, cmd in pairs(maps) do
-    vim.api.nvim_set_keymap('n', key, cmd, {silent = false})
-end
-vim.api.nvim_set_keymap('v', idemaps.REPLSend, "<Plug>SnipRun",  {silent = true})
-EOF
-endif
 
 if IsPluginUsed("toggleterm.nvim")
 lua << EOF
