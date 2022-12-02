@@ -1,35 +1,20 @@
-function get_color(group, attr)
-   local fn = vim.fn
-   return fn.synIDattr(fn.synIDtrans(fn.hlID(group)), attr)
-end
-
-local coloured_on_modified_buffers = require('lualine.components.buffers'):extend()
-local highlight = require'lualine.highlight'
-function coloured_on_modified_buffers:init(options)
-   coloured_on_modified_buffers.super.init(self, options)
-   -- self.status_colors = {
-   --    saved = highlight.create_component_highlight_group(
-   --       {bg = get_color('lualine_a_normal', 'bg')},
-   --       'filename_status_saved', self.options),
-   --    modified = highlight.create_component_highlight_group(
-   --       {bg = get_color('GitGutterChange', 'fg')},
-   --       'filename_status_modified', self.options),
-   -- }
-   -- if self.options.color == nil then self.options.color = '' end
-end
-
-function coloured_on_modified_buffers:render()
-   local line = coloured_on_modified_buffers.super.render(self)
-   print(self.current)
-   print('arst ')
-   -- line = highlight.component_format_highlight(
-   --     self.highlights[(self.current and 'active' or 'inactive')]
-   --  ) .. line
-
-  -- line = highlight.component_format_highlight(vim.bo.modified
-  --                                             and self.status_colors.modified
-  --                                             or self.status_colors.saved) .. line
-  return line
+local short_mode_name = function(mode)
+   map = {
+      ['NORMAL'] = 'NORM',
+      ['INSERT'] = 'INS',
+      ['VISUAL'] = 'VIS',
+      ['V-BLOCK'] = 'V-BLOCK',
+      ['V-LINE'] = 'V-LINE',
+      ['REPLACE'] = 'REPL',
+      ['SELECT'] = 'SEL',
+      ['TERMINAL'] = 'TERM',
+      ['COMMAND'] = 'CMD',
+   }
+   out = map[mode]
+   if out == nil then
+      out = ""
+   end
+   return out
 end
 
 local location_format = ''
@@ -53,7 +38,7 @@ local config = {
       }
    },
    sections = {
-      lualine_a = {'mode'},
+      lualine_a = {{ 'mode', fmt = function(str) return short_mode_name(str) end }},
       lualine_b = {'branch', 'diff', 'diagnostics'},
       lualine_c = {
          {'filename', path = 1, shorting_target = vim.o.columns / 2.5}
@@ -73,8 +58,7 @@ local config = {
    tabline = {
       lualine_a = {
          {
-            -- 'buffers',
-            coloured_on_modified_buffers,
+            'buffers',
             show_filename_only = false, -- show shortened relative path
             mode = 4, -- Show buf name+number
             -- max_length = vim.o.columns * 4 / 5,
