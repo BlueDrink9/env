@@ -34,10 +34,13 @@ require('nvim-treesitter.configs').setup {
        "sql",
    },
    endwise = { enable = true, },
-   indent = { enable = true },
+   indent = {
+      enable = true,
+      disable = {"python"},
+   },
    highlight = {
       enable = true,
-      -- additional_vim_regex_highlighting = [],
+      -- additional_vim_regex_highlighting = {"python"}
    },
 }
 vim.opt.foldexpr="nvim_treesitter#foldexpr()"
