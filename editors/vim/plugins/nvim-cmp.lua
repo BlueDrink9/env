@@ -19,29 +19,9 @@ Get_bufnrs_to_complete_from = function()
 end
 
 cmp.setup({
-  --   completion = {
-  --       autocomplete = true,
-  --   },
-  -- enabled = true;
-  -- autocomplete = true;
   -- debug = false;
   -- min_length = 1;
   preselect = cmp.PreselectMode.None;
-  -- throttle_time = 80;
-  -- source_timeout = 200;
-  -- resolve_timeout = 800;
-  -- incomplete_delay = 400;
-  -- max_abbr_width = 100;
-  -- max_kind_width = 100;
-  -- max_menu_width = 100;
-  -- documentation = {
-  --   border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
-  --   winhighlight = "NormalFloat:cmpDocumentation,FloatBorder:CompeDocumentationBorder",
-  --   max_width = 120,
-  --   min_width = 60,
-  --   max_height = math.floor(vim.o.lines * 0.3),
-  --   min_height = 1,
-  -- },
   -- view = {
   --   entries = {name = 'custom', selection_order = 'near_cursor' }
   -- },
@@ -58,39 +38,42 @@ cmp.setup({
   },
 
   sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-        {
-           name = 'buffer',
-           option = {
-              keyword_length = 2,
-              get_bufnrs = Get_bufnrs_to_complete_from,
-           },
-        sorting = {
-           comparators = {
-              function(...) return cmp_buffer:compare_locality(...) end,
-           },
-        }
+    { name = "nvim_lsp",
+      entry_filter = function(entry, ctx)
+        -- Dont suggest Text from nvm_lsp
+        return require('cmp.types').lsp.CompletionItemKind[entry:get_kind()] ~= 'Text'
+      end },
+    {
+      name = 'buffer',
+      option = {
+        keyword_length = 2,
+        get_bufnrs = Get_bufnrs_to_complete_from,
+      },
+      sorting = {
+        comparators = {
+          function(...) return cmp_buffer:compare_locality(...) end,
         },
-        { name = 'vsnip' },
-        { name = 'path' },
-        { name = 'cmdline' },
-        { name = 'nvim_lsp_signature_help' },
-        { name = 'vim-dadbod-completion' },
-        {
-           name = 'spell',
-           option = {
-              keep_all_entries = false,
-              enable_in_context = function()
-                 return true
-              end,
-           },
-        },
-        sorting = {
-           comparators = {
-              function(...) return cmp_buffer:compare_locality(...) end,
-           }
-        }
-     }),
+      }
+    },
+    { name = 'vsnip' },
+    { name = 'path' },
+    { name = 'nvim_lsp_signature_help' },
+    { name = 'vim-dadbod-completion' },
+    {
+      name = 'spell',
+      option = {
+        keep_all_entries = false,
+        enable_in_context = function()
+          return true
+        end,
+      },
+    },
+    sorting = {
+      comparators = {
+        function(...) return cmp_buffer:compare_locality(...) end,
+      }
+    }
+  }),
 
   mapping = {
       -- ['<C-e>'] = Mappings(Mappings.complete(), { 'i', 'c' }),
@@ -98,7 +81,7 @@ cmp.setup({
       -- Because I tab and go, the current selection when I push space is already the one I want.
       -- But this _is_ useful for snippets, because they will be expanded, not just selected.
       ['<space>'] = Mappings.confirm({ select = false }),
-      ['<return>'] = Mappings.confirm({ select = false }),
+      -- ['<return>'] = Mappings.confirm({ select = false }),
       ["<Tab>"] = Mappings(Mappings.select_next_item({behavior=cmp.SelectBehavior.Insert}), { 'i', 'c' }),
       ["<S-Tab>"] = Mappings(Mappings.select_prev_item({behavior=cmp.SelectBehavior.Insert}), { 'i', 'c' }),
       ['<C-b>'] = Mappings(Mappings.scroll_docs(-4), { 'i' }),
