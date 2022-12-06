@@ -130,9 +130,9 @@ if IsPluginUsed('echodoc.vim')
     let g:echodoc#type = 'signature'
 endif
 
-if IsPluginUsed('nvim-whichkey-setup.lua')
-endif
-if IsPluginUsed('vim-which-key')
+if IsPluginUsed('which-key.nvim')
+    lua require("which-key").setup()
+elseif IsPluginUsed('vim-which-key')
     nnoremap <leader> <cmd>WhichKey '<leader>'<CR>
     vnoremap <leader> <cmd>WhichKeyVisual '<leader>'<CR>
 endif

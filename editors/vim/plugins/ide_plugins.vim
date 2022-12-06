@@ -69,22 +69,20 @@ if IsPluginUsed("telescope.nvim")
     Plug 'FeiyouG/command_center.nvim'
 endif
 
-if has('nvim-0.5')
-    " Show registers in floating window when you go to use them.
-    Plug 'tversteeg/registers.nvim', { 'branch': 'main' }
-else
-    " Show registers in side window when you go to use them.
-    Plug 'junegunn/vim-peekaboo'
-endif
 " Display the indentation context in a window above the code you are
 " looking at (helps understand where you are in a long func/class).
 Plug 'wellle/context.vim'
 
 " Call WhichKey to see mappings starting with a thing.
 if has('nvim-0.5')
-    Plug 'AckslD/nvim-whichkey-setup.lua'
+    " Also shows registers and marks on " and '/`
+    Plug 'https://github.com/folke/which-key.nvim'
+    UnPlug 'registers.nvim'
+else
+    Plug 'liuchengxu/vim-which-key'
+    " Show registers in side window when you go to use them.
+    Plug 'junegunn/vim-peekaboo'
 endif
-Plug 'liuchengxu/vim-which-key'
 " nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
 if has('nvim-0.5')
     " Leader ? to get searchable (if using telescope) list of commands with
