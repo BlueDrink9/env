@@ -228,8 +228,6 @@ if IsPluginUsed("vim-easymotion")
     nnoremap <leader>s <Plug>(easymotion-overwin-f2)
 endif
 if IsPluginUsed("camelcasemotion")
-    call camelcasemotion#CreateMotionMappings('<leader>m')
-    call camelcasemotion#CreateMotionMappings('_')
     call camelcasemotion#CreateMotionMappings('S')
     call camelcasemotion#CreateMotionMappings(',')
 endif
