@@ -492,7 +492,11 @@ function! s:SetSpellFile()
   endif
 endfunction
 " set spellfile=$HOME/.vim-spell-en.utf-8.add
-au myVimrc BufEnter * call <sid>SetSpellFile()
+if exists('##OptionSet')
+    au myVimrc OptionSet spell call <sid>SetSpellFile()
+else
+    au myVimrc BufEnter * call <sid>SetSpellFile()
+endif
 "Uses dictionary and source files to find matching words to complete.
 "See help completion for source,
 "Note: usual completion is on <C-n> but more trouble to press all the time.
@@ -561,14 +565,20 @@ endfunction
 
 autocmd myVimrc BufEnter,Bufwrite * call <sid>SetTitle()
 
-" Autoset new unnamed buffers to scratch
-autocmd myVimrc BufEnter {} setlocal ft=scratch
+" Autoset new unnamed buffers to scratch, to get pencil stuff etc.
+" No point doing it until we have entered some text.
+augroup scratchSetStart
+    au!
+    autocmd TextChanged,InsertLeave {}
+                \ setlocal ft=scratch |
+                \ au! scratchSetStart
+augroup end
 " Autoset new named buffers to scratch if no other specified
 autocmd myVimrc BufNewFile * filetype detect | if &filetype == "" | setlocal ft=scratch | endif
 autocmd myVimrc filetype scratch setlocal spell | setl ai
 " Pre-existing files without clear ft: use conf. Gives hash comments,
 " highlights strings. Works for lots of small files.
-autocmd myVimrc FileType {} setlocal ft=conf
+autocmd myVimrc BufRead * if &filetype == "" | setlocal ft=conf | endif
 " Automatically detect the changed filetype on write. Currently only doing
 " it if the previous buftype was scratch (ie unnamed, which in default vim
 " would have done this anyway)
