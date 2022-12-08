@@ -189,7 +189,7 @@ Plug 'rhysd/vim-textobj-continuous-line'
 " iz az
 Plug 'somini/vim-textobj-fold'
 Plug 'lucapette/vim-textobj-underscore'
-if v:version >= 703
+if v:version >= 704
     " ac, ic, aC
     Plug 'https://github.com/glts/vim-textobj-comment'
 endif

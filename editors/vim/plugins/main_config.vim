@@ -127,8 +127,13 @@ elseif IsPluginUsed("detectindent")
 endif
 
 " Zoom window to tab, and out again
-if IsPluginUsed("zoomwintab.vim")
+if IsPluginUsed('zoomwintab.vim')
     nnoremap <c-w>z <cmd>ZoomWinTabToggle<cr>
+endif
+
+if IsPluginUsed('bufexplorer')
+  let g:bufExplorerDisableDefaultKeyMapping=1
+  command! Buffers BufExplorer
 endif
 " {]} ---------- Misc----------
 
