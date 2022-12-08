@@ -218,8 +218,9 @@ Plug 'https://github.com/WolfgangMehner/c-support', {'for': ['c', 'cpp'] }
 " May cause lag on scrolling.
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Multi-lang support
-let g:polyglot_disabled = ['latex', 'markdown' ]
+let g:polyglot_disabled = ['autoindent', 'sensible', 'latex', 'markdown', ]
 Plug 'https://github.com/sheerun/vim-polyglot'
+
 
 " Advanced markdown formatting. Lots of features.
 Plug 'SidOfc/mkdx'
@@ -318,7 +319,10 @@ EOF
         " Plug 'https://github.com/Wansmer/treesj'
         " Plug 'https://github.com/aarondiel/spread.nvim'
         " UnPlug 'splitjoin.vim'
-
+        " folding enhancements
+        Plug 'kevinhwang91/promise-async'
+        Plug 'https://github.com/kevinhwang91/nvim-ufo'
+        UnPlug('FastFold')
     endif
 endif
 

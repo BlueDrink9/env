@@ -189,7 +189,7 @@ Plug 'rhysd/vim-textobj-continuous-line'
 " iz az
 Plug 'somini/vim-textobj-fold'
 Plug 'lucapette/vim-textobj-underscore'
-if v:version >= 704
+if v:version >= 703
     " ac, ic, aC
     Plug 'https://github.com/glts/vim-textobj-comment'
 endif
@@ -319,9 +319,9 @@ if executable("git")
     Plug 'sodapopcan/vim-twiggy'
     " TODO fugitive mapping to bb?
     " github wrapper
-    if v:version > 701
-        Plug 'https://github.com/tpope/vim-rhubarb'
-    endif
+    " if v:version > 701
+    "     Plug 'https://github.com/tpope/vim-rhubarb'
+    " endif
     " Commit browser. :GV
     Plug 'junegunn/gv.vim'
 
