@@ -55,7 +55,9 @@ endif
 "     let g:neoyank#file = &directory . 'yankring.txt'
 " nmap <leader>p :unite history/yank
 " else
-if exists('##TextYankPost')
+if has('nvim')
+    Plug 'https://github.com/gbprod/yanky.nvim'
+elseif exists('##TextYankPost')
     Plug 'https://github.com/svermeulen/vim-yoink'
 else
     Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'

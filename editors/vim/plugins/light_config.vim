@@ -79,7 +79,37 @@ if IsPluginUsed("vim-fakeclip")
 endif
 
 " {[}--- Yanks ---
-if IsPluginUsed("vim-yoink")
+if IsPluginUsed("yanky.nvim")
+    lua << EOF
+    require("yanky").setup({
+    system_clipboard = {
+        sync_with_ring = false,
+        },
+        highlight = {
+            on_put = true,
+            on_yank = true,
+            timer = 300,
+        },
+    })
+   vim.keymap.set({"n","x"}, "p", "<Plug>(YankyPutAfter)")
+   vim.keymap.set({"n","x"}, "P", "<Plug>(YankyPutBefore)")
+   vim.keymap.set({"n","x"}, "<leader>p", "<Plug>(YankyCycleForward)")
+   vim.keymap.set({"n","x"}, "<leader>P", "<Plug>(YankyCycleForward)")
+   -- Unimpaired style
+   vim.keymap.set("n", "]p", "<Plug>(YankyPutIndentAfterLinewise)")
+   vim.keymap.set("n", "[p", "<Plug>(YankyPutIndentBeforeLinewise)")
+   vim.keymap.set("n", "]P", "<Plug>(YankyPutIndentAfterLinewise)")
+   vim.keymap.set("n", "[P", "<Plug>(YankyPutIndentBeforeLinewise)")
+
+   vim.keymap.set("n", ">p", "<Plug>(YankyPutIndentAfterShiftRight)")
+   vim.keymap.set("n", "<p", "<Plug>(YankyPutIndentAfterShiftLeft)")
+   vim.keymap.set("n", ">P", "<Plug>(YankyPutIndentBeforeShiftRight)")
+   vim.keymap.set("n", "<P", "<Plug>(YankyPutIndentBeforeShiftLeft)")
+
+   vim.keymap.set("n", "=p", "<Plug>(YankyPutAfterFilter)")
+   vim.keymap.set("n", "=P", "<Plug>(YankyPutBeforeFilter)")
+EOF
+elseif IsPluginUsed("vim-yoink")
     if has('nvim')
         let g:yoinkSavePersistently = 1  " Nvim only.
     endif
@@ -92,9 +122,7 @@ if IsPluginUsed("vim-yoink")
     nmap <expr> <leader>P yoink#canSwap() ?
                 \ '<plug>(YoinkPostPasteSwapForward)' :
                 \ '<plug>(YoinkPaste_P)'
-endif
-
-if IsPluginUsed("vim-yankstack.git")
+elseif IsPluginUsed("vim-yankstack.git")
     let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
     call yankstack#setup()
     nmap <leader>p <Plug>yankstack_substitute_older_paste
