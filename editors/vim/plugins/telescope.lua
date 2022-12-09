@@ -25,7 +25,7 @@ for f, map in pairs(telescope_mappings) do
 end
 
 
-telescope.setup{
+local opts = {
    defaults = {
       mappings = {
          i = {
@@ -33,6 +33,7 @@ telescope.setup{
          },
       },
    },
+   extensions = {},
 }
 
 
@@ -46,15 +47,19 @@ if vim.fn.IsPluginUsed("telescope-fzf-native.nvim") == 1 then
    telescope.load_extension("fzf")
 end
 if vim.fn.IsPluginUsed("telescope-coc.nvim") == 1 then
-   telescope.setup({
-         extensions = {
-            coc = {
-               -- theme = 'ivy',
-               prefer_locations = true, -- always use Telescope locations to preview definitions/declarations/implementations etc
-            }
-         },
-      })
+   opts.extensions.coc = {
+         -- theme = 'ivy',
+         prefer_locations = true, -- always use Telescope locations to preview definitions/declarations/implementations etc
+      }
    telescope.load_extension('coc')
+end
+if vim.fn.IsPluginUsed('telescope-ui-select.nvim') == 1 then
+   telescope.load_extension('ui-select')
+   opts.extensions["ui-select"] = {
+         require("telescope.themes").get_dropdown {
+                 -- even more opts
+         }
+   }
 end
 
 if vim.fn.IsPluginUsed("refactoring.nvim") == 1 then
@@ -70,18 +75,14 @@ if vim.fn.IsPluginUsed("refactoring.nvim") == 1 then
 end
 
 -- https://github.com/fcying/telescope-ctags-outline.nvim
-telescope.setup{
-   extensions = {
-      ctags_outline = {
-         --ctags option
-         ctags = {'ctags'},
-         --ctags filetype option
-         ft_opt = {
-            vim = '--vim-kinds=fk',
-            lua = '--lua-kinds=fk',
-         },
+opts.extensions.ctags_outline = {
+   --ctags option
+      ctags = {'ctags'},
+   --ctags filetype option
+      ft_opt = {
+         vim = '--vim-kinds=fk',
+         lua = '--lua-kinds=fk',
       },
-   },
 }
 
 if vim.fn.IsPluginUsed("telescope-changes.nvim") == 1 then
@@ -97,3 +98,5 @@ end
 
 -- show all opened buf outline(use current buf filetype)
 -- telescope.extensions.ctags_outline.outline({buf='all'})
+
+telescope.setup(opts)

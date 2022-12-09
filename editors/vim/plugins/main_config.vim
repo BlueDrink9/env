@@ -138,6 +138,11 @@ endif
 " {]} ---------- Misc----------
 
 " {[} ---------- Visual changes ----------
+if IsPluginUsed("dressing.nvim")
+    lua << EOF
+    require('dressing').setup()
+EOF
+endif
 if IsPluginUsed("vim-highlightedyank")
     if !exists('##TextYankPost')
         map y <Plug>(highlightedyank)

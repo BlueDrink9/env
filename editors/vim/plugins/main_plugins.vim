@@ -150,8 +150,11 @@ Plug 'https://github.com/sunaku/vim-shortcut'
 " {]} ---------- Misc----------
 
 " {[} ---------- Visual changes ----------
-" nvim-0.5 has this built-in
+if has('nvim-0.7')
+    Plug 'https://github.com/stevearc/dressing.nvim'
+endif
 if !has('nvim-0.5')
+    " nvim-0.5 has this built-in
     Plug 'machakann/vim-highlightedyank'
 endif
 " Resizes splits proportionally when changing overall size
@@ -256,6 +259,7 @@ if has('nvim')  " needs > 0.7
             Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
         endif
     endif
+    Plug 'https://github.com/nvim-telescope/telescope-ui-select.nvim'
 " fzf only works in terminal, use ctrlp otherwise
 elseif g:hasGUI && !has('terminal')
     Plug 'https://github.com/ctrlpvim/ctrlp.vim'

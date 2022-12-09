@@ -218,7 +218,7 @@ Plug 'https://github.com/WolfgangMehner/c-support', {'for': ['c', 'cpp'] }
 " May cause lag on scrolling.
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Multi-lang support
-let g:polyglot_disabled = ['autoindent', 'sensible', 'latex', 'markdown', ]
+let g:polyglot_disabled = ['latex', 'markdown', ]
 Plug 'https://github.com/sheerun/vim-polyglot'
 
 
