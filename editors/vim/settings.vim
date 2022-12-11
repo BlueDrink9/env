@@ -560,7 +560,6 @@ augroup end
 autocmd myVimrc BufNewFile * filetype detect | if &filetype == "" | setlocal ft=scratch | endif
 " Pre-existing files without clear ft: use conf. Gives hash comments,
 " highlights strings. Works for lots of small files.
-" autocmd myVimrc BufRead * if &filetype == "" | setlocal ft=conf | endif
 autocmd myVimrc BufReadPost * filetype detect | if &filetype == ""  | setlocal ft=conf | endif
 " Automatically detect the changed filetype on write. Currently only doing
 " it if the previous buftype was scratch (ie unnamed, which in default vim
