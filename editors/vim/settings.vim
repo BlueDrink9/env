@@ -23,11 +23,24 @@ endif
 let g:defaultColorSch="morning"
 
 
-if has("gui_running") || exists("g:gui_oni") || exists("g:started_by_firenvim")
+if has("gui_running") || exists("g:gui_oni") || exists("g:started_by_firenvim") || exists('g:nvy')
     let g:hasGUI=1
 else
     let g:hasGUI=0
 endif
+
+function! SetUpNvimGUI(event)
+    let g:hasGUI = 1
+    call SetUpGUI()
+    " Options provided by other GUIs that neovim might have.
+    " if event['chan'] == 'nvim-qt'
+    if exists('g:GuiLoaded')  " nvim-qt specific
+        call SetupNvimQT()
+    endif
+    if exists('g:geovide')
+    endif
+    call SourcePluginFile('symbol_check.vim')
+endfunction
 
 
 set encoding=utf-8
@@ -235,17 +248,6 @@ else
     " {]}
 endif
 "{]}
-
-function! SetUpNvimGUI(event)
-    call SetUpGUI()
-    " Options provided by other GUIs that neovim might have.
-    " if event['chan'] == 'nvim-qt'
-    if exists('g:GuiLoaded')  " nvim-qt specific
-        call SetupNvimQT()
-    endif
-    if exists('g:geovide')
-    endif
-endfunction
 
 if exists('##UIEnter')
     " v:event[chan] is 0 for builtin TUI

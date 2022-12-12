@@ -2,31 +2,37 @@
 " (unix) or to system (windows)
 " If we are (probably) using a powerline compatible font, set it so.
 " If a nerd font is found, assume powerline-compat, as well as devicons.
+" Allow overriding this, either by directly setting g:usePLFont=0 in local
+" vimrc or by setting $USENF in terminal ($USENF takes priority).
 
 " Env variables, can be set by ssh client on login if it supports PL.
-if $USENF==1
+" Use string comparisons because still works, but ==0 also is true if it
+" doesn't exist (which is pointless if I want to override).
+if $USENF=='1'
     let g:usePLFont = 1
     let g:useNerdFont = 1
-elseif $USEPF==1
+elseif $USEPF=='1'
     let g:usePLFont = 1
-elseif $USEPF==0
+elseif $USEPF=='0'
     let g:usePLFont = 0
     let g:useNerdFont = 0
-elseif $USENF==0
+elseif $USENF=='0'
     let g:useNerdFont = 0
 elseif g:hasGUI
-    let s:guiUsesNerdFont = 
+    let s:guiUsesNerdFont =
                 \ &guifont =~? "Nerd" ||
+                \ &guifont =~? "NF" ||
                 \ &guifont =~? "Meslo" ||
                 \ &guifont =~? "Sauce"
 
-    let s:guiUsesPLFont = s:guiUsesNerdFont || 
+    let s:guiUsesPLFont = s:guiUsesNerdFont ||
                 \ &guifont =~? "Powerline" ||
                 \ &guifont =~? "Source\\ Code\\ Pro"
 
     let g:usePLFont = s:guiUsesPLFont
     let g:useNerdFont = s:guiUsesNerdFont
 else
+    finish
 
     if has("unix")
         let s:uname = system("uname")
@@ -58,7 +64,7 @@ else
     let s:PLFontExists = 0
     let i = 0
     while i < len(s:nerdFontNames)
-        exec "call add(s:nerdFontIsInstalled, 
+        exec "call add(s:nerdFontIsInstalled,
                     \ filereadable( expand('" . s:fontdir . "/" . s:nerdFontNames[i] . "')))"
         exec "let s:nerdFontExists = " . s:nerdFontExists . " || " . s:nerdFontIsInstalled[i]
         exec "let s:PLFontExists = " . s:nerdFontExists . " || " . s:nerdFontIsInstalled[i]
@@ -68,7 +74,7 @@ else
     let i = 0
     if !s:nerdFontExists
         while i < len(s:PLFontNames)
-            exec "call add(s:PLFontIsInstalled, 
+            exec "call add(s:PLFontIsInstalled,
                         \ filereadable( expand('" . s:fontdir . "/" . s:PLFontNames[i] . "')))"
             exec "let s:PLFontExists = " . s:PLFontExists . " || " . s:PLFontIsInstalled[i]
             let i += 1
@@ -79,5 +85,6 @@ else
     let g:useNerdFont = s:nerdFontExists
 endif
 
-let g:usePLFont = g:useNerdFont || g:usePLFont
-
+if exists('g:usePLFont')
+    let g:usePLFont = (exists('g:useNerdFont') && g:useNerdFont) || g:usePLFont
+endif
