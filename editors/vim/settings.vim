@@ -113,25 +113,7 @@ else
     let g:defaultFontSize = 11
 endif
 
-function SetupNvimGUI()
-  call SetupNvimQT()
-endfunction
-
-function SetupNvimQT()
-    if !exists(':GuiTabline')
-        return
-    endif
-    GuiTabline 0
-    GuiPopupmenu 0
-    GuiScrollBar 1
-    call SetGFN()
-endfunction
-
-if has("nvim")
-    au myVimrc UiEnter * call SetupNvimGUI()
-endif
-if g:hasGUI
-    " GUI is running or is about to start.
+function! SetUpGUI()
     " {[} ----------- Shell ----------
     " if has("win32") || has("win64")
     "     let b:hasBash=0
@@ -177,7 +159,6 @@ if g:hasGUI
         " Larger gvim window
         set lines=40 columns=120
     endif
-    " nvim-qt options. Not working, needs to be set on uiconnect
     " Never use ugly tab page that overrides airline's
     set guioptions-=e
     " Don't use gui popups for simple questions, use console dialog (ensures
@@ -200,7 +181,22 @@ if g:hasGUI
     if has("termguicolors")
         set termguicolors
     endif
+endfunction
     "{]}
+
+function SetupNvimQT()
+    if !exists(':GuiTabline')
+        return
+    endif
+    GuiTabline 0
+    GuiPopupmenu 0
+    GuiScrollBar 1
+    call SetGFN()
+endfunction
+
+if g:hasGUI
+    " GUI is running or is about to start.
+    call SetUpGUI()
 else
     "{[} Console
     set mouse=a
@@ -239,6 +235,23 @@ else
     " {]}
 endif
 "{]}
+
+function! SetUpNvimGUI(event)
+    call SetUpGUI()
+    " Options provided by other GUIs that neovim might have.
+    " if event['chan'] == 'nvim-qt'
+    if exists('g:GuiLoaded')  " nvim-qt specific
+        call SetupNvimQT()
+    endif
+    if exists('g:geovide')
+    endif
+endfunction
+
+if exists('##UIEnter')
+    " v:event[chan] is 0 for builtin TUI
+    au myVimrc UIEnter * if v:event['chan'] != 0 | call SetUpNvimGUI(v:event) | endif
+endif
+
 
 set showcmd
 " Show cursor coords
