@@ -29,20 +29,6 @@ else
     let g:hasGUI=0
 endif
 
-function! SetUpNvimGUI(event)
-    let g:hasGUI = 1
-    call SetUpGUI()
-    " Options provided by other GUIs that neovim might have.
-    " if event['chan'] == 'nvim-qt'
-    if exists('g:GuiLoaded')  " nvim-qt specific
-        call SetupNvimQT()
-    endif
-    if exists('g:neovide')
-    endif
-    call SourcePluginFile('symbol_check.vim')
-endfunction
-
-
 set encoding=utf-8
 " Need to add M flag before syntax and filetype, because they source menu.vim.
 set guioptions+=M
@@ -216,6 +202,19 @@ else
     " {]}
 endif
 "{]}
+
+function! SetUpNvimGUI(event)
+    let g:hasGUI = 1
+    call SetUpGUI()
+    " Options provided by other GUIs that neovim might have.
+    " if event['chan'] == 'nvim-qt'
+    if exists('g:GuiLoaded')  " nvim-qt specific
+        call SetupNvimQT()
+    endif
+    if exists('g:neovide')
+    endif
+    call SourcePluginFile('symbol_check.vim')
+endfunction
 
 if exists('##UIEnter')
     " v:event[chan] is 0 for builtin TUI
