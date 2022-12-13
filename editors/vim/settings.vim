@@ -37,7 +37,7 @@ function! SetUpNvimGUI(event)
     if exists('g:GuiLoaded')  " nvim-qt specific
         call SetupNvimQT()
     endif
-    if exists('g:geovide')
+    if exists('g:neovide')
     endif
     call SourcePluginFile('symbol_check.vim')
 endfunction
@@ -127,41 +127,9 @@ else
 endif
 
 function! SetUpGUI()
-    " {[} ----------- Shell ----------
-    " if has("win32") || has("win64")
-    "     let b:hasBash=0
-    "     if executable('wsl')
-    "         echom "here"
-    "         let b:hasBash=1
-    "         set shell=wsl
-    "         " Syntastic uses PATH to determine available checkers
-    "         " let $PATH .= ';C:\cygwin64\bin'"
-    "     elseif executable('C:\Program Files\Git\git-bash.exe')
-    "         echom "now here"
-    "         let b:hasBash=1
-    "         set shell=\"C:\Program\ Files\Git\git-bash.exe\"
-    "     elseif executable('cygwin')
-    "         set shell=cygwin
-    "     endif
-    "     if b:hasBash
-    "         set shellredir=>%s\ 2>&1
-    "         set shellpipe=2>&1\|\ tee
-    "         set shellcmdflag=-c
-    "         set shellquote=
-    "         set shellxquote=\"
-    "         " set shellxquote='"'
-    "         set shellslash
-    "     endif
-    " endif
-    " " {]} ----------- Shell ----------
-
-    " Gui used to default to idevim
-    if !exists('g:ideMode')
-        let g:ideMode = 0
-    endif
     if g:ideMode
         set guioptions+=iagmrLtT
-        " Larger gvim window
+        " Full-screen gvim window
         set lines=999 columns=999
     else
         " Remove menus to speed up startup
