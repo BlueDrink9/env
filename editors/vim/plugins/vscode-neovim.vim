@@ -3,6 +3,15 @@
 
 " {[} Mappings
 
+function VSCodeMapDict(mappings, visualMappings)
+      for [key, value] in items(a:mappings)
+        exec 'nnoremap ' . key . " <Cmd>call VSCodeNotify('" . value . "')<CR>"
+      endfor
+      for [key, value] in items(a:visualMappings)
+        exec 'vnoremap ' . key . " <Cmd>call VSCodeNotifyVisual('" . value . "', 1)<CR>"
+      endfor
+endfunction
+
 " Not going to work because vscode-neovim doesn't do imaps
 " inoremap kv :call VSCodeCall("vscode-neovim.escape")
 " inoremap vk :call VSCodeCall("vscode-neovim.escape")
@@ -43,13 +52,7 @@ let s:vmappings = {
       \ g:IDE_mappings.GitUnstage: 'git.unstageSelectedRanges',
       \ }
 
-for [key, value] in items(s:nmappings)
-  exec 'nnoremap ' . key . " <Cmd>call VSCodeNotify('" . value . "')<CR>"
-endfor
-for [key, value] in items(s:vmappings)
-  exec 'vnoremap ' . key . " <Cmd>call VSCodeNotifyVisual('" . value . "', 1)<CR>"
-endfor
-
+call VSCodeMapDict(s:nmappings, s:vmappings)
 
 " {[} Window management
 " leader w opens new vert window, switches to it
@@ -57,23 +60,42 @@ nnoremap <leader>w <C-w>v<C-w>l
 " Edit current buffer with a new tab
 nnoremap <C-w>t :tab sb<cr>
 " Easier way to move between windows
-nnoremap <C-h> <Cmd>call VSCodeNotify("workbench.action.focusLeftGroup")<CR>
-nnoremap <C-l> <Cmd>call VSCodeNotify("workbench.action.focusRightGroup")<CR>
-nnoremap <C-k> <Cmd>call VSCodeNotify("workbench.action.focusAboveGroup")<CR>
-nnoremap <C-j> <Cmd>call VSCodeNotify("workbench.action.focusBelowGroup")<CR>
+call VSCodeMapDict(
+            \ {
+            \ '<C-h>': 'workbench.action.focusLeftGroup',
+            \ '<C-l>': 'workbench.action.focusRightGroup',
+            \ '<C-k>': 'workbench.action.focusAboveGroup',
+            \ '<C-j>': 'workbench.action.focusBelowGroup',
+            \ },
+            \ {
+            \ },
+            \)
 
 " {[} Open windows to the left, right, up, down, like in tmux
-nnoremap <C-w>h <Cmd>call VSCodeNotify("workbench.action.splitEditorLeft")<CR>
-nnoremap <C-w>l <Cmd>call VSCodeNotify("workbench.action.splitEditorRight")<CR>
-nnoremap <C-w>k <Cmd>call VSCodeNotify("workbench.action.splitEditorUp")<CR>
-nnoremap <C-w>j <Cmd>call VSCodeNotify("workbench.action.splitEditorDown")<CR>
+call VSCodeMapDict(
+            \ {
+            \ '<C-w>h': 'workbench.action.splitEditorLeft',
+            \ '<C-w>l': 'workbench.action.splitEditorRight',
+            \ '<C-w>k': 'workbench.action.splitEditorUp',
+            \ '<C-w>j': 'workbench.action.splitEditorDown',
+            \ },
+            \ {
+            \ },
+            \)
+
 " {]} Open windows to the left, right, up, down.
 
 " Cycle through buffers
-nnoremap <silent> <Right> :call VSCodeNotify("workbench.action.nextEditor")<CR>
-nnoremap <silent> <Left> :call VSCodeNotify("workbench.action.previousEditor")<CR>
-nnoremap <silent> <Up> :tabnext<CR>
-nnoremap <silent> <Down> :tabprevious<CR>
+call VSCodeMapDict(
+            \ {
+            \ '<Right>': 'workbench.action.nextEditor',
+            \ '<Left>': 'workbench.action.previousEditor',
+            \ },
+            \ {
+            \ },
+            \)
+" nnoremap <silent> <Up> :tabnext<CR>
+" nnoremap <silent> <Down> :tabprevious<CR>
 
 " Easy resize
 nnoremap <S-Right> 5<C-W>>
@@ -103,6 +125,23 @@ nnoremap N N
 
 endfunction
 au myVimrc User MappingOverrides call VSCodeMaps()
+
+
+" FT specific
+function VSCodeFTMaps(ft)
+      if a:ft ==? 'sql'
+            call VSCodeMapDict(
+                              \ {
+                              \ g:IDE_mappings.REPLSendFile: 'mssql.runQuery',
+                              \},
+                              \ {
+                              \ g:IDE_mappings.REPLSend: 'mssql.runQuery',
+                              \},
+                              \)
+      endif
+endfunction
+
+au myPlugins filetype sql call VSCodeFTMaps('sql')
 
 " {]} Mappings
 
