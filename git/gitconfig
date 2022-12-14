@@ -119,3 +119,5 @@
   # Skip warnings about automatic name setting from domain email
   # implicitIdentity   = false
   # detachedHead       = false
+[init]
+  defaultbranch = main
