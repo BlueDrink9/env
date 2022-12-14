@@ -404,11 +404,12 @@ Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
 " {]} ---------- NerdTree ----------
 
 " {[} Neovim UIs/integrations
-" Needs nvim > 0.4, which was probably also when UIEnter was introduced.
 if has('nvim') && exists('##UIEnter')
     if exists('g:vscode')
-        UnPlug 'easymotion/vim-easymotion'
-        Plug 'asvetliakov/vim-easymotion', {'as': 'vim-easymotion-vscode'}
+        if IsPluginUsed('vim-easymotion')
+            UnPlug 'easymotion/vim-easymotion'
+            Plug 'asvetliakov/vim-easymotion', {'as': 'vim-easymotion-vscode'}
+        endif
     else
         " if has('win32')
         "     let s:firenvim_startup_prologue='"set LITE_SYSTEM=1"'
