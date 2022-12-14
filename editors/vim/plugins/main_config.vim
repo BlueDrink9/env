@@ -202,23 +202,41 @@ if IsPluginUsed("vim-sandwich")
     runtime macros/sandwich/keymap/surround.vim
     vmap s <Plug>(operator-sandwich-add)
 endif
-if IsPluginUsed("hop.nvim")
-    lua require'hop'.setup({ keys = 'arstdhneofplucmkv'})
-lua << EOF
-    function map(mode, keys, mapping, opts)
-        vim.api.nvim_set_keymap(mode, keys, mapping, opts)
-        end
-        v = {'x', 'n'}
-        for i = 1, #v do
-            mode = v[i]
-            map(mode, ',l', "<cmd>lua require'hop'.hint_words({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR })<cr>", {})
-            map(mode, ',h', "<cmd>lua require'hop'.hint_words({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR })<cr>", {})
-            map(mode, ',j', "<cmd>lua require'hop'.hint_lines({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR })<cr>", {})
-            map(mode, ',k', "<cmd>lua require'hop'.hint_lines({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR })<cr>", {})
-        end
+if IsPluginUsed('leap.nvim')
+    lua << EOF
+    require('leap-spooky').setup()
+    leap = require('leap')
+    -- Will not override existing mappings, so my s is safe.
+    leap.add_default_mappings()
+    leap.opts.prev_target = {'<tab>',}  -- Remove ',' from the default
+    local map = vim.keymap.set
+    modes = {'n', 'x', 'o'}
+    map(modes, ',l', '<Plug>(leap-forward-to)', {})
+    map(modes, ',j', '<Plug>(leap-forward-to)', {})
+    map(modes, ',h', '<Plug>(leap-backward-to)', {})
+    map(modes, ',k', '<Plug>(leap-backward-to)', {})
+    map(modes, ',<S-l>', '<Plug>(leap-cross-window)', {})
+    map(modes, ',<S-j>', '<Plug>(leap-cross-window)', {})
+    map(modes, ',<S-h>', '<Plug>(leap-cross-window)', {})
+    map(modes, ',<S-k>', '<Plug>(leap-cross-window)', {})
+
+    if vim.fn.IsPluginUsed('leap-ast.nvim') == 1 and vim.fn.IsPluginUsed('nvim-treesitter') == 1 then
+        vim.api.nvim_set_keymap(modes, ',W',
+        function() require'leap-ast'.leap() end,
+        {desc='leap to ast element'})
+    end
 EOF
-endif
-if IsPluginUsed("vim-easymotion")
+elseif IsPluginUsed('hop.nvim')
+    lua require'hop'.setup({ keys = 'arstdhneofplucmkv'})
+    lua << EOF
+    local map = vim.keymap.set
+    modes = {'n', 'x', 'o'}
+    map(modes, ',l', function() require'hop'.hint_words({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR }) end, {desc = 'hop right'})
+    map(modes, ',h', function() require'hop'.hint_words({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR}) end, {desc = 'hop left'})
+    map(modes, ',j', function() require'hop'.hint_lines({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR }) end, {desc = 'hop down'})
+    map(modes, ',k', function() require'hop'.hint_lines({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR}) end, {desc = 'hop up'})
+EOF
+elseif IsPluginUsed("vim-easymotion")
     let g:EasyMotion_do_mapping = 0 " Disable default mappings
     " tab-incrementable search with easymotion dropout feature.
     " map  <leader>/ <Plug>(easymotion-sn)
@@ -659,7 +677,7 @@ if IsPluginUsed("nerdtree.git")
     let g:NERDTreeIndicatorMapCustom = {
                 \ "Modified"  : "*",
                 \ "Staged"    : "+",
-                \ "Untracked" : "\",
+                \ "Untracked" : "?",
                 \ "Renamed"   : "➜",
                 \ "Unmerged"  : "═",
                 \ "Deleted"   : "×",

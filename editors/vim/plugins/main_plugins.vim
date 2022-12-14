@@ -211,7 +211,10 @@ Plug 'https://github.com/bps/vim-textobj-python'
 " Replacement for surround, with more features.
 Plug 'machakann/vim-sandwich'
 if has('nvim-0.5')
-    Plug 'https://github.com/phaazon/hop.nvim'
+    " Plug 'https://github.com/phaazon/hop.nvim'
+    Plug 'https://github.com/ggandor/leap.nvim'
+    Plug 'https://github.com/ggandor/leap-spooky.nvim'
+    Plug 'https://github.com/ggandor/leap-ast.nvim'
 else
     Plug 'https://github.com/easymotion/vim-easymotion'
 endif
