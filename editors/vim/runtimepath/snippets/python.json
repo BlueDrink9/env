@@ -36,5 +36,17 @@
       "from pathlib import Path"
     ]
   }
+  , "pytest skip": {
+    "prefix": ["skip"],
+    "body": [
+      "@pytest.mark.skip"
+    ]
+  }
 
+  , "pytest parametrize": {
+    "prefix": ["param"],
+    "body": [
+      "@pytest.mark.parametrize"
+    ]
+  }
 }
