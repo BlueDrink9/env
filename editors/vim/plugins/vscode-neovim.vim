@@ -30,6 +30,7 @@ let s:nmappings = {
       \ g:IDE_mappings.references: 'editor.action.findReferences',
       \ g:IDE_mappings.references2: 'editor.action.findReferences',
       \ g:IDE_mappings.FuzzyOpenFile: 'workbench.action.quickOpen',
+      \ g:IDE_mappings.FuzzyBuffers: 'workbench.action.quickOpen',
       \ g:IDE_mappings.FuzzyTags: 'workbench.action.showAllSymbols',
       \ g:IDE_mappings.FuzzyCommands: 'workbench.action.showCommands',
       \ g:IDE_mappings.FuzzyOldFiles: 'workbench.action.openRecent',
@@ -138,6 +139,19 @@ function VSCodeFTMaps(ft)
                               \ g:IDE_mappings.REPLSend: 'mssql.runQuery',
                               \},
                               \)
+            function _OpfuncRunSQLQueryMotion(type = '') abort
+                  if a:type == ''
+                        set opfunc=_OpfuncRunSQLQueryMotion
+                        return 'g@'
+                  endif
+                  noautocmd keepjumps normal! '[V']
+                  call VSCodeNotifyVisual('mssql.runQuery', 1)
+                  noautocmd keepjumps normal! V
+            endfunction
+            exec 'nnoremap <expr> ' . g:IDE_mappings.REPLSend .
+                              \ ' _OpfuncRunSQLQueryMotion()'
+            exec 'nnoremap <expr> ' . g:IDE_mappings.REPLSendLine .
+                              \ " _OpfuncRunSQLQueryMotion() .. '_'"
       endif
 endfunction
 
