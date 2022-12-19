@@ -221,7 +221,7 @@ if IsPluginUsed('leap.nvim')
     map(modes, ',<S-k>', '<Plug>(leap-cross-window)', {})
 
     if vim.fn.IsPluginUsed('leap-ast.nvim') == 1 and vim.fn.IsPluginUsed('nvim-treesitter') == 1 then
-        vim.api.nvim_set_keymap(modes, ',W',
+        vim.keymap.set(modes, ',W',
         function() require'leap-ast'.leap() end,
         {desc='leap to ast element'})
     end
