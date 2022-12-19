@@ -117,7 +117,7 @@ require'nvim-treesitter.configs'.setup {
 
 if vim.fn.IsPluginUsed('nvim-ufo') == 1 then
     -- vim.o.foldcolumn = '1' -- '0' is not bad
-    vim.o.foldlevel = 50 -- Using ufo provider need a large value, feel free to decrease the value
+    -- Have to override foldlevelstart, otherwise constantly closes folds on save.
     vim.o.foldlevelstart = 99
     vim.o.foldenable = true
 
