@@ -131,7 +131,13 @@ if IsPluginUsed('echodoc.vim')
 endif
 
 if IsPluginUsed('which-key.nvim')
-    lua require("which-key").setup()
+    lua << EOF
+    require("which-key").setup({
+    triggers_blacklist = {
+      i = { "k", "v", "(", "{", "[", },
+    },
+    })
+EOF
 elseif IsPluginUsed('vim-which-key')
     nnoremap <leader> <cmd>WhichKey '<leader>'<CR>
     vnoremap <leader> <cmd>WhichKeyVisual '<leader>'<CR>
