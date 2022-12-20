@@ -31,10 +31,17 @@ local dap_nbufmaps = {
    -- [debugShowOutput] = '',
    -- [debugHover] = '',
 }
+
 local dapui_nbufmaps = {
-   -- [vnoremap_M-k]  = 'eval()',
+   -- [maps.REPLSend]  = 'eval()',
 -- require("dapui").toggle()
 }
+local dapui_vbufmaps = {
+   [maps.REPLSend]  = 'eval()',
+-- require("dapui").toggle()
+}
+
+
 
 
 mason_dap.setup({
@@ -47,12 +54,20 @@ local set_up_buffer = function()
    --
    -- Mappings.
    local bufnr = vim.api.nvim_buf_get_number(0)
-   local prefixes = {dap="require'dap'", ui="require'dap-ui'"}
+   local prefixes = {dap="require'dap'", ui="require'dapui'"}
    local to_map_tables = {dap=dap_nbufmaps, ui=dapui_nbufmaps}
    for prefix, table in pairs(to_map_tables) do
       for mapping, cmd in pairs(table) do
          local rhs = "<cmd>lua " .. prefixes[prefix] .. "." .. cmd .. "<CR>"
          vim.api.nvim_buf_set_keymap(bufnr, 'n', mapping, rhs,
+            { noremap=true, silent=true })
+      end
+   end
+   to_map_tables = {ui=dapui_vbufmaps}
+   for prefix, table in pairs(to_map_tables) do
+      for mapping, cmd in pairs(table) do
+         local rhs = "<cmd>lua " .. prefixes[prefix] .. "." .. cmd .. "<CR>"
+         vim.api.nvim_buf_set_keymap(bufnr, 'v', mapping, rhs,
             { noremap=true, silent=true })
       end
    end
@@ -115,36 +130,33 @@ dapui.setup({
   -- Expand lines larger than the window
   -- Requires >= 0.7
   expand_lines = vim.fn.has("nvim-0.7") == 1,
-  -- Layouts define sections of the screen to place windows.
-  -- The position can be "left", "right", "top" or "bottom".
-  -- The size specifies the height/width depending on position. It can be an Int
-  -- or a Float. Integer specifies height/width directly (i.e. 20 lines/columns) while
-  -- Float value specifies percentage (i.e. 0.3 - 30% of available lines/columns)
-  -- Elements are the elements shown in the layout (in order).
-  -- Layouts are opened in order so that earlier layouts take priority in window sizing.
   layouts = {
     {
+      position = "right",
       elements = {
-      -- Elements can be strings or table with id and size keys.
+        { id = "repl", size = 0.4 },
+        { id = "watches", size = 0.6 },
+      },
+      size = 0.25, -- 40 columns
+    },
+    {
+      position = "bottom",
+      elements = {
+        "console",
+      },
+      size = 0.20, -- 25% of total lines
+    },
+    {
+      position = "left",
+      elements = {
         { id = "scopes", size = 0.25 },
         "breakpoints",
         "stacks",
-        "watches",
       },
-      size = 40, -- 40 columns
-      position = "right",
-    },
-    {
-      elements = {
-        "repl",
-        "console",
-      },
-      size = 0.25, -- 25% of total lines
-      position = "left",
+      size = 0.2,
     },
   },
   controls = {
-    -- Requires Neovim nightly (or 0.8 when released)
     enabled = true,
     -- Display controls in this element
     element = "repl",
@@ -176,6 +188,8 @@ dapui.setup({
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
   dapui.open()
+  -- vim.api.nvim_buf_set_keymap(bufnr, 'v', maps.REPLSend, "<Cmd>lua require("dapui").eval()<CR>",
+  --   { noremap=true, silent=true })
 end
 dap.listeners.before.event_terminated["dapui_config"] = function()
   dapui.close()
