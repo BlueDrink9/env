@@ -174,21 +174,10 @@ lua << EOF
            'shellcheck',
            'jq',
            'proselint',
-        }
+        },
+        automatic_setup = true,
     })
-
-    require 'mason-null-ls'.setup_handlers {
-        function(source_name)
-          null_ls.register(null_ls.builtins.diagnostics[source_name])
-        end,
-        stylua = function()
-          null_ls.register(null_ls.builtins.formatting.stylua)
-        end,
-        jq = function()
-          null_ls.register(null_ls.builtins.formatting.jq)
-        end
-    }
-
+    require 'mason-null-ls'.setup_handlers()
     -- will setup any installed and configured sources above
     null_ls.setup({
       sources = {
