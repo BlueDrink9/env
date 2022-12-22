@@ -134,9 +134,9 @@ dapui.setup({
     {
       position = "right",
       elements = {
-        { id = "repl", size = 0.3 },
         { id = "scopes", size = 0.4 },
         { id = "watches", size = 0.3 },
+        { id = "repl", size = 0.3 },
       },
       size = 0.30,
     },
