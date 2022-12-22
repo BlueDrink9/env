@@ -2,7 +2,6 @@
 vim.o.completeopt = "menuone,noselect"
 local cmp = require'cmp'
 local cmp_buffer = require('cmp_buffer')
-Mappings = cmp.mapping
 
 Get_bufnrs_to_complete_from = function()
   -- Include all visible buffers (not just default of current one) below a certain size.
@@ -18,6 +17,7 @@ Get_bufnrs_to_complete_from = function()
   return vim.tbl_keys(bufs)
 end
 
+local mappings = cmp.mapping
 cmp.setup({
   -- debug = false;
   -- min_length = 1;
@@ -76,16 +76,34 @@ cmp.setup({
   }),
 
   mapping = {
-      -- ['<C-e>'] = Mappings(Mappings.complete(), { 'i', 'c' }),
-      ['<C-e>'] = Mappings.confirm({ select = false }),
+      ['<C-e>'] = mappings.confirm({ select = false }),
       -- Because I tab and go, the current selection when I push space is already the one I want.
       -- But this _is_ useful for snippets, because they will be expanded, not just selected.
-      ['<space>'] = Mappings.confirm({ select = false }),
-      -- ['<return>'] = Mappings.confirm({ select = false }),
-      ["<Tab>"] = Mappings(Mappings.select_next_item({behavior=cmp.SelectBehavior.Insert}), { 'i', 'c' }),
-      ["<S-Tab>"] = Mappings(Mappings.select_prev_item({behavior=cmp.SelectBehavior.Insert}), { 'i', 'c' }),
-      ['<C-b>'] = Mappings(Mappings.scroll_docs(-4), { 'i' }),
-      ['<C-f>'] = Mappings(Mappings.scroll_docs(4), { 'i' }),
+      ['<space>'] = function(fallback)
+         if cmp.visible() then
+            cmp.confirm({ select = false })
+            vim.fn.feedkeys(' ')
+         else
+            fallback()
+         end
+      end,
+      -- ['<return>'] = mappings.confirm({ select = false }),
+      ["<Tab>"] = cmp.mapping(function(fallback)
+         if cmp.visible() then
+            cmp.select_next_item()
+         else
+            fallback()
+         end
+      end, {'i', 'c'}),
+      ["<S-Tab>"] = cmp.mapping(function(fallback)
+         if cmp.visible() then
+            cmp.select_prev_item()
+         else
+            fallback()
+         end
+      end, {'i', 'c'}),
+      ['<C-b>'] = mappings(mappings.scroll_docs(-4), { 'i' }),
+      ['<C-f>'] = mappings(mappings.scroll_docs(4), { 'i' }),
   },
 
 })
