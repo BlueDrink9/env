@@ -80,14 +80,13 @@ cmp.setup({
       -- Because I tab and go, the current selection when I push space is already the one I want.
       -- But this _is_ useful for snippets, because they will be expanded, not just selected.
       ['<space>'] = function(fallback)
-         if cmp.visible() then
-            cmp.confirm({ select = false })
+         if cmp.visible() and cmp.expandable then
+            mappings.confirm({ select = false })
             vim.fn.feedkeys(' ')
          else
             fallback()
          end
       end,
-      -- ['<return>'] = mappings.confirm({ select = false }),
       ["<Tab>"] = cmp.mapping(function(fallback)
          if cmp.visible() then
             cmp.select_next_item()
