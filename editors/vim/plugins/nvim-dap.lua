@@ -134,26 +134,26 @@ dapui.setup({
     {
       position = "right",
       elements = {
-        { id = "repl", size = 0.4 },
-        { id = "watches", size = 0.6 },
+        { id = "repl", size = 0.3 },
+        { id = "scopes", size = 0.4 },
+        { id = "watches", size = 0.3 },
       },
-      size = 0.25, -- 40 columns
+      size = 0.30,
+    },
+    {
+      position = "left",
+      elements = {
+        "breakpoints",
+        "stacks",
+      },
+      size = 0.15,
     },
     {
       position = "bottom",
       elements = {
         "console",
       },
-      size = 0.20, -- 25% of total lines
-    },
-    {
-      position = "left",
-      elements = {
-        { id = "scopes", size = 0.25 },
-        "breakpoints",
-        "stacks",
-      },
-      size = 0.2,
+      size = 0.15,
     },
   },
   controls = {
