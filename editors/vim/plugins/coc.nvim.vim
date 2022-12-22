@@ -92,9 +92,8 @@ exec 'nnoremap <silent> ' . g:IDE_mappings.documentation2 . ':call s:show_docume
 
 let g:coc_snippet_next = g:IDE_mappings.snippetNext
 let g:coc_snippet_prev = g:IDE_mappings.snippetPrev
-" If we have tabbed to a snippet, can press space to expand it. Can't figure
-" out how to include a literal space after...
-inoremap <expr><space> coc#expandable() && coc#pum#visible() ? coc#pum#confirm() : ' '
+" If we have tabbed to a snippet, can press space to expand it.
+inoremap <expr><space> coc#expandable() && coc#pum#visible() ? coc#pum#confirm() && feedkeys(' ') : ' '
 call Imap(g:IDE_mappings.snippetExpand, "<Plug>(coc-snippets-expand-jump)")
 
 function! s:check_back_space() abort
