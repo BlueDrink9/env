@@ -89,7 +89,12 @@ if v:version >= 704
 endif
 " Separate buffer lists for differetn windows
 " Plug 'https://github.com/zefei/vim-wintabs'
-Plug 'https://github.com/tomtom/tcomment_vim'
+if has('nvim')
+    Plug 'https://github.com/numToStr/Comment.nvim'
+else
+    Plug 'https://github.com/tomtom/tcomment_vim'
+endif
+
 
 Plug 'jeetsukumaran/vim-markology', {'on': ['MarkologyEnable', 'MarkologyToggle']}
 " https://github.com/chentoast/marks.nvim

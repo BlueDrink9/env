@@ -71,6 +71,28 @@ if IsPluginUsed("tcomment_vim")
     xnoremap <C-/>  <cmd>Tcomment<CR>
     nnoremap <C-/>  <cmd>TcommentBlock<CR>
     onoremap <C-/>  <cmd>Tcomment<CR>
+elseif IsPluginUsed("Comment.nvim")
+lua << EOF
+require('Comment').setup({
+    ---Lines to be ignored while (un)comment
+    ignore = nil,
+    ---LHS of toggle mappings in NORMAL mode
+    toggler = {
+        line = '<leader>cc',
+        block = '<leader>cC',
+    },
+    opleader = {
+        line = '<leader>c',
+        block = '<leader>C',
+    },
+    mappings = {
+        basic = true,
+        extra = false,
+    },
+    pre_hook = nil,
+    post_hook = nil,
+})
+EOF
 endif
 if IsPluginUsed("vim-showmarks.git")
     " More advanced version of showmarks. Lots of mappings, eg m]
@@ -635,7 +657,7 @@ lua << EOF
     opts ={
     open_mapping = [[<c-s>]],
     direction = 'horizontal',
-    start_in_insert = true,
+    start_in_insert = false,
     insert_mappings = false,
     terminal_mappings = true,
     persist_mode = true,
