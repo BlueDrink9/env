@@ -119,6 +119,7 @@ if vim.fn.IsPluginUsed('nvim-ufo') == 1 then
     -- vim.o.foldcolumn = '1' -- '0' is not bad
     -- Have to override foldlevelstart, otherwise constantly closes folds on save.
     vim.o.foldlevelstart = 99
+    vim.o.foldlevel = 99
     vim.o.foldenable = true
 
     -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
