@@ -72,7 +72,7 @@ local on_attach = function(client, bufnr)
     {
      group = "lsp_on_attach",
      buffer = bufnr,
-     callback = function() vim.diagnostic.open_float(nil, {focus=false}) end,
+     callback = function() if DiagnosticsEnabled then vim.diagnostic.open_float(nil, {focus=false}) end end,
     })
    vim.api.nvim_create_autocmd(
     { "CursorHold", "CursorHoldI"},
@@ -97,7 +97,20 @@ end
 
 -- require("nvim.diagnostic_virtual_text_config").setup {}
 vim.diagnostic.config({
-    virtual_text = false,
+   signs = false,
+   virtual_text = {
+      format = function(diagnostic)
+         symbols = {
+            [vim.diagnostic.severity.ERROR] = 'E',
+            [vim.diagnostic.severity.WARN] = 'W',
+            [vim.diagnostic.severity.INFO] = 'I',
+            [vim.diagnostic.severity.HINT] = 'H',
+         }
+         return symbols[diagnostic.severity]
+      end,
+      severity_sort = true,
+      spacing = 3,
+   },
   })
 
 local lsp_installer = require("mason-lspconfig")
@@ -177,3 +190,23 @@ require("trouble").setup {
       end
    end,
 }
+
+DiagnosticsConfig = vim.diagnostic.config()
+DiagnosticsEnabled = true
+function ToggleDiagnostics()
+   if not DiagnosticsEnabled then
+      vim.diagnostic.config(DiagnosticsConfig)
+      DiagnosticsEnabled = true
+   else
+      vim.diagnostic.config({
+         virtual_text = false,
+         sign = false,
+         float = false,
+         update_in_insert = false,
+         severity_sort = false,
+         underline = false,
+      })
+      DiagnosticsEnabled = false
+   end
+end
+vim.keymap.set("n", "yod", ToggleDiagnostics, { noremap=true, silent=true })
