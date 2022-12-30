@@ -72,7 +72,15 @@ local on_attach = function(client, bufnr)
     {
      group = "lsp_on_attach",
      buffer = bufnr,
-     callback = function() if DiagnosticsEnabled then vim.diagnostic.open_float(nil, {focus=false}) end end,
+     callback = function()
+            if DiagnosticsEnabled then
+               vim.diagnostic.open_float(nil, {focus=false})
+               diags = vim.diagnostic.get(bufnr, {lnum = '.'})
+               if #vim.diagnostic.get(bufnr, {lnum = vim.fn.line('.')}) > 0 then
+                  vim.diagnostic.config({underline = true})
+               end
+            end
+         end,
     })
    vim.api.nvim_create_autocmd(
     { "CursorHold", "CursorHoldI"},
@@ -80,6 +88,13 @@ local on_attach = function(client, bufnr)
      group = "lsp_on_attach",
      buffer = bufnr,
      callback = require('nvim-lightbulb').update_lightbulb,
+    })
+   vim.api.nvim_create_autocmd(
+    { "CursorMoved", "CursorMovedI"},
+    {
+     group = "lsp_on_attach",
+     buffer = bufnr,
+     callback = function() vim.diagnostic.config({underline = false}) end,
     })
 
 
@@ -110,6 +125,7 @@ vim.diagnostic.config({
       end,
       severity_sort = true,
       spacing = 3,
+      underline = false,
    },
   })
 
