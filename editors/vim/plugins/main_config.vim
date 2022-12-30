@@ -264,10 +264,10 @@ elseif IsPluginUsed("vim-easymotion")
     " map  <leader>/ <Plug>(easymotion-sn)
     " omap <leader>/ <Plug>(easymotion-tn)
     let g:EasyMotion_smartcase = 1
-    map ,l <Plug>(easymotion-lineforward)
-    map ,j <Plug>(easymotion-j)
-    map ,k <Plug>(easymotion-k)
-    map ,h <Plug>(easymotion-linebackward)
+    map sl <Plug>(easymotion-lineforward)
+    map sj <Plug>(easymotion-j)
+    map sk <Plug>(easymotion-k)
+    map sh <Plug>(easymotion-linebackward)
     let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
     " Cross window boundaries
     nmap <Leader><S-K> <Plug>(easymotion-overwin-line)
@@ -278,8 +278,8 @@ elseif IsPluginUsed("vim-easymotion")
     nnoremap <leader>s <Plug>(easymotion-overwin-f2)
 endif
 if IsPluginUsed("camelcasemotion")
-    call camelcasemotion#CreateMotionMappings('S')
-    call camelcasemotion#CreateMotionMappings(',')
+    call camelcasemotion#CreateMotionMappings('-')
+    call camelcasemotion#CreateMotionMappings('U')
 endif
 " {]} ---------- Operators ----------
 

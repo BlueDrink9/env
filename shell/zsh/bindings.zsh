@@ -43,7 +43,7 @@ bindkey -sM vicmd "\"ap" "i !!*s" + magic-space
 # Jump to the target folder of the last command and run ls with g!
 bindkey -sM vicmd "g!" 'cccd !$ && ls\C-m'
 # Insert single char in normal mode, like in vim.
-bindkey -sM vicmd "s" 'i_\er'
+bindkey -sM vicmd "," 'i_\er'
 # modified vim-style quit.
 bindkey -sM vicmd ";q" "ddiexit"
 # modified vim-style quit (insert mode)

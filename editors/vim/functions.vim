@@ -188,7 +188,7 @@ endfunction
 function! SingleCharInsert()
     exec ":normal i".RepeatChar(nr2char(getchar()), v:count1)
 endfunction
-nnoremap <silent> s :<C-U>call SingleCharInsert()<CR>
+nnoremap <silent> , :<C-U>call SingleCharInsert()<CR>
 
 function! IsWSL()
     if !has('unix')
