@@ -186,6 +186,12 @@ dapui.setup({
   }
 })
 
+vim.api.nvim_create_autocmd("Filetype", {
+   group = "myIDE",
+   pattern = "dapui_*",
+   callback = set_up_buffer,
+})
+
 dap.listeners.after.event_initialized["dapui_config"] = function()
   dapui.open()
   -- vim.api.nvim_buf_set_keymap(bufnr, 'v', maps.REPLSend, "<Cmd>lua require("dapui").eval()<CR>",
