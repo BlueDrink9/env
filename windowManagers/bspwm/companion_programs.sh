@@ -35,7 +35,7 @@ picom --config "$DOTFILES_DIR"/desktop_elements/picom.conf --experimental-backen
 
 # Daemon tracks which media player has most recent activity, which ensures
 # behavior acts on most expected player.
-command -v playerctld && playerctld daemon
+command -v playerctld >/dev/null 2>&1 && playerctld daemon >/dev/null 2>&1
 
 # flashfocus &
 # pgrep autokey-gtk || autokey-gtk \

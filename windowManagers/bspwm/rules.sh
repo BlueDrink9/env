@@ -22,6 +22,8 @@ bspc rule -a Gimp             desktop='^8' state=floating follow=on
 bspc rule -a Emacs            state=tiled
 bspc rule -a albert           floating=on  border=off     focus=on
 bspc rule -a kitty-dropdown   sticky=on
+bspc rule -a zoom state=floating center=on follow=on border=off
+# bspc rule -a <zoom\_notification\_class>
 
 # _NET_WM_STATE(ATOM) = _NET_WM_STATE_ABOVE, _NET_WM_STATE_STAYS_ON_TOP
 # bspc rule -a zoom manage=off floating=on
