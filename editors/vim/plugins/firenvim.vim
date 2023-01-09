@@ -32,6 +32,7 @@ let s:disabled_sites=[
             \ 'twitter.com*',
             \ 'roll20.com*',
             \ 'habitica.com*',
+            \ 'jira.*',
             \ ]
 for site in s:disabled_sites
     let s:fc[site] = { 'priority': 1, 'selector': '', 'takeover': 'never' }
@@ -63,6 +64,8 @@ function! s:FirenvimSetPageOptions()
         set ft=markdown
     elseif l:bufname =~? 'stackexchange.com' || l:bufname =~? 'stackoverflow.com'
         set ft=markdown
+
+    " Chat apps
     elseif l:bufname =~? 'slack.com' || l:bufname =~? 'gitter.im'
                 \ || l:bufname =~? 'webchat.kde.org'
         set ft=markdown
@@ -83,6 +86,7 @@ function! s:FirenvimSetPageOptions()
         endif
         inoremap <buffer> <s-CR> <CR>
     endif
+
 endfunction
 
 function! s:FirenvimSetGUIOptions()
@@ -112,13 +116,16 @@ function! s:FirenvimSetGUIOptions()
     " autocmd myPlugins BufWritePost * call nvim_input(";<CR>")
     " This works
     " call feedkeys("i")
+    colorscheme github
 endfunction
 
 let s:debugMessages = []
 function! s:firenvimSetup()
     " We are in firenvim
     " For debug messages during startup. After startup, use echom.
-    autocmd myPlugins BufWinEnter * echom join(s:debugMessages, "\n")
+    if len(s:debugMessages) > 0
+        autocmd myPlugins BufWinEnter * echom join(s:debugMessages, "\n")
+    endif
     " call add(s:debugMessages, 'setup')
     let g:hasGUI=1
     " Tested to match github default size on arch bspwm brave.
@@ -138,7 +145,7 @@ function! s:firenvimSetup()
     vnoremap <D-c> "+y
     set colorcolumn=0
 
-    au! myVimrc FocusLost,InsertLeave,BufLeave * ++nested call Autosave()
+    au! myVimrc FocusLost,InsertLeave,BufLeave,CursorHold,CursorHoldI * ++nested silent! update
 
     autocmd myPlugins BufEnter *.txt call s:FirenvimSetPageOptions()
     " Auto-enter insertmode if the buffer is empty.
