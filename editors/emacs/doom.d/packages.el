@@ -66,6 +66,10 @@
 (package! evil-god-state)
 ;; Adds a few extra operators, chiefly evil-operator-eval
 (package! evil-extra-operator)
+(package! evil-little-word
+  :recipe (:host github
+           :repo "tarao/evil-plugins"
+           :files ("evil-little-word.el")))
 
 (package! god-mode)
 
