@@ -269,9 +269,9 @@
   (interactive "<c><C>")
   (setq count (or count 1))
   (insert (make-string count char)))
-(map! :desc "Insert a single char before cursor" :n "," #'my/evil-insert-char)
+(map! :map 'override :desc "Insert a single char before cursor" :n "," #'my/evil-insert-char)
 
-(map! :desc "Easymotion prefix" :nvo "," nil)
+(map! :desc "Easymotion prefix" :nvo "s" nil)
 (after! evil-easymotion
   (evilem-default-keybindings "s")
   (map! :nvo "s l" #'evilem-motion-forward-word-begin
