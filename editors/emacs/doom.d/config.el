@@ -3,7 +3,6 @@
 ; TODO: jumping to mark should put mark in middle of view
 ; TODO: viminfo-style savings (persistend jump list, registers)
 ; TODO: Bacsspace undoes tab
-; TODO: binding to enable subword mode if not enabled. Hook evil-motion to remove hook and disable mode again. (Camelcasemotion)
 ; magit mappings to replace c-C? Or just create another mapping that sends c-C all the time. But a shortcut for magit to do c-c c-c or c-c c-k would be helpful.
 
 ;; Here are some additional functions/macros that could help you configure Doom:
@@ -488,12 +487,7 @@ rather than file lines."
 (add-hook! 'inferior-ess-mode-hook
         (add-to-list 'mode-line-process '(:eval (nth ess--busy-count ess-busy-strings))))
 
-;; Subword motion (and superword!)
-;; Bind key to function that:
-;; sets subword mode, and adds hook to (evil-motion-state-exit-hook). Hook disables subword mode.
-(defun my/evil-motion-subword-once ()
-  (interactive)
-  (setq previous_mode 'subword-mode)
-  (subword-mode 1)
-  (add-hook! 'evil-motion-state-exit-hook
-    (subword-mode 'previous_mode)))
+;; Prevent these errors freezing the whole editor
+(advice-add 'ispell-lookup-words :around
+            (lambda (orig &rest args)
+              (shut-up (apply orig args))))

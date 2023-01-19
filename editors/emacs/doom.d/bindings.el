@@ -488,6 +488,32 @@
 
 (map! :nv "gx" #'browse-url)
 
+
+(defun my/evil-motion-subword-once ()
+  "Temporarily toggle subword mode for a single evil motion command. Similar to
+camelcasemotion.vim"
+  (interactive)
+  (subword-mode 1)
+  (let ((current-command (this-command-keys)))
+    (evil-motion-loop (evil-lookup-key nil current-command))
+    (advice-add 'evil-motion-loop :after #'my/disable-subword-mode)
+    ))
+
+  ;; (advice-add 'evil-motion-loop :before #'my/enable-subword-mode)
+
+;; (advice-add 'evil-forward-word-end :before '(subword-mode 1))
+;; (advice-add 'evil-motion-loop :after (lambda () (message "loop") (subword-mode 0)))
+(advice-add 'evil-execute-motion :after (lambda () (message "loop") (subword-mode 0)))
+(debug-on-entry 'evil-motion-loop)
+
+(defun my/disable-subword-mode ()
+  (subword-mode 0)
+  (print "called")
+  (remove-hook 'evil-normal-state-entry-hook 'my/disable-subword-mode))
+
+(map! :map evil-motion-state-map "_" #'my/evil-motion-subword-once)
+
+
 (dolist (tab (list "TAB" "<tab>"))
   (map! :after markdown
         :map markdown-mode-map
