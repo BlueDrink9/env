@@ -61,6 +61,10 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'https://github.com/pineapplegiant/spaceduck'
 Plug 'https://github.com/sainnhe/forest-night'
 
+if has('nvim')
+  Plug 'https://github.com/uloco/bluloco.nvim'
+endif
+
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
 function! s:onehalfSwapLightDark()
   if g:colorSch =~? "dark"
