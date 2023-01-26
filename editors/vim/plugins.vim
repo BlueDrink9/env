@@ -149,6 +149,10 @@ let g:customHLGroups = []
 " {]}
 call plug#begin(s:pluginPath)
 
+if has('nvim')
+    Plug 'https://github.com/lewis6991/impatient.nvim'
+endif
+
 " Get light plugin set first
 call SourcePluginFile("colorschemes.vim")
 call SourcePluginFile("light_plugins.vim")
@@ -169,6 +173,10 @@ endif
 exec 'source ' . s:localPlugins
 
 call plug#end()
+
+if has('nvim')
+    lua require('impatient')
+endif
 
 call SourcePluginFile("light_config.vim")
 if !g:liteMode
