@@ -231,25 +231,17 @@ if IsPluginUsed('leap.nvim')
     lua << EOF
     require('leap-spooky').setup()
     leap = require('leap')
-    -- Will not override existing mappings, so my s is safe.
+    -- Will not override existing mappings.
     leap.add_default_mappings()
     leap.opts.prev_target = {'<tab>',}  -- Remove ',' from the default
     local map = vim.keymap.set
     modes = {'n', 'x', 'o'}
-    map(modes, ',l', '<Plug>(leap-forward-to)', {})
-    map(modes, ',j', '<Plug>(leap-forward-to)', {})
-    map(modes, ',h', '<Plug>(leap-backward-to)', {})
-    map(modes, ',k', '<Plug>(leap-backward-to)', {})
-    map(modes, ',<S-l>', '<Plug>(leap-cross-window)', {})
-    map(modes, ',<S-j>', '<Plug>(leap-cross-window)', {})
-    map(modes, ',<S-h>', '<Plug>(leap-cross-window)', {})
-    map(modes, ',<S-k>', '<Plug>(leap-cross-window)', {})
-
-    if vim.fn.IsPluginUsed('leap-ast.nvim') == 1 and vim.fn.IsPluginUsed('nvim-treesitter') == 1 then
-        vim.keymap.set(modes, ',W',
-        function() require'leap-ast'.leap() end,
-        {desc='leap to ast element'})
-    end
+    -- Can't really figure out how to use this one atm.
+    -- if vim.fn.IsPluginUsed('leap-ast.nvim') == 1 and vim.fn.IsPluginUsed('nvim-treesitter') == 1 then
+    --     vim.keymap.set(modes, ',W',
+    --     function() require'leap-ast'.leap() end,
+    --     {desc='leap to ast element'})
+    -- end
 EOF
 elseif IsPluginUsed('hop.nvim')
     lua require'hop'.setup({ keys = 'arstdhneofplucmkv'})
