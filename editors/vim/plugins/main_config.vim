@@ -71,11 +71,14 @@ if IsPluginUsed("tcomment_vim")
     xnoremap <C-/>  <cmd>Tcomment<CR>
     nnoremap <C-/>  <cmd>TcommentBlock<CR>
     onoremap <C-/>  <cmd>Tcomment<CR>
+    " Swap comments from mutliple lines (not all at once)
+    xnoremap <leader>gc  :norm! <leader>cc<CR>
 elseif IsPluginUsed("Comment.nvim")
+    xnoremap <leader>gc  :norm! <leader>cc<CR>
 lua << EOF
 require('Comment').setup({
     ---Lines to be ignored while (un)comment
-    ignore = nil,
+    ignore = '^%s*$',
     ---LHS of toggle mappings in NORMAL mode
     toggler = {
         line = '<leader>cc',
