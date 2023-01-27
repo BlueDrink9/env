@@ -92,16 +92,27 @@ if IsPluginUsed('indentLine')
     " let g:indentLine_setColors=0
 endif
 if IsPluginUsed('indent-blankline.nvim')
-    for hl in [
-                \ "IndentBlanklineIndent1 guifg=Red gui=nocombine",
-                \ "IndentBlanklineIndent2 guifg=Yellow gui=nocombine",
-                \ "IndentBlanklineIndent3 guifg=Green gui=nocombine",
-                \ "IndentBlanklineIndent4 guifg=Blue gui=nocombine",
-                \ "IndentBlanklineIndent5 guifg=Purple gui=nocombine",
-                \ ]
-        call add(g:customHLGroups, hl)
-    endfor
 lua << EOF
+    if vim.opt.termguicolors then
+        indentcolours = {}
+        -- Auto-gen some greys
+        for i=100,201,(200-100)/5 do
+            table.insert(indentcolours, string.format("#%02x%02x%02x", i, i, i))
+        end
+    else
+        indentcolours = {
+            "Red",
+            "Yellow",
+            "Green",
+            "Blue",
+            "Purple",
+        }
+    end
+    for i, colour in pairs(indentcolours) do
+        cmd = "IndentBlanklineIndent"..i.." guifg="..colour.." gui=nocombine"
+        vim.cmd('call add(g:customHLGroups, "'.. cmd .. '")')
+    end
+
     require("indent_blankline").setup {
         char = "┆",
         char_blankline = "",
@@ -119,7 +130,7 @@ lua << EOF
             indent_blankline_use_treesitter = true,
             -- May be a touch slow
             show_current_context = true,
-            show_current_context_start = true,
+            show_current_context_start = false,
             indent_blankline_show_current_context_start_on_current_line = false,
         }
     end
