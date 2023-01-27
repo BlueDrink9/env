@@ -109,8 +109,12 @@ if v:version < 800 && !has('nvim')
     " Autoset Paste/nopaste
     Plug 'https://github.com/ConradIrwin/vim-bracketed-paste'
 endif
-Plug 'https://github.com/tpope/vim-speeddating'
-Plug 'https://github.com/Konfekt/vim-CtrlXA'
+if has('nvim')
+    Plug 'https://github.com/monaqa/dial.nvim'
+else
+    Plug 'https://github.com/tpope/vim-speeddating'
+    Plug 'https://github.com/Konfekt/vim-CtrlXA'
+endif
 " Fewer defaults, but preserves case and can apparently support latex.
 " Plug 'https://github.com/bootleq/vim-cycle'
 " map <silent> <Plug>CycleFallbackNext <Plug>SpeedDatingUp
