@@ -83,6 +83,7 @@ nnoremap <leader>cd <cmd>lcd %:p:h<CR>:pwd<CR>
 " Autocomplete from tags
 " inoremap <c-]> <c-x><c-]>
 " Quickly re-run last macro with one key (also stop accidentally entering Ex).
+" Redundant in neovim
 nnoremap Q @@
 " Used as a weird undo. Good candidate for remapping.
 " nnoremap U <c-r>

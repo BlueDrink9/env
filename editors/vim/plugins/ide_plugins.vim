@@ -323,6 +323,8 @@ EOF
         Plug 'kevinhwang91/promise-async'
         Plug 'https://github.com/kevinhwang91/nvim-ufo'
         UnPlug('FastFold')
+        " Plug 'https://github.com/mrjones2014/nvim-ts-rainbow'
+        " UnPlug('rainbow_parentheses.vim')
     endif
 endif
 
