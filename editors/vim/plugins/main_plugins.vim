@@ -120,9 +120,11 @@ endif
 " map <silent> <Plug>CycleFallbackNext <Plug>SpeedDatingUp
 " map <silent> <Plug>CycleFallbackPrev <Plug>SpeedDatingDown
 
-" Align CSV files at commas, align Markdown tables, and more.
-" Could go in prose... but maybe I'll use it more later.
-Plug 'https://github.com/junegunn/vim-easy-align'
+if has('nvim')
+    Plug 'echasnovski/mini.align'
+else
+    Plug 'https://github.com/junegunn/vim-easy-align'
+endif
 
 if v:version >= 703
     " Vim hexedit. Low dependency, interface as you'd expect. Pretty

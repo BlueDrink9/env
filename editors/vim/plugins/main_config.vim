@@ -127,6 +127,10 @@ elseif IsPluginUsed("vim-CtrlXA")
     nmap <Plug>SpeedDatingFallbackDown <Plug>(CtrlXA-CtrlX)
 endif
 
+if IsPluginUsed("mini.align")
+    lua require('mini.align').setup({ mappings = { start = '', start_with_preview = 'gA' }})
+    command! Align lua MiniAlign.action_visual(v:false)
+endif
 if IsPluginUsed("vinarise.vim")
     let g:vinarise_enable_auto_detect=1
     let g:vinarise_detect_large_file_size=0
