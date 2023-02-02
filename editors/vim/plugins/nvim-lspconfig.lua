@@ -8,24 +8,24 @@ local maps = vim.g.IDE_mappings
 -- Mappings.
 -- See `:help vim.lsp.*` for documentation on any of the below functions
 local lsp_nbufmaps = {
-   [maps.implementation] = 'buf.declaration()',
-   [maps.implementation2] = 'buf.declaration()',
-   [maps.definition] = 'buf.definition()',
-   [maps.definition2] = 'buf.definition()',
-   [maps.documentation] = 'buf.hover()',
-   [maps.documentation2] = 'buf.hover()',
-   [maps.implementation] = 'buf.implementation()',
-   [maps.implementation2] = 'buf.implementation()',
-   [maps.typeDefinition] = 'buf.type_definition()',
-   [maps.typeDefinition2] = 'buf.type_definition()',
-   [maps.rename] = 'buf.rename()',
-   [maps.codeAction] = 'buf.code_action()',
-   [maps.references] = 'buf.references()',
-   [maps.references2] = 'buf.references()',
-   [maps.reformat] = 'buf.formatting()',
-   -- ['<space>wa'] = 'buf.add_workspace_folder()',
-   -- ['<space>wr'] = 'buf.remove_workspace_folder()',
-   --  ['<space>wl'] = '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders))()',
+   [maps.implementation] = 'declaration()',
+   [maps.implementation2] = 'declaration()',
+   [maps.definition] = 'definition()',
+   [maps.definition2] = 'definition()',
+   [maps.documentation] = 'hover()',
+   [maps.documentation2] = 'hover()',
+   [maps.implementation] = 'implementation()',
+   [maps.implementation2] = 'implementation()',
+   [maps.typeDefinition] = 'type_definition()',
+   [maps.typeDefinition2] = 'type_definition()',
+   [maps.rename] = 'rename()',
+   [maps.codeAction] = 'code_action()',
+   [maps.references] = 'references()',
+   [maps.references2] = 'references()',
+   [maps.reformat] = 'formatting()',
+   -- ['<space>wa'] = 'add_workspace_folder()',
+   -- ['<space>wr'] = 'remove_workspace_folder()',
+   --  ['<space>wl'] = '<cmd>lua print(vim.inspect(vim.lsp.list_workspace_folders))()',
 }
 
 local diagnostic_nbufmaps = {
@@ -99,7 +99,7 @@ local on_attach = function(client, bufnr)
 
 
   -- Mappings.
-  local prefixes = {lsp="vim.lsp.", diag="vim.diagnostic."}
+  local prefixes = {lsp="vim.lsp.buf.", diag="vim.diagnostic."}
   local to_map_tables = {lsp=lsp_nbufmaps, diag=diagnostic_nbufmaps}
   for k, table in pairs(to_map_tables) do
     for key, cmd in pairs(table) do

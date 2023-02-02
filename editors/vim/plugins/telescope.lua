@@ -7,23 +7,45 @@ vim.api.nvim_set_keymap(
    { noremap = true, silent = true, expr = false }
    )
 local telescope_mappings = {
+   builtin = maps.FuzzyFuzzy,
    find_files = maps.FuzzyOpenFile,
    live_grep = maps.FuzzySearchFiles,
    buffers = maps.FuzzyBuffers,
    tags = maps.FuzzyTags,
    commands = maps.FuzzyCommands,
-   lsp_workspace_symbols = maps.FuzzyLspTags,
 }
 
-for f, map in pairs(telescope_mappings) do
-   vim.api.nvim_set_keymap(
-      'n',
-      map,
-      ":lua require'telescope.builtin'."..f.."{}<CR>",
-      { noremap = true, silent = true, expr = false }
-      )
+function telescope_map(mappings, bufnr)
+   for f, map in pairs(mappings) do
+      local bind = ":lua require'telescope.builtin'."..f.."{}<CR>"
+      local opts = { noremap = true, silent = true, expr = false }
+      if bufnr then
+         vim.api.nvim_buf_set_keymap( bufnr, 'n', map, bind, opts)
+      else
+         vim.api.nvim_set_keymap( 'n', map, bind, opts)
+      end
+   end
 end
 
+telescope_map(telescope_mappings)
+
+-- By default, use treesitter. If an lsp client attaches that can replace it
+-- however, use that instead.
+if vim.fn.IsPluginUsed("nvim-treesitter") == 1 then
+   telescope_map({treesitter = maps.FuzzySymbols})
+end
+vim.api.nvim_create_autocmd('LspAttach', {
+   callback = function(args)
+      local capabilities = vim.lsp.get_client_by_id(
+         args.data.client_id).server_capabilites
+      if not capabilities then return end
+      if capabilities.workspaceSymbolProvider then
+         telescope_map({lsp_workspace_symbols = maps.FuzzySymbols}, args.buf)
+      elseif capabilities.documentSymbolProvider then
+         telescope_map({lsp_document_symbols = maps.FuzzySymbols}, args.buf)
+      end
+   end
+})
 
 local opts = {
    defaults = {

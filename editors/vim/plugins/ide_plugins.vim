@@ -87,7 +87,7 @@ endif
 if has('nvim-0.5')
     " Leader ? to get searchable (if using telescope) list of commands with
     " keybindings.
-    Plug 'sudormrfbin/cheatsheet.nvim'
+    Plug 'sudormrfbin/cheatsheet.nvim', {'on': 'Cheatsheet'}
     Plug 'nvim-lua/popup.nvim'
 endif
 "{]} Searching and code info
