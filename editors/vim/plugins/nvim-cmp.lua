@@ -64,7 +64,8 @@ cmp.setup({
       option = {
         keep_all_entries = false,
         enable_in_context = function()
-          return true
+          -- Could also only enable in prose FTs...
+          return vim.opt.spell:get()
         end,
       },
     },
