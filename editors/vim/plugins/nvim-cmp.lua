@@ -27,7 +27,7 @@ cmp.setup({
   -- },
   performance = {
     debounce = 200,
-    throttle = 20,
+    throttle = 1,
   },
 
   snippet = {
