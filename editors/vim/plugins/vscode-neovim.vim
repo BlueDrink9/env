@@ -134,10 +134,10 @@ function VSCodeFTMaps(ft)
             call VSCodeMapDict(
                               \ {
                               \ g:IDE_mappings.REPLSendFile: 'mssql.runQuery',
+                              \ g:IDE_mappings.REPLCancel: 'mssql.cancelQuery',
                               \},
                               \ {
                               \ g:IDE_mappings.REPLSend: 'mssql.runQuery',
-                              \ g:IDE_mappings.REPLCancel: 'mssql.cancelQuery',
                               \},
                               \)
             function _OpfuncRunSQLQueryMotion(type = '') abort
