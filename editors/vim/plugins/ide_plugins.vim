@@ -73,7 +73,7 @@ if IsPluginUsed("telescope.nvim")
     Plug 'LinArcX/telescope-changes.nvim'
     Plug 'FeiyouG/command_center.nvim'
     Plug 'cljoly/telescope-repo.nvim'
-
+    Plug 'https://github.com/debugloop/telescope-undo.nvim'
 endif
 
 " Display the indentation context in a window above the code you are

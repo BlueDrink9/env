@@ -108,7 +108,18 @@ telescope.load_extension('changes')
 telescope.load_extension("command_center")
 telescope.load_extension('ctags_outline')
 telescope.load_extension('repo')
+telescope.load_extension('undo')
 
+for map, rhs in pairs({
+   [maps.FuzzyFuzzy.."u"] = "undo",
+   [maps.FuzzyFuzzy.."r"] = "redo",
+   [maps.FuzzyFuzzy.."c"] = "changes",
+   [maps.FuzzyFuzzy.."m"] = "marks",
+}) do
+   local bind = "<cmd>Telescope "..rhs.."<cr>"
+   local opts = { noremap = true, silent = true, expr = false }
+   vim.keymap.set("n", map, bind, opts)
+end
 
 -- show current buf outline
 -- telescope.extensions.ctags_outline.outline()
