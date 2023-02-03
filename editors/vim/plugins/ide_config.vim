@@ -25,9 +25,14 @@ lua << EOF
 EOF
 endif
 
+if IsPluginUsed('range-highlight.nvim')
+    lua require'range-highlight'.setup{}
+endif
+
 if IsPluginUsed('nvim-colorizer.lua')
     lua require'colorizer'.setup()
 endif
+
 if IsPluginUsed('nvim-notify')
 lua << EOF
 require'notify'.setup({

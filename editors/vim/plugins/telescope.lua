@@ -1,23 +1,18 @@
 local maps = vim.api.nvim_get_var('IDE_mappings')
 local telescope = require("telescope")
-vim.api.nvim_set_keymap(
-   'n',
-   maps.FuzzySearchBuffers,
-   ":lua require'telescope.builtin'.live_grep({grep_open_files = true})<CR>",
-   { noremap = true, silent = true, expr = false }
-   )
 local telescope_mappings = {
-   builtin = maps.FuzzyFuzzy,
-   find_files = maps.FuzzyOpenFile,
-   live_grep = maps.FuzzySearchFiles,
-   buffers = maps.FuzzyBuffers,
-   tags = maps.FuzzyTags,
-   commands = maps.FuzzyCommands,
+   [maps.FuzzyFuzzy] = "builtin()",
+   [maps.FuzzyOpenFile] = "find_files()",
+   [maps.FuzzySearchFiles] = "live_grep()",
+   [maps.FuzzySearchBuffers] = "live_grep({grep_open_files = true})",
+   [maps.FuzzyBuffers] = "buffers()",
+   [maps.FuzzyTags] = "tags()",
+   [maps.FuzzyCommands] = "commands()",
 }
 
 function telescope_map(mappings, bufnr)
-   for f, map in pairs(mappings) do
-      local bind = ":lua require'telescope.builtin'."..f.."{}<CR>"
+   for map, rhs in pairs(mappings) do
+      local bind = ":lua require'telescope.builtin'."..rhs.."<CR>"
       local opts = { noremap = true, silent = true, expr = false }
       if bufnr then
          vim.api.nvim_buf_set_keymap( bufnr, 'n', map, bind, opts)
@@ -56,6 +51,7 @@ local opts = {
       },
    },
    extensions = {},
+   preview = False,
 }
 
 
