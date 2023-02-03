@@ -10,24 +10,14 @@ local telescope_mappings = {
    [maps.FuzzyCommands] = "commands()",
 }
 
-function telescope_map(mappings, bufnr)
-   for map, rhs in pairs(mappings) do
-      local bind = ":lua require'telescope.builtin'."..rhs.."<CR>"
-      local opts = { noremap = true, silent = true, expr = false }
-      if bufnr then
-         vim.api.nvim_buf_set_keymap( bufnr, 'n', map, bind, opts)
-      else
-         vim.api.nvim_set_keymap( 'n', map, bind, opts)
-      end
-   end
-end
-
-telescope_map(telescope_mappings)
+local map_prefix = ":lua require'telescope.builtin'."
+require'my.utils'.map_table_with_prefix(telescope_mappings, map_prefix, 'n')
 
 -- By default, use treesitter. If an lsp client attaches that can replace it
 -- however, use that instead.
 if vim.fn.IsPluginUsed("nvim-treesitter") == 1 then
-   telescope_map({treesitter = maps.FuzzySymbols})
+   require'my.utils'.map_table_with_prefix(
+      {treesitter = maps.FuzzySymbols}, map_prefix, 'n')
 end
 vim.api.nvim_create_autocmd('LspAttach', {
    callback = function(args)
@@ -35,9 +25,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
          args.data.client_id).server_capabilites
       if not capabilities then return end
       if capabilities.workspaceSymbolProvider then
-         telescope_map({lsp_workspace_symbols = maps.FuzzySymbols}, args.buf)
+         require'my.utils'.map_table_with_prefix(
+            {lsp_workspace_symbols = maps.FuzzySymbols},
+            map_prefix, 'n', {buffer=args.buf})
       elseif capabilities.documentSymbolProvider then
-         telescope_map({lsp_document_symbols = maps.FuzzySymbols}, args.buf)
+         require'my.utils'.map_table_with_prefix(
+            {lsp_workspace_symbols = maps.FuzzySymbols},
+            map_prefix, 'n', {buffer=args.buf})
       end
    end
 })
@@ -110,16 +104,12 @@ telescope.load_extension('ctags_outline')
 telescope.load_extension('repo')
 telescope.load_extension('undo')
 
-for map, rhs in pairs({
+require('my.utils').map_table_with_prefix({
    [maps.FuzzyFuzzy.."u"] = "undo",
    [maps.FuzzyFuzzy.."r"] = "redo",
    [maps.FuzzyFuzzy.."c"] = "changes",
    [maps.FuzzyFuzzy.."m"] = "marks",
-}) do
-   local bind = "<cmd>Telescope "..rhs.."<cr>"
-   local opts = { noremap = true, silent = true, expr = false }
-   vim.keymap.set("n", map, bind, opts)
-end
+}, "<cmd>Telescope ", "n")
 
 -- show current buf outline
 -- telescope.extensions.ctags_outline.outline()

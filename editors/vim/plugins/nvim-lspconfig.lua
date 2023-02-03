@@ -59,7 +59,6 @@ end
 -- Use an on_attach function to only map keys etc after the language server
 -- attaches to the current buffer
 local on_attach = function(client, bufnr)
-   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
    vim.api.nvim_create_augroup("lsp_on_attach", { clear = true })
 
@@ -99,14 +98,15 @@ local on_attach = function(client, bufnr)
 
 
   -- Mappings.
-  local prefixes = {lsp="vim.lsp.buf.", diag="vim.diagnostic."}
-  local to_map_tables = {lsp=lsp_nbufmaps, diag=diagnostic_nbufmaps}
-  for k, table in pairs(to_map_tables) do
-    for key, cmd in pairs(table) do
-      local rhs = "<cmd>lua " .. prefixes[k] .. cmd .. "<CR>"
-      buf_set_keymap('n', key, rhs,
-        { noremap=true, silent=true })
-    end
+   local tables = {
+      ["vim.lsp.buf."] = lsp_nbufmaps,
+      ["vim.diagnostic."] = diagnostic_nbufmaps,
+   }
+
+  for prefix, table in pairs(tables) do
+      require('my/utils').map_table_with_prefix(
+         table, "<cmd>lua " .. prefix, "n", {buffer=bufnr}
+      )
   end
 end
 

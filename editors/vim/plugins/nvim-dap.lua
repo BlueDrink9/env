@@ -51,9 +51,9 @@ local dap_breakpoints_bufmaps = {
 }
 
 map_table_prefixes = {
-   ["require'dap'"]= dap_nbufmaps,
-   ["require'dapui'"]= dapui_nbufmaps,
-   ["require'goto-breakpoints'"]= dap_breakpoints_bufmaps,
+   ["require'dap'."]= dap_nbufmaps,
+   ["require'dapui'."]= dapui_nbufmaps,
+   ["require'goto-breakpoints'."]= dap_breakpoints_bufmaps,
 }
 
 
@@ -69,19 +69,14 @@ local set_up_buffer = function()
    -- Mappings.
    local bufnr = vim.api.nvim_buf_get_number(0)
    for prefix, table in pairs(map_table_prefixes) do
-      for mapping, cmd in pairs(table) do
-         local rhs = "<cmd>lua " .. prefix .. "." .. cmd .. "<CR>"
-         vim.api.nvim_buf_set_keymap(bufnr, 'n', mapping, rhs,
-            { noremap=true, silent=true })
-      end
+      require('my/utils').map_table_with_prefix(
+         table, "<cmd>lua " .. prefix, "n", {buffer=bufnr}
+      )
    end
-   to_map_tables = {["require'dapui'"]=dapui_vbufmaps}
-   for prefix, table in pairs(map_table_prefixes) do
-      for mapping, cmd in pairs(table) do
-         local rhs = "<cmd>lua " .. prefix .. "." .. cmd .. "<CR>"
-         vim.api.nvim_buf_set_keymap(bufnr, 'v', mapping, rhs,
-            { noremap=true, silent=true })
-      end
+   for prefix, table in pairs({["require'dapui'"]=dapui_vbufmaps}) do
+      require('my/utils').map_table_with_prefix(
+         table, "<cmd>lua " .. prefix, "v", {buffer=bufnr}
+      )
    end
 end
 
