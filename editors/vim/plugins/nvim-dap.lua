@@ -8,6 +8,10 @@ require("nvim-dap-virtual-text").setup {
    commented = true,
 }
 
+-- This might need remapping to use its own toggle breakpoint :(
+require('persistent-breakpoints').setup{
+   load_breakpoints_event = { "FileReadPost" }
+}
 
 local maps = vim.g.IDE_mappings
 -- Mappings.
@@ -41,6 +45,16 @@ local dapui_vbufmaps = {
 -- require("dapui").toggle()
 }
 
+local dap_breakpoints_bufmaps = {
+   [maps.breakpointNext] = 'next()',
+   [maps.breakpointPrev] = 'prev()',
+}
+
+map_table_prefixes = {
+   ["require'dap'"]= dap_nbufmaps,
+   ["require'dapui'"]= dapui_nbufmaps,
+   ["require'goto-breakpoints'"]= dap_breakpoints_bufmaps,
+}
 
 
 
@@ -54,19 +68,17 @@ local set_up_buffer = function()
    --
    -- Mappings.
    local bufnr = vim.api.nvim_buf_get_number(0)
-   local prefixes = {dap="require'dap'", ui="require'dapui'"}
-   local to_map_tables = {dap=dap_nbufmaps, ui=dapui_nbufmaps}
-   for prefix, table in pairs(to_map_tables) do
+   for prefix, table in pairs(map_table_prefixes) do
       for mapping, cmd in pairs(table) do
-         local rhs = "<cmd>lua " .. prefixes[prefix] .. "." .. cmd .. "<CR>"
+         local rhs = "<cmd>lua " .. prefix .. "." .. cmd .. "<CR>"
          vim.api.nvim_buf_set_keymap(bufnr, 'n', mapping, rhs,
             { noremap=true, silent=true })
       end
    end
-   to_map_tables = {ui=dapui_vbufmaps}
-   for prefix, table in pairs(to_map_tables) do
+   to_map_tables = {["require'dapui'"]=dapui_vbufmaps}
+   for prefix, table in pairs(map_table_prefixes) do
       for mapping, cmd in pairs(table) do
-         local rhs = "<cmd>lua " .. prefixes[prefix] .. "." .. cmd .. "<CR>"
+         local rhs = "<cmd>lua " .. prefix .. "." .. cmd .. "<CR>"
          vim.api.nvim_buf_set_keymap(bufnr, 'v', mapping, rhs,
             { noremap=true, silent=true })
       end

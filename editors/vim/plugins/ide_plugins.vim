@@ -41,6 +41,10 @@ Plug 'https://github.com/wellle/tmux-complete.vim'
 " gS/gJ to split/join things onto separate/same lines.
 Plug 'https://github.com/AndrewRadev/splitjoin.vim'
 
+if has("nvim")
+    Plug 'https://github.com/winston0410/range-highlight.nvim'
+endif
+
 if v:version >= 703
     " visually show indentation
     if has("nvim")
@@ -67,6 +71,8 @@ if IsPluginUsed("telescope.nvim")
     Plug 'fcying/telescope-ctags-outline.nvim'
     Plug 'LinArcX/telescope-changes.nvim'
     Plug 'FeiyouG/command_center.nvim'
+    Plug 'cljoly/telescope-repo.nvim'
+
 endif
 
 " Display the indentation context in a window above the code you are
@@ -338,6 +344,8 @@ if has('nvim-0.7')
     Plug 'https://github.com/mfussenegger/nvim-dap'
     Plug 'https://github.com/jayp0521/mason-nvim-dap.nvim'
     Plug 'rcarriga/nvim-dap-ui'
+    Plug 'https://github.com/Weissle/persistent-breakpoints.nvim'
+    Plug 'https://github.com/ofirgall/goto-breakpoints.nvim'
     if IsPluginUsed("telescope.nvim")
         Plug 'https://github.com/nvim-telescope/telescope-dap.nvim'
     endif
