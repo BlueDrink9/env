@@ -107,12 +107,12 @@ opts.extensions.ctags_outline = {
       },
 }
 
-if vim.fn.IsPluginUsed("telescope-changes.nvim") == 1 then
--- if vim.fn.IsPluginUsed("command_center.nvim") == 1 then
-   telescope.load_extension('changes')
-   telescope.load_extension("command_center")
-   telescope.load_extension('ctags_outline')
-end
+-- Only rely on telescope (basically)
+telescope.load_extension('changes')
+telescope.load_extension("command_center")
+telescope.load_extension('ctags_outline')
+telescope.load_extension('repo')
+
 
 -- show current buf outline
 -- telescope.extensions.ctags_outline.outline()

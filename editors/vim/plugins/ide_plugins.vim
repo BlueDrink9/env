@@ -43,6 +43,7 @@ Plug 'https://github.com/AndrewRadev/splitjoin.vim'
 
 if has("nvim")
     Plug 'https://github.com/winston0410/range-highlight.nvim'
+    Plug 'https://github.com/winston0410/cmd-parser.nvim'
 endif
 
 if v:version >= 703

@@ -78,6 +78,8 @@ let g:IDE_mappings = {
             \ 'addBreakpointFunctional' : '<leader>dbf',
             \ 'clearBreakpoints' : '<leader>dbC',
             \ 'breakpointList' : '<leader>dbl',
+            \ 'breakpointNext' : ']b',
+            \ 'breakpointPrev' : '[b',
             \ 'GitCommit' : '<leader>gcc',
             \ 'GitAmend' : '<leader>gce',
             \ 'GitStage' : '<leader>gs',
