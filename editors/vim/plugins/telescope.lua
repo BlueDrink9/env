@@ -46,9 +46,9 @@ local opts = {
    },
    extensions = {},
 }
-if has('win32') then
+if vim.fn.has('win32') == 1 then
    -- Super slow on windows for some reason
-   opts.preview = False
+   opts.defaults.preview = false
 end
 
 

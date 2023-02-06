@@ -416,7 +416,7 @@ if IsPluginUsed("vim-fugitive")
     cabbrev gpl Git pull
     " mappings to emulate doom magit
     nnoremap <leader>gg <cmd>Git<cr>
-    nnoremap <leader>gs <cmd>Gwrite<cr>
+    nnoremap <leader>gS <cmd>Gwrite<cr>
     nnoremap <leader>gcc <cmd>Gwrite <bar>  Git commit<cr>
     nnoremap <leader>gcc <cmd>Gwrite <bar>  Git commit<cr>
     nnoremap <leader>gce <cmd>Gwrite <bar> Git commit --amend --no-edit<cr>
@@ -439,6 +439,12 @@ if IsPluginUsed('gv.vim')
 endif
 
 if IsPluginUsed('gitsigns.nvim')
+nnoremap <leader>gs <cmd>GitSigns stage_hunk<cr>
+nnoremap <leader>gu <cmd>GitSigns undo_stage_hunk<cr>
+nnoremap <leader>g_ <cmd>GitSigns reset_hunk<cr>
+nnoremap <leader>gR <cmd>GitSigns reset_hunk<cr>
+nnoremap ]h <cmd>GitSigns next_hunk<cr>
+nnoremap [h <cmd>GitSigns prev_hunk<cr>
 lua << EOF
 require('gitsigns').setup({
     signs = {
