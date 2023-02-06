@@ -274,6 +274,9 @@ if has('nvim')  " needs > 0.7
         endif
     endif
     Plug 'https://github.com/nvim-telescope/telescope-ui-select.nvim'
+    Plug 'LinArcX/telescope-changes.nvim'
+    Plug 'FeiyouG/command_center.nvim'
+    Plug 'https://github.com/debugloop/telescope-undo.nvim'
 " fzf only works in terminal, use ctrlp otherwise
 elseif g:hasGUI && !has('terminal')
     Plug 'https://github.com/ctrlpvim/ctrlp.vim'

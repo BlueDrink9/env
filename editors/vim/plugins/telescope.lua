@@ -100,11 +100,14 @@ opts.extensions.ctags_outline = {
       },
 }
 
--- Only rely on telescope (basically)
+-- All installed with telescope IDE plugins
+if vim.fn.IsPluginUsed("telescope-ctags-outline.nvim") == 1 then
+   telescope.load_extension('ctags_outline')
+   telescope.load_extension('repo')
+end
+-- Telescope only, basics
 telescope.load_extension('changes')
 telescope.load_extension("command_center")
-telescope.load_extension('ctags_outline')
-telescope.load_extension('repo')
 telescope.load_extension('undo')
 
 require('my.utils').map_table_with_prefix({
