@@ -45,8 +45,11 @@ local opts = {
       },
    },
    extensions = {},
-   preview = False,
 }
+if has('win32') then
+   -- Super slow on windows for some reason
+   opts.preview = False
+end
 
 
 if vim.fn.IsPluginUsed("telescope-dap.nvim") == 1 then
