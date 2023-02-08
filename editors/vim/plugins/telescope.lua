@@ -44,6 +44,11 @@ local opts = {
          },
       },
    },
+   pickers = {
+      colorscheme = {
+         enable_preview = true,
+      },
+   },
    extensions = {},
 }
 if vim.fn.has('win32') == 1 then
@@ -51,6 +56,7 @@ if vim.fn.has('win32') == 1 then
    opts.defaults.preview = false
 end
 
+vim.api.nvim_create_user_command('Colorschemes', 'Telescope colorscheme', {})
 
 if vim.fn.IsPluginUsed("telescope-dap.nvim") == 1 then
    telescope.load_extension('dap')
