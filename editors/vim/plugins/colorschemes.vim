@@ -12,6 +12,11 @@ function! GetBackground()
     return synIDattr(synIDtrans(hlID('SignColumn')), 'bg')
 endfunction
 
+let s:guiColours = v:false
+silent! if &termguicolors || g:hasGUI
+    let s:guiColours = v:true
+endif
+
 Plug 'reedes/vim-colors-pencil'
 let g:pencil_higher_contrast_ui = 0   " 0=low (def), 1=high
 let g:pencil_terminal_italics = 1
@@ -42,7 +47,7 @@ Plug 'https://github.com/srcery-colors/srcery-vim'
 let g:srcery_italic=1 " Default only 1 in gui
 Plug 'https://github.com/rakr/vim-two-firewatch'
 Plug 'https://github.com/rakr/vim-colors-rakr'
-silent! if &termguicolors || g:hasGUI
+if s:guiColours
   Plug 'https://github.com/ayu-theme/ayu-vim'
   " Apparently we can't have all versions. Daft.
   " Dark version doesn't work easily with airline anyway.
@@ -109,15 +114,13 @@ let g:jellybeans_overrides = {
 " If using a Base16 terminal theme designed to keep the 16 ANSI colors intact (a "256" variation) and have sucessfully modified your 256 colorspace with base16-shell you'll need to add the following to your ~/.vimrc before the colorscheme declaration.
 " Should override COLOURSCHEME settings by setting colorSch
 " let base16colorspace=256  " Access colors present in 256 colorspace
-" if has('nvim')
-"   Plug 'Soares/base16.nvim'
-" else
-  Plug 'https://github.com/chriskempson/base16-vim'
-" endif
-if filereadable(expand("~/.vimrc_background")) && exists($BASE16_THEME)
-  let base16colorspace=256
-  autocmd myPlugins User pluginSettingsToExec source ~/.vimrc_background
-  autocmd myPlugins User pluginSettingsToExec let colorSch=g:colors_name
+if !s:guiColours
+    Plug 'https://github.com/chriskempson/base16-vim'
+    if filereadable(expand("~/.vimrc_background")) && exists($BASE16_THEME)
+        let base16colorspace=256
+        autocmd myPlugins User pluginSettingsToExec source ~/.vimrc_background
+        autocmd myPlugins User pluginSettingsToExec let colorSch=g:colors_name
+    endif
 endif
 " {]} ---------- Base16 ----------
 
@@ -178,12 +181,21 @@ endif
 
 " exec so variables are set at the right time (after plugin load).
 autocmd myPlugins User pluginSettingsToExec ++nested exec 'colorscheme ' . colorSch
-call add (g:customHLGroups, "MatchParen cterm=bold,underline ctermbg=lightgray")
-call add (g:customHLGroups, "MatchParen gui=bold,underline guibg=gray90")
-" call add (g:customHLGroups, "link MatchParen CursorColumn")
-" call add (g:customHLGroups, "clear SignColumn")
-call add (g:customHLGroups, "link SignColumn LineNr")
+" These are old fixes, so I think I probably just don't need them on nvim
+if !has('nvim')
+    call add (g:customHLGroups, "MatchParen cterm=bold,underline ctermbg=lightgray")
+    call add (g:customHLGroups, "MatchParen gui=bold,underline guibg=gray90")
+    " call add (g:customHLGroups, "link MatchParen CursorColumn")
+    " call add (g:customHLGroups, "clear SignColumn")
+    call add (g:customHLGroups, "link SignColumn LineNr")
+endif
 if has('nvim')
     " Group used by neovim for listchars
     call add (g:customHLGroups, "link Whitespace Comment")
 endif
+
+" Hide the built-in schemes
+set wildignore+=blue.vim,darkblue.vim,delek.vim,desert.vim,
+      \elflord.vim,evening.vim,industry.vim,koehler.vim,morning.vim,murphy.vim,
+      \pablo.vim,peachpuff.vim,ron.vim,shine.vim,slate.vim,torte.vim,zellner.vim
+
