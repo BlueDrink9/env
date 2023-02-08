@@ -48,10 +48,14 @@ let g:srcery_italic=1 " Default only 1 in gui
 Plug 'https://github.com/rakr/vim-two-firewatch'
 Plug 'https://github.com/rakr/vim-colors-rakr'
 if s:guiColours
-  Plug 'https://github.com/ayu-theme/ayu-vim'
-  " Apparently we can't have all versions. Daft.
-  " Dark version doesn't work easily with airline anyway.
-  let ayucolor="light"
+  if has('nvim')
+    Plug 'https://github.com/Shatur/neovim-ayu'
+  else
+    Plug 'https://github.com/ayu-theme/ayu-vim'
+    " Apparently we can't have all versions. Daft.
+    " Dark version doesn't work easily with airline anyway.
+    let ayucolor="light"
+  endif
 endif
 Plug 'liuchengxu/space-vim-dark'
 " High contrast themes.
