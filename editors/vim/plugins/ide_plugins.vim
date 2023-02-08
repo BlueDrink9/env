@@ -19,13 +19,6 @@ endif
 if has('nvim-0.7')
     Plug 'https://github.com/norcalli/nvim-colorizer.lua'
 endif
-" if has('nvim-0.8')
-"     " Replaces message display
-"     Plug 'https://github.com/folke/noice.nvim'
-"     Plug 'rcarriga/nvim-notify'
-"     Plug 'MunifTanjim/nui.nvim'
-" endif
-
 
 " Plug 'rhysd/vim-grammarous', { 'for': g:proseFileTypes }
 " Brilliant for projects with lots of similar files. Check out config
@@ -42,18 +35,9 @@ Plug 'https://github.com/wellle/tmux-complete.vim'
 Plug 'https://github.com/AndrewRadev/splitjoin.vim'
 
 if has("nvim")
-    Plug 'https://github.com/winston0410/range-highlight.nvim'
     Plug 'https://github.com/winston0410/cmd-parser.nvim'
 endif
 
-if v:version >= 703
-    " visually show indentation
-    if has("nvim")
-        Plug 'https://github.com/lukas-reineke/indent-blankline.nvim'
-    else
-        Plug 'https://github.com/Yggdroot/indentLine'
-    endif
-endif
 if exists("v:completed_item")
     " Shows function args from completion in cmd line.
     Plug 'Shougo/echodoc.vim'
@@ -63,19 +47,15 @@ endif
 " Plug 'https://github.com/tpope/vim-endwise'
 " ga on char shows all representations, not just dec oct hex.
 Plug 'https://github.com/tpope/vim-characterize'
-" Needs manual activation. :RainbowParen, :RainbowParen!
-Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
 " {]} ---------- Misc ----------
 
-"{[} Searching and code info
-if IsPluginUsed("telescope.nvim")
-    Plug 'fcying/telescope-ctags-outline.nvim'
-    Plug 'cljoly/telescope-repo.nvim'
-endif
-
-" Display the indentation context in a window above the code you are
-" looking at (helps understand where you are in a long func/class).
-Plug 'wellle/context.vim'
+" {[} ---------- Visual ----------
+" if has('nvim-0.8')
+"     " Replaces message display
+"     Plug 'https://github.com/folke/noice.nvim'
+"     Plug 'rcarriga/nvim-notify'
+"     Plug 'MunifTanjim/nui.nvim'
+" endif
 
 " Call WhichKey to see mappings starting with a thing.
 if has('nvim-0.5')
@@ -94,6 +74,39 @@ if has('nvim-0.5')
     Plug 'sudormrfbin/cheatsheet.nvim', {'on': 'Cheatsheet'}
     Plug 'nvim-lua/popup.nvim'
 endif
+
+if v:version >= 703
+    " visually show indentation
+    if has("nvim")
+        Plug 'https://github.com/lukas-reineke/indent-blankline.nvim'
+    else
+        Plug 'https://github.com/Yggdroot/indentLine'
+    endif
+endif
+
+if has("patch-8.1-1880") && has('nvim')
+    " Gives behaviour like completeopt=popup for neovim.
+    Plug 'https://github.com/ncm2/float-preview.nvim'
+endif
+
+if has("nvim")
+    Plug 'https://github.com/winston0410/range-highlight.nvim'
+endif
+" Needs manual activation. :RainbowParen, :RainbowParen!
+Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
+
+" {]} ---------- Visual ----------
+
+"{[} Searching and code info
+if IsPluginUsed("telescope.nvim")
+    Plug 'fcying/telescope-ctags-outline.nvim'
+    Plug 'cljoly/telescope-repo.nvim'
+endif
+
+" Display the indentation context in a window above the code you are
+" looking at (helps understand where you are in a long func/class).
+Plug 'wellle/context.vim'
+
 "{]} Searching and code info
 
 " {[} ---------- LSP ----------
@@ -284,11 +297,6 @@ Plug 'janko-m/vim-test'
 " do that part of the file!
 " Doesn't state any requirements in readme...
 Plug 'https://github.com/sbdchd/neoformat'
-
-if has("patch-8.1-1880") && has('nvim')
-    " Gives behaviour like completeopt=popup for neovim.
-    Plug 'https://github.com/ncm2/float-preview.nvim'
-endif
 
 if has('nvim-0.7')
 lua << EOF

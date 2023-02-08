@@ -25,10 +25,6 @@ lua << EOF
 EOF
 endif
 
-if IsPluginUsed('range-highlight.nvim')
-    lua require'range-highlight'.setup{}
-endif
-
 if IsPluginUsed('nvim-colorizer.lua')
     lua require'colorizer'.setup()
 endif
@@ -40,6 +36,9 @@ require'notify'.setup({
 })
 EOF
 endif
+" {]} ---------- Misc ----------
+
+" {[} ---------- Visual ----------
 if IsPluginUsed('noice.nvim')
 lua << EOF
    require'noice'.setup({
@@ -84,6 +83,7 @@ endif
 if IsPluginUsed('vim-peekaboo')
     let g:peekaboo_delay = 200  " ms
 endif
+
 if IsPluginUsed('context.vim')
     let g:context_filetype_blacklist = []
     let g:context_add_autocmds = 1
@@ -158,7 +158,17 @@ elseif IsPluginUsed('vim-which-key')
     nnoremap <leader> <cmd>WhichKey '<leader>'<CR>
     vnoremap <leader> <cmd>WhichKeyVisual '<leader>'<CR>
 endif
-" {]} ---------- Misc ----------
+
+if IsPluginUsed('range-highlight.nvim')
+    lua require'range-highlight'.setup{}
+endif
+
+if IsPluginUsed('float-preview.nvim')
+    let g:float_preview#docked = 0
+endif
+
+" {]} ---------- Visual ----------
+
 
 " {[} ---------- LSP ----------
 " These would be unloaded for CoC.nvim, which does completion and LSP
@@ -469,10 +479,6 @@ endif
 
 if IsPluginUsed('neoformat')
     nnoremap g= <cmd>Neoformat<CR>
-endif
-
-if IsPluginUsed('float-preview.nvim')
-    let g:float_preview#docked = 0
 endif
 
 if IsPluginUsed('nvim-treesitter')
