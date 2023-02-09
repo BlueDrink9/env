@@ -85,6 +85,8 @@ nnoremap <leader>cd <cmd>lcd %:p:h<CR>:pwd<CR>
 " Quickly re-run last macro with one key (also stop accidentally entering Ex).
 " Redundant in neovim
 nnoremap Q @@
+" Run last macro on selected lines
+vnoremap g@ :norm! @@<CR>
 " Used as a weird undo. Good candidate for remapping.
 " nnoremap U <c-r>
 " Include flags when redoing last :s command with &. Nvim default.
