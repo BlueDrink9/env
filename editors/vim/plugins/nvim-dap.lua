@@ -29,6 +29,7 @@ local dap_nbufmaps = {
    [maps.debugInspect] = 'repl.toggle()',
    [maps.debugFrameUp] = 'up()',
    [maps.debugFrameDown] = 'down()',
+   [maps.debugShowStoppedLine] = 'focus_frame()',
    [maps.setBreakpoint] = 'toggle_breakpoint()',
    [maps.setBreakpointConditional] = "set_breakpoint(vim.fn.input('Breakpoint condition: '))",
    [maps.breakpointList] = 'list_breakpoints()',
@@ -64,6 +65,8 @@ mason_dap.setup({
 
 -- Ensures mappings are only set for filetypes with installed DAPs
 local set_up_buffer = function()
+   -- When jumping to a fileline from current tab, don't change tabs.
+   vim.opt_local.switchbuf="useopen,uselast"
    vim.cmd[[command! -buffer Debug lua require("dapui").toggle()]]
    --
    -- Mappings.

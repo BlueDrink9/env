@@ -277,6 +277,8 @@ if exists("g:ideMode") && g:ideMode == 1
 else
     set complete-=i     " Searching includes can be slow
 endif
+" When jumping to a fileline from current tab, don't change tabs.
+set switchbuf=useopen,uselast
 " Lower priority file suffixes in completion menus.
 set suffixes+=.tmp,tags
 set display=lastline
