@@ -6,8 +6,13 @@
 
 $scriptdir = $PSScriptRoot
 $DOTFILES_DIR = "$(resolve-path "$PSScriptRoot\..\..")"
-# Oh how good!
-$env:VISUAL='nvim'
+if (Get-Command "nvim" -ErrorAction SilentlyContinue) {
+    $env:VISUAL='nvim'
+} elseif (Get-Command "gvim" -ErrorAction SilentlyContinue) {
+    $env:VISUAL='gvim'
+} elseif (Get-Command "vim" -ErrorAction SilentlyContinue) {
+    $env:VISUAL='vim'
+}
 
 set-location $home
 
