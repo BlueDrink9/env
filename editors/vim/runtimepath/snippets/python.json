@@ -46,7 +46,11 @@
   , "pytest parametrize": {
     "prefix": ["param"],
     "body": [
-      "@pytest.mark.parametrize"
+      "@pytest.mark.parametrize('case, expected, reason', [",
+      "('',",
+      "'',",
+      "''),",
+      "])"
     ]
   }
 }
