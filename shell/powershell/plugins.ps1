@@ -12,7 +12,9 @@ Plugin PSReadline  # Included by default after v3.
 Plugin TabExpansionPlusPlus  # A little heavy.
 # Plugin PSUtil  # Hurts startup time a lot
 # Command-line intellisense based on PowerShell auto-completion
-Plugin CompletionPredictor
+if ($PSVersionTable.PSVersion -gt "7.0.0"){
+    Plugin CompletionPredictor
+}
 
 # Coloured LS output
 Plugin Get-ChildItemColor
@@ -24,4 +26,3 @@ If (-Not (Test-Path Variable:PSise)) {  # Only run this in the console and not i
 
 # Git autocomplete
 Plugin posh-git
-
