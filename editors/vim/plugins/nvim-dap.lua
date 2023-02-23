@@ -1,7 +1,6 @@
 require("mason").setup()
 local dap = require("dap")
 local mason_dap = require("mason-nvim-dap")
-mason_dap.setup()
 local dapui = require("dapui")
 
 require("nvim-dap-virtual-text").setup {
@@ -58,10 +57,11 @@ map_table_prefixes = {
 }
 
 
-
 mason_dap.setup({
       -- ensure_installed = {'stylua', 'jq'}
-   })
+      automatic_setup = true,
+    })
+
 
 -- Ensures mappings are only set for filetypes with installed DAPs
 local set_up_buffer = function()
