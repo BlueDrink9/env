@@ -439,12 +439,12 @@ if IsPluginUsed('gv.vim')
 endif
 
 if IsPluginUsed('gitsigns.nvim')
-nnoremap <leader>gs <cmd>GitSigns stage_hunk<cr>
-nnoremap <leader>gu <cmd>GitSigns undo_stage_hunk<cr>
-nnoremap <leader>g_ <cmd>GitSigns reset_hunk<cr>
-nnoremap <leader>gR <cmd>GitSigns reset_hunk<cr>
-nnoremap ]h <cmd>GitSigns next_hunk<cr>
-nnoremap [h <cmd>GitSigns prev_hunk<cr>
+nnoremap <leader>gs <cmd>Gitsigns stage_hunk<cr>
+nnoremap <leader>gu <cmd>Gitsigns undo_stage_hunk<cr>
+nnoremap <leader>g_ <cmd>Gitsigns reset_hunk<cr>
+nnoremap <leader>gR <cmd>Gitsigns reset_hunk<cr>
+nnoremap ]h <cmd>Gitsigns next_hunk<cr>
+nnoremap [h <cmd>Gitsigns prev_hunk<cr>
 lua << EOF
 require('gitsigns').setup({
     signs = {
