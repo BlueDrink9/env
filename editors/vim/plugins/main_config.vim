@@ -169,7 +169,7 @@ endif
 
 if IsPluginUsed('bufexplorer')
   let g:bufExplorerDisableDefaultKeyMapping=1
-  command! Buffers BufExplorer
+  command! Bufs BufExplorer
 endif
 " {]} ---------- Misc----------
 
