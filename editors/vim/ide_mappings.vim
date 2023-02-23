@@ -73,6 +73,7 @@ let g:IDE_mappings = {
             \ 'debugInspect' : '<leader>di',
             \ 'debugFrameUp' : '<leader>dk',
             \ 'debugFrameDown' : '<leader>dj',
+            \ 'debugShowStoppedLine' : '<leader>dH',
             \ 'setBreakpoint' : '<leader>b',
             \ 'setBreakpointConditional' : '<leader>dbc',
             \ 'addBreakpointFunctional' : '<leader>dbf',

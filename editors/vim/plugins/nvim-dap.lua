@@ -65,7 +65,8 @@ mason_dap.setup({
 
 -- Ensures mappings are only set for filetypes with installed DAPs
 local set_up_buffer = function()
-   -- When jumping to a fileline from current tab, don't change tabs.
+   -- When jumping to a fileline from current tab, don't change tabs if you
+   -- dont' have to.
    vim.opt_local.switchbuf="useopen,uselast"
    vim.cmd[[command! -buffer Debug lua require("dapui").toggle()]]
    --
