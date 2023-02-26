@@ -80,6 +80,7 @@ alias rg="rg --smart-case"
 editor="myVim"
 # Much faster startup for vim without plugins, or ide if I need it.
 IDEVim='myVim --cmd "let g:ideMode=1"'
+liteVim='myVim --cmd "let g:liteMode=1"'
 alias vi="liteVim"
 # liteVim and nopluginVim have been moved to dedicated scripts, for
 # discoverability outside shell.
@@ -109,7 +110,7 @@ alias :q="exit"
 alias :e="myVim"
 alias e="$editor"
 alias ide="$IDEVim"
-alias le="$iteVim"
+alias le="$liteVim"
 alias lle="nopluginVim"
 # For when the system is super super slow.
 alias llle="myVim -u NONE -c 'set nocp | inore vk <esc> | inore kv <esc> | nnoremap ; :'"
