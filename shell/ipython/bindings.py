@@ -28,14 +28,7 @@ if registry:
                          filter=(HasFocus(DEFAULT_BUFFER)
                                  & ViInsertMode()))(switch_to_navigation_mode)
 
-    # c.TerminalInteractiveShell.shortcuts.extend([
-        
-    # ])
-
     registry.add_binding('g', Keys.ControlV,
                          filter=(HasFocus(DEFAULT_BUFFER)
                                  & ViNavigationMode()))(
                                      shortcuts.open_input_in_editor)
-
-
-

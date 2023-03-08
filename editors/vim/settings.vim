@@ -116,12 +116,13 @@ function! SetUpGUI()
     if g:ideMode
         set guioptions+=iagmrLtT
         " Full-screen gvim window
-        set lines=999 columns=999
+        " set lines=999 columns=999
     else
         " Remove menus to speed up startup
         set guioptions-=m
         set guioptions-=t
-        set guioptions-=T
+        " https://github.com/vim/vim/issues/5246
+        au myVimrc VimEnter * :set guioptions-=T
         set guioptions+=M
         " Larger gvim window
         set lines=40 columns=120

@@ -1,15 +1,17 @@
 import os
 from pathlib import Path
-import sys
+from sys import stdout
 from operator import attrgetter
 from prompt_toolkit.key_binding.vi_state import InputMode, ViState
+from shutil import which
 
+c.BaseIPythonApplication.extra_config_file = ""
 
 
 scriptdir = Path(__file__).parent
 
 config_files = [
-    "ipython_bindings.py",
+    "bindings.py",
 ]
 c.InteractiveShellApp.exec_files = [str(scriptdir / f) for f in config_files]
 
@@ -36,10 +38,9 @@ c.TerminalInteractiveShell.space_for_menu = 6
 
 c.TerminalInteractiveShell.wildcards_case_sensitive = False
 
-from shutil import which
 for editor in ["myVim", "nvim", "vim"]:
     if which(editor):
-        c.TerminalInteractiveShell.editor = 'editor --cmd="let g:liteMode=1"'
+        c.TerminalInteractiveShell.editor = f'{editor} --cmd "let g:liteMode=1"'
 
 
 ## Use 24bit colors instead of 256 colors in prompt highlighting.
@@ -57,12 +58,12 @@ c.TerminalInteractiveShell.prompt_includes_vi_mode = True
 def set_input_mode(self, mode):
     shape = {InputMode.NAVIGATION: 1, InputMode.REPLACE: 3}.get(mode, 5)
     raw = f'\x1b[{shape} q'
-    if hasattr(sys.stdout, '_cli'):
-        out = sys.stdout._cli.output.write_raw
+    if hasattr(stdout, '_cli'):
+        out = stdout._cli.output.write_raw
     else:
-        out = sys.stdout.write
+        out = stdout.write
     out(raw)
-    sys.stdout.flush()
+    stdout.flush()
     self._input_mode = mode
 
 ViState._input_mode = InputMode.INSERT
