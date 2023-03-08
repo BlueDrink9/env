@@ -1,5 +1,10 @@
 import os
 from pathlib import Path
+import sys
+from operator import attrgetter
+from prompt_toolkit.key_binding.vi_state import InputMode, ViState
+
+
 
 scriptdir = Path(__file__).parent
 
@@ -27,30 +32,31 @@ c.InteractiveShell.automagic = True
 #  Choices: any of ['column', 'multicolumn', 'readlinelike']
 #  Default: 'multicolumn'
 c.TerminalInteractiveShell.display_completions = 'multicolumn'
+c.TerminalInteractiveShell.space_for_menu = 6
+
+c.TerminalInteractiveShell.wildcards_case_sensitive = False
 
 from shutil import which
 for editor in ["myVim", "nvim", "vim"]:
     if which(editor):
         c.TerminalInteractiveShell.editor = 'editor --cmd="let g:liteMode=1"'
-## Display the current vi mode (when using vi editing mode).
-c.TerminalInteractiveShell.prompt_includes_vi_mode = True
+
 
 ## Use 24bit colors instead of 256 colors in prompt highlighting.
 if os.getenv("COLORTERM"):
     c.TerminalInteractiveShell.true_color = True
 
 
-import sys
-from operator import attrgetter
-from prompt_toolkit.key_binding.vi_state import InputMode, ViState
-import prompt_toolkit.key_binding.defaults as pt_defaults
-from prompt_toolkit.filters.cli import ViInsertMode
-from prompt_toolkit.keys import Keys
+if hasattr(c.TerminalInteractiveShell, "timeoutlen"):
+    c.TerminalInteractiveShell.timeoutlen = 0.3
+
+c.TerminalInteractiveShell.prompt_includes_vi_mode = True
+
 
 # Change cursor for different vi modes.
 def set_input_mode(self, mode):
     shape = {InputMode.NAVIGATION: 1, InputMode.REPLACE: 3}.get(mode, 5)
-    raw = u'\x1b[{} q'.format(shape)
+    raw = f'\x1b[{shape} q'
     if hasattr(sys.stdout, '_cli'):
         out = sys.stdout._cli.output.write_raw
     else:
@@ -63,4 +69,8 @@ ViState._input_mode = InputMode.INSERT
 ViState.input_mode = property(attrgetter('_input_mode'), set_input_mode)
 
 
+
 c.TerminalInteractiveShell.editing_mode = 'vi'
+if hasattr(c.TerminalInteractiveShell, "emacs_bindings_in_vi_insert_mode"):
+    c.TerminalInteractiveShell.emacs_bindings_in_vi_insert_mode = False
+c.TerminalInteractiveShell.mouse_support = True
