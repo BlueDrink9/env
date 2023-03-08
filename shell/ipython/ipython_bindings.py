@@ -9,11 +9,13 @@ def switch_to_navigation_mode(event):
    vi_state = event.cli.vi_state
    vi_state.input_mode = InputMode.NAVIGATION
 
+
+# Register the shortcut if IPython is using prompt_toolkit
 if getattr(ip, 'pt_app', None):
-   registry = ip.pt_app.key_bindings
-   registry.add_binding(u'k',u'v',
-                        filter=(HasFocus(DEFAULT_BUFFER)
+    registry = ip.pt_app.key_bindings
+    registry.add_binding('k', 'v',
+                         filter=(HasFocus(DEFAULT_BUFFER)
                                  & ViInsertMode()))(switch_to_navigation_mode)
-   registry.add_binding(u'v',u'k',
-                        filter=(HasFocus(DEFAULT_BUFFER)
+    registry.add_binding('v', 'k',
+                         filter=(HasFocus(DEFAULT_BUFFER)
                                  & ViInsertMode()))(switch_to_navigation_mode)

@@ -1,27 +1,37 @@
 import os
-import pathlib
+from pathlib import Path
 
-# Bindings has to be a startup file, not a config file.
-c.InteractiveShellApp.exec_files = [
-        str(pathlib.Path(__file__).parent.absolute() / "ipython_bindings.py"),
-        ]
+scriptdir = Path(__file__).parent
+
+config_files = [
+    "ipython_bindings.py",
+]
+c.InteractiveShellApp.exec_files = [str(scriptdir / f) for f in config_files]
+
+
+c.AliasManager.user_aliases = [
+ ('la', 'ls -al')
+]
 
 ## Autoindent IPython code entered interactively.
 #  Default: True
-# c.InteractiveShell.autoindent = True
+c.InteractiveShell.autoindent = True
 
 ## Enable magic commands to be called without the leading %.
 #  Default: True
-# c.InteractiveShell.automagic = True
+c.InteractiveShell.automagic = True
 
 ## Options for displaying tab completions, 'column', 'multicolumn', and
 #  'readlinelike'. These options are for `prompt_toolkit`, see `prompt_toolkit`
 #  documentation for more information.
 #  Choices: any of ['column', 'multicolumn', 'readlinelike']
 #  Default: 'multicolumn'
-# c.TerminalInteractiveShell.display_completions = 'multicolumn'
+c.TerminalInteractiveShell.display_completions = 'multicolumn'
 
-c.TerminalInteractiveShell.editor = 'myVim'
+from shutil import which
+for editor in ["myVim", "nvim", "vim"]:
+    if which(editor):
+        c.TerminalInteractiveShell.editor = 'editor --cmd="let g:liteMode=1"'
 ## Display the current vi mode (when using vi editing mode).
 c.TerminalInteractiveShell.prompt_includes_vi_mode = True
 
