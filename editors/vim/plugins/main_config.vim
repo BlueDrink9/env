@@ -254,6 +254,8 @@ if IsPluginUsed('leap.nvim')
     --     {desc='leap to ast element'})
     -- end
 EOF
+elseif IsPluginUsed('vim-sneak')
+  let g:sneak#label = 1
 elseif IsPluginUsed('hop.nvim')
     lua require'hop'.setup({ keys = 'arstdhneofplucmkv'})
     lua << EOF
@@ -739,6 +741,20 @@ if IsPluginUsed("nerdtree.git")
         let g:NERDTreeDisableExactMatchHighlight = 1
         let g:NERDTreeDisablePatternMatchHighlight = 1
     endif
+if IsPluginUsed("vim-dirvish")
+  let g:loaded_netrwPlugin = 1
+  let g:loaded_netrw = 1
+
+  function! s:hijack_directory(explorer) abort
+    let path = PathExpand('%:p')
+    if !isdirectory(path)
+      return
+    endif
+    let bufnr = bufnr()
+    execute printf('keepjumps keepalt %s %s', a:explorer, fnameescape(path))
+    execute printf('silent! bwipeout %d', bufnr)
+  endfunction
+  autocmd myPlugins BufEnter * ++nested call s:hijack_directory("Dirvish")
 endif
 " {]} ---------- NerdTree ----------
 

@@ -227,7 +227,8 @@ if has('nvim-0.5')
     Plug 'https://github.com/ggandor/leap-spooky.nvim'
     Plug 'https://github.com/ggandor/leap-ast.nvim'
 else
-    Plug 'https://github.com/easymotion/vim-easymotion'
+    Plug 'https://github.com/justinmk/vim-sneak'
+    " Plug 'https://github.com/easymotion/vim-easymotion'
 endif
 Plug 'bkad/camelcasemotion'
 " {]} ---------- Operators ----------
@@ -415,6 +416,15 @@ endif
 " Downside is that netrw will be used instead when opening directories before NT opened for the first time.
 Plug 'https://github.com/scrooloose/nerdtree.git', {'on': ['NERDTree', 'NERDTreeToggle',]}
 Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
+" on windows, gvim is super slow with dirvish
+if !has('nvim') && !has('win32')
+    Plug 'https://github.com/justinmk/vim-dirvish'
+    Plug 'roginfarrer/vim-dirvish-dovish', {'branch': 'main'}
+    Plug 'https://github.com/bounceme/remote-viewer'
+    if executable('git')
+        Plug 'https://github.com/kristijanhusak/vim-dirvish-git'
+    endif
+endif
 " {]} ---------- NerdTree ----------
 
 " {[} Neovim UIs/integrations
