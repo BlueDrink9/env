@@ -417,7 +417,7 @@ endif
 Plug 'https://github.com/scrooloose/nerdtree.git', {'on': ['NERDTree', 'NERDTreeToggle',]}
 Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
 " on windows, gvim is super slow with dirvish
-if !has('nvim') && !has('win32')
+if has('nvim') || !has('win32')
     Plug 'https://github.com/justinmk/vim-dirvish'
     Plug 'roginfarrer/vim-dirvish-dovish', {'branch': 'main'}
     Plug 'https://github.com/bounceme/remote-viewer'

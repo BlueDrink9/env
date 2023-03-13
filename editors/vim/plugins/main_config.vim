@@ -683,13 +683,13 @@ lua << EOF
         opts.shell = "powershell.exe"
     end
     require("toggleterm").setup(opts)
--- :ToggleTermSendVisualSelection 
+-- :ToggleTermSendVisualSelection
 EOF
 endif
 
 if IsPluginUsed("vim-terminal-help")
     " which key will be used to toggle terminal window, default to <m-=>.
-    " Will be mapped while using term, so choose carefully. 
+    " Will be mapped while using term, so choose carefully.
     let g:terminal_key="<c-S>"
     " initialize working dir: 0 for unchanged, 1 for file path and 2 for project root.
     let g:terminal_cwd=1
@@ -741,6 +741,7 @@ if IsPluginUsed("nerdtree.git")
         let g:NERDTreeDisableExactMatchHighlight = 1
         let g:NERDTreeDisablePatternMatchHighlight = 1
     endif
+  endif
 if IsPluginUsed("vim-dirvish")
   let g:loaded_netrwPlugin = 1
   let g:loaded_netrw = 1
