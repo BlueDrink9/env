@@ -169,7 +169,10 @@ if IsPluginUsed("vim-better-whitespace")
     let g:better_whitespace_filetypes_blacklist=['diff', 'gitcommit', 'unite', 'qf', 'help', 'far']
     let g:strip_whitespace_confirm=0
     let g:show_spaces_that_precede_tabs=1
-    let g:strip_whitespace_on_save = 1
+    " uses vimrun.exe, which is slow
+    if has('nvim') || !has('win32')
+       let g:strip_whitespace_on_save = 1
+    endif
     let g:strip_only_modified_lines=1
     let g:better_whitespace_skip_empty_lines=0
     " Don't HL current line. May cause performance issues.
