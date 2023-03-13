@@ -2,26 +2,34 @@
 " (unix) or to system (windows)
 " If we are (probably) using a powerline compatible font, set it so.
 " If a nerd font is found, assume powerline-compat, as well as devicons.
-" Allow overriding this, either by directly setting g:usePLFont=0 in local
+" Allow overriding this, either by setting g:forceUsePLFont=0 in local
 " vimrc or by setting $USENF in terminal ($USENF takes priority).
 
 " Env variables, can be set by ssh client on login if it supports PL.
 " Use string comparisons because still works, but ==0 also is true if it
 " doesn't exist (which is pointless if I want to override).
-if $USENF=='1'
-    let g:usePLFont = 1
-    let g:useNerdFont = 1
-    finish
-elseif $USEPF=='0'
-    let g:usePLFont = 0
-    let g:useNerdFont = 0
-    finish
-elseif exists('g:useNerdFont') and g:useNerdFont == 1
-    let g:usePLFont = 1
-    finish
-elseif exists('g:usePLFont') and g:usePLFont == 0
-    let g:useNerdFont = 0
-    finish
+if exists('$USENF')
+    let g:forceUseNerdFont = $USENF
+endif
+if exists('$USEPF')
+    let g:forceUsePLFont = $USEPF
+endif
+if exists('g:forceUseNerdFont')
+   if g:forceUseNerdFont == 1
+        let g:usePLFont = 1
+        let g:useNerdFont = 1
+        finish
+    else
+        " Make no assumptions about whether we want to use PL
+        " Set at end of file, after PL is set (so we can override NF)
+    endif
+endif
+if exists('g:forceUsePLFont')
+   if g:forceUsePLFont == 0
+        let g:usePLFont = 0
+        let g:useNerdFont = 0
+        finish
+    endif
 endif
 
 if g:hasGUI
@@ -93,8 +101,14 @@ if exists('g:usePLFont')
     let g:usePLFont = (exists('g:useNerdFont') && g:useNerdFont) || g:usePLFont
 endif
 
-if $USEPF=='1'
-    let g:usePLFont = 1
-elseif $USENF=='0'
-    let g:useNerdFont = 0
+if exists('g:forceUseNerdFont')
+    if g:forceUseNerdFont == 0
+        let g:useNerdFont = 0
+    endif
+endif
+if exists('g:forceUsePLFont')
+    " Don't make any assumptions about whether we also want to use NF
+    if g:forceUsePLFont == 1
+        let g:usePLFont = 1
+    endif
 endif
