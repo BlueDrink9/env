@@ -336,19 +336,14 @@ function! s:remapCtrlBStoCW()
         elseif $TERM_PROGRAM ==? "mintty"
             inoremap <C-_> <C-w>
             cnoremap <C-_> <C-w>
-        elseif has('nvim') && $TERM ==? "vtpcon"
+        elseif has('nvim') && ($TERM ==? "vtpcon" || $TERM ==? "cygwin")
             " Windows terminal console vim gets ^H for ctrl backspace.
             " Nvim sets term in this case, normal vim doesn't.
             inoremap <c-h> <C-w>
             cnoremap <c-h> <C-w>
-        elseif has('nvim') && $TERM ==? "cygwin"
-            " This seems to be the case with Windows Terminal and git commits.
-            inoremap <BS> <C-w>
-            cnoremap <BS> <C-w>
-            inoremap <c-h> <bs>
-            cnoremap <c-h> <bs>
         elseif has('win32') && $TERM ==? ""
             " Normal vim in windows console.
+            " Doesn't work if using windows terminal
             " Wow. It sees the control key plus literal <c-?>.
             inoremap <c-> <C-w>
             cnoremap <c-> <C-w>
