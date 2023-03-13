@@ -11,14 +11,20 @@
 if $USENF=='1'
     let g:usePLFont = 1
     let g:useNerdFont = 1
-elseif $USEPF=='1'
-    let g:usePLFont = 1
+    finish
 elseif $USEPF=='0'
     let g:usePLFont = 0
     let g:useNerdFont = 0
-elseif $USENF=='0'
+    finish
+elseif exists('g:useNerdFont') and g:useNerdFont == 1
+    let g:usePLFont = 1
+    finish
+elseif exists('g:usePLFont') and g:usePLFont == 0
     let g:useNerdFont = 0
-elseif g:hasGUI
+    finish
+endif
+
+if g:hasGUI
     let s:guiUsesNerdFont =
                 \ &guifont =~? "Nerd" ||
                 \ &guifont =~? "NF" ||
@@ -32,8 +38,6 @@ elseif g:hasGUI
     let g:usePLFont = s:guiUsesPLFont
     let g:useNerdFont = s:guiUsesNerdFont
 else
-    finish
-
     if has("unix")
         let s:uname = system("uname")
         if s:uname =~ "Darwin"
@@ -87,4 +91,10 @@ endif
 
 if exists('g:usePLFont')
     let g:usePLFont = (exists('g:useNerdFont') && g:useNerdFont) || g:usePLFont
+endif
+
+if $USEPF=='1'
+    let g:usePLFont = 1
+elseif $USENF=='0'
+    let g:useNerdFont = 0
 endif
