@@ -141,9 +141,9 @@ endif
 " if v:version >= 800
 if has('nvim-0.5')
     " Haven't configured yet.
-    Plug 'https://github.com/mfussenegger/nvim-lint'
+    " Plug 'https://github.com/mfussenegger/nvim-lint'
     " Integrates linters with Nvim lsp
-    Plug 'https://github.com/jose-elias-alvarez/null-ls.nvim'
+    " Plug 'https://github.com/jose-elias-alvarez/null-ls.nvim'
     Plug 'https://github.com/jayp0521/mason-null-ls.nvim'
 elseif has("timers")
     " Async linting
