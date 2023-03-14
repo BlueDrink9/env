@@ -14,6 +14,11 @@ if (Get-Command "nvim" -ErrorAction SilentlyContinue) {
     $env:VISUAL='vim'
 }
 
+if  ($env:WT_SESSION){
+    $env:COLORTERM='truecolor'
+    $env:USENF='1'
+}
+
 set-location $home
 
 . $scriptdir/settings.ps1
