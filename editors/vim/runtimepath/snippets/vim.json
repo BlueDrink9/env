@@ -1,0 +1,11 @@
+{
+  "has nvim": {
+    "prefix": ["nvim"],
+    "body": [
+      "if has('nvim')"
+      , "    $0"
+      , "endif"
+    ],
+    "description": "if has('nvim')"
+  }
+}
