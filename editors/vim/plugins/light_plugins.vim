@@ -37,8 +37,6 @@ Plug 'https://github.com/EinfachToll/DidYouMean'
 " Close buffers without changing window
 Plug 'https://github.com/moll/vim-bbye', {'on': 'Bdelete'}
 cabbrev bd Bdelete
-
-Plug 'https://github.com/chrisbra/csv.vim', {'for': 'csv'}
 " {]} Misc
 
 " {[}--- Yanks ---

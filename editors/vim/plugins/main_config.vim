@@ -388,7 +388,7 @@ if IsPluginUsed("vim-dispatch")
 endif
 "{]}
 
-" {[} ---------- Basic extra filetype support ----------
+" {[} ---------- extra filetype support ----------
 if IsPluginUsed("graphviz.vim")
     " Autocompile dotfile on write if fewer than 50 lines.
     autocmd myPlugins bufwritepost *.dot if line("$") < 50 | GraphvizCompile | endif
@@ -401,7 +401,31 @@ if IsPluginUsed("vim-openscad")
     let g:openscad_default_mappings = false
 endif
 
-" {]} ---------- Basic extra filetype support ----------
+if IsPluginUsed("csv.vim")
+    " Set to 0 to skip autoformatting of CSVs.
+    let g:csv_autocmd_arrange	   = 1
+    " limit to only apply for files under 1 MB
+    let g:csv_autocmd_arrange_size = 1024*1024
+    " let g:csv_highlight_column = 'y' " Current cursor's column.
+    " hi CSVColumnEven term=bold ctermbg=Gray guibg=LightGray
+    " TODO link to something so this doesn't look awful outside solarized light.
+    call add (g:customHLGroups, "CSVColumnEven guibg=gray90 ctermbg=lightgray")
+    " TODO Check if csv column highlight should be a highlight update or a
+    " pluginSettings update.
+    highlight clear CSVColumnOdd
+    if IsPluginUsed("nvim-preview-csv")
+        " Want to keep just in case we want the movement as well as the view
+        let g:csv_autocmd_arrange	   = 0
+        lua << EOF
+        require('nvim-preview-csv').setup {
+            max_csv_line = 100
+        }
+
+EOF
+    endif
+endif
+
+" {]} ---------- extra filetype support ----------
 
 " {[} ---------- Git ----------
 if IsPluginUsed("vim-fugitive")

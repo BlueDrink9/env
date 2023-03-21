@@ -300,7 +300,7 @@ Plug 'https://github.com/radenling/vim-dispatch-neovim'
 " command! -bang -nargs=* -complete=file Make Neomake! <args>
 "{]}
 
-" {[} ---------- Basic extra filetype support ----------
+" {[} ---------- extra filetype support ----------
 Plug 'kovetskiy/sxhkd-vim', {'for': 'sxhkdrc' }
 " Adds syntax highlighting.
 Plug 'vim-scripts/autohotkey-ahk', {'for': 'autohotkey'}
@@ -317,7 +317,14 @@ if has("nvim")
 else
     Plug 'https://github.com/jceb/vim-orgmode', {'for': 'org'}
 endif
-" {]} ---------- Basic extra filetype support ----------
+
+if has('nvim')
+    Plug 'https://github.com/Nguyen-Hoang-Nam/nvim-preview-csv'
+endif
+Plug 'https://github.com/chrisbra/csv.vim', {'for': 'csv'}
+
+
+" {]} ---------- extra filetype support ----------
 
 " {[} ---------- Git ----------
 if executable("git")
