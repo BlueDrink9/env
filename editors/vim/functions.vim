@@ -340,7 +340,7 @@ endfunction
 autocmd myVimrc FileType tex call AutoSpellGoodWords('%  LocalWords:')
 
 function! s:toggleSystemClipboard()
-  let l:clipboard="unnamedplus"
+  let l:clipboard="unnamed"
   if !exists("s:savedClipboardSetting")
     let s:savedClipboardSetting = &clipboard
   endif
