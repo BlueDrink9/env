@@ -155,10 +155,8 @@ alias pack\?="pack info"
 alias lpssh="lastpass_ssh_key_add"
 alias mosh="mosh_with_options"
 alias ssh="ssh_with_options"
-if command -v batgrep >/dev/null 2>&1; then
-  # rg + bat.
-  alias bg="batgrep"
-fi
+# rg + bat.
+alias bg="batgrep"
 
 if command -v thefuck >/dev/null 2>&1; then
   eval $(thefuck --alias)
@@ -172,4 +170,5 @@ alias pip='python -m pip'
 alias venv='python -m venv'
 alias venvc='python -m venv venv'
 alias venva='. venv/Scripts/activate'
+alias pym='python -m'
 alias plasma_reload='qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.refreshCurrentShell'
