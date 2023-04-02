@@ -409,6 +409,7 @@ set shortmess=a
 " https://en.wikipedia.org/wiki/Box-drawing_character#DOS
 " set fillchars+="vert:│,stlnc:─"
 set fillchars+="vert:║,stlnc:═,stl:\ ,"
+set lazyredraw
 
 function! MinimumUI()
   set laststatus=0
