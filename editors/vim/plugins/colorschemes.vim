@@ -36,7 +36,11 @@ let g:PaperColor_Theme_Options = {
 " \         'SpellBad' : ['underline', 'underline'],
 " \         'SpellCap' : ['underline', 'underline']
 " \       }
-Plug 'https://github.com/morhetz/gruvbox'
+if has('nvim')
+  Plug 'https://github.com/ellisonleao/gruvbox.nvim'
+else
+  Plug 'https://github.com/morhetz/gruvbox'
+endif
 Plug 'https://github.com/jnurmine/Zenburn'
 " CursorColumn a stronger option
 " au myPlugins colorscheme zenburn hi! link StatusLineNC ColorColumn | hi! link StatusLine ColorColumn
