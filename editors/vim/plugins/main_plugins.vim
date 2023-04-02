@@ -202,7 +202,6 @@ Plug 'https://github.com/reedes/vim-textobj-sentence', { 'for': g:proseFileTypes
 Plug 'rhysd/vim-textobj-continuous-line'
 " iz az
 Plug 'somini/vim-textobj-fold'
-Plug 'lucapette/vim-textobj-underscore'
 if v:version >= 703
     " ac, ic, aC
     Plug 'https://github.com/glts/vim-textobj-comment'
