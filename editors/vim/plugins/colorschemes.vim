@@ -141,11 +141,18 @@ elseif exists("g:gui_oni")
         " Comes with oni, includes theme.
         let colorSch = "solarized8"
     endif
+elseif &termguicolors == 1
+    Plug 'https://github.com/lifepillar/vim-solarized8'
+    if colorSch =~ "solarized"
+        " Comes with oni, includes theme.
+        let colorSch = "solarized8"
+    endif
 else
     Plug 'bluedrink9/vim-colors-solarized'
     " Settings doesn't recommend this...
     let g:solarized_contrast = "high"
 endif
+let g:solarized_visibility='highv:'
 let g:solarized_termtrans = 0 " 1 displays default term bg instead.
 let g:solarized_menu = 0
 if g:termColors == 16
