@@ -263,29 +263,15 @@ endif
 
 " Maybe ide candidates...
 " {[}--- Fuzzy finder ---
-if has('nvim')  " needs > 0.7
-    Plug 'nvim-telescope/telescope.nvim', { 'tag': '*' }
-    Plug 'https://github.com/nvim-lua/plenary.nvim'
-    if IsCCompilerAvailable()
-        if executable("make")
-            Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-        elseif executable("cmake")
-            Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
-        endif
-    endif
-    Plug 'https://github.com/nvim-telescope/telescope-ui-select.nvim'
-    Plug 'LinArcX/telescope-changes.nvim'
-    Plug 'FeiyouG/command_center.nvim'
-    Plug 'https://github.com/debugloop/telescope-undo.nvim'
 " fzf only works in terminal, use ctrlp otherwise
-elseif g:hasGUI && !has('terminal')
-    Plug 'https://github.com/ctrlpvim/ctrlp.vim'
-else
+if !g:hasGUI || has('terminal')
     " PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run the install
     " script
     Plug 'junegunn/fzf', { 'dir': '~/.local/packages/fzf', 'do': './install --all' }
     " Adds some vim-specific fzf commands.
     Plug 'junegunn/fzf.vim'
+else
+    Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 endif
 " {]}--- Fuzzy finder ---
 " {]}--- Searching, replacing, finding ---

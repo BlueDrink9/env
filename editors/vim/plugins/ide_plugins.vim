@@ -98,7 +98,21 @@ Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
 " {]} ---------- Visual ----------
 
 "{[} Searching and code info
-if IsPluginUsed("telescope.nvim")
+if has('nvim')  " needs > 0.7
+    Plug 'nvim-telescope/telescope.nvim', { 'tag': '*' }
+    Plug 'https://github.com/nvim-lua/plenary.nvim'
+    if IsCCompilerAvailable()
+        if executable("make")
+            Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+        elseif executable("cmake")
+            Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
+        endif
+    endif
+    Plug 'https://github.com/nvim-telescope/telescope-ui-select.nvim'
+    Plug 'LinArcX/telescope-changes.nvim'
+    Plug 'FeiyouG/command_center.nvim'
+    Plug 'https://github.com/debugloop/telescope-undo.nvim'
+
     Plug 'fcying/telescope-ctags-outline.nvim'
     Plug 'cljoly/telescope-repo.nvim'
 endif
