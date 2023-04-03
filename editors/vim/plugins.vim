@@ -104,7 +104,7 @@ function! SourcePluginFile(name)
     exec 'source ' . g:plugindir . '/' . a:name
 endfunction
 
-" To remove a Plugged repo using UnPlug 'repo'
+" To remove a Plugged repo using UnPlug 'pluginName'
 function! s:deregister(name)
   try
     call remove(g:plugs, a:name)

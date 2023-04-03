@@ -1,6 +1,10 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
-
+if IsPluginUsed('lualine')
+      UnPlug 'lualine'
+elseif IsPluginUsed('airline')
+      UnPlug 'airline'
+endif
 " {[} Mappings
 
 function VSCodeMapDict(mappings, visualMappings)

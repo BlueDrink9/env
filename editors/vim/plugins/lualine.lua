@@ -96,7 +96,7 @@ end
 if vim.g.usePLFont == 0 then
    config.options.component_separators = { left = '', right = ''}
    config.options.section_separators = { left = '', right = ''}
-   config.sections.lualine_b.0.icon = nil
+   config.sections.lualine_b[1].icon = nil
 end
 
 local used_extensions = {
