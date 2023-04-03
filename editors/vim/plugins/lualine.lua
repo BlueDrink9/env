@@ -17,6 +17,17 @@ local short_mode_name = function(mode)
    return out
 end
 
+local function diff_source()
+   local gitsigns = vim.b.gitsigns_status_dict
+   if gitsigns then
+      return {
+         added = gitsigns.added,
+         modified = gitsigns.changed,
+         removed = gitsigns.removed
+      }
+   end
+end
+
 local location_format = ''
 local config = {
    options = {
@@ -39,7 +50,13 @@ local config = {
    },
    sections = {
       lualine_a = {{ 'mode', fmt = function(str) return short_mode_name(str) end }},
-      lualine_b = {'branch', 'diff', 'diagnostics'},
+      lualine_b = {
+            -- 'branch',
+            -- No point in multiple plugins getting head
+            -- {'FugitiveHead', icon = ''},
+            {'b:gitsigns_head', icon = ''},
+            {'diff', source = diff_source},
+            'diagnostics'},
       lualine_c = {
          {'filename', path = 1, shorting_target = vim.o.columns / 2.5}
       },
@@ -79,6 +96,7 @@ end
 if vim.g.usePLFont == 0 then
    config.options.component_separators = { left = '', right = ''}
    config.options.section_separators = { left = '', right = ''}
+   config.sections.lualine_b.0.icon = nil
 end
 
 local used_extensions = {
