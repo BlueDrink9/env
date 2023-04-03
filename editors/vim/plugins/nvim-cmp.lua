@@ -122,6 +122,16 @@ cmp.setup.cmdline('/', {
     })
 })
 
+-- Load vsnip when file opens, to avoid lag on insert mode.
+-- Will see whether this slows down opening a file though...
+vim.api.nvim_exec([[
+	autocmd InsertEnter * call vsnip#get_complete_items(bufnr())
+]], false)
+
+-- Debounce tabstop syncing.
+vim.g.vsnip_sync_delay = 20
+vim.g.vsnip_choice_delay = 250
+
 
 -- -- Tab and S-Tab keys need to be mapped to <C-n> and <C-p> when completion menu is visible. Following example will use Tab and S-Tab (shift+tab) to navigate completion menu and jump between vim-vsnip placeholders when possible:
 
