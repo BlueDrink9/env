@@ -159,8 +159,8 @@ lsp_installer.setup_handlers({
       vim.cmd [[silent! au! myPymode"]]
    end,
 
-   ["sumneko_lua"] = function ()
-      local server_name = "sumneko_lua"
+   ["lua_ls"] = function ()
+      local server_name = "lua_ls"
       require("lspconfig")[server_name].setup {
          on_attach = on_attach,
          capabilities = Nvim_cmp_capabilities,
