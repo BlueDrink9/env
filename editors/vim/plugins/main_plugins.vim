@@ -174,7 +174,8 @@ Plug 'https://github.com/vim-scripts/ProportionalResize'
 
 " {[} View and session
 " Automated view session creation.
-Plug 'https://github.com/zhimsel/vim-stay'
+Plug 'https://github.com/zhimsel/vim-stay', {'on': []}
+call LoadPluginOnEvent('vim-stay', "CursorHold")
 Plug 'xolox/vim-misc'
 " Map os commands (eg maximise), and open windows commands without shell
 " popup.

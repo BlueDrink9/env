@@ -61,7 +61,6 @@ Plug 'https://github.com/tpope/vim-characterize'
 if has('nvim-0.5')
     " Also shows registers and marks on " and '/`
     Plug 'https://github.com/folke/which-key.nvim'
-    UnPlug 'registers.nvim'
 else
     Plug 'liuchengxu/vim-which-key'
     " Show registers in side window when you go to use them.

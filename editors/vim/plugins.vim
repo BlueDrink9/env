@@ -104,34 +104,37 @@ function! SourcePluginFile(name)
     exec 'source ' . g:plugindir . '/' . a:name
 endfunction
 
-" To remove a Plugged repo using UnPlug 'user/repo'
-function! s:deregister(repo)
-  let repo = substitute(a:repo, '[\/]\+$', '', '')
-  let name = fnamemodify(repo, ':t:s?\.git$??')
+" To remove a Plugged repo using UnPlug 'repo'
+function! s:deregister(name)
   try
-    call remove(g:plugs, name)
-    call remove(g:plugs_order, index(g:plugs_order, name))
+    call remove(g:plugs, a:name)
+    call remove(g:plugs_order, index(g:plugs_order, a:name))
+    " strip anything after period because not legitimate variable.
+    let l:varname = substitute(a:name, '\..*', '', '')
+    let l:varname = substitute(l:varname, 'vim-', '', '')
+    exec 'let g:loaded_' . l:varname . ' = 1'
   catch E716
+    echom 'Unplug failed for ' . a:name
   endtry
-  endfunction
-  command! -nargs=1 -bar UnPlug call s:deregister(<args>)
+endfunction
+command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 
 function! IsPluginUsed(name)
-    if has_key(g:plugs, a:name)
-        return 1
-    else
-        return 0
-    endif
+    return has_key(g:plugs, a:name)
 endfunction
 
-" Plug installs the plugin, but only loads on InsertEnter.
-" name: the last part of the plugin url (just name, no auth).
-" Plug options should include 'on': [] to prevent load before insertenter.
 function! LoadPluginOnInsertEnter(name)
-  let l:plugLoad = 'autocmd InsertEnter * call plug#load("'
+  call LoadPluginOnEvent(a:name, "InsertEnter")
+endfunction
+
+" Plug installs the plugin, but only loads on autocmd event.
+" name: the last part of the plugin url (just name, no auth).
+" Plug options should include 'on': [] to prevent load before event.
+function! LoadPluginOnEvent(name, event)
+  let l:plugLoad = 'autocmd ' . a:event . ' * call plug#load("'
   let l:plugLoadEnd = '")'
-  let l:undoAutocmd = 'autocmd! ' . a:name . '_insertenter'
-  exec "augroup " . a:name . '_insertenter'
+  let l:undoAutocmd = 'autocmd! ' . a:name . '_' . a:event
+  exec "augroup " . a:name . '_' . a:event
     autocmd!
     exec  l:plugLoad . a:name . l:plugLoadEnd . ' | ' . l:undoAutocmd
   augroup END
