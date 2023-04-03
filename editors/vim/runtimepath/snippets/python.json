@@ -2,20 +2,20 @@
   "init": {
     "prefix": ["init"],
     "body": [
-      "def __init__(self, ${1:arg}):",
-      "self.${1} = ${1}"
+      "def __init__(self, ${1:arg}):"
+      , "self.${1} = ${1}"
     ],
     "description": "Class __init__ method"
-  },
+  }
 
-  "Pandas import": {
+  , "Pandas import": {
     "prefix": ["pd"],
     "body": [
       "import pandas as pd"
     ]
-  },
+  }
 
-  "Numpy import": {
+  , "Numpy import": {
     "prefix": ["np"],
     "body": [
       "import numpy as np"
@@ -25,17 +25,18 @@
   "Matplotlib and seaborn import": {
     "prefix": ["plt", "sns"],
     "body": [
-      "from matplotlib import pyplot as plt",
-      "import seaborn as sns"
+      "from matplotlib import pyplot as plt"
+      , "import seaborn as sns"
     ]
-  },
+  }
 
-  "Path import": {
+  , "Path import": {
     "prefix": ["pathlib"],
     "body": [
       "from pathlib import Path"
     ]
   }
+
   , "pytest skip": {
     "prefix": ["skip"],
     "body": [
@@ -46,11 +47,20 @@
   , "pytest parametrize": {
     "prefix": ["param"],
     "body": [
-      "@pytest.mark.parametrize('case, expected, reason', [",
-      "('',",
-      "'',",
-      "''),",
-      "])"
+      "@pytest.mark.parametrize('case, expected, reason', ["
+      , "('',"
+      , "'',"
+      , "''),"
+      , "])"
     ]
   }
+
+  , "Set scriptdir": {
+    "prefix": ["scriptdir"],
+    "body": [
+      "from pathlib import Path"
+      , "scriptdir = Path(__file__).parent"
+    ]
+  }
+
 }

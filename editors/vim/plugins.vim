@@ -156,6 +156,11 @@ if has('nvim')
     Plug 'https://github.com/lewis6991/impatient.nvim'
 endif
 
+" For profiling startup time.
+" Plug 'https://github.com/dstein64/vim-startuptime'
+" let g:startuptime_tries = 3
+" let g:ideMode=1
+
 " Get light plugin set first
 call SourcePluginFile("colorschemes.vim")
 call SourcePluginFile("light_plugins.vim")
