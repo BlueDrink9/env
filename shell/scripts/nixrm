@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+nix-env -e $1
