@@ -13,7 +13,7 @@ install_applet(){
   dir="$applet_dir/$(basename "$url")"
   rm -rf "$dir"
   git clone --depth=1 "$url" "$dir"
-  kpackagetool5 -i "$dir"
+  kpackagetool5 -i "$dir" || true
 }
 
 find_applet_groups(){
@@ -137,5 +137,9 @@ configure_applet org.kde.windowtitle General style 3  # style 3 = Title - Applic
 configure_applet org.kde.windowtitle General lengthPolicy Fill
 configure_applet org.kde.windowtitle General boldFont false
 configure_applet org.kde.windowtitle General containmentType Plasma
+
+configure_applet org.kde.plasma.pager General showOnlyCurrentScreen true
+configure_applet org.kde.plasma.pager General showWindowIcons true
+configure_applet org.kde.plasma.pager General wrapPage true
 # disable_plasmashell_task_manager_overrides
 # disable_other_meta_shortcuts

@@ -57,12 +57,14 @@ for (var panelIndex = 0; panelIndex < allPanels.length; panelIndex++) {
     var widgets = p.widgets();
     for (var widgetIndex = 0; widgetIndex < widgets.length; widgetIndex++) {
         var w = widgets[widgetIndex];
-        // Whichever panel has the pager; that's the one I want to add the window title widget to.
-        if (w.type === "org.kde.plasma.taskmanager"){
+        if (w.type === "org.kde.plasma.taskmanager"
+            or w.type === "org.kde.plasma.icontasks){
             w.remove();
             continue
         }
 
+        // Whichever panel has the pager; that's the one I want to add the window title widget to.
+        // Skip all others.
         if (w.type != "org.kde.plasma.pager"){
             continue;
         }
