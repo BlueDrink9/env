@@ -313,7 +313,7 @@ Plug 'https://github.com/sbdchd/neoformat'
 
 if has('nvim-0.7')
 lua << EOF
-function check_treesitter_installable()
+function! check_treesitter_installable()
     -- ("tar" and "curl" or "git") and {
     local fn = vim.fn
     if fn.executable("git") == 0 then

@@ -158,7 +158,7 @@ function! SetUpGUI()
 endfunction
     "{]}
 
-function SetupNvimQT()
+function! SetupNvimQT()
     if !exists(':GuiTabline')
         return
     endif

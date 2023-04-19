@@ -7,7 +7,7 @@ elseif IsPluginUsed('airline')
 endif
 " {[} Mappings
 
-function VSCodeMapDict(mappings, visualMappings)
+function! VSCodeMapDict(mappings, visualMappings)
       for [key, value] in items(a:mappings)
         exec 'nnoremap ' . key . " <Cmd>call VSCodeNotify('" . value . "')<CR>"
       endfor
@@ -20,7 +20,7 @@ endfunction
 " inoremap kv :call VSCodeCall("vscode-neovim.escape")
 " inoremap vk :call VSCodeCall("vscode-neovim.escape")
 
-function VSCodeMaps()
+function! VSCodeMaps()
 let s:nmappings = {
       \ g:IDE_mappings.definition: 'editor.action.goToDeclaration',
       \ g:IDE_mappings.definition2: 'editor.action.peakDefinition',
@@ -133,7 +133,7 @@ au myVimrc User MappingOverrides call VSCodeMaps()
 
 
 " FT specific
-function VSCodeFTMaps(ft)
+function! VSCodeFTMaps(ft)
       if a:ft ==? 'sql'
             call VSCodeMapDict(
                               \ {
@@ -144,7 +144,7 @@ function VSCodeFTMaps(ft)
                               \ g:IDE_mappings.REPLSend: 'mssql.runQuery',
                               \},
                               \)
-            function _OpfuncRunSQLQueryMotion(type = '') abort
+            function! _OpfuncRunSQLQueryMotion(type = '') abort
                   if a:type == ''
                         set opfunc=_OpfuncRunSQLQueryMotion
                         return 'g@'
