@@ -77,6 +77,7 @@ Set-PSReadlineOption -ShowToolTips
 Set-PSReadlineOption -CompletionQueryItems 100
 Set-PSReadlineOption -BellStyle None
 
+if($host.version.major -gt 7){
 # virtualtext suggestion from history. Can also suggest as a list if you want.
 if ($PSVersionTable.PSVersion -gt "7.0.0"){
   Set-PSReadlineOption -PredictionSource HistoryAndPlugin
