@@ -50,7 +50,6 @@ Plug 'aonemd/kuroi.vim'
 Plug 'https://github.com/srcery-colors/srcery-vim'
 let g:srcery_italic=1 " Default only 1 in gui
 Plug 'https://github.com/rakr/vim-two-firewatch'
-Plug 'https://github.com/rakr/vim-colors-rakr'
 if s:guiColours
   if has('nvim')
     Plug 'https://github.com/Shatur/neovim-ayu'
