@@ -3,12 +3,17 @@
 & 'C:\Program Files\Git\git-bash.exe' -c "~/env/install.sh -l"
 # Boxstarter-specific commands
 Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowFileExtensions -EnableShowRecentFilesInQuickAccess -EnableShowFrequentFoldersInQuickAccess -EnableExpandToOpenFolder -EnableShowRibbon
+Set-ExplorerOptions -showHiddenFilesFoldersDrives -showProtectedOSFiles -showFileExtensions
+
 Disable-BingSearch
-Enable-MicrosoftUpdate 
+Enable-MicrosoftUpdate
 Disable-GameBarTips
 Install-WindowsUpdate -AcceptEula
 
-Set-TaskbarOptions -Lock -Dock Bottom -Combine full -AlwaysShowIconsOn
+# Move-LibraryDirectory
+
+Set-BoxstarterTaskbarOptions  -Combine Full -MultiMonitorOn -Size Large -MultiMonitorCombine Full -MultiMonitorMode All -Dock Bottom -AlwaysShowIconsOn
+Set-BoxstarterTaskbarOptions  -DisableSearchBox
 # /Boxstarter-specific commands
 
 function createNewRegKey($path){
@@ -363,6 +368,7 @@ foreach ($k in $keys) {
 
 # Show Accent on Title bars, task bars
 Set-RegKey -Path 'HKLM:\SOFTWARE\Microsoft\Windows\DWM' -Name 'ColorPrevalence' -Value 2
+Set-RegKey -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize' -Name 'ColorPrevalence' -Value 2
 # restart explorer to reload colours
 Stop-Process -ProcessName explorer -Force -ErrorAction SilentlyContinue
 

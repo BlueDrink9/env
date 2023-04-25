@@ -32,6 +32,8 @@ function AddToPath($path){
     Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH -Value $newPath
 }
 
+AddToPath "C:\ProgramData\chocolatey\bin"
+
 Get-ChildItem "packages/" -filter "*.conf" | foreach-object {
     InstallPackagesFromFile("packages/$_")
 }
@@ -74,6 +76,7 @@ Install-Module -Force SecretManagement.JustinGrote.CredMan -Scope AllUsers
 # This is where chocolatey keeps vim now.
 $ToolsVimDir="C:\tools\vim"
 $linkname="${ToolsVimDir}\latest"
+AddToPath $linkname
 
 # Define helper as per linked answer. https://stackoverflow.com/a/32818070
 $VerNumsToNatural = { [regex]::Replace($_, '\d+', { $args[0].Value.PadLeft(20) }) }

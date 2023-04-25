@@ -6,6 +6,7 @@
 ##Requires -RunAsAdministrator
 if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit }
 
+Set-ExecutionPolicy Unrestricted -Force -Scope CurrentUser
 Set-ExecutionPolicy Unrestricted -Force
 
 $DesktopPath = [Environment]::GetFolderPath("Desktop")
@@ -23,6 +24,12 @@ $scriptdir = $PSScriptRoot
 cd $scriptdir
 [Environment]::CurrentDirectory = $PWD
 
+$scriptdir | out-file -filepath $env:APPDATA\dotfiles_win_setup_dir.txt
+
+pushd "${scriptdir}\..\..\shell\powershell"
+. ".\install.ps1"
+popd
+
 # Install chocolatey
 # if(-not(powershell choco -v 2>&1 | out-null)){
   if(-not(Get-Command "choco" -ErrorAction SilentlyContinue)){
@@ -37,12 +44,8 @@ cd $scriptdir
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 choco feature enable -n=allowGlobalConfirmation
 
-$scriptdir | out-file -filepath $env:APPDATA\dotfiles_win_setup_dir.txt
-
-. "${scriptdir}..\..\shell\powershell\install.ps1"
-
 # Trust plugin store to avoid having to manually confirm each plugin installation.
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 
-
-. "$scriptdir\boxstarter_setup.ps1"
+$scriptdir = $PSScriptRoot
+# . "$scriptdir\boxstarter_setup.ps1"
