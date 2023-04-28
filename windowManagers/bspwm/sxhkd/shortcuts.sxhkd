@@ -33,7 +33,8 @@ super + e; b
     brave-browser || \
     xdg-open /usr/share/applications/brave-browser.desktop || \
     xdg-open ~/usr/share/applications/brave-browser.desktop || \
-    gtk-launch brave-browser.desktop
+    gtk-launch brave-browser.desktop || \
+    firefox
 
 # Office: write, spreadsheet, present, images, Image manipulation.
 super + e; o; {w,s,p,i,shift+I}
