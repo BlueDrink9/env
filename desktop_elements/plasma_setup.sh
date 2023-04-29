@@ -141,5 +141,5 @@ configure_applet org.kde.windowtitle General containmentType Plasma
 configure_applet org.kde.plasma.pager General showOnlyCurrentScreen true
 configure_applet org.kde.plasma.pager General showWindowIcons true
 configure_applet org.kde.plasma.pager General wrapPage true
-# disable_plasmashell_task_manager_overrides
-# disable_other_meta_shortcuts
+disable_plasmashell_task_manager_overrides
+disable_other_meta_shortcuts

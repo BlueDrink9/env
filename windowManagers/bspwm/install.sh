@@ -24,7 +24,12 @@ replace_plasma_wm(){
   # Taken from https://maxnatt.gitlab.io/posts/kde-plasma-with-i3wm/#kde-525-and-newer
   # Two methods. The systemd masking doesn't always work, so this is the
   # backup option.
+  # KDEWM method
   kwriteconfig5 --file startkderc --group General --key systemdBoot false
+  kde_env_dir="$XDG_CONFIG_HOME/plasma-workspace/env/"
+  mkdir -p "$kde_env_dir"
+  printf '#!/bin/sh\nexport KDEWM=bspwm' >| "$kde_env_dir/bspwm.sh"
+  # systemd mask method
   user_sysd_dir="$XDG_CONFIG_HOME/systemd/user/"
   mkdir -p "$user_sysd_dir"
   cp "$($SCRIPTDIR_CMD)/plasma_wm_replace/plasma-bspwm.service" "$user_sysd_dir"
