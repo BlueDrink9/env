@@ -113,7 +113,7 @@ function! s:deregister(name)
     let l:varname = substitute(a:name, '\..*', '', '')
     let l:varname = substitute(l:varname, 'vim-', '', '')
     exec 'let g:loaded_' . l:varname . ' = 1'
-  catch E716
+  catch /^Vim\%((\a\+)\)\=:E716:/
     echom 'Unplug failed for ' . a:name
   endtry
 endfunction
