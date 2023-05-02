@@ -57,12 +57,6 @@ map_table_prefixes = {
 }
 
 
-mason_dap.setup({
-      -- ensure_installed = {'stylua', 'jq'}
-      automatic_setup = true,
-    })
-
-
 -- Ensures mappings are only set for filetypes with installed DAPs
 local set_up_buffer = function()
    -- When jumping to a fileline from current tab, don't change tabs if you
@@ -84,6 +78,7 @@ local set_up_buffer = function()
    end
 end
 
+
 local set_up_autocmd = function(source_name)
    vim.api.nvim_create_autocmd("Filetype", {
          group = "myIDE",
@@ -92,38 +87,45 @@ local set_up_autocmd = function(source_name)
       })
 end
 
-mason_dap.setup_handlers {
-   function(source_name)
-      set_up_autocmd(source_name)
+
+mason_dap.setup({
+  -- ensure_installed = {'stylua', 'jq'}
+  automatic_setup = true,
+  handlers = {
+    function(config)
+      set_up_autocmd(config.name)
+      mason_dap.default_setup(config)
       -- dap.listeners.after.event_initialized["dap"] = on_attach(vim.api.nvim_buf_get_number)
-   end,
-   python = function()
+    end,
+    python = function(config)
       set_up_autocmd("python")
       require('dap-python').setup(vim.g.python3_host_prog)
       vim.cmd[[command! -buffer DebugTestMethod lua require('dap-python').test_method()]]
       vim.cmd[[command! -buffer DebugTestClass lua require('dap-python').test_class()]]
 
       dap.adapters.python = {
-         type = "executable",
-         -- command = "/usr/bin/python3",
-         command = "python3",
-         args = {
-            "-m",
-            "debugpy.adapter",
-         },
+        type = "executable",
+        -- command = "/usr/bin/python3",
+        command = "python3",
+        args = {
+          "-m",
+          "debugpy.adapter",
+        },
       }
 
       -- Insert because dap-python already configures it
       table.insert(dap.configurations.python, {
-         {
-            type = "python",
-            request = "launch",
-            name = "Launch file",
-            program = "${file}", -- This configuration will launch the current file if used.
-            },
-         })
-      end,
-}
+        {
+          type = "python",
+          request = "launch",
+          name = "Launch file",
+          program = "${file}", -- This configuration will launch the current file if used.
+        },
+      })
+      mason_dap.default_setup(config) 
+    end,
+  }
+})
 
 
 
