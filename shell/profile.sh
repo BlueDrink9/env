@@ -104,6 +104,9 @@ if ! substrInStr "$HOME/.local" "${PATH%%:*}" ; then
   export MANPATH="$HOME/.local/share/man:$MANPATH"
   export INFOPATH="$HOME/.local/share/info:$INFOPATH"
 fi
+if ! substrInStr "$HOME/.emacs.d/bin" "${PATH%%:*}" ; then
+  export PATH="$HOME/.emacs.d/bin:$PATH"
+fi
 
 scriptsFolder="${SCRIPT_DIR_LOCAL}/scripts"
 if ! substrInStr "$scriptsFolder" "${PATH}" ; then
