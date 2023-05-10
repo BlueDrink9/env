@@ -168,9 +168,27 @@ function! SetupNvimQT()
     call SetGFN()
 endfunction
 
+function! SetUpNvimGUI(event)
+    let g:hasGUI = 1
+    call SetUpGUI()
+    " Options provided by other GUIs that neovim might have.
+    " if event['chan'] == 'nvim-qt'
+    if exists('g:GuiLoaded')  " nvim-qt specific
+        call SetupNvimQT()
+    endif
+    if exists('g:neovide')
+    endif
+    call SourcePluginFile('symbol_check.vim')
+endfunction
+
 if g:hasGUI
     " GUI is running or is about to start.
-    call SetUpGUI()
+    if has('nvim')
+        call SetUpGUI()
+        au myVimrc UIEnter * call SetUpNvimGUI(v:event)
+    else
+        call SetUpGUI()
+    endif
 else
     "{[} Console
     set mouse=a
@@ -209,25 +227,6 @@ else
     " {]}
 endif
 "{]}
-
-function! SetUpNvimGUI(event)
-    let g:hasGUI = 1
-    call SetUpGUI()
-    " Options provided by other GUIs that neovim might have.
-    " if event['chan'] == 'nvim-qt'
-    if exists('g:GuiLoaded')  " nvim-qt specific
-        call SetupNvimQT()
-    endif
-    if exists('g:neovide')
-    endif
-    call SourcePluginFile('symbol_check.vim')
-endfunction
-
-if exists('##UIEnter')
-    " v:event[chan] is 0 for builtin TUI
-    au myVimrc UIEnter * if v:event['chan'] != 0 | call SetUpNvimGUI(v:event) | endif
-endif
-
 
 set showcmd
 " Show cursor coords
@@ -589,35 +588,36 @@ endfunction
 autocmd myVimrc BufNewFile * call s:ReadTemplate()
 
 " {[} Set cursor based on mode.
-" block cursor in normal mode, line in other.
-if &term =~ "xterm\\|rxvt" || $TERM_PROGRAM =~ "mintty\\|xterm" || exists('$TMUX')
-    let s:iCursor = "\<Esc>[5 q"
-    let s:nCursor = "\<Esc>[1 q"
-    let s:rCursor = "\<Esc>[3 q"
-    let s:vCursor = "\<Esc>[2 q"
-    " 1 or 0 -> blinking block
-    " 2 solid block
-    " 3 -> blinking underscore
-    " 4 solid underscore
-    " Recent versions of xterm (282 or above) also support
-    " 5 -> blinking vertical bar
-    " 6 -> solid vertical bar
-elseif $TERM_PROGRAM =~ "iTerm" || &term =~ "konsole"
-    let s:iCursor = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
-    let s:nCursor = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
-    let s:rCursor = "\<Esc>]50;CursorShape=2\x7" " Underline in replace mode
-    let s:vCursor = "\<Esc>]50;CursorShape=0\x7"
-endif
-" if $TERMTYPE =~ "mintty"
-    " Requires mintty terminal.
-    " let &t_ti.="\e[1 q" " termcap mode, for terminfo
-    " let &t_SI.="\<Esc>[5 q"
-    " let &t_EI.="\e[1 q"
-    " let &t_te.="\e[0 q" " end termcap
-    " let s:iCursor = "\e[5 q"
-    " let s:nCursor = "\e[1 q"
-    " let s:rCursor = "\e[1 q"
-    " elseif $TERMTYPE ~= "xterm"
+if !has('nvim')
+    " block cursor in normal mode, line in other.
+    if &term =~ "xterm\\|rxvt" || $TERM_PROGRAM =~ "mintty\\|xterm" || exists('$TMUX')
+        let s:iCursor = "\<Esc>[5 q"
+        let s:nCursor = "\<Esc>[1 q"
+        let s:rCursor = "\<Esc>[3 q"
+        let s:vCursor = "\<Esc>[2 q"
+        " 1 or 0 -> blinking block
+        " 2 solid block
+        " 3 -> blinking underscore
+        " 4 solid underscore
+        " Recent versions of xterm (282 or above) also support
+        " 5 -> blinking vertical bar
+        " 6 -> solid vertical bar
+    elseif $TERM_PROGRAM =~ "iTerm" || &term =~ "konsole"
+        let s:iCursor = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
+        let s:nCursor = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
+        let s:rCursor = "\<Esc>]50;CursorShape=2\x7" " Underline in replace mode
+        let s:vCursor = "\<Esc>]50;CursorShape=0\x7"
+    endif
+    " if $TERMTYPE =~ "mintty"
+        " Requires mintty terminal.
+        " let &t_ti.="\e[1 q" " termcap mode, for terminfo
+        " let &t_SI.="\<Esc>[5 q"
+        " let &t_EI.="\e[1 q"
+        " let &t_te.="\e[0 q" " end termcap
+        " let s:iCursor = "\e[5 q"
+        " let s:nCursor = "\e[1 q"
+        " let s:rCursor = "\e[1 q"
+        " elseif $TERMTYPE ~= "xterm"
 
     if exists('s:iCursor')
         " if exists('$TMUX')
@@ -635,6 +635,7 @@ endif
         " reset cursor when vim exits
         autocmd myVimrc VimLeave * silent !echo -ne "\033]112\007"
         " use \003]12;gray\007 for gnome-terminal and rxvt up to version 9.21
+    endif
 endif
 " Cursor {]}
 
