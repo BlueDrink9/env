@@ -99,6 +99,8 @@ Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
 "{[} Searching and code info
 if has('nvim')  " needs > 0.7
     Plug 'nvim-telescope/telescope.nvim', { 'tag': '*' }
+    silent! UnPlug 'ctrlp.vim'
+    silent! UnPlug 'fzf.vim'
     Plug 'https://github.com/nvim-lua/plenary.nvim'
     if IsCCompilerAvailable()
         if executable("make")
