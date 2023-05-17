@@ -78,6 +78,9 @@ cnoremap <C-o>A <End>
 " n and N always go the same direction regardless of whether / or ? was used.
 nnoremap <expr> n  'Nn'[v:searchforward]
 nnoremap <expr> N  'nN'[v:searchforward]
+
+" g/ to search for currently selected text. Overwrites - register
+vnoremap g/ "-y/\V<C-R>=escape(@-,'/\')<CR><CR>
 " Cd to current file
 nnoremap <leader>cd <cmd>lcd %:p:h<CR>:pwd<CR>
 " Autocomplete from tags
