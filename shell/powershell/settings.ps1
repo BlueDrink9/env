@@ -8,6 +8,14 @@ if (Get-Command "nvim" -ErrorAction SilentlyContinue) {
     $env:VISUAL='gvim'
 } elseif (Get-Command "vim" -ErrorAction SilentlyContinue) {
     $env:VISUAL='vim'
+} elseif (Get-Command "codium" -ErrorAction SilentlyContinue) {
+    $env:VISUAL='codium'
+} elseif (Get-Command "code" -ErrorAction SilentlyContinue) {
+    $env:VISUAL='code'
+} elseif (Get-Command "notepad++" -ErrorAction SilentlyContinue) {
+    $env:VISUAL='notepad++'
+} else {
+    $env:VISUAL='notepad'
 }
 
 if ($env:WT_SESSION){
