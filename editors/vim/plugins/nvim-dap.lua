@@ -3,9 +3,11 @@ local dap = require("dap")
 local mason_dap = require("mason-nvim-dap")
 local dapui = require("dapui")
 
-require("nvim-dap-virtual-text").setup {
-   commented = true,
-}
+if vim.fn.IsPluginUsed("nvim-dap-virtual-text") == 1 then
+   require("nvim-dap-virtual-text").setup {
+      commented = true,
+   }
+end
 
 -- This might need remapping to use its own toggle breakpoint :(
 require('persistent-breakpoints').setup{
