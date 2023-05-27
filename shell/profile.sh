@@ -3,7 +3,7 @@
 # vim:foldmethod=marker:foldmarker={[},{]}
 # Contains bash and cli bootstrapping/init code designed to be run once per
 # shell
-SCRIPT_DIR_LOCAL="$PROFILE_DIR/.."
+SCRIPT_DIR_LOCAL="$(realpath "$PROFILE_DIR/..")"
 export DOTFILES_DIR=$(cd "${SCRIPT_DIR_LOCAL}/.." && pwd)
 
 if grep -qE "(Microsoft|WSL)" "$([ -f /proc/version ] && cat /proc/version)" > /dev/null 2>&1; then
@@ -104,15 +104,18 @@ if ! substrInStr "$HOME/.local" "${PATH%%:*}" ; then
   export MANPATH="$HOME/.local/share/man:$MANPATH"
   export INFOPATH="$HOME/.local/share/info:$INFOPATH"
 fi
-if ! substrInStr "$HOME/.emacs.d/bin" "${PATH%%:*}" ; then
-  export PATH="$HOME/.emacs.d/bin:$PATH"
-fi
 
-scriptsFolder="${SCRIPT_DIR_LOCAL}/scripts"
-if ! substrInStr "$scriptsFolder" "${PATH}" ; then
-  export PATH="$scriptsFolder:$PATH"
-fi
-unset scriptsFolder
+binFolders="${SCRIPT_DIR_LOCAL}/scripts
+$HOME/.cargo/bin
+$HOME/.emacs.d/bin
+"
+while read -r folder; do
+  if ! substrInStr "$folder" "${PATH}" ; then
+    export PATH="$folder:$PATH"
+  fi
+done <<EOF
+$binFolders
+EOF
 
 # Want xcode to be lower priority than brew
 if substrInStr "darwin1" "$OSTYPE"; then
