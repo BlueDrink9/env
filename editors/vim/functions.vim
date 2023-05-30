@@ -419,3 +419,39 @@ function! s:Profile()
 endfunction
 command! Profile call <sid>Profile()
 command! ProfileStop profile stop
+
+" Light, short backup for commenting plugins when they aren't available.
+function! ToggleComment(...)
+  if len(a:000) > 0
+    " This was called as an opfunc. Apply to each line between the marks
+    let l:start = getpos("'[")[1]
+    let l:end = getpos("']")[1]
+    for num in range(l:start, l:end)
+      " jump to line
+      exec 'norm! ' . num . 'gg'
+      call ToggleComment()
+    endfor
+    return
+  endif
+  " Ensure regex special characters in commentstring (eg /*) are ignored by my
+  " substitutes that include a .* to represent the line itself
+  let l:commentstring = substitute(substitute(&commentstring,
+        \ '\*', '\\*', 'g'),
+        \ '\.', '\\.', 'g')
+  " Capture group of .* to match entire line
+  let l:search = substitute(l:commentstring, '%s', '\\(.*\\)', '')
+  let l:line = getline('.')
+  if match(l:line, l:search) >= 0
+    " Uncomment - replace line with capture group for middle of search string
+    " Matchlist[0] is the whole matched string, subsequent indices are capture
+    " groups
+    call setline('.',
+          \ matchlist(l:line, l:search)[1])
+  else
+    " Comment - replace line with line inside comment string
+    call setline('.', substitute(&commentstring, "%s", l:line, ''))
+  endif
+endfunction
+nnoremap <silent> <leader>cc :call ToggleComment()<cr>
+vnoremap <silent> <leader>c :call ToggleComment()<cr>
+nnoremap <silent> <leader>c :set opfunc=ToggleComment<CR>g@
