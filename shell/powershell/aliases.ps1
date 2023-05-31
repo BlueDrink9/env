@@ -11,6 +11,9 @@ function gupe { git commit --amend }
 
 # Allows pip to auto-update, and ensures you use the right version of pip for the current environment
 function pip {python -m pip $args}
+function venv {python -m venv $args}
+function venvc {python -m venv venv}
+function venva {. venv/Scripts/activate.ps1}
 function gdiff { git diff --ignore-space-change --color-words --no-index }
 Set-Alias e $env:VISUAL
 function liteEdit {nvim --cmd "let g:liteMode=1" $args}

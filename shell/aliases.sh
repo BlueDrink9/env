@@ -169,4 +169,7 @@ alias srcinfo='makepkg --printsrcinfo > .SRCINFO'
 
 # Allows pip to auto-update, and ensures you use the right version of pip for the current environment
 alias pip='python -m pip'
+alias venv='python -m venv'
+alias venvc='python -m venv venv'
+alias venva='. venv/Scripts/activate'
 alias plasma_reload='qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.refreshCurrentShell'
