@@ -85,7 +85,7 @@ function! myVimrcFunctions#ToggleComment(...)
     for num in range(l:start, l:end)
       " jump to line
       exec 'norm! ' . num . 'gg'
-      call ToggleComment()
+      call myVimrcFunctions#ToggleComment()
     endfor
     return
   endif
