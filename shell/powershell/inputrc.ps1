@@ -11,7 +11,7 @@ function OnViModeChangeSetCursor {
         Write-Host -NoNewLine "$Esc[5 q"
     }
 }
-if($host.version.major -gt 7){
+if($host.version.major -ge 7){
   Set-PSReadLineOption -ViModeIndicator Script -ViModeChangeHandler $Function:OnViModeChangeSetCursor
 }else{
   Set-PSReadLineOption -ViModeIndicator Cursor
@@ -78,7 +78,7 @@ Set-PSReadlineOption -CompletionQueryItems 100
 Set-PSReadlineOption -BellStyle None
 
 # virtualtext suggestion from history. Can also suggest as a list if you want.
-if ($PSVersionTable.PSVersion -gt "7.0.0"){
+if ($PSVersionTable.PSVersion -ge "7.0.0"){
   Set-PSReadlineOption -PredictionSource HistoryAndPlugin
   Set-PSReadlineKeyHandler -Chord "Ctrl+e" -Function AcceptSuggestion
 }
