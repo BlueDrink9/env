@@ -420,30 +420,48 @@ function! MinimumUI()
 endfunction
 
 function! SmallUIOnResize()
+    if !exists('g:oldShortmess')
+        let g:oldShortmess=&shortmess
+    endif
     if &lines < 24
+        " let &l:scrolloff=&lines/5
         set cmdheight=1
+        " Can't afford to hard wrap by mistake.
+        set textwidth=200
+        set noshowcmd
+        set shortmess=aWAFtI
         if &lines < 18
             " Hides airline/any other status bar.
             set laststatus=0
             set showtabline=0
-            set showmode
-            " let g:loaded_airline = 1
+            set noruler
         else
-            set laststatus=2
-            set showtabline=2
-            set noshowmode
+            set laststatus=1
+            set showtabline=1
+            set ruler
         endif
     else
         set cmdheight=2
         set laststatus=2
         set showtabline=2
-        set noshowmode
+        set showcmd
+        set ruler
+        let &shortmess=g:oldShortmess
+        setlocal scrolloff=-1  " return to global value
+    endif
+    if &columns < 15
+        set nonumber
+        set norelativenumber
+    else
+        set number
+        set relativenumber
     endif
 endfunction
+
 if exists("g:minimumUI")
   call MinimumUI()
 else
-  " Autocmd doesn't trigger on startup, only on change.
+  " Add vimenter because resized doesn't trigger on startup, only on change.
   autocmd myVimrc VimEnter * call SmallUIOnResize()
   autocmd myVimrc VimResized * call SmallUIOnResize()
 endif

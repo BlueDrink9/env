@@ -9,6 +9,9 @@
 " Mainly for OSX. Use alphanum to ignore alt for alphanum.
 " I don't use any alt mappings anyway, since terminals don't always
 " support them.
+if !exists("g:started_by_firenvim")
+    finish
+endif
 let g:firenvim_config = {
     \ 'globalSettings': {
         \ 'alt': 'alphanum',
@@ -89,24 +92,12 @@ function! s:FirenvimSetPageOptions()
 
 endfunction
 
+
 function! s:FirenvimSetGUIOptions()
-    if &lines < 20
-        let g:loaded_airline = 1
-        silent! AirlineToggle
-        " See neovim #1004
-        " set cmdheight=0
-        set cmdheight=1
-        set laststatus=0
-        set noshowmode
-        set noruler
-        set noshowcmd
-        set shortmess=aWAFtI
-        " Can't afford to hard wrap by mistake.
-        set textwidth=200
-    endif
-    if &columns < 15
-        set nonumber
-        set norelativenumber
+    set showtabline=0
+    set cmdheight=0
+    if &lines < 2
+        quitall!
     endif
     " Get rid of the annoying message at the bottom about the new file being
     " written, and then start insert mode.
@@ -119,8 +110,15 @@ function! s:FirenvimSetGUIOptions()
     colorscheme github
 endfunction
 
+function! SetFontSizeFirenvim(timer)
+    call SetGFN()
+endfunction
+
+call timer_start(3000, function("SetFontSizeFirenvim"))
+
 let s:debugMessages = []
 function! s:firenvimSetup()
+    autocmd myPlugins UIEnter * call s:FirenvimSetGUIOptions()
     " We are in firenvim
     " For debug messages during startup. After startup, use echom.
     if len(s:debugMessages) > 0
@@ -151,15 +149,9 @@ function! s:firenvimSetup()
     " Auto-enter insertmode if the buffer is empty.
     autocmd myPlugins BufWinEnter * if line('$') == 1 && getline(1) == ''
                 \ && bufname() != '' | startinsert | endif
-    autocmd myPlugins UIEnter * call s:FirenvimSetGUIOptions()
-endfunction
-
-function! s:onFirenvimLoad()
-    " call feedkeys("\<C-L>", 'n')
-    call s:firenvimSetup()
 endfunction
 
 " Fix odd bug that sometimes stops firenvim loading the text if setting a
 " colourscheme from a plugin. Will be overridden in setup anyway.
 let g:colorSch='default'
-call s:onFirenvimLoad()
+call s:firenvimSetup()

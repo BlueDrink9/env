@@ -293,10 +293,10 @@ function! ResizeGUIHoriz(value)
     let &columns+=a:value
 endfunction
 let g:GUIResizeValue=5
-nnoremap <M-S-left> :call ResizeGUIHoriz(-g:GUIResizeValue)<cr>
-nnoremap <M-S-right> :call ResizeGUIHoriz(g:GUIResizeValue)<cr>
-nnoremap <M-S-up> :call ResizeGUIVert(g:GUIResizeValue)<cr>
-nnoremap <M-S-down> :call ResizeGUIVert(-g:GUIResizeValue)<cr>
+nnoremap <silent> <M-S-left> :call ResizeGUIHoriz(-g:GUIResizeValue)<cr>
+nnoremap <silent> <M-S-right> :call ResizeGUIHoriz(g:GUIResizeValue)<cr>
+nnoremap <silent> <M-S-up> :call ResizeGUIVert(g:GUIResizeValue)<cr>
+nnoremap <silent> <M-S-down> :call ResizeGUIVert(-g:GUIResizeValue)<cr>
 
 " Vim script to add user-defined words to spell file automatically
 " A function to search for words after {marker_text} and add them to local
