@@ -435,10 +435,17 @@ function! SmallUIOnResize()
             set laststatus=0
             set showtabline=0
             set noruler
+            set noshowmode
+            if has('nvim')
+                set cmdheight=0
+            else
+                set cmdheight=1
+            endif
         else
             set laststatus=1
             set showtabline=1
             set ruler
+            set cmdheight=1
         endif
     else
         set cmdheight=2
@@ -447,7 +454,7 @@ function! SmallUIOnResize()
         set showcmd
         set ruler
         let &shortmess=g:oldShortmess
-        setlocal scrolloff=-1  " return to global value
+        " setlocal scrolloff=-1  " return to global value
     endif
     if &columns < 15
         set nonumber
