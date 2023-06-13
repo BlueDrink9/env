@@ -22,8 +22,10 @@ else
   # esac
   if substrInStr "darwin1" "$OSTYPE"; then
     parents="$(ps -o ppid,comm | grep $PPID)"
-  else
+  elif command -v pstree > /dev/null 2>&1; then
     parents="$(pstree -p | grep $PPID)"
+  else
+    parents="$(ps | cut -d '' -f 2 | grep $PPID)"
   fi
   if substrInStr "sshd" "$parents"; then
     SESSION_TYPE=remote/ssh
