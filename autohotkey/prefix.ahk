@@ -1,7 +1,7 @@
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
-SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+SetWorkingDir %A_MyDocuments%
 #KeyHistory 0
 #SingleInstance Force
 ; #NoTrayIcon
@@ -34,14 +34,28 @@ GetDefaultBrowser() {
     return BrowserPath
 }
 
-#If (IsPrefix(""))
-#e::SetPrefix("exe")
-#o::SetPrefix("office")
-#If
+; Include if exists - intended to be local to each machine
+#include *i %A_MyDocuments%\local shortcuts.ahk
+
+; Example: Override vim command:
+; #If IsPrefix("exe")
+; hotkey, if, IsPrefix("exe")
+; hotkey, v, editor
+; editor:
+;     Run neovide.exe -- --cmd "let g:liteMode=1"
+; return
+; #If
 
 ResetPrefix:
     prefix := ""
 return
+
+
+#If (IsPrefix(""))
+#e::SetPrefix("exe")
+#o::SetPrefix("office")
+#m::SetPrefix("media")
+#If
 
 #If IsPrefix("office")
 w::Run, winword.exe
@@ -53,8 +67,19 @@ s::Run, excel.exe
 e::Run explorer
 t::Run wt.exe
 b::Run % GetDefaultBrowser()
-v::Run % gvim.exe --cmd "let g:liteMode=1"
-+v::Run % gvim.exe
-i::Run % gvim.exe --cmd "let g:IDEMode=1"
+v::Run gvim.exe, --cmd "let g:liteMode=1"
++v::Run gvim.exe
+n::Run joplin.exe
+i::
+    try{
+        Run neovide.exe -- --cmd "let g:IDEMode=1"
+    } catch {
+        Run gvim.exe, --cmd "let g:IDEMode=1"
+    }
+return
+#If
+
+#If IsPrefix("media")
+s::Run spotify.exe
 #If
 
