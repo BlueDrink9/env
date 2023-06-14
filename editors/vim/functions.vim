@@ -2,7 +2,6 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
 
-
 " Check out
 " https://github.com/jalvesaq/Nvim-R/blob/03214225dd0467bb6724b38955f1c7ae5b439022/R/common_global.vim#L2792
 " for more complex version of these funcs.
@@ -138,57 +137,17 @@ function! SetFirstValidGuifont(fonts)
     exec "set guifont=" . substitute(l:fontBackup, "\\ ", "\\\\ ", "g")
 endfunc
 
-" Pipes the output of shell commands into a new window for viewing.
-function! WindowOutput(cmd)
-    redir => message
-    silent execute a:cmd
-    redir END
-    if empty(message)
-        echoerr "no output"
-    else
-        " use "new" instead of "tabnew" below if you prefer split windows instead of tabs
-        vnew
-        setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
-        silent put=message
-    endif
-endfunction
-command! -nargs=+ -complete=command WindowOutput call WindowOutput(<q-args>)
-nnoremap <F9> :w<enter> :WindowOutput !%:p<Enter>
+command! -nargs=+ -complete=command WindowOutput call myVimrcFunctions#WindowOutput(<q-args>)
+nnoremap <F9> :w<enter> :myVimrcFunctions#WindowOutput !%:p<Enter>
 
-if !exists('g:completionCommand')
-    let g:completionCommand="\<C-N>"
-endif
-" Use TAB to complete when typing words, else inserts TABs as usual.
-" Abort means func will abort if it detects an error.
-function! Tab_Or_Complete() abort
-    " If menu is already open the $(tab) cycles through suggested completions.
-    if pumvisible()
-        return "\<C-N>"
-    elseif s:inWord()
-        return g:completionCommand
-    else
-        return "\<Tab>"
-    endif
-endfunction
-function! s:inWord()
-    return col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
-endfunction
-
-inoremap <silent> <Tab> <C-R>=Tab_Or_Complete()<CR>
+inoremap <silent> <Tab> <C-R>=myVimrcFunctions#Tab_Or_Complete()<CR>
 " Make imap if we want to remap s-tab normally.
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <S-Tab> <C-P>
 " <CR> to confirm completion, use:
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
 
-" Allow insertion of single character in normal mode.
-function! RepeatChar(char, count)
-    return repeat(a:char, a:count)
-endfunction
-function! SingleCharInsert()
-    exec ":normal i".RepeatChar(nr2char(getchar()), v:count1)
-endfunction
-nnoremap <silent> , :<C-U>call SingleCharInsert()<CR>
+nnoremap <silent> , :<C-U>call myVimrcFunctions#SingleCharInsert()<CR>
 
 function! IsWSL()
     if !has('unix')
@@ -203,23 +162,9 @@ function! IsWSL()
 endfunction
 
 " @ will play the macro over each line in visual range.
-xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
-function! ExecuteMacroOverVisualRange()
-  echo "@".getcmdline()
-  execute ":'<,'>normal @".nr2char(getchar())
-endfunction
+xnoremap @ :<C-u>call myVimrcFunctions#ExecuteMacroOverVisualRange()<CR>
 
-" Search in all currently opened buffers. $(SearchAll [pattern])
-" Populates quicklist
-function! ClearQuickfixList()
-  call setqflist([])
-endfunction
-function! Vimgrepall(pattern)
-  call ClearQuickfixList()
-  exe 'bufdo vimgrepadd ' . a:pattern . ' %'
-  cnext
-endfunction
-command! -nargs=1 SearchAll call Vimgrepall(<f-args>)
+command! -nargs=1 SearchAll call myVimrcFunctions#Vimgrepall(<f-args>)
 
 command! -nargs=1 Mkdir call mkdir(<f-args>)
 
@@ -227,25 +172,12 @@ autocmd myVimrc BufNewFile *.rb 0put =\"#!/usr/bin/env ruby\<nl># -*- coding: No
 autocmd myVimrc BufNewFile *.tex 0put =\"%&plain\<nl>\"|$
 autocmd myVimrc BufNewFile *.\(cc\|hh\) 0put =\"//\<nl>// \".expand(\"<afile>:t\").\" -- \<nl>//\<nl>\"|2|start!
 
-function! s:MkNonExDir(file, buf)
-    if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
-        let dir=fnamemodify(a:file, ':h')
-        if !isdirectory(dir)
-            call mkdir(dir, 'p')
-        endif
-    endif
-endfunction
-autocmd myVimrc BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
+autocmd myVimrc BufWritePre * :call myVimrcFunctions#MkNonExDir(expand('<afile>'), +expand('<abuf>'))
 
-" :W and :Save will escape a file name and write it
-command! -bang -nargs=* W :call W(<q-bang>, <q-args>) 
-command! -bang -nargs=* Save :call Save(<q-bang>, <q-args>) 
-function! W(bang, filename) 
-    :exe "w".a:bang." ". fnameescape(a:filename) 
-endfu
-function! Save(bang, filename) 
-    :exe "save".a:bang." ". fnameescape(a:filename) 
-endfu
+" :W and :myVimrcFunctions#Save will escape a file name and write it
+command! -bang -nargs=* W :call myVimrcFunctions#W(<q-bang>, <q-args>) 
+command! -bang -nargs=* Save :call myVimrcFunctions#Save(<q-bang>, <q-args>) 
+
 let s:hidden_all = 0
 function! ToggleHiddenAll()
     if s:hidden_all  == 0
@@ -286,17 +218,11 @@ function! CenterText()
   let &signcolumn="yes:" . l:marginSize
 endfunction
 
-function! ResizeGUIVert(value)
-    let &lines+=a:value
-endfunction
-function! ResizeGUIHoriz(value)
-    let &columns+=a:value
-endfunction
 let g:GUIResizeValue=5
-nnoremap <silent> <M-S-left> :call ResizeGUIHoriz(-g:GUIResizeValue)<cr>
-nnoremap <silent> <M-S-right> :call ResizeGUIHoriz(g:GUIResizeValue)<cr>
-nnoremap <silent> <M-S-up> :call ResizeGUIVert(g:GUIResizeValue)<cr>
-nnoremap <silent> <M-S-down> :call ResizeGUIVert(-g:GUIResizeValue)<cr>
+nnoremap <silent> <M-S-left> :call myVimrcFunctions#ResizeGUIHoriz(-g:GUIResizeValue)<cr>
+nnoremap <silent> <M-S-right> :call myVimrcFunctions#ResizeGUIHoriz(g:GUIResizeValue)<cr>
+nnoremap <silent> <M-S-up> :call myVimrcFunctions#ResizeGUIVert(g:GUIResizeValue)<cr>
+nnoremap <silent> <M-S-down> :call myVimrcFunctions#ResizeGUIVert(-g:GUIResizeValue)<cr>
 
 " Vim script to add user-defined words to spell file automatically
 " A function to search for words after {marker_text} and add them to local
@@ -339,28 +265,8 @@ endfunction
 " Comment with LocalWords at end of doc, similar to emacs.
 autocmd myVimrc FileType tex call AutoSpellGoodWords('%  LocalWords:')
 
-function! s:toggleSystemClipboard()
-  let l:clipboard="unnamed"
-  if !exists("s:savedClipboardSetting")
-    let s:savedClipboardSetting = &clipboard
-  endif
-  if &clipboard !=# l:clipboard
-    let s:savedClipboardSetting = &clipboard
-    let &clipboard=l:clipboard
-  else
-    let &clipboard = s:savedClipboardSetting
-  endif
-endfunction
-nnoremap yoy <cmd>call <sid>toggleSystemClipboard()<cr>
-
-function! ToggleAutoWrite()
-    if &autowrite
-      set noautowrite
-    else
-      set autowrite
-    endif
-endfunction
-nnoremap yoa <cmd>call ToggleAutoWrite()<cr>
+nnoremap yoy <cmd>call myVimrcFunctions#toggleSystemClipboard()<cr>
+nnoremap yoa <cmd>call myVimrcFunctions#ToggleAutoWrite()<cr>
 
 
 " Define command alias for at start of  command line mode only.
@@ -394,64 +300,11 @@ function! CmdAlias(lhs, ...)
   \ " <SID>ExpandAlias('".lhs."', '".rhs."')"
 endfunction
 
-function! s:ExpandAlias(lhs, rhs)
-  if getcmdtype() == ":"
-    " Determine if we are at the start of the command-line.
-    " getcmdpos() is 1-based.
-    let partCmd = strpart(getcmdline(), 0, getcmdpos())
-    let prefixes = ['^'] + map(split(g:cmdaliasCmdPrefixes, ' '), '"^".v:val."!\\?"." "')
-    for prefix in prefixes
-      if partCmd =~ prefix.a:lhs.'$'
-        return a:rhs
-      endif
-    endfor
-  endif
-  return a:lhs
-endfunction
 
-function! s:Profile()
-    let logfile = '$HOME/.logs/vim_profile.log'
-    exec 'profile start ' . logfile
-    profile func *
-    profile! file *
-    echom 'writing profile log to ' . logfile
-    echom 'Run ProfileStop to end and write log'
-endfunction
-command! Profile call <sid>Profile()
+command! Profile call myVimrcFunctions#Profile()
 command! ProfileStop profile stop
 
 " Light, short backup for commenting plugins when they aren't available.
-function! ToggleComment(...)
-  if len(a:000) > 0
-    " This was called as an opfunc. Apply to each line between the marks
-    let l:start = getpos("'[")[1]
-    let l:end = getpos("']")[1]
-    for num in range(l:start, l:end)
-      " jump to line
-      exec 'norm! ' . num . 'gg'
-      call ToggleComment()
-    endfor
-    return
-  endif
-  " Ensure regex special characters in commentstring (eg /*) are ignored by my
-  " substitutes that include a .* to represent the line itself
-  let l:commentstring = substitute(substitute(&commentstring,
-        \ '\*', '\\*', 'g'),
-        \ '\.', '\\.', 'g')
-  " Capture group of .* to match entire line
-  let l:search = substitute(l:commentstring, '%s', '\\(.*\\)', '')
-  let l:line = getline('.')
-  if match(l:line, l:search) >= 0
-    " Uncomment - replace line with capture group for middle of search string
-    " Matchlist[0] is the whole matched string, subsequent indices are capture
-    " groups
-    call setline('.',
-          \ matchlist(l:line, l:search)[1])
-  else
-    " Comment - replace line with line inside comment string
-    call setline('.', substitute(&commentstring, "%s", l:line, ''))
-  endif
-endfunction
-nnoremap <silent> <leader>cc :call ToggleComment()<cr>
-vnoremap <silent> <leader>c :call ToggleComment()<cr>
-nnoremap <silent> <leader>c :set opfunc=ToggleComment<CR>g@
+nnoremap <silent> <leader>cc :call myVimrcFunctions#ToggleComment()<cr>
+vnoremap <silent> <leader>c :call myVimrcFunctions#ToggleComment()<cr>
+nnoremap <silent> <leader>c :set opfunc=myVimrcFunctions#ToggleComment<CR>g@
