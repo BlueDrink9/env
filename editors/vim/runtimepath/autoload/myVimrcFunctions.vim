@@ -140,3 +140,11 @@ endfunction
 function! myVimrcFunctions#ResizeGUIVert(value)
     let &lines+=a:value
 endfunction
+
+function! myVimrcFunctions#ChangeGFNSize(change)
+  if !exists("g:GUIFontSize")
+    let g:GUIFontSize = g:defaultFontSize
+  endif
+  let g:GUIFontSize += a:change
+  call SetGFN(g:GUIFontSize)
+endfunction

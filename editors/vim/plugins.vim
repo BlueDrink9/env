@@ -41,6 +41,7 @@ augroup end
 if exists("g:noPlugins")
     let g:liteMode=0
     let g:ideMode=0
+    call SourcePluginFile("noplugin_alts.vim")
     finish
 endif
 

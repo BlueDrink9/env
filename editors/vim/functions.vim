@@ -137,18 +137,6 @@ function! SetFirstValidGuifont(fonts)
     exec "set guifont=" . substitute(l:fontBackup, "\\ ", "\\\\ ", "g")
 endfunc
 
-command! -nargs=+ -complete=command WindowOutput call myVimrcFunctions#WindowOutput(<q-args>)
-nnoremap <F9> :w<enter> :myVimrcFunctions#WindowOutput !%:p<Enter>
-
-inoremap <silent> <Tab> <C-R>=myVimrcFunctions#Tab_Or_Complete()<CR>
-" Make imap if we want to remap s-tab normally.
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <S-Tab> <C-P>
-" <CR> to confirm completion, use:
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
-
-nnoremap <silent> , :<C-U>call myVimrcFunctions#SingleCharInsert()<CR>
-
 function! IsWSL()
     if !has('unix')
         return
@@ -161,22 +149,10 @@ function! IsWSL()
     endif
 endfunction
 
-" @ will play the macro over each line in visual range.
-xnoremap @ :<C-u>call myVimrcFunctions#ExecuteMacroOverVisualRange()<CR>
-
-command! -nargs=1 SearchAll call myVimrcFunctions#Vimgrepall(<f-args>)
-
-command! -nargs=1 Mkdir call mkdir(<f-args>)
-
-autocmd myVimrc BufNewFile *.rb 0put =\"#!/usr/bin/env ruby\<nl># -*- coding: None -*-\<nl>\"|$
-autocmd myVimrc BufNewFile *.tex 0put =\"%&plain\<nl>\"|$
-autocmd myVimrc BufNewFile *.\(cc\|hh\) 0put =\"//\<nl>// \".expand(\"<afile>:t\").\" -- \<nl>//\<nl>\"|2|start!
-
-autocmd myVimrc BufWritePre * :call myVimrcFunctions#MkNonExDir(expand('<afile>'), +expand('<abuf>'))
-
-" :W and :myVimrcFunctions#Save will escape a file name and write it
-command! -bang -nargs=* W :call myVimrcFunctions#W(<q-bang>, <q-args>) 
-command! -bang -nargs=* Save :call myVimrcFunctions#Save(<q-bang>, <q-args>) 
+" " Shebangs
+" autocmd myVimrc BufNewFile *.rb 0put =\"#!/usr/bin/env ruby\<nl># -*- coding: None -*-\<nl>\"|$
+" autocmd myVimrc BufNewFile *.tex 0put =\"%&plain\<nl>\"|$
+" autocmd myVimrc BufNewFile *.\(cc\|hh\) 0put =\"//\<nl>// \".expand(\"<afile>:t\").\" -- \<nl>//\<nl>\"|2|start!
 
 let s:hidden_all = 0
 function! ToggleHiddenAll()
@@ -217,12 +193,6 @@ function! CenterText()
   let l:marginSize = (l:excessWidth) / 2
   let &signcolumn="yes:" . l:marginSize
 endfunction
-
-let g:GUIResizeValue=5
-nnoremap <silent> <M-S-left> :call myVimrcFunctions#ResizeGUIHoriz(-g:GUIResizeValue)<cr>
-nnoremap <silent> <M-S-right> :call myVimrcFunctions#ResizeGUIHoriz(g:GUIResizeValue)<cr>
-nnoremap <silent> <M-S-up> :call myVimrcFunctions#ResizeGUIVert(g:GUIResizeValue)<cr>
-nnoremap <silent> <M-S-down> :call myVimrcFunctions#ResizeGUIVert(-g:GUIResizeValue)<cr>
 
 " Vim script to add user-defined words to spell file automatically
 " A function to search for words after {marker_text} and add them to local
@@ -265,9 +235,6 @@ endfunction
 " Comment with LocalWords at end of doc, similar to emacs.
 autocmd myVimrc FileType tex call AutoSpellGoodWords('%  LocalWords:')
 
-nnoremap yoy <cmd>call myVimrcFunctions#toggleSystemClipboard()<cr>
-nnoremap yoa <cmd>call myVimrcFunctions#ToggleAutoWrite()<cr>
-
 
 " Define command alias for at start of  command line mode only.
 " https://github.com/vim-scripts/cmdalias.vim/blob/master/plugin/cmdalias.vim
@@ -299,12 +266,3 @@ function! CmdAlias(lhs, ...)
   exec 'cnoreabbr <expr> '.flags.a:lhs.
   \ " <SID>ExpandAlias('".lhs."', '".rhs."')"
 endfunction
-
-
-command! Profile call myVimrcFunctions#Profile()
-command! ProfileStop profile stop
-
-" Light, short backup for commenting plugins when they aren't available.
-nnoremap <silent> <leader>cc :call myVimrcFunctions#ToggleComment()<cr>
-vnoremap <silent> <leader>c :call myVimrcFunctions#ToggleComment()<cr>
-nnoremap <silent> <leader>c :set opfunc=myVimrcFunctions#ToggleComment<CR>g@

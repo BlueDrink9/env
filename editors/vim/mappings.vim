@@ -146,6 +146,22 @@ cmap W! SudoSave
 " command! -bang -nargs=* MacroEdit c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 command! MRU browse oldfiles
 
+command! -nargs=+ -complete=command WindowOutput call myVimrcFunctions#WindowOutput(<q-args>)
+nnoremap <F9> :w<enter> :myVimrcFunctions#WindowOutput !%:p<Enter>
+
+" @ will play the macro over each line in visual range.
+xnoremap @ :<C-u>call myVimrcFunctions#ExecuteMacroOverVisualRange()<CR>
+
+command! -nargs=1 SearchAll call myVimrcFunctions#Vimgrepall(<f-args>)
+
+command! -nargs=1 Mkdir call mkdir(<f-args>)
+
+" :W and :myVimrcFunctions#Save will escape a file name and write it
+command! -bang -nargs=* W :call myVimrcFunctions#W(<q-bang>, <q-args>)
+command! -bang -nargs=* Save :call myVimrcFunctions#Save(<q-bang>, <q-args>)
+
+command! Profile call myVimrcFunctions#Profile()
+command! ProfileStop profile stop
 " {]} Abbreviations
 
 " {[} Window management
@@ -230,6 +246,12 @@ nnoremap <C-w>k :call <SID>SplitUp()<CR>
 nnoremap <C-w>j :call <SID>SplitDown()<CR>
 " {]} Open windows to the left, right, up, down.
 
+let g:GUIResizeValue=5
+nnoremap <silent> <M-S-left> :call myVimrcFunctions#ResizeGUIHoriz(-g:GUIResizeValue)<cr>
+nnoremap <silent> <M-S-right> :call myVimrcFunctions#ResizeGUIHoriz(g:GUIResizeValue)<cr>
+nnoremap <silent> <M-S-up> :call myVimrcFunctions#ResizeGUIVert(g:GUIResizeValue)<cr>
+nnoremap <silent> <M-S-down> :call myVimrcFunctions#ResizeGUIVert(-g:GUIResizeValue)<cr>
+
 " {]} Window management
 
 " {[} Clipboard
@@ -251,6 +273,8 @@ if has("clipboard") && !IsWSL()
 endif
 " Use CTRL-Q to do what CTRL-V used to do in insert
 inoremap <C-Q> <C-V>
+
+nnoremap yoy <cmd>call myVimrcFunctions#toggleSystemClipboard()<cr>
 
 " {]} Clipboard
 
@@ -359,22 +383,25 @@ function! s:remapCtrlBStoCW()
 endfunction
 call s:remapCtrlBStoCW()
 
-function! ChangeGFNSize(change)
-  if !exists("g:GUIFontSize")
-    let g:GUIFontSize = g:defaultFontSize
-  endif
-  let g:GUIFontSize += a:change
-  call SetGFN(g:GUIFontSize)
-endfunction
 if g:hasGUI
   " These are what get sent in gvim for C-S-+ and C--
-  nnoremap <expr> + ChangeGFNSize(1)
-  " nnoremap <expr>  ChangeGFNSize(-1)
+  nnoremap <expr> + myVimrcFunctions#ChangeGFNSize(1)
+  " nnoremap <expr>  myVimrcFunctions#ChangeGFNSize(-1)
   " Because above doesn't work
-  nnoremap <expr> - ChangeGFNSize(-1)
+  nnoremap <expr> - myVimrcFunctions#ChangeGFNSize(-1)
 endif
 
 " Replace visual selection with its evaluation result
 vnoremap <silent> <c-r>= c<C-r>=<C-r>"<CR><ESC>
 
+nnoremap yoa <cmd>call myVimrcFunctions#ToggleAutoWrite()<cr>
+
+nnoremap <silent> , :<C-U>call myVimrcFunctions#SingleCharInsert()<CR>
+
+inoremap <silent> <Tab> <C-R>=myVimrcFunctions#Tab_Or_Complete()<CR>
+" Make imap if we want to remap s-tab normally.
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <S-Tab> <C-P>
+" <CR> to confirm completion, use:
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
 " {]} Misc
