@@ -154,6 +154,7 @@
       :desc "evilnc-comment-operator" :nv "c" #'evilnc-comment-operator)
 ;; By default bound to leader-c
 (map! :desc "code" :leader :nv "e" doom-leader-code-map)
+(map! :map doom-leader-code-map :desc "LSP" "l" #'+default/lsp-command-map)
 
 (map! :map doom-leader-code-map :m "e" 'evil-operator-eval)
 

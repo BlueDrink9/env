@@ -4,6 +4,17 @@
 ; TODO: viminfo-style savings (persistend jump list, registers)
 ; TODO: Bacsspace undoes tab
 ; magit mappings to replace c-C? Or just create another mapping that sends c-C all the time. But a shortcut for magit to do c-c c-c or c-c c-k would be helpful.
+; TODO: Modeline: % buffer, wordcount
+; spc + =
+; Multi scratch
+;[d] in minibuffer for date
+; tab-workspace-persp sync
+; vertico remember last command
+; file completion
+; WDired - intstall and set up
+; Fix broken easymotion
+; enable company-box always?? should have done with posframe too. Maybe check doom module init
+; Disable f/t repeat plugin
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
