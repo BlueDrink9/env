@@ -27,6 +27,7 @@ super + e; c
 super + e; e
   xdg-open ~ || \
     dolphin
+
 # Internet browser
 super + e; b
     brave || \
@@ -34,6 +35,8 @@ super + e; b
     xdg-open /usr/share/applications/brave-browser.desktop || \
     xdg-open ~/usr/share/applications/brave-browser.desktop || \
     gtk-launch brave-browser.desktop || \
+    firefox
+super + e; shift+b
     firefox
 
 # Office: write, spreadsheet, present, images, Image manipulation.
