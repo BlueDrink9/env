@@ -13,6 +13,9 @@ function! myVimrcFunctions#Tab_Or_Complete() abort
         return "\<Tab>"
     endif
 endfunction
+function! s:inWord()
+    return col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+endfunction
 
 function! myVimrcFunctions#RepeatChar(char, count)
     " Allow insertion of single character in normal mode.
