@@ -37,6 +37,16 @@ augroup end
 " {]} ------ Disable built-in plugins ------
 
 " {[} Settings and dir creation
+
+let s:pluginInstallPath = CreateVimDir("/plugins")
+let s:localPlugins = PathExpand(g:vimfilesDir . "/local_plugins.vim")
+let s:scriptdir = expand('<sfile>:p:h')
+let g:plugindir = PathExpand(s:scriptdir . "/" . "plugins")
+
+function! SourcePluginFile(name)
+    exec 'source ' . g:plugindir . '/' . a:name
+endfunction
+
 " Skip loading this file entirely.
 if exists("g:noPlugins")
     let g:liteMode=0
@@ -47,14 +57,8 @@ endif
 
 " Silence a python deprecation warning.
 if has('python3') && !(has('patch-8.1.201') || has('nvim')) && g:liteMode == 0
-  echom 'python'
   silent! python3 1
 endif
-
-let s:pluginPath = CreateVimDir("/plugins")
-let s:scriptdir = PathExpand('<sfile>:p:h')
-let s:localPlugins = PathExpand(g:vimfilesDir . "/local_plugins.vim")
-let s:scriptdir = expand('<sfile>:p:h')
 
 if has('win32') || has ('win64')
     let $VIMHOME = $HOME."/vimfiles"
@@ -99,11 +103,6 @@ if !filereadable(s:localPlugins)
     silent exec 'write ' . s:localPlugins
     bdelete
 endif
-
-let g:plugindir = PathExpand(s:scriptdir . "/" . "plugins")
-function! SourcePluginFile(name)
-    exec 'source ' . g:plugindir . '/' . a:name
-endfunction
 
 " To remove a Plugged repo using UnPlug 'pluginName'
 function! s:deregister(name)
@@ -151,7 +150,7 @@ let g:customHLGroups = []
 " let g:plugs={}
 " let g:plugs_order=[]
 " {]}
-call plug#begin(s:pluginPath)
+call plug#begin(s:pluginInstallPath)
 
 if has('nvim')
     Plug 'https://github.com/lewis6991/impatient.nvim'
