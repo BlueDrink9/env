@@ -1,0 +1,9 @@
+{
+  "scriptdir": {
+    "prefix": ["scriptdir"],
+    "body": [
+      "SCRIPTDIR=\"$(cd \"$(dirname \"${BASH_SOURCE[0]}\")\" && pwd)\""
+    ],
+    "description": "Variable containing path to current script"
+  }
+}
