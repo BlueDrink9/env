@@ -149,6 +149,7 @@ function! s:firenvimSetup()
     " Auto-enter insertmode if the buffer is empty.
     autocmd myPlugins BufWinEnter * if line('$') == 1 && getline(1) == ''
                 \ && bufname() != '' | startinsert | endif
+   let g:strip_whitespace_on_save = 0
 endfunction
 
 " Fix odd bug that sometimes stops firenvim loading the text if setting a
