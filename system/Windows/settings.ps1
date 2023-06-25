@@ -305,6 +305,7 @@ Set-Regkey -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name 
 Set-Regkey -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "AppCaptureEnabled" -Type DWord -Value 0
 
 Set-Service -StartupType Automatic ssh-agent
+[Environment]::SetEnvironmentVariable("GIT_SSH", "C:\Windows\System32\OpenSSH\ssh.exe", "Machine")
 
 #--- Rename the Computer ---
 # Also set description to same as name.
