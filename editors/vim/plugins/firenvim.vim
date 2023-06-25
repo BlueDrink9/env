@@ -143,13 +143,37 @@ function! s:firenvimSetup()
     vnoremap <D-c> "+y
     set colorcolumn=0
 
-    au! myVimrc FocusLost,InsertLeave,BufLeave,CursorHold,CursorHoldI * ++nested silent! update
-
     autocmd myPlugins BufEnter *.txt call s:FirenvimSetPageOptions()
     " Auto-enter insertmode if the buffer is empty.
     autocmd myPlugins BufWinEnter * if line('$') == 1 && getline(1) == ''
                 \ && bufname() != '' | startinsert | endif
    let g:strip_whitespace_on_save = 0
+
+    lua << EOF
+    vim.api.nvim_create_autocmd({'TextChanged', 'TextChangedI'}, {
+        callback = function(e)
+            if vim.g.timer_started == true then
+                return
+            end
+            vim.g.timer_started = true
+            vim.fn.timer_start(10000, function()
+                vim.g.timer_started = false
+                write
+            end)
+        end
+    end})
+    EOF
+
+endfunction
+
+" Override autosave so it does trigger firenvim updates
+function! Autosave()
+    " Don't autosave if there is no buffer name, or readonly, and ensure
+    " autowrite is set.
+    if bufname('%') != '' && &ro != 1 && &modifiable == 1 && &autowrite
+        " If no changes, don't touch modified timestamp.
+        silent! update
+    endif
 endfunction
 
 " Fix odd bug that sometimes stops firenvim loading the text if setting a
