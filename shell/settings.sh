@@ -48,14 +48,16 @@ if [ -n "$DISPLAY" ]; then
     # Keyboard setup stuff
     export XKB_DEFAULT_LAYOUT="us,us"
     export XKB_DEFAULT_VARIANT="colemak,"
-    export XKB_DEFAULT_OPTIONS="grp:alt_shift_toggle,caps:backspace,grp_led:caps,altwin:swap_alt_win"
+    export XKB_DEFAULT_OPTIONS="grp:win_space_toggle,caps:backspace,grp_led:caps,altwin:swap_alt_win"
     capsToBS="-option caps:backspace"
     altWinSwap="-option altwin:swap_alt_win"
     winSpaceToggle="-option grp:win_space_toggle"
     capsLed="-option grp_led:caps"
     colemak="-layout 'us, us' -variant 'colemak,'"
-    eval "setxkbmap $colemak $capsToBS $altWinSwap $winSpaceToggle $capsLed"
-    unset colemak capsToBS altWinSwap winSpaceToggle capsLed
+    allK="setxkbmap $colemak $capsToBS $altWinSwap $winSpaceToggle $capsLed"
+    alias setKeyboard="$allK"
+    eval "$allK"
+    unset allK colemak capsToBS altWinSwap winSpaceToggle capsLed
   fi
 
 elif command -v loadkeys >/dev/null 2>&1 && [ "$TERM" = linux ]; then
@@ -141,6 +143,7 @@ fi
 # function redirect(){ exec 2>&8; }
 # trap "redirect;" DEBUG
 # PROMPT_COMMAND='undirect;'
+
 export MYFLY_KEY_SCHEME=vim
 export MCFLY_FUZZY=true
 export MCFLY_INTERFACE_VIEW=BOTTOM
