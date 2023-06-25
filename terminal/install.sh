@@ -75,20 +75,32 @@ END
 )"
 
 doAlacritty() {
-    thisRc="$($SCRIPTDIR_CMD)/alacritty/alacritty.yml"
-    installID="Alacritty"
-    installText="$(printf "import:\n\
-      - ${thisRc}")"
-    baseRC="${XDG_CONFIG_HOME:-$HOME/.config}/alacritty.yml"
+    local thisRc="$($SCRIPTDIR_CMD)/alacritty/alacritty.yml"
+    local installID="Alacritty"
     printErr "Enabling custom ${installID} setup..."
-    addTextIfAbsent "${installText}" "${baseRC}"
+    # Themes
+    local datadir="${XDG_DATA_HOME:-$HOME/.local/share}"/alacritty
+    mkdir -p "$datadir"
+    git clone --depth 1 https://github.com/alacritty/alacritty-theme "$datadir"/alacritty-theme
+    local themes_dir="${datadir}/alacritty-theme/themes"
+    COLOURSCHEME="${COLOURSCHEME:-ayu_light}"
+
+    # linux
+    local installText="$(printf "import:\n  - ${thisRc}")"
+    local baseRC="${XDG_CONFIG_HOME:-$HOME/.config}/alacritty.yml"
+    local extra="$(printf "\n\
+      - ${themes_dir}/${COLOURSCHEME}.yaml")"
+    addTextIfAbsent "${installText}${extra}" "${baseRC}"
+
     # Windows
-    baseRC2="$HOME/AppData/Roaming/alacritty/alacritty.yml"
+    local baseRC2="$HOME/AppData/Roaming/alacritty/alacritty.yml"
     if [ -d "$HOME/AppData" ]; then
         mkdir -p "$(dirname "$baseRC2")"
-        thisRc="$(cygpath -w "$thisRc" | tr '\\' '\\\\')"
-        installText2="$(printf "import:\n  - ")$thisRc"
-        addTextIfAbsent "${installText2}" "${baseRC2}"
+        local thisRc="$(cygpath -w "$thisRc" | tr '\\' '\\\\')"
+        local installText2="$(printf "import:\n  - ")$thisRc"
+        local theme="$(cygpath -w "$themes_dir/${COLOURSCHEME}.yaml" | tr '\\' '\\\\')"
+        local extra="$(printf "\n  - ")$theme"
+        addTextIfAbsent "${installText2}${extra}" "${baseRC2}"
     fi
 }
 
