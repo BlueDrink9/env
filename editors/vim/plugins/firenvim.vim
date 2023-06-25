@@ -16,11 +16,11 @@ let g:firenvim_config = {
     \ 'globalSettings': {
         \ 'alt': 'alphanum',
         \ 'cmdlineTimeout': 3000,
-    \  },
+    \ },
     \ 'localSettings': {
         \ '.*': {
             \ 'priority': 0,
-            \ 'selector': 'textarea:not([class="crayon-plain print-no"]), div[role="textbox"]',
+            \ 'selector': 'textarea:not(.crayon-plain):not([aria-readonly]), div[role="textbox"]:not([aria-readonly])',
             \ 'cmdline': 'firenvim',
             \ 'takeover': 'nonempty',
         \ },
@@ -168,10 +168,7 @@ endfunction
 
 " Override autosave so it does trigger firenvim updates
 function! Autosave()
-    " Don't autosave if there is no buffer name, or readonly, and ensure
-    " autowrite is set.
     if bufname('%') != '' && &ro != 1 && &modifiable == 1 && &autowrite
-        " If no changes, don't touch modified timestamp.
         silent! update
     endif
 endfunction
