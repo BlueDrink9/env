@@ -67,7 +67,7 @@ fi
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 export HISTSIZE=1000
 export HISTORY_FILESIZE=5000
-export HISTORY_IGNORE_PATTERNS="&:[ ]*:exit:ls*:bg:fg:history:clear:reset:fc *"
+export HISTORY_IGNORE_PATTERNS="&:[ ]*:exit:ls:bg:fg:history:clear:reset:fc *"
 if [ ! -d "${HOME}/.logs" ] ; then
   mkdir ${HOME}/.logs
 fi
