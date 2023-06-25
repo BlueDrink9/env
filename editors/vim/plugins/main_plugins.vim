@@ -216,6 +216,8 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'https://github.com/jeetsukumaran/vim-indentwise'
 " af, if for functions, ac, ic for classes. Also ]pf, [pc for movements.
 Plug 'https://github.com/bps/vim-textobj-python'
+Plug 'mtdl9/vim-log-highlighting'
+Plug 'https://github.com/glts/vim-texlog'
 " {]} Extra text objects
 
 " {[} ---------- Operators ----------
