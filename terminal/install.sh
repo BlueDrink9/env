@@ -74,18 +74,23 @@ undo${installID}(){
 END
 )"
 
-installID="Alacritty"
-installText="import: \n\
-  - $($SCRIPTDIR_CMD)/alacritty/alacritty.yml"
-baseRC="${XDG_CONFIG_HOME:-$HOME/.config}/alacritty.yml"
-
-eval "$(cat <<END
-do${installID}() {
+doAlacritty() {
+    thisRc="$($SCRIPTDIR_CMD)/alacritty/alacritty.yml"
+    installID="Alacritty"
+    installText="$(printf "import:\n\
+      - ${thisRc}")"
+    baseRC="${XDG_CONFIG_HOME:-$HOME/.config}/alacritty.yml"
     printErr "Enabling custom ${installID} setup..."
     addTextIfAbsent "${installText}" "${baseRC}"
-  }
-END
-)"
+    # Windows
+    baseRC2="$HOME/AppData/Roaming/alacritty/alacritty.yml"
+    if [ -d "$HOME/AppData" ]; then
+        mkdir -p "$(dirname "$baseRC2")"
+        thisRc="$(cygpath -w "$thisRc" | tr '\\' '\\\\')"
+        installText2="$(printf "import:\n  - ")$thisRc"
+        addTextIfAbsent "${installText2}" "${baseRC2}"
+    fi
+}
 
 eval "$(cat <<END
 undo${installID}(){
@@ -116,6 +121,7 @@ if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
     doTermux
   elif [ "$OSTYPE" != "msys" ]; then
     doKitty
+  else
     doAlacritty
   fi
 fi

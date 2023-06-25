@@ -143,6 +143,8 @@ readSettings() {
         installers="$installers doTermux"
       elif [ "$OSTYPE" != "msys" ]; then
         installers="$installers doKitty"
+      else
+        installers="$installers doAlacritty"
       fi
       if substrInStr "darwin" "$OSTYPE"; then
         installers="$installers doiTerm2"
