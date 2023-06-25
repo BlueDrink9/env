@@ -35,6 +35,7 @@ GetDefaultBrowser() {
 }
 
 terminal := "WindowsTerminal.lnk"
+terminal := "alacritty"
 
 ; Include if exists - intended to be local to each machine
 #include *i %A_MyDocuments%\local shortcuts.ahk
@@ -67,8 +68,7 @@ s::Run, excel.exe
 
 #If IsPrefix("exe")
 e::Run explorer
-t::Run wt.exe
-; t::Run "%terminal%" -p "Ubuntu"
+t::Run "%terminal%"
 b::Run % GetDefaultBrowser()
 v::Run gvim.exe, --cmd "let g:liteMode=1"
 +v::Run gvim.exe
