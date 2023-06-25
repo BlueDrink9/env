@@ -37,7 +37,6 @@ replace_plasma_wm(){
   systemctl --user daemon-reload
   systemctl --user enable plasma-bspwm.service
   systemctl --user add-wants plasma-workspace-x11.target plasma-bspwm.service
-
 }
 
 eval "$(cat <<END
