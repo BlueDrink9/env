@@ -3,6 +3,7 @@
 add_newline = false
 # Wait x milliseconds for starship to check files under the current directory.
 scan_timeout = 30
+command_timeout = 500
 
 # For a two-line prompt.
 [line_break]
@@ -40,11 +41,12 @@ use_logical_path = true  # don't resolve symlinks.
 format = "[@$hostname]($style)"
 
 [git_branch]
+# opening {
 format = "[{$symbol$branch]($style)"
 truncation_length = 8
 truncation_symbol = "…"
 style = "yellow"
-symbol = ""
+symbol = " "
 
 [git_commit]
 style = "purple"
@@ -62,7 +64,10 @@ staged  = "*"
 stashed = "○"
 conflicted = "!"
 deleted = "X"
-format = '([$all_status$ahead_behind}]($style) )'
+ahead = "^"
+behind = "v"
+# Matching }
+format = '([ $all_status$ahead_behind}]($style) )'
 style = "yellow"
 
 [jobs]
@@ -71,3 +76,7 @@ symbol = ""
 
 [battery]
 disabled = true
+
+[python]
+format = '[${symbol}${pyenv_prefix}(\($virtualenv\) )]($style)'
+version_format = 'v${major}.${minor}'

@@ -13,6 +13,11 @@ $DOTFILES_DIR = "$(resolve-path "$PSScriptRoot\..\..")"
 . $scriptdir/inputrc.ps1
 . $scriptdir/aliases.ps1
 if (Get-Command "starship" -ErrorAction SilentlyContinue) {
+    # Set windowtitle, update on each line
+    function Invoke-Starship-PreCommand {
+      $current = (Split-Path -Path $PWD -Leaf)
+      $host.ui.RawUI.WindowTitle = "…/$current ($pwd)"
+    }
     $ENV:STARSHIP_CONFIG="$DOTFILES_DIR\shell\prompts\starship.toml"
     Invoke-Expression (&starship init powershell)
 }
