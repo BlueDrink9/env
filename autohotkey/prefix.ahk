@@ -1,10 +1,10 @@
-#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
-#Warn  ; Enable warnings to assist with detecting common errors.
+; #Warn  ; Enable warnings to assist with detecting common errors.
+; #KeyHistory 0
+; #SingleInstance Force
+; #NoTrayIcon
+
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_MyDocuments%
-#KeyHistory 0
-#SingleInstance Force
-; #NoTrayIcon
 
 prefix := ""
 
@@ -33,6 +33,8 @@ GetDefaultBrowser() {
         BrowserPath := "brave.exe"
     return BrowserPath
 }
+
+terminal := "WindowsTerminal.lnk"
 
 ; Include if exists - intended to be local to each machine
 #include *i %A_MyDocuments%\local shortcuts.ahk
@@ -66,16 +68,30 @@ s::Run, excel.exe
 #If IsPrefix("exe")
 e::Run explorer
 t::Run wt.exe
+; t::Run "%terminal%" -p "Ubuntu"
 b::Run % GetDefaultBrowser()
 v::Run gvim.exe, --cmd "let g:liteMode=1"
 +v::Run gvim.exe
-n::Run joplin.exe
 i::
     try{
         Run neovide.exe -- --cmd "let g:IDEMode=1"
     } catch {
         Run gvim.exe, --cmd "let g:IDEMode=1"
     }
+return
+; notes
+n::Run joplin.exe
+; Games
+g::Run "%L_AppData%\Playnite\Playnite.DesktopApp.exe"
+; Kalendar
+k::Run "Thunderbird"
+; Signal
+s::Run "%L_appdata%\Programs\signal-desktop\Signal.exe" --use-tray-icon
+; Passwords
+p::
+    Run "C:\Program Files\KeePassXC\keepassxc.exe"
+    winwait,KeePassXC
+    send ^f
 return
 #If
 
