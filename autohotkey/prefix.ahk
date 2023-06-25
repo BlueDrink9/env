@@ -11,7 +11,7 @@ prefix := ""
 SetPrefix(arg){
     global prefix
     prefix := arg
-    SetTimer, ResetPrefix, 300
+    SetTimer, ResetPrefix, 1000
 }
 
 IsPrefix(arg){
