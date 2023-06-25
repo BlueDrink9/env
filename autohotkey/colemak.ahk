@@ -11,7 +11,6 @@
 #SingleInstance force
 #NoEnv ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; SendMode Input ; Recommended for new scripts due to its superior speed and reliability.
-SendMode Event ; Allows input command to catch sent shortcuts (used by hotkey_sequence)
 SetKeyDelay , 5,, ; sendevent is delayed by 10 by default, which may be inconvenvient
 Process, Priority,, High
 
@@ -19,6 +18,9 @@ Process, Priority,, High
 ; this script sends ^t, the user's ahk ^t script should also be triggered.
 sendlevel 99
 #inputlevel 99
+
+; Results in lower-level hotkeys? Forces using system hotkey register api
+#UseHook Off
 
 ; Remap things to their original to ensure any delay is even across keys, to
 ; reduce transposition typos.
