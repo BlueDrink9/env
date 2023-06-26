@@ -88,8 +88,8 @@ live_config_reload: true
 #   - (macOS) /bin/bash --login
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
-# shell:
-#   program: pwsh
+shell:
+  program: pwsh
   # args:
   #   - --login
 
@@ -141,10 +141,11 @@ hints:
       key: F
       mode: Vi
 
-#mouse_bindings:
-#  - { mouse: Right,                 action: ExpandSelection }
-#  - { mouse: Right,  mods: Control, action: ExpandSelection }
-#  - { mouse: Middle, mode: ~Vi,     action: PasteSelection  }
+mouse_bindings:
+ - { mouse: Left,                 action: ReceiveChar }
+ - { mouse: Right,                 action: ReceiveChar }
+ # - { mouse: Right,  mods: Control, action: ExpandSelection }
+ # - { mouse: Middle, mode: ~Vi,     action: PasteSelection  }
 
 # Key bindings
 #
