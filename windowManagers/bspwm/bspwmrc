@@ -16,6 +16,9 @@ BSPWM_PRESELECT_COLOUR="#$preselect_border_color"
 # bspc config focused_border_color "#00bcff" # simpler cyan
 # {]} Variables
 
+# Java windows are often blank in bspwm without this.
+export _JAVA_AWT_WM_NONREPARENTING=1
+
 bsp_border_reset(){
   bspc config focused_border_color "$BSPWM_FOCUSED_COLOUR"
 }
