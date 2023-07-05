@@ -312,7 +312,6 @@ Plug 'https://github.com/PProvost/vim-ps1', {'for': 'ps1'}
 Plug 'https://github.com/lervag/vim-rmarkdown', {'for': 'rmd'}
 Plug 'https://github.com/liuchengxu/graphviz.vim', {'for': 'dot'}
 Plug 'https://github.com/waycrate/swhkd-vim', {'for': 'swhkd'}
-Plug 'https://github.com/Jorengarenar/vim-SQL-UPPER',  {'for': 'sql'}
 if has("nvim")
     Plug 'https://github.com/nvim-orgmode/orgmode', {'for': 'org'}
     Plug 'https://github.com/salkin-mada/openscad.nvim', {'for': 'scad'}
