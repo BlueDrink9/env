@@ -22,7 +22,11 @@ bspc rule -a Gimp             desktop='^8' state=floating follow=on
 bspc rule -a Emacs            state=tiled
 bspc rule -a albert           floating=on  border=off     focus=on
 bspc rule -a kitty-dropdown   sticky=on
+# All the little zoom windows don't need to be captured, but the main ones should be.
 bspc rule -a zoom state=floating center=on follow=on border=off
+# Can only differentiate with wm_name
+bspc rule -a '*:Zoom Meeting' state=tiling border=on follow=off
+bspc rule -a '*:Zoom -*' state=tiling border=on follow=off
 # bspc rule -a <zoom\_notification\_class>
 
 # _NET_WM_STATE(ATOM) = _NET_WM_STATE_ABOVE, _NET_WM_STATE_STAYS_ON_TOP
