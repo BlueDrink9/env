@@ -36,6 +36,7 @@ bspc_desktop(){
 bspc monitor -d " " " " " " " "
 
 . "$DOTFILES_DIR"/windowManagers/bspwm/rules.sh
+bspc config external_rules_command "$DOTFILES_DIR"/windowManagers/bspwm/external_rules.sh
 
 #This creates negative padding equal to window gap so that gaps are shown only between windows and not on desktop edges.
 gap=15
