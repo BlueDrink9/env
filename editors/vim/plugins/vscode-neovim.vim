@@ -135,32 +135,44 @@ au myVimrc User MappingOverrides call VSCodeMaps()
 " FT specific
 function! VSCodeFTMaps(ft)
       if a:ft ==? 'sql'
+            let b:REPLSendCommand = 'mssql.runQuery'
             call VSCodeMapDict(
                               \ {
-                              \ g:IDE_mappings.REPLSendFile: 'mssql.runQuery',
+                              \ g:IDE_mappings.REPLSendFile: b:REPLSendCommand,
                               \ g:IDE_mappings.REPLCancel: 'mssql.cancelQuery',
                               \},
                               \ {
                               \ g:IDE_mappings.REPLSend: 'mssql.runQuery',
                               \},
                               \)
-            function! _OpfuncRunSQLQueryMotion(type = '') abort
-                  if a:type == ''
-                        set opfunc=_OpfuncRunSQLQueryMotion
-                        return 'g@'
-                  endif
-                  noautocmd keepjumps normal! '[V']
-                  call VSCodeNotifyVisual('mssql.runQuery', 1)
-                  noautocmd keepjumps normal! V
-            endfunction
-            exec 'nnoremap <expr> ' . g:IDE_mappings.REPLSend .
-                              \ ' _OpfuncRunSQLQueryMotion()'
-            exec 'nnoremap <expr> ' . g:IDE_mappings.REPLSendLine .
-                              \ " _OpfuncRunSQLQueryMotion() .. '_'"
+      elseif a:ft ==? 'python'
+            let b:REPLSendCommand = 'jupyter.execSelectionInteractive'
+            call VSCodeMapDict(
+                              \ {
+                              \ g:IDE_mappings.REPLSendFile: 'jupyter.runFileInteractive',
+                              \},
+                              \ {
+                              \ g:IDE_mappings.REPLSend: b:REPLSendCommand,
+                              \},
+                              \)
       endif
+      function! _OpfuncRunMotion(type = '') abort
+            if a:type == ''
+                  set opfunc=_OpfuncRunMotion
+                  return 'g@'
+            endif
+            noautocmd keepjumps normal! '[V']
+            call VSCodeNotifyVisual(b:REPLSendCommand, 1)
+            noautocmd keepjumps normal! V
+      endfunction
+      exec 'nnoremap <expr> ' . g:IDE_mappings.REPLSend .
+                        \ ' _OpfuncRunMotion()'
+      exec 'nnoremap <expr> ' . g:IDE_mappings.REPLSendLine .
+                        \ " _OpfuncRunMotion() .. '_'"
 endfunction
 
 au myPlugins filetype sql call VSCodeFTMaps('sql')
+au myPlugins filetype python call VSCodeFTMaps('python')
 
 " {]} Mappings
 
