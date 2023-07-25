@@ -41,7 +41,7 @@ super + e; shift+b
 
 # Office: write, spreadsheet, present, images, Image manipulation.
 super + e; o; {w,s,p,i,shift+I}
-  {lowriter,localc,loimpress,inkscape,gimp}
+  {libreoffice --writer,libreoffice --calc,libreoffice --impress,inkscape,gimp}
 # references (Zotero)
 super + e; z
   zotero
