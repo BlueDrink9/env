@@ -1,238 +1,189 @@
 {
-  "workbench.colorTheme": "Default Light Modern",
-  "editor.rulers": [
-    80,
-    120
-  ],
-  "editor.autoClosingBrackets": "beforeWhitespace",
-  "editor.autoClosingQuotes": "never",
-  "files.eol": "\n",
-  "files.insertFinalNewline": true,
-  "files.trimFinalNewlines": true,
-  "files.trimTrailingWhitespace": true,
-  "git.autofetch": true,
-  "git.confirmSync": false,
-  "git.enableCommitSigning": false,
-  "git.enableSmartCommit": true,
-  "telemetry.enableCrashReporter": false,
-  "telemetry.enableTelemetry": false,
-  "terminal.external.windowsExec": "C:\\Program Files\\Git\\bin\\bash.exe",
-  "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
-  "window.menuBarVisibility": "toggle",
-  "vim.camelCaseMotion.enable": true,
-  "vim.easymotion": true,
-  "vim.highlightedyank.enable": true,
-  "vim.leader": "<space>",
-  "vim.insertModeKeyBindingsNonRecursive": [
-    {
-      "before": [
-        "k",
-        "v"
-      ],
-      "after": [
-        "<Esc>"
-      ]
+    "workbench.colorTheme": "Default Light Modern",
+    "editor.rulers": [
+        80,
+        120
+    ],
+    "editor.acceptSuggestionOnCommitCharacter": false,
+    "editor.acceptSuggestionOnEnter": "off",
+    "editor.autoClosingBrackets": "beforeWhitespace",
+    "editor.autoClosingQuotes": "never",
+    "editor.autoSurround": "never",
+    "editor.copyWithSyntaxHighlighting": false,
+    "editor.cursorSurroundingLines": 3,
+    "editor.definitionLinkOpensInPeek": true,
+    "editor.fontFamily": "'SauceCodePro NF', 'Source Code Pro', Consolas, 'Courier New', monospace",
+    "editor.lineNumbers": "relative",
+    "editor.linkedEditing": true,
+    "editor.renderWhitespace": "trailing",
+    "editor.smoothScrolling": true,
+    "editor.suggest.insertMode": "replace",
+    "editor.wordWrap": "on",
+    "files.autoGuessEncoding": true,
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "git.enableCommitSigning": false,
+    "git.enableSmartCommit": true,
+    "telemetry.telemetryLevel": "off",
+    "terminal.external.windowsExec": "C:\\Program Files\\Git\\bin\\bash.exe",
+    "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
+    "window.menuBarVisibility": "toggle",
+    "window.title": "<ws>/${rootName}/${activeEditorShort} ${dirty}",
+    "vscode-neovim.revealCursorScrollLine": true,
+    "vscode-neovim.textDecorationsAtTop": true,
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
     },
-    {
-      "before": [
-        "v",
-        "k"
-      ],
-      "after": [
-        "<Esc>"
-      ]
-    }
-  ],
-  "vim.normalModeKeyBindingsNonRecursive": [
-    {
-      "before": [
-        ";"
-      ],
-      "commands": [
-        "vim.showQuickpickCmdLine",
-      ],
-    },
-    {
-      "before": [
-        ":"
-      ],
-      "after": [
-        ";",
-      ],
-    },
-    {
-      "before": [
-        "<leader>",
-        ";"
-      ],
-      "commands": [
-        "workbench.action.showCommands",
-      ],
-    },
-    {
-      "before": [
-        "<leader>",
-        "<leader>",
-      ],
-      "commands": [
-        "workbench.action.quickOpen",
-      ],
-    },
-    {
-      "before": [
-        "<leader>",
-        ",",
-      ],
-      "commands": [
-        "workbench.action.quickOpen",
-      ],
-    },
-    {
-      "before": [
-        "<leader>",
-        "a",
-      ],
-      "commands": [
-        "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
-      ],
-    },
-  ],
-  "vim.replaceWithRegister": true,
-  "vim.showMarksInGutter": true,
-  "vim.smartRelativeLine": true,
-  "vim.sneak": true,
-  "vim.targets.enable": true,
-  "editor.autoClosingBrackets": "beforeWhitespace",
-  "editor.autoClosingQuotes": "never",
-  "window.title": "<ws>/${rootName}/${activeEditorShort} ${dirty}",
-  "workbench.colorTheme": "Default Light Modern",
-  "vim.camelCaseMotion.enable": true,
-  "vim.easymotion": true,
-  "vim.highlightedyank.enable": true,
-  "vim.leader": "<space>",
-  "vim.insertModeKeyBindingsNonRecursive": [
-    {
-      "before": [
-        "k",
-        "v"
-      ],
-      "after": [
-        "<Esc>"
-      ]
-    },
-    {
-      "before": [
-        "v",
-        "k"
-      ],
-      "after": [
-        "<Esc>"
-      ]
-    }
-  ],
-  "vim.normalModeKeyBindingsNonRecursive": [
-    {
-      "before": [
-        ";"
-      ],
-      "commands": [
-        "vim.showQuickpickCmdLine",
-      ],
-    },
-    {
-      "before": [
-        ":"
-      ],
-      "after": [
-        ";",
-      ],
-    },
-    {
-      "before": [
-        "<leader>",
-        ";"
-      ],
-      "commands": [
-        "workbench.action.showCommands",
-      ],
-    },
-    {
-      "before": [
-        "<leader>",
-        "<leader>",
-      ],
-      "commands": [
-        "workbench.action.quickOpen",
-      ],
-    },
-    {
-      "before": [
-        "<leader>",
-        ",",
-      ],
-      "commands": [
-        "workbench.action.quickOpen",
-      ],
-    },
-    {
-      "before": [
-        "<leader>",
-        "a",
-      ],
-      "commands": [
-        "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
-      ],
-    },
-    {
-      "before": [
-        "<leader>",
-        "c",
-        "c"
-      ],
-      "commands": [
-        "editor.action.commentLine",
-      ],
-    },
-  ],
-  "vim.visualModeKeyBindingsNonRecursive": [
-    {
-      "before": [
-        ";"
-      ],
-      "commands": [
-        "vim.showQuickpickCmdLine",
-      ],
-    },
-    {
-      "before": [
-        ":"
-      ],
-      "after": [
-        ";",
-      ],
-    },
-    {
-      "before": [
-        "<leader>",
-        ";"
-      ],
-      "commands": [
-        "workbench.action.showCommands",
-      ],
-    },
-    {
-      "before": [
-        "<leader>",
-        "c"
-      ],
-      "commands": [
-        "editor.action.commentLine",
-      ],
-    },
-  ],
-  "vim.replaceWithRegister": true,
-  "vim.showMarksInGutter": true,
-  "vim.smartRelativeLine": true,
-  "vim.sneak": true,
-  "vim.targets.enable": true,
+    "vim.camelCaseMotion.enable": true,
+    "vim.easymotion": true,
+    "vim.highlightedyank.enable": true,
+    "vim.leader": "<space>",
+    "vim.replaceWithRegister": true,
+    "vim.showMarksInGutter": true,
+    "vim.smartRelativeLine": true,
+    "vim.sneak": true,
+    "vim.targets.enable": true,
+    "vim.insertModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "k",
+                "v"
+            ],
+            "after": [
+                "<Esc>"
+            ]
+        },
+        {
+            "before": [
+                "v",
+                "k"
+            ],
+            "after": [
+                "<Esc>"
+            ]
+        }
+    ],
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                ";"
+            ],
+            "commands": [
+                "vim.showQuickpickCmdLine",
+            ],
+        },
+        {
+            "before": [
+                ":"
+            ],
+            "after": [
+                ";",
+            ],
+        },
+        {
+            "before": [
+                "<leader>",
+                ";"
+            ],
+            "commands": [
+                "workbench.action.showCommands",
+            ],
+        },
+        {
+            "before": [
+                "<leader>",
+                "<leader>",
+            ],
+            "commands": [
+                "workbench.action.quickOpen",
+            ],
+        },
+        {
+            "before": [
+                "<leader>",
+                ",",
+            ],
+            "commands": [
+                "workbench.action.quickOpen",
+            ],
+        },
+        {
+            "before": [
+                "<leader>",
+                "a",
+            ],
+            "commands": [
+                "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
+            ],
+        },
+        {
+            "before": [
+                "<leader>",
+                "c",
+                "c"
+            ],
+            "commands": [
+                "editor.action.commentLine",
+            ],
+        },
+        {
+            "before": [ "\"",  "\"",],
+            "after": [ "\"",  "*",],
+        },
+        {
+            "before": [ "<leader>",  "s", "s"],
+            "commands": [ "jupyter.execSelectionInteractive", ],
+            "when": "editorLangId == python  && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor",
+        },
+        {
+            "before": [ "<leader>",  "shift+s"],
+            "commands": [ "jupyter.runFileInteractive", ],
+            "when": "editorLangId == python  && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor",
+        },
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                ";"
+            ],
+            "commands": [
+                "vim.showQuickpickCmdLine",
+            ],
+        },
+        {
+            "before": [
+                ":"
+            ],
+            "after": [
+                ";",
+            ],
+        },
+        {
+            "before": [
+                "<leader>",
+                ";"
+            ],
+            "commands": [
+                "workbench.action.showCommands",
+            ],
+        },
+        {
+            "before": [
+                "<leader>",
+                "c"
+            ],
+            "commands": [
+                "editor.action.commentLine",
+            ],
+        },
+        {
+            "before": [ "<leader>",  "s"],
+            "commands": [ "jupyter.execSelectionInteractive", ],
+            "when": "editorLangId == python  && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor",
+        },
+    ],
 }
