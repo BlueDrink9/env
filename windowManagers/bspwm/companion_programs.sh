@@ -43,6 +43,9 @@ picom --config "$DOTFILES_DIR"/desktop_elements/picom.conf --experimental-backen
 # behavior acts on most expected player.
 command -v playerctld >/dev/null 2>&1 && playerctld daemon >/dev/null 2>&1
 
+xremap "$DOTFILES_DIR"/misc/xremap.yml \
+  >| $HOME/.logs/xremap.log 2>| $HOME/.logs/xremap.err &
+
 # flashfocus &
 # pgrep autokey-gtk || autokey-gtk \
 #    > $HOME/.logs/autokey.log 2> $HOME/.logs/autokey.err &

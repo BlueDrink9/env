@@ -1,0 +1,24 @@
+# modmap:
+#   - name: Except Chrome
+#     application:
+#       not: Google-chrome
+#     remap:
+#       CapsLock: Esc
+keymap:
+  - name: Authy click copy
+    application:
+      only: "Authy Desktop"
+    remap:
+      # Click the 'copy' button in the authy window by:
+      # 1. going to the top left of the authy window (found with focused window geometry)
+      # 2. moving within the window to the button location
+      # Found the button location within the authy window thru trial and error
+      C-c:
+        launch:
+          - "bash"
+          - "-c"
+          - eval "$(xdotool getwindowfocus getwindowgeometry --shell)";
+            xdotool mousemove --sync $X $Y
+            mousemove_relative --sync 370 580
+            click 1;
+            xdotool getwindowfocus windowkill

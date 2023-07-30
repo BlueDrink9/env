@@ -17,7 +17,20 @@ baseRC="${HOME}/.pyvimrc"
 
 source "$DOTFILES_DIR/generic_rc_installer.sh"
 
+doXremap(){
+  # Best installed with cargo I think.
+  # https://github.com/k0kubun/xremap
+  # Ubuntu setup rules
+  echo uinput | sudo tee /etc/modules-load.d/uinput.conf
+  sudo gpasswd -a $USER input
+  echo 'KERNEL=="uinput", GROUP="input", TAG+="uaccess"' | sudo tee /etc/udev/rules.d/input.rules
+  echo 'KERNEL=="event*", NAME="input/%k", MODE="660", GROUP="input"' | sudo tee /etc/udev/rules.d/input.rules
+  sudo modprobe uinput
+  sudo udevadm control --reload-rules && sudo udevadm trigger
+}
+
 # If directly run instead of sourced, do all
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
   do${installID}
+  doXremap
 fi

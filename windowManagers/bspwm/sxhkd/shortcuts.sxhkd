@@ -113,12 +113,3 @@ super + \
 
 super + shift + q
   qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1
-
-  # Click the 'copy' button in the authy window by:
-  # 1. going to the top left of the authy window (found with focused window geometry)
-  # 2. moving within the window to the button location
-  # Found the button location within the authy window thru trial and error
-# eval "$(xdotool getwindowfocus getwindowgeometry --shell)"; \
-#   xdotool mousemove --sync $X $Y sleep 0.1 \
-#   mousemove_relative --sync 370 580 \
-#   click 1
