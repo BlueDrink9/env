@@ -140,14 +140,14 @@ super + w; m; {_, shift + ,ctrl + }{h,j,k,l}
 # focus the next/previous desktop in the current monitor
 super + bracket{left,right}
   bspc desktop -f {prev,next}.local
-# Move to desktop
+# Move to desktop in current monitor
 super + shift + bracket{left,right}
-	bspc node --to-desktop {prev,next}
+	bspc node --to-desktop {prev,next}.local
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
 # Move to desktop and focus on it
 super + ctrl + bracket{left,right}
-  bspc node --to-desktop {prev,next} --follow
+  bspc node --to-desktop {prev,next}.local --follow
 super + ctrl + shift + {1-9,0}
 	bspc node -d '^{1-9,10}' --follow
 # Destroys the old desktop if it is empty first.
