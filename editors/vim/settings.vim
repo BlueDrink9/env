@@ -35,6 +35,9 @@ else
     let g:hasGUI=0
 endif
 
+if has('nvim-0.9')
+  lua vim.loader.enable()
+endif
 set encoding=utf-8
 " Need to add M flag before syntax and filetype, because they source menu.vim.
 set guioptions+=M
@@ -110,7 +113,8 @@ let g:guiFonts = [
               \ "Menlo",
               \ "Consolas"
               \ ]
-if has("win32")
+if exists('g:defaultFontSize')
+elseif has("win32")
     let g:defaultFontSize = 11
 elseif has("macunix")
     let g:defaultFontSize = 15

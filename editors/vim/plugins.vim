@@ -152,7 +152,7 @@ let g:customHLGroups = []
 " {]}
 call plug#begin(s:pluginInstallPath)
 
-if has('nvim')
+if has('nvim') && !has('nvim-0.9')
     Plug 'https://github.com/lewis6991/impatient.nvim'
 endif
 
