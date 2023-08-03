@@ -158,6 +158,8 @@ endif
 Plug 'https://github.com/troydm/zoomwintab.vim'
 " fzf for all the shortcuts defined in vim
 Plug 'https://github.com/sunaku/vim-shortcut'
+" Confirms opening empty file on tabcomplete
+Plug 'https://github.com/EinfachToll/DidYouMean'
 " {]} ---------- Misc----------
 
 " {[} ---------- Visual changes ----------

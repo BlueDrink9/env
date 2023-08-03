@@ -23,8 +23,6 @@ Plug 'https://github.com/Konfekt/FastFold'
 " Allows plugin maps to use '.' to repeat
 Plug 'https://github.com/tpope/vim-repeat'
 
-" Jump to specified place in file with file(L:C)
-Plug 'https://github.com/wsdjeg/vim-fetch'
 " For switching between header and alt files
 " Plug 'vim-scripts/a.vim'
 if has("timers")
@@ -32,8 +30,6 @@ if has("timers")
     " use AsyncRun! to prevent autoscroll.
     Plug 'https://github.com/skywind3000/asyncrun.vim'
 endif
-" Confirms opening empty file on tabcomplete
-Plug 'https://github.com/EinfachToll/DidYouMean'
 " Close buffers without changing window
 Plug 'https://github.com/moll/vim-bbye', {'on': 'Bdelete'}
 cabbrev bd Bdelete
@@ -46,13 +42,6 @@ cabbrev bd Bdelete
 if !has('clipboard') || IsWSL()
     Plug 'https://github.com/kana/vim-fakeclip'
 endif
-" Needs unite/denite, no mappings by default.
-" Maybe later on, put in ide and don't load yankring if idemode.
-" if exists('##TextYankPost')
-"     Plug 'Shougo/neoyank.vim'
-"     let g:neoyank#file = &directory . 'yankring.txt'
-" nmap <leader>p :unite history/yank
-" else
 if has('nvim')
     Plug 'https://github.com/gbprod/yanky.nvim'
 elseif exists('##TextYankPost')
@@ -69,9 +58,9 @@ Plug 'https://github.com/tpope/vim-unimpaired'
 " cx to select an object, then cx again to swap it with first thing.
 Plug 'https://github.com/tommcdo/vim-exchange'
 " Do replace, because cr is used for abolish. Yr is unused atm?
-" Plug 'https://github.com/inkarkat/vim-ReplaceWithRegister'
-Plug 'https://github.com/kana/vim-operator-user'
-Plug 'https://github.com/kana/vim-operator-replace'
+Plug 'https://github.com/inkarkat/vim-ReplaceWithRegister'
+" Plug 'https://github.com/kana/vim-operator-user'
+" Plug 'https://github.com/kana/vim-operator-replace'
 
 " Operator for start/end of text object. For example, d]i) deletes from the
 " cursor to the end of the current parenthetical term
@@ -79,10 +68,10 @@ Plug 'tommcdo/vim-ninja-feet'
 " {]}--- Operators ---
 
 " {[}--- Visual changes ---
+" Highlight f and t chars to get where you want.
 if has('nvim')
     Plug 'https://github.com/jinh0/eyeliner.nvim'
 elseif v:version >= 702
-    " Highlight f and t chars to get where you want.
     Plug 'unblevable/quick-scope'
 endif
 if v:version >= 703
