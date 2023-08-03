@@ -234,6 +234,7 @@
   (add-to-list 'hippie-expand-try-functions-list (lambda (arg) (call-interactively 'company-complete)))
   ;; lsp-mode will override this
   (set-company-backend! 'prog-mode
+    ;; '(:separate company-capf company-dabbrev company-yasnippet company-ispell))
     '(:separate company-capf company-dabbrev company-yasnippet))
   (set-company-backend! 'text-mode
     ;; '(:separate company-capf company-dabbrev company-ispell company-yasnippet))
