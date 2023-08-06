@@ -1117,7 +1117,7 @@
 			<key>Idle Code</key>
 			<integer>0</integer>
 			<key>Initial Text</key>
-			<string> export COLOURSCHEME="solarized_dark"; clear</string>
+			<string> export COLOURSCHEME="ayu"; clear</string>
 			<key>Jobs to Ignore</key>
 			<array>
 				<string>rlogin</string>

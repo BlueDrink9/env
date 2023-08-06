@@ -52,7 +52,7 @@ command! SynSync syntax sync fromstart
 " {[} Colours
 let s:defaultBGGUI="light"
 let s:defaultBGConsole="light"
-let s:defaultColorSch="solarized"
+let s:defaultColorSch="ayu"
 
 " Set colorScheme variable for use in other settings
 " Doesn't override preset scheme
