@@ -144,10 +144,23 @@ function! myVimrcFunctions#ResizeGUIVert(value)
     let &lines+=a:value
 endfunction
 
-function! myVimrcFunctions#ChangeGFNSize(change)
-  if !exists("g:GUIFontSize")
-    let g:GUIFontSize = g:defaultFontSize
-  endif
-  let g:GUIFontSize += a:change
-  call SetGFN(g:GUIFontSize)
-endfunction
+if exists('g:neovide')
+    let g:neovide_scale_factor=1.0
+    function! myVimrcFunctions#ChangeGFNSize(change)
+        if !exists("g:GUIFontSize")
+          let g:GUIFontSize = g:defaultFontSize
+        endif
+        let l:delta = (g:GUIFontSize + a:change) / (0.0 + g:GUIFontSize)
+        let g:GUIFontSize += a:change
+        let g:neovide_scale_factor = g:neovide_scale_factor * l:delta
+        call SetGFN(g:GUIFontSize)
+    endfunction
+else
+    function! myVimrcFunctions#ChangeGFNSize(change)
+      if !exists("g:GUIFontSize")
+        let g:GUIFontSize = g:defaultFontSize
+      endif
+      let g:GUIFontSize += a:change
+      call SetGFN(g:GUIFontSize)
+    endfunction
+endif
