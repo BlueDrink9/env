@@ -40,6 +40,20 @@ endif
 " {]} ---------- Module setup ----------
 
 " {[} ---------- Misc ----------
+if IsPluginUsed("asyncrun.vim")
+    " Open quickfix window at height 8 on running
+    let g:asyncrun_open = 8
+    let g:asyncrun_auto = "make"
+    command! -bang -nargs=* -complete=file ASMake AsyncRun -program=make @ <args>
+    cabbrev make Make
+    cabbrev !! AsyncRun
+    " Set qf statusbar to status of asyncrun
+    let g:asyncrun_status = "stopped"
+    autocmd myPlugins QuickFixCmdPost * call asyncrun#quickfix_toggle(8, 1)
+    autocmd myPlugins BufWinEnter quickfix setlocal 
+                \ statusline=%t\ [%{g:asyncrun_status}]\ %{exists('w:quickfix_title')?\ '\ '.w:quickfix_title\ :\ ''}\ %=%-15(%l,%c%V%)\ %P
+endif
+
 if IsPluginUsed("vim-auto-origami")
     au myPlugins CursorHold,BufWinEnter,WinEnter * AutoOrigamiFoldColumn
 endif

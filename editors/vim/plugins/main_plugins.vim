@@ -56,6 +56,11 @@ endif
 " {]} ---------- Module setup ----------
 
 " {[} ---------- Misc ----------
+if has("timers")
+    " Commands sent to shell with AsyncRun appear in qf window.
+    " use AsyncRun! to prevent autoscroll.
+    Plug 'https://github.com/skywind3000/asyncrun.vim', {'on': 'AsyncRun'}
+endif
 if has('nvim-0.5')
     " Prerequisite for many nvim lua plugins.
     Plug 'nvim-lua/plenary.nvim'
@@ -77,18 +82,10 @@ elseif has("channel") && has('python')
     Plug 'atkenny15/vim-ghosttext', {'on': 'GhostStart'}
 endif
 
-" Lighter-weight, native completion engine. TODO sort
-" Plug 'https://github.com/ajh17/VimCompletesMe'
-" autocmd myPlugins bufenter * let b:vcm_tab_complete = 'tags'
-" autocmd myPlugins FileType vim let b:vcm_tab_complete = 'vim'
-" autocmd myPlugins FileType vim let b:vcm_tab_complete = 'omni'
-
 if v:version >= 704
     " Useful for overviews, and deleting lots of buffers.
-    Plug 'https://github.com/jlanzarotta/bufexplorer.git'
+    Plug 'https://github.com/jlanzarotta/bufexplorer.git', {'on': 'BufExplorer'}
 endif
-" Separate buffer lists for differetn windows
-" Plug 'https://github.com/zefei/vim-wintabs'
 if has('nvim')
     Plug 'https://github.com/numToStr/Comment.nvim'
 else

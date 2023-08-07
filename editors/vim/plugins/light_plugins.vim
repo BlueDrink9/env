@@ -25,11 +25,6 @@ Plug 'https://github.com/tpope/vim-repeat'
 
 " For switching between header and alt files
 " Plug 'vim-scripts/a.vim'
-if has("timers")
-    " Commands sent to shell with AsyncRun appear in qf window.
-    " use AsyncRun! to prevent autoscroll.
-    Plug 'https://github.com/skywind3000/asyncrun.vim'
-endif
 " Close buffers without changing window
 Plug 'https://github.com/moll/vim-bbye', {'on': 'Bdelete'}
 cabbrev bd Bdelete
