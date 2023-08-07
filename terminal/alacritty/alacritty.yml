@@ -42,7 +42,7 @@ font:
   # Normal (roman) font face
   normal:
     # family: MesloLGMDZ NF
-    family: SauceCodePro NFM
+    family: SauceCodePro NF
     # family: SauceCodePro NF Medium
     style: Regular
   bold:

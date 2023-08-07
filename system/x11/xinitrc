@@ -6,7 +6,7 @@ export DOTFILES_DIR="$(cat $HOME/.config/.dotfiles_dir)"
 X_DOTFILES_DIR="$DOTFILES_DIR"/system/x11
 
 export DEFAULT_SESSION=bspwm
-export COLOURSCHEME=solarized_light
+export COLOURSCHEME=ayu_light
 
 . "$DOTFILES_DIR"/shell/XDG_setup.sh
 . "$X_DOTFILES_DIR"/system_defaults.sh
