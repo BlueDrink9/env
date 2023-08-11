@@ -33,7 +33,7 @@ if $TMUX !=? ""
 endif
 
 " gS/gJ to split/join things onto separate/same lines.
-Plug 'https://github.com/AndrewRadev/splitjoin.vim'
+Plug 'https://github.com/AndrewRadev/splitjoin.vim', {'on': ['SplitjoinSplit', 'SplitjoinJoin']}
 " Auto-add 'end' statements, eg endif.
 " Has odd bug with prose fts.
 " Plug 'https://github.com/tpope/vim-endwise'
@@ -305,8 +305,9 @@ EOF
         UnPlug 'vim-pythonsense'
         UnPlug 'SimpylFold'
         Plug 'https://github.com/JoosepAlviste/nvim-ts-context-commentstring'
+        " Replaces splitjoin, but only for some languages. Fallback in config
+        " to regular splitjoin
         Plug 'https://github.com/Wansmer/treesj'
-        UnPlug 'splitjoin.vim'
         " folding enhancements
         Plug 'kevinhwang91/promise-async'
         Plug 'https://github.com/kevinhwang91/nvim-ufo'
