@@ -158,7 +158,7 @@ if has('nvim-0.5')
     " Haven't configured yet.
     " Plug 'https://github.com/mfussenegger/nvim-lint'
     " Integrates linters with Nvim lsp
-    " Plug 'https://github.com/jose-elias-alvarez/null-ls.nvim'
+    Plug 'https://github.com/jose-elias-alvarez/null-ls.nvim'
     Plug 'https://github.com/jayp0521/mason-null-ls.nvim'
 elseif has("timers")
     " Async linting
@@ -352,6 +352,11 @@ EOF
         UnPlug('FastFold')
         " Plug 'https://github.com/mrjones2014/nvim-ts-rainbow'
         " UnPlug('rainbow_parentheses.vim')
+        " Structural search and replace.
+        Plug 'https://github.com/cshuaimin/ssr.nvim'
+        command! SSR lua require("ssr").open()
+        " lua vim.keymap.set({ "n", "x" }, "<leader>sr", function() require("ssr").open() end)
+
     endif
 endif
 

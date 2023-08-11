@@ -303,6 +303,9 @@ if IsPluginUsed("camelcasemotion")
     call camelcasemotion#CreateMotionMappings('-')
     call camelcasemotion#CreateMotionMappings('U')
 endif
+if IsPluginUsed("vim-asterisk")
+  let g:asterisk#keeppos = 1
+endif
 " {]} ---------- Operators ----------
 
 " {[}--- Searching, replacing, finding ---

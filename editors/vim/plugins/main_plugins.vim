@@ -232,9 +232,14 @@ else
     " Plug 'https://github.com/easymotion/vim-easymotion'
 endif
 Plug 'bkad/camelcasemotion'
+" iv as object for camelcasemotion style
+Plug 'https://github.com/Julian/vim-textobj-variable-segment'
+Plug 'https://github.com/haya14busa/vim-asterisk'
 " {]} ---------- Operators ----------
 
 " {[}--- Searching, replacing, finding ---
+" Edit quickfix window and have the changes apply!
+Plug 'https://github.com/stefandtw/quickfix-reflector.vim'
 if has('timers')
     " Async, uses better grep tools like ack or ag
     Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }

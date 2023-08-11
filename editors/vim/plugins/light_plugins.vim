@@ -38,7 +38,8 @@ if !has('clipboard') || IsWSL()
     Plug 'https://github.com/kana/vim-fakeclip'
 endif
 if has('nvim')
-    Plug 'https://github.com/gbprod/yanky.nvim'
+    " Plug 'https://github.com/gbprod/yanky.nvim'
+    Plug 'https://github.com/bfredl/nvim-miniyank'
 elseif exists('##TextYankPost')
     Plug 'https://github.com/svermeulen/vim-yoink'
 else
@@ -51,7 +52,11 @@ endif
 " And [<space> for addign newlines.
 Plug 'https://github.com/tpope/vim-unimpaired'
 " cx to select an object, then cx again to swap it with first thing.
-Plug 'https://github.com/tommcdo/vim-exchange'
+if has('nvim')
+    Plug 'https://github.com/gbprod/substitute.nvim'
+else
+    Plug 'https://github.com/tommcdo/vim-exchange'
+endif
 " Do replace, because cr is used for abolish. Yr is unused atm?
 Plug 'https://github.com/inkarkat/vim-ReplaceWithRegister'
 " Plug 'https://github.com/kana/vim-operator-user'
