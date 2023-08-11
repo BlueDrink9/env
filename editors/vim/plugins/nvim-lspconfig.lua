@@ -170,20 +170,6 @@ lsp_installer.setup_handlers({
          },
       }
    end,
-   ["sqls"] = function()
-      require('lspconfig').sqls.setup{
-         on_attach = function(client, bufnr)
-            require('sqls').on_attach(client, bufnr)
-            on_attach(client, bufnr)
-            vim.api.nvim_buf_set_keymap(
-               bufnr, '', maps.REPLSend, "<Plug>(sqls-execute-query)",
-               { noremap=true, silent=true })
-            vim.api.nvim_buf_set_keymap(
-               bufnr, 'n', maps.REPLSendLine, "0<Plug>(sqls-execute-query)$",
-               { noremap=true, silent=true })
-         end
-      }
-   end
 })
 
 -- Instead of showing signs, change the colour of the numbercolumn.

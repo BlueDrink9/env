@@ -706,3 +706,10 @@ if has('nvim-0.5')
 endif
 
 autocmd myVimrc BufWritePre * :call myVimrcFunctions#MkNonExDir(expand('<afile>'), +expand('<abuf>'))
+
+if has("autocmd") && exists("+omnifunc")
+    autocmd Filetype *
+                \ if &omnifunc == "" |
+                \ setlocal omnifunc=syntaxcomplete#Complete |
+                \ endif
+endif

@@ -82,7 +82,7 @@ Plug 'https://github.com/junegunn/goyo.vim', {'on' : ['Goyo',]}
 " {]}--- Visual ---
 
 " {[} --- TMUX ---
-if executable('tmux')
+if $TMUX !=? ""
     Plug 'https://github.com/tmux-plugins/vim-tmux'
     Plug 'https://github.com/christoomey/vim-tmux-navigator'
     Plug 'https://github.com/preservim/vimux'

@@ -164,7 +164,7 @@ if IsPluginUsed('range-highlight.nvim')
 endif
 
 if IsPluginUsed('float-preview.nvim')
-    let g:float_preview#docked = 0
+    let g:float_preview#docked = 1
 endif
 
 " {]} ---------- Visual ----------
@@ -483,6 +483,10 @@ endif
 
 if IsPluginUsed('nvim-treesitter')
     call SourcePluginFile('treesitter.lua')
+   if IsPluginUsed('treesj')
+      lua vim.keymap.set('n', 'gJ', function() require('treesj').join() end)
+      lua vim.keymap.set('n', 'gS', function() require('treesj').split() end)
+   endif
 endif
 " {]} ---------- IDE----------
 

@@ -182,7 +182,7 @@ exec 'source ' . s:localPlugins
 
 call plug#end()
 
-if has('nvim')
+if has('nvim') && !has('nvim-0.9')
     lua require('impatient')
 endif
 
