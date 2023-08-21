@@ -223,7 +223,7 @@ if IsPluginUsed('ale')
     let g:ale_echo_delay = 200
     " Faster but have to restart vim if you install a new linter.
     let g:ale_cache_executable_check_failures = 1
-    if executable('nice')
+    if Executable('nice')
         " Don't run linters at the expense of general system
         let g:ale_command_wrapper = 'nice -n5 %*'
     endif

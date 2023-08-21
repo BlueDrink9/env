@@ -21,7 +21,7 @@ Plug 'Shougo/neoinclude.vim'
 " Completion sources for vimscript
 Plug 'Shougo/neco-vim'
 Plug 'artur-shaik/vim-javacomplete2'
-if executable("clang")
+if Executable("clang")
   Plug 'Shougo/deoplete-clangx', {'for': ['c', 'cpp'] }
 endif
 Plug 'deoplete-plugins/deoplete-dictionary'

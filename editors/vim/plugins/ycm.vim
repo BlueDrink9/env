@@ -1,8 +1,7 @@
 " let g:ycm_global_ycm_extra_conf = '~/.config/ycm/ycm_extra_conf.py'
 
-" if executable('ctags-exuberant')
 " ctags --version must be exuberant
-if executable("ctags")
+if Executable("ctags")
     let g:ycm_collect_identifiers_from_tags_files = 1
 endif
 let g:ycm_confirm_extra_conf = 1

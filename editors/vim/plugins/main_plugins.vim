@@ -26,26 +26,11 @@ function! PythonInstallModule(module)
     if exists('g:skipPythonInstall')
         return
     endif
-    if !exists('g:pyInstaller')
-        if executable('conda')
-            let g:pyInstaller="conda install -y -c conda-forge -c malramsay "
-        else
-            if executable('pip3')
-                let l:pipVersion="pip3"
-            elseif executable('pip')
-                " elseif executable('pip') && system('pip --version') =~ '3'
-                let g:pyInstaller="pip"
-                " Fallback - python 2
-            elseif executable('pip2')
-                let g:pyInstaller="pip2"
-            else
-                silent echom "Err: No pip installed. Will not install python support."
-                return
-            endif
-            let g:pyInstaller=l:pipVersion . " install --user --upgrade "
-        endif
+    if Executable('conda')
+        exec "!conda install -y -c conda-forge -c malramsay " . a:module
+    else
+        exec 'pyx import subprocess; import sys; subprocess.check_call([sys.executable,"-m","pip","install","' . a:module . '"])'
     endif
-    exec "!" . g:pyInstaller . a:module
 endfunction
 
 " Should pick up from either python types.
@@ -127,11 +112,11 @@ if v:version >= 703
     " Vim hexedit. Low dependency, interface as you'd expect. Pretty
     " good.
     Plug 'https://github.com/Shougo/vinarise.vim'
-elseif executable('xxd')
+elseif Executable('xxd')
     " Doesn't use autoload.
     Plug 'https://github.com/fidian/hexmodee', {'on': 'HexEdit'}
 endif
-if HasPython() && executable('pfp')
+if HasPython() && Executable('pfp')
     " Powerful hexedit interface. Needs pip install pfp. Allows seing the
     " assembly.
     " Also requires downloading a .bt file for the filetype you are interested in.
@@ -332,7 +317,7 @@ Plug 'https://github.com/chrisbra/csv.vim', {'for': 'csv'}
 " {]} ---------- extra filetype support ----------
 
 " {[} ---------- Git ----------
-if executable("git")
+if Executable("git")
     " Git wrapper. Includes magit-style functionality under Gstatus
     Plug 'https://github.com/tpope/vim-fugitive'
     " Enhances working with branches in fugitive
@@ -384,7 +369,7 @@ endif
 "     Plug 'previm/previm'
 "     let g:previm_open_cmd="fopen"
 " endif
-if executable('pandoc') && !has('win32')
+if Executable('pandoc') && !has('win32')
     " Actually works, fewer dependencies (pandoc, not node or yarn). Doesn't
     " have synced scrolling, hard to change browser.
     Plug 'JamshedVesuna/vim-markdown-preview', {'for': 'markdown'}
@@ -419,7 +404,7 @@ if has('nvim') || !has('win32')
     Plug 'https://github.com/justinmk/vim-dirvish'
     Plug 'roginfarrer/vim-dirvish-dovish', {'branch': 'main'}
     Plug 'https://github.com/bounceme/remote-viewer'
-    if executable('git')
+    if Executable('git')
         Plug 'https://github.com/kristijanhusak/vim-dirvish-git'
     endif
 endif

@@ -68,9 +68,9 @@ endif
 let s:autoloadDir=expand($VIMHOME . "/autoload")
 let s:vimplug_file=expand(s:autoloadDir . "/plug.vim")
 if !filereadable(s:vimplug_file)
-    if executable("curl")
+    if Executable("curl")
         let s:downloader = "!curl -fLo "
-    elseif executable("wget")
+    elseif Executable("wget")
         let s:downloader = "!wget --no-check-certificate -O "
     else
         echoerr "You have to install curl or wget, or install vim-plug yourself!"

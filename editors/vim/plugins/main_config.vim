@@ -1,44 +1,6 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
 
-" {[} ---------- Providers/External model setup neovim ----------
-let g:skipPythonInstall=1  " Tmp skip installing python modules.
-" Install python module, preferably for py3.
-function! PythonInstallModule(module)
-    if exists('g:skipPythonInstall')
-        return
-    endif
-    if !exists('g:pyInstaller')
-        if executable('conda')
-            let g:pyInstaller="conda install -y -c conda-forge -c malramsay "
-        else
-            if executable('pip3')
-                let l:pipVersion="pip3"
-            elseif executable('pip')
-                " elseif executable('pip') && system('pip --version') =~ '3'
-                let g:pyInstaller="pip"
-                " Fallback - python 2
-            elseif executable('pip2')
-                let g:pyInstaller="pip2"
-            else
-                silent echom "Err: No pip installed. Will not install python support."
-                return
-            endif
-            let g:pyInstaller=l:pipVersion . " install --user --upgrade "
-        endif
-    endif
-    exec "!" . g:pyInstaller . a:module
-endfunction
-
-" Should pick up from either python types.
-if !exists('g:skipPythonInstall')
-    if has('nvim') && !(has("python") || has("python3"))
-        " Needed for neovim python support.
-        call PythonInstallModule('neovim')
-    endif
-endif
-" {]} ---------- Module setup ----------
-
 " {[} ---------- Misc ----------
 if IsPluginUsed("asyncrun.vim")
     " Open quickfix window at height 8 on running
@@ -343,17 +305,13 @@ if IsPluginUsed("far.vim")
     " Used for completion
     let g:far#file_mask_favorites=['**/*.*', '%']
     let g:far#default_file_mask='**/*.*'
-    " Sets the first one in the loop it finds.
-    for p in ['rg', 'ag', 'ack']
-        if executable(p)
-            if has('nvim')
-                let g:far#source=p . 'nvim'
-            else
-                let g:far#source=p
-            endif
-            break
+    if Executable('rg')
+        if has('nvim')
+            let g:far#source='rg' . 'nvim'
+        else
+            let g:far#source='rg'
         endif
-    endfor
+    endif
 endif
 
 if IsPluginUsed("vim-buffersaurus")
@@ -367,7 +325,7 @@ endif
 if IsPluginUsed("ctrlp.vim")
     " Look in buffers, files and MRU.
     let g:ctrlp_cmd = 'CtrlPMixed'
-    if executable('fd')
+    if Executable('fd')
         let g:ctrlp_user_command = 'fd %s -type f'
     endif
     let g:ctrlp_map = '<leader><space>'
@@ -653,7 +611,7 @@ if IsPluginUsed("vimtex")
         " python3 -c 'import site; print(site.USER_BASE, end=\"\")'
         if has('nvim') && !has('clientserver')
             " May require specific configuration
-            if executable('nvr')
+            if Executable('nvr')
                 let g:vimtex_compiler_progname="nvr"
             else
                 augroup vimtexWarning

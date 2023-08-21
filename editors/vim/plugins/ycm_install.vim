@@ -14,7 +14,7 @@ function! BuildYCM()
                 \ "mono" : "--cs-completer"
                 \ }
     for prog in keys(l:installSupports)
-        if executable(prog)
+        if Executable(prog)
             call add(l:installOptions, l:installSupports[prog])
         endif
     endfor

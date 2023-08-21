@@ -96,9 +96,9 @@ if has('nvim')  " needs > 0.7
     silent! UnPlug 'fzf.vim'
     Plug 'https://github.com/nvim-lua/plenary.nvim'
     if IsCCompilerAvailable()
-        if executable("make")
+        if Executable("make")
             Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-        elseif executable("cmake")
+        elseif Executable("cmake")
             Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
         endif
     endif
@@ -194,14 +194,14 @@ if HasPython()
 endif
 
 " Pip install jupytext. Converts notebooks to text format.
-if executable('jupytext')
+if Executable('jupytext')
     Plug 'goerz/jupytext.vim'
 endif
 
 " {]} ------ Python ------
 
 " {[} ---------- R ----------
-if executable('R')
+if Executable('R')
     if !has('nvim') && !has('job')
         " Unmaintained version that doesn't need vim 8
         Plug 'jcfaria/vim-r-plugin'
@@ -233,7 +233,7 @@ endif
 " {]} ---------- Lang-specific ----------
 
 " {[} ---------- Git ----------
-if executable("git")
+if Executable("git")
     " Advanced commit history browser
     Plug 'https://github.com/junegunn/gv.vim', {'on': 'GV'}
     " Better diff algs with :PatientDiff or :EnhancedDiff
@@ -279,8 +279,8 @@ lua << EOF
 function check_treesitter_installable()
     -- ("tar" and "curl" or "git") and {
     local fn = vim.fn
-    if fn.executable("git") == 0 then
-        if fn.executable("curl") == 0 and fn.executable("tar") == 0 then
+    if fn.Executable("git") == 0 then
+        if fn.Executable("curl") == 0 and fn.executable("tar") == 0 then
             return false
         end
     end
@@ -386,7 +386,7 @@ if has("timers")
         endif
 
     elseif has("python3")
-        if executable("cmake")
+        if Executable("cmake")
             " Awesome code completion, but requires specific installations and
             " compiling a binary.
             call SourcePluginFile("ycm_install.vim")
