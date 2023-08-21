@@ -75,7 +75,7 @@ EOF
 endif
 if IsPluginUsed("vim-showmarks.git")
     " More advanced version of showmarks. Lots of mappings, eg m]
-    Plug 'jeetsukumaran/vim-markology', {'on': ['MarkologyEnable', 'MarkologyToggle']}
+    Plugin 'jeetsukumaran/vim-markology', {'on': ['MarkologyEnable', 'MarkologyToggle']}
     nnoremap m? <cmd>MarkologyEnable<cr>
     let g:markology_enable=0
     let g:markology_ignore_type="hpq"

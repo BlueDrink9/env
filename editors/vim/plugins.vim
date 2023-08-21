@@ -180,11 +180,18 @@ function PlugToLazy(plugin, opts)
 end
 EOF
 endif
-function! PluginAdapter(plugin, opts)
-    if has('nvim')
-        spec = lua PlugToLazy(a:plugin, a:opts)
+function! PluginAdapter(...)
+    let l:plugin = a:1
+    let l:args = {}
+    if a:0 == 2
+        let l:args = a:2
+    endif
+    if has('nvim') && v:false
+        lua PlugToLazy(vim.g.plugin, vim.g.args)
     else
-        Plug a:plugin, a:opts
+        " Remove args unsupported by Plug
+        silent! call remove(l:args, "keys")
+        Plug l:plugin, l:args
     endif
 endfunction
 
@@ -202,11 +209,11 @@ call plug#begin(s:pluginInstallPath)
 " Jetpack 'tani/vim-jetpack', {'opt': 1} "bootstrap
 
 if has('nvim') && !has('nvim-0.9')
-    Plug 'https://github.com/lewis6991/impatient.nvim'
+    Plugin 'https://github.com/lewis6991/impatient.nvim'
 endif
 
 " For profiling startup time.
-" Plug 'https://github.com/dstein64/vim-startuptime'
+" Plugin 'https://github.com/dstein64/vim-startuptime'
 " let g:startuptime_tries = 3
 " let g:ideMode=1
 
@@ -216,10 +223,10 @@ call SourcePluginFile("light_plugins.vim")
 if !g:liteMode
     call SourcePluginFile("main_plugins.vim")
     if has('nvim-0.5')
-        Plug 'https://github.com/nvim-lualine/lualine.nvim'
+        Plugin 'https://github.com/nvim-lualine/lualine.nvim'
     else
-        Plug 'https://github.com/vim-airline/vim-airline-themes'
-        Plug 'https://github.com/vim-airline/vim-airline'
+        Plugin 'https://github.com/vim-airline/vim-airline-themes'
+        Plugin 'https://github.com/vim-airline/vim-airline'
     endif
     if g:ideMode
         call SourcePluginFile("ide_plugins.vim")

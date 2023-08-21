@@ -30,7 +30,7 @@ endfunction
 
 let s:YCM_dir=PathExpand(g:plug_home . '/' . s:name)
 let g:YCMInstallOps={'do': ":call BuildYCM()", 'dir': s:YCM_dir, 'on': []}
-Plug 'https://github.com/ycm-core/YouCompleteMe', g:YCMInstallOps
+Plugin 'https://github.com/ycm-core/YouCompleteMe', g:YCMInstallOps
 unlet g:YCMInstallOps
 if filereadable(PathExpand(s:YCM_dir . '/third_party/ycmd/ycm_core.so'))
     let g:YCM_Installed=1

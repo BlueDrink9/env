@@ -398,7 +398,7 @@ if IsPluginUsed('vim-r-plugin')
     " let R_user_maps_only = 1
     " {]} Mappings
     " Requires ncm2
-    " Plug 'https://github.com/gaalcaras/ncm-R'
+    " Plugin 'https://github.com/gaalcaras/ncm-R'
 endif
 " {]} ---------- R ----------
 

@@ -1,7 +1,7 @@
 if $USENF==1
-  Plug 'kyazdani42/nvim-web-devicons'
+  Plugin 'kyazdani42/nvim-web-devicons'
 endif
-Plug 'romgrk/barbar.nvim'
+Plugin 'romgrk/barbar.nvim'
 
 " Move to previous/next
 nnoremap <silent>    <Left> :BufferPrevious<CR>

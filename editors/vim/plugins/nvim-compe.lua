@@ -1,4 +1,4 @@
-vim.cmd("Plug 'hrsh7th/nvim-compe'")
+vim.cmd("Plugin 'hrsh7th/nvim-compe'")
 vim.cmd("autocmd myPlugins User pluginSettingsToExec lua nvim_compe_setup(require('compe'))")
 -- https://github.com/ray-x/lsp_signature.nvim
 vim.o.completeopt = "menuone,noselect"
