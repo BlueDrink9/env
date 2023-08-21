@@ -38,7 +38,7 @@ augroup end
 
 " {[} Settings and dir creation
 
-let s:pluginInstallPath = CreateVimDir("/pack")
+let s:pluginInstallPath = CreateVimDir("/plugins")
 let s:localPlugins = PathExpand(g:vimfilesDir . "/local_plugins.vim")
 let s:scriptdir = expand('<sfile>:p:h')
 let g:plugindir = PathExpand(s:scriptdir . "/" . "plugins")
@@ -66,38 +66,44 @@ else
     let s:vimhome = $HOME."/.vim"
  endif
 
-" Install plugin manager
-if has('nvim')
-    let s:jetpack_dir = stdpath('data') .. '/site/pack/jetpack/opt/vim-jetpack/plugin'
-else
-    let s:jetpack_dir = expand(s:vimhome) .. '/pack/jetpack/opt/vim-jetpack/plugin'
-endif
-let s:plugin_manager_file = s:jetpack_dir .. '/jetpack.vim'
+cabbrev packi PlugInstall
+cabbrev packu PlugUpdate <bar> PlugUpgrade
 
-let s:jetpackurl = "https://raw.githubusercontent.com/tani/vim-jetpack/master/plugin/jetpack.vim"
+" Install plugin manager
+" if has('nvim')
+"     let s:plugin_manager_dir = stdpath('data') .. '/site/pack/jetpack/opt/vim-jetpack/plugin'
+" else
+"     let s:plugin_manager_dir = expand(s:vimhome) .. '/pack/jetpack/opt/vim-jetpack/plugin'
+" endif
+let s:plugin_manager_dir = expand(s:vimhome .. '/autoload')
+let s:plugin_manager_file = s:plugin_manager_dir .. '/plug.vim'
+
+" Jetpack
+" let s:plugin_manager_url = "https://raw.githubusercontent.com/tani/vim-jetpack/master/plugin/jetpack.vim"
+let s:plugin_manager_url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+
 if !filereadable(s:plugin_manager_file)
-    exec "silent !mkdir -p " . s:jetpack_dir
+    exec "silent !mkdir -p " . s:plugin_manager_dir
     if Executable("curl")
         let s:downloader = "curl -fLo "
     elseif Executable("wget")
         let s:downloader = "wget --no-check-certificate -O "
     else
-        echoerr "You have to install curl or wget, or install jetpack yourself!"
-        echoerr "jetpack not installed. No plugins will be loaded."
+        echoerr "You have to install curl or wget, or install plugin manager yourself!"
+        echoerr "Plugin manager not installed. No plugins will be loaded."
         finish
     endif
     " Continue installing...
-    echom "Installing jetpack..."
+    echom "Installing plugin manager..."
     echo ""
-    echom printf('%s %s %s', s:downloader, s:plugin_manager_file, s:jetpackurl)
-    call system(printf('%s %s %s', s:downloader, s:plugin_manager_file, s:jetpackurl))
+    call system(printf('%s %s %s', s:downloader, s:plugin_manager_file, s:plugin_manager_url))
     if !filereadable(s:plugin_manager_file)
-        echoerr "jetpack failed to install. No plugins will be loaded."
+        echoerr "Plugin manager not installed. No plugins will be loaded."
         finish
     endif
-    autocmd myPlugins VimEnter * call jetpack#sync()
+    autocmd myPlugins VimEnter * PlugInstall
 endif
-packadd vim-jetpack
+" packadd vim-jetpack
 
 
 
@@ -131,20 +137,18 @@ endfunction
 command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 
 function! IsPluginUsed(name)
-    return jetpack#tap(a:name)
+    return has_key(g:plugs, a:name)
 endfunction
 
 function! LoadPluginOnInsertEnter(name)
   call LoadPluginOnEvent(a:name, "InsertEnter")
 endfunction
 
-command! -bang -nargs=* Plug Jetpack <args>
-
 " Plug installs the plugin, but only loads on autocmd event.
 " name: the last part of the plugin url (just name, no auth).
 " Plug options should include 'on': [] to prevent load before event.
 function! LoadPluginOnEvent(name, event)
-  let l:plugLoad = 'autocmd ' . a:event . ' * call jetpack#load("'
+  let l:plugLoad = 'autocmd ' . a:event . ' * call plug#load("'
   let l:plugLoadEnd = '")'
   let l:undoAutocmd = 'autocmd! ' . a:name . '_' . a:event
   exec "augroup " . a:name . '_' . a:event
@@ -153,8 +157,39 @@ function! LoadPluginOnEvent(name, event)
   augroup END
 endfunction
 
-cabbrev packi JetpackSync
-cabbrev packu JetpackSync
+if has('nvim')
+lua << EOF
+-- Compatibility function to convert vim-plug's Plug command to lazy.nvim spec
+function PlugToLazy(plugin, opts)
+    local lazySpec = {}
+    lazySpec.url = plugin
+    if opts then
+        -- if opts["for"] then
+            lazySpec.ft = opts["for"]
+        -- end
+        if opts["on"] then
+            lazySpec.cmd = opts["on"]
+        end
+        if opts["do"] then
+            lazySpec.run = opts["do"]
+        end
+        lazySpec.keys = opts["keys"]
+    end
+
+    return lazySpec
+end
+EOF
+endif
+function! PluginAdapter(plugin, opts)
+    if has('nvim')
+        spec = lua PlugToLazy(a:plugin, a:opts)
+    else
+        Plug a:plugin, a:opts
+    endif
+endfunction
+
+command! -bang -nargs=* Plugin call PluginAdapter(<args>)
+
 
 let g:pluginSettingsToExec = []
 let g:customHLGroups = []
@@ -163,8 +198,8 @@ let g:customHLGroups = []
 " let g:plugs={}
 " let g:plugs_order=[]
 " {]}
-call jetpack#begin(s:pluginInstallPath)
-Jetpack 'tani/vim-jetpack', {'opt': 1} "bootstrap
+call plug#begin(s:pluginInstallPath)
+" Jetpack 'tani/vim-jetpack', {'opt': 1} "bootstrap
 
 if has('nvim') && !has('nvim-0.9')
     Plug 'https://github.com/lewis6991/impatient.nvim'
@@ -194,7 +229,7 @@ endif
 " Unplugs and replacements go here
 exec 'source ' . s:localPlugins
 
-call jetpack#end()
+call plug#end()
 
 if has('nvim') && !has('nvim-0.9')
     lua require('impatient')
