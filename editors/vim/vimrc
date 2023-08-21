@@ -8,16 +8,9 @@ augroup myVimrc
 augroup end
 
 function! PathExpand(path)
-    " Version 7.1 doesn't support fnameescape. Used on iOS.
-    " Besides, if you're using 7.1, it's because it's a pre-installed default,
-    " meaning it's unix, meaning "/" is the right path separator anyway.
-    if v:version >= 703
-        let l:out = fnameescape(expand(a:path))
-    else
-        let l:out = expand(a:path)
-    endif
-    return l:out
+    return fnameescape(expand(a:path))
 endfunction
+
 function! CreateDir(dir)
     if has('win32')
         let l:dir = escape(a:dir, '\')
@@ -30,7 +23,6 @@ function! CreateDir(dir)
 endfunction
 
 " Folder in which current script resides:
-" let s:scriptdir = PathExpand(<sfile>:p:h)
 " Handles symlinks, etc.
 let s:scriptdir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
@@ -44,13 +36,6 @@ else
 endif
 let g:vimfilesDir = PathExpand(g:vimfilesParentDir . '/' . s:vimfilesDirName)
 
-  " if v:version < 704  " Only looks at ~/.vimrc.
-  " endif
-" Caution: nvim init.vim is kept elsewhere.
-let g:vimrcdir = fnamemodify(expand("$MYVIMRC"), ":p:h")
-" if has('nvim')
-"     let g:vimrcdir = expand("$HOME", ":p:h")
-" endif
 " Automatically create vimfile directories in same location as vimrc
 function! CreateVimDir(dir)
     let l:fullDir = PathExpand(g:vimfilesDir . '/' . a:dir)

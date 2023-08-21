@@ -180,7 +180,7 @@ Plug 'xolox/vim-misc'
 " popup.
 Plug 'https://github.com/xolox/vim-shell'
 if v:version >= 704
-    Plug 'https://github.com/xolox/vim-session'
+    Plug 'https://github.com/xolox/vim-session', {'on': ['OpenSession']}
 endif
 " {]} View and session
 
