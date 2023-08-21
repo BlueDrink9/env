@@ -6,7 +6,7 @@ fn = vim.fn
 -- vim.cmd('au VimLeave * set guicursor=a:block-blinkon0')  -- Uncomment if needed
 
 -- Define VIMHOME based on platform
-local is_windows = fn.has('win32') or fn.has('win64')
+local is_windows = fn.has('win32') == 1 or fn.has('win64') == 1
 local VIMHOME = ""
 if is_windows then
     VIMHOME = fn.expand("$HOME/vimfiles")
@@ -30,12 +30,16 @@ o.packpath = o.runtimepath:get()
 
 -- Load the appropriate vimrc file based on platform and its existence
 if is_windows then
-    -- try load this vimrc
-    if not pcall(vim.cmd, "source " .. fn.expand("~/vimfiles/vimrc")) then
-        vim.cmd("source " .. fn.expand("~/_vimrc"))
+    if vim.fn.filereadable(vim.fn.expand("~/vimfiles/vimrc")) == 1 then
+        vimrc_path = "~/vimfiles/vimrc"
+    else
+        vimrc_path = "~/_vimrc"
     end
 else
-    if not pcall(vim.cmd, "source " .. fn.expand("~/.vim/vimrc")) then
-        vim.cmd("source " .. fn.expand("~/.vimrc"))
+    if vim.fn.filereadable(vim.fn.expand("~/.vim/vimrc")) == 1 then
+        vimrc_path = "~/.vim/vimrc"
+    else
+        vimrc_path = "~/.vimrc"
     end
 end
+vim.cmd("source " .. vimrc_path)
