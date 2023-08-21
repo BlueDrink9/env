@@ -92,7 +92,7 @@ if !exists ('g:backgroundColour')
     endif
 endif
 
-exec 'set background=' . g:backgroundColour
+let &background=g:backgroundColour
 
 
 "{[} GUI
@@ -231,22 +231,14 @@ set incsearch
 set ignorecase smartcase
 if has('nvim')
     set inccommand=split
-    " when 'c'hanging, don't remove text. Put $ at end instead. Line will be
-    " overwritten.
-    " set cpoptions += "$"
-endif
-
-if has('nvim-0.4')
     set signcolumn=auto:4
 endif
 " Highlight search results. Use :noh to undo
 " set hlsearch
 " Show line numbers
 set number
-if v:version >= 703
-    " Line numbers are displayed relative to current line.
-    set relativenumber
-endif
+" Line numbers are displayed relative to current line.
+set relativenumber
 " Hide buffer (don't ask for save) when navigating away.
 set hidden
 set sessionoptions-=blank
@@ -257,11 +249,6 @@ set wildmode=list:longest,full
 set wildignorecase
 " Mapping usable in macros/maps to trigger completion menu.
 set wildcharm=<tab>
-" if exists('&pumblend') && &termguicolors && !g:liteMode
-"     " Pseudo-transparency for popup menu.
-"     set pumblend=20
-"     set winblend=20
-" endif
 if exists('+wildoptions')
     set wildoptions=fuzzy,pum
 endif
@@ -283,7 +270,7 @@ endif
 " When jumping to a fileline from current tab, don't change tabs.
 set switchbuf=useopen,uselast
 " Lower priority file suffixes in completion menus.
-set suffixes+=.tmp,tags
+set suffixes+=.tmp,tags,.bak
 set display=lastline
 set diffopt+=vertical
 set previewheight=6
@@ -300,35 +287,33 @@ endfunction
 autocmd myVimrc BufWinEnter * if &previewwindow | call s:previewWinSettings() | endif
 
 
-if v:version >= 703
-    if has('nvim')
-        " Note that viminfo is an alias for &shada in nvim.
-        let s:viminfoName = 'nviminfo.shada'
-    else
-        let s:viminfoName = 'viminfo'
-    endif
-    let s:viminfoPath=PathExpand(g:vimfilesDir . '/' . s:viminfoName)
-    " Need to use '/' as path sep, or '\\'. Not '/' as is created by
-    " pathexpand.
-    let s:viminfoPath=substitute(s:viminfoPath,'\\','/','g')
-    exec 'set viminfo+=n' . s:viminfoPath
+if has('nvim')
+    " Note that viminfo is an alias for &shada in nvim.
+    let s:viminfoName = 'nviminfo.shada'
+else
+    let s:viminfoName = 'viminfo'
 endif
+let s:viminfoPath=PathExpand(g:vimfilesDir . '/' . s:viminfoName)
+" Need to use '/' as path sep, or '\\'. Not '/' as is created by
+" pathexpand.
+let s:viminfoPath=substitute(s:viminfoPath,'\\','/','g')
+exec 'set viminfo+=n' . s:viminfoPath
 
 " Extra slash at end means files will have unique names
 " Backupdir possibly doesn't allow // on older versions
-exec 'set backupdir=' . CreateVimDir("backup") . '//'
+let &backupdir=CreateVimDir("backup") . '//'
 " au BufWritePre * let &bex = '-' . strftime("%Y%b%d%X") . '.vimbackup'
 set backupext=.vimbackup
 set backup
 set writebackup
 " Note that neovim auto-creates these directories if they don't exist
-exec 'set directory=' . CreateVimDir("swap") . '//'
-exec 'set viewdir=' . CreateVimDir("views") . '//'
+let &directory=CreateVimDir("swap") . '//'
+let &viewdir=CreateVimDir("views") . '//'
 if has('persistent_undo')
     if has('nvim')
         let &undodir=g:vimfilesDir . "nvimundo//"
     else
-        exec 'set undodir=' . CreateVimDir("undo") . '//'
+        let &undodir=CreateVimDir("undo") . '//'
     endif
     " Create undo file for inter-session undo
     set undofile
@@ -348,7 +333,7 @@ function! Autosave()
     " autowrite is set.
     if bufname('%') != '' && &ro != 1 && &modifiable == 1 && &autowrite
         " If no changes, don't touch modified timestamp.
-        " Don't trigger autocmds.
+        " Don't trigger autocmds because it's too slow (on insertleave).
         noa silent! update
     endif
 endfunction
@@ -396,10 +381,8 @@ if exists('+wrapmargin')
 endif
 " backspace and cursor keys wrap to previous/next line
 set backspace=indent,eol,start whichwrap+=<,>,[,]
-if v:version >= 703
-    " Colour the 80th column
-    set colorcolumn=80
-endif
+" Colour the 80th column
+set colorcolumn=80
 " Linebreak relates to when a line wraps (ie not in a word)
 set linebreak
 " Vertical window splits open on right side, horizontal below
@@ -479,20 +462,18 @@ endif
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor = "latex"
-if v:version >= 703
-    set conceallevel=2
-endif
+set conceallevel=2
 set foldmethod=syntax
 set foldminlines=6
 " set foldmethod=marker
 " set foldmarker={[},{]}
-set foldnestmax=3
+set foldnestmax=4
 " Shows a column that displays folds.
 " set foldcolumn=1
 set foldminlines=3
 " Most folds closed on bufopen, not all.
 set foldlevelstart=1
-set foldopen+=",insert"
+set foldopen+=insert
 " Use indent and manual folding
 " au myVimrc BufReadPre * setlocal foldmethod=indent
 " au myVimrc BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
@@ -574,7 +555,7 @@ function! s:SetTitle()
     endif
     let l:filename = expand("%:t")
     if l:filename == ""
-        let &titlestring = 'Vim - New Buffer'
+        let &titlestring = l:preTitle . ' – New Buffer'
     else
         let &titlestring = l:preTitle . l:filename . ' [' . expand("%:p:h") . ']'
     endif
@@ -667,17 +648,12 @@ autocmd myVimrc WinEnter * if winnr('$') == 1 && &buftype == "quickfix" | quit |
 autocmd myVimrc Filetype qf setlocal laststatus=0
 autocmd myVimrc Filetype qf setlocal nonu
 autocmd myVimrc Filetype qf setlocal norelativenumber
-if v:version >= 703
-    autocmd myVimrc Filetype qf setlocal colorcolumn=0
-endif
+autocmd myVimrc Filetype qf setlocal colorcolumn=0
 
-if executable('rg')
+" if executable('rg')
 	set grepformat=%f:%l:%m
 	let &grepprg = 'rg --vimgrep' . (&smartcase ? ' --smart-case' : '')
-elseif executable('ag')
-	set grepformat=%f:%l:%m
-	let &grepprg = 'ag --vimgrep' . (&smartcase ? ' --smart-case' : '')
-endif
+" endif
 
 if has('patch-8.1.0360')
     set diffopt+=internal,algorithm:patience
@@ -691,15 +667,15 @@ endif
 if $TERM =~ 'kitty'
     let &t_ut=''
 endif
-if has('nvim-0.5')
+if has('##TextYankPost')
   au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=3000, on_visual=true}
 endif
 
 autocmd myVimrc BufWritePre * :call myVimrcFunctions#MkNonExDir(expand('<afile>'), +expand('<abuf>'))
 
-if has("autocmd") && exists("+omnifunc")
-    autocmd Filetype *
-                \ if &omnifunc == "" |
-                \ setlocal omnifunc=syntaxcomplete#Complete |
-                \ endif
-endif
+" if has("autocmd") && exists("+omnifunc")
+"     autocmd Filetype *
+"                 \ if &omnifunc == "" |
+"                 \ setlocal omnifunc=syntaxcomplete#Complete |
+"                 \ endif
+" endif
