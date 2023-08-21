@@ -401,7 +401,7 @@ endif
 if IsPluginUsed("vim-dispatch")
     " exec 'nnoremap ' . g:IDE_mappings.make . "<cmd>w <bar> Dispatch<cr>"
     let g:dispatch_no_maps = 1
-    exec 'nmap ' . g:IDE_mappings.make . "<cmd>Make<CR>"
+    exec 'nmap ' . g:IDE_mappings.make . " <cmd>Make<CR>"
 endif
 "{]}
 
