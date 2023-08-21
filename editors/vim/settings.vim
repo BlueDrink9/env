@@ -2,13 +2,6 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
 
-" Folder in which current script resides:
-if v:version >= 703
-    let s:scriptdir = fnameescape(expand('<sfile>:p:h'))
-else
-    let s:scriptdir = expand('<sfile>:p:h')
-endif
-
 " Needs to be set before plugins use it. Set here rather than in mappings.
 let mapleader = " "
 let maplocalleader = ""
@@ -43,10 +36,12 @@ set encoding=utf-8
 set guioptions+=M
 " For highlighting, and color schemes
 " Should go before ft plugin on
-syntax on
-filetype plugin indent on
+if !has('nvim')
+    syntax on
+    filetype plugin indent on
+endif
 " :h syn-sync. Complicated stuff, can't figure it out really.
-autocmd myVimrc BufWinEnter,Syntax * syn sync minlines=100 | syn sync maxlines=1000
+" autocmd myVimrc BufWinEnter,Syntax * syn sync minlines=100 | syn sync maxlines=1000
 command! SynSync syntax sync fromstart
 
 " {[} Colours
@@ -196,11 +191,6 @@ if g:hasGUI
 else
     "{[} Console
     set mouse=a
-    " let &pastetoggle = '\e[201~'
-    " noremap  <special> <expr> <Esc>[200~ <SID>XTermPasteBegin('0i')
-    " inoremap <special> <expr> <Esc>[200~ <SID>XTermPasteBegin('')
-    " cnoremap <special> <Esc>[200~ <nop>
-    " cnoremap <special> <Esc>[201~ <nop>
 
     " {[} Colours
     " Use true colors
@@ -272,6 +262,9 @@ set wildcharm=<tab>
 "     set pumblend=20
 "     set winblend=20
 " endif
+if exists('+wildoptions')
+    set wildoptions=fuzzy,pum
+endif
 set scrolloff=5
 set completeopt=longest,menu
 try
@@ -328,11 +321,12 @@ exec 'set backupdir=' . CreateVimDir("backup") . '//'
 set backupext=.vimbackup
 set backup
 set writebackup
+" Note that neovim auto-creates these directories if they don't exist
 exec 'set directory=' . CreateVimDir("swap") . '//'
 exec 'set viewdir=' . CreateVimDir("views") . '//'
 if has('persistent_undo')
     if has('nvim')
-        exec 'set undodir=' . CreateVimDir("nvimundo") . '//'
+        let &undodir=g:vimfilesDir . "nvimundo//"
     else
         exec 'set undodir=' . CreateVimDir("undo") . '//'
     endif
@@ -369,6 +363,7 @@ augroup end
 " on these events, any filename... and not in command mode then check files for changes
 au myVimrc FocusLost,BufLeave * if mode() != 'c' | checktime | endif
 
+set noautoread
 set modeline
 set modelines=5
 " Important for security.
@@ -395,6 +390,9 @@ if v:version >= 800
     let &showbreak='→ '
     " put linebreak in number column? Doesn't seem to work...
     set cpoptions+=n
+endif
+if exists('+wrapmargin')
+    set wrapmargin=3
 endif
 " backspace and cursor keys wrap to previous/next line
 set backspace=indent,eol,start whichwrap+=<,>,[,]
@@ -606,16 +604,6 @@ autocmd myVimrc BufWritePost * if &filetype == "scratch" | filetype detect | end
 
 autocmd myVimrc filetype scratch setlocal spell | setl ai
 
-function! s:ReadTemplate()
-    filetype detect
-    let l:templateDir = PathExpand(s:scriptdir . '/templates')
-    let l:templatePaths = split(globpath(l:templateDir, &filetype . '.*'), '\n')
-    for templatePath in l:templatePaths
-      exec 'silent! 0read ' . templatePath
-    endfor
-endfunction
-autocmd myVimrc BufNewFile * call s:ReadTemplate()
-
 " {[} Set cursor based on mode.
 if !has('nvim')
     " block cursor in normal mode, line in other.
@@ -696,7 +684,9 @@ if has('patch-8.1.0360')
       " set diffopt=indent-heuristic,algorithm:patience
 endif
 
-au myVimrc InsertLeave * set nopaste
+if !has('nvim')
+    au myVimrc InsertLeave * set nopaste
+endif
 
 if $TERM =~ 'kitty'
     let &t_ut=''
