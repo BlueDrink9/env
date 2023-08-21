@@ -20,31 +20,27 @@ function! HasPython()
     return has('python') || has('python3') || has('pythonx')
 endfunction
 
-function! HasNvimPythonModule()
-    if has('nvim')
-        return has('python') || has('python3')
-    endif
-    try
-        python3 import pynvim
-    catch
-        try
-            python3 import neovim
-        catch
-            return v:false
-        endtry
-    endtry
-    return v:true
-endfunction
-
-function! ExecutePlugMapping(mapping)
-    execute "normal \<Plug>" . a:mapping
-endfunction
+" function! HasNvimPythonModule()
+"     if has('nvim')
+"         return has('python') || has('python3')
+"     endif
+"     try
+"         python3 import pynvim
+"     catch
+"         try
+"             python3 import neovim
+"         catch
+"             return v:false
+"         endtry
+"     endtry
+"     return v:true
+" endfunction
 
 function! IsCCompilerAvailable()
     " -- CCompilers = { vim.fn.getenv("CC"), "cc", "gcc", "clang", "cl", "zig" }
     let l:CCompilers = [ "cc", "gcc", "clang", "cl", "zig" ]
     for compiler in l:CCompilers
-        if executable(compiler)
+        if Executable(compiler)
             return v:true
         endif
     endfor
@@ -115,12 +111,7 @@ function! IsWSL()
     if !has('unix')
         return
     endif
-    let s:version = system("cat /proc/version")
-    if s:version=~"Microsoft"
-        return 1
-    else
-        return 0
-    endif
+    return system("cat /proc/version") =~ "Microsoft"
 endfunction
 
 " " Shebangs
@@ -145,28 +136,7 @@ function! ToggleHiddenAll()
     endif
 endfunction
 
-" Uses an expandable signcolumn (neovim feature) to push text into the centre
-" of the view.
-" Sadly doesn't work for signcolumn size > 10.
-function! CenterText()
-  augroup CenterTextFunction
-    au!
-  augroup end
-  let l:desiredTextWidth = 80
-  if exists("s:storedSetting")
-    let &signcolumn=s:storedSetting
-    unlet s:storedSetting
-    return
-  endif
-  let s:storedSetting=&signcolumn
-  let l:excessWidth = winwidth(0) - l:desiredTextWidth
-  if l:excessWidth < 1
-    return
-  endif
-  " Use &columns for whole vim process, winwidth(0) for vim window
-  let l:marginSize = (l:excessWidth) / 2
-  let &signcolumn="yes:" . l:marginSize
-endfunction
+command! CenterText call myVimrcFunctions#CenterText()
 
 " Vim script to add user-defined words to spell file automatically
 " A function to search for words after {marker_text} and add them to local
