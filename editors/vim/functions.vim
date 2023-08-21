@@ -245,3 +245,14 @@ function! s:ExpandAlias(lhs, rhs)
   endif
   return a:lhs
 endfunction
+
+
+function! s:ReadTemplate()
+    filetype detect
+    let l:templateDir = PathExpand(g:confDir . '/templates')
+    let l:templatePaths = split(globpath(l:templateDir, &filetype . '.*'), '\n')
+    for templatePath in l:templatePaths
+      exec 'silent! 0read ' . templatePath
+    endfor
+endfunction
+autocmd myVimrc BufNewFile * call s:ReadTemplate()

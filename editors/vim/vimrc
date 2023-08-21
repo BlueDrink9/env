@@ -24,7 +24,7 @@ endfunction
 
 " Folder in which current script resides:
 " Handles symlinks, etc.
-let s:scriptdir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+let g:confDir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
 let g:remoteSession = ($SSH_CLIENT != "")
 
@@ -43,10 +43,34 @@ function! CreateVimDir(dir)
     return l:fullDir
 endfunction
 
+let s:executables_cache = PathExpand(g:vimfilesDir . '/' . 'executables_cache.vim')
+" Cache checks on executables. Removing the file resets it.
+function! s:markExecutable(program)
+    let l:var = 'g:executable_' . a:program
+    if !exists(l:var)
+        let l:cmd = 'let ' . l:var . ' = ' . executable(a:program)
+        exec l:cmd
+        call writefile([l:cmd], s:executables_cache, "a")
+    endif
+endfunction
+command! ClearExecutablesCache call delete(s:executables_cache)
+if filereadable(s:executables_cache)
+    exec 'source ' . s:executables_cache
+endif
+function! Executable(program)
+    let l:var = 'g:executable_' . a:program
+    if exists(l:var)
+        exec 'return ' . l:var
+    else
+        call s:markExecutable('rg')
+        return executable(a:program)
+    endif
+endfunction
+
 function! SourceCustoms(...)
     for vimfile in a:000
         " Converts the path properly for win or unix
-        exec 'source ' . s:scriptdir . expand('/' . vimfile)
+        exec 'source ' . g:confDir . expand('/' . vimfile)
     endfor
 endfunction
 
@@ -67,7 +91,7 @@ elseif g:liteMode==1
 endif
 
 " For custom snippets, templates, ftplugins etc kept under VCS.
-let &runtimepath.=',' . s:scriptdir . expand('/runtimepath')
+let &runtimepath.=',' . g:confDir . expand('/runtimepath')
 
 " Mappings after plugins, to override any plugin clobbers (although really, I
 " should just configure the plugins better).

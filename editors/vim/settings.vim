@@ -650,10 +650,10 @@ autocmd myVimrc Filetype qf setlocal nonu
 autocmd myVimrc Filetype qf setlocal norelativenumber
 autocmd myVimrc Filetype qf setlocal colorcolumn=0
 
-" if executable('rg')
+if Executable('rg')
 	set grepformat=%f:%l:%m
 	let &grepprg = 'rg --vimgrep' . (&smartcase ? ' --smart-case' : '')
-" endif
+endif
 
 if has('patch-8.1.0360')
     set diffopt+=internal,algorithm:patience
