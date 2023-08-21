@@ -250,7 +250,11 @@ set wildignorecase
 " Mapping usable in macros/maps to trigger completion menu.
 set wildcharm=<tab>
 if exists('+wildoptions')
-    set wildoptions=fuzzy,pum
+    try
+        set wildoptions=fuzzy,pum
+    catch /E474:/
+        set wildoptions=pum
+    endtry
 endif
 set scrolloff=5
 set completeopt=longest,menu
@@ -555,7 +559,7 @@ function! s:SetTitle()
     endif
     let l:filename = expand("%:t")
     if l:filename == ""
-        let &titlestring = l:preTitle . ' – New Buffer'
+        let &titlestring = l:preTitle . 'New Buffer'
     else
         let &titlestring = l:preTitle . l:filename . ' [' . expand("%:p:h") . ']'
     endif

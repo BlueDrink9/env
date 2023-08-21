@@ -36,3 +36,5 @@ function ln($source, $linkname, $s, $j, $h){
         New-Item -ItemType SymbolicLink -Path $linkname -Target $source
     }
 }
+
+function rg { rg --smart-case }
