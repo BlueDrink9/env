@@ -53,19 +53,21 @@ function! s:markExecutable(program)
         call writefile([l:cmd], s:executables_cache, "a")
     endif
 endfunction
-command! ClearExecutablesCache call delete(s:executables_cache)
-if filereadable(s:executables_cache)
-    exec 'source ' . s:executables_cache
-endif
+
 function! Executable(program)
     let l:var = 'g:executable_' . a:program
     if exists(l:var)
         exec 'return ' . l:var
     else
-        call s:markExecutable('rg')
+        call s:markExecutable(a:program)
         return executable(a:program)
     endif
 endfunction
+
+command! ClearExecutablesCache call delete(s:executables_cache)
+if filereadable(s:executables_cache)
+    exec 'source ' . s:executables_cache
+endif
 
 function! SourceCustoms(...)
     for vimfile in a:000
