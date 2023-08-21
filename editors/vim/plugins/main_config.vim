@@ -399,9 +399,9 @@ endif
 
 "{[} Running/executing
 if IsPluginUsed("vim-dispatch")
-    call Nnoremap(g:IDE_mappings.make, "<cmd>w <bar> Dispatch<cr>")
+    " exec 'nnoremap ' . g:IDE_mappings.make . "<cmd>w <bar> Dispatch<cr>"
     let g:dispatch_no_maps = 1
-    call Nmap(g:IDE_mappings.make, "<cmd>Make<CR>")
+    exec 'nmap ' . g:IDE_mappings.make . "<cmd>Make<CR>"
 endif
 "{]}
 
@@ -500,8 +500,8 @@ EOF
 endif
 
 if IsPluginUsed("vim-signify")
-    call Nmap(g:IDE_mappings.VCSNextHunk, "<Plug>(signify-next-hunk)")
-    call Vmap(g:IDE_mappings.VCSPreviousHunk, "<Plug>(signify-prev-hunk)")
+    exec 'nmap ' . g:IDE_mappings.VCSNextHunk . " <Plug>(signify-next-hunk)"
+    exec 'nmap ' . g:IDE_mappings.VCSPreviousHunk . " <Plug>(signify-prev-hunk)"
     " Add VCS systems to this when needed. More will slow buffer loading.
     let g:signify_vcs_list = [ 'git' ]
     " Async, so shouldn't be too bad. Ignored if not async.

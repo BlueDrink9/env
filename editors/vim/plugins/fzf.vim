@@ -1,20 +1,23 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
 
-" Fuzzy search list of buffers
-nnoremap <silent> <leader><space> :Buffers<CR>
-call Nnoremap(g:IDE_mappings.FuzzyBuffers, ":Buffers<CR>")
-" Files
-call Nnoremap(g:IDE_mappings.FuzzyOpenFile, ":FZF<CR>")
-" Search lines in current buffer.
-call Nnoremap(g:IDE_mappings.FuzzySearchBuffer, ":BLines<CR>")
-call Nnoremap(g:IDE_mappings.FuzzySearchBuffers, ":Lines<CR>")
-call Nnoremap(g:IDE_mappings.FuzzyTags, ":Tags<CR>")
-call Nnoremap(g:IDE_mappings.FuzzyCommands, ":Commands<CR>")
+let g:mappings_dict = {
+    \ g:IDE_mappings.FuzzyBuffers: ':Buffers<CR>',
+    \ g:IDE_mappings.FuzzyOpenFile: ':FZF<CR>',
+    \ g:IDE_mappings.FuzzySearchBuffer: ':BLines<CR>',
+    \ g:IDE_mappings.FuzzySearchBuffers: ':Lines<CR>',
+    \ g:IDE_mappings.FuzzyTags: ':Tags<CR>',
+    \ g:IDE_mappings.FuzzyCommands: ':Commands<CR>',
+    \ g:IDE_mappings.FuzzyOldFiles: ':History<CR>'
+\ }
+
+for [lhs, rhs] in items(g:mappings_dict)
+    exec 'nnoremap ' . lhs . ' ' . rhs
+endfor
+
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
 command! MRUFZF :History
-call Nnoremap(g:IDE_mappings.FuzzyOldFiles, ":History<CR>")
 
 " {[} Use proper fzf colours in gvim
 if g:hasGUI

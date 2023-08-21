@@ -64,37 +64,38 @@ let g:nremap = {"]e": "<Plug>(coc-diagnostic-next-error)","[e": "<Plug>(coc-diag
 " let g:coc_snippet_next = "<c-f>"
 let g:coc_snippet_prev = "<c-b>"
 
-" Use <leader>i for IDE.
+let g:mappings_dict = {
+            \ g:IDE_mappings.codeAction: "<Plug>(coc-codeaction)",
+            \ g:IDE_mappings.codeActionSelected: "<Plug>(coc-codeaction-selected)",
+            \ g:IDE_mappings.codelensAction: "<Plug>(coc-codelens-action)",
+            \ g:IDE_mappings.definition2: "<Plug>(coc-definition)",
+            \ g:IDE_mappings.definition: "<Plug>(coc-definition)",
+            \ g:IDE_mappings.diagnosticNext: "<plug>(coc-diagnostic-next-error)",
+            \ g:IDE_mappings.diagnosticPrev: "<plug>(coc-diagnostic-prev-error)",
+            \ g:IDE_mappings.fix: "<Plug>(coc-fix-current)",
+            \ g:IDE_mappings.implementation2: "<Plug>(coc-implementation)",
+            \ g:IDE_mappings.implementation: "<Plug>(coc-implementation)",
+            \ g:IDE_mappings.refactor: "<Plug>(coc-refactor)",
+            \ g:IDE_mappings.references2: "<Plug>(coc-references)",
+            \ g:IDE_mappings.references: "<Plug>(coc-references)",
+            \ g:IDE_mappings.rename: "<Plug>(coc-rename)",
+            \ g:IDE_mappings.typeDefinition: "<Plug>(coc-type-definition)",
+            \ }
+for [lhs, rhs] in items(g:mappings_dict)
+    exec 'nmap ' . lhs . ' ' . rhs
+endfor
 " Open Coc action list.
-call Nnoremap(g:IDE_mappings.allActions, ":CocAction<cr>")
-call Nnoremap(g:IDE_mappings.allCommands, ":CocCommand<cr>")
-call Nmap(g:IDE_mappings.rename, "<Plug>(coc-rename)")
-call Nmap(g:IDE_mappings.references, "<Plug>(coc-references)")
-call Nmap(g:IDE_mappings.references2, "<Plug>(coc-references)")
-call Nmap(g:IDE_mappings.refactor, "<Plug>(coc-refactor)")
-call Nmap(g:IDE_mappings.definition, "<Plug>(coc-definition)")
-call Nmap(g:IDE_mappings.definition2, "<Plug>(coc-definition)")
-call Nmap(g:IDE_mappings.typeDefinition, "<Plug>(coc-type-definition)")
-call Nmap(g:IDE_mappings.implementation, "<Plug>(coc-implementation)")
-call Nmap(g:IDE_mappings.implementation2, "<Plug>(coc-implementation)")
-call Nmap(g:IDE_mappings.references, "<Plug>(coc-references)")
-call Nmap(g:IDE_mappings.codeAction, "<Plug>(coc-codeaction)")
-call Vmap(g:IDE_mappings.codeActionSelected, "<Plug>(coc-codeaction-selected)")
-call Nmap(g:IDE_mappings.codelensAction, "<Plug>(coc-codelens-action)")
-" Use <leader>e for errors/linting/fixing.
-call Nmap(g:IDE_mappings.fix, "<Plug>(coc-fix-current)")
-call Nmap(g:IDE_mappings.diagnosticNext, "<plug>(coc-diagnostic-next-error)")
-call Nmap(g:IDE_mappings.diagnosticPrev, "<plug>(coc-diagnostic-prev-error)")
-" List errors
+exec 'nnoremap <silent> ' . g:IDE_mappings.allActions .  " :CocAction<cr>"
+exec 'nnoremap <silent> ' . g:IDE_mappings.allCommands . " :CocCommand<cr>"
 exec 'nnoremap <silent> ' . g:IDE_mappings.listErrs . ' :<C-u>CocList locationlist<cr>'
-exec 'nnoremap <silent> ' . g:IDE_mappings.documentation . ':call s:show_documentation()<CR>'
-exec 'nnoremap <silent> ' . g:IDE_mappings.documentation2 . ':call s:show_documentation()<CR>'
+exec 'nnoremap <silent> ' . g:IDE_mappings.documentation . ' :call s:show_documentation()<CR>'
+exec 'nnoremap <silent> ' . g:IDE_mappings.documentation2 . ' :call s:show_documentation()<CR>'
 
 let g:coc_snippet_next = g:IDE_mappings.snippetNext
 let g:coc_snippet_prev = g:IDE_mappings.snippetPrev
 " If we have tabbed to a snippet, can press space to expand it.
 inoremap <expr><space> coc#expandable() && coc#pum#visible() ? coc#pum#confirm() && feedkeys(' ') : ' '
-call Imap(g:IDE_mappings.snippetExpand, "<Plug>(coc-snippets-expand-jump)")
+exec 'imap ' . g:IDE_mappings.snippetExpand . " <Plug>(coc-snippets-expand-jump)"
 
 function! s:check_back_space() abort
   let col = col('.') - 1

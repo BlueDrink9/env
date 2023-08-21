@@ -4,22 +4,28 @@
 command! LanguageClientUpdateAndInstallBinary PlugInstall! LanguageClient-neovim
 
 function! s:SetLSPShortcuts()
-    call Nnoremap(g:IDE_mappings.definition, ":call LanguageClient#textDocument_definition()<CR>")
-    call Nnoremap(g:IDE_mappings.definition2, ":call LanguageClient#textDocument_definition()<CR>")
-    call Nnoremap(g:IDE_mappings.typeDefinition, ":call LanguageClient#textDocument_typeDefinition()<CR>")
-    call Nnoremap(g:IDE_mappings.rename, ":call LanguageClient#textDocument_rename()<CR>")
-    call Nnoremap(g:IDE_mappings.reformat, ":call LanguageClient#textDocument_formatting()<CR>")
-    call Nnoremap(g:IDE_mappings.references, ":call LanguageClient#textDocument_references()<CR>")
-    call Nnoremap(g:IDE_mappings.references2, ":call LanguageClient#textDocument_references()<CR>")
-    " Not sure about these...
-    call Nnoremap(g:IDE_mappings.codeAction, ":call LanguageClient_workspace_applyEdit()<CR>")
-    call Nnoremap(g:IDE_mappings.fix, ":call LanguageClient_workspace_applyEdit()<CR>")
-    call Nnoremap(g:IDE_mappings.complete, ":call LanguageClient#textDocument_completion()<CR>")
-    call Nnoremap(g:IDE_mappings.codelensAction, ":call LanguageClient#textDocument_hover()<CR>")
-    call Nnoremap(g:IDE_mappings.documentation, ":call LanguageClient_textDocument_documentSymbol()<CR>")
-    call Nnoremap(g:IDE_mappings.documentation2, ":call LanguageClient_textDocument_documentSymbol()<CR>")
-    call Nnoremap(g:IDE_mappings.documentation3, ":call LanguageClient_textDocument_documentSymbol()<CR>")
-    call Nnoremap(g:IDE_mappings.allActions, ":call LanguageClient_contextMenu()<CR>")
+    let g:mappings_dict = {
+    \ g:IDE_mappings.definition: "textDocument_definition",
+    \ g:IDE_mappings.definition2: "textDocument_definition",
+    \ g:IDE_mappings.typeDefinition: "textDocument_typeDefinition",
+    \ g:IDE_mappings.rename: "textDocument_rename",
+    \ g:IDE_mappings.reformat: "textDocument_formatting",
+    \ g:IDE_mappings.references: "textDocument_references",
+    \ g:IDE_mappings.references2: "textDocument_references",
+
+    \ g:IDE_mappings.codeAction: "workspace_applyEdit",
+    \ g:IDE_mappings.fix: "workspace_applyEdit",
+    \ g:IDE_mappings.complete: "textDocument_completion",
+    \ g:IDE_mappings.codelensAction: "textDocument_hover",
+    \ g:IDE_mappings.documentation: "textDocument_documentSymbol",
+    \ g:IDE_mappings.documentation2: "textDocument_documentSymbol",
+    \ g:IDE_mappings.documentation3: "textDocument_documentSymbol",
+    \ g:IDE_mappings.allActions: "contextMenu",
+    \ }
+
+    for [lhs, rhs] in items(g:mappings_dict)
+        exec 'nnoremap :call LanguageClient#' . lhs . '()<CR> ' . rhs
+    endfor
 endfunction()
 
 let g:LanguageClient_diagnosticsDisplay = { 1: { "name": "Error",

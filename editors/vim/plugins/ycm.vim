@@ -41,17 +41,22 @@ let g:ycm_key_invoke_completion = '<C-x><c-x>'
 let g:ycm_key_detailed_diagnostics = g:IDE_mappings.codelensAction
 
 function! s:SetShortcuts()
-    call Nnoremap(g:IDE_mappings.definition, ":YcmCompleter GoTo<CR>")
-    call Nnoremap(g:IDE_mappings.definition2, ":YcmCompleter GoTo<CR>")
-    call Nnoremap(g:IDE_mappings.typeDefinition, ":YcmCompleter GoToType<CR>")
-    call Nnoremap(g:IDE_mappings.rename, ":YcmCompleter RefactorRename<CR>")
-    call Nnoremap(g:IDE_mappings.reformat, ":YcmCompleter Format<CR>")
-    call Nnoremap(g:IDE_mappings.references, ":YcmCompleter GoToReferences<CR>")
-    call Nnoremap(g:IDE_mappings.references2, ":YcmCompleter GoToReferences<CR>")
-    call Nnoremap(g:IDE_mappings.fix, ":YcmCompleter FixIt<CR>")
+    let g:mappings_dict = {
+            \ g:IDE_mappings.definition: ":YcmCompleter GoTo<CR>",
+            \ g:IDE_mappings.definition2: ":YcmCompleter GoTo<CR>",
+            \ g:IDE_mappings.typeDefinition: ":YcmCompleter GoToType<CR>",
+            \ g:IDE_mappings.rename: ":YcmCompleter RefactorRename<CR>",
+            \ g:IDE_mappings.reformat: ":YcmCompleter Format<CR>",
+            \ g:IDE_mappings.references: ":YcmCompleter GoToReferences<CR>",
+            \ g:IDE_mappings.references2: ":YcmCompleter GoToReferences<CR>",
+            \ g:IDE_mappings.fix: ":YcmCompleter FixIt<CR>",
+            \ g:IDE_mappings.documentation: ":YcmCompleter GetDoc<CR>",
+            \ g:IDE_mappings.documentation2: ":YcmCompleter GetDoc<CR>",
+            \ g:IDE_mappings.documentation3: ":YcmCompleter GetDoc<CR>",
+            \ }
     " call Nnoremap(g:IDE_mappings.complete, ":YcmCompleter textDocument_completion()<CR>")
-    call Nnoremap(g:IDE_mappings.documentation, ":YcmCompleter GetDoc<CR>")
-    call Nnoremap(g:IDE_mappings.documentation2, ":YcmCompleter GetDoc<CR>")
-    call Nnoremap(g:IDE_mappings.documentation3, ":YcmCompleter GetDoc<CR>")
+    for [lhs, rhs] in items(g:mappings_dict)
+        exec 'nnoremap ' . lhs . ' ' . rhs
+    endfor
 endfunction()
 au myIDE InsertEnter call <SID>SetShortcuts()
