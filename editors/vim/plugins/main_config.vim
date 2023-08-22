@@ -49,29 +49,6 @@ if IsPluginUsed("tcomment_vim")
     onoremap <C-/>  <cmd>Tcomment<CR>
     " Swap comments from mutliple lines (not all at once)
     xnoremap <leader>gc  :norm! <leader>cc<CR>
-elseif IsPluginUsed("Comment.nvim")
-    xnoremap <leader>gc  :norm! <leader>cc<CR>
-lua << EOF
-require('Comment').setup({
-    ---Lines to be ignored while (un)comment
-    ignore = '^%s*$',
-    ---LHS of toggle mappings in NORMAL mode
-    toggler = {
-        line = '<leader>cc',
-        block = '<leader>cC',
-    },
-    opleader = {
-        line = '<leader>c',
-        block = '<leader>C',
-    },
-    mappings = {
-        basic = true,
-        extra = false,
-    },
-    pre_hook = nil,
-    post_hook = nil,
-})
-EOF
 endif
 if IsPluginUsed("vim-showmarks.git")
     " More advanced version of showmarks. Lots of mappings, eg m]
@@ -103,10 +80,6 @@ elseif IsPluginUsed("vim-CtrlXA")
     nmap <Plug>SpeedDatingFallbackDown <Plug>(CtrlXA-CtrlX)
 endif
 
-if IsPluginUsed("mini.align")
-    lua require('mini.align').setup({ mappings = { start = '', start_with_preview = 'gA' }})
-    command! Align lua MiniAlign.action_visual(v:false)
-endif
 if IsPluginUsed("vinarise.vim")
     let g:vinarise_enable_auto_detect=1
     let g:vinarise_detect_large_file_size=0
@@ -130,9 +103,7 @@ if IsPluginUsed("pfp-vim")
     command! HexEditFull :PfpParse<CR>
 endif
 
-if IsPluginUsed("guess-indent.nvim")
-    lua require('guess-indent').setup {}
-elseif IsPluginUsed("detectindent")
+if IsPluginUsed("detectindent")
     let g:detectindent_preferred_expandtab = &expandtab
     let g:detectindent_preferred_indent = &shiftwidth
     au myPlugins BufReadPost * silent! :DetectIndent
@@ -150,11 +121,6 @@ endif
 " {]} ---------- Misc----------
 
 " {[} ---------- Visual changes ----------
-if IsPluginUsed("dressing.nvim")
-    lua << EOF
-    require('dressing').setup()
-EOF
-endif
 if IsPluginUsed("vim-highlightedyank")
     if !exists('##TextYankPost')
         map y <Plug>(highlightedyank)
@@ -214,34 +180,8 @@ if IsPluginUsed("vim-sandwich")
     runtime macros/sandwich/keymap/surround.vim
     vmap s <Plug>(operator-sandwich-add)
 endif
-if IsPluginUsed('leap.nvim')
-    lua << EOF
-    require('leap-spooky').setup()
-    leap = require('leap')
-    -- Will not override existing mappings.
-    leap.add_default_mappings()
-    leap.opts.prev_target = {'<tab>',}  -- Remove ',' from the default
-    local map = vim.keymap.set
-    modes = {'n', 'x', 'o'}
-    -- Can't really figure out how to use this one atm.
-    -- if vim.fn.IsPluginUsed('leap-ast.nvim') == 1 and vim.fn.IsPluginUsed('nvim-treesitter') == 1 then
-    --     vim.keymap.set(modes, ',W',
-    --     function() require'leap-ast'.leap() end,
-    --     {desc='leap to ast element'})
-    -- end
-EOF
-elseif IsPluginUsed('vim-sneak')
+if IsPluginUsed('vim-sneak')
   let g:sneak#label = 1
-elseif IsPluginUsed('hop.nvim')
-    lua require'hop'.setup({ keys = 'arstdhneofplucmkv'})
-    lua << EOF
-    local map = vim.keymap.set
-    modes = {'n', 'x', 'o'}
-    map(modes, ',l', function() require'hop'.hint_words({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR }) end, {desc = 'hop right'})
-    map(modes, ',h', function() require'hop'.hint_words({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR}) end, {desc = 'hop left'})
-    map(modes, ',j', function() require'hop'.hint_lines({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR }) end, {desc = 'hop down'})
-    map(modes, ',k', function() require'hop'.hint_lines({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR}) end, {desc = 'hop up'})
-EOF
 elseif IsPluginUsed("vim-easymotion")
     let g:EasyMotion_do_mapping = 0 " Disable default mappings
     " tab-incrementable search with easymotion dropout feature.
@@ -369,13 +309,6 @@ if IsPluginUsed("graphviz.vim")
     autocmd myPlugins bufwritepost *.dot if line("$") < 50 | GraphvizCompile | endif
 endif
 
-if IsPluginUsed("vim-openscad")
-    lua require('openscad')
-    let g:openscad_load_snippets = false
-    let g:openscad_auto_open = false
-    let g:openscad_default_mappings = false
-endif
-
 if IsPluginUsed("csv.vim")
     " Set to 0 to skip autoformatting of CSVs.
     let g:csv_autocmd_arrange	   = 1
@@ -388,16 +321,6 @@ if IsPluginUsed("csv.vim")
     " TODO Check if csv column highlight should be a highlight update or a
     " pluginSettings update.
     highlight clear CSVColumnOdd
-    if IsPluginUsed("nvim-preview-csv")
-        " Want to keep just in case we want the movement as well as the view
-        let g:csv_autocmd_arrange	   = 0
-        lua << EOF
-        require('nvim-preview-csv').setup {
-            max_csv_line = 100
-        }
-
-EOF
-    endif
 endif
 
 " {]} ---------- extra filetype support ----------
@@ -437,24 +360,6 @@ endif
 " Enhances working with branches in fugitive "
 if IsPluginUsed('gv.vim')
     command! Glog :GV<CR>
-endif
-
-if IsPluginUsed('gitsigns.nvim')
-nnoremap <leader>gs <cmd>Gitsigns stage_hunk<cr>
-nnoremap <leader>gu <cmd>Gitsigns undo_stage_hunk<cr>
-nnoremap <leader>g_ <cmd>Gitsigns reset_hunk<cr>
-nnoremap <leader>gR <cmd>Gitsigns reset_hunk<cr>
-nnoremap ]h <cmd>Gitsigns next_hunk<cr>
-nnoremap [h <cmd>Gitsigns prev_hunk<cr>
-lua << EOF
-require('gitsigns').setup({
-    signs = {
-        add = {hl = 'GitSignsAdd', text = '+', numhl='GitSignsAddNr', linehl='GitSignsAddLn'},
-    },
-    signcolumn = true,
-    numhl      = true,
-})
-EOF
 endif
 
 if IsPluginUsed("vim-signify")
@@ -664,27 +569,6 @@ endif
 " {]} ---------- Prose----------
 
 " {[} ---------- Terminal ----------
-
-if IsPluginUsed("toggleterm.nvim")
-lua << EOF
-    opts ={
-    open_mapping = [[<c-s>]],
-    direction = 'horizontal',
-    start_in_insert = false,
-    insert_mappings = false,
-    terminal_mappings = true,
-    persist_mode = true,
-    close_on_exit = false, -- Otherwise may miss startup errors
-    auto_scroll = false,
-    shell = vim.o.shell,
-    }
-    if vim.fn.has("win32") == 1 then
-        opts.shell = "powershell.exe"
-    end
-    require("toggleterm").setup(opts)
--- :ToggleTermSendVisualSelection
-EOF
-endif
 
 if IsPluginUsed("vim-terminal-help")
     " which key will be used to toggle terminal window, default to <m-=>.
