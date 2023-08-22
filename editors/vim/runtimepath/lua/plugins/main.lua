@@ -4,12 +4,11 @@ end
 
 return {
   {
-    "Comment.nvim",
-    -- xnoremap <leader>gc  :norm! <leader>cc<CR>
+    "https://github.com/numToStr/Comment.nvim",
     opts = {
-      ---Lines to be ignored while (un)comment
+      -- Lines to be ignored while (un)comment
       ignore = '^%s*$',
-      ---LHS of toggle mappings in NORMAL mode
+      -- LHS of toggle mappings in NORMAL mode
       toggler = {
         line = '<leader>cc',
         block = '<leader>cC',
@@ -29,7 +28,7 @@ return {
   },
 
   {
-    "mini.align",
+    'echasnovski/mini.align',
     opts = {
       mappings = { start = '', start_with_preview = 'gA' }
     },
@@ -40,11 +39,11 @@ return {
     end,
   },
 
-  {"guess-indent.nvim", config=true},
+  {"https://github.com/NMAC427/guess-indent.nvim", config=true},
 
-  {"dressing.nvim", config=true},
+  {"https://github.com/stevearc/dressing.nvim.git", config=true},
 
-  {'leap.nvim',
+  {'https://github.com/ggandor/leap.nvim.git',
     config = function()
       -- Will not override existing mappings.
       require('leap').add_default_mappings()
@@ -59,8 +58,10 @@ return {
     --     {desc='leap to ast element'})
     -- end
   },
+  {'https://github.com/ggandor/leap-spooky.nvim'},
+  {'https://github.com/ggandor/leap-ast.nvim'},
 
-  {"nvim-preview-csv",
+  {"https://github.com/Nguyen-Hoang-Nam/nvim-preview-csv",
     -- Want to keep just in case we want the movement as well as the view
     init = function()
       vim.g.csv_autocmd_arrange	   = 0
@@ -68,12 +69,13 @@ return {
     opts = {
       max_csv_line = 100
     },
+    ft="csv",
   },
 
 
 
   {
-    'gitsigns.nvim',
+    'https://github.com/lewis6991/gitsigns.nvim.git',
     on_attach = function(buffer)
       local gs = package.loaded.gitsigns
       local function map(mode, l, r, desc)
@@ -102,7 +104,7 @@ return {
     }
   },
 
-  {"toggleterm.nvim",
+  {"https://github.com/akinsho/toggleterm.nvim",
     keys = "<C-s>",
     opts = function()
       opts ={

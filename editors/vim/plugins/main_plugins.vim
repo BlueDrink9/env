@@ -76,9 +76,7 @@ if v:version >= 704
     Plugin 'https://github.com/jlanzarotta/bufexplorer.git', {'on': 'BufExplorer'}
 endif
 
-if has('nvim')
-    Plugin 'https://github.com/numToStr/Comment.nvim', {'keys': '<leader>c'}
-else
+if !has('nvim')
     Plugin 'https://github.com/tomtom/tcomment_vim'
 endif
 
@@ -108,9 +106,7 @@ endif
 " map <silent> <Plug>CycleFallbackNext <Plug>SpeedDatingUp
 " map <silent> <Plug>CycleFallbackPrev <Plug>SpeedDatingDown
 
-if has('nvim')
-    Plugin 'echasnovski/mini.align'
-else
+if !has('nvim')
     Plugin 'https://github.com/junegunn/vim-easy-align'
 endif
 
@@ -132,9 +128,7 @@ endif
 
 " Limelight Looks really nice, esp for prose. Highlight slightly current paragraph.
 Plugin 'junegunn/limelight.vim', { 'for': g:proseFileTypes, 'on': 'Limelight' }
-if has('nvim')
-    Plugin 'https://github.com/NMAC427/guess-indent.nvim'
-else
+if !has('nvim')
     " Alternative is vim-sleuth, which seems overzealous.
     " This plugin has several forks. I am using the most updated one, but may be
     " worth playing with them.
@@ -151,9 +145,6 @@ Plugin 'https://github.com/EinfachToll/DidYouMean'
 " {]} ---------- Misc----------
 
 " {[} ---------- Visual changes ----------
-if has('nvim-0.7')
-    Plugin 'https://github.com/stevearc/dressing.nvim.git'
-endif
 if !has('nvim-0.5')
     " nvim-0.5 has this built-in
     Plugin 'machakann/vim-highlightedyank'
@@ -227,12 +218,7 @@ Plugin 'https://github.com/glts/vim-texlog'
 " {[} ---------- Operators ----------
 " Replacement for surround, with more features.
 Plugin 'machakann/vim-sandwich'
-if has('nvim-0.5')
-    " Plugin 'https://github.com/phaazon/hop.nvim'
-    Plugin 'https://github.com/ggandor/leap.nvim.git'
-    Plugin 'https://github.com/ggandor/leap-spooky.nvim'
-    Plugin 'https://github.com/ggandor/leap-ast.nvim'
-else
+if !has('nvim')
     Plugin 'https://github.com/justinmk/vim-sneak'
     " Plugin 'https://github.com/easymotion/vim-easymotion'
 endif
@@ -327,9 +313,6 @@ else
     Plugin 'https://github.com/sirtaj/vim-openscad', {'for': 'scad'}
 endif
 
-if has('nvim')
-    Plugin 'https://github.com/Nguyen-Hoang-Nam/nvim-preview-csv', {'for': 'csv'}
-endif
 Plugin 'https://github.com/chrisbra/csv.vim', {'for': 'csv'}
 
 
@@ -350,10 +333,7 @@ if Executable("git")
     Plugin 'junegunn/gv.vim'
 
 
-    if has('nvim-0.7')
-        " Can stage and all sorts.
-        Plugin 'https://github.com/lewis6991/gitsigns.nvim.git'
-    else
+    if !has('nvim-0.7')
         " VCS changes shown in sign column.
         Plugin 'https://github.com/mhinz/vim-signify'
     endif
@@ -401,9 +381,7 @@ Plugin 'ferrine/md-img-paste.vim', {'for': 'markdown'}
 " {]} ---------- Prose----------
 
 " {[} ---------- Terminal ----------
-if has('nvim')
-    Plugin 'https://github.com/akinsho/toggleterm.nvim'
-else
+if !has('nvim')
     " Convenient hide/show term buffer, $drop to open file with vim
     Plugin 'skywind3000/vim-terminal-help'
 endif
