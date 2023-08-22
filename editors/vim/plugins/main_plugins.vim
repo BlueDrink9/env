@@ -77,7 +77,7 @@ if v:version >= 704
 endif
 
 if has('nvim')
-    Plugin 'https://github.com/numToStr/Comment.nvim'
+    Plugin 'https://github.com/numToStr/Comment.nvim', {'keys': '<leader>c'}
 else
     Plugin 'https://github.com/tomtom/tcomment_vim'
 endif

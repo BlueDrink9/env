@@ -7,78 +7,8 @@ augroup myIDE
 augroup end
 
 " {[} ---------- Misc ----------
-if IsPluginUsed('mason')
-lua << EOF
-   require("mason").setup({
-         ui = {
-            icons = {
-               package_installed = "✓",
-               package_pending = "➜",
-               package_uninstalled = "✗"
-            }
-         }
-      })
-   require('mason-update-all').setup()
-   require('mason-tool-installer').setup()
-   -- nvim --headless -c 'autocmd User MasonUpdateAllComplete quitall' -c 'MasonUpdateAll'
-
-EOF
-endif
-
-if IsPluginUsed('nvim-colorizer.lua')
-    lua require'colorizer'.setup()
-endif
-
-if IsPluginUsed('nvim-notify')
-lua << EOF
-require'notify'.setup({
-   stages = "static",
-})
-EOF
-endif
+"
 " {]} ---------- Misc ----------
-
-" {[} ---------- Visual ----------
-if IsPluginUsed('noice.nvim')
-lua << EOF
-   require'noice'.setup({
-      cmdline = {
-         -- view = "cmdline",  -- or "cmdline_popup" for fancy.
-         -- Sent to nui.nvim's input popup
-         input = {
-            -- input:map("n", "<esc>", input.input_props.on_close, { noremap = true })
-         }
-      },
-      popupmenu = {
-         enabled = true,
-      },
-      presets = {
-         command_palette = true,
-         long_message_to_split = true,
-      },
-      messages = {
-        view_search = False,
-      },
-      lsp = {
-          progress = {
-            enabled = false,
-          }
-       }
-   })
-   -- override my normal mapping to ctrl-f, since noice can handle it like normal
-   -- vim.api.nvim_create_autocmd(
-   -- "VimEnter",
-   --  {
-   --   group = "myIDE",
-   --   buffer = bufnr,
-   --   callback = function()
-   --      vim.api.nvim_set_keymap('c', "kv", "<esc>", { noremap=true, silent=true })
-   --      vim.api.nvim_set_keymap('c', "vk", "<esc>", { noremap=true, silent=true })
-   --   end,
-   --  })
-EOF
-endif
-
 
 if IsPluginUsed('vim-peekaboo')
     let g:peekaboo_delay = 200  " ms
@@ -96,71 +26,14 @@ if IsPluginUsed('indentLine')
     let g:indentLine_setConceal = 0
     " let g:indentLine_setColors=0
 endif
-if IsPluginUsed('indent-blankline.nvim')
-lua << EOF
-    if vim.opt.termguicolors then
-        indentcolours = {}
-        -- Auto-gen some greys
-        for i=100,201,(200-100)/5 do
-            table.insert(indentcolours, string.format("#%02x%02x%02x", i, i, i))
-        end
-    else
-        indentcolours = {
-            "Red",
-            "Yellow",
-            "Green",
-            "Blue",
-            "Purple",
-        }
-    end
-    for i, colour in pairs(indentcolours) do
-        cmd = "IndentBlanklineIndent"..i.." guifg="..colour.." gui=nocombine"
-        vim.cmd('call add(g:customHLGroups, "'.. cmd .. '")')
-    end
-
-    require("indent_blankline").setup {
-        char = "┆",
-        char_blankline = "",
-        show_first_indent_level = false,
-        char_highlight_list = {
-            "IndentBlanklineIndent1",
-            "IndentBlanklineIndent2",
-            "IndentBlanklineIndent3",
-            "IndentBlanklineIndent4",
-            "IndentBlanklineIndent5",
-        },
-    }
-    if vim.fn.IsPluginUsed('nvim-treesitter') == 1 then
-        require("indent_blankline").setup {
-            indent_blankline_use_treesitter = true,
-            -- May be a touch slow
-            show_current_context = true,
-            show_current_context_start = false,
-            indent_blankline_show_current_context_start_on_current_line = false,
-        }
-    end
-EOF
-endif
 if IsPluginUsed('echodoc.vim')
     let g:echodoc#enable_at_startup = 1
     let g:echodoc#type = 'signature'
 endif
 
-if IsPluginUsed('which-key.nvim')
-    lua << EOF
-    require("which-key").setup({
-    triggers_blacklist = {
-      i = { "k", "v", "(", "{", "[", },
-    },
-    })
-EOF
-elseif IsPluginUsed('vim-which-key')
+if IsPluginUsed('vim-which-key')
     nnoremap <leader> <cmd>WhichKey '<leader>'<CR>
     vnoremap <leader> <cmd>WhichKeyVisual '<leader>'<CR>
-endif
-
-if IsPluginUsed('range-highlight.nvim')
-    lua require'range-highlight'.setup{}
 endif
 
 if IsPluginUsed('float-preview.nvim')
@@ -185,35 +58,6 @@ endif
 " {]} ---------- LSP ----------
 
 " {[} ---------- Linting ----------
-if IsPluginUsed('nvim-lint')
-    au BufWritePost <buffer> lua require('lint').try_lint()
-endif
-if IsPluginUsed('null-ls.nvim')
-lua << EOF
-    local null_ls = require 'null-ls'
-    require ('mason-null-ls').setup({
-        ensure_installed = {
-           'vint',
-           'luacheck',
-           'stylua',
-           'pylint',
-           'shellcheck',
-           'jq',
-           'proselint',
-        },
-        automatic_setup = true,
-    })
-    require 'mason-null-ls'.setup_handlers()
-    -- will setup any installed and configured sources above
-    null_ls.setup({
-      sources = {
-         -- null_ls.builtins.code_actions.refactoring,
-         null_ls.builtins.completion.spell,
-         null_ls.builtins.hover.printenv,
-      }
-    })
-EOF
-endif
 
 if IsPluginUsed('ale')
     let g:ale_sign_error = 'X'
@@ -289,10 +133,6 @@ endif
 if IsPluginUsed('cscope.vim')
     nnoremap <leader>if <cmd>call cscope#findInteractive(expand('<cword>'))<CR>
     " nnoremap <leader>l <cmd>call ToggleLocationList()<CR>
-endif
-
-if IsPluginUsed('symbols-outline.nvim')
-    lua require("symbols-outline").setup()
 endif
 " {]} ---------- Tags----------
 
@@ -437,11 +277,6 @@ if IsPluginUsed('git-messenger.vim')
     " running command a second time.
     let g:git_messenger_always_into_popup=v:true
 endif
-if IsPluginUsed('neogit')
-    lua require('neogit').setup {}
-    command! Magit Neogit
-    nnoremap <space>gg <cmd>Neogit<CR>
-endif
 if IsPluginUsed('vimagit')
     nnoremap <space>gg <cmd>Magit<CR>
 endif
@@ -483,32 +318,6 @@ endif
 
 if IsPluginUsed('nvim-treesitter')
     call SourcePluginFile('treesitter.lua')
-   if IsPluginUsed('treesj')
-      lua vim.keymap.set('n', 'gJ', function() require('treesj').join() end)
-      lua vim.keymap.set('n', 'gS', function() require('treesj').split() end)
-lua << EOF
-      require'treesj'.setup {
-        use_default_keymaps = false,
-      }
-
-      local langs = require'treesj.langs'['presets']
-
-      vim.api.nvim_create_autocmd({ 'FileType' }, {
-         group="myPlugins",
-        pattern = '*',
-        callback = function()
-          local opts = { buffer = true }
-          if langs[vim.bo.filetype] then
-            vim.keymap.set('n', 'gS', '<Cmd>TSJSplit<CR>', opts)
-            vim.keymap.set('n', 'gJ', '<Cmd>TSJJoin<CR>', opts)
-          else
-            vim.keymap.set('n', 'gS', '<Cmd>SplitjoinSplit<CR>', opts)
-            vim.keymap.set('n', 'gJ', '<Cmd>SplitjoinJoin<CR>', opts)
-          end
-        end,
-      })
-EOF
-   endif
 endif
 " {]} ---------- IDE----------
 
@@ -639,78 +448,4 @@ endif
 " {]} ---------- Snippits----------
 
 " {[} ---------- REPL ----------
-if IsPluginUsed("sniprun")
-lua << EOF
-require'sniprun'.setup({
-    --" you can combo different display modes as desired
-    display = {
-        "Classic",                    -- "display results in the command-line  area
-        "VirtualTextOk",              -- "display ok results as virtual text (multiline is shortened)
-
-        "VirtualTextErr",          -- "display error results as virtual text
-        -- "TempFloatingWindow",      -- "display results in a floating window
-        "LongTempFloatingWindow",  -- "same as above, but only long results. To use with VirtualText__
-        -- "Terminal"                 -- "display results in a vertical split
-        "TerminalWithCode",        --# display results and code history in a vertical split
-    },
-})
-local idemaps = vim.g.IDE_mappings
-local sniprunfile_keep_position = "<cmd>let b:caret=winsaveview()" ..
-                                " <bar> %SnipRun" ..
-                                " <bar> call winrestview(b:caret)<CR>"
-local maps = {
-    [idemaps.REPLSendLine] = '<Plug>SnipRun',
-    [idemaps.REPLSend] = '<Plug>SnipRunOperator',
-    [idemaps.REPLCancel] = '<Plug>SnipReset',
-    [idemaps.REPLClear] = '<Plug>SnipClose',
-    [idemaps.REPLClose] = '<Plug>SnipClose',
-    [idemaps.REPLSendFile] = sniprunfile_keep_position,
-}
-for key, cmd in pairs(maps) do
-    vim.api.nvim_set_keymap('n', key, cmd, {silent = false})
-end
-vim.api.nvim_set_keymap('v', idemaps.REPLSend, "<Plug>SnipRun",  {silent = true})
-EOF
-endif
-
-if IsPluginUsed("iron.nvim")
-    lua << EOF
-    local iron = require'iron.core'
-    local idemaps = vim.g.IDE_mappings
-    local view = require("iron.view")
-    iron.setup({
-    config = {
-        -- Whether a repl should be discarded or not
-        scratch_repl = true,
-        repl_definition = {
-            sh = {
-                command = {"bash"}
-            }
-            },
-            repl_open_cmd = view.split.horizontal.belowright(0.15),
-            },
-            keymaps = {
-                send_motion = idemaps.REPLSend,
-                visual_send = idemaps.REPLSend,
-                send_file = idemaps.REPLSendFile,
-                send_line = idemaps.REPLSendLine,
-                -- send_mark = idemaps.REPLSend,
-                -- mark_motion = idemaps.REPLSend,
-                -- mark_visual = idemaps.REPLSend,
-                -- remove_mark = idemaps.REPLSend,
-                -- cr = idemaps.REPLSend,
-                interrupt = idemaps.REPLCancel,
-                exit = idemaps.REPLClose,
-                clear = idemaps.REPLClear,
-                },
-                highlight = {
-                    italic = true
-                    },
-                    ignore_blank_lines = false,
-    })
-    vim.keymap.set('n', '<space>s<c-s>', '<cmd>IronFocus<cr>')
-
-
-EOF
-endif
 " {]} ---------- REPL ----------

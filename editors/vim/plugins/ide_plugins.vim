@@ -292,7 +292,7 @@ end
 EOF
 
     if luaeval("check_treesitter_installable()")
-        Plugin 'https://github.com/nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+        Plugin 'https://github.com/nvim-treesitter/nvim-treesitter.git', {'do': ':TSUpdate'}
         Plugin 'nvim-treesitter/playground'
 
         Plugin 'https://github.com/ThePrimeagen/refactoring.nvim'
@@ -424,17 +424,13 @@ Plugin 'https://github.com/Antyos/vscode-openscad', {'for': 'openscad'}
 
 if has('nvim-0.5') && !IsPluginUsed('coc.nvim')
     " Coc only support ultisips, neosnippet
-    Plugin 'https://github.com/hrsh7th/vim-vsnip', {'on': [] }
-    Plugin 'hrsh7th/vim-vsnip-integ', {'on': [] }
-    call LoadPluginOnInsertEnter('vim-vsnip')
-    call LoadPluginOnInsertEnter('vim-vsnip-integ')
-    Plugin 'octaltree/virtualsnip', { 'do': 'make', 'on': [] }
-    call LoadPluginOnInsertEnter('virtualsnip')
+    Plugin 'https://github.com/hrsh7th/vim-vsnip', {'on': [], 'event': ['InsertEnter']}
+    Plugin 'hrsh7th/vim-vsnip-integ', {'on': [], 'event': ['InsertEnter']}
+    Plugin 'octaltree/virtualsnip', { 'do': 'make', 'on': [], 'event': ['InsertEnter']}
 
 elseif has('nvim') || v:version >= 740
     " Only requires 7.4, but recommends 8.
-    Plugin 'Shougo/neosnippet.vim', {'on': [] }
-    call LoadPluginOnInsertEnter('neosnippet.vim')
+    Plugin 'Shougo/neosnippet.vim', {'on': [], 'event': ['InsertEnter']}
     Plugin 'Shougo/neosnippet-snippets'
 elseif HasPython() && v:version >= 704
     Plugin 'https://github.com/SirVer/ultisnips' " Snippit engine
