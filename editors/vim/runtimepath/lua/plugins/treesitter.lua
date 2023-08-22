@@ -1,3 +1,6 @@
+if vim.g.ideMode==0 then
+  return {}
+end
 
 function check_treesitter_installable()
    -- ("tar" and "curl" or "git") and {

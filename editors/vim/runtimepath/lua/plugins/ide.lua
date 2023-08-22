@@ -36,14 +36,6 @@ return {
   -- -- nvim --headless -c 'autocmd User MasonUpdateAllComplete quitall' -c 'MasonUpdateAll'
   -- },
 
-  {'https://github.com/neovim/nvim-lspconfig'},
-  {'https://github.com/williamboman/mason-lspconfig.nvim'},
-  {'https://github.com/folke/trouble.nvim'},
-  -- Create appropriate colours for old colourschemes
-  {'https://github.com/folke/lsp-colors.nvim'},
-  {'https://github.com/Hrle97/nvim.diagnostic_virtual_text_config'},
-  {'https://github.com/kosayoda/nvim-lightbulb'},
-
   -- {[} ---------- Visual ----------
   {'folke/noice.nvim',
     enabled=false,
