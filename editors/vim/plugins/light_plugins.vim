@@ -50,9 +50,7 @@ endif
 Plugin 'https://github.com/tpope/vim-unimpaired',
             \ {'keys': [']', '[', 'yo', '>', '<', '=']}
 " cx to select an object, then cx again to swap it with first thing.
-if has('nvim')
-    Plugin 'gbprod/substitute.nvim', {'keys': ['cx']}
-else
+if !has('nvim')
     Plugin 'https://github.com/tommcdo/vim-exchange'
 endif
 " Do replace, because cr is used for abolish. Yr is unused atm?
@@ -67,9 +65,7 @@ Plugin 'tommcdo/vim-ninja-feet'
 
 " {[}--- Visual changes ---
 " Highlight f and t chars to get where you want.
-if has('nvim')
-    Plugin 'https://github.com/jinh0/eyeliner.nvim', {'keys': ['f', 'F', 't', 'T']}
-elseif v:version >= 702
+if !has('nvim')
     Plugin 'unblevable/quick-scope'
 endif
 if v:version >= 703

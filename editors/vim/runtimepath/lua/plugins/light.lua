@@ -9,6 +9,10 @@ return {
     }
   },
 
-  {"eyeliner.nvim", opts = { highlight_on_key = true, dim = true }},
+  -- Highlight f and t chars to get where you want.
+  {'https://github.com/jinh0/eyeliner.nvim',
+    opts = { highlight_on_key = true, dim = true },
+    keys = {'f', 'F', 't', 'T'},
+  },
 
 }
