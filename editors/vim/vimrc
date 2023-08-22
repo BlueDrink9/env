@@ -72,7 +72,11 @@ endif
 function! SourceCustoms(...)
     for vimfile in a:000
         " Converts the path properly for win or unix
-        exec 'source ' . g:confDir . expand('/' . vimfile)
+        try
+            exec 'source ' . g:confDir . expand('/' . vimfile)
+        catch
+            echoerr v:exception
+        endtry
     endfor
 endfunction
 

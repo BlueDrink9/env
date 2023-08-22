@@ -144,15 +144,10 @@ function! IsPluginUsed(name)
     endif
 endfunction
 
-function! LoadPluginOnInsertEnter(name)
-    call LoadPluginOnEvent(a:name, "InsertEnter")
-endfunction
-
 " Plug installs the plugin, but only loads on autocmd event.
 " name: the last part of the plugin url (just name, no auth).
 " Plug options should include 'on': [] to prevent load before event.
 function! LoadPluginOnEvent(name, event)
-    return
     let l:plugLoad = 'autocmd ' . a:event . ' * call plug#load("'
     let l:plugLoadEnd = '")'
     let l:undoAutocmd = 'autocmd! ' . a:name . '_' . a:event
@@ -200,13 +195,16 @@ function! PluginAdapter(...)
     if has('nvim')
         let g:__plugin_args= l:args
         exec 'lua PlugToLazy("' .. l:plugin  .. '", vim.g.__plugin_args)'
-        let s:plugs[l:plugin] = 1
+        let s:plugs[split(l:plugin, '/')[-1]] = 1
     else
         " convert args we want to keep
-        let l:deps = get(l:args, 'dependencies', [])
-        for dep in l:deps
+        for dep in get(l:args, 'dependencies', [])
             Plug dep
         endfor
+        for event in get(l:args, 'event', [])
+            LoadPluginOnEvent(l:plugin, event)
+        endfor
+
         " Remove args unsupported by Plug
         for opt in keys(l:args)
             if index(s:PlugOpts, opt) < 0  " If item not in the list.
@@ -260,10 +258,7 @@ endif
 " Unplugs and replacements go here
 exec 'source ' . s:localPlugins
 
-if has('nvim')
-    " Inits lazy.vim plugins
-    lua require("config.lazy")
-else
+if !has('nvim')
     call plug#end()
 endif
 
@@ -282,6 +277,10 @@ if !g:liteMode
       call SourcePluginFile("ide_config.vim")
     endif
 endif
+
+" Inits lazy.nvim plugin loading
+lua require("config.lazy")
+
 silent doautocmd User pluginSettingsToExec
 
 " HLGroups get cleared by colourschemes when changing. This resets them.
