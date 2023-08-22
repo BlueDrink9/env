@@ -142,7 +142,7 @@ else
 endif
 
 " Zoom window to tab, and out again
-Plugin 'https://github.com/troydm/zoomwintab.vim'
+Plugin 'https://github.com/troydm/zoomwintab.vim', {'on': 'ZoomWinTabToggle'}
 " fzf for all the shortcuts defined in vim
 Plugin 'https://github.com/sunaku/vim-shortcut'
 " Confirms opening empty file on tabcomplete
@@ -326,7 +326,7 @@ else
 endif
 
 if has('nvim')
-    Plugin 'https://github.com/Nguyen-Hoang-Nam/nvim-preview-csv'
+    Plugin 'https://github.com/Nguyen-Hoang-Nam/nvim-preview-csv', {'for': 'csv'}
 endif
 Plugin 'https://github.com/chrisbra/csv.vim', {'for': 'csv'}
 
@@ -430,17 +430,6 @@ endif
 " {[} Neovim UIs/integrations
 if has('nvim') && exists('##UIEnter')
     if exists('g:vscode')
-    else
-        " if has('win32')
-        "     let s:firenvim_startup_prologue='"set LITE_SYSTEM=1"'
-        " else
-        "     let s:firenvim_startup_prologue='"export LITE_SYSTEM=1"'
-        " endif
-        let s:firenvim_startup_prologue=''
-        let g:firenvim_install=":call firenvim#install(0, " . s:firenvim_startup_prologue . ")"
-        " Only on tags/releases, because updates may require the extension to be
-        " updated.
-        Plugin 'https://github.com/glacambre/firenvim', {'tag': '*', 'do': g:firenvim_install}
     endif
 endif
 " {]} Neovim UIs/integrations
