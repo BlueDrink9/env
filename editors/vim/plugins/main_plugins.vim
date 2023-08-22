@@ -71,6 +71,7 @@ if v:version >= 704
     " Useful for overviews, and deleting lots of buffers.
     Plugin 'https://github.com/jlanzarotta/bufexplorer.git', {'on': 'BufExplorer'}
 endif
+
 if has('nvim')
     Plugin 'https://github.com/numToStr/Comment.nvim'
 else
@@ -92,7 +93,8 @@ if v:version < 800 && !has('nvim')
     Plugin 'https://github.com/ConradIrwin/vim-bracketed-paste'
 endif
 if has('nvim')
-    Plugin 'https://github.com/monaqa/dial.nvim'
+    Plugin 'https://github.com/monaqa/dial.nvim', {'keys':
+                \ ['<C-a>', '<C-x>', 'g<C-a>', 'g<C-x>']}
 else
     Plugin 'https://github.com/tpope/vim-speeddating'
     Plugin 'https://github.com/Konfekt/vim-CtrlXA'
@@ -158,8 +160,7 @@ Plugin 'https://github.com/vim-scripts/ProportionalResize'
 
 " {[} View and session
 " Automated view session creation.
-Plugin 'https://github.com/zhimsel/vim-stay', {'on': []}
-call LoadPluginOnEvent('vim-stay', "CursorHold")
+Plugin 'https://github.com/zhimsel/vim-stay', {'on': [], 'event': ['CursorHold']}
 " Map os commands (eg maximise), and open windows commands without shell
 " popup.
 Plugin 'https://github.com/xolox/vim-shell', {
@@ -176,23 +177,27 @@ Plugin 'wellle/targets.vim'
 " Move args with >, <,. Next arg ], [,. New text obj a, i,.
 " ],
 Plugin 'https://github.com/PeterRincker/vim-argumentative'
-" Library for some other text obj plugins.
-Plugin 'https://github.com/kana/vim-textobj-user'
 " See https://github.com/kana/vim-textobj-user/wiki for more, esp for
 " lang-specific.
 " Add text object for whole buffer
-Plugin 'https://github.com/kana/vim-textobj-entire'
+Plugin 'https://github.com/kana/vim-textobj-entire', {
+            \ 'dependencies': 'kana/vim-textobj-user'}
 " Expands what a sentence/word is for prose.
-Plugin 'https://github.com/reedes/vim-textobj-sentence', { 'for': g:proseFileTypes }
+Plugin 'https://github.com/reedes/vim-textobj-sentence', { 'for': g:proseFileTypes,
+            \ 'dependencies': 'kana/vim-textobj-user'}
 " av/iv for lines continued by \
-Plugin 'rhysd/vim-textobj-continuous-line'
+Plugin 'rhysd/vim-textobj-continuous-line', {
+            \ 'dependencies': 'kana/vim-textobj-user'}
 " iz az
-Plugin 'somini/vim-textobj-fold'
+Plugin 'somini/vim-textobj-fold', {
+            \ 'dependencies': 'kana/vim-textobj-user'}
 if v:version >= 703
     " ac, ic, aC
-    Plugin 'https://github.com/glts/vim-textobj-comment'
+    Plugin 'https://github.com/glts/vim-textobj-comment', {
+                \ 'dependencies': 'kana/vim-textobj-user'}
 endif
-Plugin 'https://github.com/coachshea/vim-textobj-markdown', { 'for': 'markdown' }
+Plugin 'https://github.com/coachshea/vim-textobj-markdown', { 'for': 'markdown',
+            \ 'dependencies': 'kana/vim-textobj-user'}
 " Function argument movements
 Plugin 'https://github.com/PeterRincker/vim-argumentative'
 " Adds indent block as text object. ii , ai or aI
@@ -200,7 +205,8 @@ Plugin 'michaeljsmith/vim-indent-object'
 " Adds [ ] mappins for -=+% indentation objects
 Plugin 'https://github.com/jeetsukumaran/vim-indentwise'
 " af, if for functions, ac, ic for classes. Also ]pf, [pc for movements.
-Plugin 'https://github.com/bps/vim-textobj-python'
+Plugin 'https://github.com/bps/vim-textobj-python', {
+            \ 'dependencies': 'kana/vim-textobj-user'}
 Plugin 'mtdl9/vim-log-highlighting'
 Plugin 'https://github.com/glts/vim-texlog'
 " {]} Extra text objects
@@ -219,7 +225,8 @@ else
 endif
 Plugin 'bkad/camelcasemotion'
 " iv as object for camelcasemotion style
-Plugin 'https://github.com/Julian/vim-textobj-variable-segment'
+Plugin 'https://github.com/Julian/vim-textobj-variable-segment', {
+            \ 'dependencies': 'kana/vim-textobj-user'}
 Plugin 'https://github.com/haya14busa/vim-asterisk'
 " {]} ---------- Operators ----------
 
