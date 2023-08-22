@@ -1,3 +1,7 @@
+if vim.g.liteMode == 1 then
+  return {}
+end
+
 return {
   {
     "Comment.nvim",

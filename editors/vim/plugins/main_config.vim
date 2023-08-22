@@ -277,9 +277,6 @@ endif
 if IsPluginUsed("fzf")
     call SourcePluginFile("fzf.vim")
 endif
-if IsPluginUsed("telescope.nvim")
-    call SourcePluginFile("telescope.lua")
-endif
 " {]}--- Fuzzy finder ---
 " {]}--- Searching, replacing, finding ---
 

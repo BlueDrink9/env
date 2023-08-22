@@ -1,10 +1,10 @@
 return {
   {"substitute.nvim",
     keys = {
-      {mode="n", "cx", require('substitute.exchange').operator},
-      {mode="n", "cxx", require('substitute.exchange').line},
-      {mode="x", "X", require('substitute.exchange').visual},
-      {mode="n", "cxc", require('substitute.exchange').cancel},
+      {"cx", function() require('substitute.exchange').operator() end, mode="n"},
+      {"cxx", function() require('substitute.exchange').line() end, mode="n"},
+      {"X", function() require('substitute.exchange').visual() end, mode="x"},
+      {"cxc", function() require('substitute.exchange').cancel() end, mode="n"},
     }
   },
 
