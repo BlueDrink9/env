@@ -1,3 +1,6 @@
+-- call SourcePluginFile("nvim-lspconfig.lua")
+    -- call SourcePluginFile('nvim-cmp.lua')
+
 if vim.g.ideMode==0 then
   return {}
 end
@@ -7,10 +10,10 @@ local idemaps = vim.g.IDE_mappings
 return {
 
 
-    -- Dependency for a lot of plugins
+  -- Dependency for a lot of plugins
   {'nvim-lua/plenary.nvim'},
 
-    -- For installing LSPs (and other packages)
+  -- For installing LSPs (and other packages)
   {'https://github.com/williamboman/mason.nvim'},
   {'https://github.com/RubixDev/mason-update-all'},
   {'https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim'},
@@ -19,18 +22,18 @@ return {
   -- {'nvim-notify', opt={stages="static"}},
 
   -- {'mason',
-   -- require("mason").setup({
-   --       ui = {
-   --          icons = {
-   --             package_installed = "✓",
-   --             package_pending = "➜",
-   --             package_uninstalled = "✗"
-   --          }
-   --       }
-   --    })
-   -- require('mason-update-all').setup()
-   -- require('mason-tool-installer').setup()
-   -- -- nvim --headless -c 'autocmd User MasonUpdateAllComplete quitall' -c 'MasonUpdateAll'
+  -- require("mason").setup({
+  --       ui = {
+  --          icons = {
+  --             package_installed = "✓",
+  --             package_pending = "➜",
+  --             package_uninstalled = "✗"
+  --          }
+  --       }
+  --    })
+  -- require('mason-update-all').setup()
+  -- require('mason-tool-installer').setup()
+  -- -- nvim --headless -c 'autocmd User MasonUpdateAllComplete quitall' -c 'MasonUpdateAll'
   -- },
 
   {'https://github.com/neovim/nvim-lspconfig'},
@@ -69,17 +72,17 @@ return {
       }
     }
   },
-   -- override my normal mapping to ctrl-f, since noice can handle it like normal
-   -- vim.api.nvim_create_autocmd(
-   -- "VimEnter",
-   --  {
-   --   group = "myIDE",
-   --   buffer = bufnr,
-   --   callback = function()
-   --      vim.api.nvim_set_keymap('c', "kv", "<esc>", { noremap=true, silent=true })
-   --      vim.api.nvim_set_keymap('c', "vk", "<esc>", { noremap=true, silent=true })
-   --   end,
-   --  })
+  -- override my normal mapping to ctrl-f, since noice can handle it like normal
+  -- vim.api.nvim_create_autocmd(
+  -- "VimEnter",
+  --  {
+  --   group = "myIDE",
+  --   buffer = bufnr,
+  --   callback = function()
+  --      vim.api.nvim_set_keymap('c', "kv", "<esc>", { noremap=true, silent=true })
+  --      vim.api.nvim_set_keymap('c', "vk", "<esc>", { noremap=true, silent=true })
+  --   end,
+  --  })
 
   {'https://github.com/lukas-reineke/indent-blankline.nvim',
     init = function()
@@ -155,11 +158,11 @@ return {
 
   -- {]} ---------- Visual ----------
 
-    -- " Haven't configured yet.
-    -- " Plugin 'https://github.com/mfussenegger/nvim-lint'
-    -- " Integrates linters with Nvim lsp
-    -- " Plugin 'https://github.com/jose-elias-alvarez/null-ls.nvim'
-    -- " Plugin 'https://github.com/jayp0521/mason-null-ls.nvim'
+  -- " Haven't configured yet.
+  -- " Plugin 'https://github.com/mfussenegger/nvim-lint'
+  -- " Integrates linters with Nvim lsp
+  -- " Plugin 'https://github.com/jose-elias-alvarez/null-ls.nvim'
+  -- " Plugin 'https://github.com/jayp0521/mason-null-ls.nvim'
 
   -- DEPRECATED - TODO REMOVE
   {'null-ls.nvim',
@@ -276,12 +279,24 @@ return {
 
   -- {]} ---------- REPL ----------
 
-  {'jalvesaq/Nvim-R'},
+  {'jalvesaq/Nvim-R',
+    config = function()
+      vim.fn.SourcePluginFile("nvim-R.vim")
+    end
+  },
 
   {'https://github.com/TimUntersberger/neogit'},
 
-  {'https://github.com/hrsh7th/vim-vsnip',
-    event='InsertEnter'},
+  {
+    'https://github.com/hrsh7th/vim-vsnip',
+    keys={
+      {idemaps.snippetExpand, '<Plug>(vsnip-expand-or-jump)', mode={'i', 'v'}},
+    },
+    config = function()
+      vim.g.vsnip_snippet_dir = vim.fn.PathExpand(vim.g.plugin_config_dir .. '/../runtimepath/snippets')
+    end,
+    event='InsertEnter'
+  },
 
   {'hrsh7th/vim-vsnip-integ',
     event='InsertEnter'},

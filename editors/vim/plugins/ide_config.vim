@@ -2,6 +2,7 @@
 " vim: foldmarker={[},{]}
 
 let s:scriptdir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+let g:plugin_config_dir = s:scriptdir
 augroup myIDE
     au!
 augroup end
@@ -36,21 +37,11 @@ if IsPluginUsed('vim-which-key')
     vnoremap <leader> <cmd>WhichKeyVisual '<leader>'<CR>
 endif
 
-if IsPluginUsed('float-preview.nvim')
-    let g:float_preview#docked = 1
-endif
-
 " {]} ---------- Visual ----------
 
 
 " {[} ---------- LSP ----------
-" These would be unloaded for CoC.nvim, which does completion and LSP
-" Deoplete and ale will use them though.
-if has('nvim-0.5')
-    if IsPluginUsed('nvim-lspconfig')
-        call SourcePluginFile("nvim-lspconfig.lua")
-    endif
-else
+if !has('nvim')
     if IsPluginUsed('languageclient-neovim')
         call SourcePluginFile("languageclient-neovim.vim")
     endif
@@ -128,11 +119,6 @@ endif
 if exists("s:tagbarOpenCmd")
     exec 'cabbrev tb ' . s:tagbarOpenCmd
     exec 'nnoremap <leader>tt <cmd>' . s:tagbarOpenCmd . '<cr>'
-endif
-
-if IsPluginUsed('cscope.vim')
-    nnoremap <leader>if <cmd>call cscope#findInteractive(expand('<cword>'))<CR>
-    " nnoremap <leader>l <cmd>call ToggleLocationList()<CR>
 endif
 " {]} ---------- Tags----------
 
@@ -212,9 +198,6 @@ endif
 " {]} ------ Python ------
 
 " {[} ---------- R ----------
-if IsPluginUsed('nvim-R')
-    call SourcePluginFile("nvim-R.vim")
-endif
 if IsPluginUsed('vim-r-plugin')
     " R output is highlighted with current colorscheme
     let g:rout_follow_colorscheme = 1
@@ -351,10 +334,6 @@ if IsPluginUsed('copilot.vim')
     let g:copilot_no_tab_map = v:true
 endif
 
-if IsPluginUsed('nvim-cmp')
-    call SourcePluginFile('nvim-cmp.lua')
-endif
-
 if IsPluginUsed('ycm')
     call SourcePluginFile('ycm.vim')
 endif
@@ -382,12 +361,6 @@ endif
 " {]} ---------- Completion----------
 "
 " {[} ---------- Snippits ----------
-if IsPluginUsed('vim-vsnip')
-    exec 'imap ' . g:IDE_mappings.snippetExpand . ' <Plug>(vsnip-expand-or-jump)'
-    exec 'vmap ' . g:IDE_mappings.snippetExpand . ' <Plug>(vsnip-expand-or-jump)'
-    let g:vsnip_snippet_dir = PathExpand(s:scriptdir . '/../runtimepath/snippets')
-endif
-
 if IsPluginUsed('neosnippet-snippets')
     let g:neosnippet#enable_snipmate_compatibility=1
     " let g:neosnippet#enable_conceal_markers=0
