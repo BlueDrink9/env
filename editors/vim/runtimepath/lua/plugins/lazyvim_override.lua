@@ -5,13 +5,6 @@
 return {
 
   {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "ayu",
-    },
-  },
-
-  {
     "folke/noice.nvim",
     -- opts will be merged with the parent spec
     opts = {
@@ -19,11 +12,13 @@ return {
       cmdline = { enabled = false },
     },
     config = function()
+      vim.cmd('echom noice loaded')
       vim.opt.lazyredraw = false
     end,
     init = function()
       vim.opt.lazyredraw = false
-    end
+    end,
+    event="VeryLazy",
   },
 
   {
