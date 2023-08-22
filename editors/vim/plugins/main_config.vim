@@ -202,8 +202,7 @@ elseif IsPluginUsed("vim-easymotion")
     nnoremap <leader>s <Plug>(easymotion-overwin-f2)
 endif
 if IsPluginUsed("camelcasemotion")
-    call camelcasemotion#CreateMotionMappings('-')
-    call camelcasemotion#CreateMotionMappings('U')
+    let g:camelcasemotion_key = '-'
 endif
 if IsPluginUsed("vim-asterisk")
   let g:asterisk#keeppos = 1
