@@ -47,7 +47,7 @@ cabbrev bd Bdelete
 if has("timers")
     " Commands sent to shell with AsyncRun appear in qf window.
     " use AsyncRun! to prevent autoscroll.
-    Plugin 'https://github.com/skywind3000/asyncrun.vim', {'on': 'AsyncRun'}
+    Plugin 'https://github.com/skywind3000/asyncrun.vim', {'on': ['AsyncRun', 'asyncrun#quickfix_toggle']}
 endif
 if has('nvim-0.5')
     " Prerequisite for many nvim lua plugins.
@@ -58,7 +58,7 @@ endif
 Plugin 'https://github.com/Konfekt/FoldText'
 if v:version > 704
     " Auto-set foldcolumn if folds exist in buffer.
-    Plugin 'https://github.com/benknoble/vim-auto-origami'
+    Plugin 'https://github.com/benknoble/vim-auto-origami', {'on': 'AutoOrigamiFoldColumn'}
 endif
 " Relative line numbers only in focussed buffer & not in insert mode.
 Plugin 'ericbn/vim-relativize'
@@ -151,7 +151,7 @@ Plugin 'https://github.com/EinfachToll/DidYouMean'
 
 " {[} ---------- Visual changes ----------
 if has('nvim-0.7')
-    Plugin 'https://github.com/stevearc/dressing.nvim'
+    Plugin 'https://github.com/stevearc/dressing.nvim.git'
 endif
 if !has('nvim-0.5')
     " nvim-0.5 has this built-in
@@ -228,7 +228,7 @@ Plugin 'https://github.com/glts/vim-texlog'
 Plugin 'machakann/vim-sandwich'
 if has('nvim-0.5')
     " Plugin 'https://github.com/phaazon/hop.nvim'
-    Plugin 'https://github.com/ggandor/leap.nvim'
+    Plugin 'https://github.com/ggandor/leap.nvim.git'
     Plugin 'https://github.com/ggandor/leap-spooky.nvim'
     Plugin 'https://github.com/ggandor/leap-ast.nvim'
 else
@@ -244,7 +244,7 @@ Plugin 'https://github.com/haya14busa/vim-asterisk'
 Plugin 'https://github.com/stefandtw/quickfix-reflector.vim'
 if has('timers')
     " Async, uses better grep tools like ack or ag
-    Plugin 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
+    Plugin 'mhinz/vim-grepper', { 'on': ['Grepper'] }
     " Live results, fuzzy buffer. Hideous.
     Plugin 'wsdjeg/FlyGrep.vim'
     " Multi-file find and replace with a 'nice' interface. :Farp
@@ -351,7 +351,7 @@ if Executable("git")
 
     if has('nvim-0.7')
         " Can stage and all sorts.
-        Plugin 'https://github.com/lewis6991/gitsigns.nvim'
+        Plugin 'https://github.com/lewis6991/gitsigns.nvim.git'
     else
         " VCS changes shown in sign column.
         Plugin 'https://github.com/mhinz/vim-signify'

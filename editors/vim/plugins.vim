@@ -177,6 +177,7 @@ function PlugToLazy(plugin, opts)
     if opts then
         lazySpec.ft = opts["for"]
         lazySpec.name = opts["as"]
+        lazySpec.cmd = opts["on"]
     end
     table.insert(MyLazySpecs, lazySpec)
 end
