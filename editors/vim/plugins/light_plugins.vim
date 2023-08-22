@@ -51,7 +51,7 @@ Plugin 'https://github.com/tpope/vim-unimpaired',
             \ {'keys': [']', '[', 'yo', '>', '<', '=']}
 " cx to select an object, then cx again to swap it with first thing.
 if has('nvim')
-    Plugin 'https://github.com/gbprod/substitute.nvim', {'keys': ['cx']}
+    Plugin 'gbprod/substitute.nvim', {'keys': ['cx']}
 else
     Plugin 'https://github.com/tommcdo/vim-exchange'
 endif

@@ -60,15 +60,6 @@ return {
     -- end
   },
 
-  {"vim-openscad",
-    config=true,
-    init = function()
-      vim.g.openscad_load_snippets = false
-      vim.g.openscad_auto_open = false
-      vim.g.openscad_default_mappings = false
-    end
-  },
-
   {"nvim-preview-csv",
     -- Want to keep just in case we want the movement as well as the view
     init = function()
