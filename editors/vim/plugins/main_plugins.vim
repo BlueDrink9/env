@@ -181,19 +181,28 @@ Plugin 'https://github.com/PeterRincker/vim-argumentative'
 " lang-specific.
 " Add text object for whole buffer
 Plugin 'https://github.com/kana/vim-textobj-entire', {
+            \ 'keys': ['i%', 'a%'],
             \ 'dependencies': 'kana/vim-textobj-user'}
 " Expands what a sentence/word is for prose.
 Plugin 'https://github.com/reedes/vim-textobj-sentence', { 'for': g:proseFileTypes,
+            \ 'keys': [')', '('],
             \ 'dependencies': 'kana/vim-textobj-user'}
 " av/iv for lines continued by \
 Plugin 'rhysd/vim-textobj-continuous-line', {
+            \ 'keys': ['il', 'al'],
+            \ 'dependencies': 'kana/vim-textobj-user'}
+" iv as object for camelcasemotion style
+Plugin 'https://github.com/Julian/vim-textobj-variable-segment', {
+            \ 'keys': ['iv', 'av'],
             \ 'dependencies': 'kana/vim-textobj-user'}
 " iz az
 Plugin 'somini/vim-textobj-fold', {
+            \ 'keys': ['az', 'iz'],
             \ 'dependencies': 'kana/vim-textobj-user'}
 if v:version >= 703
     " ac, ic, aC
     Plugin 'https://github.com/glts/vim-textobj-comment', {
+                \ 'keys': ['ac', 'ic', 'aC', 'iC'],
                 \ 'dependencies': 'kana/vim-textobj-user'}
 endif
 Plugin 'https://github.com/coachshea/vim-textobj-markdown', { 'for': 'markdown',
@@ -205,7 +214,7 @@ Plugin 'michaeljsmith/vim-indent-object'
 " Adds [ ] mappins for -=+% indentation objects
 Plugin 'https://github.com/jeetsukumaran/vim-indentwise'
 " af, if for functions, ac, ic for classes. Also ]pf, [pc for movements.
-Plugin 'https://github.com/bps/vim-textobj-python', {
+Plugin 'https://github.com/bps/vim-textobj-python', {'for': 'python',
             \ 'dependencies': 'kana/vim-textobj-user'}
 Plugin 'mtdl9/vim-log-highlighting'
 Plugin 'https://github.com/glts/vim-texlog'
@@ -224,9 +233,6 @@ else
     " Plugin 'https://github.com/easymotion/vim-easymotion'
 endif
 Plugin 'bkad/camelcasemotion'
-" iv as object for camelcasemotion style
-Plugin 'https://github.com/Julian/vim-textobj-variable-segment', {
-            \ 'dependencies': 'kana/vim-textobj-user'}
 Plugin 'https://github.com/haya14busa/vim-asterisk'
 " {]} ---------- Operators ----------
 
