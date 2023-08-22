@@ -16,9 +16,7 @@ if has('nvim-0.5')
     Plugin 'https://github.com/RubixDev/mason-update-all'
     Plugin 'https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim'
 endif
-if has('nvim-0.7')
-    Plugin 'https://github.com/norcalli/nvim-colorizer.lua'
-else
+if !has('nvim-0.7')
     " Highlight colors when used eg in css
     Plugin 'https://github.com/chrisbra/Colorizer'
 endif
@@ -42,116 +40,45 @@ Plug 'https://github.com/tpope/vim-characterize', {'on': '<Plug>(characterize)'}
 " {]} ---------- Misc ----------
 
 " {[} ---------- Visual ----------
-" if has('nvim-0.8')
-"     " Replaces message display
-"     Plugin 'https://github.com/folke/noice.nvim'
-"     Plugin 'rcarriga/nvim-notify'
-"     Plugin 'MunifTanjim/nui.nvim'
-" endif
 
 " Call WhichKey to see mappings starting with a thing.
-if has('nvim-0.5')
-    " Also shows registers and marks on " and '/`
-    Plugin 'https://github.com/folke/which-key.nvim'
-else
+if !has('nvim-0.5')
     Plugin 'liuchengxu/vim-which-key'
     " Show registers in side window when you go to use them.
     Plugin 'junegunn/vim-peekaboo'
 endif
-" nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
-if has('nvim-0.5')
-    " Leader ? to get searchable (if using telescope) list of commands with
-    " keybindings.
-    Plugin 'sudormrfbin/cheatsheet.nvim', {'on': 'Cheatsheet'}
-endif
 
-if v:version >= 703
-    " visually show indentation
-    if has("nvim")
-        Plugin 'https://github.com/lukas-reineke/indent-blankline.nvim'
-    else
-        Plugin 'https://github.com/Yggdroot/indentLine'
-    endif
-endif
-
-" Not sure if I actually need this - review later!
-" if has("patch-8.1-1880") && has('nvim')
-"     " Gives behaviour like completeopt=popup for neovim.
-"     Plugin 'https://github.com/ncm2/float-preview.nvim'
-" endif
-
-if has("nvim")
-    Plugin 'winston0410/cmd-parser.nvim'
-    Plugin 'https://github.com/winston0410/range-highlight.nvim'
-endif
 " Needs manual activation. :RainbowParen, :RainbowParen!
 Plugin 'https://github.com/junegunn/rainbow_parentheses.vim', {'on': 'RainbowParen'}
 
 " {]} ---------- Visual ----------
 
 "{[} Searching and code info
-if has('nvim')  " needs > 0.7
-    Plugin 'nvim-telescope/telescope.nvim', { 'tag': '*' }
-    silent! UnPlug 'ctrlp.vim'
-    silent! UnPlug 'fzf.vim'
-    Plugin 'https://github.com/nvim-lua/plenary.nvim'
-    if IsCCompilerAvailable()
-        if Executable("make")
-            Plugin 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-        elseif Executable("cmake")
-            Plugin 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
-        endif
-    endif
-    Plugin 'https://github.com/nvim-telescope/telescope-ui-select.nvim'
-    Plugin 'LinArcX/telescope-changes.nvim'
-    Plugin 'FeiyouG/command_center.nvim'
-    Plugin 'https://github.com/debugloop/telescope-undo.nvim'
-
-    Plugin 'fcying/telescope-ctags-outline.nvim'
-    Plugin 'cljoly/telescope-repo.nvim'
-endif
 
 " Display the indentation context in a window above the code you are
 " looking at (helps understand where you are in a long func/class).
-Plugin 'wellle/context.vim'
+if !has('nvim')
+    Plugin 'wellle/context.vim'
+endif
 
 "{]} Searching and code info
 
 " {[} ---------- LSP ----------
-" These would be unloaded for CoC.nvim, which does completion and LSP
-" Deoplete and ale will use them though.
-if has('nvim-0.5')
-    Plugin 'https://github.com/neovim/nvim-lspconfig'
-    Plugin 'https://github.com/williamboman/mason-lspconfig.nvim'
-    " Nice visuals
-    Plugin 'https://github.com/folke/trouble.nvim'
-    " Create appropriate colours for old colourschemes
-    Plugin 'https://github.com/folke/lsp-colors.nvim'
-    Plugin 'https://github.com/Hrle97/nvim.diagnostic_virtual_text_config'
-    Plugin 'https://github.com/kosayoda/nvim-lightbulb'
-else
+if !has('nvim-0.5')
     if has('win32')
-        Plugin 'autozimu/LanguageClient-neovim', {
-                    \ 'branch': 'next',
-                    \ 'do': 'powershell -executionpolicy bypass -File install.ps1',
-                    \ }
+        let s:lcn_inst = 'powershell -executionpolicy bypass -File install.ps1'
     else
-        Plugin 'autozimu/LanguageClient-neovim', {
-                    \ 'branch': 'next',
-                    \ 'do': 'bash install.sh',
-                    \ }
+        let s:lcn_inst = 'bash install.sh'
     endif
+    Plugin 'autozimu/LanguageClient-neovim', {
+                \ 'branch': 'next',
+                \ 'do': s:lcn_inst,
+                \ }
 endif
 " {]} ---------- LSP ----------
 
 " {[} ---------- Linting ----------
-if has('nvim-0.5')
-    " Haven't configured yet.
-    " Plugin 'https://github.com/mfussenegger/nvim-lint'
-    " Integrates linters with Nvim lsp
-    " Plugin 'https://github.com/jose-elias-alvarez/null-ls.nvim'
-    " Plugin 'https://github.com/jayp0521/mason-null-ls.nvim'
-elseif has("timers")
+if has("timers") && !has('nvim')
     " Async linting
     Plugin 'https://github.com/dense-analysis/ale'
 else
@@ -183,10 +110,14 @@ endif
 " functions, and doc strings
 Plugin 'jeetsukumaran/vim-pythonsense'
 if HasPython()
-    Plugin 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
+    if !has('nvim')
+        Plugin 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
+    endif
     Plugin 'https://github.com/tmhedberg/SimpylFold'
     " Python completion, plus some refactor, goto def and usage features.
-    Plugin 'https://github.com/davidhalter/jedi-vim', {'for' : 'python', 'do' : 'pip install --user jedi' }
+    if !has('nvim')
+        Plugin 'https://github.com/davidhalter/jedi-vim', {'for' : 'python', 'do' : 'pip install --user jedi' }
+    endif
     " Using deoplete
     if IsPluginUsed('deoplete.nvim')
         Plugin 'deoplete-plugins/deoplete-jedi', {'for' : 'python', 'do' : 'pip3 install --user jedi' }
@@ -205,8 +136,6 @@ if Executable('R')
     if !has('nvim') && !has('job')
         " Unmaintained version that doesn't need vim 8
         Plugin 'jcfaria/vim-r-plugin'
-    else
-        Plugin 'jalvesaq/Nvim-R'
     endif
 endif
 " {]} ---------- R ----------
@@ -244,9 +173,7 @@ if Executable("git")
     endif
     " View commit messages for current line in floating window.
     Plugin 'rhysd/git-messenger.vim', {'on': 'GitMessenger'}
-    if has('nvim-0.5')
-        Plugin 'https://github.com/TimUntersberger/neogit'
-    else
+    if !has('nvim-0.5')
         Plugin 'https://github.com/jreybert/vimagit'
     endif
 endif
@@ -327,21 +254,7 @@ endif
 " :UnstackFromClipboard to take a stack trace from the clipboard and open the
 " relevant function calls in their own splits
 Plugin 'https://github.com/mattboehm/vim-unstack', {'on': 'UnstackFromClipboard'}
-if has('nvim-0.7')
-    Plugin 'https://github.com/mfussenegger/nvim-dap'
-    Plugin 'https://github.com/jayp0521/mason-nvim-dap.nvim'
-    Plugin 'rcarriga/nvim-dap-ui'
-    Plugin 'https://github.com/Weissle/persistent-breakpoints.nvim'
-    Plugin 'https://github.com/ofirgall/goto-breakpoints.nvim'
-    if IsPluginUsed("telescope.nvim")
-        Plugin 'https://github.com/nvim-telescope/telescope-dap.nvim'
-    endif
-    if IsPluginUsed("nvim-treesitter")
-        Plugin 'theHamsta/nvim-dap-virtual-text'
-        Plugin 'mfussenegger/nvim-dap-python'
-    endif
-" Vimspector requires vim 8.1 with this patch.
-elseif has("patch-8.1-1264") || has('nvim')
+if has("patch-8.1-1264") && !has('nvim')
     " Just install all available plugins for now...
     Plugin 'https://github.com/puremourning/vimspector', { 'do': ':!./install_gadget.py --all --disable-tcl' }
     " Easier python debugging

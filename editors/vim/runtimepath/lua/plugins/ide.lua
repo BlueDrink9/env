@@ -5,8 +5,8 @@ end
 local idemaps = vim.g.IDE_mappings
 
 return {
-  {'nvim-colorizer.lua', config=true},
-  {'nvim-notify', opt={stages="static"}},
+  {'https://github.com/norcalli/nvim-colorizer.lua', config=true},
+  -- {'nvim-notify', opt={stages="static"}},
 
   -- {'mason',
    -- require("mason").setup({
@@ -22,9 +22,18 @@ return {
    -- require('mason-tool-installer').setup()
    -- -- nvim --headless -c 'autocmd User MasonUpdateAllComplete quitall' -c 'MasonUpdateAll'
   -- },
-  --
 
-  {'noice.nvim',
+  {'https://github.com/neovim/nvim-lspconfig'},
+  {'https://github.com/williamboman/mason-lspconfig.nvim'},
+  {'https://github.com/folke/trouble.nvim'},
+  -- Create appropriate colours for old colourschemes
+  {'https://github.com/folke/lsp-colors.nvim'},
+  {'https://github.com/Hrle97/nvim.diagnostic_virtual_text_config'},
+  {'https://github.com/kosayoda/nvim-lightbulb'},
+
+  -- {[} ---------- Visual ----------
+  {'folke/noice.nvim',
+    enabled=false,
     opts={
       cmdline = {
         -- view = "cmdline",  -- or "cmdline_popup" for fancy.
@@ -41,7 +50,7 @@ return {
         long_message_to_split = true,
       },
       messages = {
-        view_search = False,
+        view_search = false,
       },
       lsp = {
         progress = {
@@ -62,7 +71,7 @@ return {
    --   end,
    --  })
 
-  {'indent-blankline.nvim',
+  {'https://github.com/lukas-reineke/indent-blankline.nvim',
     init = function()
       local indentcolours = {}
       if vim.opt.termguicolors then
@@ -104,15 +113,25 @@ return {
     },
   },
 
-  {'which-key.nvim',
+  {'https://github.com/folke/which-key.nvim',
     opts = {
       triggers_blacklist = {
         i = { "k", "v", "(", "{", "[", },
       },
-    }
+    },
+    event='VeryLazy',
   },
 
-  {'range-highlight.nvim', config=true},
+  {'sudormrfbin/cheatsheet.nvim',
+    cmd='Cheatsheet',
+    keys={"<leader><s-/>", "<cmd>Cheatsheet<cr>"},
+  },
+
+  {'https://github.com/winston0410/range-highlight.nvim',
+    dependencies = {'winston0410/cmd-parser.nvim'},
+    event='VeryLazy',
+    config=true,
+  },
 
   {'nvim-lint', config = function()
     vim.api.nvim_create_autocmd({ "BufWritePost" }, {
@@ -123,6 +142,14 @@ return {
     })
   end
   },
+
+  -- {]} ---------- Visual ----------
+
+    -- " Haven't configured yet.
+    -- " Plugin 'https://github.com/mfussenegger/nvim-lint'
+    -- " Integrates linters with Nvim lsp
+    -- " Plugin 'https://github.com/jose-elias-alvarez/null-ls.nvim'
+    -- " Plugin 'https://github.com/jayp0521/mason-null-ls.nvim'
 
   -- DEPRECATED - TODO REMOVE
   {'null-ls.nvim',
@@ -236,6 +263,12 @@ return {
       {'<space>s<c-s>', '<cmd>IronFocus<cr>'}
     }
   },
+
+
+  {'jalvesaq/Nvim-R'},
+
+  {'https://github.com/TimUntersberger/neogit'},
+
 -- {]} ---------- REPL ----------
 
 }
