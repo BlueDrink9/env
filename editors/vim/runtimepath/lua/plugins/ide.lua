@@ -5,6 +5,16 @@ end
 local idemaps = vim.g.IDE_mappings
 
 return {
+
+
+    -- Dependency for a lot of plugins
+  {'nvim-lua/plenary.nvim'},
+
+    -- For installing LSPs (and other packages)
+  {'https://github.com/williamboman/mason.nvim'},
+  {'https://github.com/RubixDev/mason-update-all'},
+  {'https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim'},
+
   {'https://github.com/norcalli/nvim-colorizer.lua', config=true},
   -- {'nvim-notify', opt={stages="static"}},
 
@@ -228,7 +238,7 @@ return {
     },
   },
 
-  {"iron.nvim",
+  {"https://github.com/hkupty/iron.nvim",
     opts = {
       config = {
         -- Whether a repl should be discarded or not
@@ -264,11 +274,20 @@ return {
     }
   },
 
+  -- {]} ---------- REPL ----------
 
   {'jalvesaq/Nvim-R'},
 
   {'https://github.com/TimUntersberger/neogit'},
 
--- {]} ---------- REPL ----------
+  {'https://github.com/hrsh7th/vim-vsnip',
+    event='InsertEnter'},
+
+  {'hrsh7th/vim-vsnip-integ',
+    event='InsertEnter'},
+
+  {'octaltree/virtualsnip',
+    build='make',
+    event='InsertEnter'},
 
 }

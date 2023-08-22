@@ -7,15 +7,6 @@ augroup myIDE
 augroup end
 
 " {[} ---------- Misc ----------
-if has('nvim-0.5')
-    " Dependency for a lot of plugins
-    Plugin 'nvim-lua/plenary.nvim'
-
-    " For installing LSPs (and other packages)
-    Plugin 'https://github.com/williamboman/mason.nvim'
-    Plugin 'https://github.com/RubixDev/mason-update-all'
-    Plugin 'https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim'
-endif
 if !has('nvim-0.7')
     " Highlight colors when used eg in css
     Plugin 'https://github.com/chrisbra/Colorizer'
@@ -31,7 +22,9 @@ if $TMUX !=? ""
 endif
 
 " gS/gJ to split/join things onto separate/same lines.
-Plugin 'https://github.com/AndrewRadev/splitjoin.vim'
+if !has('nvim')
+    Plugin 'https://github.com/AndrewRadev/splitjoin.vim'
+endif
 " Auto-add 'end' statements, eg endif.
 " Has odd bug with prose fts.
 " Plugin 'https://github.com/tpope/vim-endwise'
@@ -49,7 +42,9 @@ if !has('nvim-0.5')
 endif
 
 " Needs manual activation. :RainbowParen, :RainbowParen!
-Plugin 'https://github.com/junegunn/rainbow_parentheses.vim', {'on': 'RainbowParen'}
+if !has('nvim')
+    Plugin 'https://github.com/junegunn/rainbow_parentheses.vim', {'on': 'RainbowParen'}
+endif
 
 " {]} ---------- Visual ----------
 
@@ -108,12 +103,14 @@ endif
 " {[} ------ Python ------
 " provides text objects and motions for Python classes, methods,
 " functions, and doc strings
-Plugin 'jeetsukumaran/vim-pythonsense'
+if !has('nvim')
+    Plugin 'jeetsukumaran/vim-pythonsense'
+endif
 if HasPython()
     if !has('nvim')
         Plugin 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
+        Plugin 'https://github.com/tmhedberg/SimpylFold'
     endif
-    Plugin 'https://github.com/tmhedberg/SimpylFold'
     " Python completion, plus some refactor, goto def and usage features.
     if !has('nvim')
         Plugin 'https://github.com/davidhalter/jedi-vim', {'for' : 'python', 'do' : 'pip install --user jedi' }
@@ -201,53 +198,6 @@ Plugin 'https://github.com/mhinz/vim-startify'
 " Doesn't state any requirements in readme...
 Plugin 'https://github.com/sbdchd/neoformat', {'on': 'Neoformat'}
 
-if has('nvim-0.7')
-lua << EOF
-function check_treesitter_installable()
-    -- ("tar" and "curl" or "git") and {
-    local fn = vim.fn
-    if fn.Executable("git") == 0 then
-        if fn.Executable("curl") == 0 and fn.executable("tar") == 0 then
-            return false
-        end
-    end
-    if not fn.IsCCompilerAvailable() then
-        return false
-    end
-    return true
-end
-EOF
-
-    if luaeval("check_treesitter_installable()")
-        Plugin 'https://github.com/nvim-treesitter/nvim-treesitter.git', {'do': ':TSUpdate'}
-        Plugin 'nvim-treesitter/playground'
-
-        Plugin 'https://github.com/ThePrimeagen/refactoring.nvim'
-        Plugin 'https://github.com/danymat/neogen'
-        Plugin 'https://github.com/RRethy/nvim-treesitter-endwise'
-        Plugin 'nvim-treesitter/nvim-treesitter-context'
-        UnPlug 'context.vim'
-        Plugin 'nvim-treesitter/nvim-treesitter-textobjects'
-        UnPlug 'vim-argumentative'
-        UnPlug 'vim-pythonsense'
-        UnPlug 'SimpylFold'
-        Plugin 'https://github.com/JoosepAlviste/nvim-ts-context-commentstring'
-        Plugin 'https://github.com/Wansmer/treesj'
-        UnPlug 'splitjoin.vim'
-        " folding enhancements
-        Plugin 'kevinhwang91/promise-async'
-        Plugin 'https://github.com/kevinhwang91/nvim-ufo'
-        UnPlug('FastFold')
-        Plugin 'https://gitlab.com/HiPhish/rainbow-delimiters.nvim'
-        UnPlug('rainbow_parentheses.vim')
-        " Structural search and replace.
-        Plugin 'https://github.com/cshuaimin/ssr.nvim'
-        command! SSR lua require("ssr").open()
-        " lua vim.keymap.set({ "n", "x" }, "<leader>sr", function() require("ssr").open() end)
-
-    endif
-endif
-
 " {]} ---------- IDE----------
 
 " {[} ---------- Debugging ----------
@@ -259,9 +209,6 @@ if has("patch-8.1-1264") && !has('nvim')
     Plugin 'https://github.com/puremourning/vimspector', { 'do': ':!./install_gadget.py --all --disable-tcl' }
     " Easier python debugging
     Plugin 'sagi-z/vimspectorpy', { 'do': { -> vimspectorpy#update() } }
-    if IsPluginUsed("telescope.nvim")
-        Plugin 'nvim-telescope/telescope-vimspector.nvim'
-    endif
 endif
 " {]} ---------- Debugging ----------
 
@@ -271,14 +218,7 @@ let s:fallback_completion = 1
 if has("timers")
     let s:fallback_completion = 0
     if has('nvim-0.5')
-        Plugin 'hrsh7th/cmp-nvim-lsp'
-        Plugin 'hrsh7th/cmp-buffer'
-        Plugin 'hrsh7th/cmp-path'
-        Plugin 'hrsh7th/nvim-cmp'
-        Plugin 'hrsh7th/cmp-vsnip'
-        Plugin 'hrsh7th/cmp-nvim-lsp-signature-help'
-        Plugin 'hrsh7th/cmp-nvim-lsp-document-symbol'
-        Plugin 'https://github.com/f3fora/cmp-spell'
+        " use cmp
         " Super speedy, but slightly more complex requirements
         " https://github.com/ms-jpq/coq_nvim
     elseif has('node')
@@ -293,11 +233,6 @@ if has("timers")
         if IsPluginUsed("telescope.nvim")
             Plugin 'fannheyward/telescope-coc.nvim'
         endif
-
-        if has("nvim")
-            Plugin 'https://github.com/github/copilot.vim'
-        endif
-
     elseif has("python3")
         if Executable("cmake")
             " Awesome code completion, but requires specific installations and
@@ -330,18 +265,12 @@ endif
 
 " {[} ---------- Snippits ----------
 " Snippet libs
-Plugin 'https://github.com/honza/vim-snippets'
-Plugin 'https://github.com/rafamadriz/friendly-snippets'
+Plugin 'https://github.com/honza/vim-snippets', {'on': [], 'event': ['InsertEnter']}
+Plugin 'https://github.com/rafamadriz/friendly-snippets', {'on': [], 'event': ['InsertEnter']}
 Plugin 'https://github.com/ericsia/vscode-python-snippet-pack-2.0', {'for': 'python'}
 Plugin 'https://github.com/Antyos/vscode-openscad', {'for': 'openscad'}
 
-if has('nvim-0.5') && !IsPluginUsed('coc.nvim')
-    " Coc only support ultisips, neosnippet
-    Plugin 'https://github.com/hrsh7th/vim-vsnip', {'on': [], 'event': ['InsertEnter']}
-    Plugin 'hrsh7th/vim-vsnip-integ', {'on': [], 'event': ['InsertEnter']}
-    Plugin 'octaltree/virtualsnip', { 'do': 'make', 'on': [], 'event': ['InsertEnter']}
-
-elseif has('nvim') || v:version >= 740
+if !has('nvim') && v:version >= 740
     " Only requires 7.4, but recommends 8.
     Plugin 'Shougo/neosnippet.vim', {'on': [], 'event': ['InsertEnter']}
     Plugin 'Shougo/neosnippet-snippets'
@@ -361,10 +290,6 @@ endif
 " if has('nvim') && !has('win32')
 "     Plugin 'https://github.com/michaelb/sniprun', {'do': 'bash install.sh'}
 " endif
-
-if has('nvim-0.5')
-    Plugin 'https://github.com/hkupty/iron.nvim'
-endif
 
 " Useful for REPL, but can also send the commands back to the other window.
 " Also dot repeatable.

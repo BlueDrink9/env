@@ -316,9 +316,6 @@ if IsPluginUsed('neoformat')
     nnoremap g= <cmd>Neoformat<CR>
 endif
 
-if IsPluginUsed('nvim-treesitter')
-    call SourcePluginFile('treesitter.lua')
-endif
 " {]} ---------- IDE----------
 
 " {[} ---------- Debugging ----------
