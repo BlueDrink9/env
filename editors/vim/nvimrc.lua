@@ -42,4 +42,4 @@ else
         vimrc_path = "~/.vimrc"
     end
 end
-vim.cmd("source " .. vimrc_path)
+vim.cmd.source(vimrc_path)

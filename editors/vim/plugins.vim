@@ -66,8 +66,13 @@ else
     let s:vimhome = $HOME."/.vim"
  endif
 
-cabbrev packi PlugInstall
-cabbrev packu PlugUpdate <bar> PlugUpgrade
+ if has('nvim')
+    cabbrev packi lua require('config.lazy') require("lazy").install(MyLazySpecs)
+    cabbrev packu Lazy check <bar> Lazy update
+ else
+    cabbrev packi PlugInstall
+    cabbrev packu PlugUpdate <bar> PlugUpgrade
+endif
 
 " Install plugin manager
 " if has('nvim')
@@ -124,8 +129,12 @@ endif
 function! s:deregister(name)
     return
     try
-        call remove(g:plugs, a:name)
-        call remove(g:plugs_order, index(g:plugs_order, a:name))
+        if has('nvim')
+            call remove(s:plugs, a:name)
+        else
+            call remove(g:plugs, a:name)
+            call remove(g:plugs_order, index(g:plugs_order, a:name))
+        endif
         " strip anything after period because not legitimate variable.
         let l:varname = substitute(a:name, '\..*', '', '')
         let l:varname = substitute(l:varname, 'vim-', '', '')
