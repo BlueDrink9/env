@@ -323,6 +323,7 @@ if has("nvim")
     Plugin 'https://github.com/salkin-mada/openscad.nvim', {'for': 'scad'}
 else
     Plugin 'https://github.com/jceb/vim-orgmode', {'for': 'org'}
+    Plugin 'https://github.com/sirtaj/vim-openscad', {'for': 'scad'}
 endif
 
 if has('nvim')

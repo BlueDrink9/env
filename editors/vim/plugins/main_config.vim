@@ -300,6 +300,12 @@ endif
 "{]}
 
 " {[} ---------- extra filetype support ----------
+if IsPluginUsed("vim-openscad")
+    lua require('openscad')
+    let g:openscad_load_snippets = false
+    let g:openscad_auto_open = false
+    let g:openscad_default_mappings = false
+endif
 if IsPluginUsed("graphviz.vim")
     " Autocompile dotfile on write if fewer than 50 lines.
     autocmd myPlugins bufwritepost *.dot if line("$") < 50 | GraphvizCompile | endif
