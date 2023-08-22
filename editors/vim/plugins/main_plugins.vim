@@ -185,31 +185,31 @@ Plugin 'https://github.com/PeterRincker/vim-argumentative'
 " Add text object for whole buffer
 Plugin 'https://github.com/kana/vim-textobj-entire', {
             \ 'keys': ['i%', 'a%'],
-            \ 'dependencies': 'kana/vim-textobj-user'}
+            \ 'dependencies': ['kana/vim-textobj-user']}
 " Expands what a sentence/word is for prose.
 Plugin 'https://github.com/reedes/vim-textobj-sentence', { 'for': g:proseFileTypes,
             \ 'keys': [')', '('],
-            \ 'dependencies': 'kana/vim-textobj-user'}
+            \ 'dependencies': ['kana/vim-textobj-user']}
 " av/iv for lines continued by \
 Plugin 'rhysd/vim-textobj-continuous-line', {
             \ 'keys': ['il', 'al'],
-            \ 'dependencies': 'kana/vim-textobj-user'}
+            \ 'dependencies': ['kana/vim-textobj-user']}
 " iv as object for camelcasemotion style
 Plugin 'https://github.com/Julian/vim-textobj-variable-segment', {
             \ 'keys': ['iv', 'av'],
-            \ 'dependencies': 'kana/vim-textobj-user'}
+            \ 'dependencies': ['kana/vim-textobj-user']}
 " iz az
 Plugin 'somini/vim-textobj-fold', {
             \ 'keys': ['az', 'iz'],
-            \ 'dependencies': 'kana/vim-textobj-user'}
+            \ 'dependencies': ['kana/vim-textobj-user']}
 if v:version >= 703
     " ac, ic, aC
     Plugin 'https://github.com/glts/vim-textobj-comment', {
                 \ 'keys': ['ac', 'ic', 'aC', 'iC'],
-                \ 'dependencies': 'kana/vim-textobj-user'}
+                \ 'dependencies': ['kana/vim-textobj-user']}
 endif
 Plugin 'https://github.com/coachshea/vim-textobj-markdown', { 'for': 'markdown',
-            \ 'dependencies': 'kana/vim-textobj-user'}
+            \ 'dependencies': ['kana/vim-textobj-user']}
 " Function argument movements
 Plugin 'https://github.com/PeterRincker/vim-argumentative'
 " Adds indent block as text object. ii , ai or aI
@@ -218,7 +218,7 @@ Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'https://github.com/jeetsukumaran/vim-indentwise'
 " af, if for functions, ac, ic for classes. Also ]pf, [pc for movements.
 Plugin 'https://github.com/bps/vim-textobj-python', {'for': 'python',
-            \ 'dependencies': 'kana/vim-textobj-user'}
+            \ 'dependencies': ['kana/vim-textobj-user']}
 Plugin 'mtdl9/vim-log-highlighting'
 Plugin 'https://github.com/glts/vim-texlog'
 " {]} Extra text objects
