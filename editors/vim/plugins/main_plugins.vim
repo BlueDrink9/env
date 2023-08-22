@@ -41,6 +41,9 @@ endif
 " {]} ---------- Module setup ----------
 
 " {[} ---------- Misc ----------
+" Close buffers without changing window
+Plugin 'https://github.com/moll/vim-bbye', {'on': 'Bdelete'}
+cabbrev bd Bdelete
 if has("timers")
     " Commands sent to shell with AsyncRun appear in qf window.
     " use AsyncRun! to prevent autoscroll.
@@ -370,7 +373,7 @@ Plugin 'https://github.com/reedes/vim-lexical', { 'for': g:proseFileTypes }
 " Pencil loaded in lite, for scratch.
 " Plugin 'https://github.com/reedes/vim-pencil'
 
-Plugin 'https://github.com/lervag/vimtex'
+Plugin 'https://github.com/lervag/vimtex', {'for': 'tex'}
 
 " {[} ---------- Markdown Preview ----------
 if (has('nvim') || v:version >= 801) && !has('win32')

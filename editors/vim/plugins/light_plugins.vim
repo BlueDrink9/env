@@ -21,13 +21,10 @@ endif
 Plugin 'https://github.com/Konfekt/FastFold'
 
 " Allows plugin maps to use '.' to repeat
-Plugin 'https://github.com/tpope/vim-repeat'
+Plugin 'https://github.com/tpope/vim-repeat', {'keys': '.'}
 
 " For switching between header and alt files
 " Plugin 'vim-scripts/a.vim'
-" Close buffers without changing window
-Plugin 'https://github.com/moll/vim-bbye', {'on': 'Bdelete'}
-cabbrev bd Bdelete
 " {]} Misc
 
 " {[}--- Yanks ---
@@ -39,7 +36,7 @@ if !has('clipboard') || IsWSL()
 endif
 if has('nvim')
     " Plugin 'https://github.com/gbprod/yanky.nvim'
-    Plugin 'https://github.com/bfredl/nvim-miniyank'
+    Plugin 'https://github.com/bfredl/nvim-miniyank', {'keys': ['p', 'P']}
 elseif exists('##TextYankPost')
     Plugin 'https://github.com/svermeulen/vim-yoink'
 else
@@ -50,10 +47,11 @@ endif
 " {[}--- Operators ---
 " Bunch of neat mappings, it's a tpope. Esp [n and ]n, for SCM conflict marks.
 " And [<space> for addign newlines.
-Plugin 'https://github.com/tpope/vim-unimpaired'
+Plugin 'https://github.com/tpope/vim-unimpaired',
+            \ {'keys': [']', '[', 'yo', '>', '<', '=']}
 " cx to select an object, then cx again to swap it with first thing.
 if has('nvim')
-    Plugin 'https://github.com/gbprod/substitute.nvim'
+    Plugin 'https://github.com/gbprod/substitute.nvim', {'keys': ['cx']}
 else
     Plugin 'https://github.com/tommcdo/vim-exchange'
 endif
@@ -70,12 +68,15 @@ Plugin 'tommcdo/vim-ninja-feet'
 " {[}--- Visual changes ---
 " Highlight f and t chars to get where you want.
 if has('nvim')
-    Plugin 'https://github.com/jinh0/eyeliner.nvim'
+    Plugin 'https://github.com/jinh0/eyeliner.nvim', {'keys': ['f', 'F', 't', 'T']}
 elseif v:version >= 702
     Plugin 'unblevable/quick-scope'
 endif
 if v:version >= 703
-    Plugin 'https://github.com/ntpeters/vim-better-whitespace'
+    Plugin 'https://github.com/ntpeters/vim-better-whitespace', {
+                \ 'event': ['TextChanged', 'TextChangedI'],
+                \ 'on': ['StripWhitespace', 'StripWhitespaceOnChangedLines']
+                \ }
 endif
 " Distraction-free vim.
 Plugin 'https://github.com/junegunn/goyo.vim', {'on' : ['Goyo',]}

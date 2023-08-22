@@ -55,36 +55,6 @@ if IsPluginUsed("nvim-miniyank")
    map P <Plug>(miniyank-autoPut)
    map <leader>p <Plug>(miniyank-cycle)
    map <leader>P <Plug>(miniyank-cycleback)
-" if IsPluginUsed("yanky.nvim")
-"     lua << EOF
-"     require("yanky").setup({
-"     system_clipboard = {
-"         sync_with_ring = false,
-"         },
-"         highlight = {
-"             on_put = true,
-"             on_yank = true,
-"             timer = 300,
-"         },
-"     })
-"    vim.keymap.set({"n","x"}, "p", "<Plug>(YankyPutAfter)")
-"    vim.keymap.set({"n","x"}, "P", "<Plug>(YankyPutBefore)")
-"    vim.keymap.set({"n","x"}, "<leader>p", "<Plug>(YankyCycleForward)")
-"    vim.keymap.set({"n","x"}, "<leader>P", "<Plug>(YankyCycleForward)")
-"    -- Unimpaired style
-"    vim.keymap.set("n", "]p", "<Plug>(YankyPutIndentAfterLinewise)")
-"    vim.keymap.set("n", "[p", "<Plug>(YankyPutIndentBeforeLinewise)")
-"    vim.keymap.set("n", "]P", "<Plug>(YankyPutIndentAfterLinewise)")
-"    vim.keymap.set("n", "[P", "<Plug>(YankyPutIndentBeforeLinewise)")
-
-"    vim.keymap.set("n", ">p", "<Plug>(YankyPutIndentAfterShiftRight)")
-"    vim.keymap.set("n", "<p", "<Plug>(YankyPutIndentAfterShiftLeft)")
-"    vim.keymap.set("n", ">P", "<Plug>(YankyPutIndentBeforeShiftRight)")
-"    vim.keymap.set("n", "<P", "<Plug>(YankyPutIndentBeforeShiftLeft)")
-
-"    vim.keymap.set("n", "=p", "<Plug>(YankyPutAfterFilter)")
-"    vim.keymap.set("n", "=P", "<Plug>(YankyPutBeforeFilter)")
-" EOF
 elseif IsPluginUsed("vim-yoink")
     if has('nvim')
         let g:yoinkSavePersistently = 1  " Nvim only.
@@ -116,15 +86,6 @@ if IsPluginUsed("vim-unimpaired")
     nmap <leader>t yo
 endif
 
-if IsPluginUsed("substitute.nvim")
-lua << EOF
-vim.keymap.set("n", "cx", require('substitute.exchange').operator)
-vim.keymap.set("n", "cxx", require('substitute.exchange').line)
-vim.keymap.set("x", "X", require('substitute.exchange').visual)
-vim.keymap.set("n", "cxc", require('substitute.exchange').cancel)
-EOF
-endif
-
 if IsPluginUsed("vim-ReplaceWithRegister")
     nmap dr  <Plug>ReplaceWithRegisterOperator
     nmap drr <Plug>ReplaceWithRegisterLine
@@ -142,9 +103,7 @@ endif
 " {]}--- Operators ---
 
 " {[}--- Visual changes ---
-if IsPluginUsed("eyeliner.nvim")
-    lua require'eyeliner'.setup { highlight_on_key = true, dim = true }
-elseif IsPluginUsed("quick-scope")
+if IsPluginUsed("quick-scope")
     " Trigger a highlight in the appropriate direction when pressing these keys:
     let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 endif
