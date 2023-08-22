@@ -202,7 +202,7 @@ function! PluginAdapter(...)
             Plug dep
         endfor
         for event in get(l:args, 'event', [])
-            LoadPluginOnEvent(l:plugin, event)
+            call LoadPluginOnEvent(l:plugin, event)
         endfor
 
         " Remove args unsupported by Plug
@@ -279,7 +279,9 @@ if !g:liteMode
 endif
 
 " Inits lazy.nvim plugin loading
-lua require("config.lazy")
+if has('nvim')
+    lua require("config.lazy")
+endif
 
 silent doautocmd User pluginSettingsToExec
 
