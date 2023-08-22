@@ -45,7 +45,7 @@ require("lazy").setup({
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
   install = {
-    missing = true, -- don't install missing plugins on startup.
+    missing = true, -- install missing plugins on startup.
     colorscheme = { "ayu", }, -- "tokyonight", "habamax" }
   },
   checker = { enabled = false }, -- don't automatically check for plugin updates
@@ -65,22 +65,22 @@ require("lazy").setup({
     },
   },
   -- Unicode alternatives
-  -- ui = {
-  --   icons = {
-  --     cmd = "⌘",
-  --     config = "🛠",
-  --     event = "📅",
-  --     ft = "📂",
-  --     init = "⚙",
-  --     keys = "🗝",
-  --     plugin = "🔌",
-  --     runtime = "💻",
-  --     source = "📄",
-  --     start = "🚀",
-  --     task = "📌",
-  --     lazy = "💤 ",
-  --   },
-  -- },
+  ui = {
+    icons = {
+      cmd = "⌘",
+      config = "🛠",
+      event = "📅",
+      ft = "📂",
+      init = "⚙",
+      keys = "🗝",
+      plugin = "🔌",
+      runtime = "💻",
+      source = "📄",
+      start = "🚀",
+      task = "📌",
+      lazy = "💤 ",
+    },
+  },
 })
 vim.cmd[[abbrev packi Lazy install]]
 vim.cmd[[abbrev packu Lazy update]]

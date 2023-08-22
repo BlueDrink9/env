@@ -47,7 +47,8 @@ cabbrev bd Bdelete
 if has("timers")
     " Commands sent to shell with AsyncRun appear in qf window.
     " use AsyncRun! to prevent autoscroll.
-    Plugin 'https://github.com/skywind3000/asyncrun.vim', {'on': ['AsyncRun', 'asyncrun#quickfix_toggle']}
+    Plugin 'https://github.com/skywind3000/asyncrun.vim', {
+                \ 'on': ['AsyncRun'], 'event': ['QuickFixCmdPost']}
 endif
 if has('nvim-0.5')
     " Prerequisite for many nvim lua plugins.
@@ -276,7 +277,7 @@ endif
 if !g:hasGUI || has('terminal') || has('nvim')
     " PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run the install
     " script
-    Plugin 'junegunn/fzf', { 'dir': '~/.local/packages/fzf', 'do': './install --all' }
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() }}
     " Adds some vim-specific fzf commands.
     Plugin 'junegunn/fzf.vim'
 else
@@ -395,7 +396,7 @@ endif
 " endif
 " {]} ---------- Markdown Preview ----------
 
-Plugin 'https://github.com/dkarter/bullets.vim'
+Plugin 'https://github.com/dkarter/bullets.vim', {'for': g:proseFileTypes}
 Plugin 'ferrine/md-img-paste.vim', {'for': 'markdown'}
 " {]} ---------- Prose----------
 

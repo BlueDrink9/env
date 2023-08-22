@@ -21,7 +21,7 @@ endif
 Plugin 'https://github.com/Konfekt/FastFold'
 
 " Allows plugin maps to use '.' to repeat
-Plugin 'https://github.com/tpope/vim-repeat', {'keys': '.'}
+Plugin 'https://github.com/tpope/vim-repeat.git', {'keys': '.'}
 
 " For switching between header and alt files
 " Plugin 'vim-scripts/a.vim'

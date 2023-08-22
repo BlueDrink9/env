@@ -23,7 +23,7 @@ let g:pencil_terminal_italics = 1
 let g:pencil_spell_undercurl = 1
 " Very similar to the pencil theme. Pencil doesn't support terminal
 " undercurl.
-Plugin 'NLKNguyen/papercolor-theme'
+Plugin 'NLKNguyen/papercolor-theme', {'lazy': v:true}
 let g:PaperColor_Theme_Options = {
       \   'theme': {
       \     'default': {
@@ -37,22 +37,22 @@ let g:PaperColor_Theme_Options = {
 " \         'SpellCap' : ['underline', 'underline']
 " \       }
 if has('nvim')
-  Plugin 'https://github.com/ellisonleao/gruvbox.nvim'
+  Plugin 'https://github.com/ellisonleao/gruvbox.nvim', {'lazy': v:true}
 else
   Plugin 'https://github.com/morhetz/gruvbox'
 endif
-Plugin 'https://github.com/jnurmine/Zenburn'
+Plugin 'https://github.com/jnurmine/Zenburn', {'lazy': v:true}
 " CursorColumn a stronger option
 " au myPlugins colorscheme zenburn hi! link StatusLineNC ColorColumn | hi! link StatusLine ColorColumn
-Plugin 'https://github.com/tomasr/molokai'
-Plugin 'aonemd/kuroi.vim'
+Plugin 'https://github.com/tomasr/molokai', {'lazy': v:true}
+Plugin 'aonemd/kuroi.vim', {'lazy': v:true}
 " Gorgeously coloured dark scheme.
-Plugin 'https://github.com/srcery-colors/srcery-vim'
+Plugin 'https://github.com/srcery-colors/srcery-vim', {'lazy': v:true}
 let g:srcery_italic=1 " Default only 1 in gui
-Plugin 'https://github.com/rakr/vim-two-firewatch'
+Plugin 'https://github.com/rakr/vim-two-firewatch', {'lazy': v:true}
 if s:guiColours
   if has('nvim')
-    Plugin 'https://github.com/Shatur/neovim-ayu'
+    Plugin 'https://github.com/Shatur/neovim-ayu', {'lazy': v:true}
   else
     Plugin 'https://github.com/ayu-theme/ayu-vim'
     " Apparently we can't have all versions. Daft.
@@ -60,24 +60,24 @@ if s:guiColours
     let ayucolor="light"
   endif
 endif
-Plugin 'liuchengxu/space-vim-dark'
+Plugin 'liuchengxu/space-vim-dark', {'lazy': v:true}
 " High contrast themes.
 " Mainly for rift (dark green) and maybe day (sol-style), summer (dark
 " purple). Past (pale light). Spring is also green.
-Plugin 'https://gitlab.com/protesilaos/tempus-themes-vim'
+Plugin 'https://gitlab.com/protesilaos/tempus-themes-vim', {'lazy': v:true}
 " Green-ish?
-Plugin 'https://github.com/vim-scripts/oceandeep'
+Plugin 'https://github.com/vim-scripts/oceandeep', {'lazy': v:true}
 " Purple can be quite fun.
-Plugin 'ashfinal/vim-colors-violet'
-Plugin 'dracula/vim', { 'as': 'dracula' }
-Plugin 'https://github.com/pineapplegiant/spaceduck'
-Plugin 'https://github.com/sainnhe/forest-night'
+Plugin 'ashfinal/vim-colors-violet', {'lazy': v:true}
+Plugin 'dracula/vim', { 'as': 'dracula', 'lazy': v:true }
+Plugin 'https://github.com/pineapplegiant/spaceduck', {'lazy': v:true}
+Plugin 'https://github.com/sainnhe/forest-night', {'lazy': v:true}
 
 if has('nvim')
-  Plugin 'https://github.com/uloco/bluloco.nvim'
+  Plugin 'https://github.com/uloco/bluloco.nvim', {'lazy': v:true}
 endif
 
-Plugin 'sonph/onehalf', {'rtp': 'vim/'}
+Plugin 'sonph/onehalf', {'rtp': 'vim/', 'lazy': v:true}
 function! s:onehalfSwapLightDark()
   if g:colorSch =~? "dark"
     colorscheme onehalflight
@@ -92,7 +92,7 @@ endfunction
 " 'background' option is set (e.g. with `yob`)
 au myPlugins ColorScheme onehalf* call <sid>setOnehalfColourSwapAutocmd() | au! myColourschemes ColorScheme onehalf*
 
-Plugin 'rakr/vim-one'
+Plugin 'rakr/vim-one', {'lazy': v:true}
 let g:one_allow_italics = 1
 function! s:customVimOneColours()
   " Don't hide window borders. May want to play with colours (fg, bg).
@@ -104,14 +104,14 @@ function! s:customVimOneColours()
   call one#highlight('markdownBoldItalic', '', '', 'italic,bold')
 endfunction
 autocmd myColourschemes ColorScheme one call <sid>customVimOneColours()
-Plugin 'cormacrelf/vim-colors-github'
-Plugin 'https://github.com/arzg/vim-colors-xcode'
-Plugin 'https://github.com/mvpopuk/inspired-github.vim'
+Plugin 'cormacrelf/vim-colors-github', {'lazy': v:true}
+Plugin 'https://github.com/arzg/vim-colors-xcode', {'lazy': v:true}
+Plugin 'https://github.com/mvpopuk/inspired-github.vim', {'lazy': v:true}
 " Black backgrounds
-Plugin 'fcpg/vim-fahrenheit'
-Plugin 'vim-scripts/Luinnar'
-Plugin 'https://github.com/GertjanReynaert/cobalt2-vim-theme'
-Plugin 'nanotech/jellybeans.vim'
+Plugin 'fcpg/vim-fahrenheit', {'lazy': v:true}
+Plugin 'vim-scripts/Luinnar', {'lazy': v:true}
+Plugin 'https://github.com/GertjanReynaert/cobalt2-vim-theme', {'lazy': v:true}
+Plugin 'nanotech/jellybeans.vim', {'lazy': v:true}
 let g:jellybeans_use_term_italics = 1
 let g:jellybeans_overrides = {
       \    'background': { 'guibg': '000000' },
@@ -122,7 +122,7 @@ let g:jellybeans_overrides = {
 " Should override COLOURSCHEME settings by setting colorSch
 " let base16colorspace=256  " Access colors present in 256 colorspace
 if !s:guiColours
-    Plugin 'https://github.com/chriskempson/base16-vim'
+    Plugin 'https://github.com/chriskempson/base16-vim', {'lazy': v:true}
     if filereadable(expand("~/.vimrc_background")) && exists($BASE16_THEME)
         let base16colorspace=256
         autocmd myPlugins User pluginSettingsToExec source ~/.vimrc_background
@@ -134,7 +134,7 @@ endif
 " {[} ---------- Solarized ----------
 " Altercation's version doesn't set gui colors in terminal (no termguicolours)
 if has("nvim") && &termguicolors == 1
-    Plugin 'https://gitlab.com/HiPhish/resolarized.nvim'
+    Plugin 'https://gitlab.com/HiPhish/resolarized.nvim', {'lazy': v:true}
 elseif exists("g:gui_oni")
     if colorSch =~ "solarized"
         " Comes with oni, includes theme.
