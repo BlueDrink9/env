@@ -160,12 +160,13 @@ Plugin 'https://github.com/vim-scripts/ProportionalResize'
 " Automated view session creation.
 Plugin 'https://github.com/zhimsel/vim-stay', {'on': []}
 call LoadPluginOnEvent('vim-stay', "CursorHold")
-Plugin 'xolox/vim-misc'
 " Map os commands (eg maximise), and open windows commands without shell
 " popup.
-Plugin 'https://github.com/xolox/vim-shell'
+Plugin 'https://github.com/xolox/vim-shell', {
+            \ 'dependencies': ['xolox/vim-misc']}
 if v:version >= 704
-    Plugin 'https://github.com/xolox/vim-session', {'on': ['OpenSession']}
+    Plugin 'https://github.com/xolox/vim-session', {'on': ['OpenSession'],
+            \ 'dependencies': ['xolox/vim-misc']}
 endif
 " {]} View and session
 

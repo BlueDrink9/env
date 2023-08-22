@@ -137,60 +137,82 @@ endfunction
 command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 
 function! IsPluginUsed(name)
-    return has_key(g:plugs, a:name)
+    if has('nvim')
+        return has_key(s:plugs, a:name)
+    else
+        return has_key(g:plugs, a:name)
+    endif
 endfunction
 
 function! LoadPluginOnInsertEnter(name)
-  call LoadPluginOnEvent(a:name, "InsertEnter")
+    call LoadPluginOnEvent(a:name, "InsertEnter")
 endfunction
 
 " Plug installs the plugin, but only loads on autocmd event.
 " name: the last part of the plugin url (just name, no auth).
 " Plug options should include 'on': [] to prevent load before event.
 function! LoadPluginOnEvent(name, event)
-  let l:plugLoad = 'autocmd ' . a:event . ' * call plug#load("'
-  let l:plugLoadEnd = '")'
-  let l:undoAutocmd = 'autocmd! ' . a:name . '_' . a:event
-  exec "augroup " . a:name . '_' . a:event
+    return
+    let l:plugLoad = 'autocmd ' . a:event . ' * call plug#load("'
+    let l:plugLoadEnd = '")'
+    let l:undoAutocmd = 'autocmd! ' . a:name . '_' . a:event
+    exec "augroup " . a:name . '_' . a:event
     autocmd!
     exec  l:plugLoad . a:name . l:plugLoadEnd . ' | ' . l:undoAutocmd
-  augroup END
+augroup END
 endfunction
 
 if has('nvim')
+let s:plugs = {}
 lua << EOF
+MyLazySpecs = {}
 -- Compatibility function to convert vim-plug's Plug command to lazy.nvim spec
 function PlugToLazy(plugin, opts)
-    local lazySpec = {}
-    lazySpec.url = plugin
+    local lazySpec = opts or {}
+    lazySpec[1] = plugin
     if opts then
-        -- if opts["for"] then
-            lazySpec.ft = opts["for"]
-        -- end
-        if opts["on"] then
-            lazySpec.cmd = opts["on"]
-        end
-        if opts["do"] then
-            lazySpec.run = opts["do"]
-        end
-        lazySpec.keys = opts["keys"]
+        lazySpec.ft = opts["for"]
+        lazySpec.name = opts["as"]
     end
-
-    return lazySpec
+    table.insert(MyLazySpecs, lazySpec)
 end
 EOF
 endif
+let s:PlugOpts = [
+            \ 'branch',
+            \ 'tag',
+            \ 'commit',
+            \ 'rtp',
+            \ 'dir',
+            \ 'as',
+            \ 'do',
+            \ 'on',
+            \ 'for',
+            \ 'frozen',
+            \ ]
+
 function! PluginAdapter(...)
     let l:plugin = a:1
     let l:args = {}
     if a:0 == 2
         let l:args = a:2
     endif
-    if has('nvim') && v:false
-        lua PlugToLazy(vim.g.plugin, vim.g.args)
+    if has('nvim')
+        let g:__plugin_args= l:args
+        exec 'lua PlugToLazy("' .. l:plugin  .. '", vim.g.__plugin_args)'
+        let s:plugs[l:plugin] = 1
     else
+        " convert args we want to keep
+        let l:deps = get(l:args, 'dependencies', [])
+        for dep in l:deps
+            Plug dep
+        endfor
         " Remove args unsupported by Plug
-        silent! call remove(l:args, "keys")
+        for opt in keys(l:args)
+            if index(s:PlugOpts, opt) < 0  " If item not in the list.
+                silent! call remove(l:args, opt)
+            endif
+        endfor
         Plug l:plugin, l:args
     endif
 endfunction
@@ -205,7 +227,9 @@ let g:customHLGroups = []
 " let g:plugs={}
 " let g:plugs_order=[]
 " {]}
-call plug#begin(s:pluginInstallPath)
+if !has('nvim')
+    call plug#begin(s:pluginInstallPath)
+endif
 " Jetpack 'tani/vim-jetpack', {'opt': 1} "bootstrap
 
 if has('nvim') && !has('nvim-0.9')
@@ -236,7 +260,12 @@ endif
 " Unplugs and replacements go here
 exec 'source ' . s:localPlugins
 
-call plug#end()
+if has('nvim')
+    " Inits lazy.vim plugins
+    lua require("config.lazy")
+else
+    call plug#end()
+endif
 
 if has('nvim') && !has('nvim-0.9')
     lua require('impatient')
