@@ -145,11 +145,5 @@ if IsPluginUsed("vim-pencil")
     let g:pencil#wrapModeDefault = 'soft'
     let g:pencil#conceallevel=&conceallevel
     let g:pencil#concealcursor=&concealcursor
-    " Scratch isn't explicitly a prose ft, but for quick notes I want it treated
-    " as one.
-    augroup lightPencil
-        au!
-        autocmd CursorHold * if &filetype == "scratch" | call pencil#init() | au! lightPencil
-    augroup end
 endif
 " {]} ---------- Prose----------

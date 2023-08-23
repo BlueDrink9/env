@@ -87,5 +87,5 @@ endif
 " {]} TMUX
 
 " {[} ---------- Prose ----------
-Plugin 'https://github.com/reedes/vim-pencil'
+Plugin 'https://github.com/reedes/vim-pencil', {'for': g:proseFileTypes}
 " {]} ---------- Prose----------
