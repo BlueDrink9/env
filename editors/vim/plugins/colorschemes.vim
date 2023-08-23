@@ -17,7 +17,7 @@ silent! if &termguicolors || g:hasGUI
     let s:guiColours = v:true
 endif
 
-Plugin 'reedes/vim-colors-pencil'
+Plugin 'reedes/vim-colors-pencil', {'lazy': v:true}
 let g:pencil_higher_contrast_ui = 0   " 0=low (def), 1=high
 let g:pencil_terminal_italics = 1
 let g:pencil_spell_undercurl = 1

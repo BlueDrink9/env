@@ -172,28 +172,32 @@ lua << EOF
 MyLazySpecs = {}
 -- Compatibility function to convert vim-plug's Plug command to lazy.nvim spec
 function PlugToLazy(plugin, opts)
-    local lazySpec = opts or {}
-    lazySpec[1] = plugin
+    local lazySpec = {}
     if opts then
+        lazySpec = opts
         lazySpec.ft = opts["for"]
         lazySpec.name = opts["as"]
         lazySpec.cmd = opts["on"]
-        lazySpec.keys = opts["keys"]
-        if type(lazySpec.cmd) ~= "table" then
-            lazySpec.cmd = {lazySpec.cmd}
+        lazySpec.version = opts["tag"]
+        if lazySpec.cmd then
+            if type(lazySpec.cmd) == "string" then
+                lazySpec.cmd = {lazySpec.cmd}
             end
-        -- <plug> mappings are commands ('on') for Plug, but keys for Lazy
-        for k, cmd in pairs(lazySpec.cmd) do
-            if string.find(string.lower(cmd), "<plug>", 1, 6) then
-                table.insert(lazySpec.keys, cmd)
-                table.remove(lazySpec.cmd, k)
+            -- <plug> mappings are commands ('on') for Plug, but keys for Lazy
+            for k, cmd in pairs(lazySpec.cmd) do
+                if string.find(string.lower(cmd), "<plug>", 1, 6) then
+                    table.insert(lazySpec.keys, cmd)
+                    table.remove(lazySpec.cmd, k)
+                end
             end
         end
     end
+    lazySpec[1] = plugin
     table.insert(MyLazySpecs, lazySpec)
 end
 EOF
 endif
+
 let s:PlugOpts = [
             \ 'branch',
             \ 'tag',
