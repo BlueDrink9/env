@@ -33,7 +33,6 @@ return {
    {'nvim-treesitter/nvim-treesitter-textobjects'},
    {'PeterRincker/vim-argumentative', enabled=false},
    {'https://github.com/JoosepAlviste/nvim-ts-context-commentstring'},
-   {'https://github.com/Wansmer/treesj'},
    {'kevinhwang91/promise-async'},
    {'https://github.com/kevinhwang91/nvim-ufo'},
    {'Konfekt/FastFold', enabled=false},
@@ -45,6 +44,13 @@ return {
          vim.api.nvim_create_user_command('SSR', function() require("ssr").open() end)
       end
    -- lua vim.keymap.set({ "n", "x" }, "<leader>sr", function() require("ssr").open() end)
+   },
+
+   {'https://github.com/Wansmer/treesj',
+      keys = {
+         {'gJ', function() require('treesj').join() end},
+         {'gS', function() require('treesj').split() end},
+      }
    },
 
 }

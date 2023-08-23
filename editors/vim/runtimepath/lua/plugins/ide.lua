@@ -14,7 +14,7 @@ return {
   {'nvim-lua/plenary.nvim'},
 
   -- For installing LSPs (and other packages)
-  {'https://github.com/williamboman/mason.nvim'},
+  {'williamboman/mason.nvim'},
   {'https://github.com/RubixDev/mason-update-all'},
   {'https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim'},
 
@@ -138,55 +138,51 @@ return {
     config=true,
   },
 
-  {'nvim-lint', config = function()
-    vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-      callback = function()
-        require("lint").try_lint()
-      end,
-      group='myIDE',
-    })
-  end
-  },
+  -- {'mfussenegger/nvim-lint', config = function()
+  --   vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  --     callback = function()
+  --       require("lint").try_lint()
+  --     end,
+  --     group='myIDE',
+  --   })
+  -- end
+  -- },
 
   -- {]} ---------- Visual ----------
 
-  -- " Haven't configured yet.
-  -- " Plugin 'https://github.com/mfussenegger/nvim-lint'
-  -- " Integrates linters with Nvim lsp
-  -- " Plugin 'https://github.com/jose-elias-alvarez/null-ls.nvim'
-  -- " Plugin 'https://github.com/jayp0521/mason-null-ls.nvim'
+  -- -- " Haven't configured yet.
+  -- -- DEPRECATED - TODO REMOVE
+  -- {'jose-elias-alvarez/null-ls.nvim',
+  --   -- will setup any installed and configured sources for mason
+  --   opts = {
+  --     sources = {
+  --       -- null_ls.builtins.code_actions.refactoring,
+  --       require'null_ls'.builtins.completion.spell,
+  --       require'null_ls'.builtins.hover.printenv,
+  --     }
+  --   }
+  -- },
 
-  -- DEPRECATED - TODO REMOVE
-  {'null-ls.nvim',
-    -- will setup any installed and configured sources for mason
-    opts = {
-      sources = {
-        -- null_ls.builtins.code_actions.refactoring,
-        require'null_ls'.builtins.completion.spell,
-        require'null_ls'.builtins.hover.printenv,
-      }
-    }
-  },
+  -- {'jayp0521/mason-null-ls',
+  --   opts = {
+  --     ensure_installed = {
+  --       'vint',
+  --       'luacheck',
+  --       'stylua',
+  --       'pylint',
+  --       'shellcheck',
+  --       'jq',
+  --       'proselint',
+  --     },
+  --     automatic_setup = true,
+  --   },
+  --   config = require'mason-null-ls'.setup_handlers,
+  -- },
 
-  {'mason-null-ls',
-    opts = {
-      ensure_installed = {
-        'vint',
-        'luacheck',
-        'stylua',
-        'pylint',
-        'shellcheck',
-        'jq',
-        'proselint',
-      },
-      automatic_setup = true,
-    },
-    config = require'mason-null-ls'.setup_handlers,
-  },
+  -- {'simrat39/symbols-outline.nvim', config=true},
 
-  {'symbols-outline.nvim', config=true},
+  {'https://github.com/TimUntersberger/neogit',
 
-  {'neogit',
     config=function()
       vim.api.nvim_create_user_command('Magit', 'Neogit')
     end,
@@ -194,76 +190,71 @@ return {
     keys={'<leader>gg', '<cmd>Neogit<CR>', desc='NeoGit'},
   },
 
-  {'treesj',
-    keys = {
-      {'gJ', function() require('treesj').join() end},
-      {'gS', function() require('treesj').split() end},
-    }
-  },
-
   -- {[} ---------- REPL ----------
-  {"sniprun",
-    opts = {
-      --" you can combo different display modes as desired
-      display = {
-        "Classic",                    -- "display results in the command-line  area
-        "VirtualTextOk",              -- "display ok results as virtual text (multiline is shortened)
+  -- {"michaelb/sniprun",
+  --   opts = {
+  --     --" you can combo different display modes as desired
+  --     display = {
+  --       "Classic",                    -- "display results in the command-line  area
+  --       "VirtualTextOk",              -- "display ok results as virtual text (multiline is shortened)
 
-        "VirtualTextErr",          -- "display error results as virtual text
-        -- "TempFloatingWindow",      -- "display results in a floating window
-        "LongTempFloatingWindow",  -- "same as above, but only long results. To use with VirtualText__
-        -- "Terminal"                 -- "display results in a vertical split
-        "TerminalWithCode",        --# display results and code history in a vertical split
-      },
-    },
-    keys = {
-      {idemaps.REPLSendLine, '<Plug>SnipRun'},
-      {idemaps.REPLSend, '<Plug>SnipRunOperator'},
-      {idemaps.REPLCancel, '<Plug>SnipReset'},
-      {idemaps.REPLClear, '<Plug>SnipClose'},
-      {idemaps.REPLClose, '<Plug>SnipClose'},
-      {idemaps.REPLSend, '<Plug>SnipRun', mode='v'},
-      -- sniprunfile_keep_position
-      {idemaps.REPLSendFile, [[
-      <cmd>let b:caret=winsaveview()
-           <bar> %SnipRun
-           <bar> call winrestview(b:caret)<CR>
-        ]]
-      },
-    },
-  },
+  --       "VirtualTextErr",          -- "display error results as virtual text
+  --       -- "TempFloatingWindow",      -- "display results in a floating window
+  --       "LongTempFloatingWindow",  -- "same as above, but only long results. To use with VirtualText__
+  --       -- "Terminal"                 -- "display results in a vertical split
+  --       "TerminalWithCode",        --# display results and code history in a vertical split
+  --     },
+  --   },
+  --   keys = {
+  --     {idemaps.REPLSendLine, '<Plug>SnipRun'},
+  --     {idemaps.REPLSend, '<Plug>SnipRunOperator'},
+  --     {idemaps.REPLCancel, '<Plug>SnipReset'},
+  --     {idemaps.REPLClear, '<Plug>SnipClose'},
+  --     {idemaps.REPLClose, '<Plug>SnipClose'},
+  --     {idemaps.REPLSend, '<Plug>SnipRun', mode='v'},
+  --     -- sniprunfile_keep_position
+  --     {idemaps.REPLSendFile, [[
+  --     <cmd>let b:caret=winsaveview()
+  --          <bar> %SnipRun
+  --          <bar> call winrestview(b:caret)<CR>
+  --       ]]
+  --     },
+  --   },
+  -- },
 
   {"https://github.com/hkupty/iron.nvim",
-    opts = {
-      config = {
-        -- Whether a repl should be discarded or not
-        scratch_repl = true,
-        repl_definition = {
-          sh = {
-            command = {"bash"}
-          }
+    opts = function()
+      return {
+        config = {
+          -- Whether a repl should be discarded or not
+          scratch_repl = true,
+          repl_definition = {
+            sh = {
+              command = {"bash"}
+            }
+          },
+          repl_open_cmd = require'iron.view'.split.horizontal.belowright(0.15),
         },
-        repl_open_cmd = require'iron.view'.split.horizontal.belowright(0.15),
-      },
-      keymaps = {
-        send_motion = idemaps.REPLSend,
-        visual_send = idemaps.REPLSend,
-        send_file = idemaps.REPLSendFile,
-        send_line = idemaps.REPLSendLine,
-        -- send_mark = idemaps.REPLSend,
-        -- mark_motion = idemaps.REPLSend,
-        -- mark_visual = idemaps.REPLSend,
-        -- remove_mark = idemaps.REPLSend,
-        -- cr = idemaps.REPLSend,
-        interrupt = idemaps.REPLCancel,
-        exit = idemaps.REPLClose,
-        clear = idemaps.REPLClear,
-      },
-      highlight = {
-        italic = true
-      },
-      ignore_blank_lines = false,
-    },
+        keymaps = {
+          send_motion = idemaps.REPLSend,
+          visual_send = idemaps.REPLSend,
+          send_file = idemaps.REPLSendFile,
+          send_line = idemaps.REPLSendLine,
+          -- send_mark = idemaps.REPLSend,
+          -- mark_motion = idemaps.REPLSend,
+          -- mark_visual = idemaps.REPLSend,
+          -- remove_mark = idemaps.REPLSend,
+          -- cr = idemaps.REPLSend,
+          interrupt = idemaps.REPLCancel,
+          exit = idemaps.REPLClose,
+          clear = idemaps.REPLClear,
+        },
+        highlight = {
+          italic = true
+        },
+        ignore_blank_lines = false,
+      }
+    end,
     keys = {
       {'<space>s<c-s>', '<cmd>IronFocus<cr>'}
     }
@@ -276,8 +267,6 @@ return {
       vim.fn.SourcePluginFile("nvim-R.vim")
     end
   },
-
-  {'https://github.com/TimUntersberger/neogit'},
 
   {
     'https://github.com/hrsh7th/vim-vsnip',

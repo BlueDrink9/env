@@ -77,6 +77,9 @@ function! SourceCustoms(...)
         catch
             echom "Exception from" v:throwpoint ":"
             echom v:exception
+            if has('nvim')
+                 lua print(debug.stacktrace())
+             endif
             echom ""
         endtry
     endfor

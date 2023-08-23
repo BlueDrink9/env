@@ -9,7 +9,7 @@ end
 
 return {
    {'https://github.com/williamboman/mason-lspconfig.nvim'},
-   {'https://github.com/folke/trouble.nvim'},
+   {'https://github.com/folke/trouble.nvim.git'},
    -- Create appropriate colours for old colourschemes
    {'https://github.com/folke/lsp-colors.nvim'},
    {'https://github.com/Hrle97/nvim.diagnostic_virtual_text_config'},

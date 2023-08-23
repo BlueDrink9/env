@@ -64,12 +64,12 @@ return {
   {"https://github.com/Nguyen-Hoang-Nam/nvim-preview-csv",
     -- Want to keep just in case we want the movement as well as the view
     init = function()
-      vim.g.csv_autocmd_arrange	   = 0
+      vim.g.csv_autocmd_arrange = 0
     end,
     opts = {
       max_csv_line = 100
     },
-    ft="csv",
+    -- ft="csv",
   },
 
 

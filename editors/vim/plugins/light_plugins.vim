@@ -18,7 +18,7 @@ endif
 
 " {[}--- Misc ---
 " Needed, really, because vim folding sucks otherwise.
-Plugin 'https://github.com/Konfekt/FastFold'
+Plugin 'Konfekt/FastFold'
 
 " Allows plugin maps to use '.' to repeat
 Plugin 'https://github.com/tpope/vim-repeat.git', {'keys': '.'}

@@ -29,7 +29,8 @@ endif
 " Has odd bug with prose fts.
 " Plugin 'https://github.com/tpope/vim-endwise'
 " ga on char shows all representations, not just dec oct hex.
-Plug 'https://github.com/tpope/vim-characterize', {'on': '<Plug>(characterize)'}
+Plug 'https://github.com/tpope/vim-characterize', {'on': '<Plug>(characterize)',
+            \ 'keys': ['<Plug>(characterize)']}
 " {]} ---------- Misc ----------
 
 " {[} ---------- Visual ----------
@@ -73,7 +74,8 @@ endif
 " {]} ---------- LSP ----------
 
 " {[} ---------- Linting ----------
-if has("timers") && !has('nvim')
+if has('nvim')
+elseif has("timers")
     " Async linting
     Plugin 'https://github.com/dense-analysis/ale'
 else
@@ -270,12 +272,14 @@ Plugin 'https://github.com/rafamadriz/friendly-snippets', {'on': [], 'event': ['
 Plugin 'https://github.com/ericsia/vscode-python-snippet-pack-2.0', {'for': 'python'}
 Plugin 'https://github.com/Antyos/vscode-openscad', {'for': 'openscad'}
 
-if !has('nvim') && v:version >= 740
+if has('nvim')
+elseif v:version >= 740
     " Only requires 7.4, but recommends 8.
     Plugin 'Shougo/neosnippet.vim', {'on': [], 'event': ['InsertEnter']}
     Plugin 'Shougo/neosnippet-snippets'
 elseif HasPython() && v:version >= 704
-    Plugin 'https://github.com/SirVer/ultisnips' " Snippit engine
+    " Snippit engine
+    Plugin 'https://github.com/SirVer/ultisnips'
 else
     " {[} ---------- Snipmate ----------
     Plugin 'https://github.com/tomtom/tlib_vim.git'

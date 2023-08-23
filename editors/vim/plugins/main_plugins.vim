@@ -171,7 +171,7 @@ endif
 Plugin 'wellle/targets.vim'
 " Move args with >, <,. Next arg ], [,. New text obj a, i,.
 " ],
-Plugin 'https://github.com/PeterRincker/vim-argumentative'
+Plugin 'PeterRincker/vim-argumentative'
 " See https://github.com/kana/vim-textobj-user/wiki for more, esp for
 " lang-specific.
 " Add text object for whole buffer
@@ -202,8 +202,6 @@ if v:version >= 703
 endif
 Plugin 'https://github.com/coachshea/vim-textobj-markdown', { 'for': 'markdown',
             \ 'dependencies': ['kana/vim-textobj-user']}
-" Function argument movements
-Plugin 'https://github.com/PeterRincker/vim-argumentative'
 " Adds indent block as text object. ii , ai or aI
 Plugin 'michaeljsmith/vim-indent-object'
 " Adds [ ] mappins for -=+% indentation objects
@@ -329,8 +327,6 @@ if Executable("git")
     " if v:version > 701
     "     Plugin 'https://github.com/tpope/vim-rhubarb'
     " endif
-    " Commit browser. :GV
-    Plugin 'junegunn/gv.vim'
 
 
     if !has('nvim-0.7')

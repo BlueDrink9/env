@@ -9,7 +9,7 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     tag='*',
-    dependencies = {'https://github.com/nvim-lua/plenary.nvim'},
+    dependencies = {{'nvim-lua/plenary.nvim'}, {'my.utils'}},
     opts = function()
 
       local maps = vim.api.nvim_get_var('IDE_mappings')
@@ -103,7 +103,7 @@ return {
           vim.api.nvim_set_keymap(
             mode,
             maps.refactor,
-            ":lua require('telescope').extensions.refactoring.refactors()<CR>",
+            function() require('telescope').extensions.refactoring.refactors() end,
             { noremap = true, silent = true, expr = false }
           )
         end
