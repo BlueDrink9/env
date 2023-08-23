@@ -2,7 +2,8 @@
 ; #KeyHistory 0
 ; #SingleInstance Force
 ; #NoTrayIcon
-
+; #InputLevel 0
+; #UseHook on
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_MyDocuments%
 
@@ -97,5 +98,17 @@ return
 
 #If IsPrefix("media")
 s::Run spotify.exe
+; eclectic tastes playlist
+m::
+  Run spotify:playlist:3DDy0dVcH0v8hwTsow3rCN
+  WinWaitActive ahk_exe spotify.exe,,10
+  send ^s  ; shuffle
+return
+; Beats playlist
+b::
+  Run spotify.exe spotify:playlist:07DNxdotyBhZf3R77tPheP
+  WinWaitActive ahk_exe spotify.exe,,10
+  send ^s  ; shuffle
+return
 #If
 
