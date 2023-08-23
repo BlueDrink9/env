@@ -178,6 +178,17 @@ function PlugToLazy(plugin, opts)
         lazySpec.ft = opts["for"]
         lazySpec.name = opts["as"]
         lazySpec.cmd = opts["on"]
+        lazySpec.keys = opts["keys"]
+        if type(lazySpec.cmd) ~= "table" then
+            lazySpec.cmd = {lazySpec.cmd}
+            end
+        -- <plug> mappings are commands ('on') for Plug, but keys for Lazy
+        for k, cmd in pairs(lazySpec.cmd) do
+            if string.find(string.lower(cmd), "<plug>", 1, 6) then
+                table.insert(lazySpec.keys, cmd)
+                table.remove(lazySpec.cmd, k)
+            end
+        end
     end
     table.insert(MyLazySpecs, lazySpec)
 end
