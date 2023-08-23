@@ -69,7 +69,7 @@ return {
     opts = {
       max_csv_line = 100
     },
-    -- ft="csv",
+    ft="csv",
   },
 
 

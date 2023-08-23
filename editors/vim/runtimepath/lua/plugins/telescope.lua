@@ -2,15 +2,26 @@ if vim.g.ideMode==0 then
   return {}
 end
 
+local telecope_make_cmd = ""
+if vim.fn.Executable('cmake') == 1 then
+  telecope_make_cmd = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
+elseif vim.fn.Executable('make') == 1 then
+  telecope_make_cmd = "make"
+else
+  telecope_make_cmd = nil
+end
+
 return {
   {'junegunn/fzf.vim', enabled=false},
   {'junegunn/fzf', enabled=false},
 
   {
     'nvim-telescope/telescope.nvim',
-    tag='*',
-    dependencies = {{'nvim-lua/plenary.nvim'}, {'my.utils'}},
+    version='*',
+    dependencies = {{'nvim-lua/plenary.nvim'},},
+      -- {'my.utils'}},
     opts = function()
+      vim.opt.rtp:append('/home/william/env-dev/editors/vim/runtimepath')
 
       local maps = vim.api.nvim_get_var('IDE_mappings')
       local telescope = require("telescope")
@@ -31,7 +42,7 @@ return {
       -- however, use that instead.
       if vim.fn.IsPluginUsed("nvim-treesitter") == 1 then
         require'my.utils'.map_table_with_prefix(
-          {treesitter = maps.FuzzySymbols}, map_prefix, 'n')
+          {[maps.FuzzySymbols] = "treesitter"}, map_prefix, 'n')
       end
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
@@ -40,11 +51,11 @@ return {
           if not capabilities then return end
           if capabilities.workspaceSymbolProvider then
             require'my.utils'.map_table_with_prefix(
-              {lsp_workspace_symbols = maps.FuzzySymbols},
+              {[maps.FuzzySymbols] = "lsp_workspace_symbols"},
               map_prefix, 'n', {buffer=args.buf})
           elseif capabilities.documentSymbolProvider then
             require'my.utils'.map_table_with_prefix(
-              {lsp_workspace_symbols = maps.FuzzySymbols},
+              {[maps.FuzzySymbols] = "lsp_workspace_symbols"},
               map_prefix, 'n', {buffer=args.buf})
           end
         end
@@ -155,20 +166,9 @@ return {
   {'cljoly/telescope-repo.nvim'},
 
   {
-    function()
-      local buildcmd = ""
-      if vim.fn.Executable('make') == 1 then
-        buildcmd = "make"
-      elseif vim.fn.Executable('cmake') == 1 then
-        buildcmd = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
-      else
-        return {}
-      end
-      return {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        enabled = vim.fn.IsCCompilerAvailable() == 1,
-        build= buildcmd,
-      }
-    end
+    'nvim-telescope/telescope-fzf-native.nvim',
+    enabled = vim.fn.IsCCompilerAvailable() == 1 and
+      (vim.fn.Executable('cmake') == 1 or vim.fn.Executable('make') == 1),
+    build = telecope_make_cmd,
   },
 }
