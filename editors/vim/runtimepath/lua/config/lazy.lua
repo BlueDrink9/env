@@ -1,10 +1,8 @@
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-local do_install = false
+local lazypath = vim.g.pluginInstallPath .. "/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   -- bootstrap lazy.nvim
   -- stylua: ignore
   vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath })
-  do_install = true
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
