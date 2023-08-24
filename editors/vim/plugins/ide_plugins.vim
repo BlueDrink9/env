@@ -242,7 +242,7 @@ if has("timers")
             call SourcePluginFile("ycm_install.vim")
         endif
         " Fallback to deoplete if YCM hasn't installed properly.
-        if HasNvimPythonModule() && !exists("g:YCM_Installed")
+        if !exists("g:YCM_Installed")
 
             if exists("v:completed_item")
                 " Shows function args from completion in cmd line.

@@ -224,8 +224,6 @@ return {
 
   {'https://github.com/ofirgall/goto-breakpoints.nvim'},
 
-  {'https://github.com/nvim-telescope/telescope-dap.nvim', dependencies='nvim-telescope/telescope.nvim'},
-
   {'theHamsta/nvim-dap-virtual-text',
     dependencies='nvim-treesitter/nvim-treesitter',
     opts={commented=true},

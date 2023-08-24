@@ -287,9 +287,7 @@ call SourcePluginFile("colorschemes.vim")
 call SourcePluginFile("light_plugins.vim")
 if !g:liteMode
     call SourcePluginFile("main_plugins.vim")
-    if has('nvim-0.5')
-        Plugin 'https://github.com/nvim-lualine/lualine.nvim'
-    else
+    if !has('nvim-0.5')
         Plugin 'https://github.com/vim-airline/vim-airline-themes'
         Plugin 'https://github.com/vim-airline/vim-airline'
     endif
