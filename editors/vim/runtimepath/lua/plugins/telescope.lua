@@ -58,7 +58,7 @@ local specs = {
     end,
 
     opts = function()
-      vim.opt.rtp:append('/home/william/env-dev/editors/vim/runtimepath')
+      vim.opt.rtp:append(vim.g.configDir .. '/runtimepath')
 
       local map_prefix = ":lua require'telescope.builtin'."
 
