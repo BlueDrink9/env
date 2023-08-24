@@ -1,6 +1,6 @@
 -- vim: ft=lua
-o = vim.opt
-fn = vim.fn
+local o = vim.opt
+local fn = vim.fn
 
 -- set the cursor style when vim exits
 -- vim.cmd('au VimLeave * set guicursor=a:block-blinkon0')  -- Uncomment if needed
@@ -29,6 +29,7 @@ o.packpath = o.runtimepath:get()
 -- vim.g.python3_host_prog = fn.system('which python3')
 
 -- Load the appropriate vimrc file based on platform and its existence
+local vimrc_path = ""
 if is_windows then
     if vim.fn.filereadable(vim.fn.expand("~/vimfiles/vimrc")) == 1 then
         vimrc_path = "~/vimfiles/vimrc"

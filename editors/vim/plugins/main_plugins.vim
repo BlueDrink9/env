@@ -174,31 +174,33 @@ Plugin 'wellle/targets.vim'
 Plugin 'PeterRincker/vim-argumentative'
 " See https://github.com/kana/vim-textobj-user/wiki for more, esp for
 " lang-specific.
+" Not lazyloading on keys because they need to be in op-pending mode, and can't
+" specify mode from a vimscript dict.
 " Add text object for whole buffer
 Plugin 'https://github.com/kana/vim-textobj-entire', {
-            \ 'keys': ['i%', 'a%'],
             \ 'dependencies': ['kana/vim-textobj-user']}
+            " \ 'keys': ['i%', 'a%'],
 " Expands what a sentence/word is for prose.
 Plugin 'https://github.com/reedes/vim-textobj-sentence', { 'for': g:proseFileTypes,
             \ 'keys': [')', '('],
             \ 'dependencies': ['kana/vim-textobj-user']}
 " av/iv for lines continued by \
 Plugin 'rhysd/vim-textobj-continuous-line', {
-            \ 'keys': ['il', 'al'],
             \ 'dependencies': ['kana/vim-textobj-user']}
+            " \ 'keys': ['il', 'al'],
 " iv as object for camelcasemotion style
 Plugin 'https://github.com/Julian/vim-textobj-variable-segment', {
-            \ 'keys': ['iv', 'av'],
             \ 'dependencies': ['kana/vim-textobj-user']}
+            " \ 'keys': ['iv', 'av'],
 " iz az
 Plugin 'somini/vim-textobj-fold', {
-            \ 'keys': ['az', 'iz'],
             \ 'dependencies': ['kana/vim-textobj-user']}
+            " \ 'keys': ['az', 'iz'],
 if v:version >= 703
     " ac, ic, aC
     Plugin 'https://github.com/glts/vim-textobj-comment', {
-                \ 'keys': ['ac', 'ic', 'aC', 'iC'],
                 \ 'dependencies': ['kana/vim-textobj-user']}
+                " \ 'keys': ['ac', 'ic', 'aC', 'iC'],
 endif
 Plugin 'https://github.com/coachshea/vim-textobj-markdown', { 'for': 'markdown',
             \ 'dependencies': ['kana/vim-textobj-user']}

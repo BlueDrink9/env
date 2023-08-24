@@ -193,6 +193,7 @@ function PlugToLazy(plugin, opts)
         end
     end
     lazySpec[1] = plugin
+    -- if string.find(plugin, "textobj") then print(vim.inspect(lazySpec)) end
     table.insert(MyLazySpecs, lazySpec)
 end
 EOF
