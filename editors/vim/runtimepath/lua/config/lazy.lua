@@ -15,14 +15,14 @@ package.loaded["lazyvim.config.options"] = true
 require("lazy").setup({
   spec = {
     -- add LazyVim and import its plugins
-    { "LazyVim/LazyVim", import = "lazyvim.plugins",
+    { "LazyVim/LazyVim",
+      import = "lazyvim.plugins",
+      version = '^6.2.0',
       opts = {
         colorscheme = "ayu",
         defaults = {
           autocmds = false,
           keymaps = false,
-          -- lazyvim.config.options can't be configured here since that's loaded before lazyvim setup
-          -- if you want to disable loading options, add `package.loaded["lazyvim.config.options"] = true` to the top of your init.lua
         },
       }
     },

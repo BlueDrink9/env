@@ -42,6 +42,7 @@ return {
 
   {
     "echasnovski/mini.surround",
+    enabled=false,
     opts = {
       mappings = {
         add = "ys",
@@ -57,6 +58,7 @@ return {
 
   {
     "echasnovski/mini.comment",
+    enabled=false,
     opts = {
       mappings = {
         comment = "<leader>c",
