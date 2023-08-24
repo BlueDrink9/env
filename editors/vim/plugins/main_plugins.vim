@@ -174,34 +174,33 @@ Plugin 'wellle/targets.vim'
 Plugin 'PeterRincker/vim-argumentative'
 " See https://github.com/kana/vim-textobj-user/wiki for more, esp for
 " lang-specific.
-" Not lazyloading on keys because they need to be in op-pending mode, and can't
-" specify mode from a vimscript dict.
 " Add text object for whole buffer
+" I create the mappings myself so can't lazy load atm.
 Plugin 'https://github.com/kana/vim-textobj-entire', {
             \ 'dependencies': ['kana/vim-textobj-user']}
-            " \ 'keys': ['i%', 'a%'],
-" Expands what a sentence/word is for prose.
-Plugin 'https://github.com/reedes/vim-textobj-sentence', { 'for': g:proseFileTypes,
-            \ 'keys': [')', '('],
-            \ 'dependencies': ['kana/vim-textobj-user']}
+            " \ 'keys': MakeLazyKeys(["i%", "a%"], ["v","o"]),
 " av/iv for lines continued by \
-Plugin 'rhysd/vim-textobj-continuous-line', {
-            \ 'dependencies': ['kana/vim-textobj-user']}
-            " \ 'keys': ['il', 'al'],
+" Plugin 'rhysd/vim-textobj-continuous-line', {
+"             \ 'keys': MakeLazyKeys(["il", "al"], ["v","o"]),
+"             \ 'dependencies': ['kana/vim-textobj-user']}
 " iv as object for camelcasemotion style
 Plugin 'https://github.com/Julian/vim-textobj-variable-segment', {
             \ 'dependencies': ['kana/vim-textobj-user']}
             " \ 'keys': ['iv', 'av'],
 " iz az
 Plugin 'somini/vim-textobj-fold', {
+            \ 'keys': MakeLazyKeys(['az', 'iz'], ["v","o"]),
             \ 'dependencies': ['kana/vim-textobj-user']}
-            " \ 'keys': ['az', 'iz'],
 if v:version >= 703
     " ac, ic, aC
     Plugin 'https://github.com/glts/vim-textobj-comment', {
+                \ 'keys': MakeLazyKeys(['ac', 'ic', 'aC', 'iC'], ["v","o"]),
                 \ 'dependencies': ['kana/vim-textobj-user']}
-                " \ 'keys': ['ac', 'ic', 'aC', 'iC'],
 endif
+" Expands what a sentence/word is for prose.
+Plugin 'https://github.com/reedes/vim-textobj-sentence', { 'for': g:proseFileTypes,
+            \ 'keys': [')', '('],
+            \ 'dependencies': ['kana/vim-textobj-user']}
 Plugin 'https://github.com/coachshea/vim-textobj-markdown', { 'for': 'markdown',
             \ 'dependencies': ['kana/vim-textobj-user']}
 " Adds indent block as text object. ii , ai or aI
@@ -211,19 +210,20 @@ Plugin 'https://github.com/jeetsukumaran/vim-indentwise'
 " af, if for functions, ac, ic for classes. Also ]pf, [pc for movements.
 Plugin 'https://github.com/bps/vim-textobj-python', {'for': 'python',
             \ 'dependencies': ['kana/vim-textobj-user']}
-Plugin 'mtdl9/vim-log-highlighting'
-Plugin 'https://github.com/glts/vim-texlog'
+
+Plugin 'mtdl9/vim-log-highlighting', {'for': 'log'}
+Plugin 'https://github.com/glts/vim-texlog', {'for': ['log', 'tex']}
 " {]} Extra text objects
 
 " {[} ---------- Operators ----------
 " Replacement for surround, with more features.
-Plugin 'machakann/vim-sandwich'
+Plugin 'machakann/vim-sandwich', {'keys': ['ys', 'ds', 'cs']}
 if !has('nvim')
     Plugin 'https://github.com/justinmk/vim-sneak'
     " Plugin 'https://github.com/easymotion/vim-easymotion'
 endif
-Plugin 'bkad/camelcasemotion'
-Plugin 'https://github.com/haya14busa/vim-asterisk'
+Plugin 'bkad/camelcasemotion', {'keys': '-'}
+Plugin 'https://github.com/haya14busa/vim-asterisk', {'keys': ['*', 'z*']}
 " {]} ---------- Operators ----------
 
 " {[}--- Searching, replacing, finding ---

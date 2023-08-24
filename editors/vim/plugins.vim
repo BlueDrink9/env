@@ -243,6 +243,23 @@ endfunction
 
 command! -bang -nargs=* Plugin call PluginAdapter(<args>)
 
+lua << EOF
+-- Returns a lua function for setting up a lazy keys spec. Need to return a
+-- function because can't return a mixed list/dict table.
+MakeLazyKeys = function(keys, modes)
+  return function()
+      local ret = {}
+      for _, key in ipairs(keys) do
+        table.insert(ret, { key, mode = modes})
+      end
+      return ret
+  end
+end
+EOF
+function! MakeLazyKeys(keys, modes)
+    return luaeval('MakeLazyKeys(_A[1], _A[2])', [a:keys, a:modes])
+endfunction
+" usage: add plugin opt 'keys': MakeLazyKeys(["i%", "a%"], ["v","o"]),
 
 let g:pluginSettingsToExec = []
 let g:customHLGroups = []
