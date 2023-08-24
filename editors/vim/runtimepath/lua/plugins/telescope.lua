@@ -27,6 +27,7 @@ local specs = {
     version='*',
     dependencies = {{'nvim-lua/plenary.nvim'},},
     -- {'my.utils'}},
+    cmd = "Telescope",
     keys = function()
       local out = {}
       table.insert(out, build_keymaps_other("m", "marks"))

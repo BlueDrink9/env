@@ -9,10 +9,23 @@ end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 vim.opt.rtp:append(vim.g.configDir .. '/runtimepath')
 
+-- skip loading lazyvim options
+package.loaded["lazyvim.config.options"] = true
+
 require("lazy").setup({
   spec = {
     -- add LazyVim and import its plugins
-    { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+    { "LazyVim/LazyVim", import = "lazyvim.plugins",
+      opts = {
+        colorscheme = "ayu",
+        defaults = {
+          autocmds = false,
+          keymaps = false,
+          -- lazyvim.config.options can't be configured here since that's loaded before lazyvim setup
+          -- if you want to disable loading options, add `package.loaded["lazyvim.config.options"] = true` to the top of your init.lua
+        },
+      }
+    },
 
     -- { import = "lazyvim.plugins.extras.coding.yanky" },
     -- { import = "lazyvim.plugins.extras.dap.core" },
@@ -35,6 +48,7 @@ require("lazy").setup({
     -- { import = "lazyvim.plugins.extras.ui.mini-animate" },
 
     { import = "plugins" },
+
     MyLazySpecs,
 
   },

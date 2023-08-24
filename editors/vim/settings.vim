@@ -361,6 +361,7 @@ set expandtab
 set tabstop=4
 let &shiftwidth=&tabstop
 let &softtabstop=&shiftwidth
+set shiftround
 set smarttab
 " formatoptins: See :h fo-table.
 " Don't break long lines automatically.
@@ -655,7 +656,8 @@ autocmd myVimrc Filetype qf setlocal norelativenumber
 autocmd myVimrc Filetype qf setlocal colorcolumn=0
 
 if Executable('rg')
-	set grepformat=%f:%l:%m
+	" set grepformat=%f:%l:%m
+    set grepformat=%f:%l:%c:%m
 	let &grepprg = 'rg --vimgrep' . (&smartcase ? ' --smart-case' : '')
 endif
 

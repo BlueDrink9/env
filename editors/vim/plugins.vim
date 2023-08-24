@@ -40,8 +40,7 @@ augroup end
 
 let s:pluginInstallPath = CreateVimDir("/plugins")
 let s:localPlugins = PathExpand(g:vimfilesDir . "/local_plugins.vim")
-let s:scriptdir = expand('<sfile>:p:h')
-let g:plugindir = PathExpand(s:scriptdir . "/" . "plugins")
+let g:plugindir = PathExpand(g:configDir . "/" . "plugins")
 
 function! SourcePluginFile(name)
     exec 'source ' . g:plugindir . '/' . a:name
@@ -179,8 +178,11 @@ function PlugToLazy(plugin, opts)
     if opts then
         lazySpec = opts
         lazySpec.ft = opts["for"]
+        -- lazySpec.for = nil
         lazySpec.name = opts["as"]
+        lazySpec.as = nil
         lazySpec.cmd = opts["on"]
+        lazySpec.on = nil
         lazySpec.version = opts["tag"]
         if lazySpec.cmd then
             if type(lazySpec.cmd) == "string" then

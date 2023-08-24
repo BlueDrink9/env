@@ -1,10 +1,11 @@
--- if  require'lazy'.opts.spec['LazyVim/LazyVim'] == nil then
---   return {}
--- end
+if  require'lazy'.opts.spec['LazyVim/LazyVim'] == nil then
+  return {}
+end
 
 return {
 
   {
+    enabled = false,
     "folke/noice.nvim",
     -- opts will be merged with the parent spec
     opts = {

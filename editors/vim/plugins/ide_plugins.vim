@@ -267,7 +267,7 @@ endif
 " {[} ---------- Snippits ----------
 " Snippet libs
 Plugin 'https://github.com/honza/vim-snippets', {'on': [], 'event': ['InsertEnter']}
-Plugin 'https://github.com/rafamadriz/friendly-snippets', {'on': [], 'event': ['InsertEnter']}
+Plugin 'https://github.com/rafamadriz/friendly-snippets.git', {'on': [], 'event': ['InsertEnter']}
 Plugin 'https://github.com/ericsia/vscode-python-snippet-pack-2.0', {'for': 'python'}
 Plugin 'https://github.com/Antyos/vscode-openscad', {'for': 'openscad'}
 
