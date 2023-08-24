@@ -145,6 +145,9 @@ function! s:deregister(name)
 endfunction
 command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 
+if has('nvim')
+    lua IsPluginUsed = function(name) return require("lazy.core.config").plugins[name] ~= nil end
+endif
 function! IsPluginUsed(name)
     if has('nvim')
         return has_key(s:plugs, a:name)
