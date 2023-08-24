@@ -108,17 +108,6 @@ return {
         }
       end
 
-      if vim.fn.IsPluginUsed("refactoring.nvim") == 1 then
-        telescope.load_extension('refactoring')
-        for _, mode in pairs({'v', 'n'}) do
-          vim.api.nvim_set_keymap(
-            mode,
-            maps.refactor,
-            function() require('telescope').extensions.refactoring.refactors() end,
-            { noremap = true, silent = true, expr = false }
-          )
-        end
-      end
 
       -- https://github.com/fcying/telescope-ctags-outline.nvim
       opts.extensions.ctags_outline = {

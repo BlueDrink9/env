@@ -17,16 +17,28 @@ function check_treesitter_installable()
 end
 
 if not check_treesitter_installable() then
-   return {'nvim-treesitter/nvim-treesitter.git', enabled=false}
+   return {'nvim-treesitter/nvim-treesitter', enabled=false}
 end
 
-return {
-   {'https://github.com/nvim-treesitter/nvim-treesitter.git',
+local maps = vim.g.IDE_mappings
+
+specs = {
+   {'nvim-treesitter/nvim-treesitter',
       build= ':TSUpdate'
    },
    {'nvim-treesitter/playground'},
 
-   {'https://github.com/ThePrimeagen/refactoring.nvim'},
+   {'https://github.com/ThePrimeagen/refactoring.nvim',
+      config = function ()
+         require("telescope").load_extension('refactoring')
+      end,
+      keys = {{
+         maps.refactor,
+         function() require('telescope').extensions.refactoring.refactors() end,
+         mode={'n', 'v'}
+      }},
+   },
+
    {'https://github.com/danymat/neogen'},
    {'https://github.com/RRethy/nvim-treesitter-endwise'},
    {'nvim-treesitter/nvim-treesitter-context'},
