@@ -7,7 +7,6 @@ if not vim.loop.fs_stat(lazypath) then
   do_install = true
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
--- vim.opt.rtp:append(vim.g.configDir .. '/runtimepath')
 
 -- skip loading lazyvim options
 package.loaded["lazyvim.config.options"] = true
@@ -27,7 +26,9 @@ require("lazy").setup({
   },
   checker = { enabled = false }, -- don't automatically check for plugin updates
   performance = {
+    reset_packpath = true, -- reset the package path to improve startup time
     rtp = {
+      reset = false,  -- reset the runtime path to $VIMRUNTIME and your config directory
       -- disable some rtp plugins
       disabled_plugins = {
         "gzip",
@@ -69,7 +70,7 @@ require("lazy").setup({
     -- { import = "lazyvim.plugins.extras.formatting.prettier" },
     -- { import = "lazyvim.plugins.extras.util.project" },
 
-    -- { import = "lazyvim.plugins.extras.editor.leap" },
+    { import = "lazyvim.plugins.extras.editor.leap" },
     -- import any extras modules here
     -- { import = "lazyvim.plugins.extras.lang.typescript" },
     -- { import = "lazyvim.plugins.extras.lang.json" },
@@ -77,7 +78,7 @@ require("lazy").setup({
 
     { import = "plugins" },
 
-    -- MyLazySpecs,
+    MyLazySpecs,
 
   },
   -- Unicode alternatives

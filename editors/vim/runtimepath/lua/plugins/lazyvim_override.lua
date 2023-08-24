@@ -1,6 +1,6 @@
-if  require'lazy'.opts.spec['LazyVim/LazyVim'] == nil then
-  return {}
-end
+-- if  require'lazy'.opts.spec['LazyVim/LazyVim'] == nil then
+--   return {}
+-- end
 
 return {
 
