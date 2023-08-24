@@ -326,7 +326,6 @@ endif
 if has('nvim')
     lua require("config.lazy")
 endif
-
 silent doautocmd User pluginSettingsToExec
 
 " HLGroups get cleared by colourschemes when changing. This resets them.

@@ -59,7 +59,7 @@ return {
          require("mason").setup()
 
 
-         if vim.fn.IsPluginUsed("nvim-cmp") == 1 then
+         if IsPluginUsed("nvim-cmp") then
             Nvim_cmp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
             Nvim_cmp_capabilities.textDocument.completion.completionItem.snippetSupport = true

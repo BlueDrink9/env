@@ -7,6 +7,7 @@ if not vim.loop.fs_stat(lazypath) then
   do_install = true
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
+vim.opt.rtp:append(vim.g.configDir .. '/runtimepath')
 
 require("lazy").setup({
   spec = {

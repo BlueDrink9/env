@@ -1,8 +1,7 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
 
-let s:scriptdir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
-let g:plugin_config_dir = s:scriptdir
+let g:plugin_config_dir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 augroup myIDE
     au!
 augroup end

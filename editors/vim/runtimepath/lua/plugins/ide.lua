@@ -110,10 +110,10 @@ return {
         "IndentBlanklineIndent4",
         "IndentBlanklineIndent5",
       },
-      indent_blankline_use_treesitter = vim.fn.IsPluginUsed('nvim-treesitter') == 1,
+      indent_blankline_use_treesitter = IsPluginUsed('nvim-treesitter'),
       -- May be a touch slow
-      show_current_context = vim.fn.IsPluginUsed('nvim-treesitter') == 1,
-      show_current_context_start = not vim.fn.IsPluginUsed('nvim-treesitter') == 1,
+      show_current_context = IsPluginUsed('nvim-treesitter'),
+      show_current_context_start = not IsPluginUsed('nvim-treesitter'),
       indent_blankline_show_current_context_start_on_current_line = not vim.fn.IsPluginUsed('nvim-treesitter') == 1,
     },
   },

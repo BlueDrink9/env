@@ -28,6 +28,8 @@ let g:confDir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
 let g:remoteSession = ($SSH_CLIENT != "")
 
+let g:configDir = expand('<sfile>:p:h')
+
 let g:vimfilesParentDir = expand("$HOME", ":p:h")
 if has('win32')
   let s:vimfilesDirName="vimfiles"
@@ -117,3 +119,4 @@ silent doautocmd User MappingOverrides
 if !exists('g:colors_name') && exists('g:fallbackColorSch')
     exec 'colorscheme ' . g:fallbackColorSch
 endif
+let &runtimepath.=',' . g:confDir . expand('/runtimepath')
