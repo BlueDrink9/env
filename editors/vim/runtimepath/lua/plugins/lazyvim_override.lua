@@ -2,6 +2,20 @@
 --   return {}
 -- end
 
+
+-- surround mappings
+-- replace
+-- exchange
+-- arg swap
+-- persistance/session management replace
+-- mason - delay installs/don't ensure installed
+-- space c replacement/remap
+-- Rg
+-- Fugitive + neogit
+-- Windowtitle
+-- cmp: don't select first one automatically
+-- Startup
+
 return {
 
   {
@@ -153,12 +167,14 @@ return {
     end,
   },
 
-  -- {
-  --   "goolord/alpha-nvim",
-  --   opts = function()
-  --     return require'alpha.themes.startify'
-  --   end
-  -- },
+  {
+    -- TODO figure out how ot change the alpha theme
+    "goolord/alpha-nvim",
+    enabled = false,
+    opts = function()
+      return require'alpha.themes.startify'
+    end
+  },
 
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
