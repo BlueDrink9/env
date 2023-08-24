@@ -38,7 +38,7 @@ augroup end
 
 " {[} Settings and dir creation
 
-let s:pluginInstallPath = CreateVimDir("/plugins")
+let g:pluginInstallPath = CreateVimDir("/plugins")
 let s:localPlugins = PathExpand(g:vimfilesDir . "/local_plugins.vim")
 let g:plugindir = PathExpand(g:configDir . "/" . "plugins")
 

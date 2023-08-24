@@ -7,12 +7,40 @@ if not vim.loop.fs_stat(lazypath) then
   do_install = true
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
-vim.opt.rtp:append(vim.g.configDir .. '/runtimepath')
+-- vim.opt.rtp:append(vim.g.configDir .. '/runtimepath')
 
 -- skip loading lazyvim options
 package.loaded["lazyvim.config.options"] = true
 
 require("lazy").setup({
+  root = vim.g.pluginInstallPath, -- directory where plugins will be installed
+  defaults = {
+    -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
+    -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
+    lazy = false,
+    version = false, -- always use the latest git commit
+    -- version = "*", -- try installing the latest stable version for plugins that support semver
+  },
+  install = {
+    missing = true, -- install missing plugins on startup.
+    colorscheme = { "ayu", }, -- "tokyonight", "habamax" }
+  },
+  checker = { enabled = false }, -- don't automatically check for plugin updates
+  performance = {
+    rtp = {
+      -- disable some rtp plugins
+      disabled_plugins = {
+        "gzip",
+        -- "matchit",
+        -- "matchparen",
+        -- "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
+  },
   spec = {
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim",
@@ -49,35 +77,8 @@ require("lazy").setup({
 
     { import = "plugins" },
 
-    MyLazySpecs,
+    -- MyLazySpecs,
 
-  },
-  defaults = {
-    -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
-    -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
-    lazy = false,
-    version = false, -- always use the latest git commit
-    -- version = "*", -- try installing the latest stable version for plugins that support semver
-  },
-  install = {
-    missing = true, -- install missing plugins on startup.
-    colorscheme = { "ayu", }, -- "tokyonight", "habamax" }
-  },
-  checker = { enabled = false }, -- don't automatically check for plugin updates
-  performance = {
-    rtp = {
-      -- disable some rtp plugins
-      disabled_plugins = {
-        "gzip",
-        -- "matchit",
-        -- "matchparen",
-        -- "netrwPlugin",
-        "tarPlugin",
-        "tohtml",
-        "tutor",
-        "zipPlugin",
-      },
-    },
   },
   -- Unicode alternatives
   ui = {
