@@ -14,7 +14,7 @@ end
 local maps = vim.api.nvim_get_var('IDE_mappings')
 
 local build_keymaps_other = function(key, ext)
-  return {maps.FuzzyFuzzy..key, "<cmd>Telescope " .. ext}
+  return {maps.FuzzyFuzzy..key, "<cmd>Telescope " .. ext .. "<cr>"}
 end
 
 
@@ -31,7 +31,7 @@ local specs = {
       local out = {}
       table.insert(out, build_keymaps_other("m", "marks"))
       for keys, cmd in pairs({
-        [maps.FuzzyFuzzy.." <Cr>"] = "builtin()",
+        [maps.FuzzyFuzzy] = "builtin()",
         [maps.FuzzyOpenFile] = "find_files()",
         [maps.FuzzySearchFiles] = "live_grep()",
         [maps.FuzzySearchBuffers] = "live_grep({grep_open_files = true})",
@@ -47,10 +47,7 @@ local specs = {
       end
 
       for keys, cmd in pairs({
-        ["<C-Down>"] = "actions.cycle_history_next()",
-        ["<C-Up>"] = "actions.cycle_history_prev()",
-        ["<M-Down>"] = "actions.cycle_history_next()",
-        ["<M-Up>"] = "actions.cycle_history_prev()",
+        -- extra manual ones
       }) do
         local map_prefix = ":lua require'telescope'."
         table.insert(out, {keys, map_prefix..cmd.."<CR>", mode='i'})
@@ -85,7 +82,11 @@ local specs = {
         defaults = {
           mappings = {
             i = {
-              ["<C-h>"] = "which_key"
+              ["<C-h>"] = "which_key",
+              ["<C-Down>"] = "actions.cycle_history_next",
+              ["<C-Up>"] = "actions.cycle_history_prev",
+              ["<M-Down>"] = "actions.cycle_history_next",
+              ["<M-Up>"] = "actions.cycle_history_prev",
             },
           },
         },
@@ -156,6 +157,7 @@ local specs = {
 
   {'FeiyouG/command_center.nvim',
     config = function() require("telescope").load_extension("command_center") end,
+    lazy=true,
   },
 
   {'https://github.com/debugloop/telescope-undo.nvim',
@@ -186,7 +188,7 @@ local specs = {
     config = function() require("telescope").load_extension('dap') end,
     dependencies={
       'https://github.com/mfussenegger/nvim-dap',
-    }
+    },
     lazy=true,
   },
 }
