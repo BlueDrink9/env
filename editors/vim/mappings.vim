@@ -303,7 +303,7 @@ endif
 
 
 if maparg(g:IDE_mappings.make, 'n') ==? ""
-  exec 'nnoremap ' . g:IDE_mappings.make .  " <cmd>w <bar> make<cr>"
+  exec 'nnoremap ' . g:IDE_mappings.make . '<cmd>w <bar> make<cr>'
 endif
 
 " Complete vim commands in cmd window.
