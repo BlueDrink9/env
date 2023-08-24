@@ -18,7 +18,7 @@ local build_keymaps_other = function(key, ext)
 end
 
 
-return {
+local specs = {
   {'junegunn/fzf.vim', enabled=false},
   {'junegunn/fzf', enabled=false},
 
@@ -28,10 +28,10 @@ return {
     dependencies = {{'nvim-lua/plenary.nvim'},},
     -- {'my.utils'}},
     keys = function()
-      out = {}
+      local out = {}
       table.insert(out, build_keymaps_other("m", "marks"))
       for keys, cmd in pairs({
-        [maps.FuzzyFuzzy] = "builtin()",
+        [maps.FuzzyFuzzy.." <Cr>"] = "builtin()",
         [maps.FuzzyOpenFile] = "find_files()",
         [maps.FuzzySearchFiles] = "live_grep()",
         [maps.FuzzySearchBuffers] = "live_grep({grep_open_files = true})",
@@ -146,45 +146,60 @@ return {
 
   {'https://github.com/nvim-telescope/telescope-ui-select.nvim',
     config = function() require("telescope").load_extension('ui-select') end,
-    dependencies = 'nvim-telescope/telescope.nvim'},
+    lazy=true,
+  },
 
   {'LinArcX/telescope-changes.nvim',
     config = function() require("telescope").load_extension('changes') end,
     keys = build_keymaps_other("c", "changes"),
-    dependencies = 'nvim-telescope/telescope.nvim'},
+  },
 
   {'FeiyouG/command_center.nvim',
     config = function() require("telescope").load_extension("command_center") end,
-    dependencies = 'nvim-telescope/telescope.nvim'},
+  },
 
   {'https://github.com/debugloop/telescope-undo.nvim',
     config = function() require("telescope").load_extension('undo') end,
     keys = build_keymaps_other("u", "undo"),
-    dependencies = 'nvim-telescope/telescope.nvim'},
+  },
 
   {'cljoly/telescope-repo.nvim',
     config = function() require("telescope").load_extension('repo') end,
     keys = build_keymaps_other("r", "redo"),
-    dependencies = 'nvim-telescope/telescope.nvim'},
+  },
 
   {'fcying/telescope-ctags-outline.nvim',
     config = function() require("telescope").load_extension('ctags_outline') end,
-    dependencies = 'nvim-telescope/telescope.nvim'},
+    lazy=true,
+  },
 
   {
     'nvim-telescope/telescope-fzf-native.nvim',
     config = function() require("telescope").load_extension("fzf") end,
-    enabled = vim.fn.IsCCompilerAvailable() == 1 and
+    enabled = vim.fn.IsCCompilerAvailable() and
       (vim.fn.Executable('cmake') == 1 or vim.fn.Executable('make') == 1),
     build = telecope_make_cmd,
-    dependencies = 'nvim-telescope/telescope.nvim',
+    lazy=true,
   },
 
   {'https://github.com/nvim-telescope/telescope-dap.nvim',
     config = function() require("telescope").load_extension('dap') end,
     dependencies={
       'https://github.com/mfussenegger/nvim-dap',
-      'nvim-telescope/telescope.nvim',
-    }},
-
+    }
+    lazy=true,
+  },
 }
+
+for _, spec in ipairs(specs) do
+   if spec[1] ~= 'nvim-telescope/telescope.nvim' and (
+    spec.enabled == nil or spec.enabled
+  ) then
+    if spec.dependencies == nil then
+      spec.dependencies = {}
+    end
+    table.insert(spec.dependencies, 'nvim-telescope/telescope.nvim')
+   end
+end
+
+return specs
