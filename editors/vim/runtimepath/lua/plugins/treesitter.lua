@@ -66,3 +66,11 @@ specs = {
    },
 
 }
+
+for _, spec in ipairs(specs) do
+   if spec[1] ~= 'nvim-treesitter/nvim-treesitter' then
+      spec.depenencies = 'nvim-treesitter/nvim-treesitter'
+   end
+end
+
+return specs
