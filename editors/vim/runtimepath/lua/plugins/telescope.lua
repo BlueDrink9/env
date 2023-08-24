@@ -28,9 +28,9 @@ return {
     dependencies = {{'nvim-lua/plenary.nvim'},},
     -- {'my.utils'}},
     keys = function()
-      local out = {}
+      out = {}
       table.insert(out, build_keymaps_other("m", "marks"))
-      local telescope_mappings = {
+      for keys, cmd in pairs({
         [maps.FuzzyFuzzy] = "builtin()",
         [maps.FuzzyOpenFile] = "find_files()",
         [maps.FuzzySearchFiles] = "live_grep()",
@@ -41,11 +41,21 @@ return {
         -- By default, use treesitter for symbols. If an lsp client attaches that
         -- can replace it however, replace with that.
         [maps.FuzzySymbols] = "treesitter()",
-      }
-      local map_prefix = ":lua require'telescope.builtin'."
-      for keys, cmd in pairs(telescope_mappings) do
+      }) do
+        local map_prefix = ":lua require'telescope.builtin'."
         table.insert(out, {keys, map_prefix..cmd.."<CR>"})
       end
+
+      for keys, cmd in pairs({
+        ["<C-Down>"] = "actions.cycle_history_next()",
+        ["<C-Up>"] = "actions.cycle_history_prev()",
+        ["<M-Down>"] = "actions.cycle_history_next()",
+        ["<M-Up>"] = "actions.cycle_history_prev()",
+      }) do
+        local map_prefix = ":lua require'telescope'."
+        table.insert(out, {keys, map_prefix..cmd.."<CR>", mode='i'})
+      end
+
       return out
     end,
 
