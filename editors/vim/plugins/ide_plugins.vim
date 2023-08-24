@@ -62,13 +62,13 @@ endif
 " {[} ---------- LSP ----------
 if !has('nvim-0.5')
     if has('win32')
-        let s:lcn_inst = 'powershell -executionpolicy bypass -File install.ps1'
+        let g:lcn_inst = 'powershell -executionpolicy bypass -File install.ps1'
     else
-        let s:lcn_inst = 'bash install.sh'
+        let g:lcn_inst = 'bash install.sh'
     endif
     Plugin 'autozimu/LanguageClient-neovim', {
                 \ 'branch': 'next',
-                \ 'do': s:lcn_inst,
+                \ 'do': g:lcn_inst,
                 \ }
 endif
 " {]} ---------- LSP ----------

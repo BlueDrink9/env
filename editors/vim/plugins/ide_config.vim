@@ -365,10 +365,10 @@ if IsPluginUsed('neosnippet-snippets')
     let g:neosnippet#enable_snipmate_compatibility=1
     " let g:neosnippet#enable_conceal_markers=0
     if !IsPluginUsed('coc.nvim')
-        exec 'imap ' . g:IDE_mappings.snippet_expand . ' <Plug>(neosnippet_expand_or_jump)'
-        exec 'vmap ' . g:IDE_mappings.snippet_expand . ' <Plug>(neosnippet_expand_or_jump)'
-        exec 'imap ' . g:IDE_mappings.snippet_next . ' <Plug>(neosnippet_jump)'
-        exec 'vmap ' . g:IDE_mappings.snippet_next . ' <Plug>(neosnippet_jump)'
+        exec 'imap ' . g:IDE_mappings.snippetExpand . ' <Plug>(neosnippet_expand_or_jump)'
+        exec 'vmap ' . g:IDE_mappings.snippetExpand . ' <Plug>(neosnippet_expand_or_jump)'
+        exec 'imap ' . g:IDE_mappings.snippetNext . ' <Plug>(neosnippet_jump)'
+        exec 'vmap ' . g:IDE_mappings.snippetNext . ' <Plug>(neosnippet_jump)'
     endif
     " imap <expr><TAB>
     "             \ pumvisible() ? "\<C-n>" :
