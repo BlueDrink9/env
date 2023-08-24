@@ -22,9 +22,45 @@ end
 
 local maps = vim.g.IDE_mappings
 
-specs = {
+-- Cache treesitter parsers
+local parser_install_dir = vim.fn.stdpath("data") .. "/treesitter"
+vim.opt.runtimepath:append(parser_install_dir)
+
+
+local specs = {
    {'nvim-treesitter/nvim-treesitter',
-      build= ':TSUpdate'
+      build= ':TSUpdate',
+      config = function()
+         vim.opt.foldexpr="nvim_treesitter#foldexpr()"
+      end,
+      opts = {
+         parser_install_dir = parser_install_dir,
+         auto_install = false,
+         ensure_installed = {
+            "vim",
+            "lua",
+            "bash",
+            -- "powershell", -- not available yet
+            "markdown",
+            "make",
+            "json",
+            "yaml",
+            "toml",
+            "python",
+            "r",
+            "sql",
+         },
+         endwise = { enable = true, },
+         indent = {
+            enable = true,
+            disable = {"python"},
+         },
+         highlight = {
+            enable = true,
+            -- additional_vim_regex_highlighting = {"python"}
+         },
+      }
+
    },
    {'nvim-treesitter/playground'},
 
@@ -39,15 +75,114 @@ specs = {
       }},
    },
 
-   {'https://github.com/danymat/neogen'},
+   -- generate annotations (eg docstrings)
+   {'https://github.com/danymat/neogen',
+      config=function()
+         vim.cmd("command! Annotate lua require('neogen').generate()")
+      end,
+      cmd="Annotate",
+   },
    {'https://github.com/RRethy/nvim-treesitter-endwise'},
-   {'nvim-treesitter/nvim-treesitter-context'},
-   {'nvim-treesitter/nvim-treesitter-textobjects'},
+
+   {'nvim-treesitter/nvim-treesitter-context',
+      config = function()
+         require'nvim-treesitter.configs'.setup {
+            context_commentstring = {
+               enable = true
+            }
+         }
+      end
+   },
+
+   {'nvim-treesitter/nvim-treesitter-textobjects',
+      config = function()
+         require'nvim-treesitter.configs'.setup {
+            textobjects = {
+               select = {
+                  enable = true,
+                  -- Automatically jump forward to textobj, similar to targets.vim
+                  lookahead = true,
+                  keymaps = {
+                     ["a,"] = "@parameter.outer",
+                     ["i,"] = "@parameter.inner",
+                     ["af"] = "@function.outer",
+                     ["if"] = "@function.inner",
+                     ["ac"] = "@class.outer",
+                     ["ic"] = "@class.inner",
+                     -- { query = "@class.inner", desc = "Select inner part of a class region" }
+                  },
+                  selection_modes = {
+                     ['@parameter.outer'] = 'v', -- charwise
+                     ['@function.outer'] = 'V', -- linewise
+                     ['@class.outer'] = 'V',
+                  },
+                  -- Can also be a function which gets passed a table with the keys
+                  -- * query_string: eg '@function.inner'
+                  -- * selection_mode: eg 'v'
+                  -- and should return true of false
+                  include_surrounding_whitespace = true,
+               },
+               swap = {
+                  enable = true,
+                  swap_next = {
+                     [">,"] = "@parameter.inner",
+                  },
+                  swap_previous = {
+                     ["<,"] = "@parameter.inner",
+                  },
+               },
+            },
+            move = {
+               enable = true,
+               set_jumps = true,
+               goto_next_start = {
+                  ["]m"] = "@function.outer",
+                  ["]]"] = { query = "@class.outer", desc = "Go to next class start" },
+                  ["],"] = { query = "@parameter.inner", desc = "Go to next argument" },
+               },
+               goto_next_end = {
+                  ["]M"] = "@function.outer",
+                  ["]["] = "@class.outer",
+               },
+               goto_previous_start = {
+                  ["[m"] = "@function.outer",
+                  ["[["] = "@class.outer",
+                  ["[,"] = { query = "@parameter.inner", desc = "Go to previous argument" },
+               },
+               goto_previous_end = {
+                  ["[M"] = "@function.outer",
+                  ["[]"] = "@class.outer",
+               },
+            },
+         }
+      end
+   },
+
+
    {'PeterRincker/vim-argumentative', enabled=false},
    {'https://github.com/JoosepAlviste/nvim-ts-context-commentstring'},
    {'kevinhwang91/promise-async'},
-   {'https://github.com/kevinhwang91/nvim-ufo'},
+
+   {'https://github.com/kevinhwang91/nvim-ufo',
+      config = function()
+         -- vim.o.foldcolumn = '1' -- '0' is not bad
+         -- Have to override foldlevelstart, otherwise constantly closes folds on save.
+         vim.o.foldlevelstart = 99
+         vim.o.foldlevel = 99
+         vim.o.foldenable = true
+         -- Not for lazy loading!
+         -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
+         vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+         vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+      end,
+      opts = {
+          provider_selector = function(bufnr, filetype, buftype)
+              return {'treesitter', 'indent'}
+          end
+      },
+   },
    {'Konfekt/FastFold', enabled=false},
+
    {'https://gitlab.com/HiPhish/rainbow-delimiters.nvim'},
 
    {'https://github.com/cshuaimin/ssr.nvim',
@@ -59,6 +194,7 @@ specs = {
    },
 
    {'https://github.com/Wansmer/treesj',
+      opts = {use_default_keymaps = false},
       keys = {
          {'gJ', function() require('treesj').join() end},
          {'gS', function() require('treesj').split() end},
@@ -69,7 +205,7 @@ specs = {
 
 for _, spec in ipairs(specs) do
    if spec[1] ~= 'nvim-treesitter/nvim-treesitter' then
-      spec.depenencies = 'nvim-treesitter/nvim-treesitter'
+      spec.dependencies = 'nvim-treesitter/nvim-treesitter'
    end
 end
 
