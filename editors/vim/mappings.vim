@@ -50,7 +50,7 @@ nnoremap gQ gggqG$()
 inoremap <c-u> <c-g>u<c-u>
 inoremap <c-w> <c-g>u<c-w>
 inoremap . <c-g>u.
-inoremap , <c-g>u;
+inoremap , <c-g>u,
 " will almost certainly be overwritten by some plugin.
 inoremap <cr> <c-g>u<cr>
 " Dot operator leaves cursor where it was
