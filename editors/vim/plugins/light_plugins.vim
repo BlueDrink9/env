@@ -85,7 +85,3 @@ if $TMUX !=? ""
     Plugin 'https://github.com/preservim/vimux'
 endif
 " {]} TMUX
-
-" {[} ---------- Prose ----------
-Plugin 'https://github.com/reedes/vim-pencil', {'for': g:proseFileTypes}
-" {]} ---------- Prose----------
