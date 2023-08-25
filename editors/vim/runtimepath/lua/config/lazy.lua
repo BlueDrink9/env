@@ -51,7 +51,8 @@ require("lazy").setup({
           autocmds = false,
           keymaps = false,
         },
-      }
+      },
+      enabled = vim.g.ideMode == 1,
     },
 
     -- { import = "lazyvim.plugins.extras.coding.yanky" },
