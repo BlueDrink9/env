@@ -89,7 +89,7 @@ let g:customHLGroups = []
 " let g:plugs_order=[]
 " {]}
 if !has('nvim')
-    call plug#begin(s:pluginInstallPath)
+    call plug#begin(g:pluginInstallPath)
 endif
 " Jetpack 'tani/vim-jetpack', {'opt': 1} "bootstrap
 
