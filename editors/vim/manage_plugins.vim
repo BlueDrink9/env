@@ -4,6 +4,10 @@ else
     let s:vimhome = $HOME."/.vim"
  endif
 
+augroup plugAdapter
+  au!
+augroup END
+
 
 " Install plugin manager
 " if has('nvim')
@@ -102,6 +106,11 @@ function PlugToLazy(plugin, opts)
         lazySpec.cmd = opts["on"]
         lazySpec.on = nil
         lazySpec.version = opts["tag"]
+        if opts['afterLoad'] then
+            lazySpec['config'] = function()
+            vim.fn[opts['afterLoad']]()
+            end
+        end
         if lazySpec.cmd then
             if type(lazySpec.cmd) == "string" then
                 lazySpec.cmd = {lazySpec.cmd}
@@ -109,10 +118,14 @@ function PlugToLazy(plugin, opts)
             -- <plug> mappings are commands ('on') for Plug, but keys for Lazy
             for k, cmd in pairs(lazySpec.cmd) do
                 if string.find(string.lower(cmd), "<plug>", 1, 6) then
-                    table.insert(lazySpec.keys, cmd)
-                    table.remove(lazySpec.cmd, k)
+                    lazySpec.keys = lazySpec.keys or {}
+                    -- Convert plug mappings for all modes, not just default of 'n'
+                    table.insert(lazySpec.keys, {cmd, mode={'n','v','o','l'}})
+                    lazySpec.cmd[k] = nil
                 end
             end
+            -- Remove empty cmd table to prevent lazyload
+            if not lazySpec.cmd then lazySpec.cmd = nil end
         end
     end
     lazySpec[1] = plugin
@@ -135,24 +148,35 @@ let s:PlugOpts = [
             \ 'frozen',
             \ ]
 
-function! PluginAdapter(...)
+function! s:PluginAdapter(...)
     let l:plugin = a:1
+    let l:plugin_name = split(l:plugin, '/')[-1]
     let l:args = {}
     if a:0 == 2
         let l:args = a:2
     endif
     if has('nvim')
         let g:__plugin_args= l:args
-        exec 'lua PlugToLazy("' .. l:plugin  .. '", vim.g.__plugin_args)'
-        let s:plugs[split(l:plugin, '/')[-1]] = 1
+        exec 'lua PlugToLazy("' . l:plugin  . '", vim.g.__plugin_args)'
+        let s:plugs[l:plugin_name] = 1
     else
         " convert args we want to keep
         for dep in get(l:args, 'dependencies', [])
             Plug dep
         endfor
-        for event in get(l:args, 'event', [])
-            call LoadPluginOnEvent(l:plugin, event)
-        endfor
+        " Handle hook for after load
+        let l:func = get(l:args, 'afterFunc', v:false)
+        " If 'afterFunc' is v:true, call function based off a default name
+        " convention (the plugin name, with _ replacing . and -). Otherwise
+        " call the function name passed in. Only will be called for
+        " lazy-loaded plugins, so don't use without an 'on' or 'for' mapping.
+        " ('keys' gets ignored).
+        if l:func == v:true
+            exec 'au User ' . l:plugin_name . ' call Plug_after_' .
+                        \ substitute(l:plugin_name, '[\\.-]', '_', 'g') . '()'
+        elseif l:func != v:false
+            exec 'au User ' . l:plugin_name . ' call ' . l:func . '()'
+        endif
 
         " Remove args unsupported by Plug
         for opt in keys(l:args)
@@ -164,11 +188,13 @@ function! PluginAdapter(...)
     endif
 endfunction
 
-command! -bang -nargs=* Plugin call PluginAdapter(<args>)
+command! -bang -nargs=* Plugin call <sid>PluginAdapter(<args>)
 
+" Allow making a keys table with modes for Lazy.vim in vimscript
+" usage: add plugin opt 'keys': MakeLazyKeys(["i%", "a%"], ["v","o"]),
 lua << EOF
 -- Returns a lua function for setting up a lazy keys spec. Need to return a
--- function because can't return a mixed list/dict table.
+-- function because can't return a mixed list/dict table to vimscript.
 MakeLazyKeys = function(keys, modes)
   return function()
       local ret = {}
@@ -182,4 +208,3 @@ EOF
 function! MakeLazyKeys(keys, modes)
     return luaeval('MakeLazyKeys(_A[1], _A[2])', [a:keys, a:modes])
 endfunction
-" usage: add plugin opt 'keys': MakeLazyKeys(["i%", "a%"], ["v","o"]),
