@@ -144,9 +144,6 @@ Plugin 'https://github.com/WolfgangMehner/c-support', {'for': ['c', 'cpp'] }
 
 " May cause lag on scrolling.
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
-" Multi-lang support
-let g:polyglot_disabled = ['latex', 'markdown', ]
-Plugin 'https://github.com/sheerun/vim-polyglot'
 
 " Advanced markdown formatting. Lots of features.
 Plugin 'SidOfc/mkdx',  {'for': 'markdown'}

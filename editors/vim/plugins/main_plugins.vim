@@ -330,12 +330,10 @@ Plugin 'https://github.com/radenling/vim-dispatch-neovim', {'on': ['Make', 'Star
 "{]}
 
 " {[} ---------- extra filetype support ----------
-Plugin 'kovetskiy/sxhkd-vim', {'for': 'sxhkdrc' }
-" Adds syntax highlighting.
-Plugin 'vim-scripts/autohotkey-ahk', {'for': 'autohotkey'}
-" Adds indent. Included in polyglot.
-Plugin 'https://github.com/hnamikaw/vim-autohotkey', {'for': 'autohotkey'}
-Plugin 'https://github.com/PProvost/vim-ps1', {'for': 'ps1'}
+" Check that whatever you need isn't in polyglot, first!
+" Multi-lang support
+let g:polyglot_disabled = ['autoindent', 'sensible', 'latex', 'markdown', ]
+Plugin 'https://github.com/sheerun/vim-polyglot'
 Plugin 'https://github.com/lervag/vim-rmarkdown', {'for': 'rmd'}
 Plugin 'https://github.com/liuchengxu/graphviz.vim', {'for': 'dot'}
 Plugin 'https://github.com/waycrate/swhkd-vim', {'for': 'swhkd'}
@@ -343,10 +341,6 @@ if !has("nvim")
     Plugin 'https://github.com/jceb/vim-orgmode', {'for': 'org'}
     Plugin 'https://github.com/sirtaj/vim-openscad', {'for': 'scad'}
 endif
-
-Plugin 'https://github.com/chrisbra/csv.vim', {'for': 'csv'}
-
-
 " {]} ---------- extra filetype support ----------
 
 " {[} ---------- Git ----------
