@@ -274,9 +274,22 @@ endif
 if !g:hasGUI || has('terminal') || has('nvim')
     " PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run the install
     " script
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() }}
+    Plug 'junegunn/fzf', {
+                \ 'do': { -> fzf#install() },
+                \ 'on': [
+                \ 'FZF',
+                \ ]}
     " Adds some vim-specific fzf commands.
-    Plugin 'junegunn/fzf.vim'
+    Plugin 'junegunn/fzf.vim', {'dependencies': 'junegunn/fzf',
+                \ 'on': [
+                \ 'FZF',
+                \ 'Buffers',
+                \ 'BLines',
+                \ 'Lines',
+                \ 'Tags',
+                \ 'Commands',
+                \ 'History'
+                \ ]}
 else
     Plugin 'https://github.com/ctrlpvim/ctrlp.vim'
 endif
