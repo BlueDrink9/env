@@ -72,7 +72,7 @@ endif
 if v:version >= 703
     Plugin 'https://github.com/ntpeters/vim-better-whitespace', {
                 \ 'event': ['TextChanged', 'TextChangedI'],
-                \ 'on': ['StripWhitespace', 'StripWhitespaceOnChangedLines']
+                \ 'on': ['StripWhitespace', 'StripWhitespaceOnChangedLines', 'DisableWhitespace']
                 \ }
 endif
 " Distraction-free vim.

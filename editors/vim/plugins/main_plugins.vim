@@ -86,10 +86,11 @@ Plugin 'jeetsukumaran/vim-markology', {'on': ['MarkologyEnable', 'MarkologyToggl
 "
 " Adds a bunch of unix-mapped filesystem ops from vim
 Plugin 'https://github.com/tpope/vim-eunuch'
-Plugin 'https://github.com/simnalamburt/vim-mundo'
+Plugin 'https://github.com/simnalamburt/vim-mundo', {'on': 'MundoToggle'}
 
 " Way better search and replace, also case coersion
-Plugin 'https://github.com/tpope/vim-abolish'
+Plugin 'https://github.com/tpope/vim-abolish', {'keys': ['cr'],
+            \ 'on': ['Abolish', 'Subvert', 'S']}
 if v:version < 800 && !has('nvim')
     " Autoset Paste/nopaste
     Plugin 'https://github.com/ConradIrwin/vim-bracketed-paste'
@@ -139,7 +140,7 @@ endif
 " Zoom window to tab, and out again
 Plugin 'https://github.com/troydm/zoomwintab.vim', {'on': 'ZoomWinTabToggle'}
 " fzf for all the shortcuts defined in vim
-Plugin 'https://github.com/sunaku/vim-shortcut'
+Plugin 'https://github.com/sunaku/vim-shortcut', {'on': 'Shortcut'}
 " Confirms opening empty file on tabcomplete
 Plugin 'https://github.com/EinfachToll/DidYouMean'
 " {]} ---------- Misc----------
@@ -171,7 +172,10 @@ endif
 Plugin 'wellle/targets.vim'
 " Move args with >, <,. Next arg ], [,. New text obj a, i,.
 " ],
-Plugin 'PeterRincker/vim-argumentative'
+Plugin 'PeterRincker/vim-argumentative', {
+            \ 'keys': MakeLazyKeys(
+            \ ['<,', '>,', '[ ,', '],', 'i,', 'a,' ],
+            \ ['n', 'o', 'v']) }
 " See https://github.com/kana/vim-textobj-user/wiki for more, esp for
 " lang-specific.
 " Add text object for whole buffer
@@ -183,8 +187,8 @@ Plugin 'https://github.com/kana/vim-textobj-entire', {
 "             \ 'keys': MakeLazyKeys(["il", "al"], ["v","o"]),
 "             \ 'dependencies': ['kana/vim-textobj-user']}
 " iv as object for camelcasemotion style
-Plugin 'https://github.com/Julian/vim-textobj-variable-segment', {
-            \ 'dependencies': ['kana/vim-textobj-user']}
+" Plugin 'https://github.com/Julian/vim-textobj-variable-segment', {
+"             \ 'dependencies': ['kana/vim-textobj-user']}
             " \ 'keys': ['iv', 'av'],
 " iz az
 Plugin 'somini/vim-textobj-fold', {
@@ -203,9 +207,11 @@ Plugin 'https://github.com/reedes/vim-textobj-sentence', { 'for': g:proseFileTyp
 Plugin 'https://github.com/coachshea/vim-textobj-markdown', { 'for': 'markdown',
             \ 'dependencies': ['kana/vim-textobj-user']}
 " Adds indent block as text object. ii , ai or aI
-Plugin 'michaeljsmith/vim-indent-object'
+Plugin 'michaeljsmith/vim-indent-object', {
+            \ 'keys': MakeLazyKeys(['ii', 'ai', 'aI', 'iI'], ["v","o"])}
 " Adds [ ] mappins for -=+% indentation objects
-Plugin 'https://github.com/jeetsukumaran/vim-indentwise'
+Plugin 'https://github.com/jeetsukumaran/vim-indentwise', {
+            \ 'keys': ['[', ']']}
 " af, if for functions, ac, ic for classes. Also ]pf, [pc for movements.
 Plugin 'https://github.com/bps/vim-textobj-python', {'for': 'python',
             \ 'dependencies': ['kana/vim-textobj-user']}
@@ -233,16 +239,16 @@ Plugin 'https://github.com/haya14busa/vim-asterisk', {'keys': ['*', 'z*']}
 
 " {[}--- Searching, replacing, finding ---
 " Edit quickfix window and have the changes apply!
-Plugin 'https://github.com/stefandtw/quickfix-reflector.vim'
+Plugin 'https://github.com/stefandtw/quickfix-reflector.vim', {'ft': 'qf'}
 if has('timers')
     " Async, uses better grep tools like ack or ag
     Plugin 'mhinz/vim-grepper', { 'on': ['Grepper'] }
     " Live results, fuzzy buffer. Hideous.
-    Plugin 'wsdjeg/FlyGrep.vim'
+    Plugin 'wsdjeg/FlyGrep.vim', {'on': ['FlyGrep']}
     " Multi-file find and replace with a 'nice' interface. :Farp
     " I think this also needs python3
     " x - exclude. i - include. t - toggle. Capital X I T for all.
-    Plugin 'brooth/far.vim'
+    Plugin 'brooth/far.vim', {'on': ['Farp']}
 
 else
     " Bsgrep for searching in all open buffers. Also Bsreplace, Bstoc.
@@ -279,7 +285,7 @@ endif
 
 " {[} Tags
 if has('timers')
-    Plugin 'https://github.com/wsdjeg/vim-todo'
+    Plugin 'https://github.com/wsdjeg/vim-todo', {'on': 'OpenTodo'}
 else
     " :TaskList to show list of TODOs etc.
     Plugin 'https://github.com/vim-scripts/TaskList.vim', {'on': ['Tasklist']}
@@ -289,12 +295,12 @@ endif
 "{[} Running/executing
 " Run shell commands async (uses python)
 " Plugin 'https://github.com/joonty/vim-do'
-Plugin 'https://github.com/thinca/vim-quickrun'
+" Plugin 'https://github.com/thinca/vim-quickrun'
 " Select code to execute.
 " Plugin 'https://github.com/JarrodCTaylor/vim-shell-executor'
 " Async make, autoset compiler and makeprg from filetype plugin (view quickfix with :COpen)
-Plugin 'https://github.com/tpope/vim-dispatch'
-Plugin 'https://github.com/radenling/vim-dispatch-neovim'
+Plugin 'https://github.com/tpope/vim-dispatch', {'on': ['Make', 'Start', 'Spawn']}
+Plugin 'https://github.com/radenling/vim-dispatch-neovim', {'on': ['Make', 'Start', 'Spawn']}
 " Not sure how this compares to Dispatch. Not a complete replacement.
 " Plugin 'https://github.com/neomake/neomake'
 " command! -bang -nargs=* -complete=file Make Neomake! <args>
@@ -323,9 +329,10 @@ Plugin 'https://github.com/chrisbra/csv.vim', {'for': 'csv'}
 " {[} ---------- Git ----------
 if Executable("git")
     " Git wrapper. Includes magit-style functionality under Gstatus
+    " Don't lazy-load
     Plugin 'https://github.com/tpope/vim-fugitive'
     " Enhances working with branches in fugitive
-    Plugin 'sodapopcan/vim-twiggy'
+    Plugin 'sodapopcan/vim-twiggy', {'for': 'fugitive'}
     " TODO fugitive mapping to bb?
     " github wrapper
     " if v:version > 701
@@ -396,14 +403,14 @@ endif
 " NT loads quite a lot in plugin/, so prefer to lazy-load when it gets opened.
 " Downside is that netrw will be used instead when opening directories before NT opened for the first time.
 Plugin 'https://github.com/scrooloose/nerdtree.git', {'on': ['NERDTree', 'NERDTreeToggle',]}
-Plugin 'https://github.com/Xuyuanp/nerdtree-git-plugin'
+Plugin 'https://github.com/Xuyuanp/nerdtree-git-plugin', {'on': ['NERDTree', 'NERDTreeToggle',]}
 " on windows, gvim is super slow with dirvish
 if has('nvim') || !has('win32')
-    Plugin 'https://github.com/justinmk/vim-dirvish'
-    Plugin 'roginfarrer/vim-dirvish-dovish', {'branch': 'main'}
-    Plugin 'https://github.com/bounceme/remote-viewer'
+    Plugin 'https://github.com/justinmk/vim-dirvish', {'on': 'Dirvish'}
+    Plugin 'roginfarrer/vim-dirvish-dovish', {'branch': 'main', 'on': 'Dirvish'}
+    " Plugin 'https://github.com/bounceme/remote-viewer'
     if Executable('git')
-        Plugin 'https://github.com/kristijanhusak/vim-dirvish-git'
+        Plugin 'https://github.com/kristijanhusak/vim-dirvish-git', {'on': 'Dirvish'}
     endif
 endif
 " {]} ---------- NerdTree ----------
