@@ -56,13 +56,15 @@ if has('nvim-0.5')
 endif
 
 " Custom text for folds, includes indent level. Integrates with fastfold.
-Plugin 'https://github.com/Konfekt/FoldText'
+Plugin 'https://github.com/Konfekt/FoldText',
+            \ has('nvim') ? {'event': ['VeryLazy']} : {}
 if v:version > 704
     " Auto-set foldcolumn if folds exist in buffer.
     Plugin 'https://github.com/benknoble/vim-auto-origami', {'on': 'AutoOrigamiFoldColumn'}
 endif
 " Relative line numbers only in focussed buffer & not in insert mode.
-Plugin 'ericbn/vim-relativize'
+Plugin 'ericbn/vim-relativize',
+            \ has('nvim') ? {'event': ['VeryLazy']} : {}
 " :GhostTextStart/Stop
 if has('nvim') && has('python3')
     Plugin 'raghur/vim-ghost', {'do': ':GhostInstall', 'on': 'GhostStart'}
@@ -85,7 +87,8 @@ Plugin 'jeetsukumaran/vim-markology', {'on': ['MarkologyEnable', 'MarkologyToggl
 " https://github.com/chentoast/marks.nvim
 "
 " Adds a bunch of unix-mapped filesystem ops from vim
-Plugin 'https://github.com/tpope/vim-eunuch'
+Plugin 'https://github.com/tpope/vim-eunuch', 
+            \ has('nvim') ? {'event': ['VeryLazy']} : {}
 Plugin 'https://github.com/simnalamburt/vim-mundo', {'on': 'MundoToggle'}
 
 " Way better search and replace, also case coersion
@@ -142,7 +145,7 @@ Plugin 'https://github.com/troydm/zoomwintab.vim', {'on': 'ZoomWinTabToggle'}
 " fzf for all the shortcuts defined in vim
 Plugin 'https://github.com/sunaku/vim-shortcut', {'on': 'Shortcut'}
 " Confirms opening empty file on tabcomplete
-Plugin 'https://github.com/EinfachToll/DidYouMean'
+Plugin 'https://github.com/EinfachToll/DidYouMean', {'event': ['BufReadPre']}
 " {]} ---------- Misc----------
 
 " {[} ---------- Visual changes ----------
@@ -151,7 +154,8 @@ if !has('nvim-0.5')
     Plugin 'machakann/vim-highlightedyank'
 endif
 " Resizes splits proportionally when changing overall size
-Plugin 'https://github.com/vim-scripts/ProportionalResize'
+Plugin 'https://github.com/vim-scripts/ProportionalResize',
+            \ has('nvim') ? {'event': ['VeryLazy']} : {}
 " {]} ---------- Visual changes ----------
 
 " {[} View and session
@@ -159,8 +163,11 @@ Plugin 'https://github.com/vim-scripts/ProportionalResize'
 Plugin 'https://github.com/zhimsel/vim-stay', {'on': [], 'event': ['CursorHold']}
 " Map os commands (eg maximise), and open windows commands without shell
 " popup.
-Plugin 'https://github.com/xolox/vim-shell', {
-            \ 'dependencies': ['xolox/vim-misc']}
+let g:vim_shell_plug_args = {'dependencies': ['xolox/vim-misc']}
+if has('nvim')
+    let g:vim_shell_plug_args['event'] = 'VeryLazy'
+endif
+Plugin 'https://github.com/xolox/vim-shell', g:vim_shell_plug_args
 if v:version >= 704
     Plugin 'https://github.com/xolox/vim-session', {'on': ['OpenSession'],
             \ 'dependencies': ['xolox/vim-misc']}
@@ -171,7 +178,7 @@ endif
 " Additional text objects for next bracket, i/a comma, pairs, smarter searching.
 Plugin 'wellle/targets.vim', {
             \ 'keys': MakeLazyKeys(
-            \ ['[', ']', 'i,' 'a', 'I', 'A'  ],
+            \ ['[', ']', 'i,', 'a', 'I', 'A'],
             \ ['n', 'o', 'v']) }
 " Move args with >, <,. Next arg ], [,. New text obj a, i,.
 " ],
@@ -242,7 +249,7 @@ Plugin 'https://github.com/haya14busa/vim-asterisk', {'keys': ['*', 'z*']}
 
 " {[}--- Searching, replacing, finding ---
 " Edit quickfix window and have the changes apply!
-Plugin 'https://github.com/stefandtw/quickfix-reflector.vim', {'ft': 'qf'}
+Plugin 'https://github.com/stefandtw/quickfix-reflector.vim', {'for': 'qf'}
 if has('timers')
     " Async, uses better grep tools like ack or ag
     Plugin 'mhinz/vim-grepper', { 'on': ['Grepper'] }

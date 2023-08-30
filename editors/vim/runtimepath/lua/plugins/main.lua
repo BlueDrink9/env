@@ -40,9 +40,9 @@ return {
     end,
   },
 
-  {"https://github.com/NMAC427/guess-indent.nvim", config=true},
+  {"https://github.com/NMAC427/guess-indent.nvim", event="VeryLazy", config=true},
 
-  {"https://github.com/stevearc/dressing.nvim.git", config=true},
+  {"https://github.com/stevearc/dressing.nvim.git", event="VeryLazy"},
 
   {'https://github.com/ggandor/leap.nvim.git',
     config = function()
@@ -51,16 +51,28 @@ return {
     end,
     opts = {
       prev_target = {'<tab>',}  -- Remove ',' from the default
-    }
+    },
+    keys = {'s', 'S'},
     -- Can't really figure out how to use this one atm.
     -- if vim.fn.IsPluginUsed('leap-ast.nvim') == 1 and vim.fn.IsPluginUsed('nvim-treesitter') == 1 then
     --     vim.keymap.set(modes, ',W',
     --     function() require'leap-ast'.leap() end,
-    --     {desc='leap to ast element'})
+    --     {desc='leap to ast elemenjt'})
     -- end
   },
-  {'https://github.com/ggandor/leap-spooky.nvim'},
-  {'https://github.com/ggandor/leap-ast.nvim'},
+  {'https://github.com/ggandor/leap-spooky.nvim',
+    config=true,
+    keys = function()
+      local out = {}
+      for _, key1 in ipairs({'i', 'a'}) do
+        for _, key2 in ipairs({'r', 'R', 'm', 'M'}) do
+          table.insert(out, {key1 .. key2, mode='o'})
+        end
+      end
+      return out
+    end
+  },
+  -- {'https://github.com/ggandor/leap-ast.nvim'},
 
   {"https://github.com/Nguyen-Hoang-Nam/nvim-preview-csv",
     -- Want to keep just in case we want the movement as well as the view

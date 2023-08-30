@@ -193,7 +193,7 @@ function! s:PluginAdapter(...)
     endif
 endfunction
 
-command! -bang -nargs=* Plugin call <sid>PluginAdapter(<args>)
+command! -bang -nargs=+ Plugin call <sid>PluginAdapter(<args>)
 
 " Allow making a keys table with modes for Lazy.vim in vimscript
 " usage: add plugin opt 'keys': MakeLazyKeys(["i%", "a%"], ["v","o"]),
