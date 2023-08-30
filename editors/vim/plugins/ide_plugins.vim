@@ -28,8 +28,7 @@ endif
 " Has odd bug with prose fts.
 " Plugin 'https://github.com/tpope/vim-endwise'
 " ga on char shows all representations, not just dec oct hex.
-Plug 'https://github.com/tpope/vim-characterize', {'on': '<Plug>(characterize)',
-            \ 'keys': ['<Plug>(characterize)']}
+Plug 'https://github.com/tpope/vim-characterize', {'on': '<Plug>(characterize)'}
 " {]} ---------- Misc ----------
 
 " {[} ---------- Visual ----------
@@ -105,12 +104,12 @@ endif
 " provides text objects and motions for Python classes, methods,
 " functions, and doc strings
 if !has('nvim')
-    Plugin 'jeetsukumaran/vim-pythonsense'
+    Plugin 'jeetsukumaran/vim-pythonsense', {'for': 'python'}
 endif
 if HasPython()
     if !has('nvim')
-        Plugin 'https://github.com/python-mode/python-mode', { 'branch': 'develop' }
-        Plugin 'https://github.com/tmhedberg/SimpylFold'
+        Plugin 'https://github.com/python-mode/python-mode', { 'branch': 'develop', 'for': 'python' }
+        Plugin 'https://github.com/tmhedberg/SimpylFold', {'for': 'python'}
     endif
     " Python completion, plus some refactor, goto def and usage features.
     if !has('nvim')
@@ -150,7 +149,7 @@ let g:polyglot_disabled = ['latex', 'markdown', ]
 Plugin 'https://github.com/sheerun/vim-polyglot'
 
 " Advanced markdown formatting. Lots of features.
-Plugin 'SidOfc/mkdx'
+Plugin 'SidOfc/mkdx',  {'for': 'markdown'}
 " Plugin 'vim-pandoc/vim-pandoc'
 " Plugin 'vim-pandoc/vim-pandoc-syntax'
 
@@ -190,7 +189,7 @@ Plugin 'https://github.com/janko/vim-test', {'on': [
             \ 'TestVisit'
             \ ]}
 " Look up documtenation for word under cursor with gk
-Plugin 'https://github.com/keith/investigate.vim'
+Plugin 'https://github.com/keith/investigate.vim', {'keys': 'gk'}
 " Customisable start screen, including MRU files
 Plugin 'https://github.com/mhinz/vim-startify'
 
