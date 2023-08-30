@@ -35,8 +35,6 @@ if !has('clipboard') || IsWSL()
     Plugin 'https://github.com/kana/vim-fakeclip'
 endif
 if has('nvim')
-    " Plugin 'https://github.com/gbprod/yanky.nvim'
-    Plugin 'https://github.com/bfredl/nvim-miniyank', {'keys': ['p', 'P']}
 elseif exists('##TextYankPost')
     Plugin 'https://github.com/svermeulen/vim-yoink'
 else

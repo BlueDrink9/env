@@ -15,4 +15,21 @@ return {
     keys = {'f', 'F', 't', 'T'},
   },
 
+  {
+    -- " Plugin 'https://github.com/gbprod/yanky.nvim'
+    'https://github.com/bfredl/nvim-miniyank',
+    keys=function()
+      local keys = {
+        {'p', '<Plug>(miniyank-autoput)'},
+        {'P', '<Plug>(miniyank-autoPut)'},
+        {'<leader>p', '<Plug>(miniyank-cycle)'},
+        {'<leader>P', '<Plug>(miniyank-cycleback)'},
+      }
+      for _, key in ipairs(keys) do
+        key["mode"] = {'v', 'n'}
+      end
+      return keys
+    end
+  },
+
 }
