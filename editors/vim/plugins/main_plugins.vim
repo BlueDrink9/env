@@ -216,7 +216,13 @@ Plugin 'https://github.com/glts/vim-texlog', {'for': ['log', 'tex']}
 
 " {[} ---------- Operators ----------
 " Replacement for surround, with more features.
-Plugin 'machakann/vim-sandwich', {'keys': ['ys', 'ds', 'cs']}
+function! Plug_after_vim_sandwich()
+    " Gives it tpope-surround mappings.
+    runtime macros/sandwich/keymap/surround.vim
+    vmap s <Plug>(operator-sandwich-add)
+endf
+Plugin 'machakann/vim-sandwich', {'keys': ['ys', 'ds', 'cs'],
+            \ 'afterLoad': v:true}
 if !has('nvim')
     Plugin 'https://github.com/justinmk/vim-sneak'
     " Plugin 'https://github.com/easymotion/vim-easymotion'

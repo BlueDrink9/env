@@ -168,11 +168,6 @@ endif
 " {]} Extra text objects
 
 " {[} ---------- Operators ----------
-if IsPluginUsed("vim-sandwich")
-    " Gives it tpope-surround mappings.
-    runtime macros/sandwich/keymap/surround.vim
-    vmap s <Plug>(operator-sandwich-add)
-endif
 if IsPluginUsed('vim-sneak')
   let g:sneak#label = 1
 elseif IsPluginUsed("vim-easymotion")
