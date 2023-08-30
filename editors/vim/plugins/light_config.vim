@@ -50,12 +50,7 @@ if IsPluginUsed("vim-fakeclip")
 endif
 
 " {[}--- Yanks ---
-if IsPluginUsed("nvim-miniyank")
-   map p <Plug>(miniyank-autoput)
-   map P <Plug>(miniyank-autoPut)
-   map <leader>p <Plug>(miniyank-cycle)
-   map <leader>P <Plug>(miniyank-cycleback)
-elseif IsPluginUsed("vim-yoink")
+if IsPluginUsed("vim-yoink")
     if has('nvim')
         let g:yoinkSavePersistently = 1  " Nvim only.
     endif
@@ -89,16 +84,12 @@ endif
 if IsPluginUsed("vim-ReplaceWithRegister")
     nmap dr  <Plug>ReplaceWithRegisterOperator
     nmap drr <Plug>ReplaceWithRegisterLine
-elseif IsPluginUsed("vim-operator-replace")
-    nmap dr  <Plug>(operator-replace)
-    nmap drr 0<Plug>(operator-replace)$
-endif
-
-
-if IsPluginUsed("vim-ReplaceWithRegister")
     " Causes delay on yank op.
     " xmap yr  <Plug>ReplaceWithRegisterVisual
     xmap R  <Plug>ReplaceWithRegisterVisual
+elseif IsPluginUsed("vim-operator-replace")
+    nmap dr  <Plug>(operator-replace)
+    nmap drr 0<Plug>(operator-replace)$
 endif
 " {]}--- Operators ---
 

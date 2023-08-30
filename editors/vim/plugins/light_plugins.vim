@@ -2,15 +2,17 @@
 " vim: foldmarker={[},{]}
 " {[} Litemode only / replacements.
 if g:liteMode
-" Superlight airline (no plugins)
+    " Superlight airline (no plugins)
     " Plugin 'https://github.com/itchyny/lightline.vim'
-    " {[} Replace Tcomment with commentary
-    " Replaced in favour of slightly heavier version tcomment in main
-    " plugins. See https://github.com/wincent/wincent/commit/913e79724456976549244893e9025aa6fcf3cc1c
-    Plugin 'https://github.com/tpope/vim-commentary'
-    " {]} Replace Tcomment with commentary
-    " Use better 'vim-sandwich' in main.
-    Plugin 'https://github.com/tpope/vim-surround.git'
+    if !has('nvim')
+        " {[} Replace Tcomment with commentary
+        " Replaced in favour of slightly heavier version tcomment in main
+        " plugins. See https://github.com/wincent/wincent/commit/913e79724456976549244893e9025aa6fcf3cc1c
+        Plugin 'https://github.com/tpope/vim-commentary'
+        " {]} Replace Tcomment with commentary
+        " Use better 'vim-sandwich' in main.
+        Plugin 'https://github.com/tpope/vim-surround.git'
+    endif
     " Lighter alt to airline for putting buffers in tabline.
     Plugin 'https://github.com/ap/vim-buftabline'
 endif
@@ -52,13 +54,14 @@ if !has('nvim')
     Plugin 'https://github.com/tommcdo/vim-exchange'
 endif
 " Do replace, because cr is used for abolish. Yr is unused atm?
-Plugin 'https://github.com/inkarkat/vim-ReplaceWithRegister'
+Plugin 'https://github.com/inkarkat/vim-ReplaceWithRegister', {'keys': ['dr']}
 " Plugin 'https://github.com/kana/vim-operator-user'
 " Plugin 'https://github.com/kana/vim-operator-replace'
 
 " Operator for start/end of text object. For example, d]i) deletes from the
 " cursor to the end of the current parenthetical term
-Plugin 'tommcdo/vim-ninja-feet'
+Plugin 'tommcdo/vim-ninja-feet',
+            \ {'keys': MakeLazyKeys(["]", "[", "z]", "z["], ["o"])}
 " {]}--- Operators ---
 
 " {[}--- Visual changes ---
