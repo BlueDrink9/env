@@ -32,27 +32,27 @@ local specs = {
       local out = {}
       table.insert(out, build_keymaps_other("m", "marks"))
       for keys, cmd in pairs({
-        [maps.FuzzyFuzzy] = "builtin()",
-        [maps.FuzzyOpenFile] = "find_files()",
-        [maps.FuzzySearchFiles] = "live_grep()",
+        [maps.FuzzyFuzzy]         = "builtin()",
+        [maps.FuzzyOpenFile]      = "find_files()",
+        [maps.FuzzySearchFiles]   = "live_grep()",
         [maps.FuzzySearchBuffers] = "live_grep({grep_open_files = true})",
-        [maps.FuzzyBuffers] = "buffers()",
-        [maps.FuzzyTags] = "tags()",
-        [maps.FuzzyCommands] = "commands()",
-        -- By default, use treesitter for symbols. If an lsp client attaches that
-        -- can replace it however, replace with that.
-        [maps.FuzzySymbols] = "treesitter()",
+        [maps.FuzzyBuffers]       = "buffers()",
+        [maps.FuzzyTags]          = "tags()",
+        [maps.FuzzyCommands]      = "commands()",
+        -- By default, use treesitter for symbols. If an lsp client
+        -- attaches which can replace it however, replace with that.
+        [maps.FuzzySymbols]       = "treesitter()",
       }) do
-        local map_prefix = ":lua require'telescope.builtin'."
-        table.insert(out, {keys, map_prefix..cmd.."<CR>"})
+        local map_prefix = "require'telescope.builtin'."
+        table.insert(out, {keys, loadstring(map_prefix..cmd)})
       end
 
-      for keys, cmd in pairs({
-        -- extra manual ones
-      }) do
-        local map_prefix = ":lua require'telescope'."
-        table.insert(out, {keys, map_prefix..cmd.."<CR>", mode='i'})
-      end
+      -- for keys, cmd in pairs({
+      --   -- extra manual/insert ones
+      -- }) do
+      --   local map_prefix = "require'telescope'."
+      --   table.insert(out, {keys, loadstring(map_prefix..cmd), mode='i'})
+      -- end
 
       return out
     end,
