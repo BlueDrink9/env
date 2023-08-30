@@ -168,13 +168,16 @@ endif
 " {]} View and session
 
 " {[} Extra text objects
-" Additional text objects for next braket, i/a comma, pairs, smarter searching.
-Plugin 'wellle/targets.vim'
+" Additional text objects for next bracket, i/a comma, pairs, smarter searching.
+Plugin 'wellle/targets.vim', {
+            \ 'keys': MakeLazyKeys(
+            \ ['[', ']', 'i,' 'a', 'I', 'A'  ],
+            \ ['n', 'o', 'v']) }
 " Move args with >, <,. Next arg ], [,. New text obj a, i,.
 " ],
 Plugin 'PeterRincker/vim-argumentative', {
             \ 'keys': MakeLazyKeys(
-            \ ['<,', '>,', '[ ,', '],', 'i,', 'a,' ],
+            \ ['<,', '>,', '[,', '],', 'i,', 'a,' ],
             \ ['n', 'o', 'v']) }
 " See https://github.com/kana/vim-textobj-user/wiki for more, esp for
 " lang-specific.

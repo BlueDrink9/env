@@ -77,6 +77,7 @@ return {
 
   {
     'https://github.com/lewis6991/gitsigns.nvim.git',
+    event='VeryLazy',
     on_attach = function(buffer)
       local gs = package.loaded.gitsigns
       local function map(mode, l, r, desc)
