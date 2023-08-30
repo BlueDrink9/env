@@ -61,7 +61,6 @@ local specs = {
 			},
 		},
 	},
-	{ "nvim-treesitter/playground" },
 
 	{
 		"https://github.com/ThePrimeagen/refactoring.nvim.git",
