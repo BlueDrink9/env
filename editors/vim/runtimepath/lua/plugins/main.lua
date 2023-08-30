@@ -140,6 +140,16 @@ return {
         -- let g:firenvim_install=":call firenvim#install(0, " . s:firenvim_startup_prologue . ")"
       vim.fn["firenvim#install"](0)
     end,
-  }
+  },
+
+  {
+    'https://github.com/salkin-mada/openscad.nvim',
+    ft='scad',
+  },
+
+  {
+    'https://github.com/nvim-orgmode/orgmode',
+    ft='org',
+  },
 
 }

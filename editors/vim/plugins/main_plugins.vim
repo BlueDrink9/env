@@ -175,10 +175,9 @@ Plugin 'PeterRincker/vim-argumentative'
 " See https://github.com/kana/vim-textobj-user/wiki for more, esp for
 " lang-specific.
 " Add text object for whole buffer
-" I create the mappings myself so can't lazy load atm.
 Plugin 'https://github.com/kana/vim-textobj-entire', {
-            \ 'dependencies': ['kana/vim-textobj-user']}
-            " \ 'keys': MakeLazyKeys(["i%", "a%"], ["v","o"]),
+            \ 'dependencies': ['kana/vim-textobj-user'],
+            \ 'on': ['<Plug>(textobj-entire-a)', '<Plug>(textobj-entire-i)']}
 " av/iv for lines continued by \
 " Plugin 'rhysd/vim-textobj-continuous-line', {
 "             \ 'keys': MakeLazyKeys(["il", "al"], ["v","o"]),
@@ -305,10 +304,7 @@ Plugin 'https://github.com/PProvost/vim-ps1', {'for': 'ps1'}
 Plugin 'https://github.com/lervag/vim-rmarkdown', {'for': 'rmd'}
 Plugin 'https://github.com/liuchengxu/graphviz.vim', {'for': 'dot'}
 Plugin 'https://github.com/waycrate/swhkd-vim', {'for': 'swhkd'}
-if has("nvim")
-    Plugin 'https://github.com/nvim-orgmode/orgmode', {'for': 'org'}
-    Plugin 'https://github.com/salkin-mada/openscad.nvim', {'for': 'scad'}
-else
+if !has("nvim")
     Plugin 'https://github.com/jceb/vim-orgmode', {'for': 'org'}
     Plugin 'https://github.com/sirtaj/vim-openscad', {'for': 'scad'}
 endif
@@ -352,7 +348,8 @@ Plugin 'https://github.com/reedes/vim-lexical', { 'for': g:proseFileTypes }
 " Plugin 'https://github.com/vim-pandoc/vim-rmarkdown', {'for': 'rmd' }
 Plugin 'https://github.com/reedes/vim-pencil', {'for': g:proseFileTypes}
 
-Plugin 'https://github.com/lervag/vimtex', {'for': 'tex'}
+Plugin 'https://github.com/lervag/vimtex', {'for': 'tex',
+            \ 'beforeFunc': 'VimtexBefore'}
 
 " {[} ---------- Markdown Preview ----------
 if (has('nvim') || v:version >= 801) && !has('win32')

@@ -108,7 +108,13 @@ function PlugToLazy(plugin, opts)
         lazySpec.version = opts["tag"]
         if opts['afterLoad'] then
             lazySpec['config'] = function()
-            vim.fn[opts['afterLoad']]()
+                if opts['afterLoad'] == true then
+                    vim.fn[vim.fn.PluginNameToFunc(
+                        vim.fn.GetPluginName(plugin)
+                    )]()
+                else
+                    vim.fn[opts['afterLoad']]()
+                end
             end
         end
         if lazySpec.cmd then
@@ -129,7 +135,7 @@ function PlugToLazy(plugin, opts)
         end
     end
     lazySpec[1] = plugin
-    -- if string.find(plugin, "textobj") then print(vim.inspect(lazySpec)) end
+    -- if string.find(plugin, "sandw") then print(vim.inspect(lazySpec)) end
     table.insert(MyLazySpecs, lazySpec)
 end
 EOF
@@ -150,7 +156,7 @@ let s:PlugOpts = [
 
 function! s:PluginAdapter(...)
     let l:plugin = a:1
-    let l:plugin_name = split(l:plugin, '/')[-1]
+    let l:plugin_name = GetPluginName(l:plugin)
     let l:args = {}
     if a:0 == 2
         let l:args = a:2
@@ -165,15 +171,14 @@ function! s:PluginAdapter(...)
             Plug dep
         endfor
         " Handle hook for after load
-        let l:func = get(l:args, 'afterFunc', v:false)
-        " If 'afterFunc' is v:true, call function based off a default name
+        let l:func = get(l:args, 'afterLoad', v:false)
+        " If 'afterLoad' is v:true, call function based off a default name
         " convention (the plugin name, with _ replacing . and -). Otherwise
         " call the function name passed in. Only will be called for
         " lazy-loaded plugins, so don't use without an 'on' or 'for' mapping.
         " ('keys' gets ignored).
         if l:func == v:true
-            exec 'au User ' . l:plugin_name . ' call Plug_after_' .
-                        \ substitute(l:plugin_name, '[\\.-]', '_', 'g') . '()'
+            exec 'au User ' . l:plugin_name . ' call ' . PluginNameToFunc(l:plugin_name) . '()'
         elseif l:func != v:false
             exec 'au User ' . l:plugin_name . ' call ' . l:func . '()'
         endif
@@ -207,4 +212,12 @@ end
 EOF
 function! MakeLazyKeys(keys, modes)
     return luaeval('MakeLazyKeys(_A[1], _A[2])', [a:keys, a:modes])
-endfunction
+endf
+
+function! GetPluginName(pluginUrl)
+    return split(a:pluginUrl, '/')[-1]
+endf
+
+function! PluginNameToFunc(name)
+    return 'Plug_after_' . substitute(a:name, '[\\.-]', '_', 'g')
+endf
