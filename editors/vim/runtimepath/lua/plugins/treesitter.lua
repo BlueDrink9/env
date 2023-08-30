@@ -37,18 +37,21 @@ local specs = {
 			parser_install_dir = parser_install_dir,
 			auto_install = false,
 			ensure_installed = {
-				"vim",
-				"lua",
 				"bash",
-				-- "powershell", -- not available yet
-				"markdown",
-				"make",
 				"json",
-				"yaml",
-				"toml",
+				"lua",
+				"make",
+				"markdown",
+				"markdown_inline",
 				"python",
+				"query",
 				"r",
+				"regex",
 				"sql",
+				"toml",
+				"vim",
+				"yaml",
+				-- "powershell", -- not available yet
 			},
 			endwise = { enable = true },
 			indent = {
@@ -92,6 +95,14 @@ local specs = {
 
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
+		keys = {
+			{'a', mode={'o'}},
+			{'i', mode={'o'}},
+			{']'},
+			{'['},
+			{'>,'},
+			{'<,'},
+		},
 		config = function()
 			require("nvim-treesitter.configs").setup({
 				textobjects = {

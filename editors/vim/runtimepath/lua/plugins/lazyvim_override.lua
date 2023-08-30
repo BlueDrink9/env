@@ -38,20 +38,7 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = {
-        "bash",
-        "json",
-        "lua",
-        "markdown",
-        "markdown_inline",
-        "python",
-        "query",
-        "regex",
-        "vim",
-        "yaml",
-      },
-    },
+    enabled = vim.g.ideMode == 1,
   },
 
   {
@@ -92,6 +79,10 @@ return {
         end,
       },
     },
+    keys = {
+      {"a", mode="o"},
+      {"i", mode="o"},
+    }
   },
 
   -- Use <tab> for completion and snippets (supertab)
@@ -105,6 +96,7 @@ return {
 
   {
     "hrsh7th/nvim-cmp",
+    enabled = vim.g.ideMode == 1;
     opts = function(_, opts)
       local has_words_before = function()
         unpack = unpack or table.unpack
@@ -155,6 +147,7 @@ return {
 
   {
     "jose-elias-alvarez/null-ls.nvim",
+    enabled = vim.g.ideMode == 1,
     opts = function()
       local nls = require("null-ls")
       return {
@@ -174,20 +167,5 @@ return {
     opts = function()
       return require'alpha.themes.startify'
     end
-  },
-
-  {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    textobjects = {
-      swap = {
-        enable = true,
-        swap_next = {
-          [">,"] = "@parameter.inner",
-        },
-        swap_previous = {
-          ["<,"] = "@parameter.inner",
-        },
-      },
-    },
   },
 }
