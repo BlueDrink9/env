@@ -199,7 +199,7 @@ command! -bang -nargs=* Plugin call <sid>PluginAdapter(<args>)
 " usage: add plugin opt 'keys': MakeLazyKeys(["i%", "a%"], ["v","o"]),
 lua << EOF
 -- Returns a lua function for setting up a lazy keys spec. Need to return a
--- function because can't return a mixed list/dict table to vimscript.
+-- function because can't return a mixed list/dict table in vimscript.
 MakeLazyKeys = function(keys, modes)
   return function()
       local ret = {}

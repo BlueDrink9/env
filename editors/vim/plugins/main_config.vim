@@ -553,6 +553,7 @@ if IsPluginUsed("bullets.vim")
     let g:bullets_enable_in_empty_buffers = 0
 endif
 if IsPluginUsed("md-img-paste.vim")
+    " TODO make buffer-local. Maybe add c-v mapping if it doesn't come with one?
     autocmd myPlugins FileType markdown command! PasteImage silent call mdip#MarkdownClipboardImage()<CR>
 endif
 " {]} ---------- Prose----------
