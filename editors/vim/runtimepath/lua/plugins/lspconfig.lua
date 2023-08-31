@@ -15,8 +15,6 @@ return {
 		event="LspAttach",
 	},
 
-	-- {'https://github.com/kosayoda/nvim-lightbulb'},
-
 	{
 		"https://github.com/neovim/nvim-lspconfig.git",
 		config = function()
@@ -96,11 +94,6 @@ return {
 							end
 						end
 					end,
-				})
-				vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-					group = "lsp_on_attach",
-					buffer = bufnr,
-					callback = require("nvim-lightbulb").update_lightbulb,
 				})
 				vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
 					group = "lsp_on_attach",
