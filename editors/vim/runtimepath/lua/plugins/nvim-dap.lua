@@ -79,9 +79,16 @@ end
 return {
 
   {'https://github.com/mfussenegger/nvim-dap',
+    keys = maps.debugFile,
     config = function()
+      require'persistent-breakpoints'
       require'dap'.listeners.after.event_initialized["dapui_config"] = function()
+        require'nvim-dap-virtual-text'
+        require'goto-breakpoints'
         require'dapui'.open()
+        if vim.bo.filetype == "python" then
+          require'dap-python'
+        end
         -- vim.api.nvim_buf_set_keymap(bufnr, 'v', maps.REPLSend, "<Cmd>lua require("dapui").eval()<CR>",
         --   { noremap=true, silent=true })
       end
@@ -96,6 +103,7 @@ return {
 
   {'https://github.com/jayp0521/mason-nvim-dap.nvim',
     dependencies='williamboman/mason.nvim',
+    cmd="Mason",
     opts = {
       -- ensure_installed = {'stylua', 'jq'}
       automatic_setup = true,
@@ -137,6 +145,7 @@ return {
   },
 
   {'rcarriga/nvim-dap-ui',
+    lazy=true,
     opts = {
       icons = { expanded = "▾", collapsed = "▸", current_frame = "▸" },
       mappings = {
@@ -220,15 +229,20 @@ return {
   -- This might need remapping to use its own toggle breakpoint :(
   {'https://github.com/Weissle/persistent-breakpoints.nvim',
     opts = {load_breakpoints_event = { "FileReadPost" }},
+    lazy=true,
   },
 
-  {'https://github.com/ofirgall/goto-breakpoints.nvim'},
+  {'https://github.com/ofirgall/goto-breakpoints.nvim', lazy=true},
 
   {'theHamsta/nvim-dap-virtual-text',
     dependencies='nvim-treesitter/nvim-treesitter',
     opts={commented=true},
+    lazy=true,
   },
 
-  {'mfussenegger/nvim-dap-python', dependencies='nvim-treesitter/nvim-treesitter'},
+  {'mfussenegger/nvim-dap-python',
+    lazy=true,
+    dependencies='nvim-treesitter/nvim-treesitter',
+  },
 
 }
