@@ -54,7 +54,8 @@ if !has('nvim')
     Plugin 'https://github.com/tommcdo/vim-exchange'
 endif
 " Do replace, because cr is used for abolish. Yr is unused atm?
-Plugin 'https://github.com/inkarkat/vim-ReplaceWithRegister', {'keys': ['dr']}
+Plugin 'https://github.com/inkarkat/vim-ReplaceWithRegister', {'on': 
+            \ ['<Plug>ReplaceWithRegisterOperator', '<Plug>ReplaceWithRegisterLine']}
 " Plugin 'https://github.com/kana/vim-operator-user'
 " Plugin 'https://github.com/kana/vim-operator-replace'
 
