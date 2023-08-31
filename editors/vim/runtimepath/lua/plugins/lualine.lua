@@ -1,3 +1,7 @@
+if true then
+   return {}
+end
+
 return {
    'nvim-lualine/lualine.nvim',
    enabled=vim.g.liteMode == 0,

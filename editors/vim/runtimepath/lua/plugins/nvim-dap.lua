@@ -78,10 +78,11 @@ end
 
 return {
 
-  {'https://github.com/mfussenegger/nvim-dap',
+  {'mfussenegger/nvim-dap',
     keys = maps.debugFile,
     config = function()
       require'persistent-breakpoints'
+      require("telescope").load_extension('dap')
       require'dap'.listeners.after.event_initialized["dapui_config"] = function()
         require'nvim-dap-virtual-text'
         require'goto-breakpoints'
@@ -101,7 +102,7 @@ return {
     end
   },
 
-  {'https://github.com/jayp0521/mason-nvim-dap.nvim',
+  {'jayp0521/mason-nvim-dap.nvim',
     dependencies='williamboman/mason.nvim',
     cmd="Mason",
     opts = {
@@ -243,6 +244,14 @@ return {
   {'mfussenegger/nvim-dap-python',
     lazy=true,
     dependencies='nvim-treesitter/nvim-treesitter',
+  },
+
+  {'https://github.com/nvim-telescope/telescope-dap.nvim',
+    config = function() require("telescope").load_extension('dap') end,
+    dependencies={
+      'mfussenegger/nvim-dap',
+    },
+    lazy=true,
   },
 
 }

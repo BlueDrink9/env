@@ -183,14 +183,6 @@ local specs = {
     build = telecope_make_cmd,
     lazy=true,
   },
-
-  {'https://github.com/nvim-telescope/telescope-dap.nvim',
-    config = function() require("telescope").load_extension('dap') end,
-    dependencies={
-      'https://github.com/mfussenegger/nvim-dap',
-    },
-    lazy=true,
-  },
 }
 
 for _, spec in ipairs(specs) do
