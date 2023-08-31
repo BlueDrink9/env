@@ -18,6 +18,8 @@ augroup END
 let s:plugin_manager_dir = expand(s:vimhome .. '/autoload')
 let s:plugin_manager_file = s:plugin_manager_dir .. '/plug.vim'
 
+" vim-plug specific
+if !has('nvim')
 " Jetpack
 " let s:plugin_manager_url = "https://raw.githubusercontent.com/tani/vim-jetpack/master/plugin/jetpack.vim"
 let s:plugin_manager_url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
@@ -45,6 +47,31 @@ if !filereadable(s:plugin_manager_file)
 endif
 " packadd vim-jetpack
 
+" Plug installs the plugin, but only loads on autocmd event.
+" name: the last part of the plugin url (just name, no auth).
+" Plug options should include 'on': [] to prevent load before event.
+function! LoadPluginOnEvent(name, event)
+    let l:plugLoad = 'autocmd ' . a:event . ' * call plug#load("'
+    let l:plugLoadEnd = '")'
+    let l:undoAutocmd = 'autocmd! ' . a:name . '_' . a:event
+    exec "augroup " . a:name . '_' . a:event
+    autocmd!
+    exec  l:plugLoad . a:name . l:plugLoadEnd . ' | ' . l:undoAutocmd
+augroup END
+endfunction
+
+endif
+
+if has('nvim')
+    lua IsPluginUsed = function(name) return require("lazy.core.config").plugins[name] ~= nil end
+endif
+function! IsPluginUsed(name)
+    if has('nvim')
+        return has_key(s:plugs, a:name)
+    else
+        return has_key(g:plugs, a:name)
+    endif
+endfunction
 
 " To remove a Plugged repo using UnPlug 'pluginName'
 function! s:deregister(name)
@@ -65,30 +92,6 @@ function! s:deregister(name)
     endtry
 endfunction
 command! -nargs=1 -bar UnPlug call s:deregister(<args>)
-
-if has('nvim')
-    lua IsPluginUsed = function(name) return require("lazy.core.config").plugins[name] ~= nil end
-endif
-function! IsPluginUsed(name)
-    if has('nvim')
-        return has_key(s:plugs, a:name)
-    else
-        return has_key(g:plugs, a:name)
-    endif
-endfunction
-
-" Plug installs the plugin, but only loads on autocmd event.
-" name: the last part of the plugin url (just name, no auth).
-" Plug options should include 'on': [] to prevent load before event.
-function! LoadPluginOnEvent(name, event)
-    let l:plugLoad = 'autocmd ' . a:event . ' * call plug#load("'
-    let l:plugLoadEnd = '")'
-    let l:undoAutocmd = 'autocmd! ' . a:name . '_' . a:event
-    exec "augroup " . a:name . '_' . a:event
-    autocmd!
-    exec  l:plugLoad . a:name . l:plugLoadEnd . ' | ' . l:undoAutocmd
-augroup END
-endfunction
 
 if has('nvim')
 let s:plugs = {}
@@ -210,6 +213,7 @@ MakeLazyKeys = function(keys, modes)
   end
 end
 EOF
+
 function! MakeLazyKeys(keys, modes)
     return luaeval('MakeLazyKeys(_A[1], _A[2])', [a:keys, a:modes])
 endf
