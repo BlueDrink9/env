@@ -32,7 +32,7 @@ local specs = {
 		build = ":TSUpdate",
 		config = function()
 			vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-			require"nvim-treesitter-context"
+			require"treesitter-context"
 		end,
 		opts = {
 			parser_install_dir = parser_install_dir,
@@ -181,8 +181,6 @@ local specs = {
 		dependencies = { "nvim-treesitter/nvim-treesitter-context" },
 	},
 
-	{ "kevinhwang91/promise-async" },
-
 	{
 		"https://github.com/kevinhwang91/nvim-ufo.git",
 		config = function()
@@ -201,6 +199,8 @@ local specs = {
 				return { "treesitter", "indent" }
 			end,
 		},
+		dependencies = {"kevinhwang91/promise-async"},
+		event = "VeryLazy",
 	},
 	{ "Konfekt/FastFold", enabled = false },
 

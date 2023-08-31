@@ -142,9 +142,6 @@ Plugin 'octol/vim-cpp-enhanced-highlight', {'for': ['cpp'] }
 Plugin 'https://github.com/WolfgangMehner/c-support', {'for': ['c', 'cpp'] }
 " {]} ------ C ------
 
-" May cause lag on scrolling.
-Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
-
 " Advanced markdown formatting. Lots of features.
 Plugin 'SidOfc/mkdx',  {'for': 'markdown'}
 " Plugin 'vim-pandoc/vim-pandoc'
