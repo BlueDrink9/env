@@ -343,7 +343,7 @@ Plugin 'https://github.com/radenling/vim-dispatch-neovim', {'on': ['Make', 'Star
 " Check that whatever you need isn't in polyglot, first!
 " Multi-lang support
 let g:polyglot_disabled = ['autoindent', 'sensible', 'latex', 'markdown', ]
-Plugin 'https://github.com/sheerun/vim-polyglot'
+Plugin 'https://github.com/sheerun/vim-polyglot', {'event': ['BufNewFile','BufRead']}
 Plugin 'https://github.com/lervag/vim-rmarkdown', {'for': 'rmd'}
 Plugin 'https://github.com/liuchengxu/graphviz.vim', {'for': 'dot'}
 Plugin 'https://github.com/waycrate/swhkd-vim', {'for': 'swhkd'}
