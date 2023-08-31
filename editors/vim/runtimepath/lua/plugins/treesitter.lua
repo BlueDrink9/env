@@ -33,6 +33,7 @@ local specs = {
 		config = function()
 			vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 			require"treesitter-context"
+			require"ts_context_commentstring"
 		end,
 		opts = {
 			parser_install_dir = parser_install_dir,
