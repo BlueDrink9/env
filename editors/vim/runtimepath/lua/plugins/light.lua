@@ -1,4 +1,28 @@
 return {
+  {
+    "https://github.com/numToStr/Comment.nvim",
+    opts = {
+      -- Lines to be ignored while (un)comment
+      ignore = '^%s*$',
+      -- LHS of toggle mappings in NORMAL mode
+      toggler = {
+        line = '<leader>cc',
+        block = '<leader>cC',
+      },
+      opleader = {
+        line = '<leader>c',
+        block = '<leader>C',
+      },
+      mappings = {
+        basic = true,
+        extra = false,
+      },
+      pre_hook = nil,
+      post_hook = nil,
+    },
+    keys = {'<leader>c', '<leader>C'},
+  },
+
   {"gbprod/substitute.nvim",
     keys = {
       {"cx", function() require('substitute').operator() end, mode="n"},
