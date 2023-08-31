@@ -20,7 +20,7 @@ let s:plugin_manager_file = s:plugin_manager_dir .. '/plug.vim'
 
 " vim-plug specific
 if has('nvim')
-    let g:loaded_vim_plug = 1
+    let g:loaded_plug = 1
 else
     " Jetpack
     " let s:plugin_manager_url = "https://raw.githubusercontent.com/tani/vim-jetpack/master/plugin/jetpack.vim"
