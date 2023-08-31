@@ -175,12 +175,12 @@ return {
   -- vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
   -- vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 
-  {'hrsh7th/cmp-nvim-lsp'},
-  {'hrsh7th/cmp-buffer'},
-  {'hrsh7th/cmp-path'},
-  {'hrsh7th/cmp-vsnip'},
-  {'hrsh7th/cmp-nvim-lsp-signature-help'},
-  {'hrsh7th/cmp-nvim-lsp-document-symbol'},
-  {'https://github.com/f3fora/cmp-spell'},
+  {'hrsh7th/cmp-nvim-lsp', lazy=true},
+  {'hrsh7th/cmp-buffer', lazy=true},
+  {'hrsh7th/cmp-path', lazy=true},
+  -- {'hrsh7th/cmp-vsnip', lazy=true},
+  {'hrsh7th/cmp-nvim-lsp-signature-help', lazy=true},
+  {'hrsh7th/cmp-nvim-lsp-document-symbol', lazy=true},
+  {'https://github.com/f3fora/cmp-spell', lazy=true},
 
 }

@@ -89,6 +89,7 @@ return {
   -- first: disable default <tab> and <s-tab> behavior in LuaSnip
   {
     "L3MON4D3/LuaSnip",
+    enabled = vim.g.ideMode == 1,
     keys = function()
       return {}
     end,
@@ -96,7 +97,7 @@ return {
 
   {
     "hrsh7th/nvim-cmp",
-    enabled = vim.g.ideMode == 1;
+    enabled = vim.g.ideMode == 1,
     opts = function(_, opts)
       local has_words_before = function()
         unpack = unpack or table.unpack
