@@ -171,4 +171,19 @@ return {
       return require'alpha.themes.startify'
     end
   },
+
+  {
+    "folke/which-key.nvim",
+    opts = {
+      plugins = { spelling = true },
+      defaults = {
+        mode = { "n", "v" },
+        -- Remove these because they begin operator funcs, which get overritten
+        -- by which-key here if lazy-loaded. (E.g. comment)
+        ["<leader>c"] = nil,
+        ["<leader>s"] = nil,
+        ["<leader>u"] = nil,
+      },
+    },
+  },
 }
