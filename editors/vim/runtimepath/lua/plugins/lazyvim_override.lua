@@ -85,6 +85,8 @@ return {
     }
   },
 
+  {"https://github.com/neovim/nvim-lspconfig.git",
+  enabled = vim.g.ideMode == 1},
   -- Use <tab> for completion and snippets (supertab)
   -- first: disable default <tab> and <s-tab> behavior in LuaSnip
   {

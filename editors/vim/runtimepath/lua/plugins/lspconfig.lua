@@ -8,18 +8,19 @@ if vim.g.ideMode == 0 then
 end
 
 return {
-	{ "https://github.com/williamboman/mason-lspconfig.nvim.git" },
-	{ "https://github.com/folke/trouble.nvim.git" },
+	{ "https://github.com/williamboman/mason-lspconfig.nvim.git", cmd="Mason" },
 	-- Create appropriate colours for old colourschemes
-	{ "https://github.com/folke/lsp-colors.nvim.git" },
-	{ "https://github.com/Hrle97/nvim.diagnostic_virtual_text_config.git" },
+	{ "https://github.com/folke/lsp-colors.nvim.git", event="VeryLazy" },
+	{ "https://github.com/Hrle97/nvim.diagnostic_virtual_text_config.git",
+		event="LspAttach",
+	},
 
 	-- {'https://github.com/kosayoda/nvim-lightbulb'},
 
 	{
 		"https://github.com/neovim/nvim-lspconfig.git",
 		config = function()
-			local maps = vim.api.nvim_get_var("IDE_mappings")
+			local maps = vim.g.IDE_mappings
 
 			-- Mappings.
 			-- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -222,5 +223,6 @@ return {
 				return false
 			end
 		end,
+		event="LspAttach",
 	},
 }
