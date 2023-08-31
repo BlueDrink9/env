@@ -10,30 +10,31 @@ local idemaps = vim.g.IDE_mappings
 return {
 
 	-- Dependency for a lot of plugins
-	{ "nvim-lua/plenary.nvim" },
+	{ "nvim-lua/plenary.nvim", lazy=true },
 
 	-- For installing LSPs (and other packages)
-	{ "williamboman/mason.nvim" },
-	{ "https://github.com/RubixDev/mason-update-all" },
-	{ "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim" },
+	{ "williamboman/mason.nvim",
+		cmd="Mason",
+		opts={
+			ui = {
+				icons = {
+					package_installed = "✓",
+					package_pending = "➜",
+					package_uninstalled = "✗"
+				}
+			}
+		},
+		config = function()
+			require('mason-update-all')
+			require('mason-tool-installer')
+			-- -- nvim --headless -c 'autocmd User MasonUpdateAllComplete quitall' -c 'MasonUpdateAll'
+		end
+	},
+	{ "https://github.com/RubixDev/mason-update-all", lazy=true},
+	{ "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim", lazy=true},
 
-	{ "https://github.com/norcalli/nvim-colorizer.lua", config = true },
+	{ "https://github.com/norcalli/nvim-colorizer.lua", config = true, event="VeryLazy"},
 	-- {'nvim-notify', opt={stages="static"}},
-
-	-- {'mason',
-	-- require("mason").setup({
-	--       ui = {
-	--          icons = {
-	--             package_installed = "✓",
-	--             package_pending = "➜",
-	--             package_uninstalled = "✗"
-	--          }
-	--       }
-	--    })
-	-- require('mason-update-all').setup()
-	-- require('mason-tool-installer').setup()
-	-- -- nvim --headless -c 'autocmd User MasonUpdateAllComplete quitall' -c 'MasonUpdateAll'
-	-- },
 
 	-- {[} ---------- Visual ----------
 	{
@@ -187,7 +188,7 @@ return {
 		"https://github.com/TimUntersberger/neogit",
 
 		config = function()
-			vim.api.nvim_create_user_command("Magit", "Neogit")
+			vim.api.nvim_create_user_command("Magit", "Neogit", {})
 		end,
 		cmd = { "Neogit" },
 		keys = { "<leader>gg", "<cmd>Neogit<CR>", desc = "NeoGit" },
@@ -271,6 +272,7 @@ return {
 		config = function()
 			vim.fn.SourcePluginFile("nvim-R.vim")
 		end,
+		ft={"R", "Rmd", "Rnoweb"},
 	},
 
 	{

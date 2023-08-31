@@ -123,7 +123,7 @@ endif
 
 " Pip install jupytext. Converts notebooks to text format.
 if Executable('jupytext')
-    Plugin 'goerz/jupytext.vim'
+    Plugin 'goerz/jupytext.vim', {'for': 'ipynb'}
 endif
 
 " {]} ------ Python ------
