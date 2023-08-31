@@ -169,8 +169,10 @@ if has('nvim')
 endif
 Plugin 'https://github.com/xolox/vim-shell', g:vim_shell_plug_args
 if v:version >= 704
-    Plugin 'https://github.com/xolox/vim-session', {'on': ['OpenSession'],
-            \ 'dependencies': ['xolox/vim-misc']}
+    Plugin 'https://github.com/xolox/vim-session', {
+                \ 'on': ['OpenSession', 'DeleteSession', 'SaveSession'],
+                \ 'event': ["SessionLoadPost"],
+                \ 'dependencies': ['xolox/vim-misc']}
 endif
 " {]} View and session
 
