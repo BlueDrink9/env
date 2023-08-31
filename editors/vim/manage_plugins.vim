@@ -19,46 +19,48 @@ let s:plugin_manager_dir = expand(s:vimhome .. '/autoload')
 let s:plugin_manager_file = s:plugin_manager_dir .. '/plug.vim'
 
 " vim-plug specific
-if !has('nvim')
-" Jetpack
-" let s:plugin_manager_url = "https://raw.githubusercontent.com/tani/vim-jetpack/master/plugin/jetpack.vim"
-let s:plugin_manager_url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+if has('nvim')
+    let g:loaded_vim_plug = 1
+else
+    " Jetpack
+    " let s:plugin_manager_url = "https://raw.githubusercontent.com/tani/vim-jetpack/master/plugin/jetpack.vim"
+    let s:plugin_manager_url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 
-if !filereadable(s:plugin_manager_file)
-    exec "silent !mkdir -p " . s:plugin_manager_dir
-    if Executable("curl")
-        let s:downloader = "curl -fLo "
-    elseif Executable("wget")
-        let s:downloader = "wget --no-check-certificate -O "
-    else
-        echoerr "You have to install curl or wget, or install plugin manager yourself!"
-        echoerr "Plugin manager not installed. No plugins will be loaded."
-        finish
-    endif
-    " Continue installing...
-    echom "Installing plugin manager..."
-    echo ""
-    call system(printf('%s %s %s', s:downloader, s:plugin_manager_file, s:plugin_manager_url))
     if !filereadable(s:plugin_manager_file)
-        echoerr "Plugin manager not installed. No plugins will be loaded."
-        finish
+        exec "silent !mkdir -p " . s:plugin_manager_dir
+        if Executable("curl")
+            let s:downloader = "curl -fLo "
+        elseif Executable("wget")
+            let s:downloader = "wget --no-check-certificate -O "
+        else
+            echoerr "You have to install curl or wget, or install plugin manager yourself!"
+            echoerr "Plugin manager not installed. No plugins will be loaded."
+            finish
+        endif
+        " Continue installing...
+        echom "Installing plugin manager..."
+        echo ""
+        call system(printf('%s %s %s', s:downloader, s:plugin_manager_file, s:plugin_manager_url))
+        if !filereadable(s:plugin_manager_file)
+            echoerr "Plugin manager not installed. No plugins will be loaded."
+            finish
+        endif
+        autocmd myPlugins VimEnter * PlugInstall
     endif
-    autocmd myPlugins VimEnter * PlugInstall
-endif
-" packadd vim-jetpack
+    " packadd vim-jetpack
 
-" Plug installs the plugin, but only loads on autocmd event.
-" name: the last part of the plugin url (just name, no auth).
-" Plug options should include 'on': [] to prevent load before event.
-function! LoadPluginOnEvent(name, event)
-    let l:plugLoad = 'autocmd ' . a:event . ' * call plug#load("'
-    let l:plugLoadEnd = '")'
-    let l:undoAutocmd = 'autocmd! ' . a:name . '_' . a:event
-    exec "augroup " . a:name . '_' . a:event
-    autocmd!
-    exec  l:plugLoad . a:name . l:plugLoadEnd . ' | ' . l:undoAutocmd
-augroup END
-endfunction
+    " Plug installs the plugin, but only loads on autocmd event.
+    " name: the last part of the plugin url (just name, no auth).
+    " Plug options should include 'on': [] to prevent load before event.
+    function! LoadPluginOnEvent(name, event)
+        let l:plugLoad = 'autocmd ' . a:event . ' * call plug#load("'
+        let l:plugLoadEnd = '")'
+        let l:undoAutocmd = 'autocmd! ' . a:name . '_' . a:event
+        exec "augroup " . a:name . '_' . a:event
+            autocmd!
+            exec  l:plugLoad . a:name . l:plugLoadEnd . ' | ' . l:undoAutocmd
+        augroup END
+    endfunction
 
 endif
 
@@ -75,10 +77,10 @@ endfunction
 
 " To remove a Plugged repo using UnPlug 'pluginName'
 function! s:deregister(name)
-    return
     try
         if has('nvim')
             call remove(s:plugs, a:name)
+            return
         else
             call remove(g:plugs, a:name)
             call remove(g:plugs_order, index(g:plugs_order, a:name))
@@ -92,6 +94,54 @@ function! s:deregister(name)
     endtry
 endfunction
 command! -nargs=1 -bar UnPlug call s:deregister(<args>)
+
+if has('nvim')
+lua << EOF
+-- Allow making a keys table with modes for Lazy.vim in vimscript
+-- Expects a dictionary where keys are a string of modes and values are
+-- a list of keys.
+-- usage: add plugin opt:
+-- Plugin 'abc/def', {'keys': MakeLazyKeys({
+--             " \ 'keys': MakeLazyKeys({
+--             " \ 'n': ['[', ']'],
+--             " \ 'ov': ['i,', 'a', 'I', 'A'],
+--             " \ })}
+-- Returns a lua function for setting up a lazy keys spec. Need to return a
+-- function because can't return a mixed list/dict table in vimscript.
+MakeLazyKeys = function(args)
+  return function()
+      local ret = {}
+      for modes, keys in pairs(args) do
+        for _, key in ipairs(keys) do
+            modesT = {}
+            for i = 1, #modes do
+                modesT[i] = modes:sub(i, i)
+            end
+            table.insert(ret, { key, mode = modesT})
+        end
+      end
+      return ret
+  end
+end
+EOF
+
+function! MakeLazyKeys(args)
+    return luaeval('MakeLazyKeys(_A[1])', [a:args])
+endf
+
+else
+    function! MakeLazyKeys(args)
+        return []
+    endf
+endif
+
+function! GetPluginName(pluginUrl)
+    return split(a:pluginUrl, '/')[-1]
+endf
+
+function! PluginNameToFunc(name)
+    return 'Plug_after_' . substitute(a:name, '[\\.-]', '_', 'g')
+endf
 
 if has('nvim')
 let s:plugs = {}
@@ -197,31 +247,3 @@ function! s:PluginAdapter(...)
 endfunction
 
 command! -bang -nargs=+ Plugin call <sid>PluginAdapter(<args>)
-
-" Allow making a keys table with modes for Lazy.vim in vimscript
-" usage: add plugin opt 'keys': MakeLazyKeys(["i%", "a%"], ["v","o"]),
-lua << EOF
--- Returns a lua function for setting up a lazy keys spec. Need to return a
--- function because can't return a mixed list/dict table in vimscript.
-MakeLazyKeys = function(keys, modes)
-  return function()
-      local ret = {}
-      for _, key in ipairs(keys) do
-        table.insert(ret, { key, mode = modes})
-      end
-      return ret
-  end
-end
-EOF
-
-function! MakeLazyKeys(keys, modes)
-    return luaeval('MakeLazyKeys(_A[1], _A[2])', [a:keys, a:modes])
-endf
-
-function! GetPluginName(pluginUrl)
-    return split(a:pluginUrl, '/')[-1]
-endf
-
-function! PluginNameToFunc(name)
-    return 'Plug_after_' . substitute(a:name, '[\\.-]', '_', 'g')
-endf

@@ -177,15 +177,17 @@ endif
 " {[} Extra text objects
 " Additional text objects for next bracket, i/a comma, pairs, smarter searching.
 Plugin 'wellle/targets.vim', {
-            \ 'keys': MakeLazyKeys(
-            \ ['[', ']', 'i,', 'a', 'I', 'A'],
-            \ ['n', 'o', 'v']) }
+            \ 'keys': MakeLazyKeys({
+            \ 'n': ['[', ']'],
+            \ 'ov': ['i,', 'a', 'I', 'A'],
+            \ })}
 " Move args with >, <,. Next arg ], [,. New text obj a, i,.
 " ],
 Plugin 'PeterRincker/vim-argumentative', {
-            \ 'keys': MakeLazyKeys(
-            \ ['<,', '>,', '[,', '],', 'i,', 'a,' ],
-            \ ['n', 'o', 'v']) }
+            \ 'keys': MakeLazyKeys({
+            \ 'n': ['<,', '>,', '[,', '],'],
+            \ 'ov': ['i,', 'a,'],
+            \ })}
 " See https://github.com/kana/vim-textobj-user/wiki for more, esp for
 " lang-specific.
 " Add text object for whole buffer
@@ -202,12 +204,12 @@ Plugin 'https://github.com/kana/vim-textobj-entire', {
             " \ 'keys': ['iv', 'av'],
 " iz az
 Plugin 'somini/vim-textobj-fold', {
-            \ 'keys': MakeLazyKeys(['az', 'iz'], ["v","o"]),
+            \ 'keys': MakeLazyKeys({"vo": ['az', 'iz']}),
             \ 'dependencies': ['kana/vim-textobj-user']}
 if v:version >= 703
     " ac, ic, aC
     Plugin 'https://github.com/glts/vim-textobj-comment', {
-                \ 'keys': MakeLazyKeys(['ac', 'ic', 'aC', 'iC'], ["v","o"]),
+                \ 'keys': MakeLazyKeys({"vo": ['ac', 'ic', 'aC', 'iC']}),
                 \ 'dependencies': ['kana/vim-textobj-user']}
 endif
 " Expands what a sentence/word is for prose.
@@ -218,7 +220,7 @@ Plugin 'https://github.com/coachshea/vim-textobj-markdown', { 'for': 'markdown',
             \ 'dependencies': ['kana/vim-textobj-user']}
 " Adds indent block as text object. ii , ai or aI
 Plugin 'michaeljsmith/vim-indent-object', {
-            \ 'keys': MakeLazyKeys(['ii', 'ai', 'aI', 'iI'], ["v","o"])}
+            \ 'keys': MakeLazyKeys({"vo": ['ii', 'ai', 'aI', 'iI']})}
 " Adds [ ] mappins for -=+% indentation objects
 Plugin 'https://github.com/jeetsukumaran/vim-indentwise', {
             \ 'keys': ['[', ']']}

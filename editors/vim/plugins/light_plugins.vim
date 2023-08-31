@@ -61,7 +61,7 @@ Plugin 'https://github.com/inkarkat/vim-ReplaceWithRegister', {'keys': ['dr']}
 " Operator for start/end of text object. For example, d]i) deletes from the
 " cursor to the end of the current parenthetical term
 Plugin 'tommcdo/vim-ninja-feet',
-            \ {'keys': MakeLazyKeys(["]", "[", "z]", "z["], ["o"])}
+            \ {'keys': MakeLazyKeys({"o": ["]", "[", "z]", "z["]})}
 " {]}--- Operators ---
 
 " {[}--- Visual changes ---
