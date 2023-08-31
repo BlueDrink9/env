@@ -32,6 +32,7 @@ local specs = {
 		build = ":TSUpdate",
 		config = function()
 			vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+			require"nvim-treesitter-context"
 		end,
 		opts = {
 			parser_install_dir = parser_install_dir,
@@ -89,9 +90,9 @@ local specs = {
 		end,
 		cmd = "Annotate",
 	},
-	{ "https://github.com/RRethy/nvim-treesitter-endwise.git" },
+	{ "https://github.com/RRethy/nvim-treesitter-endwise.git", lazy=true },
 
-	{ "nvim-treesitter/nvim-treesitter-context" },
+	{ "nvim-treesitter/nvim-treesitter-context", lazy=true },
 
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
@@ -203,7 +204,7 @@ local specs = {
 	},
 	{ "Konfekt/FastFold", enabled = false },
 
-	{ "https://gitlab.com/HiPhish/rainbow-delimiters.nvim.git" },
+	{ "https://gitlab.com/HiPhish/rainbow-delimiters.nvim.git", event="VeryLazy"},
 
 	{
 		"https://github.com/cshuaimin/ssr.nvim.git",

@@ -315,7 +315,7 @@ let &directory=CreateVimDir("swap") . '//'
 let &viewdir=CreateVimDir("views") . '//'
 if has('persistent_undo')
     if has('nvim')
-        let &undodir=g:vimfilesDir . "nvimundo//"
+        let &undodir=g:vimfilesDir . "/nvimundo//"
     else
         let &undodir=CreateVimDir("undo") . '//'
     endif
