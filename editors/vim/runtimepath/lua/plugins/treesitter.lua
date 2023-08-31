@@ -37,7 +37,7 @@ local specs = {
 		end,
 		opts = {
 			parser_install_dir = parser_install_dir,
-			auto_install = false,
+			auto_install = true,
 			ensure_installed = {
 				"bash",
 				"json",
@@ -58,7 +58,6 @@ local specs = {
 			endwise = { enable = true },
 			indent = {
 				enable = true,
-				disable = { "python" },
 			},
 			highlight = {
 				enable = true,
