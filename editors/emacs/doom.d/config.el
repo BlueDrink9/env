@@ -255,7 +255,8 @@
 ; Seems to break tng
 ;; (add-hook! 'company-mode-hook #'company-box-mode)
 (after! company-bibtex
-  (add-to-list 'company-backends 'company-bibtex))
+  (add-to-list 'company-backends 'company-bibtex)
+  )
 ;; Consider using instead. Prepends, rather than appends.
 ;; (set-company-backend! '(latex-mode, org-mode) 'company-bibtex)
 
@@ -277,6 +278,8 @@
 
   ;; (add-hook! 'eshell-mode-hook
   ;;   (setq-local corfu-auto nil))
+;; Put the following in a `.dir-locals.el` file in the directory you are working in.
+;; ((text-mode . ((local-bib-path . "../../2021_Masters.bib"))))
   (add-hook! 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer))
 (defun corfu-enable-in-minibuffer ()
   "Enable Corfu in the minibuffer if `completion-at-point' is bound."
@@ -348,6 +351,8 @@
 (setq TeX-parse-self t) ; Parse on load
 (setq TeX-command-extra-options "-output-directory=./latexbuild")
 (setq-default TeX-master nil)
+(setq TeX-fold-preserve-comments t)
+(setq TeX-fold-unfold-around-mark t)
 (after! latex
 (setf (nth 1 (assoc "LaTeX" TeX-command-list))
       "%`%l –output-directory=latexbuild -interaction=nonstopmode -outdir=latexbuild %(mode)%' %t"))
@@ -371,6 +376,18 @@
 ;; If creating commit with nothing staged, auto-stage current file.
 (setq magit-commit-ask-to-stage "stage")
 (setq git-commit-major-mode 'markdown-mode)
+
+(after! reftex
+  (setq reftex-cite-format
+        '((?\C-m . "\\cite[]{%l}")
+          (?f . "\\footcite[][]{%l}")
+          (?t . "\\textcite[]{%l}")
+          ;; (?t . "\\citet[]{%l}")
+          (?p . "\\parencite[]{%l}")
+          ;; (?p . "\\citep[]{%l}")
+          (?o . "\\citepr[]{%l}")
+          (?n . "\\nocite{%l}"))))
+
 
 ;; ;; Permenantly show workspace list in minibuffer line
 ;; (after! persp-mode
