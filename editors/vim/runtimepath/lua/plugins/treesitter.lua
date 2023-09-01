@@ -29,10 +29,10 @@ vim.opt.runtimepath:append(parser_install_dir)
 local specs = {
 	{
 		"nvim-treesitter/nvim-treesitter",
+		event="VeryLazy",
 		build = ":TSUpdate",
 		config = function()
 			vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-			require"treesitter-context"
 			require"ts_context_commentstring"
 		end,
 		opts = {
@@ -61,7 +61,6 @@ local specs = {
 			},
 			highlight = {
 				enable = true,
-				-- additional_vim_regex_highlighting = {"python"}
 			},
 		},
 	},
@@ -90,9 +89,11 @@ local specs = {
 		end,
 		cmd = "Annotate",
 	},
-	{ "https://github.com/RRethy/nvim-treesitter-endwise.git", lazy=true },
 
-	{ "nvim-treesitter/nvim-treesitter-context", lazy=true },
+	{
+		"https://github.com/RRethy/nvim-treesitter-endwise.git",
+		event="TextChangedI",
+	},
 
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
@@ -172,14 +173,17 @@ local specs = {
 	{
 		"https://github.com/JoosepAlviste/nvim-ts-context-commentstring.git",
 		config = function()
+			require"treesitter-context"
 			require("nvim-treesitter.configs").setup({
 				context_commentstring = {
 					enable = true,
 				},
 			})
 		end,
-		dependencies = { "nvim-treesitter/nvim-treesitter-context" },
+		lazy=true,
+		dependencies = {{"nvim-treesitter/nvim-treesitter-context"}},
 	},
+	{"nvim-treesitter/nvim-treesitter-context", lazy=true},
 
 	{"kevinhwang91/promise-async", lazy=true},
 	{
