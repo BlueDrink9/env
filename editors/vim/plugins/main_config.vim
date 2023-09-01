@@ -16,9 +16,6 @@ if IsPluginUsed("asyncrun.vim")
                 \ statusline=%t\ [%{g:asyncrun_status}]\ %{exists('w:quickfix_title')?\ '\ '.w:quickfix_title\ :\ ''}\ %=%-15(%l,%c%V%)\ %P
 endif
 
-if IsPluginUsed("vim-auto-origami")
-    au myPlugins CursorHold,BufWinEnter,WinEnter * AutoOrigamiFoldColumn
-endif
 if IsPluginUsed("supertab")
     let g:SuperTabDefaultCompletionType = "context"
     " Fallback for context.

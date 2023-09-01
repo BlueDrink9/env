@@ -62,6 +62,7 @@ if v:version > 704
     " Auto-set foldcolumn if folds exist in buffer.
     Plugin 'https://github.com/benknoble/vim-auto-origami', {
                 \ 'on': 'AutoOrigamiFoldColumn',
+                \ 'event': ["CursorHold","BufWinEnter","WinEnter"],
                 \ 'afterLoad': 'PluginAfterAutoOrigami'}
     function! PluginAfterAutoOrigami()
         au myPlugins CursorHold,BufWinEnter,WinEnter * AutoOrigamiFoldColumn
