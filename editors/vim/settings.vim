@@ -567,7 +567,7 @@ function! s:SetTitle()
     set title
 endfunction
 
-autocmd myVimrc BufEnter,Bufwrite * call <sid>SetTitle()
+autocmd myVimrc BufEnter,BufwritePost * call <sid>SetTitle()
 
 " Autoset new unnamed buffers to scratch, to get pencil stuff etc.
 " No point doing it until we have entered some text.
