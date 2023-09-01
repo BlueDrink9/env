@@ -81,7 +81,7 @@ function! SourceCustoms(...)
             echom "Exception from" v:throwpoint ":"
             echom v:exception
             if has('nvim')
-                 lua print(pcall(debug.stacktrace()))
+                 lua if debug.stacktrace then print(debug.stacktrace()) end
              endif
             echom ""
         endtry
