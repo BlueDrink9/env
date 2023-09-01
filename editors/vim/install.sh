@@ -23,15 +23,15 @@ undoVimPlugins(){
 doVim(){
     printErr "Enabling vim setup..."
     addTextIfAbsent "so $($SCRIPTDIR_CMD)/vimrc" "${HOME}/.vimrc"
-    addTextIfAbsent "dofile($($SCRIPTDIR_CMD)/nvimrc.lua)" "${HOME}/.config/nvim/init.lua"
+    addTextIfAbsent "dofile(\"$($SCRIPTDIR_CMD)/nvimrc.lua\")" "${HOME}/.config/nvim/init.lua"
     if [[ $OSTYPE == 'msys' ]]; then
       # git bash on windows, so lets also add a windows rc.
       # Using the vimfiles dir messes up creating vimfiles because it uses vimrc dir as home.
       addTextIfAbsent "so $(cygpath.exe -w "$($SCRIPTDIR_CMD)/vimrc")" "${HOME}/vimfiles/vimrc"
-      addTextIfAbsent "so $(cygpath.exe -w "$($SCRIPTDIR_CMD)/vimrc")" "${HOME}/_vimrc"
+      # addTextIfAbsent "so $(cygpath.exe -w "$($SCRIPTDIR_CMD)/vimrc")" "${HOME}/_vimrc"
       winNvimDir="${HOME}/AppData/Local/nvim/"
       mkdir -p "${winNvimDir}"
-      addTextIfAbsent "dofile($(cygpath.exe -w "$($SCRIPTDIR_CMD)/nvimrc.lua)")" "${winNvimDir}/init.lua"
+      addTextIfAbsent "dofile(\"$(cygpath.exe -w "$($SCRIPTDIR_CMD)/nvimrc.lua\")")" "${winNvimDir}/init.lua"
     fi
     doVimPlugins
     addTextIfAbsent "so $(realpath "$(${SCRIPTDIR_CMD})/../ideavimrc")" "${HOME}/.ideavimrc"
