@@ -60,7 +60,12 @@ Plugin 'https://github.com/Konfekt/FoldText',
             \ has('nvim') ? {'event': ['VeryLazy']} : {}
 if v:version > 704
     " Auto-set foldcolumn if folds exist in buffer.
-    Plugin 'https://github.com/benknoble/vim-auto-origami', {'on': 'AutoOrigamiFoldColumn'}
+    Plugin 'https://github.com/benknoble/vim-auto-origami', {
+                \ 'on': 'AutoOrigamiFoldColumn',
+                \ 'afterLoad': 'PluginAfterAutoOrigami'}
+    function! PluginAfterAutoOrigami()
+        au myPlugins CursorHold,BufWinEnter,WinEnter * AutoOrigamiFoldColumn
+    endf
 endif
 " Relative line numbers only in focussed buffer & not in insert mode.
 Plugin 'ericbn/vim-relativize',
@@ -302,7 +307,6 @@ if !g:hasGUI || has('terminal') || has('nvim')
     " Adds some vim-specific fzf commands.
     Plugin 'junegunn/fzf.vim', {'dependencies': ['junegunn/fzf'],
                 \ 'on': [
-                \ 'FZF',
                 \ 'Buffers',
                 \ 'BLines',
                 \ 'Lines',
