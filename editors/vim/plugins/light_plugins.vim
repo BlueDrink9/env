@@ -72,8 +72,8 @@ if !has('nvim')
 endif
 if v:version >= 703
     Plugin 'https://github.com/ntpeters/vim-better-whitespace', {
-                \ 'event': ['TextChanged', 'TextChangedI'],
-                \ 'on': ['StripWhitespace', 'StripWhitespaceOnChangedLines', 'DisableWhitespace']
+                \ 'event': ['BufWritePre'],
+                \ 'on': ['StripWhitespace', 'StripWhitespaceOnChangedLines', 'EnableWhitespace', 'DisableWhitespace']
                 \ }
 endif
 " Distraction-free vim.

@@ -110,7 +110,8 @@ if IsPluginUsed("vim-better-whitespace")
     let g:strip_only_modified_lines=1
     let g:better_whitespace_skip_empty_lines=0
     " Don't HL current line. May cause performance issues.
-    let g:current_line_whitespace_disabled_hard=0
+    " let g:current_line_whitespace_disabled_hard=0
+    let g:current_line_whitespace_disabled_soft=1
     let g:better_whitespace_operator=''
     " call add (g:customHLGroups, "ExtraWhitespace ctermbg=Gray guibg=LightGray")
     call add (g:customHLGroups, "link ExtraWhitespace Visual")
