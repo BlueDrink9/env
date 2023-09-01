@@ -1,4 +1,4 @@
-if vim.g.ideMode == 0 then
+if vim.g.liteMode == 1 then
 	return {}
 end
 
@@ -181,6 +181,7 @@ local specs = {
 		dependencies = { "nvim-treesitter/nvim-treesitter-context" },
 	},
 
+	{"kevinhwang91/promise-async", lazy=true},
 	{
 		"kevinhwang91/nvim-ufo",
 		dependencies = "kevinhwang91/promise-async",
