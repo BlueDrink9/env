@@ -91,14 +91,15 @@ return {
             "branch",
          },
          lualine_c = {
-            {'encoding', padding = { left = 1, right = 0 }, separator = "" },
-            { "filetype", icon_only = opts.options.icons_enabled, separator = "",
-               padding = { left = 1, right = 0 } },
+            {'encoding'},
+            { "filetype", icon_only = opts.options.icons_enabled,
+               separator = "", padding = { left = 1, right = 0 } },
             { "filename", path = 1, shorting_target = vim.o.columns / 2.5,
                symbols = { modified = "  ", readonly = "", unnamed = "" },
                separator = opts.options.section_separators.left,
             },
          },
+         lualine_x = {},
          lualine_y = {'searchcount', },
          lualine_z = {
             {'location', separator = "", padding = { left = 0, right = 0 } },
@@ -115,18 +116,20 @@ return {
       }
 
       -- Swap around two sections
-      for i, elem in ipairs(current_opts.sections.lualine_x) do
-         if elem[1] == "diff" then
-            table.insert(opts.sections.lualine_b, elem)
-            current_opts.sections.lualine_x[i] = nil
-            break
+      if current_opts.section then
+         for i, elem in ipairs(current_opts.sections.lualine_x) do
+            if elem[1] == "diff" then
+               table.insert(opts.sections.lualine_b, elem)
+               current_opts.sections.lualine_x[i] = nil
+               break
+            end
          end
-      end
-      for i, elem in ipairs(current_opts.sections.lualine_c) do
-         if elem[1] == "diagnostics" then
-            table.insert(opts.sections.lualine_y, 1, elem)
-            current_opts.sections.lualine_c[i] = nil
-            break
+         for i, elem in ipairs(current_opts.sections.lualine_c) do
+            if elem[1] == "diagnostics" then
+               table.insert(opts.sections.lualine_y, 1, elem)
+               current_opts.sections.lualine_c[i] = nil
+               break
+            end
          end
       end
 
