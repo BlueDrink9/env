@@ -7,6 +7,13 @@ if vim.g.ideMode == 0 then
 	return {}
 end
 
+-- local lspCapabilities = vim.lsp.protocol.make_client_capabilities()
+-- -- Enable folding (for nvim-ufo)
+-- lspCapabilities.textDocument.foldingRange = {
+-- 	dynamicRegistration = false,
+-- 	lineFoldingOnly = true,
+-- }
+
 return {
 	{ "https://github.com/williamboman/mason-lspconfig.nvim.git", cmd="Mason" },
 	-- Create appropriate colours for old colourschemes

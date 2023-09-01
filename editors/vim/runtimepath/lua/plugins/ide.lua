@@ -288,18 +288,18 @@ return {
 		ft={"R", "Rmd", "Rnoweb"},
 	},
 
-	{
-		"https://github.com/hrsh7th/vim-vsnip",
-		keys = {
-			{ idemaps.snippetExpand, "<Plug>(vsnip-expand-or-jump)", mode = { "i", "v" } },
-		},
-		config = function()
-			vim.g.vsnip_snippet_dir = vim.fn.PathExpand(vim.g.plugin_config_dir .. "/../runtimepath/snippets")
-		end,
-		event = "InsertEnter",
-	},
-
-	{ "hrsh7th/vim-vsnip-integ", event = "InsertEnter" },
+	-- Switching to luasnip via lazyvim
+	-- {
+	-- 	"https://github.com/hrsh7th/vim-vsnip",
+	-- 	keys = {
+	-- 		{ idemaps.snippetExpand, "<Plug>(vsnip-expand-or-jump)", mode = { "i", "v" } },
+	-- 	},
+	-- 	config = function()
+	-- 		vim.g.vsnip_snippet_dir = vim.fn.PathExpand(vim.g.plugin_config_dir .. "/../runtimepath/snippets")
+	-- 	end,
+	-- 	event = "InsertEnter",
+	-- },
+	-- { "hrsh7th/vim-vsnip-integ", event = "InsertEnter" },
 
 	{ "octaltree/virtualsnip", build = "make", event = "InsertEnter" },
 }

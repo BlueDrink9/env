@@ -123,14 +123,14 @@ return {
 -- ]], false)
 
     end,
-    init = function()
+    -- init = function()
       -- -- https://github.com/ray-x/lsp_signature.nvim
       -- vim.o.completeopt = "menuone,noselect"
 
       -- Debounce tabstop syncing.
       -- vim.g.vsnip_sync_delay = 20
       -- vim.g.vsnip_choice_delay = 250
-    end,
+    -- end,
 
   },
 

@@ -6,6 +6,6 @@ return {
   {"folke/tokyonight.nvim", enabled = false},
   {"ggandor/flit.nvim", enabled = false},
   {"folke/persistence.nvim", enabled = false},
-
+  { "goolord/alpha-nvim", enabled = false},
   -- {"RRethy/vim-illuminate", enabled = false},
 }

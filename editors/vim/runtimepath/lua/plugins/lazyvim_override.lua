@@ -38,7 +38,7 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
-    enabled = vim.g.ideMode == 1,
+    enabled = vim.g.liteMode == 0,
   },
 
   {
@@ -161,15 +161,6 @@ return {
         },
       }
     end,
-  },
-
-  {
-    -- TODO figure out how ot change the alpha theme
-    "goolord/alpha-nvim",
-    enabled = false,
-    opts = function()
-      return require'alpha.themes.startify'
-    end
   },
 
   {
