@@ -2,9 +2,12 @@
 # vim:ft=sh
 
 # -- Execute --
-# terminal, notes, mail, passwords, Facebook messages, OTP Authenticator
-super + e; {t,n,m,p,f,a}
-  {kitty,joplin-desktop || joplin,tutanota-desktop,keepassxc,ferdi,authy}
+# Terminal + backup
+super + e; {t,shift+t}
+  {kitty, alacritty || konsole || xterm || /bin/xterm || /usr/bin/xterm }
+# notes, mail, passwords, Facebook messages, OTP Authenticator
+super + e; {n,m,p,f,a}
+  {joplin-desktop || joplin,tutanota-desktop,keepassxc,ferdi,authy}
 # ide
 super + e; {_,shift+}i
   {emacsclient --create-frame --alternate-editor="", emacs}
