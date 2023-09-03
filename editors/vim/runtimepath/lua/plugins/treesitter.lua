@@ -199,7 +199,8 @@ local specs = {
 			vim.opt.foldlevel = 99
 			vim.opt.foldlevelstart = 99
 		end,
-		config = function()
+		config = function(_, opts)
+			require('ufo').setup(opts)
 			-- vim.o.foldcolumn = '1' -- '0' is not bad
 			-- Have to override foldlevelstart, otherwise constantly closes folds on save.
 			vim.o.foldlevelstart = 99
