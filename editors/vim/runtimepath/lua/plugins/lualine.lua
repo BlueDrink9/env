@@ -73,10 +73,7 @@ return {
       if vim.g.usePLFont == 0 then
          opts.options.component_separators = { left = '', right = ''}
          opts.options.section_separators = { left = '', right = ''}
-         opts.sections.lualine_b[1].icon = nil
       end
-
-
 
       opts.sections = {
          lualine_a = {{ 'mode', fmt = function(str) return short_mode_name(str) end }},
@@ -88,7 +85,7 @@ return {
          --    {'diff', source = diff_source},
          --    'diagnostics'},
          lualine_b = {
-            "branch",
+            { "branch"}
          },
          lualine_c = {
             {'encoding'},
@@ -131,6 +128,10 @@ return {
                break
             end
          end
+      end
+
+      if vim.g.usePLFont == 0 then
+         opts.sections.lualine_b[1].icon = nil
       end
 
 
