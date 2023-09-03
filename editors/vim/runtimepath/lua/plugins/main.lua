@@ -143,4 +143,15 @@ return {
     ft='org',
   },
 
+  {
+      "chrishrb/gx.nvim",
+      keys = {"gx"},
+      dependencies = { "nvim-lua/plenary.nvim" },
+      opts = {
+          handler_options = {
+              search_engine = "duckducgo", -- you can select between google, bing, duckduckgo, and ecosia
+          },
+      },
+  },
+
 }
