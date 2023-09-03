@@ -352,7 +352,7 @@ key_bindings:
   - { key: Equals,   mods: Control|Shift, action: IncreaseFontSize }
   - { key: Plus,      mods: Control|Shift, action: IncreaseFontSize }
   - { key: Minus,    mods: Control|Shift, action: DecreaseFontSize }
-  - { key: V,    mods: Control|Shift, action: ToggleViMode }
+  - { key: K,    mods: Control|Shift, action: ToggleViMode }
   # Disable defaults:
   - { key: L,         mods: Control,                    action: ReceiveChar }
 
