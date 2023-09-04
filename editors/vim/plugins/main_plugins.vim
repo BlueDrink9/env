@@ -253,7 +253,7 @@ if !has('nvim')
     Plugin 'https://github.com/justinmk/vim-sneak'
     " Plugin 'https://github.com/easymotion/vim-easymotion'
 endif
-Plugin 'bkad/camelcasemotion', {'keys': '-'}
+Plugin 'bkad/camelcasemotion', {'keys': ['-']}
 Plugin 'https://github.com/haya14busa/vim-asterisk', {'keys': ['*', 'z*']}
 " {]} ---------- Operators ----------
 

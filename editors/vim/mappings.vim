@@ -388,11 +388,12 @@ endfunction
 call s:remapCtrlBStoCW()
 
 if g:hasGUI
-  " These are what get sent in gvim for C-S-+ and C--
-  nnoremap <expr> + myVimrcFunctions#ChangeGFNSize(1)
+  " GUIs like gvim and neovide don't seem to be abe to distinguish C-S-+ or
+  " C-S--. Just sends + and -, or nothing at all.
+  nnoremap <expr> <space>= myVimrcFunctions#ChangeGFNSize(1)
   " nnoremap <expr>  myVimrcFunctions#ChangeGFNSize(-1)
   " Because above doesn't work
-  nnoremap <expr> - myVimrcFunctions#ChangeGFNSize(-1)
+  nnoremap <expr> <space>- myVimrcFunctions#ChangeGFNSize(-1)
 endif
 
 " Replace visual selection with its evaluation result
