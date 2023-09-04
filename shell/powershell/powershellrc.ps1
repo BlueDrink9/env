@@ -7,8 +7,6 @@
 $scriptdir = $PSScriptRoot
 $DOTFILES_DIR = "$(resolve-path "$PSScriptRoot\..\..")"
 
-# set-location $home
-
 . $scriptdir/settings.ps1
 . $scriptdir/inputrc.ps1
 . $scriptdir/aliases.ps1
@@ -21,7 +19,7 @@ if (Get-Command "starship" -ErrorAction SilentlyContinue) {
     $ENV:STARSHIP_CONFIG="$DOTFILES_DIR\shell\prompts\starship.toml"
     # Hide warnings - comment this out if debugging.
     $ENV:STARSHIP_LOG="error"
-    Invoke-Expression (&starship init powershell)
+    &starship init powershell --print-full-init | Out-String | Invoke-Expression
 }
 
-# . $scriptdir/plugins.ps1
+. $scriptdir/plugins.ps1
