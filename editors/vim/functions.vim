@@ -219,7 +219,7 @@ endfunction
 
 function! s:ReadTemplate()
     filetype detect
-    let l:templateDir = PathExpand(g:confDir . '/templates')
+    let l:templateDir = PathExpand(g:configDir . '/templates')
     let l:templatePaths = split(globpath(l:templateDir, &filetype . '.*'), '\n')
     for templatePath in l:templatePaths
       exec 'silent! 0read ' . templatePath

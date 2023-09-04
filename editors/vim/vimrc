@@ -25,11 +25,9 @@ endfunction
 
 " Folder in which current script resides:
 " Handles symlinks, etc.
-let g:confDir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+let g:configDir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
 let g:remoteSession = ($SSH_CLIENT != "")
-
-let g:configDir = expand('<sfile>:p:h')
 
 let g:vimfilesParentDir = expand("$HOME", ":p:h")
 if has('win32')
@@ -76,7 +74,7 @@ function! SourceCustoms(...)
     for vimfile in a:000
         try
             " Converts the path properly for win or unix
-            exec 'source ' . g:confDir . expand('/' . vimfile)
+            exec 'source ' . g:configDir . expand('/' . vimfile)
         catch
             echom "Exception from" v:throwpoint ":"
             echom v:exception
@@ -105,7 +103,7 @@ elseif g:liteMode==1
 endif
 
 " For custom snippets, templates, ftplugins etc kept under VCS.
-let &runtimepath.=',' . g:confDir . expand('/runtimepath')
+let &runtimepath.=',' . g:configDir . expand('/runtimepath')
 
 " Mappings after plugins, to override any plugin clobbers (although really, I
 " should just configure the plugins better).
