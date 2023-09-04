@@ -3,7 +3,7 @@
 add_newline = false
 # Wait x milliseconds for starship to check files under the current directory.
 scan_timeout = 30
-command_timeout = 500
+command_timeout = 50
 
 # For a two-line prompt.
 [line_break]
@@ -42,7 +42,8 @@ format = "[@$hostname]($style)"
 
 [git_branch]
 # opening {
-format = "[{$symbol$branch]($style)"
+# format = "[{$symbol$branch]($style)"
+format = '\[[$symbol$branch]($style)\]'
 truncation_length = 8
 truncation_symbol = "…"
 style = "yellow"
@@ -67,16 +68,141 @@ deleted = "X"
 ahead = "^"
 behind = "v"
 # Matching }
-format = '([ $all_status$ahead_behind}]($style) )'
+# format = '([ $all_status$ahead_behind}]($style) )'
+format = '([\[$all_status$ahead_behind\]]($style))'
 style = "yellow"
 
 [jobs]
 style = "cyan"
 symbol = ""
 
+# [python]
+# format = '[${symbol}${pyenv_prefix}(\($virtualenv\) )]($style)'
+# version_format = 'v${major}.${minor}'
+
+[aws]
+disabled = true
 [battery]
 disabled = true
-
+[bun]
+disabled = true
+[c]
+disabled = true
+[cmake]
+disabled = true
+[cmd_duration]
+disabled = true
+[cobol]
+disabled = true
+[conda]
+disabled = true
+[crystal]
+disabled = true
+[daml]
+disabled = true
+[dart]
+disabled = true
+[deno]
+disabled = true
+[docker_context]
+disabled = true
+[dotnet]
+disabled = true
+[elixir]
+disabled = true
+[elm]
+disabled = true
+[erlang]
+disabled = true
+[fennel]
+disabled = true
+[fossil_branch]
+disabled = true
+[gcloud]
+disabled = true
+[golang]
+disabled = true
+[gradle]
+disabled = true
+[guix_shell]
+disabled = true
+[haskell]
+disabled = true
+[haxe]
+disabled = true
+[helm]
+disabled = true
+[hg_branch]
+disabled = true
+[java]
+disabled = true
+[julia]
+disabled = true
+[kotlin]
+disabled = true
+[kubernetes]
+disabled = true
+[lua]
+disabled = true
+[memory_usage]
+disabled = true
+[meson]
+disabled = true
+[nim]
+disabled = true
+[nix_shell]
+disabled = true
+[nodejs]
+disabled = true
+[ocaml]
+disabled = true
+[opa]
+disabled = true
+[openstack]
+disabled = true
+[os]
+disabled = true
+[package]
+disabled = true
+[perl]
+disabled = true
+[php]
+disabled = true
+[pijul_channel]
+disabled = true
+[pulumi]
+disabled = true
+[purescript]
+disabled = true
 [python]
-format = '[${symbol}${pyenv_prefix}(\($virtualenv\) )]($style)'
-version_format = 'v${major}.${minor}'
+disabled = true
+[raku]
+disabled = true
+[red]
+disabled = true
+[rlang]
+disabled = true
+[ruby]
+disabled = true
+[rust]
+disabled = true
+[scala]
+disabled = true
+[spack]
+disabled = true
+# [sudo]
+# disabled = true
+[swift]
+disabled = true
+[terraform]
+disabled = true
+[time]
+disabled = true
+[vagrant]
+disabled = true
+[vlang]
+disabled = true
+[zig]
+disabled = true
+[solidity]
+disabled = true

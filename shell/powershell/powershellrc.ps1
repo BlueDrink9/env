@@ -19,7 +19,9 @@ if (Get-Command "starship" -ErrorAction SilentlyContinue) {
       $host.ui.RawUI.WindowTitle = "…/$current ($pwd)"
     }
     $ENV:STARSHIP_CONFIG="$DOTFILES_DIR\shell\prompts\starship.toml"
+    # Hide warnings - comment this out if debugging.
+    $ENV:STARSHIP_LOG="error"
     Invoke-Expression (&starship init powershell)
 }
 
-. $scriptdir/plugins.ps1
+# . $scriptdir/plugins.ps1
