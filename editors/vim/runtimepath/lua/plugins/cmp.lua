@@ -4,9 +4,16 @@ end
 
 return {
 
+  
   {'hrsh7th/nvim-cmp',
     opts = function(_, opts)
       local cmp = require("cmp")
+      opts.preselect = cmp.PreselectMode.None;
+      vim.o.completeopt = "menu,menuone,noselect,noinsert"
+
+      opts.completion = {
+        completeopt = "noselect",
+      }
 
       Get_bufnrs_to_complete_from = function()
         -- Include all visible buffers (not just default of current one) below a certain size.
@@ -21,9 +28,6 @@ return {
         end
         return vim.tbl_keys(bufs)
       end
-
-
-      opts.preselect = cmp.PreselectMode.None;
 
       local sources = {
         -- { name = "nvim_lsp",
@@ -68,9 +72,48 @@ return {
       }
       opts.sources = cmp.config.sources(vim.list_extend(opts.sources or {}, sources))
 
+      -- Setting up mappings for supertab-like behaviour
+      local has_words_before = function()
+        unpack = unpack or table.unpack
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+      end
 
-      opts.mapping = {
-        ['<C-e>'] = cmp.mapping.confirm({ select = false }),
+      local luasnip = require("luasnip")
+      opts.mapping = cmp.mapping.preset.insert({
+        ["<C-n>"] = cmp.mapping.select_next_item(),
+        ["<C-p>"] = cmp.mapping.select_prev_item(),
+        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        ["<C-e>"] = cmp.mapping(function(fallback)
+          if luasnip.expand_or_locally_jumpable() then
+            luasnip.expand_or_jump()
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+        ["<Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          elseif has_words_before() then
+            cmp.complete()
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+        ["<S-CR>"] = cmp.mapping.confirm({
+          behavior = cmp.ConfirmBehavior.Replace,
+          select = true,
+        }),
         -- Because I tab and go, the current selection when I push space is already the one I want.
         -- But this _is_ useful for snippets, because they will be expanded, not just selected.
         ['<space>'] = function(fallback)
@@ -81,26 +124,11 @@ return {
             fallback()
           end
         end,
-        ["<Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          else
-            fallback()
-          end
-        end, {'i', 'c'}),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          else
-            fallback()
-          end
-        end, {'i', 'c'}),
-        ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i' }),
-        ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i' }),
-      }
+      })
+
     end,
 
-    config=function ()
+    -- config=function ()
 
       -- cmp.setup.cmdline(':', {
       --   sources = cmp.config.sources({
@@ -122,10 +150,10 @@ return {
 -- autocmd InsertEnter * call vsnip#get_complete_items(bufnr())
 -- ]], false)
 
-    end,
+    -- end,
     -- init = function()
       -- -- https://github.com/ray-x/lsp_signature.nvim
-      -- vim.o.completeopt = "menuone,noselect"
+      -- vim.o.completeopt = "menu,menuone,noselect,noinsert"
 
       -- Debounce tabstop syncing.
       -- vim.g.vsnip_sync_delay = 20
@@ -182,5 +210,24 @@ return {
   {'hrsh7th/cmp-nvim-lsp-signature-help', lazy=true},
   {'hrsh7th/cmp-nvim-lsp-document-symbol', lazy=true},
   {'https://github.com/f3fora/cmp-spell', lazy=true},
+
+  -- Use <tab> for completion and snippets (supertab)
+  -- first: disable default <tab> and <s-tab> behavior in LuaSnip
+  {
+    "L3MON4D3/LuaSnip",
+    enabled = vim.g.ideMode == 1,
+    config = function()
+      -- load snippets from path/of/your/nvim/config/my-cool-snippets
+      require("luasnip.loaders.from_vscode").lazy_load({
+          paths = { vim.g.configDir .. "/runtimepath/snippets" }
+        })
+      require("luasnip.loaders.from_snipmate").lazy_load({
+          paths = { vim.g.configDir .. "/runtimepath/snippets" }
+        })
+    end,
+    keys = function()
+      return {}
+    end,
+  },
 
 }

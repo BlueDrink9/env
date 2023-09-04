@@ -19,7 +19,7 @@ require("lazy").setup({
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
   install = {
-    missing = true, -- install missing plugins on startup.
+    missing = false, -- install missing plugins on startup.
     colorscheme = { "ayu", }, -- "tokyonight", "habamax" }
   },
   checker = { enabled = false }, -- don't automatically check for plugin updates
@@ -44,6 +44,7 @@ require("lazy").setup({
     notify = false,
   },
   spec = {
+
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim",
       import = "lazyvim.plugins",
@@ -64,6 +65,7 @@ require("lazy").setup({
 
     MyLazySpecs,
 
+    {'https://github.com/Shatur/neovim-ayu', lazy=true},
   },
   -- Unicode alternatives
   ui = {
