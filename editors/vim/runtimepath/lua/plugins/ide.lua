@@ -275,6 +275,9 @@ return {
 		end,
 		keys = {
 			{ "<space>s<c-s>", "<cmd>IronFocus<cr>" },
+			{ idemaps.REPLSend, mode={'n', 'v'}},
+			{ idemaps.REPLSendFile },
+			{ idemaps.REPLSendLine },
 		},
 	},
 
