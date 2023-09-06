@@ -249,9 +249,10 @@ return {
 	-- },
 
 	{
-		"https://github.com/hkupty/iron.nvim",
-		opts = function()
-			return {
+		"https://github.com/Vigemus/iron.nvim",
+		-- version="*", -- v3 currently broken for latest nvim, need master
+		config = function()
+			require('iron.core').setup({
 				config = {
 					-- Whether a repl should be discarded or not
 					scratch_repl = true,
@@ -260,7 +261,14 @@ return {
 							command = { "bash" },
 						},
 					},
-					repl_open_cmd = require("iron.view").split.horizontal.belowright(0.15),
+					repl_open_cmd = require("iron.view").split.horizontal.botright(0.2)
+					-- repl_open_cmd = require("iron.view").split.botright(function
+					-- 	if vim.o.columns > 180 then
+					-- 		return require("iron.view").split.vertical.botright(50)
+					-- 	else
+					-- 		return require("iron.view").split.horizonal.botright(0.20)
+					-- 	end
+					-- end
 				},
 				keymaps = {
 					send_motion = idemaps.REPLSend,
@@ -280,8 +288,9 @@ return {
 					italic = true,
 				},
 				ignore_blank_lines = false,
-			}
+			})
 		end,
+		cmd = {"IronFocus", "IronRepl"},
 		keys = {
 			{ "<space>s<c-s>", "<cmd>IronFocus<cr>" },
 			{ idemaps.REPLSend, mode={'n', 'v'}},
