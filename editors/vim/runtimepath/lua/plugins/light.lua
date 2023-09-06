@@ -20,7 +20,8 @@ return {
       pre_hook = nil,
       post_hook = nil,
     },
-    keys = {'<leader>c', '<leader>C'},
+    keys = {
+      {'<leader>c', mode={'n', 'x'}}, '<leader>C'},
   },
 
   {"gbprod/substitute.nvim",
@@ -40,7 +41,6 @@ return {
   },
 
   {
-    -- " Plugin 'https://github.com/gbprod/yanky.nvim'
     'https://github.com/bfredl/nvim-miniyank',
     keys=function()
       local keys = {
