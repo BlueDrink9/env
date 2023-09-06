@@ -8,7 +8,6 @@ end
 local idemaps = vim.g.IDE_mappings
 
 return {
-
   --   { import = "lazyvim.plugins.extras.coding.yanky",
 		-- enabled=IsPluginUsed("folke/LazyVim")},
     -- { import = "lazyvim.plugins.extras.dap.core" },
@@ -211,6 +210,7 @@ return {
 
 		config = function()
 			vim.api.nvim_create_user_command("Magit", "Neogit", {})
+			vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<CR>")
 		end,
 		cmd = { "Neogit" },
 		keys = { "<leader>gg", "<cmd>Neogit<CR>", desc = "NeoGit" },
