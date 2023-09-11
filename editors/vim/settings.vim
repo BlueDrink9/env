@@ -68,7 +68,7 @@ if !exists ('colorSch')
                 let g:backgroundColour="dark"
             endif
         endif
-        let colorSch=substitute($COLOURSCHEME, '_dark', '', '')
+        let colorSch=substitute(tolower($COLOURSCHEME), '_dark', '', '')
         let colorSch=substitute(colorSch, '_light', '', '')
         let colorSch=substitute(colorSch, 'light', '', '')
         let colorSch=substitute(colorSch, 'dark', '', '')

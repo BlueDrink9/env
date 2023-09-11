@@ -154,4 +154,24 @@ return {
       },
   },
 
+  {
+    -- Mainly taken from lazyvim, but leaving out any IDE and lazy bits.
+    -- Lazyvim can add them back in when in IDE mode.
+    "akinsho/bufferline.nvim",
+    event = "VeryLazy",
+    keys = {
+      { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
+      { "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },
+    },
+    opts = function(_, opts)
+      opts.options = opts.options or {}
+      opts.options.numbers = "buffer_id"
+      opts.options.close_command = function(n)
+        require("mini.bufremove").delete(n, false) end
+      opts.options.right_mouse_command = function(n)
+        require("mini.bufremove").delete(n, false) end
+      opts.options.always_show_bufferline = false
+    end
+  },
+
 }

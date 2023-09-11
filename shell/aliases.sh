@@ -172,3 +172,5 @@ alias venvc='python -m venv venv'
 alias venva='. venv/Scripts/activate'
 alias pym='python -m'
 alias plasma_reload='qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.refreshCurrentShell'
+alias lsblkids='lsblk -o NAME,SIZE,MOUNTPOINT,UUID,PARTUUID'
+
