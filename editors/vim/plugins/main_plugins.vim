@@ -430,7 +430,9 @@ endif
 " {[} ---------- file explorers ----------
 " on windows, gvim is super slow with dirvish
 if has('nvim') || !has('win32')
-    Plugin 'https://github.com/justinmk/vim-dirvish', {'on': 'Dirvish'}
+    " possible alt for nvim
+    " https://github.com/stevearc/oil.nvim
+    Plugin 'https://github.com/justinmk/vim-dirvish'
     Plugin 'roginfarrer/vim-dirvish-dovish', {'branch': 'main', 'on': 'Dirvish'}
     " Plugin 'https://github.com/bounceme/remote-viewer'
     if Executable('git')
