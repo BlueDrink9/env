@@ -4,6 +4,9 @@ end
 
 return {
 
+  -- { "monkoose/matchparen.nvim", event="VeryLazy", config=true }
+  { "andymass/vim-matchup", event="VeryLazy" },
+
   {
     'echasnovski/mini.align',
     opts = {
