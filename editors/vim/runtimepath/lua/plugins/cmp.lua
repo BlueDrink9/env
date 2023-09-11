@@ -15,7 +15,7 @@ return {
         completeopt = "noselect",
       }
 
-      Get_bufnrs_to_complete_from = function()
+      local get_bufnrs_to_complete_from = function()
         -- Include all visible buffers (not just default of current one) below a certain size.
         local bufs = {}
         for _, win in ipairs(vim.api.nvim_list_wins()) do
