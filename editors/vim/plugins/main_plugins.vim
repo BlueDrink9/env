@@ -427,15 +427,7 @@ if !has('nvim')
 endif
 " {]} ---------- Terminal ----------
 
-" {[} ---------- NerdTree Project/file drawer ----------
-" Better version with more async and smarts.
-" if has('python3') && has('nvim')
-" Plugin 'ms-jpq/chadtree'
-" endif
-" NT loads quite a lot in plugin/, so prefer to lazy-load when it gets opened.
-" Downside is that netrw will be used instead when opening directories before NT opened for the first time.
-Plugin 'https://github.com/scrooloose/nerdtree.git', {'on': ['NERDTree', 'NERDTreeToggle',]}
-Plugin 'https://github.com/Xuyuanp/nerdtree-git-plugin', {'on': ['NERDTree', 'NERDTreeToggle',]}
+" {[} ---------- file explorers ----------
 " on windows, gvim is super slow with dirvish
 if has('nvim') || !has('win32')
     Plugin 'https://github.com/justinmk/vim-dirvish', {'on': 'Dirvish'}
@@ -445,7 +437,7 @@ if has('nvim') || !has('win32')
         Plugin 'https://github.com/kristijanhusak/vim-dirvish-git', {'on': 'Dirvish'}
     endif
 endif
-" {]} ---------- NerdTree ----------
+" {]} ---------- files ----------
 
 " {[} Neovim UIs/integrations
 if has('nvim') && exists('##UIEnter')

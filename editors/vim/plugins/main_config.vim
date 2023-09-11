@@ -577,41 +577,7 @@ if IsPluginUsed("vim-terminal-help")
 endif
 " {]} ---------- Terminal ----------
 
-" {[} ---------- NerdTree Project/file drawer ----------
-if IsPluginUsed("nerdtree.git")
-    " Change these if you feel the desire...
-    let g:NERDTreeIndicatorMapCustom = {
-                \ "Modified"  : "*",
-                \ "Staged"    : "+",
-                \ "Untracked" : "?",
-                \ "Renamed"   : "➜",
-                \ "Unmerged"  : "═",
-                \ "Deleted"   : "×",
-                \ "Dirty"     : "~",
-                \ "Clean"     : "✔︎",
-                \ 'Ignored'   : 'i',
-                \ "Unknown"   : "?"
-                \}
-    " Open nerdtree when you :edit a directory
-    let NERDTreeHijackNetrw=1
-    let NERDTreeDirArrows = 1
-    let NERDTreeShowHidden=1
-    " Don't lose alternate file etc if NT opened.
-    let NERDTreeCreatePrefix='silent keepalt keepjumps'
-    " Open nerdtree on directory edit (startup)
-    autocmd myPlugins StdinReadPre * let s:std_in=1
-    autocmd myPlugins VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-    autocmd myPlugins BufRead * if isdirectory(@%) | exec 'NERDTree' | endif
-    autocmd myPlugins bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-    cabbrev nt NERDTreeToggle
-    " nnoremap _ <cmd>NERDTreeToggle<CR>
-    if g:useNerdFont
-        let g:NERDTreeDisableFileExtensionHighlight = 1
-        let g:NERDTreeDisableExactMatchHighlight = 1
-        let g:NERDTreeDisablePatternMatchHighlight = 1
-    endif
-  endif
+" {[} ---------- Project/file drawer ----------
 if IsPluginUsed("vim-dirvish")
   let g:loaded_netrwPlugin = 1
   let g:loaded_netrw = 1
