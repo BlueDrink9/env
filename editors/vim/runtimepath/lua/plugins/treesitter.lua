@@ -170,6 +170,17 @@ local specs = {
 
 	{ "PeterRincker/vim-argumentative", enabled = false },
 
+	{ "andymass/vim-matchup", event="VeryLazy",
+		config = function()
+			require'nvim-treesitter.configs'.setup {
+				matchup = {
+					enable = true,
+				},
+			}
+		end,
+	},
+
+
 	{
 		"https://github.com/JoosepAlviste/nvim-ts-context-commentstring.git",
 		config = function()
