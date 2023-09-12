@@ -107,11 +107,10 @@ let &runtimepath.=',' . g:configDir . expand('/runtimepath')
 
 " Mappings after plugins, to override any plugin clobbers (although really, I
 " should just configure the plugins better).
-exec SourceCustoms(
+call SourceCustoms(
       \ "functions.vim",
       \ "settings.vim",
       \ "ide_mappings.vim",
-      \ "manage_plugins.vim",
       \ "plugins.vim",
       \ "mappings.vim"
       \)

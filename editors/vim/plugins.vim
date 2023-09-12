@@ -38,8 +38,6 @@ augroup end
 
 " {[} Settings and dir creation
 
-let g:pluginInstallPath = CreateVimDir("/plugins")
-let s:localPlugins = PathExpand(g:vimfilesDir . "/local_plugins.vim")
 let g:plugindir = PathExpand(g:configDir . "/" . "plugins")
 
 function! SourcePluginFile(name)
@@ -53,6 +51,11 @@ if exists("g:noPlugins")
     call SourcePluginFile("noplugin_alts.vim")
     finish
 endif
+
+let g:pluginInstallPath = CreateVimDir("/plugins")
+let s:localPlugins = PathExpand(g:vimfilesDir . "/local_plugins.vim")
+
+call SourceCustoms("manage_plugins.vim")
 
 " Silence a python deprecation warning.
 if has('python3') && !(has('patch-8.1.201') || has('nvim')) && g:liteMode == 0
