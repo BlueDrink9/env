@@ -162,8 +162,7 @@ return {
 
   {
     "hachy/cmdpalette.nvim",
-    enabled=false,
-    keys={ "\\", "<Cmd>Cmdpalette<CR>" },
+    keys={ ";", "<Cmd>Cmdpalette<CR>" },
     opts= {
       win = {
         height = 0.1,
@@ -177,12 +176,29 @@ return {
         text = ":",
       },
       buf = {
-        filetype = "vim",
+        filetype = "cmdpalette",
         syntax = "vim",
       },
       delete_confirm = true,
       show_title = false,
     },
+    config = function(_, opts)
+      require("cmdpalette").setup(opts)
+      vim.keymap.set({'n', 'x'}, ';', "<Cmd>Cmdpalette<CR>")
+      -- vim.opt_local.completeopt:remove("noselect")
+      local function bufmap()
+        -- Need the <c-n> to select the first option for some reason
+        vim.keymap.set('i', '<tab>',
+        "<c-x><c-v>",
+        -- 'pumvisible() ? "<c-n>" : "<c-x><c-v><c-n>"',
+        {buffer=true})
+      end
+      vim.api.nvim_create_autocmd("filetype", {
+        pattern="cmdpalette", group="myPlugins",
+        callback=bufmap
+      })
+
+    end
   },
 
 }

@@ -143,6 +143,12 @@ return {
       --     { name = 'nvim_lsp_document_symbol' }
       --   })
       -- })
+      -- cmp.setup.filetype("cmdpalette", {
+      --    mapping = cmp.mapping.preset.cmdline(),
+      --    sources = {
+      --      { name = "cmdline" },
+      --    },
+      --  })
 
 --       -- Load vsnip when file opens, to avoid lag on insert mode.
 --       -- Will see whether this slows down opening a file though...
