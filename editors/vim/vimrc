@@ -111,8 +111,8 @@ call SourceCustoms(
       \ "functions.vim",
       \ "settings.vim",
       \ "ide_mappings.vim",
-      \ "plugins.vim",
-      \ "mappings.vim"
+      \ "mappings.vim",
+      \ "plugins.vim"
       \)
 silent doautocmd User MappingOverrides
 if !exists('g:colors_name') && exists('g:fallbackColorSch')
