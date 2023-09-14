@@ -83,7 +83,7 @@ return {
             -- including it in the mapping. Needed for mapping to press_keys.
             if string.find(bufname, 'github.com') then
                 vim.cmd('colorscheme github')
-                vim.opt.ft='markdown'
+                vim.o.ft='markdown'
                 local clickSubmitButtonJS = [[
                 'document.getElementById(
                 "partial-new-comment-form-actions"
@@ -93,16 +93,16 @@ return {
                 function() eval_js(clickSubmitButtonJS) end, { buffer = true })
             elseif string.find(bufname, 'cocalc.com') or
                 string.find(bufname, 'kaggleusercontent.com') then
-                vim.opt.ft='python'
+                vim.o.ft='python'
             elseif string.find(bufname, 'localhost') or
                 -- Assume Jupyter notebook.
                 string.find(bufname, '127.0.0.1') then
-                vim.opt.ft='python'
+                vim.o.ft='python'
             elseif string.find(bufname, 'reddit.com') then
-                vim.opt.ft='markdown'
+                vim.o.ft='markdown'
             elseif string.find(bufname, 'stackexchange.com') or
                 string.find(bufname, 'stackoverflow.com') then
-                vim.opt.ft='markdown'
+                vim.o.ft='markdown'
             elseif string.find(bufname, 'codewars.com') then
                 vim.cmd('colorscheme dracula')
                 vim.keymap.set('n', '<C-CR>',
@@ -115,7 +115,7 @@ return {
             elseif string.find(bufname, 'slack.com') or
                 string.find(bufname, 'gitter.im') or
                 string.find(bufname, 'webchat.kde.org') then
-                vim.opt.ft='markdown'
+                vim.o.ft='markdown'
                 vim.bo.norelativenumber = true
                 vim.bo.nonumber = true
                 -- For chat apps. Enter sends the message and deletes the buffer.
@@ -166,7 +166,7 @@ return {
             -- autocmd myPlugins BufWritePost * call nvim_input(";<CR>")
             -- This works
             -- vim.fn.feedkeys('i')
-            vim.opt.background = 'light'
+            vim.o.background = 'light'
             vim.cmd('colorscheme github')
         end
 
@@ -207,9 +207,9 @@ return {
 
         -- Tested to match github default size on arch bspwm brave.
         vim.fn.SetGFN(9)
-        vim.opt.termguicolors = true
+        vim.o.termguicolors = true
         table.insert(vim.g.customHLGroups, 'EndOfBuffer guifg=guibg')
-        vim.opt.background = 'light'
+        vim.o.background = 'light'
 
         vim.keymap.set('n', '<C-CR>',
         function()
@@ -224,7 +224,7 @@ return {
         )
         vim.keymap.set({'i', 'c'}, '<D-v>', '<c-r>+')
         vim.api.nvim_set_keymap('v', '<D-c>', '"+y', { noremap = true })
-        vim.opt.colorcolumn = '0'
+        vim.o.colorcolumn = '0'
 
         -- Auto-enter insertmode if the buffer is empty.
         vim.cmd([[
