@@ -592,9 +592,5 @@ if exists('g:vscode')
     call SourcePluginFile("vscode-neovim.vim")
 endif
 
-if IsPluginUsed("firenvim")
-    call SourcePluginFile("firenvim.vim")
-endif
-
 " {]} Neovim UIs/integrations
 

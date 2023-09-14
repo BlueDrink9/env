@@ -120,22 +120,6 @@ return {
   },
 
   {
-    "https://github.com/glacambre/firenvim",
-    lazy = not vim.g.started_by_firenvim,
-    module = false,
-    build = function()
-        -- " if has('win32')
-        -- "     let s:firenvim_startup_prologue='"set LITE_SYSTEM=1"'
-        -- " else
-        -- "     let s:firenvim_startup_prologue='"export LITE_SYSTEM=1"'
-        -- " endif
-        -- let s:firenvim_startup_prologue=''
-        -- let g:firenvim_install=":call firenvim#install(0, " . s:firenvim_startup_prologue . ")"
-      vim.fn["firenvim#install"](0)
-    end,
-  },
-
-  {
     'https://github.com/salkin-mada/openscad.nvim',
     ft='scad',
   },
