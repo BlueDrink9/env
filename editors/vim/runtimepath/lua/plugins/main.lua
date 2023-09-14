@@ -160,4 +160,29 @@ return {
     end
   },
 
+  {
+    "hachy/cmdpalette.nvim",
+    enabled=false,
+    keys={ "\\", "<Cmd>Cmdpalette<CR>" },
+    opts= {
+      win = {
+        height = 0.1,
+        width = 0.8,
+        border = "rounded",
+        -- Title requires nvim-0.9 or higher.
+        title = "Cmdpalette",
+        title_pos = "center",
+      },
+      sign = {
+        text = ":",
+      },
+      buf = {
+        filetype = "vim",
+        syntax = "vim",
+      },
+      delete_confirm = true,
+      show_title = false,
+    },
+  },
+
 }
