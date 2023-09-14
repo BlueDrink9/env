@@ -20,7 +20,9 @@ require("lazy").setup({
   },
   install = {
     missing = false, -- install missing plugins on startup.
-    colorscheme = { "ayu", }, -- "tokyonight", "habamax" }
+
+    -- Colourschemes for installing missing on startup
+    colorscheme = {vim.g.colorSch, "ayu", vim.g.defaultColorSch, "default" },
   },
   checker = { enabled = false }, -- don't automatically check for plugin updates
   performance = {
