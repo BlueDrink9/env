@@ -212,7 +212,7 @@
   (setq company-idle-delay 0
         company-selection-wrap-around t
         company-minimum-prefix-length 1)
-  (setq company-dabbrev-other-buffers 1)
+  (setq company-dabbrev-other-buffers 'all)
 
   ;; (setq company-posframe-font doom-font)
   (setq company-frontends '(company-tng-frontend company-box-frontend))
@@ -265,7 +265,7 @@
 ;; (setq company-auto-commit t)
 ; Floating completion pop-up for company, with icons and documentation!
 ; Seems to break tng
-;; (add-hook! 'company-mode-hook #'company-box-mode)
+(add-hook! 'company-mode-hook #'company-box-mode)
 (after! company-bibtex
   (add-to-list 'company-backends 'company-bibtex)
   )
