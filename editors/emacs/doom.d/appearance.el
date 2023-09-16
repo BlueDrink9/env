@@ -74,7 +74,7 @@
 ;;    (setq doom-theme colourscheme)
 ;;    )
 ;;  )
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-ayu-light)
 
 (custom-set-faces!
   '(doom-modeline-buffer-modified :foreground "orange"))
