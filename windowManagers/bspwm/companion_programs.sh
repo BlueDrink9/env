@@ -1,4 +1,5 @@
 #! /bin/sh
+export PATH="$PATH:$HOME/.local/bin"
 # Making this a function and exporting it so that it's easier to restart if it
 # fails
 sxhkd_mine(){
@@ -43,7 +44,8 @@ picom --config "$DOTFILES_DIR"/desktop_elements/picom.conf --experimental-backen
 # behavior acts on most expected player.
 command -v playerctld >/dev/null 2>&1 && playerctld daemon >/dev/null 2>&1
 
-xremap "$DOTFILES_DIR"/misc/xremap.yml \
+command -v xremap >/dev/null 2>&1 && \
+  xremap "$DOTFILES_DIR"/misc/xremap.yml \
   >| $HOME/.logs/xremap.log 2>| $HOME/.logs/xremap.err &
 
 # flashfocus &
