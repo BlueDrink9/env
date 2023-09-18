@@ -1,7 +1,7 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
 
-if g:vscode
+if exists('g:vscode')
     finish
 endif
 
