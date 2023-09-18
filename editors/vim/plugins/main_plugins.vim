@@ -440,10 +440,3 @@ if has('nvim') || !has('win32')
     endif
 endif
 " {]} ---------- files ----------
-
-" {[} Neovim UIs/integrations
-if has('nvim') && exists('##UIEnter')
-    if exists('g:vscode')
-    endif
-endif
-" {]} Neovim UIs/integrations

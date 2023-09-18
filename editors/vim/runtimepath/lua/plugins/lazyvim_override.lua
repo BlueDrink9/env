@@ -20,6 +20,7 @@ return {
 
   {
     enabled = false,
+    cond=vim.g.vscode ~= 1,
     "folke/noice.nvim",
     -- opts will be merged with the parent spec
     opts = {
@@ -125,6 +126,7 @@ return {
 
   {
     "folke/which-key.nvim",
+    cond=vim.g.vscode ~= 1,
     opts = {
       plugins = { spelling = true },
       defaults = {
@@ -140,4 +142,5 @@ return {
 			},
     },
   },
+
 }

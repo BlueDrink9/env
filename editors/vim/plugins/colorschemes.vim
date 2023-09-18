@@ -1,6 +1,10 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
-"
+
+if g:vscode
+    finish
+endif
+
 augroup myColourschemes
     autocmd!
 augroup end

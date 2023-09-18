@@ -21,7 +21,9 @@ return {
 
   {"https://github.com/NMAC427/guess-indent.nvim", event="VeryLazy", config=true},
 
-  {"https://github.com/stevearc/dressing.nvim.git", event="VeryLazy"},
+  {"https://github.com/stevearc/dressing.nvim.git",
+    cond=vim.g.vscode ~= 1,
+  event="VeryLazy"},
 
   {'https://github.com/ggandor/leap.nvim.git',
     config = function()
@@ -69,6 +71,7 @@ return {
   {
     'https://github.com/lewis6991/gitsigns.nvim.git',
     event='VeryLazy',
+    cond = vim.g.vscode ~= 1,
     on_attach = function(buffer)
       local gs = package.loaded.gitsigns
       local function map(mode, l, r, desc)
@@ -98,6 +101,7 @@ return {
   },
 
   {"https://github.com/akinsho/toggleterm.nvim",
+    cond = vim.g.vscode ~= 1,
     keys = "<C-s>",
     opts = function()
       opts ={
@@ -119,6 +123,9 @@ return {
     -- :ToggleTermSendVisualSelection
   },
 
+
+  -- Extra filetypes
+
   {
     'https://github.com/salkin-mada/openscad.nvim',
     ft='scad',
@@ -129,13 +136,15 @@ return {
     ft='org',
   },
 
+
+
   {
       "chrishrb/gx.nvim",
       keys = {"gx"},
       dependencies = { "nvim-lua/plenary.nvim" },
       opts = {
           handler_options = {
-              search_engine = "duckducgo", -- you can select between google, bing, duckduckgo, and ecosia
+              search_engine = "duckduckgo", -- you can select between google, bing, duckduckgo, and ecosia
           },
       },
   },
@@ -144,6 +153,7 @@ return {
     -- Mainly taken from lazyvim, but leaving out any IDE and lazy bits.
     -- Lazyvim can add them back in when in IDE mode.
     "akinsho/bufferline.nvim",
+    cond = vim.g.vscode ~= 1,
     event = "VeryLazy",
     keys = {
       { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
@@ -162,6 +172,7 @@ return {
 
   {
     "hachy/cmdpalette.nvim",
+    cond=vim.g.vscode ~= 1,
     keys={ ";", "<Cmd>Cmdpalette<CR>" },
     opts= {
       win = {
@@ -198,6 +209,14 @@ return {
         callback=bufmap
       })
 
+    end,
+  },
+
+  {
+    "vscode-neovim/vscode-neovim",
+    cond = vim.g.vscode == 1,
+    config = function(_, opts)
+      vim.fn.SourcePluginFile("vscode-neovim.vim")
     end
   },
 
