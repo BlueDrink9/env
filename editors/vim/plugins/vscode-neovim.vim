@@ -1,10 +1,5 @@
 " vim: foldmethod=marker
 " vim: foldmarker={[},{]}
-if IsPluginUsed('lualine')
-      UnPlug 'lualine'
-elseif IsPluginUsed('airline')
-      UnPlug 'airline'
-endif
 " {[} Mappings
 
 function! VSCodeMapDict(mappings, visualMappings)
@@ -12,7 +7,7 @@ function! VSCodeMapDict(mappings, visualMappings)
         exec 'nnoremap ' . key . " <Cmd>call VSCodeNotify('" . value . "')<CR>"
       endfor
       for [key, value] in items(a:visualMappings)
-        exec 'vnoremap ' . key . " <Cmd>call VSCodeNotifyVisual('" . value . "', 1)<CR>"
+        exec 'vnoremap ' . key . " <Cmd>call VSCodeNotify('" . value . "', 1)<CR>"
       endfor
 endfunction
 
@@ -161,8 +156,12 @@ function! VSCodeFTMaps(ft)
                   set opfunc=_OpfuncRunMotion
                   return 'g@'
             endif
+            if !exists('b:REPLSendCommand')
+                  echom "no repl command set for this filetype: '" . &ft . "'"
+                  return
+            endif
             noautocmd keepjumps normal! '[V']
-            call VSCodeNotifyVisual(b:REPLSendCommand, 1)
+            call VSCodeNotify(b:REPLSendCommand, 1)
             noautocmd keepjumps normal! V
       endfunction
       exec 'nnoremap <expr> ' . g:IDE_mappings.REPLSend .
