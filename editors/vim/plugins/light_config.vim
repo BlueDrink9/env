@@ -35,7 +35,7 @@ if IsPluginUsed("FastFold")
     let g:python_fold = 1
     let g:fastfold_fold_command_suffixes =
                 \ ['x','X','a','A','o','O','c','C','r','R','m','M','i','n','N']
-    nnoremap <BS> <cmd><C-u>FastFoldUpdate<cr>za
+    nnoremap <BS> <cmd>FastFoldUpdate<cr>za
     let g:fastfold_minlines = 700
 endif
 
