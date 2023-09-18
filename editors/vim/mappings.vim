@@ -133,8 +133,8 @@ cnoreabbrev H vert h
 " The C-R at the end is a hack. It swallows the space subsequently used to
 " expand the abbreviation, meaning the cursor is left at the end of the
 " path.
-cabbrev le e <C-R>=expand("%:p:h") . "/" <CR><C-R>
-cabbrev lr r <C-R>=expand("%:p:h") . "/" <CR><C-R>
+cabbrev le e <C-R>=escape(expand("%:p:h"), " ") . "/" <CR><C-R>
+cabbrev lr r <C-R>=escape(expand("%:p:h"), " ") . "/" <CR><C-R>
 " Load ide plugins/start ide mode.
 cabbrev ide let g:ideMode=1 <bar> so $MYVIMRC
 " Copy path of current buffer.
