@@ -151,18 +151,18 @@ cmap W! SudoSave
 command! MRU browse oldfiles
 
 command! -nargs=+ -complete=command WindowOutput call myVimrcFunctions#WindowOutput(<q-args>)
-nnoremap <F9> :w<enter> :myVimrcFunctions#WindowOutput !%:p<Enter>
+nnoremap <F9> :w<enter> <cmd>myVimrcFunctions#WindowOutput !%:p<Enter>
 
 " @ will play the macro over each line in visual range.
-xnoremap @ :<C-u>call myVimrcFunctions#ExecuteMacroOverVisualRange()<CR>
+xnoremap @ <cmd><C-u>call myVimrcFunctions#ExecuteMacroOverVisualRange()<CR>
 
 command! -nargs=1 SearchAll call myVimrcFunctions#Vimgrepall(<f-args>)
 
 command! -nargs=1 Mkdir call mkdir(<f-args>)
 
 " :W and :myVimrcFunctions#Save will escape a file name and write it
-command! -bang -nargs=* W :call myVimrcFunctions#W(<q-bang>, <q-args>)
-command! -bang -nargs=* Save :call myVimrcFunctions#Save(<q-bang>, <q-args>)
+command! -bang -nargs=* W <cmd>call myVimrcFunctions#W(<q-bang>, <q-args>)
+command! -bang -nargs=* Save <cmd>call myVimrcFunctions#Save(<q-bang>, <q-args>)
 
 command! Profile call myVimrcFunctions#Profile()
 command! ProfileStop profile stop
@@ -244,17 +244,17 @@ function! s:SplitDown()
     call s:RestoreSplitSide()
 endfunction
 
-nnoremap <C-w>h :call <SID>SplitLeft()<CR>
-nnoremap <C-w>l :call <SID>SplitRight()<CR>
-nnoremap <C-w>k :call <SID>SplitUp()<CR>
-nnoremap <C-w>j :call <SID>SplitDown()<CR>
+nnoremap <C-w>h <cmd>call <SID>SplitLeft()<CR>
+nnoremap <C-w>l <cmd>call <SID>SplitRight()<CR>
+nnoremap <C-w>k <cmd>call <SID>SplitUp()<CR>
+nnoremap <C-w>j <cmd>call <SID>SplitDown()<CR>
 " {]} Open windows to the left, right, up, down.
 
 let g:GUIResizeValue=5
-nnoremap <silent> <M-S-left> :call myVimrcFunctions#ResizeGUIHoriz(-g:GUIResizeValue)<cr>
-nnoremap <silent> <M-S-right> :call myVimrcFunctions#ResizeGUIHoriz(g:GUIResizeValue)<cr>
-nnoremap <silent> <M-S-up> :call myVimrcFunctions#ResizeGUIVert(g:GUIResizeValue)<cr>
-nnoremap <silent> <M-S-down> :call myVimrcFunctions#ResizeGUIVert(-g:GUIResizeValue)<cr>
+nnoremap <silent> <M-S-left> <cmd>call myVimrcFunctions#ResizeGUIHoriz(-g:GUIResizeValue)<cr>
+nnoremap <silent> <M-S-right> <cmd>call myVimrcFunctions#ResizeGUIHoriz(g:GUIResizeValue)<cr>
+nnoremap <silent> <M-S-up> <cmd>call myVimrcFunctions#ResizeGUIVert(g:GUIResizeValue)<cr>
+nnoremap <silent> <M-S-down> <cmd>call myVimrcFunctions#ResizeGUIVert(-g:GUIResizeValue)<cr>
 
 " {]} Window management
 
@@ -394,8 +394,8 @@ if g:hasGUI
   " " nnoremap <expr>  myVimrcFunctions#ChangeGFNSize(-1)
   " " Because above doesn't work
   " nnoremap <expr> <space>- myVimrcFunctions#ChangeGFNSize(-1)
-  nnoremap <silent> <C-ScrollWheelUp> :set guifont=+<CR>
-  nnoremap <silent> <C-ScrollWheelDown> :set guifont=-<CR>
+  nnoremap <silent> <C-ScrollWheelUp> <cmd>set guifont=+<CR>
+  nnoremap <silent> <C-ScrollWheelDown> <cmd>set guifont=-<CR>
 endif
 
 " Replace visual selection with its evaluation result
