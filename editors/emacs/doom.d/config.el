@@ -279,6 +279,12 @@
 (setq-default prescient-history-length 1000)
 (setq which-key-idle-delay 0.5) ;; Which-key kicks in faster
 
+;;; Snippet config
+(after! yasnippet
+  (add-to-list 'yas-snippet-dirs (concat script_dir "snippets"))
+  (yas-reload-all))
+
+
 (after! corfu
   (setq corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
   (setq corfu-auto t)                 ;; Enable auto completion
