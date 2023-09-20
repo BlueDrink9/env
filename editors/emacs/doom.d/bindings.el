@@ -56,7 +56,6 @@
 (map! :desc "C-c" :nv "S-SPC" #'my/get-current-C-c-map)
 
 
-
 ;;;###autoload
 (defun my/evil-collection-translations (_mode mode-keymaps &rest _rest)
   (evil-collection-translate-key 'normal mode-keymaps
@@ -67,6 +66,7 @@
     (kbd "M-k") (kbd "C-k")
     ))
 (add-hook! 'evil-collection-setup-hook #'my/evil-collection-translations)
+
 
 ;; Swap ;, :
 (map! :nv
@@ -333,9 +333,24 @@
       :in "<backtab>" #'vertico-previous
       )
 
-;; Eventually will want to change this to something that first tries local buffer expansion, I think.
+;; ;; Eventually will want to change this to something that first tries local buffer expansion, I think.
 (after! company
-  (map! :i "C-e" #'company-complete-common)
+  (defun my/transition-to-evil-normal-after-tng-chord ()
+    "Transition to evil-normal-state after company-tng completion when a key-chord is detected."
+    (when unread-command-events
+      (if (eq (car unread-command-events) 'key-chord)
+        (progn
+          (company-complete)
+          (evil-normal-state)
+          ; Clear the tng event storage that thinks it needs to trigger an extra key-chord
+          (setq unread-command-events nil)
+          ; Reset key-chord's unmatched key state - not sure this is actually necessary
+          (setq key-chord-last-unmatched nil)))))
+
+  (advice-add 'company--unread-this-command-keys :after #'my/transition-to-evil-normal-after-tng-chord)
+
+
+  ;; (map! :i "C-e" #'company-complete-common)
   (map! (:map company-active-map
               "C-e" #'company-complete-selection
               "C-n" #'evil-complete-next
@@ -371,11 +386,13 @@
       )
 
 (after! yasnippet
-  (map! :map yas-minor-mode-map "C-e" 'yas-expand)
-  (map! :map yas-keymap "C-e" 'yas-next-field-or-maybe-expand)
+  (map! :map yas-minor-mode-map :i "C-e" 'yas-expand)
+  (map! :map yas-keymap :i "C-e" 'yas-next-field-or-maybe-expand)
+  ; Can't seem to get this to stop using tab to expand when after
+  ; a snippet, but tbh I think it's minor. Doesn't affect company.
   (dolist (keymap (list yas-minor-mode-map yas-keymap))
     (dolist (tab (list "TAB" "<tab>"))
-      (map! :i tab 'nil))))
+      (map! :map keymap :i tab nil))))
 
 ;; c-a and c-x need fixing for increment/decrement.
 
