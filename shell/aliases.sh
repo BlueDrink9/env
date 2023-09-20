@@ -156,7 +156,7 @@ alias lpssh="lastpass_ssh_key_add"
 alias mosh="mosh_with_options"
 alias ssh="ssh_with_options"
 # rg + bat.
-alias bg="batgrep"
+alias bgr="batgrep"
 
 if command -v thefuck >/dev/null 2>&1; then
   eval $(thefuck --alias)
