@@ -98,15 +98,15 @@ return
 
 #If IsPrefix("media")
 s::Run spotify.exe
-; eclectic tastes playlist
+; main playlist
 m::
-  Run spotify:playlist:3DDy0dVcH0v8hwTsow3rCN
+  Run spotify:playlist:3DDy0dVcH0v8hwTsow3rCN?si=94d798e36838416c
   WinWaitActive ahk_exe spotify.exe,,10
   send ^s  ; shuffle
 return
 ; Beats playlist
 b::
-  Run spotify.exe spotify:playlist:07DNxdotyBhZf3R77tPheP
+  Run spotify.exe spotify:playlist:07DNxdotyBhZf3R77tPheP?si=b26e130008464df8
   WinWaitActive ahk_exe spotify.exe,,10
   send ^s  ; shuffle
 return
