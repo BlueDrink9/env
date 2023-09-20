@@ -28,7 +28,8 @@ require("lazy").setup({
   performance = {
     reset_packpath = true, -- reset the package path to improve startup time
     rtp = {
-      reset = false,  -- reset the runtime path to $VIMRUNTIME and your config directory
+      reset = true,  -- reset the runtime path to $VIMRUNTIME and your config directory
+      paths = {vim.g.configDir .. vim.fn.expand('/runtimepath')},
       -- disable some rtp plugins
       disabled_plugins = {
         "gzip",

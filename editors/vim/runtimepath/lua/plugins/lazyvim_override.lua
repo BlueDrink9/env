@@ -95,6 +95,17 @@ return {
   {
     "L3MON4D3/LuaSnip",
     enabled = vim.g.ideMode == 1,
+    opts = function(_, opts)
+      local snipdir = vim.g.configDir .. vim.fn.expand("/runtimepath/snippets")
+      print(snipdir)
+      -- load snippets from path/of/your/nvim/config/my-cool-snippets
+      require("luasnip.loaders.from_snipmate").lazy_load({
+          paths = {snipdir}
+        })
+      require("luasnip.loaders.from_vscode").lazy_load({
+          paths = {snipdir}
+        })
+    end,
   },
 
   {
