@@ -339,13 +339,13 @@
     "Transition to evil-normal-state after company-tng completion when a key-chord is detected."
     (when unread-command-events
       (if (eq (car unread-command-events) 'key-chord)
-        (progn
-          (company-complete)
-          (evil-normal-state)
-          ; Clear the tng event storage that thinks it needs to trigger an extra key-chord
-          (setq unread-command-events nil)
-          ; Reset key-chord's unmatched key state - not sure this is actually necessary
-          (setq key-chord-last-unmatched nil)))))
+          (progn
+            (company-complete)
+            (evil-normal-state)
+                                        ; Clear the tng event storage that thinks it needs to trigger an extra key-chord
+            (setq unread-command-events nil)
+                                        ; Reset key-chord's unmatched key state - not sure this is actually necessary
+            (setq key-chord-last-unmatched nil)))))
 
   (advice-add 'company--unread-this-command-keys :after #'my/transition-to-evil-normal-after-tng-chord)
 

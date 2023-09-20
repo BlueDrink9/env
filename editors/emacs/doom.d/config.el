@@ -218,10 +218,10 @@
   (setq company-frontends '(company-tng-frontend company-box-frontend))
   ;; recommended for company-fuzzy
   (setq
-        company-require-match nil            ; Don't require match, so you can still move your cursor as expected.
-        company-tooltip-align-annotations t  ; Align annotation to the right side.
-        company-eclim-auto-save nil          ; Stop eclim auto save.
-        company-dabbrev-downcase nil)        ; No downcase when completion.
+   company-require-match nil            ; Don't require match, so you can still move your cursor as expected.
+   company-tooltip-align-annotations t  ; Align annotation to the right side.
+   company-eclim-auto-save nil          ; Stop eclim auto save.
+   company-dabbrev-downcase nil)        ; No downcase when completion.
   ;; Enable downcase only when completing the completion. Reccomended for fuzzy
   (defun jcs--company-complete-selection--advice-around (fn)
     "Advice execute around `company-complete-selection' command."
@@ -258,16 +258,17 @@
     (company-fuzzy-mode 1)
     (setq-local company-backends '(company-fuzzy-all-other-backends)))
   (advice-add '+company-init-backends-h :after #'my/company-init-backends-h--advice-after)
-  (advice-add '+lsp-init-company-backends-h :after #'my/company-init-backends-h--advice-after))
+  (advice-add '+lsp-init-company-backends-h :after #'my/company-init-backends-h--advice-after)
 
-;; make aborting less annoying.
-;; Accept when certain characters entered.
-;; (setq company-auto-commit t)
-; Floating completion pop-up for company, with icons and documentation!
-; Seems to break tng
-(add-hook! 'company-mode-hook #'company-box-mode)
-(after! company-bibtex
-  (add-to-list 'company-backends 'company-bibtex)
+  ;; make aborting less annoying.
+  ;; Accept when certain characters entered.
+  ;; (setq company-auto-commit t)
+
+  ;; Floating completion pop-up for company, with icons and documentation!
+  (add-hook! 'company-mode-hook #'company-box-mode)
+  (after! company-bibtex
+    (add-to-list 'company-backends 'company-bibtex)
+    )
   )
 ;; Consider using instead. Prepends, rather than appends.
 ;; (set-company-backend! '(latex-mode, org-mode) 'company-bibtex)
