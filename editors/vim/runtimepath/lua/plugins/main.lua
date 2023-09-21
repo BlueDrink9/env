@@ -171,69 +171,6 @@ return {
   },
 
   {
-    "hachy/cmdpalette.nvim",
-    cond=vim.g.vscode ~= 1,
-    keys={ ";", "<Cmd>Cmdpalette<CR>", mode={'n','x'}},
-    opts= {
-      win = {
-        height = 0.1,
-        width = 0.8,
-        border = "rounded",
-        -- Title requires nvim-0.9 or higher.
-        title = "Cmdpalette",
-        title_pos = "center",
-      },
-      sign = {
-        text = ":",
-      },
-      buf = {
-        filetype = "cmdpalette",
-        syntax = "vim",
-      },
-      delete_confirm = true,
-      show_title = false,
-    },
-    config = function(_, opts)
-      require("cmdpalette").setup(opts)
-      vim.keymap.set({'n'}, ';', "<Cmd>Cmdpalette<CR>")
-      vim.keymap.set({'x'}, ';', "<Cmd>Cmdpalette<CR>'<,'>")
-      -- vim.opt_local.completeopt:remove("noselect")
-      local function bufmap()
-        -- Need the <c-n> to select the first option for some reason
-        vim.keymap.set('i', '<tab>', "<c-x><c-v>",
-        -- 'pumvisible() ? "<c-n>" : "<c-x><c-v><c-n>"',
-        {buffer=true})
-        vim.keymap.set({"n", "v"}, "<CR>", require'cmdpalette'.execute_cmd, {buffer=true})
-      end
-
-      local function copy_cabbrevs()
-        --- Copy cabbrevs into local iabbrevs, for same behaviour as
-        --- cmd-mode.
-        local result = vim.api.nvim_exec2('cabbrev', {output=true}).output
-        for line in result:gmatch("[^\r\n]+") do
-          local mode, abbrev, expansion = line:match(
-            "^%s*(%S+)%s+(%S+)%s+%*?%s*(.+)$")
-          -- Doens't look like expr abbrevs are marked in any way. But
-          -- most of the ones we care about will be returning strings in
-          -- some way, so will usually have quotes in them. Hopefully a
-          -- decent enough heuristic...
-          if expansion.find('"') or expansion.find("'") then
-            vim.cmd.iabbr({"<expr>", "<buffer>", abbrev, expansion})
-          else
-            vim.cmd.iabbr({"<buffer>", abbrev, expansion})
-          end
-        end
-      end
-
-      vim.api.nvim_create_autocmd("filetype", {
-        pattern="cmdpalette", group="myPlugins",
-        callback=function() bufmap() copy_cabbrevs() end
-      })
-
-    end,
-  },
-
-  {
     "vscode-neovim/vscode-neovim",
     cond = vim.g.vscode == 1,
     config = function(_, opts)
