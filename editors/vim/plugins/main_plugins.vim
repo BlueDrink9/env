@@ -433,10 +433,10 @@ if has('nvim') || !has('win32')
     " possible alt for nvim
     " https://github.com/stevearc/oil.nvim
     Plugin 'https://github.com/justinmk/vim-dirvish'
-    Plugin 'roginfarrer/vim-dirvish-dovish', {'branch': 'main', 'on': 'Dirvish'}
+    Plugin 'roginfarrer/vim-dirvish-dovish', {'branch': 'main', 'for': 'dirvish'}
     " Plugin 'https://github.com/bounceme/remote-viewer'
     if Executable('git')
-        Plugin 'https://github.com/kristijanhusak/vim-dirvish-git', {'on': 'Dirvish'}
+        Plugin 'https://github.com/kristijanhusak/vim-dirvish-git', {'for': 'dirvish'}
     endif
 endif
 " {]} ---------- files ----------

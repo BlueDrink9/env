@@ -178,4 +178,10 @@ return {
     end
   },
 
+  {
+    'tzachar/highlight-undo.nvim',
+    config=true,
+    keys = {"u", "C-r" }
+  },
+
 }
