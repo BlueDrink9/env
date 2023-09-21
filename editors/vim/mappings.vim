@@ -138,8 +138,6 @@ return a:c . " " . escape(expand("%:p:h"), " ") . "/"
 endf
 cabbrev <expr> le <SID>append_filedir("e") . "<c-r>"
 cabbrev <expr> lr <SID>append_filedir("r") . "<c-r>"
-" Load ide plugins/start ide mode.
-cabbrev ide let g:ideMode=1 <bar> so $MYVIMRC
 " Copy path of current buffer.
 command! -bang -nargs=* PathCopy let @+ = expand("%:p")
 " Word under cursor.

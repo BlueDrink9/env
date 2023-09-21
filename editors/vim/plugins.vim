@@ -55,6 +55,24 @@ endif
 let g:pluginInstallPath = CreateVimDir("/plugins")
 let s:localPlugins = PathExpand(g:vimfilesDir . "/local_plugins.vim")
 
+" Load ide plugins/start ide mode.
+function! IdeMode()
+    let g:ideMode=1
+    if has('nvim') && Executable('touch')
+        " Touch so that Lazy thinks they need reloading
+        !touch g:vimfilesDir . "/runtimepath/lua/plugins/*"})
+        " Lazyloading doens't seem to update properly when reloading specs, so
+        " manually reload the key plugins for quick ide work.
+        Lazy load nvim-lspconfig
+        Lazy load nvim-cmp
+        Lazy load cmp-buffer
+        Lazy load refactoring.nvim
+    endif
+    :edit  " reload buffer to trigger ft aucmds again
+    so $MYVIMRC
+endf
+command! Ide call IdeMode()
+
 call SourceCustoms("manage_plugins.vim")
 
 " Silence a python deprecation warning.

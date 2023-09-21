@@ -104,6 +104,7 @@ return {
                 string.find(bufname, 'stackoverflow.com') then
                 vim.o.ft='markdown'
             elseif string.find(bufname, 'codewars.com') then
+                vim.fn.IdeMode()
                 vim.cmd('colorscheme dracula')
                 vim.keymap.set('n', '<C-CR>',
                 function() press_keys("<LT>C-CR>") end,
