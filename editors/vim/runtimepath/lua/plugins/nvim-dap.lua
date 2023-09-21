@@ -104,7 +104,7 @@ return {
 
   {'jayp0521/mason-nvim-dap.nvim',
     dependencies='williamboman/mason.nvim',
-    cmd="Mason",
+    cmd = { "DapInstall", "DapUninstall" },
     opts = {
       -- ensure_installed = {'stylua', 'jq'}
       automatic_setup = true,
