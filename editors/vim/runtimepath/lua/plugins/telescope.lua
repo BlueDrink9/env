@@ -59,20 +59,23 @@ local specs = {
 
     opts = function()
 
-      local map_prefix = ":lua require'telescope.builtin'."
+      local map_prefix = "<cmd>lua require'telescope.builtin'."
 
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
+          -- For some reason capabilities is always nil at this point. The
+          -- equivalent in lspconfig works though.
           local capabilities = vim.lsp.get_client_by_id(
             args.data.client_id).server_capabilites
           if not capabilities then return end
           if capabilities.workspaceSymbolProvider then
             require'my.utils'.map_table_with_prefix(
-              {[maps.FuzzySymbols] = "lsp_workspace_symbols"},
+              {[maps.FuzzySymbols] = "lsp_document_symbols"},
               map_prefix, 'n', {buffer=args.buf})
-          elseif capabilities.documentSymbolProvider then
+          end
+          if capabilities.documentSymbolProvider then
             require'my.utils'.map_table_with_prefix(
-              {[maps.FuzzySymbols] = "lsp_workspace_symbols"},
+              {[maps.FuzzySymbolsWorkspace] = "lsp_workspace_symbols"},
               map_prefix, 'n', {buffer=args.buf})
           end
         end

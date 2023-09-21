@@ -45,6 +45,7 @@ return {
 				[maps.references] = "references()",
 				[maps.references2] = "references()",
 				[maps.reformat] = "format()",
+				-- [maps.refactor] = "format()",
 				-- ['<space>wa'] = 'add_workspace_folder()',
 				-- ['<space>wr'] = 'remove_workspace_folder()',
 				--  ['<space>wl'] = '<cmd>lua print(vim.inspect(vim.lsp.list_workspace_folders))()',
@@ -80,13 +81,10 @@ return {
 			-- Use an on_attach function to only map keys etc after the language server
 			-- attaches to the current buffer
 			local on_attach = function(client, bufnr)
-				local function buf_set_option(...)
-					vim.api.nvim_buf_set_option(bufnr, ...)
-				end
 				vim.api.nvim_create_augroup("lsp_on_attach", { clear = true })
 
 				--Enable completion triggered by <c-x><c-o>
-				buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
+				vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 
 				-- Auto-show diagnostics on pause over them.
 				vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
@@ -102,6 +100,8 @@ return {
 						end
 					end,
 				})
+
+				-- Show hover for diagnostics when paused over error.
 				vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
 					group = "lsp_on_attach",
 					buffer = bufnr,
@@ -118,6 +118,16 @@ return {
 
 				for prefix, table in pairs(tables) do
 					require("my/utils").map_table_with_prefix(table, "<cmd>lua " .. prefix, "n", { buffer = bufnr })
+				end
+				if client.server_capabilities.workspaceSymbolProvider then
+					vim.keymap.set('n', maps.FuzzySymbols,
+					require('telescope.builtin').lsp_document_symbols,
+					{ buffer = bufnr})
+				end
+				if client.server_capabilities.documentSymbolProvider then
+					vim.keymap.set('n', maps.FuzzySymbolsWorkspace,
+					require('telescope.builtin').lsp_workspace_symbols,
+					{ buffer = bufnr})
 				end
 			end
 

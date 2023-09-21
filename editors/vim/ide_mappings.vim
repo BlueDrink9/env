@@ -5,11 +5,12 @@
 " Use <leader>e for errors/linting/fixing.
 let g:IDE_mappings = {
             \ 'FuzzyFuzzy' : '<leader><cr>',
+            \ 'FuzzyOldFiles' : '<leader><cr>r',
             \ 'FuzzyBuffers' : '<leader>,',
             \ 'FuzzyCommands' : '<leader>;',
             \ 'FuzzyOpenFile' : '<leader><leader>',
             \ 'FuzzySymbols' : '<leader>.',
-            \ 'FuzzyOldFiles' : '<leader>fr',
+            \ 'FuzzySymbolsWorkspace' : '<leader>>',
             \ 'FuzzySearchBuffer' : '<leader>/',
             \ 'FuzzySearchBuffers' : '<leader>f',
             \ 'FuzzySearchFiles' : '<leader>F',
