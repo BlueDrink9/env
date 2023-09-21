@@ -3,6 +3,7 @@ return {
    enabled=vim.g.liteMode == 0,
    cond = vim.g.vscode ~= 1,
    opts = function(_, current_opts)
+      vim.o.showmode = false
 
       local short_mode_name = function(mode)
          local map = {

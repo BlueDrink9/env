@@ -88,5 +88,5 @@ require("lazy").setup({
     },
   },
 })
-vim.cmd[[abbrev packi Lazy install]]
-vim.cmd[[abbrev packu Lazy update]]
+vim.cmd[[cabbrev packi Lazy install]]
+vim.cmd[[cabbrev packu Lazy update]]
