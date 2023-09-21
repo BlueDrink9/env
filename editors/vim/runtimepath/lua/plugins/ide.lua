@@ -210,7 +210,7 @@ return {
       "NeogitOrg/neogit",
       opts = {
            disable_commit_confirmation = true,
-           disable_insert_on_commit = auto,
+           disable_insert_on_commit = "auto",
            disable_builtin_notifications = vim.fn.has('win32') == 1,
            disable_line_numbers = false,
            mappings = {
@@ -234,6 +234,8 @@ return {
       dependencies = {
          "nvim-lua/plenary.nvim",         -- required
          "nvim-telescope/telescope.nvim", -- optional
+         "sindrets/diffview.nvim",        -- optional
+         -- "ibhagwan/fzf-lua",              -- optional
       },
    },
 

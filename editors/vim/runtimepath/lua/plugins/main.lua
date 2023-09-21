@@ -184,4 +184,15 @@ return {
     keys = {"u", "C-r" }
   },
 
+  {
+    "sindrets/diffview.nvim",
+    config=true,
+    cmd = {
+      "DiffviewFileHistory",
+      "DiffviewOpen",
+    },
+    event="OptionSet diff",
+    lazy=not vim.o.diff,
+  },
+
 }
