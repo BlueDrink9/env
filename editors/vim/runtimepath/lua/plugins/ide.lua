@@ -207,14 +207,34 @@ return {
    -- {'simrat39/symbols-outline.nvim', config=true},
 
    {
-      "https://github.com/TimUntersberger/neogit",
-
-      config = function()
+      "NeogitOrg/neogit",
+      opts = {
+           disable_commit_confirmation = true,
+           disable_insert_on_commit = auto,
+           disable_builtin_notifications = vim.fn.has('win32') == 1,
+           disable_line_numbers = false,
+           mappings = {
+             finder = {
+               ["<BS>"] = "MultiselectToggleNext",
+             },
+             -- Setting any of these to `false` will disable the mapping.
+             status = {
+               ["<BS>"] = "Toggle",
+            },
+         },
+      },
+      config = function(_, opts)
          vim.api.nvim_create_user_command("Magit", "Neogit", {})
+         -- For some reason lazy isn't mapping this right.
          vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<CR>")
+         require('neogit').setup(opts)
       end,
-      cmd = { "Neogit" },
+      cmd = { "Neogit", "Magit" },
       keys = { "<leader>gg", "<cmd>Neogit<CR>", desc = "NeoGit" },
+      dependencies = {
+         "nvim-lua/plenary.nvim",         -- required
+         "nvim-telescope/telescope.nvim", -- optional
+      },
    },
 
    -- {[} ---------- REPL ----------
