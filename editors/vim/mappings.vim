@@ -129,7 +129,6 @@ abbrev <expr> [t] strftime("%H:%M")
 cnoreabbrev hg helpgrep
 cnoreabbrev vg vimgrep
 cnoreabbrev H vert h
-cabbrev <expr> abc printf('1')
 " Opens an edit command with the dir of the currently edited file filled in.
 " The C-R at the end is a hack. It swallows the space subsequently used to
 " expand the abbreviation, meaning the cursor is left at the end of the
