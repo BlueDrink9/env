@@ -60,7 +60,7 @@ function! IdeMode()
     let g:ideMode=1
     if has('nvim') && Executable('touch')
         " Touch so that Lazy thinks they need reloading
-        !touch g:vimfilesDir . "/runtimepath/lua/plugins/*"})
+        exec "silent !touch " . g:configDir . "/runtimepath/lua/plugins/*"
         " Lazyloading doens't seem to update properly when reloading specs, so
         " manually reload the key plugins for quick ide work.
         Lazy load nvim-lspconfig
