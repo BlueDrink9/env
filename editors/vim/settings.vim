@@ -673,7 +673,7 @@ endif
 if $TERM =~ 'kitty'
     let &t_ut=''
 endif
-if exists('##TextYankPost')
+if has('nvim')
   autocmd myVimrc TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=3000, on_visual=true}
 endif
 
