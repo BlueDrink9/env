@@ -15,7 +15,7 @@ end
 -- }
 
 return {
-	-- { "https://github.com/williamboman/mason-lspconfig.nvim.git"},
+	{ "williamboman/mason-lspconfig.nvim", lazy=true},
 	-- Create appropriate colours for old colourschemes
 	{ "https://github.com/folke/lsp-colors.nvim.git", event="VeryLazy" },
 	{ "https://github.com/Hrle97/nvim.diagnostic_virtual_text_config.git",

@@ -63,15 +63,15 @@ function! IdeMode()
         exec "silent !touch " . g:configDir . "/runtimepath/lua/plugins/*"
         " Lazyloading doens't seem to update properly when reloading specs, so
         " manually reload the key plugins for quick ide work.
+        Lazy load mason-lspconfig.nvim
         Lazy load nvim-lspconfig
         Lazy load nvim-cmp
         Lazy load cmp-buffer
         Lazy load refactoring.nvim
     endif
-    :edit  " reload buffer to trigger ft aucmds again
-    so $MYVIMRC
+    filetype detect
 endf
-command! Ide call IdeMode()
+command! Ide call IdeMode() <bar> so $MYVIMRC
 
 call SourceCustoms("manage_plugins.vim")
 

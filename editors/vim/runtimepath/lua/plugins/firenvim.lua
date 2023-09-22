@@ -89,7 +89,7 @@ return {
             table.insert(vim.g.customHLGroups, 'EndOfBuffer guifg=guibg')
             vim.o.colorcolumn = '0'
             vim.o.background = 'light'
-            vim.opt.shortmess:append "tTF"
+            vim.opt.shortmess:append "atTFoW"
             vim.cmd('colorscheme github')
         end
 
@@ -193,7 +193,6 @@ return {
                 string.find(bufname, 'stackoverflow.com') then
                 vim.o.ft='markdown'
             elseif string.find(bufname, 'codewars.com') then
-                vim.fn.IdeMode()
                 vim.cmd('colorscheme dracula')
                 vim.keymap.set('n', '<C-CR>',
                 function() press_keys("<LT>C-CR>") end,
@@ -201,6 +200,7 @@ return {
                 vim.keymap.set('n', '<C-\'>',
                 function() press_keys("<C-\'>") end,
                 { buffer = true })
+                vim.fn.IdeMode()
                 -- Chat apps
             elseif string.find(bufname, 'slack.com') or
                 string.find(bufname, 'gitter.im') or
