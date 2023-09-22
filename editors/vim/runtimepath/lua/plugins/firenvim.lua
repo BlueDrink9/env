@@ -74,6 +74,95 @@ return {
             vim.fn['firenvim#press_keys'](keys)
         end
 
+        local FirenvimSetGUIOptions = function()
+            vim.o.showtabline=0
+            vim.o.cmdheight=0
+            if vim.o.lines < 2 then
+                vim.cmd('quitall!')
+            end
+            -- call add(s:debugMessages, 'setup')
+            vim.g.hasGUI = 1
+
+            -- Tested to match github default size on arch bspwm brave.
+            vim.fn.SetGFN(9)
+            vim.o.termguicolors = true
+            table.insert(vim.g.customHLGroups, 'EndOfBuffer guifg=guibg')
+            vim.o.colorcolumn = '0'
+            vim.o.background = 'light'
+            vim.opt.shortmess:append "tTF"
+            vim.cmd('colorscheme github')
+        end
+
+        vim.api.nvim_create_autocmd("UIEnter", {
+            pattern="*", group="myPlugins", nested=true,
+            callback=FirenvimSetGUIOptions
+        })
+
+        vim.defer_fn(vim.fn.SetGFN, 3000)
+
+        local debugMessages = {}
+        -- Convert the Autosave function
+        function Autosave()
+            if vim.bo.ro
+                and vim.bo.modifiable
+                and vim.bo.autowrite then
+                vim.cmd('silent! update')
+            end
+        end
+        vim.cmd([[
+        function! Autosave()
+        lua Autosave()
+        endf
+        ]])
+        -- Autosave on idle
+        vim.api.nvim_create_autocmd('TextChanged,TextChangedI', {
+                group="myPlugins",
+                callback = function()
+                    if vim.g.timer_started == true then
+                        return
+                    end
+                    vim.g.timer_started = true
+                    vim.fn.timer_start(10000, function()
+                        vim.g.timer_started = false
+                        vim.cmd('write')
+                    end)
+                end
+            })
+
+        -- Fix odd bug that sometimes stops firenvim loading the text if setting a
+        -- colourscheme from a plugin. Will be overridden in setup anyway.
+        vim.g.colorSch = 'default'
+
+        -- Don't bother with whitespace plugin on save
+        vim.g.strip_whitespace_on_save = 0
+
+        -- We are in firenvim
+        -- For debug messages during startup. After startup, use echom.
+        if #debugMessages > 0 then
+            vim.cmd([[autocmd myPlugins BufWinEnter * echom table.concat(debugMessages, "\n")]])
+        end
+
+
+        -- Universal mappings
+        vim.keymap.set('n', '<C-CR>',
+        function()
+            press_keys("<LT>C-CR>")
+            vim.cmd.norm("ggdG:q!")
+        end)
+        vim.keymap.set('n', '<C-z>',
+            function() vim.fn['firenvim#hide_frame']() end
+        )
+        vim.keymap.set('n', '<Esc><Esc><Esc>',
+            function() vim.fn['firenvim#focus_page']() end
+        )
+        vim.keymap.set({'i', 'c'}, '<D-v>', '<c-r>+')
+        vim.api.nvim_set_keymap('v', '<D-c>', '"+y', { noremap = true })
+
+        -- Auto-enter insertmode if the buffer is empty.
+        vim.cmd([[
+        autocmd myPlugins BufWinEnter * if line('$') == 1 && getline(1) == ''
+        \ && bufname() != '' | startinsert | endif
+        ]])
 
         -- Use buffer mappings to ensure they override other mappings, even if
         -- unlikely to change buffers in firenvim. Also future-proofs.
@@ -153,100 +242,6 @@ return {
             callback=FirenvimSetPageOptions}) 
 
 
-        local FirenvimSetGUIOptions = function()
-            vim.o.showtabline=0
-            vim.o.cmdheight=0
-            if vim.o.lines < 2 then
-                vim.cmd('quitall!')
-            end
-            -- Get rid of the annoying message at the bottom about the new file being
-            -- written, and then start insert mode.
-            -- Not working
-            -- autocmd myPlugins BufNewFile * silent redraw
-            -- autocmd myPlugins BufWrite * call feedkeys(";\<CR>")
-            -- autocmd myPlugins BufWritePost * call nvim_input(";<CR>")
-            -- This works
-            -- vim.fn.feedkeys('i')
-            vim.o.background = 'light'
-            vim.cmd('colorscheme github')
-        end
-
-        vim.defer_fn(vim.fn.SetGFN, 3000)
-
-        local debugMessages = {}
-        -- Convert the Autosave function
-        function Autosave()
-            if vim.bo.ro ~= 1
-                and vim.bo.modifiable == 1
-                and vim.bo.autowrite then
-                vim.cmd('silent! update')
-            end
-        end
-        vim.cmd([[
-        function! Autosave()
-        lua Autosave()
-        endf
-        ]])
-
-        -- Fix odd bug that sometimes stops firenvim loading the text if setting a
-        -- colourscheme from a plugin. Will be overridden in setup anyway.
-        vim.g.colorSch = 'default'
-
-        vim.api.nvim_create_autocmd("UIEnter", {
-            pattern="*", group="myPlugins", nested=true,
-            callback=FirenvimSetGUIOptions
-        })
-
-        -- We are in firenvim
-        -- For debug messages during startup. After startup, use echom.
-        if #debugMessages > 0 then
-            vim.cmd([[autocmd myPlugins BufWinEnter * echom table.concat(debugMessages, "\n")]])
-        end
-
-        -- call add(s:debugMessages, 'setup')
-        vim.g.hasGUI = 1
-
-        -- Tested to match github default size on arch bspwm brave.
-        vim.fn.SetGFN(9)
-        vim.o.termguicolors = true
-        table.insert(vim.g.customHLGroups, 'EndOfBuffer guifg=guibg')
-        vim.o.background = 'light'
-
-        vim.keymap.set('n', '<C-CR>',
-        function()
-            press_keys("<LT>C-CR>")
-            vim.cmd.norm("ggdG:q!")
-        end)
-        vim.keymap.set('n', '<C-z>',
-        function() vim.fn['firenvim#hide_frame']() end
-        )
-        vim.keymap.set('n', '<Esc><Esc><Esc>',
-        function() vim.fn['firenvim#focus_page']() end
-        )
-        vim.keymap.set({'i', 'c'}, '<D-v>', '<c-r>+')
-        vim.api.nvim_set_keymap('v', '<D-c>', '"+y', { noremap = true })
-        vim.o.colorcolumn = '0'
-
-        -- Auto-enter insertmode if the buffer is empty.
-        vim.cmd([[
-        autocmd myPlugins BufWinEnter * if line('$') == 1 && getline(1) == ''
-        \ && bufname() != '' | startinsert | endif
-        ]])
-        vim.g.strip_whitespace_on_save = 0
-
-        vim.api.nvim_create_autocmd('TextChanged,TextChangedI', {
-            group="myPlugins",
-            callback = function()
-                if vim.g.timer_started == true then
-                    return
-                end
-                vim.g.timer_started = true
-                vim.fn.timer_start(10000, function()
-                    vim.g.timer_started = false
-                    vim.cmd('write')
-                end)
-            end
-        })
         vim.g.firenvim_config = config
     end
 }
