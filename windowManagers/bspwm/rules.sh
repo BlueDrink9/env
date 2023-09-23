@@ -22,10 +22,6 @@ bspc rule -a Gimp             desktop='^8' state=floating follow=on
 bspc rule -a Emacs            state=tiled
 bspc rule -a albert           floating=on  border=off     focus=on
 bspc rule -a kitty-dropdown   sticky=on
-# All the little zoom windows don't need to be captured, but the main ones
-# should be. This rule captures the default zoom state, but the main windows
-# can only be differentiated by title so that is done in external rules
-bspc rule -a zoom state=floating center=on follow=on border=off
 
 if [ "$XDG_SESSION_DESKTOP" = "plasmax11" ] || \
     [ "$XDG_SESSION_DESKTOP" = "KDE" ] || \
