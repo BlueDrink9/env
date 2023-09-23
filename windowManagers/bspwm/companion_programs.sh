@@ -35,7 +35,7 @@ fi
 unset wallpaper
 
 # -b starts as a bg process
-picom --config "$DOTFILES_DIR"/desktop_elements/picom.conf --experimental-backends -b \
+picom --config "$DOTFILES_DIR"/desktop_elements/picom.conf -b \
    >| $HOME/.logs/picom.log 2>| $HOME/.logs/picom.err
 
 "$DOTFILES_DIR"/windowManagers/bspwm/scripts/floating_noborder.sh &
