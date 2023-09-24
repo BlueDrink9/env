@@ -81,7 +81,7 @@ if has('python3') && !(has('patch-8.1.201') || has('nvim')) && g:liteMode == 0
 endif
 
  if has('nvim')
-    cabbrev packi lua require('config.lazy') require("lazy").install(MyLazySpecs)
+    cabbrev packi lua require('config.lazy') require("lazy").install(LazyPlugSpecs)
     cabbrev packu Lazy check <bar> Lazy update
  else
     cabbrev packi PlugInstall

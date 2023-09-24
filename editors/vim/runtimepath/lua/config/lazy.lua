@@ -1,11 +1,3 @@
-local lazypath = vim.g.pluginInstallPath .. "/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  -- bootstrap lazy.nvim
-  -- stylua: ignore
-  vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath })
-end
-vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
-
 -- skip loading lazyvim options
 package.loaded["lazyvim.config.options"] = true
 
@@ -66,7 +58,7 @@ require("lazy").setup({
 
     { import = "plugins" },
 
-    MyLazySpecs,
+    LazyPlugSpecs,
 
     {'https://github.com/Shatur/neovim-ayu', lazy=true},
   },
