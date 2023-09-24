@@ -1,4 +1,11 @@
-
+" This command is your main interface to the plugin:
+" args: anything vim-plug supports in its extra options, plus:
+" * afterLoad: the name of a vimscript function to run after the plugin
+" lazy-loads.
+" * event: list of autocmd events that the plugin should lazy-load on
+" * Any other lazy.nvim spec config options that don't have a Plug alternative
+" (Note, for `keys`, modes are only supported via the special MakeLazyKeys
+" function.)
 command! -bang -nargs=+ Plugin call <sid>PluginAdapter(<args>)
 
 function! GetPluginName(pluginUrl)
@@ -21,75 +28,6 @@ function! IsPluginUsed(name)
         return has_key(g:plugs, a:name)
     endif
 endfunction
-
-" Passes plugin to lua functon that creates a lazy spec, OR extracts extra
-" plug args and activates them.
-function! s:PluginAdapter(...)
-    let l:plugin = a:1
-    let l:plugin_name = GetPluginName(l:plugin)
-    let l:args = {}
-    if a:0 == 2
-        let l:args = a:2
-    endif
-    if has('nvim')
-        let g:__plugin_args = l:args
-        exec 'lua PlugToLazy("' . l:plugin  . '", vim.g.__plugin_args)'
-        let s:plugs[l:plugin_name] = 1
-    else
-        " convert lazy args we want to keep when using plug
-        for dep in get(l:args, 'dependencies', [])
-            Plug dep
-        endfor
-        " Handle hook for after load
-        let l:func = get(l:args, 'afterLoad', v:false)
-        " If 'afterLoad' is v:true, call function based off a default name
-        " convention (the plugin name, with _ replacing . and -). Otherwise
-        " call the function name passed in. Only will be called for
-        " lazy-loaded plugins, so don't use without an 'on' or 'for' mapping.
-        " ('keys' gets ignored).
-        if l:func == v:true
-            exec 'au User ' . l:plugin_name . ' call ' . PluginNameToFunc(l:plugin_name) . '()'
-        elseif l:func != v:false
-            exec 'au User ' . l:plugin_name . ' call ' . l:func . '()'
-        endif
-
-        for event in get(l:args, 'event', [])
-            " Removes unsupported events, e.g. VeryLazy.
-            if !exists('##' . event)
-                continue
-            endif
-            call s:loadPluginOnEvent(l:plugin_name, event)
-            " Add empty 'on' argument to enable lazyloading.
-            if !has_key(l:args, 'on')
-              let l:args['on'] = []
-            endif
-        endfor
-
-        call s:removeUnsupportedArgs(l:args)
-        Plug l:plugin, l:args
-    endif
-endfunction
-
-if !has('nvim')
-    " Add support for loading Plug plugins on specific event.
-    function! s:loadPluginOnEvent(name, event)
-        " Plug-loads function on autocmd event.
-        " Plug options should include 'on': [] to prevent load before event.
-        " name: the last part of the plugin url (See GetPluginName()).
-        " event: name of autocmd event
-        " Example:
-        " Plug 'ycm-core/YouCompleteMe', {'on': []}
-        " call LoadPluginOnEvent('YouCompleteMe', 'InsertEnter')
-        let l:plugLoad = 'autocmd ' . a:event . ' * call plug#load("'
-        let l:plugLoadEnd = '")'
-        let l:augroupName = a:name . '_' . a:event
-        let l:undoAutocmd = 'autocmd! ' . l:augroupName
-        exec 'augroup ' . l:augroupName
-            autocmd!
-            exec  l:plugLoad . a:name . l:plugLoadEnd . ' | ' . l:undoAutocmd
-        exec 'augroup END'
-    endfunction
-endif
 
 " To remove a Plugged repo using UnPlug 'pluginName'
 function! s:deregister(name)
@@ -150,11 +88,22 @@ else
     endfunction
 endif
 
-function! PluginNameToFunc(name)
-    " Convert a plugins name to default function name to use for afterLoad
-    " functions.
-    " Has to be a global function so lua can access it.
-    return 'Plug_after_' . substitute(a:name, '[\\.-]', '_', 'g')
+" Passes plugin to a lua function that creates a lazy.nvim spec, or to a vimscript
+" function to adapt the args for vim-plug.
+function! s:PluginAdapter(...)
+    let l:plugin = a:1
+    let l:args = {}
+    if a:0 == 2
+        let l:args = a:2
+    endif
+    if has('nvim')
+        " Has to be global so lua sees it
+        let g:__plugin_args = l:args
+        exec 'lua PlugToLazy("' . l:plugin  . '", vim.g.__plugin_args)'
+        let s:plugs[GetPluginName(l:plugin)] = 1
+    else
+        call PlugPlusLazyArgs(l:plugin, l:args)
+    endif
 endfunction
 
 if has('nvim')
@@ -212,28 +161,12 @@ end
 EOF
 endif
 
-if !has('nvim')
-    function! s:removeUnsupportedArgs(args)
-        " Remove args unsupported by Plug
-        let l:PlugOpts = [
-                    \ 'branch',
-                    \ 'tag',
-                    \ 'commit',
-                    \ 'rtp',
-                    \ 'dir',
-                    \ 'as',
-                    \ 'do',
-                    \ 'on',
-                    \ 'for',
-                    \ 'frozen',
-                    \ ]
-        for opt in keys(a:args)
-            if index(l:PlugOpts, opt) < 0  " If item not in the list.
-                silent! call remove(a:args, opt)
-            endif
-        endfor
-    endfunction
-endif
+function! PluginNameToFunc(name)
+    " Convert a plugins name to default function name to use for afterLoad
+    " functions.
+    " Has to be a global function so lua can access it.
+    return 'Plug_after_' . substitute(a:name, '[\\.-]', '_', 'g')
+endfunction
 
 function! s:installPluginManager()
     if has('nvim')
@@ -254,8 +187,8 @@ EOF
         else
             let l:vimhome = $HOME."/.vim"
         endif
-        let l:plugin_manager_dir = expand(l:vimhome .. '/autoload')
-        let l:plugin_manager_file = l:plugin_manager_dir .. '/plug.vim'
+        let l:plugin_manager_dir = expand(l:vimhome . '/autoload')
+        let l:plugin_manager_file = l:plugin_manager_dir . '/plug.vim'
         let s:plugin_manager_url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 
         if !filereadable(l:plugin_manager_file)
@@ -283,3 +216,84 @@ EOF
     endif
 endfunction
 call s:installPluginManager()
+
+" Rest is entirely plug-specific
+if has('nvim')
+    finish
+endif
+
+function! PlugPlusLazyArgs(plugin, args)
+    let l:plugin_name = GetPluginName(a:plugin)
+    let l:args = a:args
+    " convert lazy args we want to keep when using plug
+    for dep in get(l:args, 'dependencies', [])
+        Plug dep
+    endfor
+    " Handle hook for after load
+    let l:func = get(l:args, 'afterLoad', v:false)
+    " If 'afterLoad' is v:true, call function based off a default name
+    " convention (the plugin name, with _ replacing . and -). Otherwise
+    " call the function name passed in. Only will be called for
+    " lazy-loaded plugins, so don't use without an 'on' or 'for' mapping.
+    " ('keys' gets ignored).
+    if l:func == v:true
+        exec 'au User ' . l:plugin_name . ' call ' . PluginNameToFunc(l:plugin_name) . '()'
+    elseif l:func != v:false
+        exec 'au User ' . l:plugin_name . ' call ' . l:func . '()'
+    endif
+
+    for event in get(l:args, 'event', [])
+        " Removes unsupported events, e.g. VeryLazy.
+        if !exists('##' . event)
+            continue
+        endif
+        call s:loadPluginOnEvent(l:plugin_name, event)
+        " Add empty 'on' argument to enable lazyloading.
+        if !has_key(l:args, 'on')
+            let l:args['on'] = []
+        endif
+    endfor
+
+    call s:removeUnsupportedArgs(l:args)
+    Plug a:plugin, l:args
+endfunction
+
+function! s:removeUnsupportedArgs(args)
+    " Remove args unsupported by Plug
+    let l:PlugOpts = [
+                \ 'branch',
+                \ 'tag',
+                \ 'commit',
+                \ 'rtp',
+                \ 'dir',
+                \ 'as',
+                \ 'do',
+                \ 'on',
+                \ 'for',
+                \ 'frozen',
+                \ ]
+    for opt in keys(a:args)
+        if index(l:PlugOpts, opt) < 0  " If item not in the list.
+            silent! call remove(a:args, opt)
+        endif
+    endfor
+endfunction
+
+" Add support for loading Plug plugins on specific event.
+function! s:loadPluginOnEvent(name, event)
+    " Plug-loads function on autocmd event.
+    " Plug options should include 'on': [] to prevent load before event.
+    " name: the last part of the plugin url (See GetPluginName()).
+    " event: name of autocmd event
+    " Example:
+    " Plug 'ycm-core/YouCompleteMe', {'on': []}
+    " call LoadPluginOnEvent('YouCompleteMe', 'InsertEnter')
+    let l:plugLoad = 'autocmd ' . a:event . ' * call plug#load("'
+    let l:plugLoadEnd = '")'
+    let l:augroupName = a:name . '_' . a:event
+    let l:undoAutocmd = 'autocmd! ' . l:augroupName
+    exec 'augroup ' . l:augroupName
+        autocmd!
+        exec  l:plugLoad . a:name . l:plugLoadEnd . ' | ' . l:undoAutocmd
+    exec 'augroup END'
+endfunction
