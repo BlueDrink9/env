@@ -5,12 +5,7 @@ if g:liteMode
     " Superlight airline (no plugins)
     " Plugin 'https://github.com/itchyny/lightline.vim'
     if !has('nvim')
-        " {[} Replace Tcomment with commentary
-        " Replaced in favour of slightly heavier version tcomment in main
-        " plugins. See https://github.com/wincent/wincent/commit/913e79724456976549244893e9025aa6fcf3cc1c
-        Plugin 'https://github.com/tpope/vim-commentary'
-        " {]} Replace Tcomment with commentary
-        " Use better 'vim-sandwich' in main.
+        " Use better, but heavier, 'vim-sandwich' in main.
         Plugin 'https://github.com/tpope/vim-surround.git'
     endif
     " Lighter alt to airline for putting buffers in tabline.

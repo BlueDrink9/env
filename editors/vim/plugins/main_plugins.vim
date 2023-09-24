@@ -234,21 +234,21 @@ Plugin 'https://github.com/glts/vim-texlog', {'for': ['log', 'tex']}
 " {]} Extra text objects
 
 " {[} ---------- Operators ----------
-" Replacement for surround, with more features.
-function! Plug_after_vim_sandwich()
-    " Gives it tpope-surround mappings.
-    runtime macros/sandwich/keymap/surround.vim
-    vmap s <Plug>(operator-sandwich-add)
-endf
-Plugin 'machakann/vim-sandwich', {'keys': ['ys', 'ds', 'cs'],
-            \ 'afterLoad': v:true}
 if !has('nvim')
+    " Replacement for surround, with more features.
+    function! Plug_after_vim_sandwich()
+        " Gives it tpope-surround mappings.
+        runtime macros/sandwich/keymap/surround.vim
+        vmap s <Plug>(operator-sandwich-add)
+    endf
+    Plugin 'machakann/vim-sandwich', {'keys': ['ys', 'ds', 'cs'],
+                \ 'afterLoad': v:true}
     Plugin 'https://github.com/justinmk/vim-sneak'
     " Plugin 'https://github.com/easymotion/vim-easymotion'
 endif
-Plugin 'bkad/camelcasemotion', {'keys': ['-']}
-Plugin 'https://github.com/haya14busa/vim-asterisk', {'keys': ['*', 'z*']}
-" {]} ---------- Operators ----------
+    Plugin 'bkad/camelcasemotion', {'keys': ['-']}
+    Plugin 'https://github.com/haya14busa/vim-asterisk', {'keys': ['*', 'z*']}
+    " {]} ---------- Operators ----------
 
 " {[}--- Searching, replacing, finding ---
 " Edit quickfix window and have the changes apply!

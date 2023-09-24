@@ -21,7 +21,22 @@ return {
       post_hook = nil,
     },
     keys = {
-      {'<leader>c', mode={'n', 'x'}}, '<leader>C'},
+      {'<leader>c', mode={'n', 'x'}}, '<leader>C'
+    },
+  },
+
+  {
+    "kylechui/nvim-surround",
+    version = "*",
+    keys = { 'ys', 'ds', 'cs', {'S', mode={'x'}}, },
+    opts = {
+      keymaps = {
+        insert = nil,
+        insert_line = nil,
+        visual = "S",
+        visual_line = "S",
+      },
+    },
   },
 
   {"gbprod/substitute.nvim",
