@@ -56,8 +56,7 @@ if has('nvim-0.5')
 endif
 
 " Custom text for folds, includes indent level. Integrates with fastfold.
-Plugin 'https://github.com/Konfekt/FoldText',
-            \ has('nvim') ? {'event': ['VeryLazy']} : {}
+Plugin 'https://github.com/Konfekt/FoldText', {'event': ['VeryLazy']}
 if v:version > 704
     " Auto-set foldcolumn if folds exist in buffer.
     Plugin 'https://github.com/benknoble/vim-auto-origami', {
@@ -69,8 +68,7 @@ if v:version > 704
     endf
 endif
 " Relative line numbers only in focussed buffer & not in insert mode.
-Plugin 'ericbn/vim-relativize',
-            \ has('nvim') ? {'event': ['VeryLazy']} : {}
+Plugin 'ericbn/vim-relativize', {'event': ['VeryLazy']}
 " :GhostTextStart/Stop
 if has('nvim') && has('python3')
     Plugin 'raghur/vim-ghost', {'do': ':GhostInstall', 'on': 'GhostStart'}
@@ -93,8 +91,7 @@ Plugin 'jeetsukumaran/vim-markology', {'on': ['MarkologyEnable', 'MarkologyToggl
 " https://github.com/chentoast/marks.nvim
 "
 " Adds a bunch of unix-mapped filesystem ops from vim
-Plugin 'https://github.com/tpope/vim-eunuch', 
-            \ has('nvim') ? {'event': ['VeryLazy']} : {}
+Plugin 'https://github.com/tpope/vim-eunuch', {'event': ['VeryLazy']}
 Plugin 'https://github.com/simnalamburt/vim-mundo', {'on': 'MundoToggle'}
 
 " Way better search and replace, also case coersion
@@ -160,8 +157,7 @@ if !has('nvim-0.5')
     Plugin 'machakann/vim-highlightedyank'
 endif
 " Resizes splits proportionally when changing overall size
-Plugin 'https://github.com/vim-scripts/ProportionalResize',
-            \ has('nvim') ? {'event': ['VeryLazy']} : {}
+Plugin 'https://github.com/vim-scripts/ProportionalResize', {'event': ['VeryLazy']}
 " {]} ---------- Visual changes ----------
 
 " {[} View and session
@@ -169,11 +165,8 @@ Plugin 'https://github.com/vim-scripts/ProportionalResize',
 Plugin 'https://github.com/zhimsel/vim-stay', {'on': [], 'event': ['CursorHold']}
 " Map os commands (eg maximise), and open windows commands without shell
 " popup.
-let g:vim_shell_plug_args = {'dependencies': ['xolox/vim-misc']}
-if has('nvim')
-    let g:vim_shell_plug_args['event'] = 'VeryLazy'
-endif
-Plugin 'https://github.com/xolox/vim-shell', g:vim_shell_plug_args
+Plugin 'https://github.com/xolox/vim-shell',
+            \ {'dependencies': ['xolox/vim-misc'], 'event': ['VeryLazy']}
 if v:version >= 704
     Plugin 'https://github.com/xolox/vim-session', {
                 \ 'on': ['OpenSession', 'DeleteSession', 'SaveSession'],
@@ -348,7 +341,7 @@ Plugin 'https://github.com/radenling/vim-dispatch-neovim', {'on': ['Make', 'Star
 " Check that whatever you need isn't in polyglot, first!
 " Multi-lang support
 let g:polyglot_disabled = ['autoindent', 'sensible', 'latex', 'markdown', ]
-Plugin 'https://github.com/sheerun/vim-polyglot', {'event': ['BufNewFile','BufRead']}
+Plugin 'https://github.com/sheerun/vim-polyglot', {'event': ['BufNewFile','BufReadPre']}
 Plugin 'https://github.com/lervag/vim-rmarkdown', {'for': 'rmd'}
 Plugin 'https://github.com/liuchengxu/graphviz.vim', {'for': 'dot'}
 Plugin 'https://github.com/waycrate/swhkd-vim', {'for': 'swhkd'}
