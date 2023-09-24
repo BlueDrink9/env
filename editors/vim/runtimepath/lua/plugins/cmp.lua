@@ -116,14 +116,16 @@ return {
         }),
         -- Because I tab and go, the current selection when I push space is already the one I want.
         -- But this _is_ useful for snippets, because they will be expanded, not just selected.
-        ['<space>'] = function(fallback)
-          if cmp.visible() and cmp.expandable then
-            cmp.mapping.confirm({ select = false })
-            vim.fn.feedkeys(' ')
-          else
-            fallback()
-          end
-        end,
+        -- 24/09/23: disabled because it breaks abbreviations.
+        -- See https://github.com/hrsh7th/nvim-cmp/issues/103
+        -- ['<space>'] = function(fallback)
+        --   if cmp.visible() and cmp.expandable then
+        --     cmp.mapping.confirm({ select = false })
+        --     vim.fn.feedkeys(' ')
+        --   else
+        --     fallback()
+        --   end
+        -- end,
       })
 
     end,
@@ -221,7 +223,6 @@ return {
   -- first: disable default <tab> and <s-tab> behavior in LuaSnip
   {
     "L3MON4D3/LuaSnip",
-    enabled = vim.g.ideMode == 1,
     keys = function()
       return {}
     end,
