@@ -110,6 +110,7 @@ fi
 binFolders="${SCRIPT_DIR_LOCAL}/scripts
 $HOME/.cargo/bin
 $HOME/.emacs.d/bin
+$HOME/.local/share/nvim/mason/bin
 "
 while read -r folder; do
   if ! substrInStr "$folder" "${PATH}" ; then
