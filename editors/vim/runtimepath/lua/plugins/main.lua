@@ -137,6 +137,21 @@ return {
   },
 
 
+  {
+    -- Has come up with a decent set of low-clash bindings I think.
+    'julienvincent/nvim-paredit',
+    ft={
+      -- Currently only supports closure :/
+      -- 'commonlisp',
+      -- 'elisp',
+      'closure',
+    },
+    opts = {
+      indent = {
+        enabled = true,
+      }
+    },
+  },
 
   {
       "chrishrb/gx.nvim",
@@ -194,5 +209,7 @@ return {
     event="OptionSet diff",
     lazy=not vim.o.diff,
   },
+
+  {"kwkarlwang/bufresize.nvim", event="VeryLazy"},
 
 }
