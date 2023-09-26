@@ -14,7 +14,7 @@ hotkeyPrefixes := {"": "Focus"
   ,"+": "Move"
   ,"^": "Send"}
 cycleTargetHotkeyPrefix := {"": "Workspace", "!": "Monitor"}
-cycleDirectionMap := {"[": "previous", "]": "next"}
+cycleDirectionMap := {"[": "previous", "]": "next", "SC01A": "previous"}
 
 SplitModAndDirkey(ThisHotkey, byref modifiers, byref dirKey){
   ; Removes the # from the start of the key, then sets modifiers to the
@@ -36,9 +36,12 @@ FocusOrMoveDirection(){
 
 CycleDirection(){
   global cycleDirectionMap, cycleTargetHotkeyPrefix
+  msgbox, 'hi'
   StringReplace, thisHotkey, A_ThisHotkey, #,, All
   SplitModAndDirkey(A_ThisHotkey, modifiers, dirKey)
   command := "Cycle" + cycleTargetHotkeyPrefix[modifiers]
+  msgbox %command%
+  msgbox % cycleDirectionMap[dirKey]
   %command%(cycleDirectionMap[dirKey])
 }
 
@@ -66,6 +69,31 @@ for _, key in ["h", "l", "k", "j"] {
 ;   ; Hotkey, #+%key%, FocusOrMoveWorkspaceDirection
 ;   ; Hotkey, #+!%key%, FocusOrMoveWorkspaceDirection
 ; }
+; Hotkey, #+t, CycleDirection
+#[::CycleWorkspace("previous")
+#]::CycleWorkspace("next")
+#+[::CycleMoveToWorkspace("previous")
+#+]::CycleMoveToWorkspace("next")
+#^[::
+  CycleMoveToWorkspace("previous")
+  CycleWorkspace("previous")
+return
+#^]::
+  CycleMoveToWorkspace("next")
+  CycleWorkspace("next")
+return
+#![::CycleMonitor("previous")
+#!]::CycleMonitor("next")
+#!+[::CycleMoveToMonitor("previous")
+#!+]::CycleMoveToMonitor("next")
+#!^[::
+  CycleMoveToMonitor("previous")
+  CycleMonitor("previous")
+return
+#!^]::
+  CycleMoveToMonitor("next")
+  CycleMonitor("next")
+return
 
 ; loop, 9{
 ;   ; focus
@@ -77,12 +105,13 @@ for _, key in ["h", "l", "k", "j"] {
 ; }
 
 ; Probably actually generally useful
-#x::send !{F4}
+#z::Minimize()
+#x::close()
 #!x::send #x
 
 #!Esc::Stop()
 ; if things get buggy, often a retile will fix it
-#+^c::Retile()
+#^c::Retile()
 ; Reloads ~/komorebi.ahk (I'm hoping it's more flexible than that...)
 #+c::ReloadConfiguration()
 
@@ -90,10 +119,10 @@ for _, key in ["h", "l", "k", "j"] {
 #w::
   ; Yellowy Orange #F88F08
   activeWindowBorderColour(248, 143, 8, "single")
-  Sequence({w: "komorebic.exe quick-save"
-  ; loads $Env:TEMP\komorebi.quicksave.json on the focused workspace
-  , e: "komorebic.exe quick-load"})
-  resetBorderColour()
+  ; Sequence({w: "komorebic.exe quick-save"
+  ; ; loads $Env:TEMP\komorebi.quicksave.json on the focused workspace
+  ; , e: "komorebic.exe quick-load"})
+  ; resetBorderColour()
 return
 
 #+m::toggleMonocle()
@@ -101,8 +130,8 @@ return
 #+t::toggleTiling()
 #+f::toggleFloat()
 
-; #n::NewWorkspace()
+#n::NewWorkspace()
 
-#r::FlipLayout("horizontal-and-vertical")
+#+r::FlipLayout("horizontal-and-vertical")
 ; #r::FlipLayout("horizontal")
 ; #r::FlipLayout("vertical")

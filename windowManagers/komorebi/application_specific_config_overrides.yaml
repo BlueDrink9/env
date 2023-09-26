@@ -4,3 +4,15 @@
     id: grindstone.exe
   options:
     - tray_and_multi_window
+- name: workrave
+  identifier:
+    kind: exe
+    id: workrave.exe
+  options:
+    - tray_and_multi_window
+- name: hunt and peck
+  identifier:
+    kind: exe
+    id: hap.exe
+  options:
+    - tray_and_multi_window

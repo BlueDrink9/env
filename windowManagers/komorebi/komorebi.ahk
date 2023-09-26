@@ -10,11 +10,11 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 #inputlevel 1
 
-resetBorderColour(){
-  ; this is a nice blue colour #42A5F5
-  activeWindowBorderColour(66, 165, 245, "single")
-}
-resetBorderColour()
+; resetBorderColour(){
+;   ; this is a nice blue colour #42A5F5
+;   activeWindowBorderColour(66, 165, 245, "single")
+; }
+; resetBorderColour()
 
 run komorebic.exe complete-configuration
 
