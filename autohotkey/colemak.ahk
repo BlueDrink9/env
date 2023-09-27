@@ -16,6 +16,8 @@ Process, Priority,, High
 
 ; We want other hotkey scripts to be usable with this one. Sendlevel means if
 ; this script sends ^t, the user's ahk ^t script should also be triggered.
+; Generally works best if this ahk script is run AFTER any other ahk script, so
+; that colemak keys will trigger other scripts as expected.
 sendlevel 99
 #inputlevel 99
 
