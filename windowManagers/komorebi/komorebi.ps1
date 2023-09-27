@@ -1,5 +1,10 @@
 # By default, komorebi will start up $Env:UserProfile\komorebi.ahk if it exists.
 # $Env:KOMOREBI_AHK_V1="$(where autohotkey)"
+$logFile="$env:UserProfile/.logs/komorebi.log"
+try {
+    Stop-Transcript | out-null
+} catch {}
+Start-Transcript -path $logFile -force
 
 komorebic start --await-configuration
 
@@ -16,3 +21,4 @@ start-process -WindowStyle hidden autohotkey `
     -ArgumentList "$PSScriptRoot\komorebi.ahk"
 
 komorebic complete-configuration
+Stop-Transcript

@@ -1,37 +1,18 @@
-#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
-#Warn  ; Enable warnings to assist with detecting common errors.
-; SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
-; SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
-#KeyHistory 0
-#SingleInstance Force
-; #NoTrayIcon Since if you're running this script directly, you're debugging
-
-
 ; Hotkey, #+t, CycleDirection
 #[::CycleWorkspace("previous")
 #]::CycleWorkspace("next")
-#+[::CycleMoveToWorkspace("previous")
-#+]::CycleMoveToWorkspace("next")
-#^[::
-  CycleMoveToWorkspace("previous")
-  CycleWorkspace("previous")
-return
-#^]::
-  CycleMoveToWorkspace("next")
-  CycleWorkspace("next")
-return
+#+[::CycleSendToWorkspace("previous")
+#+]::CycleSendToWorkspace("next")
+#^[::CycleMoveToWorkspace("previous")
+#^]::CycleMoveToWorkspace("next")
 #![::CycleMonitor("previous")
 #!]::CycleMonitor("next")
-#!+[::CycleMoveToMonitor("previous")
-#!+]::CycleMoveToMonitor("next")
-#!^[::
-  CycleMoveToMonitor("previous")
-  CycleMonitor("previous")
-return
-#!^]::
-  CycleMoveToMonitor("next")
-  CycleMonitor("next")
-return
+#!h::CycleMonitor("previous")
+#!l::CycleMonitor("next")
+#!+[::CycleSendToMonitor("previous")
+#!+]::CycleSendToMonitor("next")
+#!^[::CycleMoveToMonitor("previous")
+#!^]::CycleMoveToMonitor("next")
 
 ; Probably actually generally useful
 #z::Minimize()
@@ -45,6 +26,7 @@ return
 #+c::
   ReloadConfiguration()
   run, powershell -NoProfile -windowStyle hidden -File "%A_ScriptDir%\settings.ps1"
+  Reload
 return
 ; Force Grab/manage window
 #!\::Manage()
