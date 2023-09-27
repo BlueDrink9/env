@@ -5,7 +5,7 @@
 #InputLevel 0
 #UseHook on
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
-SetWorkingDir %A_MyDocuments%
+SetWorkingDir %A_MyDocuments%\..
 
 #include %A_Scriptdir%\programs_setup.ahk
 
