@@ -42,17 +42,23 @@ return
 ; if things get buggy, often a retile will fix it
 #^c::Retile()
 ; Reloads ~/komorebi.ahk (I'm hoping it's more flexible than that...)
-#+c::ReloadConfiguration()
-
-
-#w::
-  ; Yellowy Orange #F88F08
-  activeWindowBorderColour(248, 143, 8, "single")
-  ; Sequence({w: "komorebic.exe quick-save"
-  ; ; loads $Env:TEMP\komorebi.quicksave.json on the focused workspace
-  ; , e: "komorebic.exe quick-load"})
-  ; resetBorderColour()
+#+c::
+  ReloadConfiguration()
+  run, powershell -NoProfile -windowStyle hidden -File "%A_ScriptDir%\settings.ps1"
 return
+; Force Grab/manage window
+#!\::Manage()
+#!+\::UnManage()
+
+
+; #w::
+;   ; Yellowy Orange #F88F08
+;   activeWindowBorderColour(248, 143, 8, "single")
+;   ; Sequence({w: "komorebic.exe quick-save"
+;   ; ; loads $Env:TEMP\komorebi.quicksave.json on the focused workspace
+;   ; , e: "komorebic.exe quick-load"})
+;   ; resetBorderColour()
+; return
 
 #+m::toggleMonocle()
 #+!m::toggleMaximize()
@@ -66,5 +72,8 @@ return
 ; #r::FlipLayout("vertical")
 
 ; Block windows+l from locking, with colemak.ahk
-#u::Focus("right")
+; Add this in %A_MyDocuments%\local colemak ove rrides.ahk to get win+l working with colemak.ahk
+; #if true
+; #u::RunWait, komorebic.exe focus right, , Hide
+; #if
 #l::Focus("right")
