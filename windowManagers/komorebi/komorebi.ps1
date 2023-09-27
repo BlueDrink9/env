@@ -21,7 +21,7 @@ for ($mon = 0; $mon -lt $n_monitors; $mon++){
     for ($ws = 0; $ws -lt $n_workspaces; $ws++){
         komorebic workspace-padding $mon $ws $outer_gap
         komorebic container-padding $mon $ws $inner_gap
-        komorebic ensure-workspaces $mon $n_ws
+        komorebic ensure-workspaces $mon $n_workspaces
     }
 }
 
@@ -60,6 +60,12 @@ komorebic cross-monitor-move-behaviour insert
 
 komorebic resize-delta 5
 
+# generate and source the Crowd-sourced app configs.
+# Source in powershell because autokey's run is quite slow.
+. "$env:UserProfile\config\komorebi\komorebi.generated.ps1"
+
 # Leave till last
 start-process -WindowStyle hidden autohotkey `
     -ArgumentList "$PSScriptRoot\komorebi.ahk"
+
+komorebic complete-configuration

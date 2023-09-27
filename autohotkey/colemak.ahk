@@ -89,3 +89,5 @@ Capslock::Backspace
 ; Overrides the change layout key... but that's exactly what this script is
 ; doing.
 #Space::Suspend
+
+#include *i %A_MyDocuments%\local colemak overrides.ahk
