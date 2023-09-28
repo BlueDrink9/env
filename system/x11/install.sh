@@ -12,7 +12,7 @@ do${installID}() {
     chmod u+x "${baseRC}"
     xsession_setup
     xresources_setup
-    if $(SUDO_ASKPASS=/bin/false sudo -v > /dev/null 2>&1); then
+    if userHasSudo; then
         # This is how to set keyboard layout properly on arch, fedora, hopefully others.
         XKB_DEFAULT_OPTIONS="grp:win_space_toggle,caps:backspace,grp_led:caps,altwin:swap_alt_win,shift:both_capslock"
         # sudo localectl set-keymap us-colemak

@@ -4,9 +4,13 @@
 # For debugging use
 # set -eEuxo pipefail
 # set -uxo pipefail
-SCRIPTDIR_CMD='eval echo $(cd $( dirname "${BASH_SOURCE[0]}" ) && pwd)'
+SCRIPTDIR_CMD_BASE='$(cd $( dirname "${BASH_SOURCE[0]}" ) && pwd)'
+SCRIPTDIR_CMD="eval echo $SCRIPTDIR_CMD_BASE"
+if [ "$OSTYPE" = "msys" ]; then
+  # Git bash, all paths should be set as windows paths
+  SCRIPTDIR_CMD="eval cygpath -w $SCRIPTDIR_CMD_BASE"
+fi
 SCRIPTDIR="$($SCRIPTDIR_CMD)"
-# SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export DOTFILES_DIR="$SCRIPTDIR"
 
 source "$SCRIPTDIR/shell/functions.sh"
