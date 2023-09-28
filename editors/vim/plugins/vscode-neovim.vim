@@ -3,12 +3,14 @@
 " {[} Mappings
 
 function! VSCodeMapDict(mappings, visualMappings)
-      for [key, value] in items(a:mappings)
+    for [key, value] in items(a:mappings)
         exec 'nnoremap ' . key . " <Cmd>call VSCodeNotify('" . value . "')<CR>"
-      endfor
-      for [key, value] in items(a:visualMappings)
-        exec 'vnoremap ' . key . " <Cmd>call VSCodeNotify('" . value . "', 1)<CR>"
-      endfor
+    endfor
+    for [key, value] in items(a:visualMappings)
+        " 0 to deselect visual after calling. Call rather than notify to
+        " not deselect until after.
+        exec 'vnoremap ' . key . " <Cmd>call VSCodeCall('" . value . "', 0)<CR>"
+    endfor
 endfunction
 
 " Not going to work because vscode-neovim doesn't do imaps
@@ -160,9 +162,10 @@ function! VSCodeFTMaps(ft)
                   echom "no repl command set for this filetype: '" . &ft . "'"
                   return
             endif
-            noautocmd keepjumps normal! '[V']
-            call VSCodeNotify(b:REPLSendCommand, 1)
-            noautocmd keepjumps normal! V
+            let [line1, line2] = [line("'["), line("']")]
+            " 0 to deselect visual after calling. Call rather than notify to
+            " not deselect until after.
+            call VSCodeCallRange(b:REPLSendCommand, line1, line2, 0)
       endfunction
       exec 'nnoremap <expr> ' . g:IDE_mappings.REPLSend .
                         \ ' _OpfuncRunMotion()'
@@ -174,7 +177,3 @@ au myPlugins filetype sql call VSCodeFTMaps('sql')
 au myPlugins filetype python call VSCodeFTMaps('python')
 
 " {]} Mappings
-
-" Fix quickscope mappings (If used)
-highlight QuickScopePrimary guifg='#afff5f' gui=underline ctermfg=155 cterm=underline
-highlight QuickScopeSecondary guifg='#5fffff' gui=underline ctermfg=81 cterm=underline
