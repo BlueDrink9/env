@@ -10,7 +10,7 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/LGUG2Z/komorebi-applic
 $configDir="$Env:KOMOREBI_CONFIG_HOME"
 
 # Generate application-specific config in config dir
-komorebic pwsh-app-specific-configuration "$sourceFile"
+komorebic pwsh-app-specific-configuration "$sourceFile" "$PSScriptRoot\application_specific_config_overrides.yaml"
 
 pushd "$configDir"
 # generates configDir\komorebi.generated.ahk
