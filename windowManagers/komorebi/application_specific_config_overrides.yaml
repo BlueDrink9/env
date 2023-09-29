@@ -8,16 +8,16 @@
   identifier:
     kind: exe
     id: workrave.exe
-    float_identifiers:
-    - kind: title
-      id: Workrave
-      comment: Targets the floating timer
-    - kind: title
-      id: Exercises
-    - kind: title
-      id: Rest break
-    - kind: title
-      id: Micro-break
+  float_identifiers:
+  - kind: title
+    id: Workrave
+    comment: Targets the floating timer
+  - kind: title
+    id: Exercises
+  - kind: title
+    id: Rest break
+  - kind: title
+    id: Micro-break
   options:
     - tray_and_multi_window
 - name: hunt and peck
@@ -30,5 +30,11 @@
   identifier:
     kind: Exe
     id: codium.exe
+  options:
+  - border_overflow
+- name: Vieb browser
+  identifier:
+    kind: Exe
+    id: Vieb.exe
   options:
   - border_overflow
