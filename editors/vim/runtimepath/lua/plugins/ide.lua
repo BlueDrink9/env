@@ -436,4 +436,23 @@ return {
      cmd = 'DogeGenerate',
    },
 
+   {
+   'bennypowers/nvim-regexplainer',
+      opts = {
+         mappings = {
+            toggle = '<leader>hR',
+         },
+      },
+      dependencies = {
+        'nvim-treesitter/nvim-treesitter',
+        'MunifTanjim/nui.nvim',
+      },
+      keys = { '<leader>hR' },
+      cmd = {
+         'RegexplainerToggle',
+         'RegexplainerShowSplit',
+         'RegexplainerShowPopup'
+      }
+   },
+
 }
