@@ -156,9 +156,12 @@ if !has('nvim-0.5')
     " nvim-0.5 has this built-in
     Plugin 'machakann/vim-highlightedyank'
 endif
-" Resizes splits proportionally when changing overall size
-Plugin 'https://github.com/vim-scripts/ProportionalResize', {'event': ['VeryLazy'],
-            \ 'dependencies': ['inkarkat/vim-ingo-library']}
+
+if !has('nvim')
+    " Resizes splits proportionally when changing overall size
+    Plugin 'https://github.com/vim-scripts/ProportionalResize', {'event': ['VeryLazy'],
+                \ 'dependencies': ['inkarkat/vim-ingo-library']}
+endif
 " {]} ---------- Visual changes ----------
 
 " {[} View and session
