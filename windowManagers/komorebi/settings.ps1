@@ -25,8 +25,11 @@ $border_width=7
 komorebic global-work-area-offset $border_width `
     $border_width (2*$border_width) (2*$border_width)
 
-komorebic mouse-follows-focus disable
 komorebic focus-follows-mouse disable
+# Monitor and workspace switching relies on mouse position. Plus, dragging tabs
+# doesn't immediately retile and make it hard to return the tab like in bspwm,
+# so this setting makes sense.
+komorebic mouse-follows-focus enable
 
 komorebic active-window-border enable
 komorebic active-window-border-width $border_width
