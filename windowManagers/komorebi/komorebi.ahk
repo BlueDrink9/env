@@ -6,6 +6,9 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 #SingleInstance Force
 ; #NoTrayIcon
 
+; $HOME, hopefully/usually...
+SetWorkingDir %A_MyDocuments%\..
+
 #inputlevel 0
 
 ; resetBorderColour(){
