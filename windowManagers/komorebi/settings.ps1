@@ -12,11 +12,11 @@ $n_monitors=4
 $n_workspaces=6
 # Have to set for every workspace and monitor, ugh
 for ($mon = 0; $mon -lt $n_monitors; $mon++){
+    komorebic ensure-workspaces $mon $n_workspaces
     for ($ws = 0; $ws -lt $n_workspaces; $ws++){
         komorebic workspace-padding $mon $ws -- $outer_gap
         komorebic container-padding $mon $ws $inner_gap
     }
-    komorebic ensure-workspaces $mon $n_workspaces
 }
 
 # Configure the invisible border dimensions
