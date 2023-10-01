@@ -175,34 +175,33 @@ return {
 
    -- {]} ---------- Visual ----------
 
-   -- -- " Haven't configured yet.
-   -- -- DEPRECATED - TODO REMOVE
-   -- {'jose-elias-alvarez/null-ls.nvim',
-   --   -- will setup any installed and configured sources for mason
-   --   opts = {
-   --     sources = {
-   --       -- null_ls.builtins.code_actions.refactoring,
-   --       require'null_ls'.builtins.completion.spell,
-   --       require'null_ls'.builtins.hover.printenv,
-   --     }
-   --   }
-   -- },
+   -- " Haven't configured yet.
+   {'nvimtools/none-ls.nvim',
+     -- will setup any installed and configured sources for mason
+     opts = {
+       sources = {
+         -- null_ls.builtins.code_actions.refactoring,
+         require'null_ls'.builtins.completion.spell,
+         require'null_ls'.builtins.hover.printenv,
+       }
+     }
+   },
 
-   -- {'jayp0521/mason-null-ls',
-   --   opts = {
-   --     ensure_installed = {
-   --       'vint',
-   --       'luacheck',
-   --       'stylua',
-   --       'pylint',
-   --       'shellcheck',
-   --       'jq',
-   --       'proselint',
-   --     },
-   --     automatic_setup = true,
-   --   },
-   --   config = require'mason-null-ls'.setup_handlers,
-   -- },
+   {'jayp0521/mason-null-ls',
+     opts = {
+       -- ensure_installed = {
+       --   'vint',
+       --   'luacheck',
+       --   'stylua',
+       --   'pylint',
+       --   'shellcheck',
+       --   'jq',
+       --   'proselint',
+       -- },
+       automatic_setup = true,
+     },
+     config = require'mason-null-ls'.setup_handlers,
+   },
 
    -- {'simrat39/symbols-outline.nvim', config=true},
 

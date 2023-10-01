@@ -109,7 +109,7 @@ return {
   },
 
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     enabled = vim.g.ideMode == 1,
     opts = function()
       local nls = require("null-ls")
