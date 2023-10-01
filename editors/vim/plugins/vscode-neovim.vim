@@ -125,6 +125,10 @@ nnoremap / /
 nnoremap n n
 nnoremap N N
 
+set nonumber
+set norelativenumber
+set colorcolumn=
+
 endfunction
 au myVimrc User MappingOverrides call VSCodeMaps()
 
