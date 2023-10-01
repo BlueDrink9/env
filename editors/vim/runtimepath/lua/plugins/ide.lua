@@ -432,7 +432,7 @@ return {
 
    { -- docs generator
      'kkoomen/vim-doge',
-     build = ':call doge#install()'
+     build = ':call doge#install()',
      cmd = 'DogeGenerate',
    },
 

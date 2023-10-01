@@ -34,6 +34,9 @@ function AddToPath($path){
 
 AddToPath "C:\ProgramData\chocolatey\bin"
 
+# TODO: add git/cmd and git/bin for wherever git gets installed to -
+# local appdata if no admin?
+
 Get-ChildItem "packages/" -filter "*.conf" | foreach-object {
     InstallPackagesFromFile("packages/$_")
 }
