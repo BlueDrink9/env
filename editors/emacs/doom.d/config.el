@@ -526,3 +526,11 @@ rather than file lines."
 (advice-add 'ispell-lookup-words :around
             (lambda (orig &rest args)
               (shut-up (apply orig args))))
+
+;; Always consider a "paragraph" to be blank line delineated blocks of text
+(defun use-text-mode-paragraphs ()
+  "Use text-mode paragraph definitions."
+  (setq-local paragraph-start (default-value 'paragraph-start))
+  (setq-local paragraph-separate (default-value 'paragraph-separate)))
+
+(add-hook 'after-change-major-mode-hook 'use-text-mode-paragraphs)
