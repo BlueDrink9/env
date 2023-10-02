@@ -166,6 +166,7 @@ fi
 alias srcinfo='makepkg --printsrcinfo > .SRCINFO'
 
 # Allows pip to auto-update, and ensures you use the right version of pip for the current environment
+alias py='python'
 alias pip='python -m pip'
 alias venv='python -m venv'
 alias venvc='python -m venv venv'
