@@ -116,10 +116,8 @@
 (setq evil-collection-want-unimpaired-p t)
 
 ;; Disable smartparens. Can't be done another way because it is a default package.
-;; (remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
-;; or: from an old github issue:
-(after! smartparens (smartparens-global-mode -1))
-;;
+(remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
+
 (sp-local-pair 'lua-mode "function" "end")
 ;; Disable autopairing unless before newline
 ;; (sp-pair "*" nil :unless sp-point-before-eol-p)

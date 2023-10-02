@@ -14,6 +14,7 @@
             (mixed-pitch-mode 0)
             )
 
+
 ;; Use soft wraps instead of hard. Only enable if found to be necessary.
 ;; (remove-hook 'text-mode-hook #'auto-fill-mode)
 ;; (add-hook 'message-mode-hook #'word-wrap-mode)
@@ -103,12 +104,16 @@
   )
 ;; (dolist (hook (list 'org-mode-hook 'latex-mode-hook))
 ;;   (add-hook! hook
-(add-hook! 'org-mode-hook
-    (unless (not (boundp 'local-bib-path))
-      (update-bibliography-path 'local-bib-path)))
-(add-hook! 'latex-mode-hook
-    (unless (not (boundp 'local-bib-path))
-      (update-bibliography-path 'local-bib-path)))
+(dolist (mode '(org-mode-hook LaTeX-mode-hook))
+; Can't use add-hook! within a loop, so using add-hook
+  (add-hook mode
+            (lambda ()
+              (when (boundp 'local-bib-path)
+                (update-bibliography-path 'local-bib-path))
+              ;; Disable concealing symbols etc.
+              (prettify-symbols-mode -1)
+              (TeX-fold-mode -1))))
+
 ;; (mapc (lambda (hook)
 ;;         (add-hook hook
 ;;           (unless (not (boundp 'local-bib-path))
