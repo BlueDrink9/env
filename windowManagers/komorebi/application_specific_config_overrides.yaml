@@ -2,6 +2,9 @@
   identifier:
     kind: exe
     id: GS4.exe
+  float_identifiers:
+  - kind: title
+    id: Welcome back.*
   options:
     - tray_and_multi_window
 - name: workrave
@@ -38,3 +41,9 @@
     id: Vieb.exe
   options:
   - border_overflow
+- name: Joplin
+  identifier:
+    kind: exe
+    id: joplin.exe
+  options:
+    - tray_and_multi_window
