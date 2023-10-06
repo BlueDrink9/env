@@ -33,14 +33,16 @@ super + e; e
 
 # Internet browser
 super + e; b
+    firefox || 
+    xdg-open /usr/share/applications/firefox.desktop || \
+    xdg-open ~/usr/share/applications/firefox.desktop || \
+    gtk-launch firefox.desktop || \
+super + e; shift+b
     brave || \
     brave-browser || \
     xdg-open /usr/share/applications/brave-browser.desktop || \
     xdg-open ~/usr/share/applications/brave-browser.desktop || \
     gtk-launch brave-browser.desktop || \
-    firefox
-super + e; shift+b
-    firefox
 
 # Office: write, spreadsheet, present, images, Image manipulation.
 super + e; o; {w,s,p,i,shift+I,3}
