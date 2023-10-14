@@ -54,7 +54,9 @@ require("lazy").setup({
       enabled = vim.g.ideMode == 1,
     },
 
-    { import = "lazyvim.plugins.extras.editor.leap" },
+    { import = "lazyvim.plugins.extras.editor.leap",
+      enabled = vim.g.ideMode == 1,
+    },
 
     { import = "plugins" },
 
