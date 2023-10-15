@@ -180,9 +180,9 @@ return {
      -- will setup any installed and configured sources for mason
      opts = {
        sources = {
-         -- null_ls.builtins.code_actions.refactoring,
-         require'null_ls'.builtins.completion.spell,
-         require'null_ls'.builtins.hover.printenv,
+         -- null-ls.builtins.code_actions.refactoring,
+         require'null-ls'.builtins.completion.spell,
+         require'null-ls'.builtins.hover.printenv,
        }
      }
    },
