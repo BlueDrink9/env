@@ -7,7 +7,7 @@ KeyHistory(0)
 SendMode("Input")  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir(A_MyDocuments "\..")
 
-#Include %A_Scriptdir%\programs_setup.ahk
+#include %A_ScriptDir%\programs_setup.ahk
 
 ; Include if exists - intended to be local to each machine
 ; Example: Google suite, override and add new
