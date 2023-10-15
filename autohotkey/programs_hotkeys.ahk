@@ -17,6 +17,7 @@ s::Run, excel.exe
 #If IsPrefix("exe")
 e::Run explorer
 t::%terminal%()
++t::%terminal%(true)
 b::Run % GetDefaultBrowser()
 v::%editor%()
 +v::%liteEditor%()

@@ -54,9 +54,13 @@ ide(){
 }
 
 terminal=terminal
-terminal(){
+terminal(admin:=false){
     ; run, "WindowsTerminal.lnk"
-    run, "alacritty.exe"
+    if admin{
+        run, *RunAs "alacritty.exe"
+    } else {
+        run, "alacritty.exe"
+    }
 }
 
 notes=joplin
