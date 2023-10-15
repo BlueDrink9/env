@@ -16,16 +16,16 @@ IsPrefix(arg){
 
 GetDefaultBrowser() {
     RegRead, BrowserPath, HKCU, Software\Microsoft\Windows\Shell\Associations\UrlAssociations\http\UserChoice, ProgId
-    if (BrowserPath = "IE.HTTP")
-        BrowserPath := "iexplore.exe"
-    else if (BrowserPath = "FirefoxURL")
-        BrowserPath := "firefox.exe"
-    else if (BrowserPath = "ChromeHTML")
-        BrowserPath := "chrome.exe"
-    else if (BrowserPath = "AppXq0fevzme2pys62n3e0fbqa7peapykr8v")
-        BrowserPath := "microsoft-edge.exe"
-    else if (BrowserPath = "BraveHTML")
-        BrowserPath := "brave.exe"
+    maps := { "IE.HTTP": "iexplore.exe"
+        , "FirefoxURL": "firefox.exe"
+        , "ChromeHTML": "chrome.exe"
+        , "AppXq0fevzme2pys62n3e0fbqa7peapykr8v": "microsoft-edge.exe"
+        , "BraveHTML": "brave.exe" }
+    for ProgId, browser in maps {
+        if regexmatch(BrowserPath, ".*" . ProgId . ".*"){
+            BrowserPath := browser
+        }
+    }
     return BrowserPath
 }
 
