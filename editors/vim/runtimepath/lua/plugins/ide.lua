@@ -2,457 +2,479 @@
 -- call SourcePluginFile('nvim-cmp.lua')
 
 if vim.g.ideMode == 0 then
-   return {}
+	return {}
 end
 
 local idemaps = vim.g.IDE_mappings
 
 return {
-   --   { import = "lazyvim.plugins.extras.coding.yanky",
-   -- enabled=IsPluginUsed("folke/LazyVim")},
-   -- { import = "lazyvim.plugins.extras.dap.core" },
-   -- { import = "lazyvim.plugins.extras.dap.nlua" },
+	--   { import = "lazyvim.plugins.extras.coding.yanky",
+	-- enabled=IsPluginUsed("folke/LazyVim")},
+	-- { import = "lazyvim.plugins.extras.dap.core" },
+	-- { import = "lazyvim.plugins.extras.dap.nlua" },
 
-   { import = "lazyvim.plugins.extras.lang.python",
-   enabled=IsPluginUsed("folke/LazyVim")},
-   { import = "lazyvim.plugins.extras.lang.rust",
-   enabled=IsPluginUsed("folke/LazyVim")},
-   { import = "lazyvim.plugins.extras.lang.yaml",
-   enabled=IsPluginUsed("folke/LazyVim")},
-   { import = "lazyvim.plugins.extras.lang.json",
-   enabled=IsPluginUsed("folke/LazyVim")},
+	{ import = "lazyvim.plugins.extras.lang.python", enabled = IsPluginUsed("folke/LazyVim") },
+	{ import = "lazyvim.plugins.extras.lang.rust", enabled = IsPluginUsed("folke/LazyVim") },
+	{ import = "lazyvim.plugins.extras.lang.yaml", enabled = IsPluginUsed("folke/LazyVim") },
+	{ import = "lazyvim.plugins.extras.lang.json", enabled = IsPluginUsed("folke/LazyVim") },
 
-   { import = "lazyvim.plugins.extras.test.core",
-   enabled=IsPluginUsed("folke/LazyVim")},
+	{ import = "lazyvim.plugins.extras.test.core", enabled = IsPluginUsed("folke/LazyVim") },
 
-   { import = "lazyvim.plugins.extras.formatting.prettier",
-   enabled=IsPluginUsed("folke/LazyVim")},
-   { import = "lazyvim.plugins.extras.util.project",
-   enabled=IsPluginUsed("folke/LazyVim")},
+	{ import = "lazyvim.plugins.extras.formatting.prettier", enabled = IsPluginUsed("folke/LazyVim") },
+	{ import = "lazyvim.plugins.extras.util.project", enabled = IsPluginUsed("folke/LazyVim") },
 
-   -- Dependency for a lot of plugins
-   { "nvim-lua/plenary.nvim", lazy=true },
+	-- Dependency for a lot of plugins
+	{ "nvim-lua/plenary.nvim", lazy = true },
 
-   -- For installing LSPs (and other packages)
-   {
-      "williamboman/mason.nvim",
-      cmd="Mason",
-      opts={
-         ui = {
-            icons = {
-               package_installed = "✓",
-               package_pending = "➜",
-               package_uninstalled = "✗"
-            }
-         }
-      },
-      config = function()
-         require('mason-update-all')
-         require('mason-tool-installer')
-         -- -- nvim --headless -c 'autocmd User MasonUpdateAllComplete quitall' -c 'MasonUpdateAll'
-      end
-   },
-   { "https://github.com/RubixDev/mason-update-all", lazy=true},
-   { "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim", lazy=true},
+	-- For installing LSPs (and other packages)
+	{
+		"williamboman/mason.nvim",
+		cmd = "Mason",
+		opts = {
+			ui = {
+				icons = {
+					package_installed = "✓",
+					package_pending = "➜",
+					package_uninstalled = "✗",
+				},
+			},
+		},
+		config = function()
+			require("mason-update-all")
+			require("mason-tool-installer")
+			-- -- nvim --headless -c 'autocmd User MasonUpdateAllComplete quitall' -c 'MasonUpdateAll'
+		end,
+	},
+	{ "https://github.com/RubixDev/mason-update-all", lazy = true },
+	{ "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim", lazy = true },
 
-   { "https://github.com/norcalli/nvim-colorizer.lua", config = true, event="VeryLazy"},
-   -- {'nvim-notify', opt={stages="static"}},
+	{ "https://github.com/norcalli/nvim-colorizer.lua", config = true, event = "VeryLazy" },
+	-- {'nvim-notify', opt={stages="static"}},
 
-   -- {[} ---------- Visual ----------
-   {
-      "folke/noice.nvim",
-      enabled = false,
-      opts = {
-         cmdline = {
-            -- view = "cmdline",  -- or "cmdline_popup" for fancy.
-            -- Sent to nui.nvim's input popup
-            input = {
-               -- input:map("n", "<esc>", input.input_props.on_close, { noremap = true })
-            },
-         },
-         popupmenu = {
-            enabled = true,
-         },
-         presets = {
-            command_palette = true,
-            long_message_to_split = true,
-         },
-         messages = {
-            view_search = false,
-         },
-         lsp = {
-            progress = {
-               enabled = false,
-            },
-         },
-      },
-   },
-   -- override my normal mapping to ctrl-f, since noice can handle it like normal
-   -- vim.api.nvim_create_autocmd(
-   -- "VimEnter",
-   --  {
-   --   group = "myIDE",
-   --   buffer = bufnr,
-   --   callback = function()
-   --      vim.api.nvim_set_keymap('c', "kv", "<esc>", { noremap=true, silent=true })
-   --      vim.api.nvim_set_keymap('c', "vk", "<esc>", { noremap=true, silent=true })
-   --   end,
-   --  })
+	-- {[} ---------- Visual ----------
+	{
+		"folke/noice.nvim",
+		enabled = false,
+		opts = {
+			cmdline = {
+				-- view = "cmdline",  -- or "cmdline_popup" for fancy.
+				-- Sent to nui.nvim's input popup
+				input = {
+					-- input:map("n", "<esc>", input.input_props.on_close, { noremap = true })
+				},
+			},
+			popupmenu = {
+				enabled = true,
+			},
+			presets = {
+				command_palette = true,
+				long_message_to_split = true,
+			},
+			messages = {
+				view_search = false,
+			},
+			lsp = {
+				progress = {
+					enabled = false,
+				},
+			},
+		},
+	},
+	-- override my normal mapping to ctrl-f, since noice can handle it like normal
+	-- vim.api.nvim_create_autocmd(
+	-- "VimEnter",
+	--  {
+	--   group = "myIDE",
+	--   buffer = bufnr,
+	--   callback = function()
+	--      vim.api.nvim_set_keymap('c', "kv", "<esc>", { noremap=true, silent=true })
+	--      vim.api.nvim_set_keymap('c', "vk", "<esc>", { noremap=true, silent=true })
+	--   end,
+	--  })
 
-   {
-      "https://github.com/lukas-reineke/indent-blankline.nvim.git",
-      init = function()
-         local indentcolours = {}
-         if vim.opt.termguicolors then
-            -- Auto-gen some greys
-            for i = 100, 201, (200 - 100) / 5 do
-               table.insert(indentcolours, string.format("#%02x%02x%02x", i, i, i))
-            end
-         else
-            indentcolours = {
-               "Red",
-               "Yellow",
-               "Green",
-               "Blue",
-               "Purple",
-            }
-         end
-         for i, colour in pairs(indentcolours) do
-            local cmd = "IndentBlanklineIndent" .. i .. " guifg=" .. colour .. " gui=nocombine"
-            vim.cmd('call add(g:customHLGroups, "' .. cmd .. '")')
-         end
-      end,
+	{
+		"https://github.com/lukas-reineke/indent-blankline.nvim.git",
+		main = "ibl",
+		opts = {
+			indent = {
+				char = "┆",
+				tab_char = "┆",
+				-- char_blankline = "",
+				highlight = {
+					"IndentBlanklineIndent1",
+					"IndentBlanklineIndent2",
+					"IndentBlanklineIndent3",
+					"IndentBlanklineIndent4",
+					"IndentBlanklineIndent5",
+				},
+			},
+			-- May be a touch slow
+			scope = {
+				show_start = true,
+				show_exact_scope = true,
+				-- show_end = false,
+			},
+		},
+		config = function(_, opts)
+			opts.scope.enabled = IsPluginUsed("nvim-treesitter")
 
-      opts = {
-         char = "┆",
-         char_blankline = "",
-         show_first_indent_level = false,
-         char_highlight_list = {
-            "IndentBlanklineIndent1",
-            "IndentBlanklineIndent2",
-            "IndentBlanklineIndent3",
-            "IndentBlanklineIndent4",
-            "IndentBlanklineIndent5",
-         },
-         indent_blankline_use_treesitter = IsPluginUsed("nvim-treesitter"),
-         -- May be a touch slow
-         show_current_context = IsPluginUsed("nvim-treesitter"),
-         show_current_context_start = not IsPluginUsed("nvim-treesitter"),
-         indent_blankline_show_current_context_start_on_current_line = not vim.fn.IsPluginUsed(
-         "nvim-treesitter"
-         ) == 1,
-      },
-   },
+			local hooks = require("ibl.hooks")
+			hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
+			hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_tab_indent_level)
 
-   {
-      "https://github.com/folke/which-key.nvim.git",
-      opts = {
-         triggers_blacklist = {
-            i = { "k", "v", "(", "{", "[" },
-         },
-      },
-      event = "VeryLazy",
-   },
+			local indentcolours = {}
+			if vim.opt.termguicolors then
+				-- Auto-gen some greys
+				for i = 100, 201, (200 - 100) / 5 do
+					table.insert(indentcolours, string.format("#%02x%02x%02x", i, i, i))
+				end
+			else
+				indentcolours = {
+					"Red",
+					"Yellow",
+					"Green",
+					"Blue",
+					"Purple",
+				}
+			end
 
-   { "sudormrfbin/cheatsheet.nvim", cmd = "Cheatsheet", keys = { "<leader><s-/>", "<cmd>Cheatsheet<cr>" } },
+			hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+				for i, colour in pairs(indentcolours) do
+					vim.api.nvim_set_hl(0, "IndentBlanklineIndent" .. i, { fg = colour, nocombine = true })
+				end
+			end)
 
-   {
-      "https://github.com/winston0410/range-highlight.nvim",
-      dependencies = { "winston0410/cmd-parser.nvim" },
-      event = "CmdlineEnter",
-      config = true,
-   },
+			require("ibl").setup(opts)
+		end,
+	},
 
-   -- {'mfussenegger/nvim-lint', config = function()
-   --   vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-   --     callback = function()
-   --       require("lint").try_lint()
-   --     end,
-   --     group='myIDE',
-   --   })
-   -- end
-   -- },
+	{
+		"https://github.com/folke/which-key.nvim.git",
+		opts = {
+			triggers_blacklist = {
+				i = { "k", "v", "(", "{", "[" },
+			},
+		},
+		event = "VeryLazy",
+	},
 
-   -- {]} ---------- Visual ----------
+	{ "sudormrfbin/cheatsheet.nvim", cmd = "Cheatsheet", keys = { "<leader><s-/>", "<cmd>Cheatsheet<cr>" } },
 
-   -- " Haven't configured yet.
-   {'nvimtools/none-ls.nvim',
-     -- will setup any installed and configured sources for mason
-     opts = {
-       sources = {
-         -- null-ls.builtins.code_actions.refactoring,
-         require'null-ls'.builtins.completion.spell,
-         require'null-ls'.builtins.hover.printenv,
-       }
-     }
-   },
+	{
+		"https://github.com/winston0410/range-highlight.nvim",
+		dependencies = { "winston0410/cmd-parser.nvim" },
+		event = "CmdlineEnter",
+		config = true,
+	},
 
-   {'jayp0521/mason-null-ls',
-     opts = {
-       -- ensure_installed = {
-       --   'vint',
-       --   'selene',
-       --   'stylua',
-       --   'pylint',
-       --   'shellcheck',
-       --   'jq',
-       --   'proselint',
-       -- },
-       automatic_setup = true,
-     },
-     config = require'mason-null-ls'.setup_handlers,
-   },
+	-- {'mfussenegger/nvim-lint', config = function()
+	--   vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+	--     callback = function()
+	--       require("lint").try_lint()
+	--     end,
+	--     group='myIDE',
+	--   })
+	-- end
+	-- },
 
-   -- {'simrat39/symbols-outline.nvim', config=true},
+	-- {]} ---------- Visual ----------
 
-   {
-      "NeogitOrg/neogit",
-      opts = {
-           disable_commit_confirmation = true,
-           disable_insert_on_commit = "auto",
-           disable_builtin_notifications = vim.fn.has('win32') == 1,
-           disable_line_numbers = false,
-           mappings = {
-             finder = {
-               ["<BS>"] = "MultiselectToggleNext",
-             },
-             -- Setting any of these to `false` will disable the mapping.
-             status = {
-               ["<BS>"] = "Toggle",
-            },
-         },
-      },
-      config = function(_, opts)
-         vim.api.nvim_create_user_command("Magit", "Neogit", {})
-         -- For some reason lazy isn't mapping this right.
-         vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<CR>")
-         require('neogit').setup(opts)
-      end,
-      cmd = { "Neogit", "Magit" },
-      keys = { "<leader>gg", "<cmd>Neogit<CR>", desc = "NeoGit" },
-      dependencies = {
-         "nvim-lua/plenary.nvim",         -- required
-         "nvim-telescope/telescope.nvim", -- optional
-         "sindrets/diffview.nvim",        -- optional
-         -- "ibhagwan/fzf-lua",              -- optional
-      },
-   },
+	-- Haven't configured yet. Add the none-ls extra
+	{
+		"nvimtools/none-ls.nvim",
+		-- will setup any installed and configured sources for mason
+		opts = {
+			sources = {
+				-- null-ls.builtins.code_actions.refactoring,
+				require("null-ls").builtins.completion.spell,
+				-- require'null-ls'.builtins.hover.printenv,
+			},
+		},
+	},
 
-   -- {[} ---------- REPL ----------
-   -- {"michaelb/sniprun",
-   --   opts = {
-   --     --" you can combo different display modes as desired
-   --     display = {
-   --       "Classic",                    -- "display results in the command-line  area
-   --       "VirtualTextOk",              -- "display ok results as virtual text (multiline is shortened)
+	{
+		"jay-babu/mason-null-ls.nvim",
+		event = { "BufReadPre", "BufNewFile" },
+		dependencies = {
+			"williamboman/mason.nvim",
+			"nvimtools/none-ls.nvim",
+		},
+		opts = {
+			-- ensure_installed = {
+			--   'vint',
+			--   'selene',
+			--   'stylua',
+			--   'pylint',
+			--   'shellcheck',
+			--   'jq',
+			--   'proselint',
+			-- },
+			automatic_setup = true,
+		},
+		-- config = function(_, opts)
+		--     require("mason-null-ls").setup(opts)
+		-- end,
+	},
 
-   --       "VirtualTextErr",          -- "display error results as virtual text
-   --       -- "TempFloatingWindow",      -- "display results in a floating window
-   --       "LongTempFloatingWindow",  -- "same as above, but only long results. To use with VirtualText__
-   --       -- "Terminal"                 -- "display results in a vertical split
-   --       "TerminalWithCode",        --# display results and code history in a vertical split
-   --     },
-   --   },
-   --   keys = {
-   --     {idemaps.REPLSendLine, '<Plug>SnipRun'},
-   --     {idemaps.REPLSend, '<Plug>SnipRunOperator'},
-   --     {idemaps.REPLCancel, '<Plug>SnipReset'},
-   --     {idemaps.REPLClear, '<Plug>SnipClose'},
-   --     {idemaps.REPLClose, '<Plug>SnipClose'},
-   --     {idemaps.REPLSend, '<Plug>SnipRun', mode='v'},
-   --     -- sniprunfile_keep_position
-   --     {idemaps.REPLSendFile, [[
-   --     <cmd>let b:caret=winsaveview()
-   --          <bar> %SnipRun
-   --          <bar> call winrestview(b:caret)<CR>
-   --       ]]
-   --     },
-   --   },
-   -- },
+	-- {'simrat39/symbols-outline.nvim', config=true},
 
-   {
-      "https://github.com/Vigemus/iron.nvim",
-      -- version="*", -- v3 currently broken for latest nvim, need master
-      config = function()
-         require('iron.core').setup({
-            config = {
-               -- Whether a repl should be discarded or not
-               scratch_repl = true,
-               repl_definition = {
-                  sh = {
-                     command = { "bash" },
-                  },
-               },
-               repl_open_cmd = require("iron.view").split.horizontal.botright(0.2)
-               -- repl_open_cmd = require("iron.view").split.botright(function
-               --  if vim.o.columns > 180 then
-               --      return require("iron.view").split.vertical.botright(50)
-               --  else
-               --      return require("iron.view").split.horizonal.botright(0.20)
-               --  end
-               -- end
-            },
-            keymaps = {
-               send_motion = idemaps.REPLSend,
-               visual_send = idemaps.REPLSend,
-               send_file = idemaps.REPLSendFile,
-               send_line = idemaps.REPLSendLine,
-               -- send_mark = idemaps.REPLSend,
-               -- mark_motion = idemaps.REPLSend,
-               -- mark_visual = idemaps.REPLSend,
-               -- remove_mark = idemaps.REPLSend,
-               -- cr = idemaps.REPLSend,
-               interrupt = idemaps.REPLCancel,
-               exit = idemaps.REPLClose,
-               clear = idemaps.REPLClear,
-            },
-            highlight = {
-               italic = true,
-            },
-            ignore_blank_lines = false,
-         })
-      end,
-      cmd = {"IronFocus", "IronRepl"},
-      keys = {
-         { "<space>s<c-s>", "<cmd>IronFocus<cr>" },
-         { idemaps.REPLSend, mode={'n', 'v'}},
-         { idemaps.REPLSendFile },
-         { idemaps.REPLSendLine },
-      },
-   },
+	{
+		"NeogitOrg/neogit",
+		opts = {
+			disable_commit_confirmation = true,
+			disable_insert_on_commit = "auto",
+			disable_builtin_notifications = vim.fn.has("win32") == 1,
+			disable_line_numbers = false,
+			mappings = {
+				finder = {
+					["<BS>"] = "MultiselectToggleNext",
+				},
+				-- Setting any of these to `false` will disable the mapping.
+				status = {
+					["<BS>"] = "Toggle",
+				},
+			},
+		},
+		config = function(_, opts)
+			vim.api.nvim_create_user_command("Magit", "Neogit", {})
+			-- For some reason lazy isn't mapping this right.
+			vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<CR>")
+			require("neogit").setup(opts)
+		end,
+		cmd = { "Neogit", "Magit" },
+		keys = { "<leader>gg", "<cmd>Neogit<CR>", desc = "NeoGit" },
+		dependencies = {
+			"nvim-lua/plenary.nvim", -- required
+			"nvim-telescope/telescope.nvim", -- optional
+			"sindrets/diffview.nvim", -- optional
+			-- "ibhagwan/fzf-lua",              -- optional
+		},
+	},
 
-   -- {]} ---------- REPL ----------
+	-- {[} ---------- REPL ----------
+	-- {"michaelb/sniprun",
+	--   opts = {
+	--     --" you can combo different display modes as desired
+	--     display = {
+	--       "Classic",                    -- "display results in the command-line  area
+	--       "VirtualTextOk",              -- "display ok results as virtual text (multiline is shortened)
 
-   {
-      "jalvesaq/Nvim-R",
-      config = function()
-         vim.fn.SourcePluginFile("nvim-R.vim")
-      end,
-      ft={"R", "Rmd", "Rnoweb"},
-   },
+	--       "VirtualTextErr",          -- "display error results as virtual text
+	--       -- "TempFloatingWindow",      -- "display results in a floating window
+	--       "LongTempFloatingWindow",  -- "same as above, but only long results. To use with VirtualText__
+	--       -- "Terminal"                 -- "display results in a vertical split
+	--       "TerminalWithCode",        --# display results and code history in a vertical split
+	--     },
+	--   },
+	--   keys = {
+	--     {idemaps.REPLSendLine, '<Plug>SnipRun'},
+	--     {idemaps.REPLSend, '<Plug>SnipRunOperator'},
+	--     {idemaps.REPLCancel, '<Plug>SnipReset'},
+	--     {idemaps.REPLClear, '<Plug>SnipClose'},
+	--     {idemaps.REPLClose, '<Plug>SnipClose'},
+	--     {idemaps.REPLSend, '<Plug>SnipRun', mode='v'},
+	--     -- sniprunfile_keep_position
+	--     {idemaps.REPLSendFile, [[
+	--     <cmd>let b:caret=winsaveview()
+	--          <bar> %SnipRun
+	--          <bar> call winrestview(b:caret)<CR>
+	--       ]]
+	--     },
+	--   },
+	-- },
 
-   -- Switching to luasnip via lazyvim
-   -- {
-   --  "https://github.com/hrsh7th/vim-vsnip",
-   --  keys = {
-   --      { idemaps.snippetExpand, "<Plug>(vsnip-expand-or-jump)", mode = { "i", "v" } },
-   --  },
-   --  config = function()
-   --      vim.g.vsnip_snippet_dir = vim.fn.PathExpand(vim.g.plugin_config_dir .. "/../runtimepath/snippets")
-   --  end,
-   --  event = "InsertEnter",
-   -- },
-   -- { "hrsh7th/vim-vsnip-integ", event = "InsertEnter" },
+	{
+		"https://github.com/Vigemus/iron.nvim",
+		-- version="*", -- v3 currently broken for latest nvim, need master
+		config = function()
+			require("iron.core").setup({
+				config = {
+					-- Whether a repl should be discarded or not
+					scratch_repl = true,
+					repl_definition = {
+						sh = {
+							command = { "bash" },
+						},
+					},
+					repl_open_cmd = require("iron.view").split.horizontal.botright(0.2),
+					-- repl_open_cmd = require("iron.view").split.botright(function
+					--  if vim.o.columns > 180 then
+					--      return require("iron.view").split.vertical.botright(50)
+					--  else
+					--      return require("iron.view").split.horizonal.botright(0.20)
+					--  end
+					-- end
+				},
+				keymaps = {
+					send_motion = idemaps.REPLSend,
+					visual_send = idemaps.REPLSend,
+					send_file = idemaps.REPLSendFile,
+					send_line = idemaps.REPLSendLine,
+					-- send_mark = idemaps.REPLSend,
+					-- mark_motion = idemaps.REPLSend,
+					-- mark_visual = idemaps.REPLSend,
+					-- remove_mark = idemaps.REPLSend,
+					-- cr = idemaps.REPLSend,
+					interrupt = idemaps.REPLCancel,
+					exit = idemaps.REPLClose,
+					clear = idemaps.REPLClear,
+				},
+				highlight = {
+					italic = true,
+				},
+				ignore_blank_lines = false,
+			})
+		end,
+		cmd = { "IronFocus", "IronRepl" },
+		keys = {
+			{ "<space>s<c-s>", "<cmd>IronFocus<cr>" },
+			{ idemaps.REPLSend, mode = { "n", "v" } },
+			{ idemaps.REPLSendFile },
+			{ idemaps.REPLSendLine },
+		},
+	},
 
-   { "octaltree/virtualsnip", build = "make", event = "InsertEnter" },
+	-- {]} ---------- REPL ----------
 
-   {
-      "hachy/cmdpalette.nvim",
-      cond=vim.g.vscode ~= 1,
-      keys={ ";", "<Cmd>Cmdpalette<CR>", mode={'n','x'}},
-      opts= {
-         win = {
-            height = 0.1,
-            width = 0.8,
-            border = "rounded",
-            -- Title requires nvim-0.9 or higher.
-            title = "Cmdpalette",
-            title_pos = "center",
-         },
-         sign = {
-            text = ":",
-         },
-         buf = {
-            filetype = "cmdpalette",
-            syntax = "vim",
-         },
-         delete_confirm = true,
-         show_title = false,
-      },
-      config = function(_, opts)
-         require("cmdpalette").setup(opts)
-         vim.keymap.set({'n'}, ';', "<Cmd>Cmdpalette<CR>")
-         vim.keymap.set({'x'}, ';', "<Cmd>Cmdpalette<CR>'<,'>")
-         -- vim.opt_local.completeopt:remove("noselect")
-         local function bufmap()
-            -- Need the <c-n> to select the first option for some reason
-            vim.keymap.set('i', '<tab>', "<c-x><c-v>",
-            -- 'pumvisible() ? "<c-n>" : "<c-x><c-v><c-n>"',
-            {buffer=true})
-            vim.keymap.set({"n", "v"}, "<CR>", require'cmdpalette'.execute_cmd, {buffer=true})
-         end
+	{
+		"jalvesaq/Nvim-R",
+		config = function()
+			vim.fn.SourcePluginFile("nvim-R.vim")
+		end,
+		ft = { "R", "Rmd", "Rnoweb" },
+	},
 
-         local function copy_cabbrevs()
-            --- Copy cabbrevs into local iabbrevs, for same behaviour as
-            --- cmd-mode.
-            local result = vim.api.nvim_exec2('cabbrev', {output=true}).output
-            for line in result:gmatch("[^\r\n]+") do
-               local mode, abbrev, expansion = line:match(
-               "^%s*(%S+)%s+(%S+)%s+%*?%s*(.+)$")
-               -- Doens't look like expr abbrevs are marked in any way. But
-               -- most of the ones we care about will be returning strings in
-               -- some way, so will usually have quotes in them. Hopefully a
-               -- decent enough heuristic...
-               if expansion:find('\"') or expansion:find("\'") then
-                  vim.cmd.iabbr({"<expr>", "<buffer>", abbrev, expansion})
-               else
-                  vim.cmd.iabbr({"<buffer>", abbrev, expansion})
-               end
-            end
-         end
+	-- Switching to luasnip via lazyvim
+	-- {
+	--  "https://github.com/hrsh7th/vim-vsnip",
+	--  keys = {
+	--      { idemaps.snippetExpand, "<Plug>(vsnip-expand-or-jump)", mode = { "i", "v" } },
+	--  },
+	--  config = function()
+	--      vim.g.vsnip_snippet_dir = vim.fn.PathExpand(vim.g.plugin_config_dir .. "/../runtimepath/snippets")
+	--  end,
+	--  event = "InsertEnter",
+	-- },
+	-- { "hrsh7th/vim-vsnip-integ", event = "InsertEnter" },
 
-         vim.api.nvim_create_autocmd("filetype", {
-            pattern="cmdpalette", group="myPlugins",
-            callback=function() bufmap() copy_cabbrevs() end
-         })
+	{ "octaltree/virtualsnip", build = "make", event = "InsertEnter" },
 
-      end,
-   },
+	{
+		"hachy/cmdpalette.nvim",
+		cond = vim.g.vscode ~= 1,
+		keys = { ";", "<Cmd>Cmdpalette<CR>", mode = { "n", "x" } },
+		opts = {
+			win = {
+				height = 0.1,
+				width = 0.8,
+				border = "rounded",
+				-- Title requires nvim-0.9 or higher.
+				title = "Cmdpalette",
+				title_pos = "center",
+			},
+			sign = {
+				text = ":",
+			},
+			buf = {
+				filetype = "cmdpalette",
+				syntax = "vim",
+			},
+			delete_confirm = true,
+			show_title = false,
+		},
+		config = function(_, opts)
+			require("cmdpalette").setup(opts)
+			vim.keymap.set({ "n" }, ";", "<Cmd>Cmdpalette<CR>")
+			vim.keymap.set({ "x" }, ";", "<Cmd>Cmdpalette<CR>'<,'>")
+			-- vim.opt_local.completeopt:remove("noselect")
+			local function bufmap()
+				-- Need the <c-n> to select the first option for some reason
+				vim.keymap.set(
+					"i",
+					"<tab>",
+					"<c-x><c-v>",
+					-- 'pumvisible() ? "<c-n>" : "<c-x><c-v><c-n>"',
+					{ buffer = true }
+				)
+				vim.keymap.set({ "n", "v" }, "<CR>", require("cmdpalette").execute_cmd, { buffer = true })
+			end
 
-   {
-      "Zeioth/compiler.nvim",
-      cmd = {"CompilerOpen", "CompilerToggleResults", "CompilerRedo"},
-      dependencies = { "stevearc/overseer.nvim" },
-      opts = {},
-   },
-   { -- The task runner for compiler
-      "stevearc/overseer.nvim",
-      commit = "19aac0426710c8fc0510e54b7a6466a03a1a7377",
-      cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
-      opts = {
-         task_list = {
-            direction = "bottom",
-            min_height = 25,
-            max_height = 25,
-            default_detail = 1,
-            bindings = { ["q"] = function() vim.cmd("OverseerClose") end },
-         },
-      },
-   },
+			local function copy_cabbrevs()
+				--- Copy cabbrevs into local iabbrevs, for same behaviour as
+				--- cmd-mode.
+				local result = vim.api.nvim_exec2("cabbrev", { output = true }).output
+				for line in result:gmatch("[^\r\n]+") do
+					local mode, abbrev, expansion = line:match("^%s*(%S+)%s+(%S+)%s+%*?%s*(.+)$")
+					-- Doens't look like expr abbrevs are marked in any way. But
+					-- most of the ones we care about will be returning strings in
+					-- some way, so will usually have quotes in them. Hopefully a
+					-- decent enough heuristic...
+					if expansion:find('"') or expansion:find("'") then
+						vim.cmd.iabbr({ "<expr>", "<buffer>", abbrev, expansion })
+					else
+						vim.cmd.iabbr({ "<buffer>", abbrev, expansion })
+					end
+				end
+			end
 
-   { -- docs generator
-     'kkoomen/vim-doge',
-     build = ':call doge#install()',
-     cmd = 'DogeGenerate',
-   },
+			vim.api.nvim_create_autocmd("filetype", {
+				pattern = "cmdpalette",
+				group = "myPlugins",
+				callback = function()
+					bufmap()
+					copy_cabbrevs()
+				end,
+			})
+		end,
+	},
 
-   {
-   'bennypowers/nvim-regexplainer',
-      opts = {
-         mappings = {
-            toggle = '<leader>hR',
-         },
-      },
-      dependencies = {
-        'nvim-treesitter/nvim-treesitter',
-        'MunifTanjim/nui.nvim',
-      },
-      keys = { '<leader>hR' },
-      cmd = {
-         'RegexplainerToggle',
-         'RegexplainerShowSplit',
-         'RegexplainerShowPopup'
-      }
-   },
+	{
+		"Zeioth/compiler.nvim",
+		cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
+		dependencies = { "stevearc/overseer.nvim" },
+		opts = {},
+	},
+	{ -- The task runner for compiler
+		"stevearc/overseer.nvim",
+		commit = "19aac0426710c8fc0510e54b7a6466a03a1a7377",
+		cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
+		opts = {
+			task_list = {
+				direction = "bottom",
+				min_height = 25,
+				max_height = 25,
+				default_detail = 1,
+				bindings = {
+					["q"] = function()
+						vim.cmd("OverseerClose")
+					end,
+				},
+			},
+		},
+	},
 
+	{ -- docs generator
+		"kkoomen/vim-doge",
+		build = ":call doge#install()",
+		cmd = "DogeGenerate",
+	},
+
+	{
+		"bennypowers/nvim-regexplainer",
+		opts = {
+			mappings = {
+				toggle = "<leader>hR",
+			},
+		},
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"MunifTanjim/nui.nvim",
+		},
+		keys = { "<leader>hR" },
+		cmd = {
+			"RegexplainerToggle",
+			"RegexplainerShowSplit",
+			"RegexplainerShowPopup",
+		},
+	},
 }
