@@ -84,10 +84,15 @@ local specs = {
 	-- generate annotations (eg docstrings)
 	{
 		"https://github.com/danymat/neogen.git",
-		config = function()
+		opts = {
+			 snippet_engine = "luasnip",
+		},
+		config = function(_, opts)
+			require('neogen').setup(opts)
 			vim.cmd("command! Annotate lua require('neogen').generate()")
 		end,
-		cmd = "Annotate",
+		cmd = {"Annotate",},
+
 	},
 
 	{
