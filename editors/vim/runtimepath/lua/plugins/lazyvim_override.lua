@@ -25,9 +25,9 @@ return {
   { "conform.nvim", cond = vim.g.ideMode == 1},
 
   {
+    "folke/noice.nvim",
     enabled = false,
     cond=vim.g.vscode ~= 1,
-    "folke/noice.nvim",
     -- opts will be merged with the parent spec
     opts = {
       messages = { enabled = false },
@@ -139,6 +139,27 @@ return {
 				v = {"<leader>c"},
 			},
     },
+  },
+
+  {
+    "nvim-ts-autotag",
+    ft = {
+      "astro",
+      "glimmer",
+      "handlebars",
+      "html",
+      "javascript",
+      "jsx",
+      "markdown",
+      "php",
+      "rescript",
+      "svelte",
+      "tsx",
+      "typescript",
+      "vue",
+      "xml",
+    },
+    cond = vim.g.ideMode == 1
   },
 
 }
