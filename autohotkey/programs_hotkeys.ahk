@@ -43,15 +43,16 @@ return
 s::Run spotify.exe
 ; main playlist
 m::
-  Run spotify:playlist:3DDy0dVcH0v8hwTsow3rCN?si=94d798e36838416c
+  Run spotify:playlist:3DDy0dVcH0v8hwTsow3rCN:play
   WinWaitActive ahk_exe spotify.exe,,10
-  send ^s  ; shuffle
+  ; send ^s  ; shuffle
 return
 ; Beats playlist
 b::
-  Run spotify.exe spotify:playlist:07DNxdotyBhZf3R77tPheP?si=0734c844b0a34813&pt=4051add2b1bc86898b22cc53ac2a9e04
+  Run spotify.exe spotify:playlist:07DNxdotyBhZf3R77tPheP:play
   WinWaitActive ahk_exe spotify.exe,,10
-  send ^s  ; shuffle
+  ; send ^s  ; shuffle
+  ; send ^{right}  ; skip to next to ensure shuffling takse place
 return
 #If
 
