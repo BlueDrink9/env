@@ -50,7 +50,7 @@ editor(){
 }
 ide=ide
 ide(){
-    vim("--cmd ""let g:IDEMode=1""")
+    vim("--cmd ""let g:ideMode=1""")
 }
 
 terminal=terminal
