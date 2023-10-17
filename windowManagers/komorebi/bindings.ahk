@@ -22,6 +22,13 @@
 #!Esc::Stop()
 ; if things get buggy, often a retile will fix it
 #^c::Retile()
+; Hard restart
+#^!c::
+  run taskkill /f /im komorebi.exe
+  run taskkill /f /im komorebi.exe
+  run taskkill /f /im komorebi.exe
+  run, powershell -NoProfile -windowStyle hidden -File "%A_ScriptDir%\komorebi.ps1"
+return
 ; Reloads ~/komorebi.ahk (I'm hoping it's more flexible than that...)
 #+c::
   ReloadConfiguration()
@@ -29,8 +36,8 @@
   Reload
 return
 ; Force Grab/manage window
-#!\::Manage()
-#!+\::UnManage()
+#!m::Manage()
+#!i::UnManage()
 
 
 ; #w::
