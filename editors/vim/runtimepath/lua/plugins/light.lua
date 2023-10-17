@@ -41,12 +41,13 @@ return {
 
   {"gbprod/substitute.nvim",
     keys = {
-      {"cx", function() require('substitute').operator() end, mode="n"},
-      {"cX", function() require('substitute').eol() end, mode="n"},
-      {"cxx", function() require('substitute').line() end, mode="n"},
-      {"cxc", function() require('substitute').cancel() end, mode="n"},
-      {"X", function() require('substitute').visual() end, mode="x"},
-    }
+      {"cx", function() require('substitute.exchange').operator() end, mode="n"},
+      {"cX", function() require('substitute.exchange').eol() end, mode="n"},
+      {"cxx", function() require('substitute.exchange').line() end, mode="n"},
+      {"cxc", function() require('substitute.exchange').cancel() end, mode="n"},
+      {"X", function() require('substitute.exchange').visual() end, mode="x"},
+    },
+    config=true,
   },
 
   -- Highlight f and t chars to get where you want.
