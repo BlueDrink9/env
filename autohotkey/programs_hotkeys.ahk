@@ -49,7 +49,7 @@ m::
 return
 ; Beats playlist
 b::
-  Run spotify.exe spotify:playlist:07DNxdotyBhZf3R77tPheP?si=0734c844b0a34813
+  Run spotify.exe spotify:playlist:07DNxdotyBhZf3R77tPheP?si=0734c844b0a34813&pt=4051add2b1bc86898b22cc53ac2a9e04
   WinWaitActive ahk_exe spotify.exe,,10
   send ^s  ; shuffle
 return
