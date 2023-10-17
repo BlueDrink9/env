@@ -21,6 +21,7 @@ t::%terminal%()
 b::Run % GetDefaultBrowser()
 v::%editor%()
 +v::%liteEditor%()
+!v::%ide%()
 i::%ide%()
 ; notes
 n::%notes%()
