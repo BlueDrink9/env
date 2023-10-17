@@ -18,6 +18,12 @@
 
 return {
 
+  {"neovim/nvim-lspconfig", cond = vim.g.ideMode == 1},
+
+  { "hrsh7th/nvim-cmp", cond = vim.g.ideMode == 1},
+
+  { "conform.nvim", cond = vim.g.ideMode == 1},
+
   {
     enabled = false,
     cond=vim.g.vscode ~= 1,
@@ -39,7 +45,7 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
-    enabled = vim.g.liteMode == 0,
+    cond = vim.g.liteMode == 0,
   },
 
   {
@@ -86,16 +92,9 @@ return {
     }
   },
 
-  {"https://github.com/neovim/nvim-lspconfig.git",
-  enabled = vim.g.ideMode == 1},
-
-  { "hrsh7th/nvim-cmp",
-    enabled = vim.g.ideMode == 1,
-  },
-
   {
     "L3MON4D3/LuaSnip",
-    enabled = vim.g.ideMode == 1,
+    cond = vim.g.ideMode == 1,
     opts = function(_, opts)
       local snipdir = vim.g.configDir .. vim.fn.expand("/runtimepath/snippets")
       -- load snippets from path/of/your/nvim/config/my-cool-snippets
@@ -110,7 +109,7 @@ return {
 
   {
     "nvimtools/none-ls.nvim",
-    enabled = vim.g.ideMode == 1,
+    cond = vim.g.ideMode == 1,
     opts = function()
       local nls = require("null-ls")
       return {
