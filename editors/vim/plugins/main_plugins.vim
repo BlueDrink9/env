@@ -250,9 +250,9 @@ if !has('nvim')
     Plugin 'https://github.com/justinmk/vim-sneak'
     " Plugin 'https://github.com/easymotion/vim-easymotion'
 endif
-    Plugin 'bkad/camelcasemotion', {'keys': ['-']}
-    Plugin 'https://github.com/haya14busa/vim-asterisk', {'keys': ['*', 'z*']}
-    " {]} ---------- Operators ----------
+Plugin 'bkad/camelcasemotion'
+Plugin 'https://github.com/haya14busa/vim-asterisk', {'keys': ['*', 'z*']}
+" {]} ---------- Operators ----------
 
 " {[}--- Searching, replacing, finding ---
 " Edit quickfix window and have the changes apply!

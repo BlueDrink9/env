@@ -186,7 +186,10 @@ elseif IsPluginUsed("vim-easymotion")
     " Like sneak
     nnoremap <leader>s <Plug>(easymotion-overwin-f2)
 endif
-if IsPluginUsed("camelcasemotion")
+
+if IsPluginUsed("camelcasemotion") && !has('nvim')
+    " Lazy.nvim doesn't play nice with camelcase motion setup for some reason,
+    " so only do this for regular vim.
     let g:camelcasemotion_key = '-'
 endif
 if IsPluginUsed("vim-asterisk")
