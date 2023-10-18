@@ -39,6 +39,7 @@ local specs = {
         [maps.FuzzyBuffers]       = "buffers()",
         [maps.FuzzyTags]          = "tags()",
         [maps.FuzzyCommands]      = "commands()",
+        [maps.FuzzyOldFiles]      = "oldfiles()",
         -- By default, use treesitter for symbols. If an lsp client
         -- attaches which can replace it however, replace with that.
         [maps.FuzzySymbols]       = "treesitter()",
