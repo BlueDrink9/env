@@ -23,7 +23,7 @@ return {
 	},
 
 	{
-		"https://github.com/neovim/nvim-lspconfig.git",
+		"neovim/nvim-lspconfig",
 		config = function()
 			local maps = vim.g.IDE_mappings
 
@@ -233,6 +233,12 @@ return {
 				return false
 			end
 		end,
+		event="LspAttach",
+	},
+	
+	{
+		"hinell/lsp-timeout.nvim",
+		dependencies={"neovim/nvim-lspconfig"},
 		event="LspAttach",
 	},
 }
