@@ -44,13 +44,13 @@ s::Run spotify.exe
 ; main playlist
 m::
   Run spotify:playlist:3DDy0dVcH0v8hwTsow3rCN:play
-  WinWaitActive ahk_exe spotify.exe,,10
+  ; WinWaitActive ahk_exe spotify.exe,,10
   ; send ^s  ; shuffle
 return
 ; Beats playlist
 b::
-  Run spotify.exe spotify:playlist:07DNxdotyBhZf3R77tPheP:play
-  WinWaitActive ahk_exe spotify.exe,,10
+  Run spotify:playlist:07DNxdotyBhZf3R77tPheP:play
+  ; WinWaitActive ahk_exe spotify.exe,,10
   ; send ^s  ; shuffle
   ; send ^{right}  ; skip to next to ensure shuffling takse place
 return
