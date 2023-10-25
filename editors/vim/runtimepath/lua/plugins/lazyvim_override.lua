@@ -19,10 +19,9 @@
 return {
 
   {"neovim/nvim-lspconfig", cond = vim.g.ideMode == 1},
-
   { "hrsh7th/nvim-cmp", cond = vim.g.ideMode == 1},
-
   { "conform.nvim", cond = vim.g.ideMode == 1},
+  { "indent-blankline.nvim", cond = vim.g.ideMode == 1},
 
   {
     "folke/noice.nvim",
