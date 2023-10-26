@@ -141,9 +141,12 @@ local specs = {
 						enable = true,
 						swap_next = {
 							[">,"] = "@parameter.inner",
+							["cx="] = "@assignment.inner",
+							[">="] = "@assignment.inner",
 						},
 						swap_previous = {
 							["<,"] = "@parameter.inner",
+							["<="] = "@assignment.inner",
 						},
 					},
 				},
