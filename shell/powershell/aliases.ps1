@@ -37,7 +37,7 @@ function ln($source, $linkname, $s, $j, $h){
     }
 }
 
-function rg { rg --smart-case }
+function rg { &$(get-command rg.exe) --smart-case }
 set-alias komo komorebic
 function pym { python -m }
 set-alias py python
