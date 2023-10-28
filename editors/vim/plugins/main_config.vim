@@ -2,6 +2,28 @@
 " vim: foldmarker={[},{]}
 
 " {[} ---------- Misc ----------
+if IsPluginUsed("vim-better-whitespace")
+    let g:better_whitespace_filetypes_blacklist=['diff', 'gitcommit', 'unite', 'qf', 'help', 'far']
+    let g:strip_whitespace_confirm=0
+    let g:show_spaces_that_precede_tabs=1
+    " uses vimrun.exe, which is slow
+    if has('nvim') || !has('win32')
+       let g:strip_whitespace_on_save = 1
+    endif
+    let g:strip_only_modified_lines=1
+    let g:better_whitespace_skip_empty_lines=0
+    " Don't HL current line. May cause performance issues.
+    " let g:current_line_whitespace_disabled_hard=0
+    let g:current_line_whitespace_disabled_soft=1
+    let g:better_whitespace_operator=''
+    " call add (g:customHLGroups, "ExtraWhitespace ctermbg=Gray guibg=LightGray")
+    call add (g:customHLGroups, "link ExtraWhitespace Visual")
+    " call add (g:customHLGroups, "link ExtraWhitespace SpecialKey")
+    function! WhitespaceHighlightDisable()
+        DisableWhitespace
+    endfunction
+    autocmd myPlugins BufReadPost * if &readonly || ! &modifiable | call WhitespaceHighlightDisable() | endif
+endif
 if IsPluginUsed("asyncrun.vim")
     " Open quickfix window at height 8 on running
     let g:asyncrun_open = 8

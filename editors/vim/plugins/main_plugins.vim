@@ -41,6 +41,12 @@ endif
 " {]} ---------- Module setup ----------
 
 " {[} ---------- Misc ----------
+if v:version >= 703
+    Plugin 'https://github.com/ntpeters/vim-better-whitespace', {
+                \ 'event': ['BufWritePre'],
+                \ 'on': ['StripWhitespace', 'StripWhitespaceOnChangedLines', 'EnableWhitespace', 'DisableWhitespace']
+                \ }
+endif
 " Close buffers without changing window
 Plugin 'https://github.com/moll/vim-bbye', {'on': 'Bdelete'}
 cabbrev bd Bdelete

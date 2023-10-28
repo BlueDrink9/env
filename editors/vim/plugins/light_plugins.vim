@@ -65,12 +65,6 @@ Plugin 'tommcdo/vim-ninja-feet',
 if !has('nvim')
     Plugin 'unblevable/quick-scope'
 endif
-if v:version >= 703
-    Plugin 'https://github.com/ntpeters/vim-better-whitespace', {
-                \ 'event': ['BufWritePre'],
-                \ 'on': ['StripWhitespace', 'StripWhitespaceOnChangedLines', 'EnableWhitespace', 'DisableWhitespace']
-                \ }
-endif
 " Distraction-free vim.
 Plugin 'https://github.com/junegunn/goyo.vim', {'on' : ['Goyo',]}
 " {]}--- Visual ---
