@@ -41,12 +41,12 @@ endif
 " {]} ---------- Module setup ----------
 
 " {[} ---------- Misc ----------
-if v:version >= 703
-    Plugin 'https://github.com/ntpeters/vim-better-whitespace', {
-                \ 'event': ['BufWritePre'],
-                \ 'on': ['StripWhitespace', 'StripWhitespaceOnChangedLines', 'EnableWhitespace', 'DisableWhitespace']
-                \ }
-endif
+" if v:version >= 703
+"     Plugin 'https://github.com/ntpeters/vim-better-whitespace', {
+"                 \ 'event': ['BufWritePre'],
+"                 \ 'on': ['StripWhitespace', 'StripWhitespaceOnChangedLines', 'EnableWhitespace', 'DisableWhitespace']
+"                 \ }
+" endif
 " Close buffers without changing window
 Plugin 'https://github.com/moll/vim-bbye', {'on': 'Bdelete'}
 cabbrev bd Bdelete
@@ -350,7 +350,7 @@ Plugin 'https://github.com/radenling/vim-dispatch-neovim', {'on': ['Make', 'Star
 " {[} ---------- extra filetype support ----------
 " Check that whatever you need isn't in polyglot, first!
 " Multi-lang support
-let g:polyglot_disabled = ['autoindent', 'sensible', 'latex', 'markdown', ]
+let g:polyglot_disabled = ['autoindent', 'sensible', 'latex', 'markdown', 'python']
 Plugin 'https://github.com/sheerun/vim-polyglot', {'event': ['BufNewFile','BufReadPre']}
 Plugin 'https://github.com/lervag/vim-rmarkdown', {'for': 'rmd'}
 Plugin 'https://github.com/liuchengxu/graphviz.vim', {'for': 'dot'}
