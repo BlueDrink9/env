@@ -4,6 +4,24 @@
 # console setting tool. Easy solarized!
 # https://github.com/lukesampson/concfg
 
+# # Upgrade to pwsh 7 if available. Requires double exit though, which is
+# # annoying...
+# # Check if we're already in PowerShell 7 to avoid infinite loop
+# if ($PSVersionTable.PSVersion.Major -lt 7) {
+#     # Check if PowerShell 7 is available
+#     if (Get-Command "pwsh" -ErrorAction SilentlyContinue) {
+#         # Pass the current arguments and environment variables to the new session
+#         pwsh -NoExit -Command {
+#             # Source your Windows PowerShell profile if it exists
+#             $winProfile = "$env:USERPROFILE\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"
+#             if (Test-Path $winProfile) {
+#                 . $winProfile
+#             }
+#         }
+#         exit  # This isn't working to exit the subshell
+#     }
+# }
+
 $scriptdir = $PSScriptRoot
 $DOTFILES_DIR = "$(resolve-path "$PSScriptRoot\..\..")"
 
