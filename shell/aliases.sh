@@ -172,6 +172,8 @@ alias venv='python -m venv'
 alias venvc='python -m venv venv'
 alias venva='. venv/Scripts/activate'
 alias pym='python -m'
+
 alias plasma_reload='qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.refreshCurrentShell'
 alias lsblkids='lsblk -o NAME,SIZE,MOUNTPOINT,UUID,PARTUUID'
 alias goRouter='fopen $(ip route | cut -f3 -d" " | head -n 1)'
+alias winkill='kill $(xprop | rg pid | cut -d" " -f3)'
