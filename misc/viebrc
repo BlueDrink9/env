@@ -10,6 +10,8 @@ nmap u <scrollPageUpHalf>
 nmap o <toExploreMode>
 nmap O <:tabnew><toExploreMode>
 nmap T <toCommandMode>buffer<Space>
+nmap t E
+nmap <c-t> E
 nmap g0 <:buffer 0>
 nmap g$ <:buffer -1>
 nmap J <previousTab>
@@ -25,6 +27,8 @@ nmap >> <moveTabForward>
 nmap ? <:help>
 nmap [[ <previousPage>
 nmap ]] <nextPage>
+" I only ever use d and u
+nmap <c-f> /
 
 " Change windows
 nnoremap <c-l> <c-w>l
@@ -50,6 +54,7 @@ set timeoutlen=300
 set adblocker=update
 " set downloadmethod=confirm
 set nofollownewtabswitch
+set nomousenewtabswitch
 set darkreader=false
 set guihidetimeout=3000
 set pdfbehavior=view
@@ -58,5 +63,6 @@ set taboverflow=wrap
 set tabreopenposition=previous
 set windowtitle=%title
 set followlabelposition=outsideleftcenter
+set mousevisualmode=activate
 
 set vimcommand=neovide
