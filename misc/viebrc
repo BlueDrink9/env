@@ -60,9 +60,9 @@ set guihidetimeout=3000
 set pdfbehavior=view
 set sponsorblock=true
 set taboverflow=wrap
+set mintabwidth=80
 set tabreopenposition=previous
 set windowtitle=%title
 set followlabelposition=outsideleftcenter
-set mousevisualmode=activate
 
 set vimcommand=neovide

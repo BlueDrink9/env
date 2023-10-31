@@ -7,9 +7,7 @@ function! VSCodeMapDict(mappings, visualMappings)
         exec 'nnoremap ' . key . " <Cmd>call VSCodeNotify('" . value . "')<CR>"
     endfor
     for [key, value] in items(a:visualMappings)
-        " 0 to deselect visual after calling. Call rather than notify to
-        " not deselect until after.
-        exec 'vnoremap ' . key . " <Cmd>call VSCodeCall('" . value . "', 0)<CR>"
+        exec 'vnoremap ' . key . " <Cmd>call VSCodeNotify('" . value . "')<CR>"
     endfor
 endfunction
 
