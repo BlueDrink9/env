@@ -10,8 +10,8 @@ nmap u <scrollPageUpHalf>
 nmap o <toExploreMode>
 nmap O <:tabnew><toExploreMode>
 nmap T <toCommandMode>buffer<Space>
-nmap t E
-nmap <c-t> E
+nmap t <:buffer -1><:tabnew><toExploreMode>
+nmap <c-t> <:buffer -1><:tabnew><toExploreMode>
 nmap g0 <:buffer 0>
 nmap g$ <:buffer -1>
 nmap J <previousTab>
@@ -22,14 +22,16 @@ nmap gE <:tabnew><toExploreMode>
 nmap x <:close>
 nmap X <reopenTab>
 nmap yt <openNewTabWithCurrentUrl><CR>
-nmap <lt><lt> <moveTabBackward>
-nmap >> <moveTabForward>
+nmap > <moveTabForward>
+nmap <lt> <moveTabBackward>
 nmap ? <:help>
-nmap [[ <previousPage>
-nmap ]] <nextPage>
+" nmap [[ <previousPage>
+" nmap ]] <nextPage>
 " I only ever use d and u
-nmap <c-f> /
+nmap <c-f> <toSearchMode>
 
+nnoremap E <:buffer -1><:tabnew><toExploreMode>
+nnoremap <space>a <:buffer #>
 " Change windows
 nnoremap <c-l> <c-w>l
 nnoremap <c-h> <c-w>h
@@ -48,7 +50,7 @@ colorscheme light
 set splitright
 set splitbelow
 set showcmd
-set timeoutlen=300
+set timeoutlen=1000
 
 " browser-specific settings
 set adblocker=update
@@ -56,7 +58,7 @@ set adblocker=update
 set nofollownewtabswitch
 set nomousenewtabswitch
 set darkreader=false
-set guihidetimeout=3000
+set guihidetimeout=8000
 set pdfbehavior=view
 set sponsorblock=true
 set taboverflow=wrap
