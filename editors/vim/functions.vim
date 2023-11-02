@@ -65,6 +65,10 @@ function! SetGFN(...)
         " (powerline fonts etc).
         " call SetFirstValidGuifont(l:formattedFonts)
         let l:gfn=join(l:formattedFonts, ',')
+        if exists("g:neovide")
+            let l:gfn=l:gfn . ":h" . g:GUIFontSize
+        endif
+
         " Because we are using let, with a variable, spaces in font noames
         " don't need to be escaped.
         let &guifont=l:gfn
@@ -82,7 +86,12 @@ function! s:formatFontOptions(list, size)
     endif
     for f in l:list
         let ind = index(l:list, f)
-        let l:list[ind] = f . l:sizeSep . l:size
+        " Need to add font options after all the fallbacks for neovide
+        if exists("g:neovide")
+            let l:list[ind] = f
+        else
+            let l:list[ind] = f . l:sizeSep . l:size
+        endif
     endfor
     return l:list
 endfunction

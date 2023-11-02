@@ -98,10 +98,12 @@ let &background=g:backgroundColour
 "{[} GUI
 " Guifont will be set to the first available font in this list.
 " GTK fonts should be the top, since the gtk gvim doesn't use fallbacks.
+" Neovide doesn't seem to successfully pull fallbacks either if the first font
+" doesn't exist either!
 let g:guiFonts = [
+              \ "SauceCodePro NF",
               \ "SauceCodePro Nerd Font",
               \ "SauceCodePro_NF",
-              \ "SauceCodePro NF",
               \ "SauceCodeProNerdFontCo-Regular",
               \ "Source Code Pro Medium",
               \ "Source Code Pro",
@@ -569,26 +571,26 @@ endfunction
 
 autocmd myVimrc BufEnter,BufwritePost * call <sid>SetTitle()
 
-" Autoset new unnamed buffers to scratch, to get pencil stuff etc.
-" No point doing it until we have entered some text.
-augroup scratchSetStart
-    au!
-    autocmd TextChanged,InsertLeave {}
-                \ setlocal ft=scratch |
-                \ if &filetype == "" | setlocal ft=scratch | endif |
-                \ au! scratchSetStart
-augroup end
-" Autoset new named buffers to scratch if no other specified
-autocmd myVimrc BufNewFile * filetype detect | if &filetype == "" | setlocal ft=scratch | endif
-" Pre-existing files without clear ft: use conf. Gives hash comments,
-" highlights strings. Works for lots of small files.
-autocmd myVimrc BufReadPost * filetype detect | if &filetype == ""  | setlocal ft=conf | endif
-" Automatically detect the changed filetype on write. Currently only doing
-" it if the previous buftype was scratch (ie unnamed, which in default vim
-" would have done this anyway)
-autocmd myVimrc BufWritePost * if &filetype == "scratch" | filetype detect | endif
+" " Autoset new unnamed buffers to scratch, to get pencil stuff etc.
+" " No point doing it until we have entered some text.
+" augroup scratchSetStart
+"     au!
+"     autocmd TextChanged,InsertLeave {}
+"                 \ setlocal ft=scratch |
+"                 \ if &filetype == "" | setlocal ft=scratch | endif |
+"                 \ au! scratchSetStart
+" augroup end
+" " Autoset new named buffers to scratch if no other specified
+" autocmd myVimrc BufNewFile * filetype detect | if &filetype == "" | setlocal ft=scratch | endif
+" " Pre-existing files without clear ft: use conf. Gives hash comments,
+" " highlights strings. Works for lots of small files.
+" autocmd myVimrc BufReadPost * filetype detect | if &filetype == ""  | setlocal ft=conf | endif
+" " Automatically detect the changed filetype on write. Currently only doing
+" " it if the previous buftype was scratch (ie unnamed, which in default vim
+" " would have done this anyway)
+" autocmd myVimrc BufWritePost * if &filetype == "scratch" | filetype detect | endif
 
-autocmd myVimrc filetype scratch setlocal spell | setl ai
+" autocmd myVimrc filetype scratch setlocal spell | setl ai
 
 " {[} Set cursor based on mode.
 if !has('nvim')
