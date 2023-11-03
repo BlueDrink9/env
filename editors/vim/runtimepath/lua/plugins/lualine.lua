@@ -92,17 +92,19 @@ return {
          lualine_c = {
             {'encoding'},
             { "filetype", icon_only = opts.options.icons_enabled,
-               separator = "", padding = { left = 1, right = 0 } },
+               separator = opts.options.icons_enabled and "" or opts.options.component_separators.left,
+                  padding = { left = 1, right = 1 }
+               },
             { "filename", path = 1, shorting_target = vim.o.columns / 2.5,
-               symbols = { modified = "  ", readonly = "", unnamed = "" },
+               symbols = { modified = "  ", readonly = " 🔒", unnamed = "" },
                separator = opts.options.section_separators.left,
+               padding = { left = 0, right = 1},
             },
          },
          lualine_x = {},
          lualine_y = {'searchcount', },
          lualine_z = {
-            {'location', separator = "", padding = { left = 0, right = 0 } },
-            {'progress', separator = "", padding = { left = 0, right = 1 } }
+            '%p%%(%l/%L:%c)'
          }
       }
       opts.inactive_sections = {
