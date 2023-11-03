@@ -109,11 +109,3 @@ if IsPluginUsed("vim-tmux")
     map <Leader>vl <cmd>VimuxRunLastCommand<CR>
 endif
 " {]} TMUX
-
-" {[} ---------- Prose ----------
-if IsPluginUsed("vim-pencil")
-    let g:pencil#wrapModeDefault = 'soft'
-    let g:pencil#conceallevel=&conceallevel
-    let g:pencil#concealcursor=&concealcursor
-endif
-" {]} ---------- Prose----------

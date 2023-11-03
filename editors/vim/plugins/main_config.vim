@@ -447,7 +447,6 @@ endif
 " {]} ---------- Git----------
 
 " {[} ---------- Prose ----------
-
 " Better prose spellchecking
 if IsPluginUsed("vim-lexical")
     let g:lexical#spell_key = '<localleader>ls'
@@ -455,11 +454,10 @@ if IsPluginUsed("vim-lexical")
     let g:lexical#dictionary_key = '<localleader>ld'
 endif
 
-" Pencil loaded in lite, for scratch.
 if IsPluginUsed("vim-pencil")
-    " let g:pencil#wrapModeDefault = 'soft'
-    " let g:pencil#conceallevel=&conceallevel
-    " let g:pencil#concealcursor=&concealcursor
+    let g:pencil#wrapModeDefault = 'soft'
+    let g:pencil#conceallevel=&conceallevel
+    let g:pencil#concealcursor=&concealcursor
     let g:pencil#autoformat_blacklist = [
                 \ 'markdownCode',
                 \ 'markdownUrl',
