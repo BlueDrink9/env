@@ -294,7 +294,7 @@ endif
 " Maybe ide candidates...
 " {[}--- Fuzzy finder ---
 " fzf only works in terminal, use ctrlp otherwise
-if !g:hasGUI || has('terminal') || has('nvim')
+if (!g:hasGUI || has('terminal') || has('nvim')) && !has('g:vscode')
     " PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run the install
     " script
     Plugin 'junegunn/fzf', {
