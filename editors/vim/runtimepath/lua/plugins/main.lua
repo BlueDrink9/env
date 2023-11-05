@@ -232,22 +232,6 @@ local spec = {
 
     {"kwkarlwang/bufresize.nvim", event="VeryLazy"},
 
-    { 'bkad/camelcasemotion',
-        config = function(_, opts)
-            -- Lazy causes an error when trying to set up the mappings during regular
-            -- loading. Instead, we'll have to load without setting up mappings, then
-            -- create mappings and re-feed the key ourselves.
-            vim.api.nvim_create_autocmd({"user LazyLoad"}, {
-                callback = function(args)
-                    if args.data == "camelcasemotion" then
-                        vim.fn["camelcasemotion#CreateMotionMappings"]('-')
-                    end
-                    vim.fn.feedkeys("-", "t")
-                end
-            })
-        end,
-        keys= '-',
-    },
 
     { "kwkarlwang/bufresize.nvim", event = "VeryLazy" },
 	{
@@ -257,4 +241,25 @@ local spec = {
 		-- :ToggleTermSendCurrentLine
 		-- :ToggleTermSendVisualLines
 		-- :ToggleTermSendVisualSelection
+	{
+		"bkad/camelcasemotion",
+		keys = function()
+			local out = {}
+			for _, key in ipairs({ "w", "b", "e", "ge" }) do
+				table.insert(out, { "-" .. key, "<Plug>CamelCaseMotion_" .. key, mode = { "n", "v" } })
+			end
+			for _, key in ipairs({ "w", "b", "e" }) do
+				for _, ia in ipairs({ "i", "a" }) do
+					key = ia .. key
+					table.insert(out, {
+						"-" .. key,
+						"<Plug>CamelCaseMotion_" .. key,
+						mode = { "v", "o" },
+					})
+				end
+			end
+			return out
+		end,
+	},
+
 }
