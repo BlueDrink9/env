@@ -1,6 +1,12 @@
 -- skip loading lazyvim options
 package.loaded["lazyvim.config.options"] = true
 
+-- Blank strings are ignored so this is a good way to conditionally disable
+-- default plugins.
+local extra_disabled_builtin_plugin_1 = vim.g.liteMode == 1 and "rplugin" or ""
+local extra_disabled_builtin_plugin_2 = vim.g.liteMode == 1 and "editorconfig" or ""
+local extra_disabled_builtin_plugin_3 = vim.g.liteMode == 1 and "health" or ""
+
 require("lazy").setup({
 	root = vim.g.pluginInstallPath, -- directory where plugins will be installed
 	defaults = {
@@ -32,13 +38,26 @@ require("lazy").setup({
 				"tohtml",
 				"tutor",
 				"zipPlugin",
+				extra_disabled_builtin_plugin_1,
+				extra_disabled_builtin_plugin_2,
+				extra_disabled_builtin_plugin_3,
 			},
 		},
 	},
 	change_detection = {
 		notify = false,
 	},
+	-- Enable profiling of lazy.nvim. This will add some overhead,
+	-- so only enable this when you are debugging lazy.nvim
+	profiling = {
+		-- Enables extra stats on the debug tab related to the loader cache.
+		-- Additionally gathers stats about all package.loaders
+		loader = false,
+		-- Track each new require in the Lazy profiling tab
+		require = false,
+	},
 	spec = {
+		{ "dstein64/vim-startuptime", cond = vim.g.liteMode == 0 },
 
 		-- add LazyVim and import its plugins
 		{
@@ -52,11 +71,15 @@ require("lazy").setup({
 					keymaps = false,
 				},
 			},
+			cond = vim.g.liteMode == 0,
 		},
 
-		{ import = "lazyvim.plugins.extras.editor.leap" },
+		{ import = "lazyvim.plugins.extras.editor.leap", cond = IsPluginUsed("folke/LazyVim") },
 
-		{ import = "lazyvim.plugins.extras.lsp.none-ls" },
+		{
+			import = "lazyvim.plugins.extras.lsp.none-ls",
+			cond = IsPluginUsed("folke/LazyVim") and vim.g.ideMode == 1,
+		},
 
 		{ import = "plugins" },
 
