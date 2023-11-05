@@ -3,9 +3,12 @@
 
 local load
 if vim.g.ideMode == 0 then
-    load = false
+	load = false
+	-- Even loading the rest of this file seems to be a performance hit, so not
+	-- using this for ide.
+	return {}
 else
-    load = true
+	load = true
 end
 
 local idemaps = vim.g.IDE_mappings
@@ -17,15 +20,15 @@ local spec = {
 	-- { import = "lazyvim.plugins.extras.dap.core" },
 	-- { import = "lazyvim.plugins.extras.dap.nlua" },
 
-	{ import = "lazyvim.plugins.extras.lang.python", enabled = IsPluginUsed("folke/LazyVim") },
-	{ import = "lazyvim.plugins.extras.lang.rust", enabled = IsPluginUsed("folke/LazyVim") },
-	{ import = "lazyvim.plugins.extras.lang.yaml", enabled = IsPluginUsed("folke/LazyVim") },
-	{ import = "lazyvim.plugins.extras.lang.json", enabled = IsPluginUsed("folke/LazyVim") },
+	{ import = "lazyvim.plugins.extras.lang.python", cond = IsPluginUsed("folke/LazyVim") },
+	{ import = "lazyvim.plugins.extras.lang.rust", cond = IsPluginUsed("folke/LazyVim") },
+	{ import = "lazyvim.plugins.extras.lang.yaml", cond = IsPluginUsed("folke/LazyVim") },
+	{ import = "lazyvim.plugins.extras.lang.json", cond = IsPluginUsed("folke/LazyVim") },
 
-	{ import = "lazyvim.plugins.extras.test.core", enabled = IsPluginUsed("folke/LazyVim") },
+	{ import = "lazyvim.plugins.extras.test.core", cond = IsPluginUsed("folke/LazyVim") },
 
-	{ import = "lazyvim.plugins.extras.formatting.prettier", enabled = IsPluginUsed("folke/LazyVim") },
-	{ import = "lazyvim.plugins.extras.util.project", enabled = IsPluginUsed("folke/LazyVim") },
+	{ import = "lazyvim.plugins.extras.formatting.prettier", cond = IsPluginUsed("folke/LazyVim") },
+	{ import = "lazyvim.plugins.extras.util.project", cond = IsPluginUsed("folke/LazyVim") },
 
 	-- Dependency for a lot of plugins
 	{ "nvim-lua/plenary.nvim", lazy = true },
@@ -484,6 +487,8 @@ local spec = {
 }
 
 for _, s in ipairs(spec) do
-    if not load then s.cond = false end
+	if not load then
+		s.cond = false
+	end
 end
 return spec
