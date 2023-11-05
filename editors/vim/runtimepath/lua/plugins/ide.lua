@@ -1,13 +1,17 @@
 -- call SourcePluginFile("nvim-lspconfig.lua")
 -- call SourcePluginFile('nvim-cmp.lua')
 
+local load
 if vim.g.ideMode == 0 then
-	return {}
+    load = false
+else
+    load = true
 end
 
 local idemaps = vim.g.IDE_mappings
 
-return {
+local spec = {
+
 	--   { import = "lazyvim.plugins.extras.coding.yanky",
 	-- enabled=IsPluginUsed("folke/LazyVim")},
 	-- { import = "lazyvim.plugins.extras.dap.core" },
@@ -478,3 +482,8 @@ return {
 		},
 	},
 }
+
+for _, s in ipairs(spec) do
+    if not load then s.cond = false end
+end
+return spec

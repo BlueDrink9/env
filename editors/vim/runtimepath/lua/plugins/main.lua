@@ -1,8 +1,11 @@
+local load
 if vim.g.liteMode == 1 then
-    return {}
+	load = false
+else
+	load = true
 end
 
-return {
+local spec = {
 
     { "andymass/vim-matchup", event = "VeryLazy" },
 
@@ -247,4 +250,11 @@ return {
     },
 
     { "kwkarlwang/bufresize.nvim", event = "VeryLazy" },
+	{
+		"https://github.com/akinsho/toggleterm.nvim",
+		cond = vim.g.vscode ~= 1,
+		keys = "<C-s>",
+		-- :ToggleTermSendCurrentLine
+		-- :ToggleTermSendVisualLines
+		-- :ToggleTermSendVisualSelection
 }
