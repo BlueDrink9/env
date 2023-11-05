@@ -20,6 +20,15 @@ vnoremap ; :
 nnoremap : ;
 vnoremap : ;
 
+nnoremap k gk
+vnoremap k gk
+nnoremap j gj
+vnoremap j gj
+nnoremap gk k
+vnoremap gk k
+nnoremap gj j
+vnoremap gj j
+
 " x and X shouldn't overwrite the damn paste register!
 nnoremap x "_x
 nnoremap X "_X
