@@ -19,7 +19,11 @@ return {
 
 	{ "neovim/nvim-lspconfig", cond = vim.g.ideMode == 1 },
 	{ "hrsh7th/nvim-cmp", cond = vim.g.ideMode == 1 },
-	{ "conform.nvim", cond = vim.g.ideMode == 1 },
+	{
+		"conform.nvim",
+		cond = vim.g.ideMode == 1,
+		keys = { { "<leader>cF", false, mode = { "v", "n" } } },
+	},
 	{ "indent-blankline.nvim", cond = vim.g.ideMode == 1 },
 	{ "nvim-telescope/telescope.nvim", cond = vim.g.ideMode == 1 },
 
