@@ -74,12 +74,7 @@ require("lazy").setup({
 			cond = vim.g.liteMode == 0,
 		},
 
-		{ import = "lazyvim.plugins.extras.editor.leap", cond = IsPluginUsed("folke/LazyVim") },
-
-		{
-			import = "lazyvim.plugins.extras.lsp.none-ls",
-			cond = IsPluginUsed("folke/LazyVim") and vim.g.ideMode == 1,
-		},
+		{ import = "lazyvim.plugins.extras.editor.leap", cond = IsPluginUsed("LazyVim") },
 
 		{ import = "plugins" },
 

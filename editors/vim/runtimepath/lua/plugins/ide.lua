@@ -15,20 +15,21 @@ local idemaps = vim.g.IDE_mappings
 
 local spec = {
 
-	--   { import = "lazyvim.plugins.extras.coding.yanky",
-	-- enabled=IsPluginUsed("folke/LazyVim")},
+	--   { import = "lazyvim.plugins.extras.coding.yanky", enabled=IsPluginUsed("LazyVim")},
 	-- { import = "lazyvim.plugins.extras.dap.core" },
 	-- { import = "lazyvim.plugins.extras.dap.nlua" },
 
-	{ import = "lazyvim.plugins.extras.lang.python", cond = IsPluginUsed("folke/LazyVim") },
-	{ import = "lazyvim.plugins.extras.lang.rust", cond = IsPluginUsed("folke/LazyVim") },
-	{ import = "lazyvim.plugins.extras.lang.yaml", cond = IsPluginUsed("folke/LazyVim") },
-	{ import = "lazyvim.plugins.extras.lang.json", cond = IsPluginUsed("folke/LazyVim") },
+	{ import = "lazyvim.plugins.extras.lang.python", cond = IsPluginUsed("LazyVim") },
+	{ import = "lazyvim.plugins.extras.lang.rust", cond = IsPluginUsed("LazyVim") },
+	{ import = "lazyvim.plugins.extras.lang.yaml", cond = IsPluginUsed("LazyVim") },
+	{ import = "lazyvim.plugins.extras.lang.json", cond = IsPluginUsed("LazyVim") },
 
-	{ import = "lazyvim.plugins.extras.test.core", cond = IsPluginUsed("folke/LazyVim") },
+	{ import = "lazyvim.plugins.extras.test.core", cond = IsPluginUsed("LazyVim") },
 
-	{ import = "lazyvim.plugins.extras.formatting.prettier", cond = IsPluginUsed("folke/LazyVim") },
-	{ import = "lazyvim.plugins.extras.util.project", cond = IsPluginUsed("folke/LazyVim") },
+	{ import = "lazyvim.plugins.extras.formatting.prettier", cond = IsPluginUsed("LazyVim") },
+	{ import = "lazyvim.plugins.extras.util.project", cond = IsPluginUsed("LazyVim") },
+
+	{ import = "lazyvim.plugins.extras.lsp.none-ls", cond = IsPluginUsed("LazyVim") },
 
 	-- Dependency for a lot of plugins
 	{ "nvim-lua/plenary.nvim", lazy = true },
@@ -193,7 +194,7 @@ local spec = {
 		opts = {
 			sources = {
 				-- null-ls.builtins.code_actions.refactoring,
-				require("null-ls").builtins.completion.spell,
+				-- require("null-ls").builtins.completion.spell,
 				-- require'null-ls'.builtins.hover.printenv,
 			},
 		},
