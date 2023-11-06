@@ -4,6 +4,7 @@ return {
 	{ "echasnovski/mini.pairs", enabled = false },
 	{ "echasnovski/mini.indentscope", enabled = false },
 	{ "folke/tokyonight.nvim", enabled = false },
+	{ "folke/flash.nvim", enabled = false },
 	{ "ggandor/flit.nvim", enabled = false },
 	{ "folke/persistence.nvim", enabled = false },
 	{ "goolord/alpha-nvim", enabled = false },
