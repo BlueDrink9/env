@@ -18,7 +18,7 @@ endfunction
 " Accepts only the last part of the plugin name (See GetPluginName()).
 " Usage: IsPluginUsed('nvim-treesitter')
 if has('nvim')
-    lua IsPluginUsed = function(name) return require("lazy.core.config").plugins[name] ~= nil end
+    lua IsPluginUsed = function(name) local s = require'lazy.core.config'.spec return s ~= nil and s.plugins[name] ~= nil end
 endif
 
 function! IsPluginUsed(name)
