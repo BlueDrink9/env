@@ -370,7 +370,7 @@ local spec = {
 	{
 		"hachy/cmdpalette.nvim",
 		cond = vim.g.vscode ~= 1,
-		keys = { ";", "<Cmd>Cmdpalette<CR>", mode = { "n", "x" } },
+		keys = { "q:", "<Cmd>Cmdpalette<CR>", mode = { "n", "x" } },
 		opts = {
 			win = {
 				height = 0.1,
@@ -392,8 +392,6 @@ local spec = {
 		},
 		config = function(_, opts)
 			require("cmdpalette").setup(opts)
-			vim.keymap.set({ "n" }, ";", "<Cmd>Cmdpalette<CR>")
-			vim.keymap.set({ "x" }, ";", "<Cmd>Cmdpalette<CR>'<,'>")
 			-- vim.opt_local.completeopt:remove("noselect")
 			local function bufmap()
 				-- Need the <c-n> to select the first option for some reason
