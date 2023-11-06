@@ -107,10 +107,38 @@ local spec = {
 		"https://github.com/akinsho/toggleterm.nvim",
 		cond = vim.g.vscode ~= 1,
 		keys = "<C-s>",
-		-- :ToggleTermSendCurrentLine
-		-- :ToggleTermSendVisualLines
-		-- :ToggleTermSendVisualSelection
 		opts = function()
+            local send = require("toggleterm").send_lines_to_terminal
+			vim.keymap.set("v", "<space>s", function()
+				send("visual_selection", false, { args = vim.v.count })
+			end)
+			local set_opfunc = vim.fn[vim.api.nvim_exec(
+				[[
+                func s:set_opfunc(val)
+                let &opfunc = a:val
+                endfunc
+                echon get(function('s:set_opfunc'), 'name')
+                    ]],
+				true
+			)]
+			vim.keymap.set("n", "<leader>s", function()
+				set_opfunc(function(motion_type)
+					send(motion_type, false, { args = vim.v.count })
+				end)
+				vim.api.nvim_feedkeys("g@", "n", false)
+			end)
+			vim.keymap.set("n", "<leader>ss", function()
+				set_opfunc(function(motion_type)
+					send(motion_type, false, { args = vim.v.count })
+				end)
+				vim.api.nvim_feedkeys("g@_", "n", false)
+			end)
+			vim.keymap.set("n", "<leader>S", function()
+				set_opfunc(function(motion_type)
+					send(motion_type, false, { args = vim.v.count })
+				end)
+				vim.api.nvim_feedkeys("ggg@G''", "n", false)
+			end)
 			opts = {
 				open_mapping = [[<c-s>]],
 				direction = "horizontal",
@@ -123,7 +151,11 @@ local spec = {
 				shell = vim.o.shell,
 			}
 			if vim.fn.has("win32") == 1 then
-				opts.shell = "powershell.exe"
+				if vim.fn.Executable("pwsh") == 1 then
+					opts.shell = "pwsh"
+				else
+					opts.shell = "powershell.exe"
+				end
 			end
 			return opts
 		end,
