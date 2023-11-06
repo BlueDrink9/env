@@ -235,9 +235,6 @@ Plugin 'michaeljsmith/vim-indent-object', {
 " Adds [ ] mappins for -=+% indentation objects
 Plugin 'https://github.com/jeetsukumaran/vim-indentwise', {
             \ 'keys': ['[', ']']}
-" af, if for functions, ac, ic for classes. Also ]pf, [pc for movements.
-Plugin 'https://github.com/bps/vim-textobj-python', {'for': 'python',
-            \ 'dependencies': ['kana/vim-textobj-user']}
 
 Plugin 'mtdl9/vim-log-highlighting', {'for': 'log'}
 Plugin 'https://github.com/glts/vim-texlog', {'for': ['log', 'tex']}

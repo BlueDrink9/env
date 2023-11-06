@@ -104,7 +104,10 @@ endif
 " provides text objects and motions for Python classes, methods,
 " functions, and doc strings
 if !has('nvim')
+    " af, if for functions, ac, ic for classes. Also ]pf, [pc for movements.
     Plugin 'jeetsukumaran/vim-pythonsense', {'for': 'python'}
+    " Plugin 'https://github.com/bps/vim-textobj-python', {'for': 'python',
+    "             \ 'dependencies': ['kana/vim-textobj-user']}
 endif
 if HasPython()
     if !has('nvim')
