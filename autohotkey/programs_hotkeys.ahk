@@ -4,7 +4,6 @@ Escape::goto ResetPrefix
 
 #If (IsPrefix(""))
 #e::SetPrefix("exe")
-#o::SetPrefix("office")
 #m::SetPrefix("media")
 #If
 
@@ -15,6 +14,7 @@ s::Run, excel.exe
 #If
 
 #If IsPrefix("exe")
+o::SetPrefix("office")
 e::Run explorer
 t::%terminal%()
 +t::%terminal%(true)
