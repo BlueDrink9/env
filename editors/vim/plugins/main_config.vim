@@ -184,6 +184,12 @@ if IsPluginUsed("vim-textobj-sentence")
     " Called by vim-plug when this is loaded.
     autocmd! User vim-textobj-sentence call textobj#sentence#init()
 endif
+if IsPluginUsed("vim-textobj-entire")
+    vmap ae <Plug>(textobj-entire-a)
+    vmap ie <Plug>(textobj-entire-i)
+    omap ae <Plug>(textobj-entire-a)
+    omap ie <Plug>(textobj-entire-i)
+endif
 " {]} Extra text objects
 
 " {[} ---------- Operators ----------
