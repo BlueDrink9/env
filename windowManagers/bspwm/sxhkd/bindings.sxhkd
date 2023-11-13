@@ -162,14 +162,14 @@ super + ctrl + shift + {1-9,0}
 
 # Swap desktops within current monitor or across monitors
 # Presumably want to focus the new position, or at least switch to showing it in the case of switching monitors...
-super + w; m; shift + {_,alt +} {less,greater}
+super + w; shift + {_,alt +} {less,greater}
   bspc desktop {--swap,--to-monitor} {prev,next} bspc monitor --remove
 # Create a new desktop
 super + {w; ,_}{n,d}
   bspc monitor --add-desktops ' '{_,_}{_,_}
-# Delete current desktop
-super + shift + {n,d}
-    bspc desktop --remove{,}
+# Delete current desktop or monitor
+super + shift + {_,alt +} {n,d}
+    bspc {desktop,monitor} --remove{,}
 
 
 #----------------------------------------
