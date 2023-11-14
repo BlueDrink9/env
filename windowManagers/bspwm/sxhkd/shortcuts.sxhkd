@@ -13,9 +13,9 @@ super + e; {_,shift+}i
   {emacsclient --create-frame --alternate-editor="", emacs}
 # vim (lite, IDE)
 super + e; {_,shift+,alt+}g
-    gvim {_,--cmd 'let g:liteMode=1',--cmd 'let g:ideMode=1'}
+    gvim {_,--cmd 'let g:ideMode=1',--cmd 'let g:liteMode=1'}
 super + e; {_,shift+,alt+}v
-    kitty nvim {_,--cmd 'let g:liteMode=1',--cmd 'let g:ideMode=1'}
+    kitty nvim {_,--cmd 'let g:ideMode=1',--cmd 'let g:liteMode=1'}
 # Signal/secure messages
 super + e; s
   signal-desktop --use-tray-icon
