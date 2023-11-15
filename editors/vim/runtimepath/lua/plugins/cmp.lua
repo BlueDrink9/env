@@ -11,6 +11,16 @@ return {
       opts.preselect = cmp.PreselectMode.None;
       vim.o.completeopt = "menu,menuone,noselect,noinsert"
 
+      vim.g.cmptoggle = true
+      opts.enabled = function()
+        return vim.g.cmptoggle
+      end
+      -- Create a quick way to toggle cmp
+      local toggle_cmp = function() vim.g.cmptoggle = not vim.g.cmptoggle end
+      vim.keymap.set("n", "<leader>tC", toggle_cmp, { desc = "toggle nvim-cmp" })
+      vim.api.nvim_create_user_command('CmpToggle', toggle_cmp, {})
+
+
       opts.completion = {
         completeopt = "noselect",
       }
@@ -131,7 +141,6 @@ return {
     end,
 
     -- config=function ()
-
       -- cmp.setup.cmdline(':', {
       --   sources = cmp.config.sources({
       --     { name = 'path' },
