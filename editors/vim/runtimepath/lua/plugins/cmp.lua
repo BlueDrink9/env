@@ -53,7 +53,7 @@ return {
           },
           sorting = {
             comparators = {
-              function(...) return require'cmp-buffer':compare_locality(...) end,
+              function(...) return require'cmp_buffer':compare_locality(...) end,
             },
           }
         },
@@ -141,6 +141,8 @@ return {
     end,
 
     -- config=function ()
+      -- require'cmp-spell'
+      -- require'cmp_nvim_lsp'
       -- cmp.setup.cmdline(':', {
       --   sources = cmp.config.sources({
       --     { name = 'path' },
