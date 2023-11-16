@@ -5,7 +5,8 @@ end
 return {
 
   
-  {'hrsh7th/nvim-cmp',
+  {
+    'hrsh7th/nvim-cmp',
     opts = function(_, opts)
       local cmp = require("cmp")
       opts.preselect = cmp.PreselectMode.None;
@@ -60,7 +61,7 @@ return {
 
         -- { name = 'vsnip' },
         -- { name = 'path' },
-        -- { name = 'nvim_lsp_signature_help' },
+        { name = 'nvim_lsp_signature_help' },
         -- { name = 'vim-dadbod-completion' },
 
         {
@@ -179,6 +180,16 @@ return {
       -- vim.g.vsnip_choice_delay = 250
     -- end,
 
+
+    dependencies = {
+      {'hrsh7th/cmp-nvim-lsp'},
+      {'hrsh7th/cmp-buffer'},
+      {'hrsh7th/cmp-path'},
+      -- {'hrsh7th/cmp-vsnip', lazy=true},
+      {'hrsh7th/cmp-nvim-lsp-signature-help'},
+      {'hrsh7th/cmp-nvim-lsp-document-symbol'},
+      {'https://github.com/f3fora/cmp-spell'},
+    }
   },
 
   -- -- Tab and S-Tab keys need to be mapped to <C-n> and <C-p> when completion menu is visible. Following example will use Tab and S-Tab (shift+tab) to navigate completion menu and jump between vim-vsnip placeholders when possible:
@@ -221,14 +232,6 @@ return {
   -- vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
   -- vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
   -- vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-
-  {'hrsh7th/cmp-nvim-lsp', lazy=true},
-  {'hrsh7th/cmp-buffer', lazy=true},
-  {'hrsh7th/cmp-path', lazy=true},
-  -- {'hrsh7th/cmp-vsnip', lazy=true},
-  {'hrsh7th/cmp-nvim-lsp-signature-help', lazy=true},
-  {'hrsh7th/cmp-nvim-lsp-document-symbol', lazy=true},
-  {'https://github.com/f3fora/cmp-spell', lazy=true},
 
   -- Use <tab> for completion and snippets (supertab)
   -- first: disable default <tab> and <s-tab> behavior in LuaSnip

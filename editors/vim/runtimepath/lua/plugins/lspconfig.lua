@@ -14,17 +14,52 @@ end
 -- 	lineFoldingOnly = true,
 -- }
 
-return {
-	{ "williamboman/mason-lspconfig.nvim", lazy=true},
-	-- Create appropriate colours for old colourschemes
-	{ "https://github.com/folke/lsp-colors.nvim.git", event="VeryLazy" },
-	{ "https://github.com/Hrle97/nvim.diagnostic_virtual_text_config.git",
-		event="LspAttach",
-	},
+-- Diganostic config. I guess this technically doesn't need to be in the lspconfig module,
+-- but I don't really use diagnostics anywhere else... do I?
+vim.diagnostic.config({
+		signs = false,
+		virtual_text = {
+			format = function(diagnostic)
+				symbols = {
+					[vim.diagnostic.severity.ERROR] = "E",
+					[vim.diagnostic.severity.WARN] = "W",
+					[vim.diagnostic.severity.INFO] = "I",
+					[vim.diagnostic.severity.HINT] = "H",
+				}
+				return symbols[diagnostic.severity]
+			end,
+			severity_sort = true,
+			spacing = 3,
+			underline = false,
+		},
+	})
 
+local diagnosticsConfig = vim.diagnostic.config()
+vim.g.diagnosticsEnabled = true
+function toggleDiagnostics()
+	if not vim.g.diagnosticsEnabled then
+		vim.diagnostic.config(diagnosticsConfig)
+		vim.g.diagnosticsEnabled = true
+	else
+		vim.diagnostic.config({
+			virtual_text = false,
+			sign = false,
+			float = false,
+			update_in_insert = false,
+			severity_sort = false,
+			underline = false,
+		})
+		vim.g.diagnosticsEnabled = false
+	end
+end
+vim.keymap.set("n", "yod", toggleDiagnostics, { noremap = true, silent = true })
+
+return {
 	{
 		"neovim/nvim-lspconfig",
-		config = function()
+		-- Lazyvim override can't happen in config because it is too big to replace.
+		-- Abusing the opts function to set things up on load instead.
+		opts = function(_, opts)
 			local maps = vim.g.IDE_mappings
 
 			-- Mappings.
@@ -58,26 +93,6 @@ return {
 				[maps.diagnosticNext] = "goto_next()",
 			}
 
-			local lsp_flags = {
-				debounce_text_changes = 200,
-			}
-
-			require("lspconfig")
-			require("mason").setup()
-
-			if IsPluginUsed("nvim-cmp") then
-				Nvim_cmp_capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-				Nvim_cmp_capabilities.textDocument.completion.completionItem.snippetSupport = true
-				Nvim_cmp_capabilities.textDocument.completion.completionItem.resolveSupport = {
-					properties = {
-						"documentation",
-						"detail",
-						"additionalTextEdits",
-					},
-				}
-			end
-
 			-- Use an on_attach function to only map keys etc after the language server
 			-- attaches to the current buffer
 			local on_attach = function(client, bufnr)
@@ -91,7 +106,7 @@ return {
 					group = "lsp_on_attach",
 					buffer = bufnr,
 					callback = function()
-						if DiagnosticsEnabled then
+						if diagnosticsEnabled then
 							vim.diagnostic.open_float(nil, { focus = false })
 							diags = vim.diagnostic.get(bufnr, { lnum = "." })
 							if #vim.diagnostic.get(bufnr, { lnum = vim.fn.line(".") }) > 0 then
@@ -100,8 +115,7 @@ return {
 						end
 					end,
 				})
-
-				-- Show hover for diagnostics when paused over error.
+				-- Hide again on move
 				vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
 					group = "lsp_on_attach",
 					buffer = bufnr,
@@ -131,92 +145,103 @@ return {
 				end
 			end
 
-			vim.diagnostic.config({
-				signs = false,
-				virtual_text = {
-					format = function(diagnostic)
-						symbols = {
-							[vim.diagnostic.severity.ERROR] = "E",
-							[vim.diagnostic.severity.WARN] = "W",
-							[vim.diagnostic.severity.INFO] = "I",
-							[vim.diagnostic.severity.HINT] = "H",
-						}
-						return symbols[diagnostic.severity]
+			vim.api.nvim_create_autocmd("LspAttach", {
+					callback = function(args)
+						local bufnr = args.buf
+						local client = vim.lsp.get_client_by_id(args.data.client_id)
+						on_attach(client, bufnr)
 					end,
-					severity_sort = true,
-					spacing = 3,
-					underline = false,
-				},
-			})
-
-			local lsp_installer = require("mason-lspconfig")
-
-			lsp_installer.setup({
-				-- ensure_installed = { "pylsp" },
-			})
-
-			local default_handler = function(server_name)
-				require("lspconfig")[server_name].setup({
-					on_attach = on_attach,
-					capabilities = Nvim_cmp_capabilities,
-					flags = lsp_flags,
 				})
-			end
 
-			-- Register a handler that will be called for each installed server when it's
-			-- ready (i.e. when installation is finished or if the server is already
-			-- installed).
-			lsp_installer.setup_handlers({
-				default_handler,
+			opts.main_attachment_callback = on_attach
+			-- Override lazyvim
+			opts.diagnostics = {}
 
-				-- (optional) Customize the options passed to the server
-				["pylsp"] = function()
-					default_handler("pylsp")
-					-- vim.cmd("UnPlug 'davidhalter/jedi-vim'")
-					vim.cmd([[let g:jedi#auto_initialization = 0]])
-					vim.cmd([[let g:pymode = 0]])
-					vim.cmd([[silent! au! myPymode"]])
-				end,
-
-				["lua_ls"] = function()
-					local server_name = "lua_ls"
-					require("lspconfig")[server_name].setup({
-						on_attach = on_attach,
-						capabilities = Nvim_cmp_capabilities,
-						settings = {
-							-- Get the language server to recognize the `vim` global
-							Lua = { diagnostics = { globals = { "vim" } } },
-						},
-					})
-				end,
-			})
-
-			-- Instead of showing signs, change the colour of the numbercolumn.
-			-- vim.fn.sign_define("LspDiagnosticsSignError", {text = "", numhl = "LspDiagnosticsDefaultError"})
-			-- vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "", numhl = "LspDiagnosticsDefaultWarning"})
-			-- vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "", numhl = "LspDiagnosticsDefaultInformation"})
-			-- vim.fn.sign_define("LspDiagnosticsSignHint", {text = "", numhl = "LspDiagnosticsDefaultHint"})
-
-			DiagnosticsConfig = vim.diagnostic.config()
-			DiagnosticsEnabled = true
-			function ToggleDiagnostics()
-				if not DiagnosticsEnabled then
-					vim.diagnostic.config(DiagnosticsConfig)
-					DiagnosticsEnabled = true
-				else
-					vim.diagnostic.config({
-						virtual_text = false,
-						sign = false,
-						float = false,
-						update_in_insert = false,
-						severity_sort = false,
-						underline = false,
-					})
-					DiagnosticsEnabled = false
-				end
-			end
-			vim.keymap.set("n", "yod", ToggleDiagnostics, { noremap = true, silent = true })
 		end,
+
+		-- Letting lazyvim handle config
+		-- config = function()
+		-- 	local lsp_flags = {
+		-- 		debounce_text_changes = 200,
+		-- 	}
+
+		-- 	require("lspconfig")
+		-- 	require("mason").setup()
+
+		-- 	if IsPluginUsed("nvim-cmp") then
+		-- 		Nvim_cmp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+		-- 		Nvim_cmp_capabilities.textDocument.completion.completionItem.snippetSupport = true
+		-- 		Nvim_cmp_capabilities.textDocument.completion.completionItem.resolveSupport = {
+		-- 			properties = {
+		-- 				"documentation",
+		-- 				"detail",
+		-- 				"additionalTextEdits",
+		-- 			},
+		-- 		}
+		-- 	end
+
+		-- 	local lsp_installer = require("mason-lspconfig")
+
+		-- 	lsp_installer.setup({
+		-- 		-- ensure_installed = { "pylsp" },
+		-- 	})
+
+		-- 	local default_handler = function(server_name)
+		-- 		require("lspconfig")[server_name].setup({
+		-- 			on_attach = on_attach,
+		-- 			capabilities = Nvim_cmp_capabilities,
+		-- 			flags = lsp_flags,
+		-- 		})
+		-- 	end
+
+		-- 	-- Register a handler that will be called for each installed server when it's
+		-- 	-- ready (i.e. when installation is finished or if the server is already
+		-- 	-- installed).
+		-- 	lsp_installer.setup_handlers({
+		-- 		default_handler,
+
+		-- 		-- (optional) Customize the options passed to the server
+		-- 		["pylsp"] = function()
+		-- 			default_handler("pylsp")
+		-- 			-- vim.cmd("UnPlug 'davidhalter/jedi-vim'")
+		-- 			vim.cmd([[let g:jedi#auto_initialization = 0]])
+		-- 			vim.cmd([[let g:pymode = 0]])
+		-- 			vim.cmd([[silent! au! myPymode"]])
+		-- 		end,
+
+		-- 		["lua_ls"] = function()
+		-- 			local server_name = "lua_ls"
+		-- 			require("lspconfig")[server_name].setup({
+		-- 				on_attach = opts.main_attachment_callback,
+		-- 				capabilities = Nvim_cmp_capabilities,
+		-- 				settings = {
+		-- 					-- Get the language server to recognize the `vim` global
+		-- 					Lua = { diagnostics = { globals = { "vim" } } },
+		-- 				},
+		-- 			})
+		-- 		end,
+		-- 	})
+
+		-- 	-- Instead of showing signs, change the colour of the numbercolumn.
+		-- 	-- vim.fn.sign_define("LspDiagnosticsSignError", {text = "", numhl = "LspDiagnosticsDefaultError"})
+		-- 	-- vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "", numhl = "LspDiagnosticsDefaultWarning"})
+		-- 	-- vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "", numhl = "LspDiagnosticsDefaultInformation"})
+		-- 	-- vim.fn.sign_define("LspDiagnosticsSignHint", {text = "", numhl = "LspDiagnosticsDefaultHint"})
+
+		-- end,
+
+		dependencies = {
+			-- Relying on lazyvim for these
+			-- { "mason.nvim"},
+			-- { "williamboman/mason-lspconfig.nvim"},
+			-- Create appropriate colours for old colourschemes
+			{ "https://github.com/folke/lsp-colors.nvim.git"},
+			{ "https://github.com/Hrle97/nvim.diagnostic_virtual_text_config.git",
+				event="LspAttach",
+			},
+		}
+
 	},
 
 	{

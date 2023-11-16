@@ -47,13 +47,13 @@ local spec = {
 				},
 			},
 		},
-		config = function()
-			require("mason-update-all")
-			require("mason-tool-installer")
-			-- -- nvim --headless -c 'autocmd User MasonUpdateAllComplete quitall' -c 'MasonUpdateAll'
-		end,
+		-- Let lazyvim handle this
+		-- config = function(_, opts)
+		-- 	require("mason").setup(opts)
+		-- 	require("mason-tool-installer")
+		-- 	-- -- nvim --headless -c 'autocmd User MasonUpdateAllComplete quitall' -c 'MasonUpdateAll'
+		-- end,
 	},
-	{ "https://github.com/RubixDev/mason-update-all", lazy = true },
 	{ "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim", lazy = true },
 
 	{ "https://github.com/norcalli/nvim-colorizer.lua", config = true, event = "VeryLazy" },
