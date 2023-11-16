@@ -282,10 +282,6 @@ local specs = {
 	},
 }
 
-for _, spec in ipairs(specs) do
-	if spec[1] ~= "nvim-treesitter/nvim-treesitter" then
-		spec.dependencies = "nvim-treesitter/nvim-treesitter"
-	end
-end
+require'my.utils'.inject_dependency(specs, "nvim-treesitter/nvim-treesitter")
 
 return specs

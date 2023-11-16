@@ -189,15 +189,6 @@ local specs = {
   },
 }
 
-for _, spec in ipairs(specs) do
-   if spec[1] ~= 'nvim-telescope/telescope.nvim' and (
-    spec.enabled == nil or spec.enabled
-  ) then
-    if spec.dependencies == nil then
-      spec.dependencies = {}
-    end
-    table.insert(spec.dependencies, 'nvim-telescope/telescope.nvim')
-   end
-end
+require'my.utils'.inject_dependency(specs, 'nvim-telescope/telescope.nvim')
 
 return specs

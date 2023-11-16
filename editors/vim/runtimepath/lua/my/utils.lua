@@ -21,5 +21,19 @@ function M.tostring(o)
    end
 end
 
+function M.inject_dependency(specs, dependency_name)
+   for _, spec in ipairs(specs) do
+      if spec[1] ~= dependency_name and (
+            spec.enabled == nil or spec.enabled
+            ) then
+         if spec.dependencies == nil then
+            spec.dependencies = {}
+         elseif type(spec.dependencies) == "table" then
+            spec.dependencies = {spec.dependencies}
+         end
+         table.insert(spec.dependencies, dependency_name)
+      end
+   end
+end
 
 return M
