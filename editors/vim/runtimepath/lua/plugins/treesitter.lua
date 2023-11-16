@@ -31,43 +31,43 @@ local specs = {
 		"nvim-treesitter/nvim-treesitter",
 		event="VeryLazy",
 		build = ":TSUpdate",
-		config = function()
+		opts = function(_, opts)
 			vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 			require"ts_context_commentstring"
+			return {
+				parser_install_dir = parser_install_dir,
+				auto_install = true,
+				ensure_installed = {
+					"bash",
+					"json",
+					"lua",
+					"make",
+					"markdown",
+					"markdown_inline",
+					"python",
+					"query",
+					"r",
+					"regex",
+					"sql",
+					"toml",
+					"vim",
+					"yaml",
+					-- "powershell", -- not available yet
+				},
+				endwise = { enable = true },
+				indent = {
+					enable = true,
+				},
+				highlight = {
+					enable = true,
+				},
+			},
 		end,
-		opts = {
-			parser_install_dir = parser_install_dir,
-			auto_install = true,
-			ensure_installed = {
-				"bash",
-				"json",
-				"lua",
-				"make",
-				"markdown",
-				"markdown_inline",
-				"python",
-				"query",
-				"r",
-				"regex",
-				"sql",
-				"toml",
-				"vim",
-				"yaml",
-				-- "powershell", -- not available yet
-			},
-			endwise = { enable = true },
-			indent = {
-				enable = true,
-			},
-			highlight = {
-				enable = true,
-			},
-		},
 	},
 
 	{
 		"https://github.com/ThePrimeagen/refactoring.nvim.git",
-		config = function()
+		opts = function(_, opts)
 			require("telescope").load_extension("refactoring")
 		end,
 		keys = {
@@ -87,11 +87,10 @@ local specs = {
 		opts = {
 			 snippet_engine = "luasnip",
 		},
-		config = function(_, opts)
-			require('neogen').setup(opts)
+		opts = function(_, opts)
 			vim.cmd("command! Annotate lua require('neogen').generate()")
 		end,
-		cmd = {"Annotate",},
+		cmd = {"Annotate", "Neogen"},
 
 	},
 
@@ -202,9 +201,7 @@ local specs = {
 		lazy=true,
 		dependencies = {{"nvim-treesitter/nvim-treesitter-context"}},
 	},
-	{"nvim-treesitter/nvim-treesitter-context", lazy=true},
 
-	{"kevinhwang91/promise-async", lazy=true},
 	{
 		"kevinhwang91/nvim-ufo",
 		dependencies = "kevinhwang91/promise-async",
@@ -237,8 +234,9 @@ local specs = {
 				-- INFO some filetypes only allow indent, some only LSP, some only
 				-- treesitter. However, ufo only accepts two kinds as priority,
 				-- therefore making this function necessary :/
-				local lspWithOutFolding =
-				{ "markdown", "bash", "sh", "bash", "zsh", "css", "html", "python" }
+				local lspWithOutFolding = {
+					"markdown", "bash", "sh", "bash", "zsh", "css", "html", "python"
+				}
 				if vim.tbl_contains(lspWithOutFolding, filetype) then
 					return { "treesitter", "indent" }
 				else
@@ -254,7 +252,7 @@ local specs = {
 	{
 		"https://github.com/cshuaimin/ssr.nvim.git",
 		cmd = "SSR",
-		config = function()
+		opts = function(_, opts)
 			vim.api.nvim_create_user_command("SSR", function()
 				require("ssr").open()
 			end)
