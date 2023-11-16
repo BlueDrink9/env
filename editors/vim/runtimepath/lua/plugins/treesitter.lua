@@ -34,27 +34,39 @@ local specs = {
 		opts = function(_, opts)
 			vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 			require"ts_context_commentstring"
+			-- Don't use ensure_installed normally, because if installation gets stuck or
+			-- fails for whatever reason, I don't want it trying again every time I start
+			-- vim.
+			vim.api.nvim_create_user_command(
+				"TSInstallMine",
+				function()
+					require'nvim-treesitter'.setup({
+							ensure_installed = {
+								"bash",
+								"json",
+								"lua",
+								"make",
+								"markdown",
+								"markdown_inline",
+								"python",
+								"query",
+								"r",
+								"regex",
+								"sql",
+								"toml",
+								"vim",
+								"yaml",
+								-- "powershell", -- not available yet
+							}
+						}
+				end
+				)
 			return {
 				parser_install_dir = parser_install_dir,
 				auto_install = true,
-				ensure_installed = {
-					"bash",
-					"json",
-					"lua",
-					"make",
-					"markdown",
-					"markdown_inline",
-					"python",
-					"query",
-					"r",
-					"regex",
-					"sql",
-					"toml",
-					"vim",
-					"yaml",
-					-- "powershell", -- not available yet
-				},
 				endwise = { enable = true },
+				-- Explicitly blank - use the list and function above.
+				ensure_installed = {},
 				indent = {
 					enable = true,
 				},
