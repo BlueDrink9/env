@@ -20,7 +20,7 @@ require("lazy").setup({
 		-- version = "*", -- try installing the latest stable version for plugins that support semver
 	},
 	install = {
-		missing = false, -- install missing plugins on startup.
+		missing = vim.g.plugins_first_install and vim.g.plugins_first_install == 1 or false, -- install missing plugins on startup.
 
 		-- Colourschemes for installing missing on startup
 		colorscheme = { vim.g.colorSch, "ayu", vim.g.defaultColorSch, "default" },

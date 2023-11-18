@@ -192,6 +192,7 @@ EOF
         let s:plugin_manager_url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 
         if !filereadable(l:plugin_manager_file)
+            let g:plugins_first_install = 1
             exec "silent !mkdir -p " . l:plugin_manager_dir
             if Executable("curl")
                 let s:downloader = "curl -fLo "

@@ -142,6 +142,9 @@ exec 'source ' . s:localPlugins
 
 if !has('nvim')
     call plug#end()
+    if exists("g:plugins_first_install")
+        call plug#install()
+    endif
 endif
 
 if has('nvim') && !has('nvim-0.9')
