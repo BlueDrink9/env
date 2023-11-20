@@ -6,7 +6,8 @@ try {
 } catch {}
 Start-Transcript -path $logFile -force
 
-komorebic start --await-configuration
+# komorebic start --await-configuration
+start-process -WindowStyle hidden komorebi
 sleep 1
 
 start-process -WindowStyle hidden autohotkey `
@@ -17,5 +18,5 @@ start-process -WindowStyle hidden autohotkey `
 # Source in powershell because autokey's run is quite slow.
 . "~\.config\komorebi\komorebi.generated.ps1"
 
-komorebic complete-configuration
+# komorebic complete-configuration
 Stop-Transcript
