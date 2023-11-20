@@ -1,28 +1,29 @@
-# Aliases to programs with arguments must be created as functions. Consider just using functions instead.
+# Aliases to programs with arguments must be created as functions. Consider just using functions
+# instead$args.
 Set-Alias which where.exe
 Set-Alias g git
-function gs { git status }
-function gc { git commit }
-Remove-Item -force alias:gc
-function gca { git commit --all }
-function gup { git commit --amend --no-edit --all }
-function gupa { git commit --amend --no-edit --all }
-function gupe { git commit --amend }
+function gs { git status $args}
+function gc { git commit $args}
+# Remove-Item -force alias:gc
+function gca { git commit --all $args}
+function gup { git commit --amend --no-edit --all $args}
+function gupa { git commit --amend --no-edit --all $args}
+function gupe { git commit --amend $args}
 
 # Allows pip to auto-update, and ensures you use the right version of pip for the current environment
 function pip {python -m pip $args}
 function venv {python -m venv $args}
-function venvc {python -m venv venv}
-function venva {. venv/Scripts/activate.ps1}
-function gdiff { git diff --ignore-space-change --color-words --no-index }
+function venvc {python -m venv venv $args}
+function venva {. venv/Scripts/activate.ps1 $args}
+function gdiff { git diff --ignore-space-change --color-words --no-index $args}
 Set-Alias e $env:VISUAL
 function liteEdit {nvim --cmd "let g:liteMode=1" $args}
 Set-Alias le liteEdit
 function ide {nvim --cmd "let g:ideMode=1" $args}
 Set-Alias time measure-command
 Set-Alias fopen explorer.exe
-function envupd { git -C "$DOTFILES_DIR" pull }
-# function sudo { elevate.exe -k }  # k = persistent
+function envupd { git -C "$DOTFILES_DIR" pull $args}
+# function sudo { elevate.exe -k $args}  # k = persisten$argst
 Set-Alias PlugUpdate Update-Module
 Set-Alias plugu Update-Module
 
@@ -37,7 +38,7 @@ function ln($source, $linkname, $s, $j, $h){
     }
 }
 
-function rg { &$(get-command rg.exe) --smart-case }
+function rg { &$(get-command rg.exe) --smart-case $args}
 set-alias komo komorebic
-function pym { python -m }
+function pym { python -m $args}
 set-alias py python
