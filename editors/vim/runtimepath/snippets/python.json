@@ -59,7 +59,15 @@
     "prefix": ["scriptdir"],
     "body": [
       "from pathlib import Path"
-      , "scriptdir = Path(__file__).parent"
+      , "script_dir = Path(__file__).parent"
+    ]
+  }
+
+  , "View pandas dataframe": {
+    "prefix": ["view"],
+    "body": [
+      "from gtabview import view"
+      , "view(${1})"
     ]
   }
 

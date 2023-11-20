@@ -23,7 +23,6 @@ SetWorkingDir %A_MyDocuments%\..
 ; m::Run C:\Users\user\Desktop\Gmail.lnk
 ; c::Run C:\Users\user\Desktop\Google Meet.lnk
 ; #If
-
 #include *i %A_MyDocuments%\local shortcuts.ahk
 
 #include %A_Scriptdir%\programs_hotkeys.ahk

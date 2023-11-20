@@ -9,7 +9,7 @@ $inner_gap=10  # container
 $outer_gap=-$inner_gap  # workspace
 # komorebic container-padding 0 <WORKSPACE_INDEX> $gap
 $n_monitors=4
-$n_workspaces=6
+$n_workspaces=5
 # Have to set for every workspace and monitor, ugh
 for ($mon = 0; $mon -lt $n_monitors; $mon++){
     komorebic ensure-workspaces $mon $n_workspaces

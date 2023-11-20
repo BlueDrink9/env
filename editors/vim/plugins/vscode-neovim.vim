@@ -127,6 +127,8 @@ set nonumber
 set norelativenumber
 set colorcolumn=
 
+set noautowrite
+
 endfunction
 au myVimrc User MappingOverrides call VSCodeMaps()
 

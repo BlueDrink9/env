@@ -34,7 +34,10 @@ return
   ReloadConfiguration()
   run, powershell -NoProfile -windowStyle hidden -File "%A_ScriptDir%\settings.ps1"
   Reload
+  RestoreWindows()
 return
+; Force resourcing app-specific configs, since they seem so very flakey
+#c::run, powershell -NoProfile -windowStyle hidden -File "%A_AppData%\..\..\.config\komorebi\komorebi.generated.ps1"
 ; Force Grab/manage window
 #!m::Manage()
 #!i::UnManage()

@@ -85,6 +85,10 @@ Capslock::Backspace
 ; key, or the linux-inspired version below.
 #u::return
 ^!u::#l
+; Commonly want to add this to local overrides when using komorebic. Need the #if to allow override.
+; #if true
+; #u::RunWait, komorebic.exe focus right, , Hide
+; #if
 
 ; Overrides the change layout key... but that's exactly what this script is
 ; doing.
