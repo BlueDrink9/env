@@ -2,19 +2,6 @@ if not IsPluginUsed("LazyVim") then
 	return {}
 end
 
--- surround mappings
--- replace
--- exchange
--- arg swap
--- persistance/session management replace
--- mason - delay installs/don't ensure installed
--- space c replacement/remap
--- Rg
--- Fugitive + neogit
--- Windowtitle
--- cmp: don't select first one automatically
--- Startup
-
 return {
 
 	{ "neovim/nvim-lspconfig", cond = vim.g.ideMode == 1 },
@@ -49,6 +36,9 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		cond = vim.g.liteMode == 0,
+		opts = function(_, opts)
+			opts.ensure_installed = {}
+		end
 	},
 
 	{
