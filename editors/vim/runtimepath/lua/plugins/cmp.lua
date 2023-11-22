@@ -3,7 +3,8 @@ if vim.g.ideMode==0 then
 end
 
 return {
-
+  -- first: disable LuaSnip bindings that conflict
+  { "L3MON4D3/LuaSnip", keys = function() return {} end, },
   
   {
     'hrsh7th/nvim-cmp',
@@ -232,14 +233,5 @@ return {
   -- vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
   -- vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
   -- vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-
-  -- Use <tab> for completion and snippets (supertab)
-  -- first: disable default <tab> and <s-tab> behavior in LuaSnip
-  {
-    "L3MON4D3/LuaSnip",
-    keys = function()
-      return {}
-    end,
-  },
 
 }

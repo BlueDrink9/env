@@ -365,6 +365,30 @@ local spec = {
 	-- },
 	-- { "hrsh7th/vim-vsnip-integ", event = "InsertEnter" },
 
+	{
+		"L3MON4D3/LuaSnip",
+		keys = {
+			{ "<C-e>", function()
+				if require("luasnip").expand_or_locally_jumpable() then
+					require("luasnip").expand_or_jump()
+				else
+					return "<C-e>"
+				end
+				end,
+				expr = true, silent = true, mode = "i", }
+		},
+		opts = function(_, opts)
+			local snipdir = vim.g.configDir .. vim.fn.expand("/runtimepath/snippets")
+			-- load snippets from path/of/your/nvim/config/my-cool-snippets
+			require("luasnip.loaders.from_snipmate").lazy_load({
+				paths = { snipdir },
+			})
+			require("luasnip.loaders.from_vscode").lazy_load({
+				paths = { snipdir },
+			})
+		end,
+	},
+
 	{ "octaltree/virtualsnip", build = "make", event = "InsertEnter" },
 
 	{
