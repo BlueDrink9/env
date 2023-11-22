@@ -4,7 +4,16 @@ end
 
 return {
 
-	{ "neovim/nvim-lspconfig", cond = vim.g.ideMode == 1 },
+	{
+		"neovim/nvim-lspconfig",
+		cond = vim.g.ideMode == 1,
+		init = function()
+			-- Clear default lsp keymaps
+			local keys = require("lazyvim.plugins.lsp.keymaps").get()
+			for i=0, #keys do keys[i]=nil end
+		end,
+	},
+
 	{ "hrsh7th/nvim-cmp", cond = vim.g.ideMode == 1 },
 	{
 		"conform.nvim",
