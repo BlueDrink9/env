@@ -9,7 +9,7 @@ if g:liteMode
         Plugin 'https://github.com/tpope/vim-surround.git'
     endif
     " Lighter alt to airline for putting buffers in tabline.
-    Plugin 'https://github.com/ap/vim-buftabline'
+    Plugin 'https://github.com/ap/vim-buftabline', {'event': ['BufNewFile', 'BufReadPost']}
 endif
 " {]} Litemode only
 
