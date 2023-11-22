@@ -236,8 +236,6 @@ Plugin 'michaeljsmith/vim-indent-object', {
 Plugin 'https://github.com/jeetsukumaran/vim-indentwise', {
             \ 'keys': ['[', ']']}
 
-Plugin 'mtdl9/vim-log-highlighting', {'for': 'log'}
-Plugin 'https://github.com/glts/vim-texlog', {'for': ['log', 'tex']}
 " {]} Extra text objects
 
 " {[} ---------- Operators ----------
@@ -348,14 +346,22 @@ Plugin 'https://github.com/radenling/vim-dispatch-neovim', {'on': ['Make', 'Star
 " Check that whatever you need isn't in polyglot, first!
 " Multi-lang support
 let g:polyglot_disabled = ['autoindent', 'sensible', 'latex', 'markdown', 'python']
-Plugin 'https://github.com/sheerun/vim-polyglot', {'event': ['BufNewFile','BufReadPre']}
+" Polyglot's performance is awful and its ftdetect affects many buffers.
+" So only load it when explicitly desired
+command! Polyglot :
+Plugin 'https://github.com/sheerun/vim-polyglot', {'on': 'Polyglot'}
 Plugin 'https://github.com/lervag/vim-rmarkdown', {'for': 'rmd'}
+Plugin 'https://github.com/tpope/vim-git'
 Plugin 'https://github.com/liuchengxu/graphviz.vim', {'for': 'dot'}
 Plugin 'https://github.com/waycrate/swhkd-vim', {'for': 'swhkd'}
+Plugin 'https://github.com/baskerville/vim-sxhkdrc', {'for': ['sxhkd', 'sxhkdrc']}
 if !has("nvim")
     Plugin 'https://github.com/jceb/vim-orgmode', {'for': 'org'}
     Plugin 'https://github.com/sirtaj/vim-openscad', {'for': 'scad'}
 endif
+Plugin 'mtdl9/vim-log-highlighting', {'for': 'log'}
+Plugin 'https://github.com/glts/vim-texlog', {'for': ['log', 'tex']}
+Plugin 'LnL7/vim-nix', {'for': ['nix']}
 " {]} ---------- extra filetype support ----------
 
 " {[} ---------- Git ----------
