@@ -101,7 +101,11 @@ return {
           if luasnip.expand_or_locally_jumpable() then
             luasnip.expand_or_jump()
           else
-            fallback()
+            cmp.confirm({
+              behavior = cmp.ConfirmBehavior.Insert,
+              select = true,
+            })
+            -- fallback()
           end
         end, { "i", "s" }),
         ["<Tab>"] = cmp.mapping(function(fallback)
