@@ -8,9 +8,10 @@ return {
 		"neovim/nvim-lspconfig",
 		cond = vim.g.ideMode == 1,
 		init = function()
-			-- Clear default lsp keymaps
 			local keys = require("lazyvim.plugins.lsp.keymaps").get()
-			for i=0, #keys do keys[i]=nil end
+			-- Clear default lsp keymaps
+			-- for i=0, #keys do keys[i]=nil end
+			keys[#keys + 1] = { "<leader>ca", false }
 		end,
 	},
 
