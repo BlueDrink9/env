@@ -25,7 +25,6 @@ local specs = {
   {
     'nvim-telescope/telescope.nvim',
     version='*',
-    dependencies = {{'nvim-lua/plenary.nvim'},},
     -- {'my.utils'}},
     cmd = "Telescope",
     keys = function()
@@ -108,15 +107,15 @@ local specs = {
 
       vim.api.nvim_create_user_command('Colorschemes', 'Telescope colorscheme', {})
 
-        opts.extensions.coc = {
-          -- theme = 'ivy',
-          prefer_locations = true, -- always use Telescope locations to preview definitions/declarations/implementations etc
+      opts.extensions.coc = {
+        -- theme = 'ivy',
+        prefer_locations = true, -- always use Telescope locations to preview definitions/declarations/implementations etc
+      }
+      opts.extensions["ui-select"] = {
+        require("telescope.themes").get_dropdown {
+          -- even more opts
         }
-        opts.extensions["ui-select"] = {
-          require("telescope.themes").get_dropdown {
-            -- even more opts
-          }
-        }
+      }
 
       -- https://github.com/fcying/telescope-ctags-outline.nvim
       opts.extensions.ctags_outline = {
@@ -135,60 +134,59 @@ local specs = {
 
       -- show all opened buf outline(use current buf filetype)
       -- telescope.extensions.ctags_outline.outline({buf='all'})
-    end
-  },
+    end,
+
+    dependencies = {
+
+      {'nvim-lua/plenary.nvim'},
 
       -- All installed with telescope IDE plugins
       -- require("telescope") only, basics
 
-  -- config = function() require("telescope").load_extension("vimspector") end,
-  -- config = function() require("telescope").load_extension('coc') end,
-  -- config = function() require("telescope").load_extension('refactoring') end,
+      -- config = function() require("telescope").load_extension("vimspector") end,
+      -- config = function() require("telescope").load_extension('coc') end,
+      -- config = function() require("telescope").load_extension('refactoring') end,
 
       -- require('my.utils').map_table_with_prefix({
       --   [maps.FuzzyFuzzy.."m"] = "marks",
       -- }, "<cmd>Telescope ", "n")
 
-  {'https://github.com/nvim-telescope/telescope-ui-select.nvim',
-    config = function() require("telescope").load_extension('ui-select') end,
-    lazy=true,
-  },
+      {'https://github.com/nvim-telescope/telescope-ui-select.nvim',
+        config = function() require("telescope").load_extension('ui-select') end,
+      },
 
-  {'LinArcX/telescope-changes.nvim',
-    config = function() require("telescope").load_extension('changes') end,
-    keys = build_keymaps_other("c", "changes"),
-  },
+      {'LinArcX/telescope-changes.nvim',
+        config = function() require("telescope").load_extension('changes') end,
+        keys = build_keymaps_other("c", "changes"),
+      },
 
-  {'FeiyouG/command_center.nvim',
-    config = function() require("telescope").load_extension("command_center") end,
-    lazy=true,
-  },
+      {'FeiyouG/command_center.nvim',
+        config = function() require("telescope").load_extension("command_center") end,
+      },
 
-  {'https://github.com/debugloop/telescope-undo.nvim',
-    config = function() require("telescope").load_extension('undo') end,
-    keys = build_keymaps_other("u", "undo"),
-  },
+      {'https://github.com/debugloop/telescope-undo.nvim',
+        config = function() require("telescope").load_extension('undo') end,
+        keys = build_keymaps_other("u", "undo"),
+      },
 
-  {'cljoly/telescope-repo.nvim',
-    config = function() require("telescope").load_extension('repo') end,
-    keys = build_keymaps_other("r", "redo"),
-  },
+      {'cljoly/telescope-repo.nvim',
+        config = function() require("telescope").load_extension('repo') end,
+        keys = build_keymaps_other("r", "redo"),
+      },
 
-  {'fcying/telescope-ctags-outline.nvim',
-    config = function() require("telescope").load_extension('ctags_outline') end,
-    lazy=true,
-  },
+      {'fcying/telescope-ctags-outline.nvim',
+        config = function() require("telescope").load_extension('ctags_outline') end,
+      },
 
-  {
-    'nvim-telescope/telescope-fzf-native.nvim',
-    config = function() require("telescope").load_extension("fzf") end,
-    enabled = vim.fn.IsCCompilerAvailable() and
-      (vim.fn.Executable('cmake') == 1 or vim.fn.Executable('make') == 1),
-    build = telecope_make_cmd,
-    lazy=true,
+      {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        config = function() require("telescope").load_extension("fzf") end,
+        enabled = vim.fn.IsCCompilerAvailable() and
+          (vim.fn.Executable('cmake') == 1 or vim.fn.Executable('make') == 1),
+        build = telecope_make_cmd,
+      },
+    },
   },
 }
-
-require'my.utils'.inject_dependency(specs, 'nvim-telescope/telescope.nvim')
 
 return specs

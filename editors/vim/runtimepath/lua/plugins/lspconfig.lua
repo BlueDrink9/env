@@ -7,6 +7,9 @@ if vim.g.ideMode == 0 then
 	return {}
 end
 
+-- TODO disable ensure installed. I think lazyvim is setting it (so mabye do it in
+-- override instead)
+
 -- local lspCapabilities = vim.lsp.protocol.make_client_capabilities()
 -- -- Enable folding (for nvim-ufo)
 -- lspCapabilities.textDocument.foldingRange = {
@@ -135,12 +138,12 @@ return {
 				end
 				if client.server_capabilities.workspaceSymbolProvider then
 					vim.keymap.set('n', maps.FuzzySymbols,
-					require('telescope.builtin').lsp_document_symbols,
+					function() require('telescope.builtin').lsp_document_symbols() end,
 					{ buffer = bufnr})
 				end
 				if client.server_capabilities.documentSymbolProvider then
 					vim.keymap.set('n', maps.FuzzySymbolsWorkspace,
-					require('telescope.builtin').lsp_workspace_symbols,
+					function() require('telescope.builtin').lsp_workspace_symbols() end,
 					{ buffer = bufnr})
 				end
 			end
