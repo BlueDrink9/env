@@ -1,0 +1,33 @@
+{
+    "name": "My custom snippets (json for luasnip)",
+    "engines": {
+        "vscode": "^1.11.0"
+    },
+    "contributes": {
+        "snippets": [
+            {
+                "language": [
+                    "plaintext",
+                    "markdown",
+                    "tex",
+                    "html",
+                    "global",
+                    "all"
+                ],
+                "path": "./snippets/global.json"
+            }
+            , {
+                "language": ["vim"],
+                "path": "./vim.json"
+            }
+            , {
+                "language": ["python"],
+                "path": "./python.json"
+            }
+            , {
+                "language": ["shellscript", "shell", "sh", "zsh"],
+                "path": "./sh.json"
+            }
+        ]
+    }
+}
