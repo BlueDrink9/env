@@ -62,15 +62,6 @@ function! myVimrcFunctions#toggleSystemClipboard()
 endfunction
 
 
-function! myVimrcFunctions#ToggleAutoWrite()
-    if &autowrite
-      set noautowrite
-    else
-      set autowrite
-    endif
-endfunction
-
-
 function! myVimrcFunctions#Profile()
     let logfile = '$HOME/.logs/vim_profile.log'
     exec 'profile start ' . logfile

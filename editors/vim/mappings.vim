@@ -415,7 +415,8 @@ endif
 " Replace visual selection with its evaluation result
 vnoremap <silent> <c-r>= c<C-r>=<C-r>"<CR><ESC>
 
-nnoremap yoa <cmd>call myVimrcFunctions#ToggleAutoWrite()<cr>
+nnoremap yoa <cmd>set autowrite!<cr>
+nnoremap yoW <cmd>set autowrite!<cr>
 
 nnoremap <silent> , :<C-U>call myVimrcFunctions#SingleCharInsert()<CR>
 
