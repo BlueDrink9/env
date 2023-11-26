@@ -43,6 +43,9 @@ local spec = {
 		--     function() require'leap-ast'.leap() end,
 		--     {desc='leap to ast elemenjt'})
 		-- end
+		-- Adds very little but needed for lazyvim to not throw a hissy
+		dependencies = { import = "lazyvim.plugins.extras.editor.leap", cond=IsPluginUsed("LazyVim")},
+
 	},
 	{
 		"https://github.com/ggandor/leap-spooky.nvim",

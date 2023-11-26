@@ -77,9 +77,6 @@ require("lazy").setup({
 			cond = vim.g.liteMode == 0,
 		},
 
-		-- Actually adds very little
-		-- { import = "lazyvim.plugins.extras.editor.leap"},
-
 		{ import = "plugins" },
 
 		LazyPlugSpecs,
