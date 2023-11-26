@@ -118,7 +118,10 @@ alias view="liteVim -R"
 alias e\?=fuzzyEdit
 # alias :Q="exit"
 # alias ZZ="exit"
-alias se="sudoedit"
+function se(){
+  # Ensure sudo command is set (esp useful for vim-eunuch)
+  SUDO_COMMAND="sudoedit $@" command sudoedit "$@"
+}
 alias minivim="vim -u '$DOTFILES_DIR/editors/vim/minirc' -c 'set nocp | inore vk <esc> | inore kv <esc> | nnoremap ; :'"
 alias mininvim="nvim -u '$DOTFILES_DIR/editors/vim/minirc' -c 'set nocp | inore vk <esc> | inore kv <esc> | nnoremap ; :'"
 openVimSession(){ myVim -c "OpenSession $1"; }
@@ -177,3 +180,5 @@ alias plasma_reload='qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.
 alias lsblkids='lsblk -o NAME,SIZE,MOUNTPOINT,UUID,PARTUUID'
 alias goRouter='fopen $(ip route | cut -f3 -d" " | head -n 1)'
 alias winkill='kill $(xprop | rg pid | cut -d" " -f3)'
+alias snatch='git clone --depth=1'
+alias syncthing-remote='"ssh" -L 8385:localhost:8384'
