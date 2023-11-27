@@ -31,6 +31,7 @@ Some of these are set automatically, but if set manually, should override the de
 | `.vimrc` | `liteMode` | 1 or 0 | Only loads lighter plugins. Good for quick editing. | Before |
 | `.vimrc` | `noPlugins` | 1 or 0 | Don't load any vim plugins. | Before |
 | `.vimrc` | `g:termColors` | same as `COLORTERM` | Allows vim-specific override for COLORTERM | Before |
+| `.vimrc` | `g:slow_writes` | 1 or empty | Tweaks a few options (mainly insertleave autosave) for systems where writes are slow | Before |
 | `.vimrc` | `g:minimumUI` | 1 or empty | Tries to remove most UI decorations to give maximum size for text | Before |
 
 Edit `TERMOPTIONS` and append any env variables you want to be passed through SSH.
