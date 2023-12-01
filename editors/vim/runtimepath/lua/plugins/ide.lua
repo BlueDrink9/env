@@ -53,8 +53,10 @@ local spec = {
 		-- 	require("mason-tool-installer")
 		-- 	-- -- nvim --headless -c 'autocmd User MasonUpdateAllComplete quitall' -c 'MasonUpdateAll'
 		-- end,
+		dependencies = {
+			"https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim"
+		},
 	},
-	{ "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim", lazy = true },
 
 	{ "https://github.com/norcalli/nvim-colorizer.lua", config = true, event = "VeryLazy" },
 	-- {'nvim-notify', opt={stages="static"}},
@@ -294,8 +296,13 @@ local spec = {
 	{
 		"https://github.com/Vigemus/iron.nvim",
 		-- version="*", -- v3 currently broken for latest nvim, need master
-		config = function()
-			require("iron.core").setup({
+		opts = function(_, opts)
+			vim.keymap.set("n", idemaps.REPLSendEndLine,
+				function()
+					vim.cmd[[normal v$]];
+					require'iron.core'.visual_send()
+			end)
+			return {
 				config = {
 					-- Whether a repl should be discarded or not
 					scratch_repl = true,
@@ -331,13 +338,17 @@ local spec = {
 					italic = true,
 				},
 				ignore_blank_lines = false,
-			})
+			}
+		end,
+		config = function(_, opts)
+			require("iron.core").setup(opts)
 		end,
 		cmd = { "IronFocus", "IronRepl" },
 		keys = {
 			{ "<space>s<c-s>", "<cmd>IronFocus<cr>" },
 			{ idemaps.REPLSend, mode = { "n", "v" } },
 			{ idemaps.REPLSendFile },
+			{ idemaps.REPLSendEndLine },
 			{ idemaps.REPLSendLine },
 		},
 	},
