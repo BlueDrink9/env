@@ -115,7 +115,7 @@ return {
         endf
         ]])
         -- Autosave on idle
-        vim.api.nvim_create_autocmd('TextChanged,TextChangedI', {
+        vim.api.nvim_create_autocmd({'TextChanged', 'TextChangedI'}, {
                 group="myPlugins",
                 callback = function()
                     if vim.g.timer_started == true then
@@ -243,5 +243,8 @@ return {
 
 
         vim.g.firenvim_config = config
-    end
+    end,
+
+    -- TODO fix lualine + lazyvim + firenvim
+    {'lualine.nvim', cond=not vim.g.started_by_firenvim,}
 }
