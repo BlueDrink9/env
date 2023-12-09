@@ -255,7 +255,10 @@ if exists('+wildoptions')
     try
         set wildoptions=fuzzy,pum
     catch /E474:/
-        set wildoptions=pum
+        try
+            set wildoptions=pum
+        catch /E474:/
+        endtry
     endtry
 endif
 set scrolloff=5
