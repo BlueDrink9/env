@@ -202,16 +202,7 @@ local specs = {
 
 	{
 		"https://github.com/JoosepAlviste/nvim-ts-context-commentstring.git",
-		config = function()
-			require"treesitter-context"
-			require("nvim-treesitter.configs").setup({
-				context_commentstring = {
-					enable = true,
-				},
-			})
-		end,
 		lazy=true,
-		dependencies = {{"nvim-treesitter/nvim-treesitter-context"}},
 	},
 
 	{
