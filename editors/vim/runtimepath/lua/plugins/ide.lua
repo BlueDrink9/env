@@ -400,6 +400,8 @@ local spec = {
 		end,
 	},
 
+	{ "polypus74/trusty_rusty_snippets", ft="rust"},
+
 	{ "octaltree/virtualsnip", build = "make", event = "InsertEnter" },
 
 	{

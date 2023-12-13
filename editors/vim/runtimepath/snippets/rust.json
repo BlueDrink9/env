@@ -1,0 +1,17 @@
+{
+  "printdebug": {
+    "prefix": ["println"],
+    "body": [
+      "println!(\"${var}: {:?}\", ${var})"
+    ],
+    "description": "Debug print"
+  }
+
+  , "New vector": {
+    "prefix": ["Vec"],
+    "body": [
+      "let ${1} = Vec::new();"
+    ]
+  }
+
+}
