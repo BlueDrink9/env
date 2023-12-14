@@ -471,7 +471,7 @@ local spec = {
 		keys = function()
 			local out = {}
 			for _, key in ipairs({ "w", "b", "e", "ge" }) do
-				table.insert(out, { "-" .. key, "<Plug>CamelCaseMotion_" .. key, mode = { "n", "v" } })
+				table.insert(out, { "-" .. key, "<Plug>CamelCaseMotion_" .. key, mode = { "n", "v", "o" } })
 			end
 			for _, key in ipairs({ "iw", "aw" }) do
 				table.insert(out, {
