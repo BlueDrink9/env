@@ -468,7 +468,10 @@ endfunction
 if exists("g:minimumUI")
   call MinimumUI()
 else
-  " Add vimenter because resized doesn't trigger on startup, only on change.
+  " Add vimenter and uienter because resized doesn't trigger on startup, only on change.
+  if exists("##UIEnter")
+      autocmd myVimrc UIEnter * call SmallUIOnResize()
+  endif
   autocmd myVimrc VimEnter * call SmallUIOnResize()
   autocmd myVimrc VimResized * call SmallUIOnResize()
 endif
