@@ -397,8 +397,8 @@ Plugin 'https://github.com/reedes/vim-lexical', { 'for': g:proseFileTypes }
 " Plugin 'https://github.com/vim-pandoc/vim-pandoc', { 'for': g:proseFileTypes }
 " Plugin 'https://github.com/vim-pandoc/vim-pandoc-syntax', { 'for': g:proseFileTypes }
 " Plugin 'https://github.com/vim-pandoc/vim-rmarkdown', {'for': 'rmd' }
-Plugin 'https://github.com/reedes/vim-pencil', {
-            \ 'for': g:proseFileTypes, 'on': 'Pencil'}
+" Plugin 'https://github.com/reedes/vim-pencil', {
+"             \ 'for': g:proseFileTypes, 'on': 'Pencil'}
 
 Plugin 'https://github.com/lervag/vimtex', {'for': 'tex',
             \ 'beforeFunc': 'VimtexBefore'}

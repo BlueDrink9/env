@@ -82,12 +82,6 @@ spec.config = function()
     local FirenvimSetGUIOptions = function()
         vim.o.showtabline=0
         vim.o.cmdheight=0
-        -- if vim.o.lines < 20 then
-        --     -- Enforce hiding lualine on small buffers,
-        --     -- since lualine overrides laststatus on load.
-        --     pcall(require('lualine').hide())
-        -- end
-        print(vim.o.lines)
         if vim.o.lines < 2 then
             vim.cmd('quitall!')
         end

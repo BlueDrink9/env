@@ -487,11 +487,28 @@ if IsPluginUsed("vim-pencil")
             " Custom lang not set.
             setl spell spl=en_nz
         endif
-        call pencil#init()
+        " call pencil#init()
+        " Experimenting with replacing vim-pencil 
+        " set undo points around common punctuation,
+        " line <c-u> and word <c-w> deletions
+        inoremap <buffer> . .<c-g>u
+        inoremap <buffer> ! !<c-g>u
+        inoremap <buffer> ? ?<c-g>u
+        inoremap <buffer> , ,<c-g>u
+        inoremap <buffer> ; ;<c-g>u
+        inoremap <buffer> : :<c-g>u
+        inoremap <buffer> <c-u> <c-g>u<c-u>
+        inoremap <buffer> <c-w> <c-g>u<c-w>
+
+        " map <cr> only if not already mapped
+        if empty(maparg('<cr>', 'i'))
+            inoremap <buffer> <cr> <c-g>u<cr>
+        end
+
         " Undo pencil mappings to stop them overriding my own (since they are
         " buffer maps, they take precedence even though mine were mapped later)
-        unmap <buffer> <up>
-        unmap <buffer> <down>
+        " unmap <buffer> <up>
+        " unmap <buffer> <down>
         setl ai
     endfunction
     function! s:prepareProseOptionSet()
