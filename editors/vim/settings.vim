@@ -131,8 +131,9 @@ function! SetUpGUI()
         " https://github.com/vim/vim/issues/5246
         au myVimrc VimEnter * :set guioptions-=T
         set guioptions+=M
-        " Larger gvim window
-        set lines=40 columns=120
+        " Larger gvim window. Disabling for now because it messes with
+        " firenvim
+        " set lines=40 columns=120
     endif
     " Never use ugly tab page that overrides airline's
     set guioptions-=e
