@@ -159,7 +159,9 @@ return {
       opts = vim.tbl_deep_extend("force", current_opts, opts)
       return opts
    end,
-   -- config = function()
-   --    vim.opt.showmode = false
-   -- end,
+
+   config = function(_, opts)
+      require("lualine").setup(opts)
+      vim.fn.SmallUIOnResize()
+   end,
 }
