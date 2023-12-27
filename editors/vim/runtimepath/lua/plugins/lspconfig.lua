@@ -159,7 +159,10 @@ return {
 			opts.main_attachment_callback = on_attach
 			-- Override lazyvim
 			opts.diagnostics = {}
-
+			-- Ensure file that triggers lspconfig to load also triggers
+			-- attachment.
+			vim.fn.timer_start(1000,
+				function() vim.cmd.doautocmd("bufread") end)
 		end,
 
 		-- Letting lazyvim handle config
