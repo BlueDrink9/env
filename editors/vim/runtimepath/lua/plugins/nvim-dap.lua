@@ -13,7 +13,7 @@ local specs = {
       -- Stop this being loaded by lspconfig somewhere.
       -- Only want this module loaded on a debug command.
       module=false,
-      keys = {maps.debugFile, maps.setBreakpoint},
+      keys = {maps.debugFile},
       cmd = {
          "Debug",
          "DebugTestClass",
@@ -27,6 +27,7 @@ local specs = {
             [maps.debugReset] = 'terminate()',
             [maps.debugContinue] = 'continue()',
             [maps.debugRestart] = 'run_last()',
+            [maps.debugPause] = 'pause()',
             [maps.debugStepOver] = 'step_over()',
             [maps.debugStepInto] = 'step_into()',
             [maps.debugStepOut] = 'step_out()',

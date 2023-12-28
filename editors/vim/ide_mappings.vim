@@ -66,6 +66,7 @@ let g:IDE_mappings = {
             \ 'debugRestart' : '<leader>dr',
             \ 'debugReset' : '<leader>dC',
             \ 'debugContinue' : '<leader>dc',
+            \ 'debugPause' : '<leader>p',
             \ 'debugStepOver' : '<leader>.',
             \ 'debugStepInto' : '<leader>>',
             \ 'debugStepOut' : '<leader>^',
