@@ -14,13 +14,15 @@
 ;;      Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
 ;;      directory (for easy access to its source code).
 
-       ;; Use vterm on unix, term on win (may fail for different compilations of emacs).
-       (if (eq system-type 'windows-nt)
-           (setq my/doom-term 'eshell)            ; the elisp shell that works everywhere
-         (setq my/doom-term 'vterm)             ; the best terminal emulation in Emacs
-         )
-       ;;shell             ; simple shell REPL for Emacs
-       ;;term              ; basic terminal emulator for Emacs
+
+;; Use vterm on unix with cmake, else eshell (may fail for different compilations of emacs).
+;; Not actually used; can't call macro with argument
+(defvar my/doom-term "eshell")  ; the elisp shell that works everywhere
+;; Check for Windows system or if cmake is not executable
+(when (or (eq system-type 'windows-nt)
+          (not (executable-find "cmake")))
+  ;; Set 'my/term to "vterm" if the condition is true
+  (setq my/doom-term "vterm"))
 
 ;; Has to be set before evil loads.
 (setq evil-respect-visual-line-mode t)
@@ -99,7 +101,8 @@
        (undo +tree)              ; persistent, smarter undo for your inevitable mistakes
        vc                ; version-control and Emacs, sitting in a tree
 
-       :term 'my/doom-term
+       ;; :term my/doom-term  ;; You can't actually call macros with variables it seems :/ sorry windows
+       :term vterm
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
