@@ -20,8 +20,10 @@
 
 ;; Requires KeyChord library
 (key-chord-mode 1)
-(setq key-chord-two-keys-delay 0.5)
-(map! :desc "Enter normal mode" :i (general-chord "kv") 'evil-normal-state
+(setq key-chord-two-keys-delay 0.3
+      key-chord-safety-interval-forward 0.05)
+(map! :desc "Enter normal mode"
+      :i (general-chord "kv") 'evil-normal-state
       :i (general-chord "vk") 'evil-normal-state)
 
 (require 'rebinder)
