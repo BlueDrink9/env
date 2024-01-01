@@ -71,16 +71,13 @@
 
 
 ;; Swap ;, :
-(map! :nv
-      ";" #'evil-ex
-      ;; ":" #'evil-repeat-find-char
+(map! :nv ";" #'evil-ex
+      :nv ":" #'evil-repeat-find-char)
       ;; Snipe gives colour hints.
-      :nv ":" #'evil-snipe-repeat-forwards)
+      ;; :nv ":" #'evil-snipe-repeat)
 ;; (evil-collection-swap-key nil 'evil-motion-state-map ";" ":")
 (map! :leader :nv
       ";" #'execute-extended-command  ;; Vertico
-      ;; ":" #'evil-repeat-find-char
-      ;; Snipe gives colour hints.
       :nv ":" #'pp-eval-expression)
 
 

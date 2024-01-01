@@ -105,6 +105,7 @@
       (setq truncate-lines nil))
 ;; (add-hook 'minibuffer-setup-hook 'evil-collection-minibuffer-insert)
 (setq evil-repeat-move-cursor nil)
+(setq evil-repeat-keys '(":" ","))
 (setq evil-cross-lines t)
 (setq evil-split-window-below t)
 (setq evil-vsplit-window-right t)
@@ -149,7 +150,8 @@
   (global-smart-tab-mode 1)
   )
 
-(remove-hook 'doom-first-input-hook #'evil-snipe-mode)
+;; (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
+(remove-hook 'doom-first-input-hook #'evil-snipe-override-mode)
 
 ;; Use cx for exchange mapping
 (after! evil-exchange
