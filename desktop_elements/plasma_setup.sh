@@ -136,6 +136,7 @@ install_panel_widgets
 configure_applet org.kde.windowtitle General style 3  # style 3 = Title - Application
 configure_applet org.kde.windowtitle General lengthPolicy Fill
 configure_applet org.kde.windowtitle General boldFont false
+configure_applet org.kde.windowtitle General capitalFont false
 configure_applet org.kde.windowtitle General containmentType Plasma
 
 configure_applet org.kde.plasma.pager General showOnlyCurrentScreen true
