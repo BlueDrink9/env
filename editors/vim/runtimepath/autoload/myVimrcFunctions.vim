@@ -49,7 +49,11 @@ endfunction
 
 
 function! myVimrcFunctions#toggleSystemClipboard()
-  let l:clipboard="unnamed"
+  if has('unnamedplus')
+    let l:clipboard="unnamedplus"
+  else
+    let l:clipboard="unnamed"
+  endif
   if !exists("s:savedClipboardSetting")
     let s:savedClipboardSetting = &clipboard
   endif
