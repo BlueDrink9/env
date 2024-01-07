@@ -68,6 +68,8 @@
   # tool = vimdiff4
   # tool = fugative
   tool = vim-conflicted
+  # Do virtual check in/out to resolve line ending conflicts when merging
+  renormalise = true
 [mergetool]
   prompt = false
   TrustExitCode = true
