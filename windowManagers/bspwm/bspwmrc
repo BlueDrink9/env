@@ -7,6 +7,11 @@ export SXHKD_SHELL="sh"
 export BSPWM_RESIZE_DELTA=30
 
 export DOTFILES_DIR="$(cat $HOME/.config/.dotfiles_dir)"
+export BSPWM_CONFIG_DIR="$DOTFILES_DIR/windowManagers/bspwm"
+
+. "$DOTFILES_DIR/shell/XDG_setup.sh"
+export PATH="$(cat "$XDG_CONFIG_HOME/.PATH")"
+
 . "$DOTFILES_DIR"/windowManagers/variables.sh
 # {[} BSPWM-specific variables
 BSPWM_FOCUSED_COLOUR="#$focused_border_color"
@@ -30,14 +35,14 @@ bspc_desktop(){
   bspc monitor --add-desktops $i
 }
 
-. "$DOTFILES_DIR"/windowManagers/bspwm/companion_programs.sh
+. "$BSPWM_CONFIG_DIR"/companion_programs.sh
 
 #  if [[ $(hostname) == 'myhost' ]]; then
 # bspc monitor -d I II III IV V VI VII VIII IX X
 bspc monitor -d " " " " " " " "
 
-. "$DOTFILES_DIR"/windowManagers/bspwm/rules.sh
-bspc config external_rules_command "$DOTFILES_DIR"/windowManagers/bspwm/external_rules.sh
+. "$BSPWM_CONFIG_DIR"/rules.sh
+bspc config external_rules_command "$BSPWM_CONFIG_DIR"/external_rules.sh
 
 #This creates negative padding equal to window gap so that gaps are shown only between windows and not on desktop edges.
 gap=15

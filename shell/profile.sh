@@ -5,6 +5,7 @@
 # shell
 SCRIPT_DIR_LOCAL="$(realpath "$PROFILE_DIR/..")"
 export DOTFILES_DIR=$(cd "${SCRIPT_DIR_LOCAL}/.." && pwd)
+. "$SCRIPT_DIR_LOCAL/XDG_setup.sh"
 
 if grep -qE "(Microsoft|WSL)" "$([ -f /proc/version ] && cat /proc/version)" > /dev/null 2>&1; then
   export isWSL=1
@@ -128,6 +129,10 @@ if substrInStr "darwin1" "$OSTYPE"; then
   fi
   unset xcodeBin
 fi
+
+# Export path as a file for any scripts that might need it (e.g. sxhkd or
+# bspwm)
+echo "$PATH" >| "$XDG_CONFIG_HOME/.PATH"
 
 
 # Check if interactive is part of shell options (running interactively)

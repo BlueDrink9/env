@@ -1,7 +1,6 @@
 #! /bin/sh
-export PATH="$PATH:$HOME/.local/bin"
 # Making this a function and exporting it so that it's easier to restart if it
-# fails
+# fails (terminals that sxhkd start will inherit this function).
 sxhkd_mine(){
   SXHKD_STATUS_FIFO="/run/user/${UID}/display${DISPLAY}/sxhkd.fifo"
   if [ ! -e "${SXHKD_STATUS_FIFO}" ]; then
