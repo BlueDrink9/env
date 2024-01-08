@@ -45,7 +45,9 @@
 ;; flexibly anyway.
 (package! evil-escape :disable t)
 
-(package! key-chord)
+(package! key-chord
+  ;; Commit after this adds infuriating delay to kv normal-mode
+  :pin "68264d09593e69c1d4773859ac570bd9feb008d9")
 ;; Allows rebinding whole prefix trees
 (package! rebinder :recipe (:host github :repo "darkstego/rebinder.el"))
 ;; String modification functions

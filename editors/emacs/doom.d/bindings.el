@@ -19,12 +19,12 @@
 ;; Leaving spc m (the default) for now.
 
 ;; Requires KeyChord library
-(key-chord-mode 1)
-(setq key-chord-two-keys-delay 0.3
-      key-chord-safety-interval-forward 0.05)
-(map! :desc "Enter normal mode"
-      :i (general-chord "kv") 'evil-normal-state
-      :i (general-chord "vk") 'evil-normal-state)
+(after! evil
+  (key-chord-mode 1)
+  (setq key-chord-two-keys-delay 0.3)
+  (map! :desc "Enter normal mode"
+        :i (general-chord "kv") 'evil-normal-state
+        :i (general-chord "vk") 'evil-normal-state))
 
 (require 'rebinder)
 (rebinder-hook-to-mode 'evil-normal-state-map 'evil-normal-state-entry-hook)
@@ -53,7 +53,7 @@
   (let ((map (make-sparse-keymap)))
     (set-keymap-parent map
         (make-composed-keymap mode-specific-map
-                              (lookup-key (current-local-map) (kbd "C-c"))))
+          (lookup-key (current-local-map) (kbd "C-c"))))
     map))
 (map! :desc "C-c" :nv "S-SPC" #'my/get-current-C-c-map)
 
