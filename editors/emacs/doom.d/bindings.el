@@ -386,12 +386,16 @@
 
 (after! yasnippet
   (map! :map yas-minor-mode-map :i "C-e" 'yas-expand)
-  (map! :map yas-keymap :i "C-e" 'yas-next-field-or-maybe-expand)
+  ; Have to use define-key for this because it overrides a doom binding.
+  (define-key yas-keymap (kbd "C-e") #'yas-next-field-or-maybe-expand)
   ; Can't seem to get this to stop using tab to expand when after
   ; a snippet, but tbh I think it's minor. Doesn't affect company.
   (dolist (keymap (list yas-minor-mode-map yas-keymap))
     (dolist (tab (list "TAB" "<tab>"))
-      (map! :map keymap :i tab nil))))
+      (map!
+        :after yasnippet
+        :map keymap :i tab nil))))
+
 
 ;; c-a and c-x need fixing for increment/decrement.
 
