@@ -28,7 +28,9 @@ endif
 " Has odd bug with prose fts.
 " Plugin 'https://github.com/tpope/vim-endwise'
 " ga on char shows all representations, not just dec oct hex.
-Plug 'https://github.com/tpope/vim-characterize', {'on': '<Plug>(characterize)'}
+Plugin 'https://github.com/tpope/vim-characterize', {'on': '<Plug>(characterize)'}
+" :Linediff on two visual selections to open their vimdiff
+Plugin 'https://github.com/AndrewRadev/linediff.vim', {'on': 'Linediff'}
 " {]} ---------- Misc ----------
 
 " {[} ---------- Visual ----------
