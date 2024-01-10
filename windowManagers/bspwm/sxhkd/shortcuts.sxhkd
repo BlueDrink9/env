@@ -7,7 +7,7 @@ super + e; {t,shift+t}
   {kitty, alacritty || konsole || xterm || /bin/xterm || /usr/bin/xterm }
 # notes, mail, passwords, Facebook messages, OTP Authenticator
 super + e; {n,m,p,f,a}
-  {joplin-desktop || joplin,tutanota-desktop,keepassxc,ferdi,authy}
+  {joplin-desktop || joplin,tutanota-desktop,keepassxc,ferdi,_}
 # ide
 super + e; {_,shift+}i
   {emacsclient --create-frame --alternate-editor="", emacs}
