@@ -182,3 +182,7 @@ alias goRouter='fopen $(ip route | cut -f3 -d" " | head -n 1)'
 alias winkill='kill $(xprop | rg pid | cut -d" " -f3)'
 alias snatch='git clone --depth=1'
 alias syncthing-remote='"ssh" -L 8385:localhost:8384'
+
+function rgedit() {
+    myVim $(rg --files-with-matches "$@")
+}
