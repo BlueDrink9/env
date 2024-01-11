@@ -45,8 +45,8 @@ super + e; shift+b
     gtk-launch brave-browser.desktop
 
 # Office: write, spreadsheet, present, images, Image manipulation.
-super + e; o; {w,s,p,i,shift+I,3}
-  {libreoffice --writer,libreoffice --calc,libreoffice --impress,inkscape,gimp,openscad}
+super + e; o; {w,s,p,i,shift+I,3,shift+3}
+  {libreoffice --writer,libreoffice --calc,libreoffice --impress,inkscape,gimp,openscad,cq-editor}
 # references (Zotero)
 super + e; z
   zotero
