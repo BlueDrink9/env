@@ -21,6 +21,12 @@ source "${SCRIPT_DIR}/aliases_global.zsh"
 source "${SCRIPT_DIR}/plugins.zsh"
 source "${SCRIPT_DIR}/bindings.zsh"
 
+# Directory for custom completions
+export ZSH_CUSTOM_COMPLETION_DIR="$XDG_DATA_HOME/zsh-completion"
+DUMMY="$ZSH_CUSTOM_COMPLETION_DIR"/_dummy
+mkdir -p "$ZSH_CUSTOM_COMPLETION_DIR"
+fpath=($ZSH_CUSTOM_COMPLETION_DIR $fpath)
+
 autoload -Uz bracketed-paste-magic
 zle -N bracketed-paste bracketed-paste-magic
 # The following lines were added by compinstall
