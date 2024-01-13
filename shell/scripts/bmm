@@ -59,12 +59,13 @@ list_bookmarks() {
 
 # Function to add bookmark
 add_bookmark() {
-    if [ ! -d "$1" ]; then
-        echoerr "Directory '$1' does not exist."
-    elif grep -qx "$1" "$BOOKMARK_FILE"; then
-        echoerr "Directory '$1' already bookmarked."
+    dir="$(realpath "$1")"
+    if [ ! -d "$dir" ]; then
+        echoerr "Directory '$dir' does not exist."
+    elif grep -qx "$dir" "$BOOKMARK_FILE"; then
+        echoerr "Directory '$dir' already bookmarked."
     else
-        echo "$1" >> "$BOOKMARK_FILE"
+        echo "$dir" >> "$BOOKMARK_FILE"
     fi
 }
 
