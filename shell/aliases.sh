@@ -186,3 +186,5 @@ alias syncthing-remote='"ssh" -L 8385:localhost:8384'
 function rgedit() {
     myVim $(rg --files-with-matches "$@")
 }
+
+alias bm="cd \"\$(bmm)\""

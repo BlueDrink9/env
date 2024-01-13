@@ -2,7 +2,8 @@
 
 # Set XDG_DATA_HOME or default path
 XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
-BOOKMARK_FILE="$XDG_DATA_HOME/bm_bookmarks"
+BOOKMARK_FILE="$XDG_DATA_HOME/dir_fzf_bookmarks"
+SCRIPT_NAME="bmm"
 
 # Check if the bookmarks file exists, if not create it
 [ ! -f "$BOOKMARK_FILE" ] && touch "$BOOKMARK_FILE"
@@ -21,6 +22,9 @@ main(){
             ;;
         --generate-completions)
             generate_completions
+            ;;
+        --generate-alias)
+            generate_alias
             ;;
         -h|--help)
             display_help
@@ -69,17 +73,21 @@ delete_bookmark() {
     grep -vx "$1" "$BOOKMARK_FILE" > "${BOOKMARK_FILE}.tmp" && mv "${BOOKMARK_FILE}.tmp" "$BOOKMARK_FILE"
 }
 
+generate_alias() {
+  echo 'alias bm="cd \"\$('$SCRIPT_NAME')\""'
+}
+
 generate_completions() {
     # Define the directories where to store completion scripts
     BASH_COMPLETION_DIR="$XDG_DATA_HOME/bash-completion/completions"
     mkdir -p "$BASH_COMPLETION_DIR"
 
-    opts="-a --add -d --delete -l --list --generate-completions -h --help"
+    opts="-a --add -d --delete -l --list --generate-alias --generate-completions -h --help"
 
     # Generate Bash completion script
-    cat >| "$BASH_COMPLETION_DIR/bm" << EOF
+    cat >| "$BASH_COMPLETION_DIR/$SCRIPT_NAME" << EOF
 #!/usr/bin/env bash
-_bm() {
+_$SCRIPT_NAME() {
     local cur prev opts bookmarks
     COMPREPLY=()
     cur="\${COMP_WORDS[COMP_CWORD]}"
@@ -92,32 +100,31 @@ _bm() {
     fi
 
     case "\${prev}" in
-        -a|--add)
-            COMPREPLY=( \$(compgen -A file -o plusdirs -- \${cur}) )
+        -d|--delete)
+            COMPREPLY=( \$(compgen -W "\${bookmarks}" -- \${cur}) )
             ;;
         *)
-            COMPREPLY=( \$(compgen -W "\${bookmarks}" -- \${cur}) )
+            COMPREPLY=( \$(compgen -A file -o plusdirs -- \${cur}) )
             ;;
     esac
     return 0
 }
-complete -F _bm bm
+complete -F _$SCRIPT_NAME $SCRIPT_NAME
 EOF
 
     ZSH_COMPLETION_DIR="$XDG_DATA_HOME/zsh-completion"
     mkdir -p "$ZSH_COMPLETION_DIR"
     # Generate Zsh completion script
-    cat >| "$ZSH_COMPLETION_DIR/_bm" << EOF
-#compdef bm
+    cat >| "$ZSH_COMPLETION_DIR/_$SCRIPT_NAME" << EOF
+#compdef $SCRIPT_NAME
 
-_bm() {
+_$SCRIPT_NAME() {
     local -a bookmarks
-    opts="$opts"
     local curcontext="\$curcontext" state line
     typeset -A opt_args
 
     # Define script options
-    local opts="-a --add -d --delete -l --list --generate-completions -h --help"
+    local opts="$opts"
 
     # Load bookmarks from file
     bookmarks=("\${(@f)\$(<"$BOOKMARK_FILE")}")
@@ -127,21 +134,21 @@ _bm() {
 
     case \$state in
         args)
-            if [[ \$words[CURRENT-1] == "-a" || \$words[CURRENT-1] == "--add" ]]; then
-                _files -/
+            if [[ \$words[CURRENT-1] == "-d" || \$words[CURRENT-1] == "--delete" ]]; then
+              _values 'Bookmarks' \$bookmarks
             elif [[ \$words[CURRENT] == -* ]]; then
                 _alternative \
                     'options:option:(\${(s: :)opts})'
             else
-                _values 'Bookmarks' \$bookmarks
+                _files -/
             fi
     esac
 }
 
-_bm
+_$SCRIPT_NAME
 
-if [[ "\$(basename -- \$0)" != "_bm" ]]; then
-    _bm
+if [[ "\$(basename -- \$0)" != "_$SCRIPT_NAME" ]]; then
+    _$SCRIPT_NAME
 fi
 EOF
 
@@ -153,12 +160,14 @@ EOF
 }
 # Function to display help
 display_help() {
-    echo "Usage: bm [OPTION]... [DIRECTORY]"
-    echo "Bookmark manager script."
-    echo "  -a, --add [DIRECTORY]        Add a new bookmark."
+    echo "Usage: $SCRIPT_NAME [OPTION]... [DIRECTORY]"
+    echo "Bookmark manager script. Without args, opens a list of bookmarks and echos the selected one."
+    echo "Suggested use is with an alias (see --generate-alias)"
+    echo "  [-a, --add] [DIRECTORY]        Add a new bookmark."
     echo "  -d, --delete [DIRECTORY]     Delete a bookmark."
     echo "  -l, --list                   List all bookmarks."
     echo "  --generate-completions       Generate completions for bash and zsh."
+    echo "  --generate-alias             Output text for a recommended bash alias. Use like '$SCRIPT_NAME --generate-alias >> ~/.bashrc"
     echo "  -h, --help                   Display this help and exit."
 }
 
