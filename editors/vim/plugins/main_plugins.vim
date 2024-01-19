@@ -155,6 +155,11 @@ Plugin 'https://github.com/troydm/zoomwintab.vim', {'on': 'ZoomWinTabToggle'}
 Plugin 'https://github.com/sunaku/vim-shortcut', {'on': 'Shortcut'}
 " Confirms opening empty file on tabcomplete
 Plugin 'https://github.com/EinfachToll/DidYouMean', {'event': ['BufReadPre']}
+" Not lazyloading because I want completions asap
+if Executable("zoxide")
+    Plugin 'nanotee/zoxide.vim'
+    " , {'on': 'Z'}
+endif
 " {]} ---------- Misc----------
 
 " {[} ---------- Visual changes ----------

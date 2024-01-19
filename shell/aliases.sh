@@ -160,6 +160,16 @@ alias mosh="mosh_with_options"
 alias ssh="ssh_with_options"
 # rg + bat.
 alias bgr="batgrep"
+zoxide_init(){
+  shell="$(basename "$SHELL")"
+  if [ "$shell" = "sh" ]; then 
+    eval "$(zoxide init posix --hook prompt)"
+  else
+    eval "$(zoxide init $shell)"
+  fi
+  __zoxide_z "$@"
+}
+alias z="zoxide_init"
 
 if command -v thefuck >/dev/null 2>&1; then
   eval $(thefuck --alias)

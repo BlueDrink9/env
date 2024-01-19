@@ -54,6 +54,7 @@ gcc
 openvpn
 topgrade
 playerctl
+zoxide
 
 # proselint # wooah cool. Pip module
 
