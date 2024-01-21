@@ -103,32 +103,6 @@ local spec = {
         },
     },
 
-    {
-        "https://github.com/akinsho/toggleterm.nvim",
-        cond = vim.g.vscode ~= 1,
-        keys = "<C-s>",
-        -- :ToggleTermSendCurrentLine
-        -- :ToggleTermSendVisualLines
-        -- :ToggleTermSendVisualSelection
-        opts = function()
-            opts = {
-                open_mapping = [[<c-s>]],
-                direction = "horizontal",
-                start_in_insert = false,
-                insert_mappings = false,
-                terminal_mappings = true,
-                persist_mode = true,
-                close_on_exit = false, -- Otherwise may miss startup errors
-                auto_scroll = false,
-                shell = vim.o.shell,
-            }
-            if vim.fn.has("win32") == 1 then
-                opts.shell = "powershell.exe"
-            end
-            return opts
-        end,
-    },
-
     -- Extra filetypes
 
     {
