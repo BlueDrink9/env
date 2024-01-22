@@ -60,7 +60,7 @@
   # autocrlf = true
   safecrlf = warn
   eol      = lf
-  fileMode = False  # Don't track filesystem executable bit
+  fileMode = false  # Don't track filesystem executable bit
 
 [merge]
   conflictstyle = zdiff3
