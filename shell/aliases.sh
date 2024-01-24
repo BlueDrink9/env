@@ -53,6 +53,8 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias cd..="cd .."
 
+alias m="make"
+
 alias g="git"
 alias mg="magit"
 alias ga="git add"
