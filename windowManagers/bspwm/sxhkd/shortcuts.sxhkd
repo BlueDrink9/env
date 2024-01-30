@@ -97,8 +97,9 @@ super + grave
 # m = main playlist
 # b = bounce
 super + m; {s,m,b}
-  notify-send "Opening Spotify..." \
-    spotify || snap run spotify || gtk-launch spotify{_,spotify:playlist:3DDy0dVcH0v8hwTsow3rCN:play,spotify:playlist:07DNxdotyBhZf3R77tPheP:play}
+  notify-send "Opening $(which spotify)" && \
+    arg="{_,spotify:playlist:3DDy0dVcH0v8hwTsow3rCN:play,spotify:playlist:07DNxdotyBhZf3R77tPheP:play}" && \
+    spotify $arg || snap run spotify $arg  || gtk-launch spotify $arg
 
 # XF86AudioNext
 super + m; {space,h,p,n}
