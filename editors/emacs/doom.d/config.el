@@ -35,8 +35,6 @@
 ;;
 ;; add-hook! takes either a quoted hook func, list, or unquoted major mode!
 
-;; (unless (server-running-p) (server-start))
-
 (setq script_dir (file-name-directory (or load-file-name buffer-file-name)))
 (load-file (concat script_dir "bindings.el"))
 (load-file (concat script_dir "aliases.el"))
@@ -536,3 +534,7 @@ rather than file lines."
   (setq-local paragraph-separate (default-value 'paragraph-separate)))
 
 (add-hook 'after-change-major-mode-hook 'use-text-mode-paragraphs)
+
+;; Start emacs server if we have launched a client.
+;; For some reason this is slower to start up than regular emacs...
+(unless (server-running-p) (server-start))
