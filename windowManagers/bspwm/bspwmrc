@@ -39,7 +39,7 @@ bspc_desktop(){
 
 #  if [[ $(hostname) == 'myhost' ]]; then
 # bspc monitor -d I II III IV V VI VII VIII IX X
-bspc monitor -d " " " " " " " "
+bspc monitor -d " " " " " " "4"
 
 . "$BSPWM_CONFIG_DIR"/rules.sh
 bspc config external_rules_command "$BSPWM_CONFIG_DIR"/external_rules.sh
