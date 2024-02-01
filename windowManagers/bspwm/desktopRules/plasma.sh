@@ -25,3 +25,4 @@ bspc rule -a Kmix           state=floating, border=off
 bspc rule -a Klipper        state=floating, border=off
 bspc rule -a Plasmoidviewer state=floating, border=off
 bspc rule -a mplayer2       state=floating, border=off
+bspc rule -a xwaylandvideobridge       state=floating, border=off
