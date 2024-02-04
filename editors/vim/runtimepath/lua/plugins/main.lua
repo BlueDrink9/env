@@ -350,10 +350,24 @@ local spec = {
 	},
 
 	{
+		"dundalek/parpar.nvim",
+		dependencies = { "gpanders/nvim-parinfer", "julienvincent/nvim-paredit" },
+		opts = { },
+		ft = {
+			'commonlisp',
+			'elisp',
+			'fennel',
+			'scheme',
+			'closure',
+		},
+	},
+	{
 		-- Has come up with a decent set of low-clash bindings I think.
+		-- >) >( <( <) to slurp/barf next/prev 
 		"julienvincent/nvim-paredit",
 		ft = {
-			-- Currently only supports closure :/
+			-- Currently only supports closure natively. Extend
+			-- with plugins
 			-- 'commonlisp',
 			-- 'elisp',
 			"closure",
@@ -363,6 +377,22 @@ local spec = {
 				enabled = true,
 			},
 		},
+	},
+	{
+		"julienvincent/nvim-paredit-fennel",
+		dependencies = { "julienvincent/nvim-paredit" },
+		ft = { "fennel" },
+		config = function()
+			require("nvim-paredit-fennel").setup()
+		end
+	},
+	{
+		"ekaitz-zarraga/nvim-paredit-scheme",
+		dependencies = { "julienvincent/nvim-paredit" },
+		ft = { "scheme" },
+		config = function()
+			require("nvim-paredit-scheme").setup(require("nvim-paredit"))
+		end
 	},
 
 	{
