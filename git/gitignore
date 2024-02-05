@@ -3,6 +3,7 @@
 latexbuild/
 generated/
 .syncthing*
+*.sync-conflict*
 custom-spellings-vim.utf-8.add*
 !*.mine.pdf
 cache/
