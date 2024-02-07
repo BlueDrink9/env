@@ -37,6 +37,7 @@ local specs = {
             [maps.debugFrameUp] = 'up()',
             [maps.debugFrameDown] = 'down()',
             [maps.debugShowStoppedLine] = 'focus_frame()',
+            [maps.debugShowStoppedLine2] = 'focus_frame()',
             [maps.setBreakpoint] = 'toggle_breakpoint()',
             [maps.setBreakpointConditional] = "set_breakpoint(vim.fn.input('Breakpoint condition: '))",
             [maps.breakpointList] = 'list_breakpoints()',
