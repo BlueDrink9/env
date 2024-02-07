@@ -38,21 +38,58 @@ local spec = {
 	{
 		"williamboman/mason.nvim",
 		cmd = "Mason",
-		opts = {
-			ui = {
-				icons = {
-					package_installed = "✓",
-					package_pending = "➜",
-					package_uninstalled = "✗",
+
+		opts = function(_, opts)
+			local to_install = {
+				"pyright",
+				"debugpy",
+				"ruff",
+				"ruff-lsp",
+				"stylua",
+				"lua-language-server",
+				"luacheck",
+				"shfmt",
+				"shellcheck",
+				"prettier",
+				"black",
+				"pylint",
+				"jq",
+				"jq-lsp",
+				"markdownlint",
+				"sql-formatter",
+				"sqlfluff",
+				"sqlfmt",
+				"sqls",
+				"textlint",
+				-- "codelldb",
+				-- "rust-analyser",
+			}
+
+			-- Alternative to ensure_installed, that only runs when I ask it to.
+			-- Gives convenience of set list of tools, but without the risk of errors on systems that fail to install defaults.
+			vim.api.nvim_create_user_command(
+				"MasonInstallMine",
+				-- Best practice is to check/refresh the package registry before installing
+				function()
+					require("mason-registry").refresh(
+						function () vim.cmd.MasonInstall(to_install) end
+					)
+				end,
+			{})
+
+			override_opts = {
+				ensure_installed=false,
+				ui = {
+					icons = {
+						package_installed = "✓",
+						package_pending = "➜",
+						package_uninstalled = "✗",
+					},
 				},
-			},
-		},
-		-- Let lazyvim handle this
-		-- config = function(_, opts)
-		-- 	require("mason").setup(opts)
-		-- 	require("mason-tool-installer")
-		-- 	-- -- nvim --headless -c 'autocmd User MasonUpdateAllComplete quitall' -c 'MasonUpdateAll'
-		-- end,
+			}
+			vim.tbl_deep_extend("keep", override_opts, opts)
+		end,
+
 		dependencies = {
 			"https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim"
 		},
