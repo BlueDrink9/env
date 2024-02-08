@@ -92,5 +92,5 @@ bspc config presel_feedback_color "$BSPWM_PRESELECT_COLOUR"
 # Where to add new windows
 bspc config initial_polarity second_child
 
-bspc config remove_disabled_monitors true
-bspc config remove_unplugged_monitors true
+bspc config remove_disabled_monitors false
+bspc config remove_unplugged_monitors false
