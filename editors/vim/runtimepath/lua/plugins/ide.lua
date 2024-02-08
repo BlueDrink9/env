@@ -95,7 +95,7 @@ local spec = {
 		},
 	},
 
-	{ "https://github.com/norcalli/nvim-colorizer.lua", config = true, event = "VeryLazy" },
+	{ "nvchad/nvim-colorizer.lua", config = true, event = "VeryLazy" },
 	-- {'nvim-notify', opt={stages="static"}},
 
 	-- {[} ---------- Visual ----------
