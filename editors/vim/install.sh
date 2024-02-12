@@ -1,13 +1,18 @@
 #!/usr/bin/env bash
 source "$DOTFILES_DIR/shell/script_functions.sh"
+if [[ $OSTYPE == 'msys' ]]; then
+  VIMFILES="${HOME}/vimfiles"
+else
+  VIMFILES="${HOME}/.vim"
+fi
 
 doVimPlugins(){
     printErr "Installing vim plugins..."
     # Install Plug (plugin manager)
     if [[ $OSTYPE == 'msys' ]]; then
-      downloadURLtoFile https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "${HOME}/vimfiles/autoload/plug.vim"
+      downloadURLtoFile https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "${VIMFILES}/autoload/plug.vim"
     else
-      downloadURLtoFile https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "${HOME}/.vim/autoload/plug.vim"
+      downloadURLtoFile https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "${VIMFILES}/autoload/plug.vim"
     fi
     # This has the problem of making the caret disappear in WSL...
     vim -E +PlugInstall +qall
@@ -23,18 +28,20 @@ undoVimPlugins(){
 doVim(){
     printErr "Enabling vim setup..."
     addTextIfAbsent "so $($SCRIPTDIR_CMD)/vimrc" "${HOME}/.vimrc"
+    addTextIfAbsent "so $(realpath "$($SCRIPTDIR_CMD})/../ideavimrc")" "${HOME}/.ideavimrc"
+    # Nvim:
     addTextIfAbsent "dofile(\"$($SCRIPTDIR_CMD)/nvimrc.lua\")" "${HOME}/.config/nvim/init.lua"
     if [[ $OSTYPE == 'msys' ]]; then
       # git bash on windows, so lets also add a windows rc.
       # Using the vimfiles dir messes up creating vimfiles because it uses vimrc dir as home.
-      addTextIfAbsent "so $(cygpath.exe -w "$($SCRIPTDIR_CMD)/vimrc")" "${HOME}/vimfiles/vimrc"
+      addTextIfAbsent "so $($SCRIPTDIR_CMD_WIN)/vimrc" "${VIMFILES}/vimrc"
       # addTextIfAbsent "so $(cygpath.exe -w "$($SCRIPTDIR_CMD)/vimrc")" "${HOME}/_vimrc"
       winNvimDir="${HOME}/AppData/Local/nvim/"
       mkdir -p "${winNvimDir}"
-      addTextIfAbsent "dofile(\"$(cygpath.exe -w "$($SCRIPTDIR_CMD)/nvimrc.lua\")")" "${winNvimDir}/init.lua"
+      addTextIfAbsent "dofile(\"$(echo $($SCRIPTDIR_CMD_WIN) | tr "\\\\" "/")/nvimrc.lua\")" "${winNvimDir}/init.lua"
     fi
+
     doVimPlugins
-    addTextIfAbsent "so $(realpath "$(${SCRIPTDIR_CMD})/../ideavimrc")" "${HOME}/.ideavimrc"
     printErr "Done setting up vim"
     if grep -qE "(Microsoft|WSL)" "$([ -f /proc/version ] && cat /proc/version)" > /dev/null 2>&1; then
       export isWSL=1

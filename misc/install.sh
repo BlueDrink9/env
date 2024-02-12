@@ -23,7 +23,7 @@ baseRC="${HOME}/.pyvimrc"
 source "$DOTFILES_DIR/generic_rc_installer.sh"
 
 doXremap(){
-  if userHasSudo; then
+  if ! userHasSudo; then
     return
   fi
   # Best installed with cargo I think.
@@ -37,9 +37,14 @@ doXremap(){
   sudo udevadm control --reload-rules && sudo udevadm trigger
 }
 
+doMisc(){
+  doVieb
+  doIPython
+  doPyvim
+  doXremap
+}
+
 # If directly run instead of sourced, do all
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
-  do${installID}
-  doVieb
-  doXremap
+  doMisc
 fi

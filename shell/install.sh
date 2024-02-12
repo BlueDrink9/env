@@ -14,6 +14,7 @@ do${installID}() {
   installDircolours
   installBase16Shell
   doReadline
+  doPowershell
 }
 END
 )"
@@ -46,6 +47,19 @@ installText="\\\$include $($SCRIPTDIR_CMD)/bash/inputrc"
 installText="${installText}
 \\\$include $HOME/.readline-surround"
 baseRC="${HOME}/.inputrc"
+
+eval "$(cat <<END
+do${installID}() {
+  printErr "Enabling custom readline (inputrc) setup..."
+  downloadURLtoFile https://raw.githubusercontent.com/liloman/bash-surround/master/inputrc-surround $HOME/.readline-surround
+  addTextIfAbsent "${installText}" "${baseRC}"
+}
+END
+)"
+
+installID="Powershell"
+installText=". '$($SCRIPTDIR_CMD_WIN)/powershell/powershellrc.ps1'"
+baseRC="${HOME}/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"
 
 eval "$(cat <<END
 do${installID}() {

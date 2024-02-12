@@ -29,7 +29,6 @@ fi
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 mkdir -p "$XDG_CONFIG_HOME"
 echo "$DOTFILES_DIR" > "$XDG_CONFIG_HOME/.dotfiles_dir"
-# SCRIPT COLORS are kept in this file
 OK="[ ${Green}OK${NC} ]"
 Error="[ ${Red}ERROR${NC} ]"
 ALL=0
@@ -48,6 +47,7 @@ source "$DOTFILES_DIR/system/packages/install.sh"
 source "$DOTFILES_DIR/system/ssh/install.sh"
 source "$DOTFILES_DIR/terminal/install.sh"
 source "$DOTFILES_DIR/windowManagers/install.sh"
+source "$DOTFILES_DIR/misc/install.sh"
 
 # # Source every `install.sh` file in env
 # # Problematic because some of the installers are recursive.
@@ -89,22 +89,41 @@ readSettings() {
   # Put $installers after to bump something to the front of the queue.
 
     # Functions must be called "do[X]", with a corresponding "undo[X]" to uninstall.
+    
+    # Pretty much always want these, and most are fairly low-cost (mostly just dotfiles)
+    installers="$installers doShell"
+    installers="$installers doVim"
+    installers="$installers doTmux"
+    installers="$installers doGit"
+    installers="$installers doEmacs"
+    installers="$installers doMisc"
+
+    # For android, use termux. For unix, use kitty.
+    # (For Win, use Alacritty or Windows Terminal).
+    if substrInStr "Android" "$(uname -a)";  then
+      installers="$installers doTermux"
+    elif [ "$OSTYPE" != "msys" ]; then
+      installers="$installers doKitty"
+    else
+      installers="$installers doAlacritty"
+    fi
+    if substrInStr "darwin" "$OSTYPE"; then
+      installers="$installers doiTerm2"
+    fi
+
 
     if [ "$LITE" = 1 ]; then
-      installers="$installers doShell"
-      installers="$installers doVim"
-      installers="$installers doTmux"
-      installers="$installers doGit"
       return
     fi
 
     # Asks for gitlab login for shared server repo, so put early.
-    if [ "$ALL" = 1 ] || askQuestionYN "$set_up SSH?" ; then
+    if [ "$ALL" = 1 ] || askQuestionYN "$set_up SSH server config from gitlab?" ; then
       installers="$installers doSSH"
     fi
-    if [ "$ALL" = 1 ] || askQuestionYN "$set_up git?" ; then
-      installers="$installers doGit"
-    fi
+
+    # if [ "$ALL" = 1 ] || askQuestionYN "$set_up emacs?" ; then
+      # installers="$installers doEmacs"
+    # fi
 
     # Install brew if OS X or no sudo. Otherwise use normal packages.
     if [ "$ALL" = 1 ] || askQuestionYN \
@@ -115,53 +134,23 @@ readSettings() {
       installers="$installers doPackages"
     fi
 
-    if [ "$ALL" = 1 ] || askQuestionYN "$installStr fonts?" ; then
-      installers="$installers doFonts"
+    if ! substrInStr "Android" "$(uname -a)" && [ "$OSTYPE" != "msys" ];  then
+      if [ "$ALL" = 1 ] || askQuestionYN "Will this be a GUI system?" ; then
+	installers="$installers doFonts"
+	if [ "$OSTYPE" = "linux-gnu" ]; then
+	  installers="$installers doXresources"
+	  installers="$installers doX11"
+	elif substrInStr "darwin" "$OSTYPE"; then
+	  installers="$installers doOSX"
+	fi
+	installers="$installers doWM"
+      fi
     fi
 
     # if [ "$ALL" = 1 ] || askQuestionYN "Install VSCode extensions?" ; then
     #     installers="$installers vscodeExtensions"
     # fi
 
-    if [ "$OSTYPE" = "linux-gnu" ]; then
-      if [ "$ALL" = 1 ] || askQuestionYN "$set_up X?" ; then
-        installers="$installers doX11"
-      fi
-    elif substrInStr "darwin" "$OSTYPE"; then
-      if [ "$ALL" = 1 ] || askQuestionYN "$set_up OSX?" ; then
-        installers="$installers doOSX"
-      fi
-    fi
-
-    if [ "$ALL" = 1 ] || askQuestionYN "$installStr window manager?" ; then
-      installers="$installers doWM"
-    fi
-    if [ "$ALL" = 1 ] || askQuestionYN "$set_up emacs?" ; then
-      installers="$installers doEmacs"
-    fi
-
-    if [ "$ALL" = 1 ] || askQuestionYN "$set_up terminal?" ; then
-      # For android, use termux. For unix, use kitty.
-      # (For Win, use Alacritty or Windows Terminal).
-      if substrInStr "Android" "$(uname -a)";  then
-        installers="$installers doTermux"
-      elif [ "$OSTYPE" != "msys" ]; then
-        installers="$installers doKitty"
-      else
-        installers="$installers doAlacritty"
-      fi
-      if substrInStr "darwin" "$OSTYPE"; then
-        installers="$installers doiTerm2"
-      fi
-      installers="$installers doTmux"
-      installers="$installers doXresources"
-    fi
-    if [ "$ALL" = 1 ] || askQuestionYN "$set_up shell?" ; then
-      installers="$installers doShell"
-    fi
-    if [ "$ALL" = 1 ] || askQuestionYN "$set_up vim?" ; then
-      installers="$installers doVim"
-    fi
   }
 
   main() {
@@ -198,11 +187,10 @@ elif substrInStr "darwin" "$OSTYPE"; then
   printErr "[$Green OSX ${NC}]"
 elif [ "$OSTYPE" = "msys" ]; then
   printErr "[$Green Win (git bash) ${NC}]"
-  printLine "${Red}Attempting install on Git Bash."
 else
   printErr "OS not detected..."
   if askQuestionYN "Continue anyway?" ; then
-    main "${1:-}"
+    true
   else
     printErr "Exiting without change."
     exit
