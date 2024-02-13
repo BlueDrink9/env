@@ -1,189 +1,56 @@
+
 {
-    "workbench.colorTheme": "Default Light Modern",
-    "editor.rulers": [
-        80,
-        120
-    ],
-    "editor.acceptSuggestionOnCommitCharacter": false,
-    "editor.acceptSuggestionOnEnter": "off",
-    "editor.autoClosingBrackets": "beforeWhitespace",
-    "editor.autoClosingQuotes": "never",
-    "editor.autoSurround": "never",
-    "editor.copyWithSyntaxHighlighting": false,
-    "editor.cursorSurroundingLines": 3,
-    "editor.definitionLinkOpensInPeek": true,
-    "editor.fontFamily": "'SauceCodePro NF', 'Source Code Pro', Consolas, 'Courier New', monospace",
-    "editor.lineNumbers": "relative",
-    "editor.linkedEditing": true,
-    "editor.renderWhitespace": "trailing",
-    "editor.smoothScrolling": true,
-    "editor.suggest.insertMode": "replace",
-    "editor.wordWrap": "on",
-    "files.autoGuessEncoding": true,
-    "files.eol": "\n",
-    "files.insertFinalNewline": true,
-    "files.trimFinalNewlines": true,
-    "files.trimTrailingWhitespace": true,
-    "git.autofetch": true,
-    "git.confirmSync": false,
-    "git.enableCommitSigning": false,
-    "git.enableSmartCommit": true,
-    "telemetry.telemetryLevel": "off",
-    "terminal.external.windowsExec": "C:\\Program Files\\Git\\bin\\bash.exe",
-    "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
-    "window.menuBarVisibility": "toggle",
-    "window.title": "<ws>/${rootName}/${activeEditorShort} ${dirty}",
     "vscode-neovim.revealCursorScrollLine": true,
     "vscode-neovim.textDecorationsAtTop": true,
     "extensions.experimental.affinity": {
         "asvetliakov.vscode-neovim": 1
     },
-    "vim.camelCaseMotion.enable": true,
-    "vim.easymotion": true,
-    "vim.highlightedyank.enable": true,
-    "vim.leader": "<space>",
-    "vim.replaceWithRegister": true,
-    "vim.showMarksInGutter": true,
-    "vim.smartRelativeLine": true,
-    "vim.sneak": true,
-    "vim.targets.enable": true,
-    "vim.insertModeKeyBindingsNonRecursive": [
-        {
-            "before": [
-                "k",
-                "v"
-            ],
-            "after": [
-                "<Esc>"
-            ]
-        },
-        {
-            "before": [
-                "v",
-                "k"
-            ],
-            "after": [
-                "<Esc>"
-            ]
-        }
-    ],
-    "vim.normalModeKeyBindingsNonRecursive": [
-        {
-            "before": [
-                ";"
-            ],
-            "commands": [
-                "vim.showQuickpickCmdLine",
-            ],
-        },
-        {
-            "before": [
-                ":"
-            ],
-            "after": [
-                ";",
-            ],
-        },
-        {
-            "before": [
-                "<leader>",
-                ";"
-            ],
-            "commands": [
-                "workbench.action.showCommands",
-            ],
-        },
-        {
-            "before": [
-                "<leader>",
-                "<leader>",
-            ],
-            "commands": [
-                "workbench.action.quickOpen",
-            ],
-        },
-        {
-            "before": [
-                "<leader>",
-                ",",
-            ],
-            "commands": [
-                "workbench.action.quickOpen",
-            ],
-        },
-        {
-            "before": [
-                "<leader>",
-                "a",
-            ],
-            "commands": [
-                "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
-            ],
-        },
-        {
-            "before": [
-                "<leader>",
-                "c",
-                "c"
-            ],
-            "commands": [
-                "editor.action.commentLine",
-            ],
-        },
-        {
-            "before": [ "\"",  "\"",],
-            "after": [ "\"",  "*",],
-        },
-        {
-            "before": [ "<leader>",  "s", "s"],
-            "commands": [ "jupyter.execSelectionInteractive", ],
-            "when": "editorLangId == python  && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor",
-        },
-        {
-            "before": [ "<leader>",  "shift+s"],
-            "commands": [ "jupyter.runFileInteractive", ],
-            "when": "editorLangId == python  && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor",
-        },
-    ],
-    "vim.visualModeKeyBindingsNonRecursive": [
-        {
-            "before": [
-                ";"
-            ],
-            "commands": [
-                "vim.showQuickpickCmdLine",
-            ],
-        },
-        {
-            "before": [
-                ":"
-            ],
-            "after": [
-                ";",
-            ],
-        },
-        {
-            "before": [
-                "<leader>",
-                ";"
-            ],
-            "commands": [
-                "workbench.action.showCommands",
-            ],
-        },
-        {
-            "before": [
-                "<leader>",
-                "c"
-            ],
-            "commands": [
-                "editor.action.commentLine",
-            ],
-        },
-        {
-            "before": [ "<leader>",  "s"],
-            "commands": [ "jupyter.execSelectionInteractive", ],
-            "when": "editorLangId == python  && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor",
-        },
-    ],
+    "editor.fontFamily": "'SauceCodePro NF', 'Source Code Pro', Consolas, 'Courier New', monospace",
+    "editor.renderWhitespace": "trailing",
+    "editor.wordWrap": "on",
+    "editor.autoClosingBrackets": "never",
+    "editor.autoClosingQuotes": "never",
+    "editor.autoSurround": "never",
+    "editor.definitionLinkOpensInPeek": true,
+    "editor.acceptSuggestionOnEnter": "off",
+    "editor.suggest.insertMode": "replace",
+    "files.autoGuessEncoding": true,
+    "editor.copyWithSyntaxHighlighting": false,
+    "editor.lineNumbers": "relative",
+    "editor.linkedEditing": true,
+    "editor.smoothScrolling": true,
+    "editor.acceptSuggestionOnCommitCharacter": false,
+    "editor.cursorSurroundingLines": 3,
+    "[sql]": {
+        "editor.defaultFormatter": "piotrgredowski.poor-mans-t-sql-formatter-pg"
+    },
+    "files.trimTrailingWhitespace": true,
+    "files.trimFinalNewlines": true,
+    "scm.diffDecorationsIgnoreTrimWhitespace": "inherit",
+    "mssql.enableQueryHistoryCapture": true,
+    "Prettier-SQL.keywordCase": "upper",
+    "Prettier-SQL.logicalOperatorNewline": "after",
+    "Prettier-SQL.commaPosition": "before",
+    "Prettier-SQL.linesBetweenQueries": 2,
+    "workbench.colorTheme": "Ayu Light Bordered",
+    "security.workspace.trust.untrustedFiles": "open",
+    "editor.minimap.renderCharacters": false,
+    "poor-mans-t-sql-formatter.std.breakJoinOnSections": true,
+    "poor-mans-t-sql-formatter.std.expandBetweenConditions": false,
+    "poor-mans-t-sql-formatter.std.expandInLists": true,
+    "poor-mans-t-sql-formatter.std.indent": "4",
+    "poor-mans-t-sql-formatter.std.keywordStandardization": true,
+    "poor-mans-t-sql-formatter.std.maxLineWidth": 80,
+    "poor-mans-t-sql-formatter.std.spaceAfterExpandedComma": true,
+    "poor-mans-t-sql-formatter.std.trailingCommas": false,
+    "poor-mans-t-sql-formatter-pg.std.trailingCommas": false,
+    "poor-mans-t-sql-formatter-pg.std.maxLineWidth": 80,
+    "poor-mans-t-sql-formatter-pg.std.indent": "4",
+    "poor-mans-t-sql-formatter-pg.std.keywordStandardization": true,
+    "poor-mans-t-sql-formatter-pg.std.expandInLists": true,
+    "poor-mans-t-sql-formatter-pg.std.breakJoinOnSections": true,
+    "poor-mans-t-sql-formatter-pg.std.expandBetweenConditions": false,
+    "poor-mans-t-sql-formatter-pg.std.spaceAfterExpandedComma": true,
+    "editor.minimap.enabled": false,
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
 }

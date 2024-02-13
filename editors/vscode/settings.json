@@ -4,10 +4,10 @@
         80,
         120
     ],
-    "editor.acceptSuggestionOnCommitCharacter": false,
     "editor.acceptSuggestionOnEnter": "off",
     "editor.autoClosingBrackets": "beforeWhitespace",
     "editor.autoClosingQuotes": "never",
+    "window.zoomLevel": 1,
     "editor.autoSurround": "never",
     "editor.copyWithSyntaxHighlighting": false,
     "editor.cursorSurroundingLines": 3,
@@ -17,7 +17,6 @@
     "editor.linkedEditing": true,
     "editor.renderWhitespace": "trailing",
     "editor.smoothScrolling": true,
-    "editor.suggest.insertMode": "replace",
     "editor.wordWrap": "on",
     "files.autoGuessEncoding": true,
     "files.eol": "\n",
@@ -31,7 +30,6 @@
     "telemetry.telemetryLevel": "off",
     "terminal.external.windowsExec": "C:\\Program Files\\Git\\bin\\bash.exe",
     "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
-    "window.menuBarVisibility": "toggle",
     "window.title": "<ws>/${rootName}/${activeEditorShort} ${dirty}",
     "vscode-neovim.revealCursorScrollLine": true,
     "vscode-neovim.textDecorationsAtTop": true,
@@ -47,6 +45,7 @@
     "vim.smartRelativeLine": true,
     "vim.sneak": true,
     "vim.targets.enable": true,
+    "vim.vimrc.enable": true,
     "vim.insertModeKeyBindingsNonRecursive": [
         {
             "before": [
@@ -144,6 +143,19 @@
             "commands": [ "jupyter.runFileInteractive", ],
             "when": "editorLangId == python  && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor",
         },
+        {
+            "before": [ "s" ],
+            "commands": [ "leap.find" ]
+        },
+
+        {
+            "before": [ "right" ],
+            "commands": [ "workbench.action.nextEditor" ]
+        },
+        {
+            "before": [ "left" ],
+            "commands": [ "workbench.action.previousEditor" ]
+        },
     ],
     "vim.visualModeKeyBindingsNonRecursive": [
         {
@@ -185,5 +197,18 @@
             "commands": [ "jupyter.execSelectionInteractive", ],
             "when": "editorLangId == python  && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor",
         },
+        {
+            "before": [ "s" ],
+            "commands": [ "leap.find" ]
+        },
+
     ],
+    "editor.minimap.enabled": false,
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+    "emmet.showSuggestionsAsSnippets": true,
+    "editor.suggest.localityBonus": true,
+    "editor.quickSuggestions": {
+        "comments": "on",
+        "strings": "on"
+    },
 }
