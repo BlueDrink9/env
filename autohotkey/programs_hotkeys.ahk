@@ -1,63 +1,55 @@
-#If (!IsPrefix(""))
-Escape::goto ResetPrefix
-#If
+﻿#HotIf (!IsPrefix(""))
+Escape::ResetPrefix
+#HotIf
 
-#If (IsPrefix(""))
+#HotIf (IsPrefix(""))
 #e::SetPrefix("exe")
 #m::SetPrefix("media")
-#If
+#HotIf
 
-#If IsPrefix("office")
-w::Run, winword.exe
-p::Run, powerpnt.exe
-s::Run, excel.exe
-#If
+#HotIf IsPrefix("office")
+w::Run("winword.exe")
+p::Run("powerpnt.exe")
+s::Run("excel.exe")
+#HotIf
 
-#If IsPrefix("exe")
+#HotIf IsPrefix("exe")
 o::SetPrefix("office")
-e::Run explorer
-t::%terminal%()
-+t::%terminal%(true)
-b::Run % GetDefaultBrowser()
-v::%editor%()
-!v::%liteEditor%()
-+v::%ide%()
-i::%ide%()
+e::Run("explorer")
+t::terminal
++t::terminal(true)
+b::Run(GetDefaultBrowser())
+v::editor
+!v::liteEditor
++v::ide
+i::ide
 ; notes
-n::%notes%()
+n::notes
 ; Games
-g::Run "%L_AppData%\Playnite\Playnite.DesktopApp.exe"
+g::Run(A_AppData . "..\Playnite\Playnite.DesktopApp.exe")
 ; Kalendar
-k::%calendar%()
+k::calendar
 ; Signal
-s::%chat%()
+s::chat
 ; Passwords
-p::
-    Run "C:\Program Files\KeePassXC\keepassxc.exe"
-    winwait,KeePassXC
-    send ^f
-return
-#If
+p::passwords
+#HotIf
 
-#If IsPrefix("media")
-s::Run spotify.exe
+#HotIf IsPrefix("media")
+s::Run("spotify.exe")
 ; main playlist
 m::
-  Run spotify:playlist:3DDy0dVcH0v8hwTsow3rCN:play
+{
+  Run("spotify:playlist:3DDy0dVcH0v8hwTsow3rCN:play")
   ; WinWaitActive ahk_exe spotify.exe,,10
   ; send ^s  ; shuffle
-return
+}
 ; Beats playlist
 b::
-  Run spotify:playlist:07DNxdotyBhZf3R77tPheP:play
+{
+  Run("spotify:playlist:07DNxdotyBhZf3R77tPheP:play")
   ; WinWaitActive ahk_exe spotify.exe,,10
   ; send ^s  ; shuffle
   ; send ^{right}  ; skip to next to ensure shuffling takse place
-return
-#If
-
-ResetPrefix:
-    prefix := ""
-    tooltip
-return
-
+}
+#HotIf

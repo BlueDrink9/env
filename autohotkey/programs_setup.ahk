@@ -1,10 +1,17 @@
-prefix := ""
+﻿prefix := ""
+
+
+ResetPrefix(){
+    global prefix
+    prefix := ""
+    ToolTip()
+}
 
 SetPrefix(arg){
     global prefix
-    tooltip % arg
+    ToolTip(arg)
     prefix := arg
-    SetTimer, ResetPrefix, -1000
+    SetTimer(ResetPrefix,-1000)
 }
 
 IsPrefix(arg){
@@ -15,14 +22,10 @@ IsPrefix(arg){
 }
 
 GetDefaultBrowser() {
-    RegRead, BrowserPath, HKCU, Software\Microsoft\Windows\Shell\Associations\UrlAssociations\http\UserChoice, ProgId
-    maps := { "IE.HTTP": "iexplore.exe"
-        , "FirefoxURL": "firefox.exe"
-        , "ChromeHTML": "chrome.exe"
-        , "AppXq0fevzme2pys62n3e0fbqa7peapykr8v": "microsoft-edge.exe"
-        , "BraveHTML": "brave.exe" }
+    BrowserPath := RegRead("HKCU\Software\Microsoft\Windows\Shell\Associations\UrlAssociations\http\UserChoice", "ProgId")
+    maps := map("IE.HTTP", "iexplore.exe"        , "FirefoxURL", "firefox.exe"        , "ChromeHTML", "chrome.exe"        , "AppXq0fevzme2pys62n3e0fbqa7peapykr8v", "microsoft-edge.exe"        , "BraveHTML", "brave.exe" )
     for ProgId, browser in maps {
-        if regexmatch(BrowserPath, ".*" . ProgId . ".*"){
+        if RegExMatch(BrowserPath, ".*" . ProgId . ".*"){
             BrowserPath := browser
         }
     }
@@ -34,47 +37,55 @@ GetDefaultBrowser() {
 
 vim(args:=""){
     try {
-        Run neovide.exe -- %args%
+        Run("neovide.exe -- " args)
     } catch {
-        Run gvim.exe, %args%
+        Run("gvim.exe", args)
     }
 }
 
-liteEditor=liteEditor
 liteEditor(){
-    vim("--cmd ""let g:liteMode=1""")
+    vim("--cmd `"let g:liteMode=1`"")
 }
-editor=editor
 editor(){
     vim()
 }
-ide=ide
 ide(){
-    vim("--cmd ""let g:ideMode=1""")
+    vim("--cmd `"let g:ideMode=1`"")
 }
 
-terminal=terminal
-terminal(admin:=false){
+alacritty(admin:=false){
     ; run, "WindowsTerminal.lnk"
     if admin{
-        run, *RunAs "alacritty.exe"
+        Run("*RunAs `"alacritty.exe`"")
     } else {
-        run, "alacritty.exe"
+        Run("alacritty.exe")
     }
 }
+terminal := alacritty
 
-notes=joplin
 joplin(){
-    Run joplin.exe
+    try {
+        Run("joplin.exe")
+    } catch {
+        Run(A_Programs . "\Joplin.lnk")
+    }
+}
+notes := joplin
+
+calendar := "thunderbird"
+thunderbird(){
+    Run("Thunderbird")
 }
 
-calendar=calendar
-calendar(){
-    Run "Thunderbird"
-}
-
-chat=chat
-chat(){
+signal(){
     global
-    Run "%L_appdata%\Programs\signal-desktop\Signal.exe" --use-tray-icon
+    Run(A_appdata . "\Programs\signal-desktop\Signal.exe --use-tray-icon")
 }
+chat := signal
+
+keepass(){
+    Run("C:\Program Files\KeePassXC\keepassxc.exe")
+    WinWait("KeePassXC")
+    Send("^f")
+}
+passwords := keepass
