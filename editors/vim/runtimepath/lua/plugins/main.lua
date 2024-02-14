@@ -28,7 +28,7 @@ local spec = {
 	{ "https://github.com/stevearc/dressing.nvim.git", cond = vim.g.vscode ~= 1, event = "VeryLazy" },
 
 	{
-		"https://github.com/ggandor/leap.nvim.git",
+		"ggandor/leap.nvim",
 		config = function()
 			-- Will not override existing mappings.
 			require("leap").add_default_mappings()
@@ -96,191 +96,191 @@ local spec = {
             map("n", "<leader>ghd", gs.diffthis, "Diff This")
             map("n", "<leader>ghD", function() gs.diffthis("~") end, "Diff This ~")
             map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
-        end,
-        opts = {
-            -- signs = {
-            --   add = {hl = 'GitSignsAdd', text = '+', numhl='GitSignsAddNr', linehl='GitSignsAddLn'},
-            -- },
-            signcolumn = true,
-            numhl = true,
-        },
-    },
+		end,
+		opts = {
+			-- signs = {
+			--   add = {hl = 'GitSignsAdd', text = '+', numhl='GitSignsAddNr', linehl='GitSignsAddLn'},
+			-- },
+			signcolumn = true,
+			numhl = true,
+		},
+	},
 
-    -- Extra filetypes
+	-- Extra filetypes
 
-    {
-        "https://github.com/salkin-mada/openscad.nvim",
-        ft = "scad",
-    },
+	{
+		"https://github.com/salkin-mada/openscad.nvim",
+		ft = "scad",
+	},
 
-    {
-        "https://github.com/nvim-orgmode/orgmode",
-        ft = "org",
-    },
+	{
+		"https://github.com/nvim-orgmode/orgmode",
+		ft = "org",
+	},
 
-    {
-        -- Has come up with a decent set of low-clash bindings I think.
-        "julienvincent/nvim-paredit",
-        ft = {
-            -- Currently only supports closure :/
-            -- 'commonlisp',
-            -- 'elisp',
-            "closure",
-        },
-        opts = {
-            indent = {
-                enabled = true,
-            },
-        },
-    },
+	{
+		-- Has come up with a decent set of low-clash bindings I think.
+		"julienvincent/nvim-paredit",
+		ft = {
+			-- Currently only supports closure :/
+			-- 'commonlisp',
+			-- 'elisp',
+			"closure",
+		},
+		opts = {
+			indent = {
+				enabled = true,
+			},
+		},
+	},
 
-    {
-        "chrishrb/gx.nvim",
-        keys = { "gx" },
-        dependencies = { "nvim-lua/plenary.nvim" },
-        opts = {
-            handler_options = {
-                search_engine = "duckduckgo", -- you can select between google, bing, duckduckgo, and ecosia
-            },
-        },
-    },
+	{
+		"chrishrb/gx.nvim",
+		keys = { "gx" },
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = {
+			handler_options = {
+				search_engine = "duckduckgo", -- you can select between google, bing, duckduckgo, and ecosia
+			},
+		},
+	},
 
-    {
-        -- Mainly taken from lazyvim, but leaving out any IDE and lazy bits.
-        -- Lazyvim can add them back in when in IDE mode.
-        "akinsho/bufferline.nvim",
-        cond = vim.g.vscode ~= 1,
-        event = "VeryLazy",
-        keys = {
-            { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
-            { "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },
-        },
-        opts = function(_, opts)
-            opts.options = opts.options or {}
-            opts.options.numbers = "buffer_id"
-            opts.options.close_command = function(n)
-                require("mini.bufremove").delete(n, false)
-            end
-            opts.options.right_mouse_command = function(n)
-                require("mini.bufremove").delete(n, false)
-            end
-            opts.options.always_show_bufferline = false
-        end,
-    },
+	{
+		-- Mainly taken from lazyvim, but leaving out any IDE and lazy bits.
+		-- Lazyvim can add them back in when in IDE mode.
+		"akinsho/bufferline.nvim",
+		cond = vim.g.vscode ~= 1,
+		event = "VeryLazy",
+		keys = {
+			{ "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
+			{ "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },
+		},
+		opts = function(_, opts)
+			opts.options = opts.options or {}
+			opts.options.numbers = "buffer_id"
+			opts.options.close_command = function(n)
+				require("mini.bufremove").delete(n, false)
+			end
+			opts.options.right_mouse_command = function(n)
+				require("mini.bufremove").delete(n, false)
+			end
+			opts.options.always_show_bufferline = false
+		end,
+	},
 
-    {
-        "vscode-neovim/vscode-neovim",
-        cond = vim.g.vscode == 1,
-        config = function(_, opts)
-            vim.fn.SourcePluginFile("vscode-neovim.vim")
-        end,
-    },
+	{
+		"vscode-neovim/vscode-neovim",
+		cond = vim.g.vscode == 1,
+		config = function(_, opts)
+			vim.fn.SourcePluginFile("vscode-neovim.vim")
+		end,
+	},
 
-    {
-        "tzachar/highlight-undo.nvim",
-        config = true,
-        keys = { "u", "<C-r>" },
-    },
+	{
+		"tzachar/highlight-undo.nvim",
+		config = true,
+		keys = { "u", "<C-r>" },
+	},
 
-    {
-        "vscode-neovim/vscode-neovim",
-        cond = vim.g.vscode == 1,
-        config = function(_, opts)
-            vim.fn.SourcePluginFile("vscode-neovim.vim")
-        end
-    },
+	{
+		"vscode-neovim/vscode-neovim",
+		cond = vim.g.vscode == 1,
+		config = function(_, opts)
+			vim.fn.SourcePluginFile("vscode-neovim.vim")
+		end,
+	},
 
-    {
-        'tzachar/highlight-undo.nvim',
-        config=true,
-        keys = {"u", "<C-r>" }
-    },
+	{
+		"tzachar/highlight-undo.nvim",
+		config = true,
+		keys = { "u", "<C-r>" },
+	},
 
-    {
-        "sindrets/diffview.nvim",
-        config=true,
-        cmd = {
-            "DiffviewFileHistory",
-            "DiffviewOpen",
-        },
-        event="OptionSet diff",
-        lazy=not vim.o.diff,
-    },
+	{
+		"sindrets/diffview.nvim",
+		config = true,
+		cmd = {
+			"DiffviewFileHistory",
+			"DiffviewOpen",
+		},
+		event = "OptionSet diff",
+		lazy = not vim.o.diff,
+	},
 
-    {"kwkarlwang/bufresize.nvim", event="VeryLazy"},
+	{ "kwkarlwang/bufresize.nvim", event = "VeryLazy" },
 
-    {
-            "hachy/cmdpalette.nvim",
-            cond = vim.g.vscode ~= 1,
-            keys = {
-                {"q;", "<Cmd>Cmdpalette<CR>", mode = { "n", "x" }},
-                {"kv", "<Cmd>Cmdpalette<CR><CR>", mode = { "c", }},
-                {"vk", "<Cmd>Cmdpalette<CR><CR>", mode = { "c", }},
-            },
-            opts = {
-                win = {
-                    height = 0.1,
-                    width = 0.8,
-                    border = "rounded",
-                    -- Title requires nvim-0.9 or higher.
-                    title = "Cmdpalette",
-                    title_pos = "center",
-                },
-                sign = {
-                    text = ":",
-                },
-                buf = {
-                    filetype = "cmdpalette",
-                    syntax = "vim",
-                },
-                delete_confirm = true,
-                show_title = false,
-            },
-            config = function(_, opts)
-                require("cmdpalette").setup(opts)
-                -- vim.keymap.set({ "n" }, ";", "<Cmd>Cmdpalette<CR>")
-                -- vim.keymap.set({ "x" }, ";", "<Cmd>Cmdpalette<CR>'<,'>")
-                -- vim.opt_local.completeopt:remove("noselect")
-                local function bufmap()
-                    -- Need the <c-n> to select the first option for some reason
-                    vim.keymap.set(
-                        "i",
-                        "<tab>",
-                        "<c-x><c-v>",
-                        -- 'pumvisible() ? "<c-n>" : "<c-x><c-v><c-n>"',
-                        { buffer = true }
-                    )
-                    vim.keymap.set({ "n", "v" }, "<CR>", require("cmdpalette").execute_cmd, { buffer = true })
-                end
+	{
+		"hachy/cmdpalette.nvim",
+		cond = vim.g.vscode ~= 1,
+		keys = {
+			{ "q;", "<Cmd>Cmdpalette<CR>", mode = { "n", "x" } },
+			{ "kv", "<Cmd>Cmdpalette<CR><CR>", mode = { "c" } },
+			{ "vk", "<Cmd>Cmdpalette<CR><CR>", mode = { "c" } },
+		},
+		opts = {
+			win = {
+				height = 0.1,
+				width = 0.8,
+				border = "rounded",
+				-- Title requires nvim-0.9 or higher.
+				title = "Cmdpalette",
+				title_pos = "center",
+			},
+			sign = {
+				text = ":",
+			},
+			buf = {
+				filetype = "cmdpalette",
+				syntax = "vim",
+			},
+			delete_confirm = true,
+			show_title = false,
+		},
+		config = function(_, opts)
+			require("cmdpalette").setup(opts)
+			-- vim.keymap.set({ "n" }, ";", "<Cmd>Cmdpalette<CR>")
+			-- vim.keymap.set({ "x" }, ";", "<Cmd>Cmdpalette<CR>'<,'>")
+			-- vim.opt_local.completeopt:remove("noselect")
+			local function bufmap()
+				-- Need the <c-n> to select the first option for some reason
+				vim.keymap.set(
+					"i",
+					"<tab>",
+					"<c-x><c-v>",
+					-- 'pumvisible() ? "<c-n>" : "<c-x><c-v><c-n>"',
+					{ buffer = true }
+				)
+				vim.keymap.set({ "n", "v" }, "<CR>", require("cmdpalette").execute_cmd, { buffer = true })
+			end
 
-                local function copy_cabbrevs()
-                    --- Copy cabbrevs into local iabbrevs, for same behaviour as
-                    --- cmd-mode.
-                    local result = vim.api.nvim_exec2("cabbrev", { output = true }).output
-                    for line in result:gmatch("[^\r\n]+") do
-                        local mode, abbrev, expansion = line:match("^%s*(%S+)%s+(%S+)%s+%*?%s*(.+)$")
-                        -- Doens't look like expr abbrevs are marked in any way. But
-                        -- most of the ones we care about will be returning strings in
-                        -- some way, so will usually have quotes in them. Hopefully a
-                        -- decent enough heuristic...
-                        if expansion:find('"') or expansion:find("'") then
-                            vim.cmd.iabbr({ "<expr>", "<buffer>", abbrev, expansion })
-                        else
-                            vim.cmd.iabbr({ "<buffer>", abbrev, expansion })
-                        end
-                    end
-                end
+			local function copy_cabbrevs()
+				--- Copy cabbrevs into local iabbrevs, for same behaviour as
+				--- cmd-mode.
+				local result = vim.api.nvim_exec2("cabbrev", { output = true }).output
+				for line in result:gmatch("[^\r\n]+") do
+					local mode, abbrev, expansion = line:match("^%s*(%S+)%s+(%S+)%s+%*?%s*(.+)$")
+					-- Doens't look like expr abbrevs are marked in any way. But
+					-- most of the ones we care about will be returning strings in
+					-- some way, so will usually have quotes in them. Hopefully a
+					-- decent enough heuristic...
+					if expansion:find('"') or expansion:find("'") then
+						vim.cmd.iabbr({ "<expr>", "<buffer>", abbrev, expansion })
+					else
+						vim.cmd.iabbr({ "<buffer>", abbrev, expansion })
+					end
+				end
+			end
 
-                vim.api.nvim_create_autocmd("filetype", {
-                    pattern = "cmdpalette",
-                    group = "myPlugins",
-                    callback = function()
-                        bufmap()
-                        copy_cabbrevs()
-                    end,
-                })
-            end,
-        },
+			vim.api.nvim_create_autocmd("filetype", {
+				pattern = "cmdpalette",
+				group = "myPlugins",
+				callback = function()
+					bufmap()
+					copy_cabbrevs()
+				end,
+			})
+		end,
+	},
 
 	{
 		"https://github.com/akinsho/toggleterm.nvim",
@@ -355,18 +355,18 @@ local spec = {
 	{
 		"dundalek/parpar.nvim",
 		dependencies = { "gpanders/nvim-parinfer", "julienvincent/nvim-paredit" },
-		opts = { },
+		opts = {},
 		ft = {
-			'commonlisp',
-			'elisp',
-			'fennel',
-			'scheme',
-			'closure',
+			"commonlisp",
+			"elisp",
+			"fennel",
+			"scheme",
+			"closure",
 		},
 	},
 	{
 		-- Has come up with a decent set of low-clash bindings I think.
-		-- >) >( <( <) to slurp/barf next/prev 
+		-- >) >( <( <) to slurp/barf next/prev
 		"julienvincent/nvim-paredit",
 		ft = {
 			-- Currently only supports closure natively. Extend
@@ -387,7 +387,7 @@ local spec = {
 		ft = { "fennel" },
 		config = function()
 			require("nvim-paredit-fennel").setup()
-		end
+		end,
 	},
 	{
 		"ekaitz-zarraga/nvim-paredit-scheme",
@@ -395,7 +395,7 @@ local spec = {
 		ft = { "scheme" },
 		config = function()
 			require("nvim-paredit-scheme").setup(require("nvim-paredit"))
-		end
+		end,
 	},
 
 	{

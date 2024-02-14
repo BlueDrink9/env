@@ -77,6 +77,8 @@ require("lazy").setup({
 			cond = vim.g.liteMode == 0,
 		},
 
+		-- Actually adds very little but is needed to silence error
+		{ import = "lazyvim.plugins.extras.editor.leap" },
 		{ import = "plugins" },
 
 		LazyPlugSpecs,
