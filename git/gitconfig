@@ -87,7 +87,7 @@
 
 # Record resolutions of merges to apply automatically if they occur again.
 [rerere]
-  enabled = 1
+  enabled = true
 [diff]
   colorMoved = zebra
   # tool = vimdiff2
