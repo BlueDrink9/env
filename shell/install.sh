@@ -15,6 +15,7 @@ do${installID}() {
   installBase16Shell
   doReadline
   doPowershell
+  python "$($(SCRIPTDIR_CMD))/ipython/install.py"
 }
 END
 )"
