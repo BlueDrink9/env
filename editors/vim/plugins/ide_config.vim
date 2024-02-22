@@ -295,7 +295,8 @@ if IsPluginUsed('vim-test')
 endif
 
 if IsPluginUsed('neoformat')
-    nnoremap g= <cmd>Neoformat<CR>
+    nnoremap gQ <cmd>Neoformat<CR>
+    vnoremap gQ <cmd>Neoformat<CR>
 endif
 
 " {]} ---------- IDE----------
