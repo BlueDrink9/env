@@ -2,13 +2,14 @@
 " vim: foldmarker={[},{]}
 
 let g:mappings_dict = {
-    \ g:IDE_mappings.FuzzyBuffers: ':Buffers<CR>',
-    \ g:IDE_mappings.FuzzyOpenFile: ':FZF<CR>',
-    \ g:IDE_mappings.FuzzySearchBuffer: ':BLines<CR>',
-    \ g:IDE_mappings.FuzzySearchBuffers: ':Lines<CR>',
-    \ g:IDE_mappings.FuzzyTags: ':Tags<CR>',
-    \ g:IDE_mappings.FuzzyCommands: ':Commands<CR>',
-    \ g:IDE_mappings.FuzzyOldFiles: ':History<CR>'
+    \ g:IDE_mappings.FuzzyBuffers: '<cmd>Buffers<CR>',
+    \ g:IDE_mappings.FuzzyOpenFile: '<cmd>FZF<CR>',
+    \ g:IDE_mappings.FuzzySearchBuffer: '<cmd>BLines<CR>',
+    \ g:IDE_mappings.FuzzySearchBuffers: '<cmd>Lines<CR>',
+    \ g:IDE_mappings.FuzzyTags: '<cmd>Tags<CR>',
+    \ g:IDE_mappings.FuzzyCommands: '<cmd>Commands<CR>',
+    \ g:IDE_mappings.FuzzyOldFiles: '<cmd>History<CR>',
+    \ g:IDE_mappings.FuzzySearchFiles: '<cmd>RG<CR>',
 \ }
 
 for [lhs, rhs] in items(g:mappings_dict)
