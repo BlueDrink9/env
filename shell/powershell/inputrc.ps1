@@ -48,8 +48,9 @@ function mapTwoLetterFunc($a,$b,$func) {
         return
       } else {
          # Insert func converts escape characters to their literals, e.g.
-         # converts return to ^M. jo we check if key matches regex for a control
-         # character. If it does, use a method that sends the keystroke instead.
+         # converts return to ^M.
+         # We check if key matches regex for a control character. If it does,
+         # use a method that sends the keystroke instead.
          # The downsides of this are that keystrokes are picked up by eg
          # autohotkey scripts, which is why it is undesirable for regular keys.
         if ($key -match '\p{C}') {
