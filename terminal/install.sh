@@ -37,6 +37,7 @@ END
 terminal_kitty_install(){
     local datadir="${XDG_DATA_HOME:-$HOME/.local/share}"/kitty
     mkdir -p "$datadir"
+    rm -rf "$datadir"/kitty-themes
     git clone --depth 1 https://github.com/dexpota/kitty-themes.git "$datadir"/kitty-themes
     pushd "$datadir"/kitty-themes/themes
     downloadFile https://raw.githubusercontent.com/sonph/onehalf/master/kitty/onehalf-light.conf
@@ -75,33 +76,30 @@ END
 )"
 
 doAlacritty() {
-    local thisRc="$($SCRIPTDIR_CMD)/alacritty/alacritty.yml"
     local installID="Alacritty"
     printErr "Enabling custom ${installID} setup..."
     # Themes
     local datadir="${XDG_DATA_HOME:-$HOME/.local/share}"/alacritty
     mkdir -p "$datadir"
+    rm -rf "$datadir"/alacritty-theme
     git clone --depth 1 https://github.com/alacritty/alacritty-theme "$datadir"/alacritty-theme
     local themes_dir="${datadir}/alacritty-theme/themes"
     COLOURSCHEME="${COLOURSCHEME:-ayu_light}"
 
+    local thisRc="$($SCRIPTDIR_CMD)/alacritty/alacritty.toml"
+    local theme="${themes_dir}/${COLOURSCHEME}.toml"
     # linux
-    local installText="$(printf "import:\n  - ${thisRc}")"
-    local baseRC="${XDG_CONFIG_HOME:-$HOME/.config}/alacritty.yml"
-    local extra="$(printf "\n\
-      - ${themes_dir}/${COLOURSCHEME}.yaml")"
-    addTextIfAbsent "${installText}${extra}" "${baseRC}"
-
-    # Windows
-    local baseRC2="$HOME/AppData/Roaming/alacritty/alacritty.yml"
-    if [ -d "$HOME/AppData" ]; then
-        mkdir -p "$(dirname "$baseRC2")"
-        local thisRc="$(cygpath -w "$thisRc" | tr '\\' '\\\\')"
-        local installText2="$(printf "import:\n  - ")$thisRc"
-        local theme="$(cygpath -w "$themes_dir/${COLOURSCHEME}.yaml" | tr '\\' '\\\\')"
-        local extra="$(printf "\n  - ")$theme"
-        addTextIfAbsent "${installText2}${extra}" "${baseRC2}"
+    local baseRC="${XDG_CONFIG_HOME:-$HOME/.config}/alacritty.toml"
+    if [ "$OSTYPE" = "msys" ]; then
+        # Windows
+        local baseRC="$HOME/AppData/Roaming/alacritty/alacritty.toml"
+        mkdir -p "$(dirname "$baseRC")"
+        local thisRc="$(cygpath -m "$thisRc")"
+        local theme="$(cygpath -m "$theme")"
     fi
+    importText='import = [\n"%s",\n"%s"\n]'
+    local installText="$(printf "$importText" "${thisRc}" "${theme}")"
+    addTextIfAbsent "${installText}" "${baseRC}"
 }
 
 eval "$(cat <<END
@@ -128,7 +126,7 @@ END
 
 # If directly run instead of sourced, do all
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
-  doTmux
+  # doTmux
   if substrInStr "Android" "$(uname -a)";  then
     doTermux
   elif [ "$OSTYPE" != "msys" ]; then

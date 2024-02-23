@@ -1,0 +1,106 @@
+live_config_reload = true
+
+[cursor]
+unfocused_hollow = true
+vi_mode_style = "Block"
+
+[cursor.style]
+shape = "Beam"
+blinking = "On"
+
+[env]
+COLORTERM = "truecolor"
+# If this is not present, alacritty will
+# check the local terminfo database and use `alacritty` if it is
+# available, otherwise `xterm-256color` is used.
+# Enforce xterm because remote terminals (eg for ssh) never have alacritty even if the current one does.
+TERM = "xterm-256color"
+TERM_PROGRAM = "alacritty"
+USENF = "1"
+
+[font]
+size = 11.0
+
+[font.normal]
+    # family = "MesloLGMDZ NF"
+family = "SauceCodePro Nerd Font"
+style = "Medium"
+
+[scrolling]
+history = 20000
+multiplier = 3
+
+[shell]
+program = "pwsh"
+
+[bell]
+animation = "EaseOutExpo"
+duration = 2
+
+[window]
+decorations = "full"
+dynamic_padding = true
+dynamic_title = true
+
+[window.dimensions]
+columns = 180
+lines = 50
+
+[window.padding]
+x = 5
+y = 5
+
+[window.position]
+x = 0
+y = 0
+
+[hints]
+alphabet = "rstneioadhplvmgjywfu"
+
+# Two URL bindings
+[[hints.enabled]]
+command = { program = "cmd", args = [ "/c", "start", "" ] }
+hyperlinks = true
+post_processing = true
+regex = "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001F\u007F-<>\"\\s{-}\\^⟨⟩`]+"
+mouse.enabled = true
+mouse.mods = "None"
+binding = { key = "F", mods = "Control|Shift" }
+[[hints.enabled]]
+command = { program = "cmd", args = [ "/c", "start", "" ] }
+hyperlinks = true
+post_processing = true
+regex = "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001F\u007F-<>\"\\s{-}\\^⟨⟩`]+"
+binding = { key = "F", mode = "Vi"}
+mouse.enabled = true
+mouse.mods = "None"
+
+# Two bindings for hash
+[[hints.enabled]]
+action = "copy"
+post_processing = true
+regex = "\b([0-9a-f]{6})|([0-9a-f]{34})\b"
+binding = { key = "H", mods = "Control|Shift"}
+[[hints.enabled]]
+action = "copy"
+post_processing = true
+regex = "\b([0-9a-f]{6})|([0-9a-f]{34})\b"
+binding = { key = "H", mode = "Vi"}
+
+[keyboard]
+bindings = [
+{ chars = "\u0017", key = "Back", mods = "Control"},
+{ action = "Paste", key = "V", mods = "Control|Shift"},
+{ action = "Copy", key = "C", mods = "Control|Shift"},
+{ action = "IncreaseFontSize", key = "Equals", mods = "Control|Shift"},
+{ action = "IncreaseFontSize", key = "Plus", mods = "Control|Shift"},
+{ action = "DecreaseFontSize", key = "Minus", mods = "Control|Shift"},
+{ action = "ToggleViMode", key = "K", mods = "Control|Shift"},
+{ action = "ReceiveChar", key = "L", mods = "Control"},
+]
+
+[mouse]
+bindings = [
+{ action = "ReceiveChar", mouse = "Left"},
+{ action = "ReceiveChar", mouse = "Right"}
+]
