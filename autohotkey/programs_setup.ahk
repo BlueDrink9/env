@@ -23,7 +23,7 @@ IsPrefix(arg){
 
 GetDefaultBrowser() {
     BrowserPath := RegRead("HKCU\Software\Microsoft\Windows\Shell\Associations\UrlAssociations\http\UserChoice", "ProgId")
-    maps := map("IE.HTTP", "iexplore.exe"        , "FirefoxURL", "firefox.exe"        , "ChromeHTML", "chrome.exe"        , "AppXq0fevzme2pys62n3e0fbqa7peapykr8v", "microsoft-edge.exe"        , "BraveHTML", "brave.exe" )
+    maps := map("IE.HTTP", "iexplore.exe" , "FirefoxURL", "firefox.exe" , "ChromeHTML", "chrome.exe" , "AppXq0fevzme2pys62n3e0fbqa7peapykr8v", "microsoft-edge.exe" , "BraveHTML", "brave.exe" )
     for ProgId, browser in maps {
         if RegExMatch(BrowserPath, ".*" . ProgId . ".*"){
             BrowserPath := browser
@@ -37,7 +37,13 @@ GetDefaultBrowser() {
 
 vim(args:=""){
     try {
-        Run("neovide.exe -- " args)
+        ; Don't really need to fork, and it has a slight performance hit.
+        ; For better startup perf, specify nvim binary path.
+        nvimBinaryArg := ""
+        if nvimBinaryPath {
+            nvimBinaryArg := Format("--neovim-bin `"{1}`"", nvimBinaryPath)
+        }
+        Run("neovide.exe " . nvimBinaryArg . " --nofork -- " args)
     } catch {
         Run("gvim.exe", args)
     }
