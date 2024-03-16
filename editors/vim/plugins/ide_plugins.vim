@@ -144,7 +144,7 @@ endif
 
 " {[} ------ C ------
 Plugin 'octol/vim-cpp-enhanced-highlight', {'for': ['cpp'] }
-Plugin 'https://github.com/WolfgangMehner/c-support', {'for': ['c', 'cpp'] }
+" Plugin 'https://github.com/WolfgangMehner/c-support', {'for': ['c', 'cpp'] }
 " {]} ------ C ------
 
 " Advanced markdown formatting. Lots of features.
