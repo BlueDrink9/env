@@ -1,3 +1,4 @@
 xremap
 texlab
 openscad-lsp
+kanata

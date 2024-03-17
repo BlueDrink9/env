@@ -1,0 +1,203 @@
+(defsrc
+ esc  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+ tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+ caps a    s    d    f    g    h    j    k    l    ;    '    ret
+ lsft z    x    c    v    b    n    m    ,    .    /    rsft
+ lctl lmet lalt           spc            ralt comp rctl
+ )
+;; _    _    _              _              _    _    _    
+;; temp temp temp temp temp temp temp temp temp temp temp temp temp temp 
+
+(defalias
+ ;; Layer change aliases
+ osl_spec (layer-toggle special)
+ osl_vim (layer-toggle vim)
+ osl_num (layer-toggle numbers)
+ gaming_lt (tap-hold 200 200 = (layer-switch qwerty))
+ ;; sftvi (layer-while-held vim_shifted)
+ sftvi XX
+ lt_spec (tap-hold-release 200 200 5 @osl_spec)
+
+ ;; homerow
+ ;; qwerty
+ v_vi (tap-hold 200 200 v (layer-toggle vim))
+ m_vi (tap-hold 200 200 m (layer-toggle vim))
+ ;; colemak
+ )
+
+;; needed for changing layers without hold.
+  (deffakekeys
+   to_vim_shifted (layer-while-held vim_shifted)
+   to_vim_visual (layer-while-held vim_visual)
+  )
+  (defalias
+   Svi (on-press-fakekey to_vim_shifted toggle)
+   vis (on-press-fakekey to_vim_visual toggle)
+  )
+
+
+  (defalias
+   ;; Homerow mods
+   ;; qwerty
+   mlCs (tap-hold-release 200 200 s lctl)
+   mlMd (tap-hold-release 200 200 d lmet)
+   mlAf (tap-hold-release 200 200 f lalt)
+   mrCl (tap-hold-release 200 200 l rctl)
+   mrMk (tap-hold-release 200 200 k rmet)
+   mrAj (tap-hold-release 200 200 j ralt)
+   ;; colemak
+   mlCr (tap-hold-release 200 200 r lctl)
+   mlMs (tap-hold-release 200 200 s lmet)
+   mlAt (tap-hold-release 200 200 t lalt)
+   mrCi (tap-hold-release 200 200 i rctl)
+   mrMe (tap-hold-release 200 200 e rmet)
+   mrAn (tap-hold-release 200 200 n ralt)
+  )
+
+  (defalias
+   lsft_brc  (tap-hold 200 200 [ lsft)
+   rsft_brc  (tap-hold 200 200 ] rsft)
+  )
+
+  (defalias
+   ;; tap-dances
+   ;; td_snake_case (tap-dance snake_case)
+   ;; td_slash_menu (tap-dance slash_menu)
+   ;; @vim_gg)
+  ;; @visual_v)
+  ;; @bof_eof)
+  ;; @voldn_mute)
+  ;; @pauseplay)
+  td_visual_v XX
+  td_voldn_mute XX
+  td_pauseplay XX
+
+td_vim_gg (tap-dance 200 (C-end C-home))
+  ;; td_visual_v (tap-dance 200 @visual_v)
+;; td_bof_eof (tap-dance 200 (C-end C-home))
+  ;; td_voldn_mute (tap-dance 200 @voldn_mute)
+  ;; td_pauseplay (tap-dance 200 @pauseplay)
+  )
+
+  (defalias
+   ;; Layer aliases and special functionality
+   tqwe (layer-switch qwerty)
+   tcol (layer-switch colemak)
+   tgam (layer-switch gaming)
+   tspe (layer-switch special)
+   tnum (layer-switch numbers)
+   slep XX
+   ;; slep (system-sleep)
+   prnt XX
+   ;; prnt (print-screen)
+   sysrq XX
+   ;; sysrq (system-request)
+   ;; td_voldown_mute (tap-dance 200 (volume-down mute))
+   td_voldown_mute XX
+   ;; vlup (volume-up)
+   vlup XX
+   ;; prev (media-prev-track)
+   prev XX
+   ;; td_playpause (tap-dance 200 (media-play-pause))
+   td_playpause XX
+  )
+
+  (defalias
+   tg_vim (layer-toggle vim)
+   dm_rstp (dynamic-macro-record-stop-truncate 1)
+   dm_ply1 (dynamic-macro-play 1)
+   dm_ply2 (dynamic-macro-play 2)
+   dm_rec1 (dynamic-macro-record 1)
+   dm_rec2 (dynamic-macro-record 2)
+   newline_after (tap-hold-release 200 200 enter (layer-toggle vim))
+   paste_up (macro home C-v ret)
+   newline_up (macro home ret left)
+   cut_eol (macro S-end C-x)
+   yank_eol (macro S-end C-c)
+   select_line (macro home S-end)
+   paste_replace (macro del C-v)  ;; capital P
+  )
+
+  (defalias
+   ;; Mouse aliases
+   mwu (mwheel-up 50 120)
+   mwd (mwheel-down 50 120)
+   mwl (mwheel-left 50 120)
+   mwr (mwheel-right 50 120)
+   ms↑ (movemouse-up 1 1)
+   ms← (movemouse-left 1 1)
+   ms↓ (movemouse-down 1 1)
+   ms→ (movemouse-right 1 1)
+  )
+
+  (deflayer qwerty
+   esc  1    2    3    4    5                 6    6    7    8    9    0    = bspc
+   tab  q    w    e    r    t                 y    u    i    o    p    -    ] \
+   bspc a    @mlCs @mlMd @mlAf g  h    @mrAj @mrMk @mrCl ; '    ret
+   @lsft_brc z    x    c    @v_vi    b             n    @m_vi    ,    .    /    @rsft_brc
+
+   lctl lmet lalt      spc                    rsft comp rctl
+  )
+
+  (deflayer colemak
+   _    _    _         _         _         _    _    _         _         _         _    _    _    _
+   _    _    _         f         p         g    j    l         u         y         ;    _    _    _
+   _    _    @mlCr @mlMs @mlAt d    _    @mrAn @mrMe @mrCi o    _    _
+   _    _    _         _         _         _    k    _     _         _         _    _
+
+   _    _    _              _              _    _    _
+  )
+
+  (deflayer gaming
+   esc  1    2    3    4    5    6    7    8    9    0    - @gaming_lt    bspc
+   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+   caps a    s    d    f    g    h    j    k    l    ;    '    ret
+   lsft z    x    c    v    lsft n    m    ,    .    /    b
+   lctl lctl lalt           spc            ralt rmet rctl
+  )
+
+  (deflayer numbers
+   `    f1   f2   f3   f4   f5   _    f6   f7   f8   f9   f10  f11  f12
+   _    `    `    _    _    _    _    \    \    \    -    =    f12  _
+   _    1    2    3    4    5    6    7    8    9    0    \    _
+   _    _    _    _    _    _    _    _    \    _    [    ]
+
+   _    _    _              _              _    _    _
+  )
+
+  (deflayer special
+   @tqwe @tqwe @tcol    @tgam @tspe    @tnum   @slep _    _        _        _      _    @prnt @sysrq
+   _    _    @mwl     @ms↑  @mwr     _      _    _    home     up       end    _    _
+   caps _    @ms←     @ms↓  @ms→     @mwu    _    pgup left     down     rght  _    _
+   _    _    mlft    mmid mrgt    @mwd    _    pgdn ralt     comp     rctl   _    _
+
+   lctl lmet mlft           spc            mrgt comp rctl
+  )
+
+  (deflayer vim
+   @tg_vim         @dm_rstp @dm_ply1    @dm_ply2 end         _         _    _          _      home          _    _      _
+   @dm_rec2        @dm_rec1 C-rght _       C-v      @td_vim_gg down rght C-z     C-c _             _    _
+   _              end     bspc       _       _           C-x    left _     C-rght @tg_vim @newline_after _    _
+   @Svi _       del        C-x     @vis C-left _    _     up         _      _             _    C-f @Svi
+
+   _    _    _              _              _    _    _    
+  )
+
+  (deflayer vim_shifted
+   _    _    _    _    end         _       _    _    _    _    home       _    _    _
+   _    _    _    _    @paste_up    C-end   _    _    _    _    @yank_eol   _    _    _
+   _    end  _    _    _           @cut_eol _    _    _    home @newline_up _    _
+   @Svi _    bspc _    @select_line _       _    _    _    _    _          _
+
+   _    _    _              _              _    _    _    
+  )
+
+  (deflayer vim_visual
+   @vis _    _        _    S-end         _          _      _      _        _    S-home _    _    _
+   _             _    C-S-rght _    @paste_replace C-a S-down S-rght C-z      C-c  _      _    _    _
+   _             _    _        _    _             C-x        S-left _      C-S-rght _    _      _    _
+   _             _    bspc     _    @vis C-S-left   S-up   _      S-tab    tab  _      _
+
+   _    _    _              _              _    _    _
+  )
+
