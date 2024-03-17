@@ -8,6 +8,30 @@
 ;; _    _    _              _              _    _    _    
 ;; temp temp temp temp temp temp temp temp temp temp temp temp temp temp 
 
+
+;; needed for changing layers without hold.
+  ;; Next version of kanata. May not be able to put varibles within words; in that case add an extra arg for fakekey name.
+  ;; (deftemplate to_layer_alias (layer alias_name)
+  ;;  (deffakekeys to_$layer (layer-while-held $layer))
+  ;;  (defalias $alias_name (on-press-fakekey to_$layer toggle))
+  ;; )
+  ;; (expand-template to_layer_alias special Tspec)
+
+  (deffakekeys
+   to_special (layer-while-held special)
+   to_numbers (layer-while-held numbers)
+   to_vim (layer-while-held vim)
+   to_vim_shifted (layer-while-held vim_shifted)
+   to_vim_visual (layer-while-held vim_visual)
+  )
+  (defalias
+   tspe (on-press-fakekey to_special toggle)
+   tnum (on-press-fakekey to_numbers toggle)
+   vim (on-press-fakekey to_vim toggle)
+   Svi (on-press-fakekey to_vim_shifted toggle)
+   vis (on-press-fakekey to_vim_visual toggle)
+  )
+
 (defalias
  ;; Layer change aliases
  osl_spec (layer-toggle special)
@@ -17,6 +41,7 @@
  ;; sftvi (layer-while-held vim_shifted)
  sftvi XX
  lt_spec (tap-hold-release 200 200 5 @osl_spec)
+ f12spec (tap-hold-release 200 200 f12 @tspe)
 
  ;; homerow
  ;; qwerty
@@ -25,20 +50,15 @@
  ;; colemak
  )
 
-;; needed for changing layers without hold.
-  (deffakekeys
-   to_vim_shifted (layer-while-held vim_shifted)
-   to_vim_visual (layer-while-held vim_visual)
-  )
-  (defalias
-   Svi (on-press-fakekey to_vim_shifted toggle)
-   vis (on-press-fakekey to_vim_visual toggle)
-  )
-
+  ;; Next version of kanata
+  ;; (deftemplate homerow-mod (letter mod)
+  ;;  (tap-hold-release 200 200 $letter $mod)
+  ;; )
 
   (defalias
    ;; Homerow mods
    ;; qwerty
+   ;; mlCs (expand-template homerow-mod s lctl)
    mlCs (tap-hold-release 200 200 s lctl)
    mlMd (tap-hold-release 200 200 d lmet)
    mlAf (tap-hold-release 200 200 f lalt)
@@ -72,7 +92,8 @@
   td_voldn_mute XX
   td_pauseplay XX
 
-td_vim_gg (tap-dance 200 (C-end C-home))
+  vigg (tap-dance 200 (C-end C-home))
+  visgg (tap-dance 200 (C-S-end C-S-home))
   ;; td_visual_v (tap-dance 200 @visual_v)
 ;; td_bof_eof (tap-dance 200 (C-end C-home))
   ;; td_voldn_mute (tap-dance 200 @voldn_mute)
@@ -84,8 +105,6 @@ td_vim_gg (tap-dance 200 (C-end C-home))
    tqwe (layer-switch qwerty)
    tcol (layer-switch colemak)
    tgam (layer-switch gaming)
-   tspe (layer-switch special)
-   tnum (layer-switch numbers)
    slep XX
    ;; slep (system-sleep)
    prnt XX
@@ -103,12 +122,11 @@ td_vim_gg (tap-dance 200 (C-end C-home))
   )
 
   (defalias
-   tg_vim (layer-toggle vim)
-   dm_rstp (dynamic-macro-record-stop-truncate 1)
-   dm_ply1 (dynamic-macro-play 1)
-   dm_ply2 (dynamic-macro-play 2)
-   dm_rec1 (dynamic-macro-record 1)
-   dm_rec2 (dynamic-macro-record 2)
+   rstp (dynamic-macro-record-stop-truncate 1)
+   ply1 (dynamic-macro-play 1)
+   ply2 (dynamic-macro-play 2)
+   rec1 (dynamic-macro-record 1)
+   rec2 (dynamic-macro-record 2)
    newline_after (tap-hold-release 200 200 enter (layer-toggle vim))
    paste_up (macro home C-v ret)
    newline_up (macro home ret left)
@@ -157,8 +175,8 @@ td_vim_gg (tap-dance 200 (C-end C-home))
   )
 
   (deflayer numbers
-   `    f1   f2   f3   f4   f5   _    f6   f7   f8   f9   f10  f11  f12
-   _    `    `    _    _    _    _    \    \    \    -    =    f12  _
+   `    f1   f2   f3   f4   f5   f6    f6   f7   f8   f9   f10  f11  f12
+   _    `    `    _    _    _    _    \    \    \    -    =     @f12spec  _
    _    1    2    3    4    5    6    7    8    9    0    \    _
    _    _    _    _    _    _    _    _    \    _    [    ]
 
@@ -175,9 +193,9 @@ td_vim_gg (tap-dance 200 (C-end C-home))
   )
 
   (deflayer vim
-   @tg_vim         @dm_rstp @dm_ply1    @dm_ply2 end         _         _    _          _      home          _    _      _
-   @dm_rec2        @dm_rec1 C-rght _       C-v      @td_vim_gg down rght C-z     C-c _             _    _
-   _              end     bspc       _       _           C-x    left _     C-rght @tg_vim @newline_after _    _
+   @vim         @rstp @ply1    @ply2 end         _         _    _          _      home          _    _      _
+   @rec2        @rec1 C-rght _       C-v      @vigg down rght C-z     C-c _             _    _
+   _              end     bspc       _       _           C-x    left _     C-rght @vim @newline_after _    _
    @Svi _       del        C-x     @vis C-left _    _     up         _      _             _    C-f @Svi
 
    _    _    _              _              _    _    _    
@@ -194,7 +212,7 @@ td_vim_gg (tap-dance 200 (C-end C-home))
 
   (deflayer vim_visual
    @vis _    _        _    S-end         _          _      _      _        _    S-home _    _    _
-   _             _    C-S-rght _    @paste_replace C-a S-down S-rght C-z      C-c  _      _    _    _
+   _             _    C-S-rght _    @paste_replace @visgg S-down S-rght C-z      C-c  _      _    _    _
    _             _    _        _    _             C-x        S-left _      C-S-rght _    _      _    _
    _             _    bspc     _    @vis C-S-left   S-up   _      S-tab    tab  _      _
 
