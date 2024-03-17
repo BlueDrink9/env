@@ -99,6 +99,7 @@
   (defalias
    lsft_brc  (tap-hold $tap-timeout $hold-timeout [ lsft)
    rsft_brc  (tap-hold $tap-timeout $hold-timeout ] rsft)
+   spc_sft  (tap-hold $tap-timeout $hold-timeout spc rsft)
   )
 
   (defalias
@@ -176,7 +177,7 @@ visgg (tap-dance $tap-timeout (C-S-end C-S-home))
    bspc a    @mlCs @mlMd @mlAf g  h    @mrAj @mrMk @mrCl ; '    ret
    @lsft_brc z    x    c    @v_vi    b             n    @m_vi    ,    .    /    @rsft_brc
 
-   lctl lmet lalt      spc                    rsft comp rctl
+   lctl lmet lalt      @spc_sft                    rsft comp rctl
   )
 
   (deflayer colemak
