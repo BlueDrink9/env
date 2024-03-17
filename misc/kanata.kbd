@@ -1,3 +1,10 @@
+(defvar
+ tap-timeout   100
+ hold-timeout  200
+ tt $tap-timeout
+ ht $hold-timeout
+ )
+
 (defsrc
  esc  1    2    3    4    5    6    7    8    9    0    -    =    bspc
  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
@@ -10,12 +17,12 @@
 
 
 ;; needed for changing layers without hold.
-  ;; Next version of kanata. May not be able to put varibles within words; in that case add an extra arg for fakekey name.
-  ;; (deftemplate to_layer_alias (layer alias_name)
-  ;;  (deffakekeys to_$layer (layer-while-held $layer))
-  ;;  (defalias $alias_name (on-press-fakekey to_$layer toggle))
-  ;; )
-  ;; (expand-template to_layer_alias special Tspec)
+;; Next version of kanata. May not be able to put varibles within words; in that case add an extra arg for fakekey name.
+;; (deftemplate to_layer_alias (layer alias_name)
+    ;;  (deffakekeys to_$layer (layer-while-held $layer))
+    ;;  (defalias $alias_name (on-press-fakekey to_$layer toggle))
+    ;; )
+;; (expand-template to_layer_alias special Tspec)
 
   (deffakekeys
    to_special (layer-while-held special)
@@ -32,51 +39,51 @@
    vis (on-press-fakekey to_vim_visual toggle)
   )
 
-(defalias
- ;; Layer change aliases
- osl_spec (layer-toggle special)
- osl_vim (layer-toggle vim)
- osl_num (layer-toggle numbers)
- gaming_lt (tap-hold 200 200 = (layer-switch qwerty))
- ;; sftvi (layer-while-held vim_shifted)
- sftvi XX
- lt_spec (tap-hold-release 200 200 5 @osl_spec)
- f12spec (tap-hold-release 200 200 f12 @tspe)
+  (defalias
+   ;; Layer change aliases
+   osl_spec (layer-toggle special)
+   osl_vim (layer-toggle vim)
+   osl_num (layer-toggle numbers)
+   gaming_lt (tap-hold $tt $ht = (layer-switch qwerty))
+   ;; sftvi (layer-while-held vim_shifted)
+   sftvi XX
+   lt_spec (tap-hold-release $tap-timeout $hold-timeout 5 @osl_spec)
+   f12spec (tap-hold-release $tap-timeout $hold-timeout f12 @tspe)
 
- ;; homerow
- ;; qwerty
- v_vi (tap-hold 200 200 v (layer-toggle vim))
- m_vi (tap-hold 200 200 m (layer-toggle vim))
- ;; colemak
- )
+   ;; homerow
+   ;; qwerty
+   v_vi (tap-hold $tap-timeout $hold-timeout v (layer-toggle vim))
+   m_vi (tap-hold $tap-timeout $hold-timeout m (layer-toggle vim))
+   ;; colemak
+  )
 
   ;; Next version of kanata
   ;; (deftemplate homerow-mod (letter mod)
-  ;;  (tap-hold-release 200 200 $letter $mod)
-  ;; )
+      ;;  (tap-hold-release $tap-timeout $hold-timeout $letter $mod)
+      ;; )
 
   (defalias
    ;; Homerow mods
    ;; qwerty
    ;; mlCs (expand-template homerow-mod s lctl)
-   mlCs (tap-hold-release 200 200 s lctl)
-   mlMd (tap-hold-release 200 200 d lmet)
-   mlAf (tap-hold-release 200 200 f lalt)
-   mrCl (tap-hold-release 200 200 l rctl)
-   mrMk (tap-hold-release 200 200 k rmet)
-   mrAj (tap-hold-release 200 200 j ralt)
+   mlCs (tap-hold-release $tap-timeout $hold-timeout s lctl)
+   mlMd (tap-hold-release $tap-timeout $hold-timeout d lmet)
+   mlAf (tap-hold-release $tap-timeout $hold-timeout f lalt)
+   mrCl (tap-hold-release $tap-timeout $hold-timeout l rctl)
+   mrMk (tap-hold-release $tap-timeout $hold-timeout k rmet)
+   mrAj (tap-hold-release $tap-timeout $hold-timeout j ralt)
    ;; colemak
-   mlCr (tap-hold-release 200 200 r lctl)
-   mlMs (tap-hold-release 200 200 s lmet)
-   mlAt (tap-hold-release 200 200 t lalt)
-   mrCi (tap-hold-release 200 200 i rctl)
-   mrMe (tap-hold-release 200 200 e rmet)
-   mrAn (tap-hold-release 200 200 n ralt)
+   mlCr (tap-hold-release $tap-timeout $hold-timeout r lctl)
+   mlMs (tap-hold-release $tap-timeout $hold-timeout s lmet)
+   mlAt (tap-hold-release $tap-timeout $hold-timeout t lalt)
+   mrCi (tap-hold-release $tap-timeout $hold-timeout i rctl)
+   mrMe (tap-hold-release $tap-timeout $hold-timeout e rmet)
+   mrAn (tap-hold-release $tap-timeout $hold-timeout n ralt)
   )
 
   (defalias
-   lsft_brc  (tap-hold 200 200 [ lsft)
-   rsft_brc  (tap-hold 200 200 ] rsft)
+   lsft_brc  (tap-hold $tap-timeout $hold-timeout [ lsft)
+   rsft_brc  (tap-hold $tap-timeout $hold-timeout ] rsft)
   )
 
   (defalias
@@ -92,12 +99,12 @@
   td_voldn_mute XX
   td_pauseplay XX
 
-  vigg (tap-dance 200 (C-end C-home))
-  visgg (tap-dance 200 (C-S-end C-S-home))
-  ;; td_visual_v (tap-dance 200 @visual_v)
-;; td_bof_eof (tap-dance 200 (C-end C-home))
-  ;; td_voldn_mute (tap-dance 200 @voldn_mute)
-  ;; td_pauseplay (tap-dance 200 @pauseplay)
+  vigg (tap-dance $tap-timeout (C-end C-home))
+visgg (tap-dance $tap-timeout (C-S-end C-S-home))
+  ;; td_visual_v (tap-dance $tap-timeout @visual_v)
+  ;; td_bof_eof (tap-dance $tap-timeout (C-end C-home))
+  ;; td_voldn_mute (tap-dance $tap-timeout @voldn_mute)
+  ;; td_pauseplay (tap-dance $tap-timeout @pauseplay)
   )
 
   (defalias
@@ -111,13 +118,13 @@
    ;; prnt (print-screen)
    sysrq XX
    ;; sysrq (system-request)
-   ;; td_voldown_mute (tap-dance 200 (volume-down mute))
+   ;; td_voldown_mute (tap-dance $tap-timeout (volume-down mute))
    td_voldown_mute XX
    ;; vlup (volume-up)
    vlup XX
    ;; prev (media-prev-track)
    prev XX
-   ;; td_playpause (tap-dance 200 (media-play-pause))
+   ;; td_playpause (tap-dance $tap-timeout (media-play-pause))
    td_playpause XX
   )
 
@@ -127,7 +134,7 @@
    ply2 (dynamic-macro-play 2)
    rec1 (dynamic-macro-record 1)
    rec2 (dynamic-macro-record 2)
-   newline_after (tap-hold-release 200 200 enter (layer-toggle vim))
+   newline_after (tap-hold-release $tap-timeout $hold-timeout enter (layer-toggle vim))
    paste_up (macro home C-v ret)
    newline_up (macro home ret left)
    cut_eol (macro S-end C-x)
