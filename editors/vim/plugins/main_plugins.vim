@@ -334,9 +334,11 @@ endif
 " Select code to execute.
 " Plugin 'https://github.com/JarrodCTaylor/vim-shell-executor'
 " Async make, autoset compiler and makeprg from filetype plugin (view quickfix with :COpen)
-Plugin 'https://github.com/tpope/vim-dispatch', {'on': ['Dispatch', 'Make', 'Start', 'Spawn']}
+" Commented 'on' section because as per, lazy-loading breaks a tpope plugin.
+" , {'on': ['Dispatch', 'Make', 'Start', 'Spawn']}
+Plugin 'https://github.com/tpope/vim-dispatch'
 if has('nvim')
-    Plugin 'https://github.com/radenling/vim-dispatch-neovim', {'on': ['Make', 'Start', 'Spawn']}
+    Plugin 'https://github.com/radenling/vim-dispatch-neovim', {'on': ['Dispatch', 'Make', 'Start', 'Spawn']}
 endif
 " Not sure how this compares to Dispatch. Not a complete replacement.
 " Plugin 'https://github.com/neomake/neomake'

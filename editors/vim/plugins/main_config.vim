@@ -305,8 +305,8 @@ if IsPluginUsed("asyncrun.vim")
     let g:asyncrun_open = 8
     let g:asyncrun_auto = "make"
     command! -bang -nargs=* -complete=file ASMake AsyncRun -program=make @ <args>
-    command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
-    cabbrev make Make
+    " command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
+    " cabbrev make Make
     cabbrev !! AsyncRun
     " Set qf statusbar to status of asyncrun
     let g:asyncrun_status = "stopped"
