@@ -24,20 +24,6 @@ if IsPluginUsed("vim-better-whitespace")
     endfunction
     autocmd myPlugins BufReadPost * if &readonly || ! &modifiable | call WhitespaceHighlightDisable() | endif
 endif
-if IsPluginUsed("asyncrun.vim")
-    " Open quickfix window at height 8 on running
-    let g:asyncrun_open = 8
-    let g:asyncrun_auto = "make"
-    command! -bang -nargs=* -complete=file ASMake AsyncRun -program=make @ <args>
-    command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
-    cabbrev make Make
-    cabbrev !! AsyncRun
-    " Set qf statusbar to status of asyncrun
-    let g:asyncrun_status = "stopped"
-    " autocmd myPlugins QuickFixCmdPost * call asyncrun#quickfix_toggle(8, 1)
-    autocmd myPlugins BufWinEnter quickfix setlocal 
-                \ statusline=%t\ [%{g:asyncrun_status}]\ %{exists('w:quickfix_title')?\ '\ '.w:quickfix_title\ :\ ''}\ %=%-15(%l,%c%V%)\ %P
-endif
 
 if IsPluginUsed("supertab")
     let g:SuperTabDefaultCompletionType = "context"
@@ -314,6 +300,21 @@ if IsPluginUsed("vim-dispatch")
     let g:dispatch_no_maps = 1
     exec 'nmap ' . g:IDE_mappings.make . " <cmd>Make<CR>"
 endif
+if IsPluginUsed("asyncrun.vim")
+    " Open quickfix window at height 8 on running
+    let g:asyncrun_open = 8
+    let g:asyncrun_auto = "make"
+    command! -bang -nargs=* -complete=file ASMake AsyncRun -program=make @ <args>
+    command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
+    cabbrev make Make
+    cabbrev !! AsyncRun
+    " Set qf statusbar to status of asyncrun
+    let g:asyncrun_status = "stopped"
+    " autocmd myPlugins QuickFixCmdPost * call asyncrun#quickfix_toggle(8, 1)
+    autocmd myPlugins BufWinEnter quickfix setlocal 
+                \ statusline=%t\ [%{g:asyncrun_status}]\ %{exists('w:quickfix_title')?\ '\ '.w:quickfix_title\ :\ ''}\ %=%-15(%l,%c%V%)\ %P
+endif
+
 "{]}
 
 " {[} ---------- extra filetype support ----------

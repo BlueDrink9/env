@@ -50,12 +50,6 @@ endif
 " Close buffers without changing window
 Plugin 'https://github.com/moll/vim-bbye', {'on': 'Bdelete'}
 cabbrev bd Bdelete
-if has("timers")
-    " Commands sent to shell with AsyncRun appear in qf window.
-    " use AsyncRun! to prevent autoscroll.
-    Plugin 'https://github.com/skywind3000/asyncrun.vim', {
-                \ 'on': ['AsyncRun'], 'event': ['QuickFixCmdPost']}
-endif
 if has('nvim-0.5')
     " Prerequisite for many nvim lua plugins.
     Plugin 'nvim-lua/plenary.nvim'
@@ -340,11 +334,19 @@ endif
 " Select code to execute.
 " Plugin 'https://github.com/JarrodCTaylor/vim-shell-executor'
 " Async make, autoset compiler and makeprg from filetype plugin (view quickfix with :COpen)
-Plugin 'https://github.com/tpope/vim-dispatch', {'on': ['Make', 'Start', 'Spawn']}
-Plugin 'https://github.com/radenling/vim-dispatch-neovim', {'on': ['Make', 'Start', 'Spawn']}
+Plugin 'https://github.com/tpope/vim-dispatch', {'on': ['Dispatch', 'Make', 'Start', 'Spawn']}
+if has('nvim')
+    Plugin 'https://github.com/radenling/vim-dispatch-neovim', {'on': ['Make', 'Start', 'Spawn']}
+endif
 " Not sure how this compares to Dispatch. Not a complete replacement.
 " Plugin 'https://github.com/neomake/neomake'
 " command! -bang -nargs=* -complete=file Make Neomake! <args>
+" if has("timers")
+"     " Commands sent to shell with AsyncRun appear in qf window.
+"     " use AsyncRun! to prevent autoscroll.
+"     Plugin 'https://github.com/skywind3000/asyncrun.vim', {
+"                 \ 'on': ['AsyncRun', 'ASMake'], 'event': ['QuickFixCmdPost']}
+" endif
 "{]}
 
 " {[} ---------- extra filetype support ----------
