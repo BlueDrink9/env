@@ -136,6 +136,19 @@ local specs = {
 							["ac"] = "@class.outer",
 							["ic"] = "@class.inner",
 							-- { query = "@class.inner", desc = "Select inner part of a class region" }
+							['al'] = '@loop.outer',
+							['il'] = '@loop.inner',
+							-- k looks like a branch
+							['ak'] = '@conditional.outer',
+							['ik'] = '@conditional.inner',
+							-- g for goto
+							['ig'] = '@call.inner',
+							['ag'] = '@call.outer',
+							-- latex textobjects
+							['a<Leader>lf'] = '@frame.outer',
+							['a<Leader>ls'] = '@statement.outer',
+							['a<Leader>lb'] = '@block.outer',
+							['a<Leader>lc'] = '@class.outer',
 						},
 						selection_modes = {
 							["@parameter.outer"] = "v", -- charwise
@@ -167,20 +180,63 @@ local specs = {
 					goto_next_start = {
 						["]m"] = "@function.outer",
 						["]]"] = { query = "@class.outer", desc = "Go to next class start" },
-						["],"] = { query = "@parameter.inner", desc = "Go to next argument" },
+						["],"] = { query = "@parameter.outer", desc = "Go to next argument" },
+						[']f'] = '@function.outer',
+						[']c'] = '@class.outer',
+						[']l'] = '@loop.outer',
+						[']k'] = '@conditional.outer',
+						[']g'] = '@call.outer',
+						-- latex motions
+						[']<Leader>lf'] = '@frame.outer',
+						[']<Leader>ls'] = '@statement.outer',
+						[']<Leader>lb'] = '@block.outer',
+						[']<Leader>lc'] = '@class.outer',
 					},
 					goto_next_end = {
 						["]M"] = "@function.outer",
 						["]["] = "@class.outer",
+						[']F'] = '@function.outer',
+						[']C'] = '@class.outer',
+						[']L'] = '@loop.outer',
+						[']K'] = '@conditional.outer',
+						[']G'] = '@call.outer',
+						[']>'] = '@parameter.outer',
+						-- latex motions
+						[']<Leader>lF'] = '@frame.outer',
+						[']<Leader>lS'] = '@statement.outer',
+						[']<Leader>lB'] = '@block.outer',
+						[']<Leader>lC'] = '@class.outer',
 					},
 					goto_previous_start = {
 						["[m"] = "@function.outer",
 						["[["] = "@class.outer",
+						['[c'] = '@class.outer',
 						["[,"] = { query = "@parameter.inner", desc = "Go to previous argument" },
+						['[f'] = '@function.outer',
+						['[l'] = '@loop.outer',
+						['[k'] = '@conditional.outer',
+						['[g'] = '@call.outer',
+						-- latex motions
+						['[<Leader>lf'] = '@frame.outer',
+						['[<Leader>ls'] = '@statement.outer',
+						['[<Leader>lb'] = '@block.outer',
+						['[<Leader>lc'] = '@class.outer',
+
 					},
 					goto_previous_end = {
 						["[M"] = "@function.outer",
 						["[]"] = "@class.outer",
+						['[F'] = '@function.outer',
+						['[C'] = '@class.outer',
+						['[L'] = '@loop.outer',
+						['[K'] = '@conditional.outer',
+						['[G'] = '@call.outer',
+						['[<'] = '@parameter.outer',
+						-- latex motions
+						['[<Leader>lF'] = '@frame.outer',
+						['[<Leader>lS'] = '@statement.outer',
+						['[<Leader>lB'] = '@block.outer',
+						['[<Leader>lC'] = '@class.outer',
 					},
 				},
 			})
