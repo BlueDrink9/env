@@ -87,6 +87,11 @@
    mrCl (tap-hold-release $tap-timeout $hold-timeout l rctl)
    mrMk (tap-hold-release $tap-timeout $hold-timeout k rmet)
    mrAj (tap-hold-release $tap-timeout $hold-timeout j ralt)
+   ;; layers
+   esp (tap-hold-release $tt $ht e (layer-while-held special))
+   isp (tap-hold-release $tt $ht i (layer-while-held special))
+   .nu (tap-hold-release $tt $ht . (layer-while-held special))
+   xnu (tap-hold-release $tt $ht x (layer-while-held special))
    ;; colemak
    mlCr (tap-hold-release $tap-timeout $hold-timeout r lctl)
    mlMs (tap-hold-release $tap-timeout $hold-timeout s lmet)
@@ -94,6 +99,9 @@
    mrCi (tap-hold-release $tap-timeout $hold-timeout i rctl)
    mrMe (tap-hold-release $tap-timeout $hold-timeout e rmet)
    mrAn (tap-hold-release $tap-timeout $hold-timeout n ralt)
+   ;; layers
+   fsp (tap-hold-release $tt $ht f (layer-while-held special))
+   usp (tap-hold-release $tt $ht u (layer-while-held special))
   )
 
   (defalias
@@ -173,20 +181,20 @@ visgg (tap-dance $tap-timeout (C-S-end C-S-home))
 
   (deflayer qwerty
    esc  1    2    3    4    5                 6    6    7    8    9    0    = bspc
-   tab  q    w    e    r    t                 y    u    i    o    p    -    ] \
-   bspc a    @mlCs @mlMd @mlAf g  h    @mrAj @mrMk @mrCl ; '    ret
-   @lsft_brc z    x    c    @v_vi    b             n    @m_vi    ,    .    /    @rsft_brc
+   tab  q    w    @esp r      t                 y    u    @isp o    p    -    ] \
+   bspc a    @mlCs @mlMd @mlAf g  h    @mrAj @mrMk @mrCl ;   '    ret
+   @lsft_brc z    @xnu c    @v_vi    b             n    @m_vi    ,    @.nu /    @rsft_brc
 
    lctl lmet lalt      @spc_sft                    rsft comp rctl
   )
 
   (deflayer colemak
-   _    _    _         _         _         _    _    _         _         _         _    _    _    _
-   _    _    _         f         p         g    j    l         u         y         ;    _    _    _
-   _    _    @mlCr @mlMs @mlAt d    _    @mrAn @mrMe @mrCi o    _    _
-   _    _    _         _         _         _    k    _     _         _         _    _
+   esc  1    2    3    4    5                 6    6    7    8    9    0    = bspc
+   tab  q    w    @fsp  p    g    j    l         @usp      y      ;    -    =    bspc
+   bspc a    @mlCr @mlMs @mlAt d    h    @mrAn @mrMe @mrCi o    '    ret 
+   @lsft_brc z    @xnu c    @v_vi    b             k    @m_vi    ,    @.nu /    @rsft_brc
 
-   _    _    _              _              _    _    _
+   lctl lmet lalt      @spc_sft                    rsft comp rctl
   )
 
   (deflayer gaming
