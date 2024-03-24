@@ -9,6 +9,9 @@ custom-spellings-vim.utf-8.add*
 cache/
 .cache/
 
+# Lock files
+*.lck
+
 # Ignore tags created by etags, ctags, gtags (GNU global) and cscope
 TAGS
 .TAGS
@@ -75,8 +78,7 @@ composer.lock
 *.iws
 
 # Logs
-error.log
-access.log
+*.log
 
 # Netbeans
 nbproject
