@@ -270,7 +270,7 @@ nnoremap <silent> <M-S-down> <cmd>call myVimrcFunctions#ResizeGUIVert(-g:GUIResi
 
 " {[} Clipboard
 " On WSL, xclip exists but we don't want to use it.
-if has("clipboard") && !IsWSL()
+if has("clipboard") " && !IsWSL()
     " In insert or visual mode, use standard cut/copy/paste shortcuts.
     " c-g u is to create an undo point first.
     inoremap <C-v> <c-g>u<C-r>+

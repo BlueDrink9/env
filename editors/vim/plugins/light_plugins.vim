@@ -28,7 +28,7 @@ Plugin 'https://github.com/tpope/vim-repeat.git', {'keys': '.'}
 " Provides access to clipboard via programs
 " Note that this fork is basically Unmaintained, but there are so many others
 " too that I don't know which to choose. None have all the PRs.
-if !has('clipboard') || IsWSL()
+if !has('clipboard') " || IsWSL()
     Plugin 'https://github.com/kana/vim-fakeclip'
 endif
 if has('nvim')
