@@ -383,6 +383,8 @@ if v:version >= 704
     " Remove comment leader on join.
     set formatoptions +=j
 endif
+" Don't hard break lines at textwidth
+set formatoptions -=t
 set wrap
 if v:version >= 800
     set listchars=tab:>-,trail:·,eol:¬,precedes:←,extends:→,nbsp:·
@@ -431,7 +433,7 @@ function! SmallUIOnResize()
         " let &l:scrolloff=&lines/5
         set cmdheight=1
         " Can't afford to hard wrap by mistake.
-        set textwidth=200
+        set textwidth=0
         set noshowcmd
         set shortmess=aWAFtI
         if &lines < 18
