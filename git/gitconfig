@@ -90,17 +90,21 @@
   enabled = true
 [diff]
   colorMoved = zebra
+  submodule = log
   # tool = vimdiff2
 [difftool]
   TrustExitCode = true
 [difftool "vimdiff2"]
   cmd = vim -d $LOCAL $REMOTE
+[fetch]
+  recurseSubmodules = on-demand
 [pull]
   rebase = true
 [push]
   # Autopush annotated tags
   followTags = true
   autoSetupRemote = true
+  recurseSubmodules = on-demand
 [rebase]
   autoStash = true
 # Gives diffs in commit message
@@ -126,3 +130,5 @@
   # detachedHead       = false
 [init]
   defaultbranch = main
+[status]
+  submoduleSummary = true
