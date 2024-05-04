@@ -8,11 +8,6 @@ VSCODE_APP_DATA="${HOME}/AppData/Roaming/Code"
 # This is terribly written and does not work any more. Here for legacy/when I
 # eventually decide to use VSCODE again (ie when neovim integration for it is good)
 vscodeExtensions() {
-    if hash code-insiders 2> /dev/null; then # Maybe insider version is being used.
-        VSCODE_VERSION=code-insiders
-        VSCODE_APP_DATA="${HOME}/AppData/Roaming/Code - Insiders/"
-        VSCODE_EXTENSIONS_DIR="${HOME}/.vscode-insiders/extensions"
-    fi
     if hash code 2> /dev/null || hash code-insiders 2> /dev/null; then # Check if 'code' exists.
         mkdir -p "$VSCODE_EXTENSIONS_DIR"
         while IFS='' read -r LINE || [[ -n "$LINE" ]]; do

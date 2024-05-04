@@ -1,13 +1,11 @@
 {
-    "workbench.colorTheme": "Default Light Modern",
-    "editor.rulers": [
-        80,
-        120
-    ],
+    // Temporarily enable this only, when needing to install extensions if ssl issues crop up.
+    "http.proxyStrictSSL": false,
+    "http.experimental.systemCertificatesV2": true,
     "editor.acceptSuggestionOnEnter": "off",
+    "editor.acceptSuggestionOnCommitCharacter": false,
     "editor.autoClosingBrackets": "beforeWhitespace",
     "editor.autoClosingQuotes": "never",
-    "window.zoomLevel": 1,
     "editor.autoSurround": "never",
     "editor.copyWithSyntaxHighlighting": false,
     "editor.cursorSurroundingLines": 3,
@@ -17,53 +15,84 @@
     "editor.linkedEditing": true,
     "editor.renderWhitespace": "trailing",
     "editor.smoothScrolling": true,
+    "editor.suggest.insertMode": "replace",
     "editor.wordWrap": "on",
+    "editor.rulers": [80, 120],
+    "editor.minimap.renderCharacters": false,
+
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+
     "files.autoGuessEncoding": true,
     "files.eol": "\n",
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
     "files.trimTrailingWhitespace": true,
+
     "git.autofetch": true,
     "git.confirmSync": false,
     "git.enableCommitSigning": false,
     "git.enableSmartCommit": true,
+
+    "scm.diffDecorationsIgnoreTrimWhitespace": "inherit",
+
+    "security.workspace.trust.untrustedFiles": "open",
+
     "telemetry.telemetryLevel": "off",
+
     "terminal.external.windowsExec": "C:\\Program Files\\Git\\bin\\bash.exe",
     "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
-    "window.title": "<ws>/${rootName}/${activeEditorShort} ${dirty}",
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+
+    "emmet.showSuggestionsAsSnippets": true,
+
+    "mssql.enableQueryHistoryCapture": true,
+
+    "poor-mans-t-sql-formatter-pg.std.breakJoinOnSections": true,
+    "poor-mans-t-sql-formatter-pg.std.expandBetweenConditions": false,
+    "poor-mans-t-sql-formatter-pg.std.expandInLists": true,
+    "poor-mans-t-sql-formatter-pg.std.indent": "4",
+    "poor-mans-t-sql-formatter-pg.std.keywordStandardization": true,
+    "poor-mans-t-sql-formatter-pg.std.maxLineWidth": 80,
+    "poor-mans-t-sql-formatter-pg.std.spaceAfterExpandedComma": true,
+    "poor-mans-t-sql-formatter-pg.std.trailingCommas": false,
+
+    "prettier-sql.commaPosition": "before",
+    "prettier-sql.keywordCase": "upper",
+    "prettier-sql.linesBetweenQueries": 2,
+    "prettier-sql.logicalOperatorNewline": "after",
+
     "vscode-neovim.revealCursorScrollLine": true,
     "vscode-neovim.textDecorationsAtTop": true,
-    "extensions.experimental.affinity": {
-        "asvetliakov.vscode-neovim": 1
+    "vscode-neovim.compositeKeys": {
+        "kv": {
+            "command": "vscode-neovim.escape"
+        },
+        "vk": {
+            "command": "vscode-neovim.escape"
+        },
     },
+
+    "workbench.colorTheme": "Ayu Light Bordered",
+
     "vim.camelCaseMotion.enable": true,
     "vim.easymotion": true,
     "vim.highlightedyank.enable": true,
     "vim.leader": "<space>",
-    "vim.replaceWithRegister": true,
     "vim.showMarksInGutter": true,
     "vim.smartRelativeLine": true,
-    "vim.sneak": true,
+    "vim.sneak": false,  // replaced with leap extension
     "vim.targets.enable": true,
     "vim.vimrc.enable": true,
     "vim.insertModeKeyBindingsNonRecursive": [
         {
-            "before": [
-                "k",
-                "v"
-            ],
-            "after": [
-                "<Esc>"
-            ]
+            "before": ["k", "v"],
+            "after": ["<Esc>"]
         },
         {
-            "before": [
-                "v",
-                "k"
-            ],
-            "after": [
-                "<Esc>"
-            ]
+            "before": ["v", "k"],
+            "after": ["<Esc>"]
         }
     ],
     "vim.normalModeKeyBindingsNonRecursive": [
@@ -72,16 +101,16 @@
                 ";"
             ],
             "commands": [
-                "vim.showQuickpickCmdLine",
-            ],
+                "vim.showQuickpickCmdLine"
+            ]
         },
         {
             "before": [
                 ":"
             ],
             "after": [
-                ";",
-            ],
+                ";"
+            ]
         },
         {
             "before": [
@@ -89,35 +118,35 @@
                 ";"
             ],
             "commands": [
-                "workbench.action.showCommands",
-            ],
+                "workbench.action.showCommands"
+            ]
         },
         {
             "before": [
                 "<leader>",
-                "<leader>",
+                "<leader>"
             ],
             "commands": [
-                "workbench.action.quickOpen",
-            ],
+                "workbench.action.quickOpen"
+            ]
         },
         {
             "before": [
                 "<leader>",
-                ",",
+                ","
             ],
             "commands": [
-                "workbench.action.quickOpen",
-            ],
+                "workbench.action.quickOpen"
+            ]
         },
         {
             "before": [
                 "<leader>",
-                "a",
+                "a"
             ],
             "commands": [
-                "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
-            ],
+                "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup"
+            ]
         },
         {
             "before": [
@@ -126,36 +155,64 @@
                 "c"
             ],
             "commands": [
-                "editor.action.commentLine",
+                "editor.action.commentLine"
+            ]
+        },
+        {
+            "before": [
+                "\"",
+                "\""
             ],
+            "after": [
+                "\"",
+                "*"
+            ]
         },
         {
-            "before": [ "\"",  "\"",],
-            "after": [ "\"",  "*",],
+            "before": [
+                "<leader>",
+                "s",
+                "s"
+            ],
+            "commands": [
+                "jupyter.execSelectionInteractive"
+            ],
+            "when": "editorLangId == python  && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
         },
         {
-            "before": [ "<leader>",  "s", "s"],
-            "commands": [ "jupyter.execSelectionInteractive", ],
-            "when": "editorLangId == python  && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor",
+            "before": [
+                "<leader>",
+                "shift+s"
+            ],
+            "commands": [
+                "jupyter.runFileInteractive"
+            ],
+            "when": "editorLangId == python  && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
         },
         {
-            "before": [ "<leader>",  "shift+s"],
-            "commands": [ "jupyter.runFileInteractive", ],
-            "when": "editorLangId == python  && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor",
+            "before": [
+                "s"
+            ],
+            "commands": [
+                "leap.find"
+            ]
         },
         {
-            "before": [ "s" ],
-            "commands": [ "leap.find" ]
+            "before": [
+                "right"
+            ],
+            "commands": [
+                "workbench.action.nextEditor"
+            ]
         },
-
         {
-            "before": [ "right" ],
-            "commands": [ "workbench.action.nextEditor" ]
-        },
-        {
-            "before": [ "left" ],
-            "commands": [ "workbench.action.previousEditor" ]
-        },
+            "before": [
+                "left"
+            ],
+            "commands": [
+                "workbench.action.previousEditor"
+            ]
+        }
     ],
     "vim.visualModeKeyBindingsNonRecursive": [
         {
@@ -163,16 +220,16 @@
                 ";"
             ],
             "commands": [
-                "vim.showQuickpickCmdLine",
-            ],
+                "vim.showQuickpickCmdLine"
+            ]
         },
         {
             "before": [
                 ":"
             ],
             "after": [
-                ";",
-            ],
+                ";"
+            ]
         },
         {
             "before": [
@@ -180,8 +237,8 @@
                 ";"
             ],
             "commands": [
-                "workbench.action.showCommands",
-            ],
+                "workbench.action.showCommands"
+            ]
         },
         {
             "before": [
@@ -189,26 +246,26 @@
                 "c"
             ],
             "commands": [
-                "editor.action.commentLine",
+                "editor.action.commentLine"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "s"
             ],
+            "commands": [
+                "jupyter.execSelectionInteractive"
+            ],
+            "when": "editorLangId == python  && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
         },
         {
-            "before": [ "<leader>",  "s"],
-            "commands": [ "jupyter.execSelectionInteractive", ],
-            "when": "editorLangId == python  && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor",
-        },
-        {
-            "before": [ "s" ],
-            "commands": [ "leap.find" ]
-        },
-
-    ],
-    "editor.minimap.enabled": false,
-    "terminal.integrated.defaultProfile.windows": "Command Prompt",
-    "emmet.showSuggestionsAsSnippets": true,
-    "editor.suggest.localityBonus": true,
-    "editor.quickSuggestions": {
-        "comments": "on",
-        "strings": "on"
-    },
+            "before": [
+                "s"
+            ],
+            "commands": [
+                "leap.find"
+            ]
+        }
+    ]
 }
