@@ -155,7 +155,7 @@ return {
 
 			opts.main_attachment_callback = on_attach
 			-- Override lazyvim
-			opts.diagnostics = {}
+			-- opts.diagnostics = {signs = {}}
 			-- Ensure file that triggers lspconfig to load also triggers
 			-- attachment.
 			vim.fn.timer_start(1000,

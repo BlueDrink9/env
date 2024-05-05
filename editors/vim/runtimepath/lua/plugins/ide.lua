@@ -12,11 +12,11 @@ return {
 	{ import = "plugins.telescope" },
 	
 
-	--   { import = "lazyvim.plugins.extras.coding.yanky", enabled=IsPluginUsed("LazyVim")},
-	-- { import = "lazyvim.plugins.extras.dap.core" },
-	-- { import = "lazyvim.plugins.extras.dap.nlua" },
+	{ import = "lazyvim.plugins.extras.coding.yanky", enabled=IsPluginUsed("LazyVim")},
+	{ import = "lazyvim.plugins.extras.dap.core" },
+	{ import = "lazyvim.plugins.extras.dap.nlua" },
 
-	{ import = "lazyvim.plugins.extras.lang.python", cond = IsPluginUsed("LazyVim") },
+	-- { import = "lazyvim.plugins.extras.lang.python", cond = IsPluginUsed("LazyVim") },
 	{ import = "lazyvim.plugins.extras.lang.rust", cond = IsPluginUsed("LazyVim") },
 	{ import = "lazyvim.plugins.extras.lang.yaml", cond = IsPluginUsed("LazyVim") },
 	{ import = "lazyvim.plugins.extras.lang.json", cond = IsPluginUsed("LazyVim") },
@@ -26,7 +26,7 @@ return {
 	{ import = "lazyvim.plugins.extras.formatting.prettier", cond = IsPluginUsed("LazyVim") },
 	{ import = "lazyvim.plugins.extras.util.project", cond = IsPluginUsed("LazyVim") },
 
-	{ import = "lazyvim.plugins.extras.lsp.none-ls", cond = IsPluginUsed("LazyVim") },
+	-- { import = "lazyvim.plugins.extras.lsp.none-ls", cond = IsPluginUsed("LazyVim") },
 
 	{ import = "plugins.repl"},
 
@@ -225,42 +225,42 @@ return {
 
 	-- {]} ---------- Visual ----------
 
-	-- Haven't configured yet. Add the none-ls extra
-	{
-		"nvimtools/none-ls.nvim",
-		-- will setup any installed and configured sources for mason
-		opts = {
-			sources = {
-				-- null-ls.builtins.code_actions.refactoring,
-				-- require("null-ls").builtins.completion.spell,
-				-- require'null-ls'.builtins.hover.printenv,
-			},
-		},
-	},
+	-- -- Haven't configured yet. Add the none-ls extra
+	-- {
+	-- 	"nvimtools/none-ls.nvim",
+	-- 	-- will setup any installed and configured sources for mason
+	-- 	opts = {
+	-- 		sources = {
+	-- 			-- null-ls.builtins.code_actions.refactoring,
+	-- 			-- require("null-ls").builtins.completion.spell,
+	-- 			-- require'null-ls'.builtins.hover.printenv,
+	-- 		},
+	-- 	},
+	-- },
 
-	{
-		"jay-babu/mason-null-ls.nvim",
-		event = { "BufReadPre", "BufNewFile" },
-		dependencies = {
-			"williamboman/mason.nvim",
-			"nvimtools/none-ls.nvim",
-		},
-		opts = {
-			-- ensure_installed = {
-			--   'vint',
-			--   'selene',
-			--   'stylua',
-			--   'pylint',
-			--   'shellcheck',
-			--   'jq',
-			--   'proselint',
-			-- },
-			automatic_setup = true,
-		},
-		-- config = function(_, opts)
-		--     require("mason-null-ls").setup(opts)
-		-- end,
-	},
+	-- {
+	-- 	"jay-babu/mason-null-ls.nvim",
+	-- 	event = { "BufReadPre", "BufNewFile" },
+	-- 	dependencies = {
+	-- 		"williamboman/mason.nvim",
+	-- 		"nvimtools/none-ls.nvim",
+	-- 	},
+	-- 	opts = {
+	-- 		-- ensure_installed = {
+	-- 		--   'vint',
+	-- 		--   'selene',
+	-- 		--   'stylua',
+	-- 		--   'pylint',
+	-- 		--   'shellcheck',
+	-- 		--   'jq',
+	-- 		--   'proselint',
+	-- 		-- },
+	-- 		automatic_setup = true,
+	-- 	},
+	-- 	-- config = function(_, opts)
+	-- 	--     require("mason-null-ls").setup(opts)
+	-- 	-- end,
+	-- },
 
 	-- {'simrat39/symbols-outline.nvim', config=true},
 

@@ -97,20 +97,20 @@ return {
 
 	{ "L3MON4D3/LuaSnip", cond = vim.g.ideMode == 1, },
 
-	{
-		"nvimtools/none-ls.nvim",
-		cond = vim.g.ideMode == 1,
-		opts = function()
-			local nls = require("null-ls")
-			return {
-				sources = {
-					nls.builtins.formatting.stylua,
-					nls.builtins.formatting.shfmt,
-					-- nls.builtins.diagnostics.flake8,
-				},
-			}
-		end,
-	},
+	-- {
+	-- 	"nvimtools/none-ls.nvim",
+	-- 	cond = vim.g.ideMode == 1,
+	-- 	opts = function()
+	-- 		local nls = require("null-ls")
+	-- 		return {
+	-- 			sources = {
+	-- 				nls.builtins.formatting.stylua,
+	-- 				nls.builtins.formatting.shfmt,
+	-- 				-- nls.builtins.diagnostics.flake8,
+	-- 			},
+	-- 		}
+	-- 	end,
+	-- },
 
 	{
 		"folke/which-key.nvim",

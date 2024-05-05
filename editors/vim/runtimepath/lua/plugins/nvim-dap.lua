@@ -248,6 +248,7 @@ local specs = {
                   max_value_lines = 100, -- Can be integer or nil.
                }
             },
+            dependencies='nvim-neotest/nvim-nio',
          },
 
          -- This might need remapping to use its own toggle breakpoint :(
