@@ -297,6 +297,86 @@
             "before": ["<leader>", "d", "d"],
             "commands": ["workbench.action.debug.run"]
         },
+        {
+            "before": ["<leader>", "d", "D"],
+            "commands": ["workbench.action.debug.run"]
+        },
+        {
+            "before": ["<leader>", "d", "r"],
+            "commands": ["workbench.action.debug.restart"]
+        },
+        {
+            "before": ["<leader>", "d", "C"],
+            "commands": ["workbench.action.debug.stop"]
+        },
+        {
+            "before": ["<leader>", "d", "c"],
+            "commands": ["workbench.action.debug.continue"]
+        },
+        {
+            "before": ["<leader>", "p"],
+            "commands": ["workbench.action.debug.pause"]
+        },
+        {
+            "before": ["<leader>", "."],
+            "commands": ["workbench.action.debug.stepOver"]
+        },
+        {
+            "before": ["<leader>", ">"],
+            "commands": ["workbench.action.debug.stepInto"]
+        },
+        {
+            "before": ["<leader>", "^"],
+            "commands": ["workbench.action.debug.stepOut"]
+        },
+        {
+            "before": ["<leader>", "<"],
+            "commands": ["workbench.action.debug.stepBack"]
+        },
+        {
+            "before": ["<leader>", "d", "h"],
+            "commands": ["workbench.action.debug.runToHere"]
+        },
+        {
+            "before": ["<leader>", "d", "o"],
+            "commands": ["workbench.action.debug.showOutput"]
+        },
+        {
+            "before": ["<leader>", "d", "?"],
+            "commands": ["workbench.action.debug.showDebugHover"]
+        },
+        {
+            "before": ["<leader>", "d", "i"],
+            "commands": ["workbench.action.debug.inspect"]
+        },
+        {
+            "before": ["<leader>", "d", "k"],
+            "commands": ["workbench.action.debug.frameUp"]
+        },
+        {
+            "before": ["<leader>", "d", "j"],
+            "commands": ["workbench.action.debug.frameDown"]
+        },
+        {
+            "before": ["<leader>", "d", "H"],
+            "commands": ["workbench.action.debug.showStoppedLine2"]
+        },
+        {
+            "before": ["<leader>", "b"],
+            "commands": ["editor.debug.action.toggleInlineBreakpoint"]
+        },
+        {
+            "before": ["<leader>", "b", "c"],
+            "commands": ["editor.debug.action.setBreakpointConditional"]
+        },
+        {
+            "before": ["<leader>", "b", "f"],
+            "commands": ["workbench.debug.viewlet.action.addFunctionBreakpointAction"]
+        },
+        {
+            "before": ["<leader>", "b", "C"],
+            "commands": ["editor.clearBreakpoints"]
+        },
 
         {
             "before": ["<leader>", "g", "u"],
