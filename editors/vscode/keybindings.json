@@ -1,53 +1,70 @@
 [
-	{
-		"key": "left",
-		"command": "workbench.action.previousEditor",
-		"when": "editorTextFocus && neovim.mode == 'normal'"
-	},
-	{
-		"key": "right",
-		"command": "workbench.action.nextEditor",
-		"when": "editorTextFocus && neovim.mode == 'normal'"
-	},
-	{
-		"key": "ctrl+k",
-		"command": "workbench.action.navigateUp",
-		"when": "terminalFocus"
-	},
-	{
-		"key": "ctrl+j",
-		"command": "workbench.action.navigateDown",
-		"when": "terminalFocus"
-	},
-	{
-		"key": "ctrl+h",
-		"command": "workbench.action.navigateLeft",
-		"when": "terminalFocus"
-	},
-	{
-		"key": "ctrl+l",
-		"command": "workbench.action.navigateRight",
-		"when": "terminalFocus"
-	},
+    // "when": "!neovim.init"
+    // "when": "vim.active"
+
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.navigateUp",
+        // "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "workbench.action.navigateDown",
+        // "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+h",
+        "command": "workbench.action.navigateLeft",
+        // "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "workbench.action.navigateRight",
+        // "when": "terminalFocus"
+    },
     // Tab complete like vim - cycle between candidates with Tab
     {
         "key": "tab",
         "command": "selectNextQuickFix",
-        "when": "editorFocus && quickFixWidgetVisible"
+        "when": "editorFocus && quickFixWidgetVisible && (neovim.mode == 'insert' || vim.mode == 'insert')"
     },
     {
         "key": "shift+tab",
         "command": "selectPrevQuickFix",
-        "when": "editorFocus && quickFixWidgetVisible"
+        "when": "editorFocus && quickFixWidgetVisible && (neovim.mode == 'insert' || vim.mode == 'insert')"
     },
+
+    {
+        "key": "tab",
+        "command": "selectNextSuggestion",
+        "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+    },
+    {
+        "key": "ctrl+e",
+        "command": "acceptSelectedSuggestion",
+        "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+    },
+    // {
+    //     "key": "down",
+    //     "command": "-selectNextSuggestion",
+    //     "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+    // },
+    {
+        "key": "shift+tab",
+        "command": "selectPrevSuggestion",
+        "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+    },
+    // {
+    //     "key": "up",
+    //     "command": "-selectPrevSuggestion",
+    //     "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+    // },
+
     {
         "key": "ctrl+n",
         "command": "-workbench.action.files.newUntitledFile"
     },
-    {
-        "key": "alt+right",
-        "command": "workbench.action.navigateForward"
-    },
+
     {
         "key": "alt+right",
         "command": "-workbench.action.navigateForward"
@@ -56,6 +73,17 @@
         "key": "ctrl+k ctrl+c",
         "command": "-editor.action.addCommentLine",
         "when": "editorTextFocus && !editorReadonly"
+    },
+
+    {
+        "key": "left",
+        "command": "workbench.action.previousEditor",
+        "when": "editorTextFocus && (neovim.mode == 'normal' || vim.mode == 'normal')"
+    },
+    {
+        "key": "right",
+        "command": "workbench.action.nextEditor",
+        "when": "editorTextFocus && (neovim.mode == 'normal' || vim.mode == 'normal')"
     },
     {
         "key": "left",
@@ -92,31 +120,6 @@
         "command": "-notebook.unfold",
         "when": "notebookEditorFocused && !inputFocus && activeEditor == 'workbench.editor.notebook'"
     },
-     {
-       "key": "tab",
-       "command": "selectNextSuggestion",
-       "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
-     },
-     {
-       "key": "down",
-       "command": "-selectNextSuggestion",
-       "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
-     },
-     {
-       "key": "shift+tab",
-       "command": "selectPrevSuggestion",
-       "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
-     },
-     {
-       "key": "up",
-       "command": "-selectPrevSuggestion",
-       "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
-     },
-     {
-       "key": "ctrl+e",
-       "command": "acceptSelectedSuggestion",
-       "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
-     },
 
     {
         "key": "g g",
@@ -127,16 +130,52 @@
         "command": "magit.refresh",
         "when": "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/"
     },
+
     {
-        "key": "tab",
-        "command": "extension.vim_tab",
-        "when": "editorFocus && vim.active && !inDebugRepl && vim.mode != 'Insert' && editorLangId != 'magit'"
+        "key": "ctrl+s",
+        "command": "workbench.action.terminal.toggleTerminal"
     },
     {
-        "key": "tab",
-        "command": "-extension.vim_tab",
-        "when": "editorFocus && vim.active && !inDebugRepl && vim.mode != 'Insert'"
+        "key": "ctrl+h",
+        "when": "editorTextFocus && vim.active",
+        "command": "workbench.action.focusLeftGroup"
     },
+    {
+        "key": "ctrl+l",
+        "when": "editorTextFocus && vim.active",
+        "command": "workbench.action.focusRightGroup"
+    },
+    {
+        "key": "ctrl+k",
+        "when": "editorTextFocus && vim.active",
+        "command": "workbench.action.focusAboveGroup"
+    },
+    {
+        "key": "ctrl+j",
+        "when": "editorTextFocus && vim.active",
+        "command": "workbench.action.focusBelowGroup"
+    },
+    {
+        "key": "ctrl+w h",
+        "when": "editorTextFocus && vim.active",
+        "command": "workbench.action.splitEditorLeft"
+    },
+    {
+        "key": "ctrl+w l",
+        "when": "editorTextFocus && vim.active",
+        "command": "workbench.action.splitEditorRight"
+    },
+    {
+        "key": "ctrl+w k",
+        "when": "editorTextFocus && vim.active",
+        "command": "workbench.action.splitEditorUp"
+    },
+    {
+        "key": "ctrl+w j",
+        "when": "editorTextFocus && vim.active",
+        "command": "workbench.action.splitEditorDown"
+    },
+
     {
         "key": "x",
         "command": "magit.discard-at-point",
@@ -180,5 +219,26 @@
     {
         "key": "ctrl+u x",
         "command": "-magit.reset-hard"
-    }
+    },
+
+    {
+        "key": "<leader> s",
+        "when": "editorTextFocus && vim.active && vim.mode != 'normal' && editorLangId == 'sql'",
+        "command": "mssql.runQuery"
+    },
+    {
+        "key": "<leader> s ctrl+c",
+        "when": "editorTextFocus && vim.active && vim.mode != 'normal' && editorLangId == 'sql'",
+        "command": "mssql.cancelQuery"
+    },
+    {
+        "key": "<leader> s",
+        "when": "editorTextFocus && vim.active && vim.mode != 'normal' && editorLangId == 'python'",
+        "command": "jupyter.execSelectionInteractive"
+    },
+    {
+        "key": "<leader> shift+s",
+        "when": "editorTextFocus && vim.active && vim.mode != 'normal' && editorLangId == 'python'",
+        "command": "jupyter.runFileInteractive"
+    },
 ]

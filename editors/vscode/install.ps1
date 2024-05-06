@@ -59,7 +59,7 @@ Out-File -FilePath "${env:APPDATA}\VSCodium\product.json" -InputObject "$product
 Write-Host "Installing extensions"
 $Extensions = Get-Content "$PSScriptRoot\extensions.txt"
 
-$Binaries = @("code", "vscodium", "codium")
+$Binaries = @("code", "codium")
 # Loop through the binaries list and remove the ones that are not available
 $AvailableBinaries = @()
 foreach ($Binary in $Binaries) {

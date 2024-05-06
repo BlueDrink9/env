@@ -1,6 +1,6 @@
 {
     // Temporarily enable this only, when needing to install extensions if ssl issues crop up.
-    "http.proxyStrictSSL": false,
+    // "http.proxyStrictSSL": false,
     "http.experimental.systemCertificatesV2": true,
     "editor.acceptSuggestionOnEnter": "off",
     "editor.acceptSuggestionOnCommitCharacter": false,
@@ -21,7 +21,8 @@
     "editor.minimap.renderCharacters": false,
 
     "extensions.experimental.affinity": {
-        "asvetliakov.vscode-neovim": 1
+        "asvetliakov.vscode-neovim": 1,
+        "vscodevim.vim": 1
     },
 
     "files.autoGuessEncoding": true,
@@ -64,7 +65,6 @@
     "prettier-sql.logicalOperatorNewline": "after",
 
     "vscode-neovim.revealCursorScrollLine": true,
-    "vscode-neovim.textDecorationsAtTop": true,
     "vscode-neovim.compositeKeys": {
         "kv": {
             "command": "vscode-neovim.escape"
@@ -93,7 +93,19 @@
         {
             "before": ["v", "k"],
             "after": ["<Esc>"]
-        }
+        },
+        {
+            "before": ["<c-e>"],
+            "commands": ["editor.action.insertSnippet"],
+        },
+        {
+            "before": ["<c-b>"],
+            "commands": ["cquery.snippetPrev"],
+        },
+        {
+            "before": ["<c-f>"],
+            "commands": ["cquery.snippetNext"],
+        },
     ],
     "vim.normalModeKeyBindingsNonRecursive": [
         {
@@ -177,7 +189,6 @@
             "commands": [
                 "jupyter.execSelectionInteractive"
             ],
-            "when": "editorLangId == python  && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
         },
         {
             "before": [
@@ -187,7 +198,6 @@
             "commands": [
                 "jupyter.runFileInteractive"
             ],
-            "when": "editorLangId == python  && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
         },
         {
             "before": [
@@ -212,7 +222,164 @@
             "commands": [
                 "workbench.action.previousEditor"
             ]
-        }
+        },
+        {
+            "before": ["<leader>", "i", "h"],
+            "commands": ["editor.action.showHover"]
+        },
+        {
+            "before": ["<leader>","i","r","r"],
+            "commands": ["editor.action.refactor"]
+        },
+        {
+            "before": ["<leader>", "i", "r", "n"],
+            "commands": ["editor.action.rename"]
+        },
+        {
+            "before": ["<leader>", "i", "?"],
+            "commands": ["editor.action.showHover"]
+        },
+        {
+            "before": ["<leader>", "e", "f"],
+            "commands": ["editor.action.autoFix"]
+        },
+        {
+            "before": ["<leader>", "i", "a"],
+            "commands": ["editor.action.quickFix"]
+        },
+        {
+            "before": ["g", "r"],
+            "commands": ["editor.action.findReferences"]
+        },
+        {
+            "before": ["<leader>", "g", "h"],
+            "commands": ["editor.action.goToDeclaration"]
+        },
+        {
+            "before": ["<leader>", "g", "H"],
+            "commands": ["editor.action.peakDefinition"]
+        },
+        {
+            "before": ["g", "i"],
+            "commands": ["editor.gotoImplementation"],
+        },
+        {
+            "before": ["<leader>", "i", "f"],
+            "commands": ["editor.action.findReferences"]
+        },
+        {
+            "before": ["g", "r"],
+            "commands": ["editor.action.referenceSearch.trigger"],
+        },
+        {
+            "before": ["<leader>","<leader>"],
+            "commands": ["workbench.action.quickOpen"]
+        },
+        {
+            "before": ["<leader>", ","],
+            "commands": ["workbench.action.quickOpen"]
+        },
+        {
+            "before": ["<leader>", "i", "T"],
+            "commands": ["workbench.action.showAllSymbols"]
+        },
+        {
+            "before": ["<leader>", ";"],
+            "commands": ["workbench.action.showCommands"]
+        },
+        {
+            "before": ["<leader>", "<cr>","r"],
+            "commands": ["workbench.action.openRecent"]
+        },
+        {
+            "before": ["<leader>", "g", "c","c"],
+            "commands": ["git.commit"]
+        },
+        {
+            "before": ["<leader>", "g", "s"],
+            "commands": ["git.stage"]
+        },
+        {
+            "before": ["<leader>", "g", "c","e"],
+            "commands": ["git.commitStagedAmend"]
+        },
+        {
+            "before": ["<leader>", "d", "d"],
+            "commands": ["workbench.action.debug.run"]
+        },
+        {
+            "before": ["<leader>","a"],
+            "commands": ["workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup"]
+        },
+
+        {
+            "before": ["<leader>", "g", "u"],
+            "commands": ["git.unstageSelectedRanges"],
+        },
+        {
+            "before": ["ctrl+h"],
+            "commands": ["workbench.action.focusLeftGroup"]
+        },
+        {
+            "before": ["ctrl+l"],
+            "commands": ["workbench.action.focusRightGroup"]
+        },
+        {
+            "before": ["ctrl+k"],
+            "commands": ["workbench.action.focusAboveGroup"]
+        },
+        {
+            "before": ["ctrl+j"],
+            "commands": ["workbench.action.focusBelowGroup"]
+        },
+        {
+            "before": ["ctrl+w h"],
+            "commands": ["workbench.action.splitEditorLeft"]
+        },
+        {
+            "before": ["ctrl+w l"],
+            "commands": ["workbench.action.splitEditorRight"]
+        },
+        {
+            "before": ["ctrl+w k"],
+            "commands": ["workbench.action.splitEditorUp"]
+        },
+        {
+            "before": ["ctrl+w j"],
+            "commands": ["workbench.action.splitEditorDown"]
+        },
+
+        {
+            "before": ["<leader>", "i", "s"],
+            "commands": ["editor.action.triggerParameterHints"],
+        },
+        {
+            "before": ["]", "e"],
+            "commands": ["editor.action.marker.nextInFiles"],
+        },
+        {
+            "before": ["[", "e"],
+            "commands": ["editor.action.marker.prevInFiles"],
+            "when": "editorTextFocus && vim.active && !inDebugRepl"
+        },
+        {
+            "before": ["g", "q", "%"],
+            "commands": ["editor.action.formatDocument"],
+        },
+        {
+            "before": ["m", "enter"],
+            "commands": ["workbench.action.tasks.build"],
+        },
+        {
+            "before": ["leader", "i", "m"],
+            "commands": ["workbench.action.tasks.build"],
+        },
+        {
+            "before": ["m", "space"],
+            "commands": ["workbench.action.tasks.build"],
+        },
+
+
     ],
     "vim.visualModeKeyBindingsNonRecursive": [
         {
