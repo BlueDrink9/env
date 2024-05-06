@@ -117,12 +117,8 @@
             ]
         },
         {
-            "before": [
-                ":"
-            ],
-            "after": [
-                ";"
-            ]
+            "before": [ "<leader>", "c" ],
+            "after": [ "g", "c" ]
         },
         {
             "before": [
@@ -171,34 +167,32 @@
             ]
         },
         {
-            "before": [
-                "\"",
-                "\""
-            ],
-            "after": [
-                "\"",
-                "*"
-            ]
+            "before": [ "\"", "\"" ],
+            "after": [ "\"", "*" ]
         },
         {
-            "before": [
-                "<leader>",
-                "s",
-                "s"
-            ],
-            "commands": [
-                "jupyter.execSelectionInteractive"
-            ],
+            "before": [ "d", "r" ],
+            "after": [ "\"", "_", "d" ]
         },
-        {
-            "before": [
-                "<leader>",
-                "shift+s"
-            ],
-            "commands": [
-                "jupyter.runFileInteractive"
-            ],
-        },
+        // {
+        //     "before": [
+        //         "<leader>",
+        //         "s",
+        //         "s"
+        //     ],
+        //     "commands": [
+        //         "jupyter.execSelectionInteractive"
+        //     ],
+        // },
+        // {
+        //     "before": [
+        //         "<leader>",
+        //         "shift+s"
+        //     ],
+        //     "commands": [
+        //         "jupyter.runFileInteractive"
+        //     ],
+        // },
         {
             "before": [
                 "s"
@@ -284,10 +278,6 @@
             "commands": ["workbench.action.showAllSymbols"]
         },
         {
-            "before": ["<leader>", ";"],
-            "commands": ["workbench.action.showCommands"]
-        },
-        {
             "before": ["<leader>", "<cr>","r"],
             "commands": ["workbench.action.openRecent"]
         },
@@ -306,10 +296,6 @@
         {
             "before": ["<leader>", "d", "d"],
             "commands": ["workbench.action.debug.run"]
-        },
-        {
-            "before": ["<leader>","a"],
-            "commands": ["workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup"]
         },
 
         {
@@ -333,19 +319,19 @@
             "commands": ["workbench.action.focusBelowGroup"]
         },
         {
-            "before": ["ctrl+w h"],
+            "before": ["ctrl+w", "h"],
             "commands": ["workbench.action.splitEditorLeft"]
         },
         {
-            "before": ["ctrl+w l"],
+            "before": ["ctrl+w", "l"],
             "commands": ["workbench.action.splitEditorRight"]
         },
         {
-            "before": ["ctrl+w k"],
+            "before": ["ctrl+w", "k"],
             "commands": ["workbench.action.splitEditorUp"]
         },
         {
-            "before": ["ctrl+w j"],
+            "before": ["ctrl+w", "j"],
             "commands": ["workbench.action.splitEditorDown"]
         },
 
@@ -360,7 +346,6 @@
         {
             "before": ["[", "e"],
             "commands": ["editor.action.marker.prevInFiles"],
-            "when": "editorTextFocus && vim.active && !inDebugRepl"
         },
         {
             "before": ["g", "q", "%"],
@@ -408,6 +393,10 @@
             ]
         },
         {
+            "before": [ "\"", "\"" ],
+            "after": [ "\"", "*" ]
+        },
+        {
             "before": [
                 "<leader>",
                 "c"
@@ -415,16 +404,6 @@
             "commands": [
                 "editor.action.commentLine"
             ]
-        },
-        {
-            "before": [
-                "<leader>",
-                "s"
-            ],
-            "commands": [
-                "jupyter.execSelectionInteractive"
-            ],
-            "when": "editorLangId == python  && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
         },
         {
             "before": [
