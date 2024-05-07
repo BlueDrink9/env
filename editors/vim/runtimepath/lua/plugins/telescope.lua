@@ -34,17 +34,20 @@ local specs = {
         [maps.FuzzyFuzzy]         = "builtin()",
         [maps.FuzzyOpenFile]      = "find_files()",
         [maps.FuzzySearchFiles]   = "live_grep()",
+        [maps.FuzzySearchBuffer]  = "current_buffer_fuzzy_find()",
         [maps.FuzzySearchBuffers] = "live_grep({grep_open_files = true})",
         [maps.FuzzyBuffers]       = "buffers()",
         [maps.FuzzyTags]          = "tags()",
         [maps.FuzzyCommands]      = "commands()",
+        ["<leader>:"]             = "command_history()",
         [maps.FuzzyOldFiles]      = "oldfiles()",
         -- By default, use treesitter for symbols. If an lsp client
         -- attaches which can replace it however, replace with that.
         [maps.FuzzySymbols]       = "treesitter()",
       }) do
         local map_prefix = "require'telescope.builtin'."
-        table.insert(out, {keys, loadstring(map_prefix..cmd)})
+        cmdStr = map_prefix..cmd
+        table.insert(out, {keys, loadstring(cmdStr), desc=cmdStr})
       end
 
       -- for keys, cmd in pairs({
@@ -57,9 +60,14 @@ local specs = {
       return out
     end,
 
-    opts = function()
+    opts = function(_, opts)
 
       local map_prefix = "<cmd>lua require'telescope.builtin'."
+      local actions = require("telescope.actions")
+
+      -- Mapping this manually because the lazy.nvim one seems to fail
+      -- with keys with different prefixes.
+      vim.keymap.set("n", maps.FuzzyOldFiles, map_prefix .. "oldfiles()<cr>", {desc="oldfiles"})
 
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
@@ -81,15 +89,17 @@ local specs = {
         end
       })
 
-      local opts = {
+      opts = vim.tbl_deep_extend("force", opts, {
         defaults = {
           mappings = {
             i = {
               ["<C-h>"] = "which_key",
-              ["<C-Down>"] = "actions.cycle_history_next",
-              ["<C-Up>"] = "actions.cycle_history_prev",
-              ["<M-Down>"] = "actions.cycle_history_next",
-              ["<M-Up>"] = "actions.cycle_history_prev",
+              ["<C-Down>"] = actions.cycle_history_next,
+              ["<C-Up>"] = actions.cycle_history_prev,
+              ["<M-Down>"] = actions.cycle_history_next,
+              ["<M-Up>"] = actions.cycle_history_prev,
+              ["<esc>"] = actions.close
+
             },
           },
         },
@@ -99,7 +109,7 @@ local specs = {
           },
         },
         extensions = {},
-      }
+      })
       if vim.fn.has('win32') == 1 then
         -- Super slow on windows for some reason
         opts.defaults.preview = false
@@ -134,6 +144,7 @@ local specs = {
 
       -- show all opened buf outline(use current buf filetype)
       -- telescope.extensions.ctags_outline.outline({buf='all'})
+      return opts
     end,
 
     dependencies = {
