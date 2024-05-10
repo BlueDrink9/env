@@ -1,7 +1,3 @@
-if vim.g.ideMode==0 then
-  return {}
-end
-
 return {
   -- first: disable LuaSnip bindings that conflict
   { "L3MON4D3/LuaSnip", keys = function() return {} end, },

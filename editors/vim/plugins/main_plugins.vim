@@ -204,10 +204,10 @@ Plugin 'PeterRincker/vim-argumentative', {
 Plugin 'https://github.com/kana/vim-textobj-entire', {
             \ 'dependencies': ['kana/vim-textobj-user'],
             \ 'on': ['<Plug>(textobj-entire-a)', '<Plug>(textobj-entire-i)']}
-" av/iv for lines continued by \
-" Plugin 'rhysd/vim-textobj-continuous-line', {
-"             \ 'keys': MakeLazyKeys(["il", "al"], ["v","o"]),
-"             \ 'dependencies': ['kana/vim-textobj-user']}
+" av/iv for lines continued by \, but only in specific filetypes >:
+Plugin 'rhysd/vim-textobj-continuous-line', {
+            \ 'keys': MakeLazyKeys({'vo': ['iv', 'av']}),
+            \ 'dependencies': ['kana/vim-textobj-user']}
 " iv as object for camelcasemotion style
 " Plugin 'https://github.com/Julian/vim-textobj-variable-segment', {
 "             \ 'dependencies': ['kana/vim-textobj-user']}

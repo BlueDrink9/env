@@ -77,13 +77,17 @@ require("lazy").setup({
 			cond = vim.g.liteMode == 0,
 		},
 
-		-- Actually adds very little but is needed to silence error
-		{ import = "lazyvim.plugins.extras.editor.leap" },
-		{ import = "plugins" },
+
+		{ import = "plugins.light" },
+		{ import = "plugins.main", cond = vim.g.liteMode == 0 },
+		{ import = "plugins.ide", cond = vim.g.ideMode == 1 },
 
 		LazyPlugSpecs,
 
 		{ "https://github.com/Shatur/neovim-ayu", lazy = true },
+
+		{ import = "plugins.lazyvim_disabled", cond = vim.g.liteMode == 0  },
+		{ import = "plugins.lazyvim_override", cond = vim.g.liteMode == 0  },
 	},
 	-- Unicode alternatives
 	ui = {

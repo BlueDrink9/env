@@ -1,11 +1,7 @@
-local load
-if vim.g.liteMode == 1 then
-	load = false
-else
-	load = true
-end
-
-local spec = {
+return {
+	{ import = "plugins.treesitter" },
+	{ import = "plugins.firenvim" },
+	{ import = "plugins.lualine" },
 
 	{ "andymass/vim-matchup", event = "VeryLazy" },
 
@@ -564,10 +560,3 @@ local spec = {
 
 	{ "kwkarlwang/bufresize.nvim", event = "VeryLazy" },
 }
-
-for _, s in ipairs(spec) do
-	if not load then
-		s.cond = false
-	end
-end
-return spec

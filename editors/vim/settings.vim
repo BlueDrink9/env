@@ -410,6 +410,9 @@ set shortmess=a
 " set fillchars+="vert:│,stlnc:─"
 set fillchars+="vert:║,stlnc:═,stl:\ ,"
 set lazyredraw
+if exists('+smoothscroll')
+    set smoothscroll
+endif
 
 function! MinimumUI()
   set laststatus=0

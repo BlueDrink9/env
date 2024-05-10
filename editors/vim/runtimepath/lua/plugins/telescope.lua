@@ -1,7 +1,3 @@
-if vim.g.ideMode==0 then
-  return {}
-end
-
 local telecope_make_cmd = ""
 if vim.fn.Executable('cmake') == 1 then
   telecope_make_cmd = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'

@@ -1,7 +1,3 @@
-if vim.g.ideMode==0 then
-   return {}
-end
-
 local maps = vim.g.IDE_mappings
 
 local specs = {

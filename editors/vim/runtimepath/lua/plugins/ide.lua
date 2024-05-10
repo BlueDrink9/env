@@ -1,19 +1,16 @@
 -- call SourcePluginFile("nvim-lspconfig.lua")
 -- call SourcePluginFile('nvim-cmp.lua')
 
-local load
-if vim.g.ideMode == 0 then
-	load = false
-	-- Even loading the rest of this file seems to be a performance hit, so not
-	-- using this for ide.
-	return {}
-else
-	load = true
-end
-
 local idemaps = vim.g.IDE_mappings
 
-local spec = {
+return {
+
+	{ import = "plugins.cmp" },
+	{ import = "plugins.lspconfig" },
+	{ import = "plugins.nvim-dap" },
+	{ import = "plugins.repl" },
+	{ import = "plugins.telescope" },
+	
 
 	--   { import = "lazyvim.plugins.extras.coding.yanky", enabled=IsPluginUsed("LazyVim")},
 	-- { import = "lazyvim.plugins.extras.dap.core" },
@@ -30,6 +27,8 @@ local spec = {
 	{ import = "lazyvim.plugins.extras.util.project", cond = IsPluginUsed("LazyVim") },
 
 	{ import = "lazyvim.plugins.extras.lsp.none-ls", cond = IsPluginUsed("LazyVim") },
+
+	{ import = "plugins.repl"},
 
 	-- Dependency for a lot of plugins
 	{ "nvim-lua/plenary.nvim", lazy = true },
@@ -298,100 +297,6 @@ local spec = {
 		},
 	},
 
-	-- {[} ---------- REPL ----------
-	-- {"michaelb/sniprun",
-	--   opts = {
-	--     --" you can combo different display modes as desired
-	--     display = {
-	--       "Classic",                    -- "display results in the command-line  area
-	--       "VirtualTextOk",              -- "display ok results as virtual text (multiline is shortened)
-
-	--       "VirtualTextErr",          -- "display error results as virtual text
-	--       -- "TempFloatingWindow",      -- "display results in a floating window
-	--       "LongTempFloatingWindow",  -- "same as above, but only long results. To use with VirtualText__
-	--       -- "Terminal"                 -- "display results in a vertical split
-	--       "TerminalWithCode",        --# display results and code history in a vertical split
-	--     },
-	--   },
-	--   keys = {
-	--     {idemaps.REPLSendLine, '<Plug>SnipRun'},
-	--     {idemaps.REPLSend, '<Plug>SnipRunOperator'},
-	--     {idemaps.REPLCancel, '<Plug>SnipReset'},
-	--     {idemaps.REPLClear, '<Plug>SnipClose'},
-	--     {idemaps.REPLClose, '<Plug>SnipClose'},
-	--     {idemaps.REPLSend, '<Plug>SnipRun', mode='v'},
-	--     -- sniprunfile_keep_position
-	--     {idemaps.REPLSendFile, [[
-	--     <cmd>let b:caret=winsaveview()
-	--          <bar> %SnipRun
-	--          <bar> call winrestview(b:caret)<CR>
-	--       ]]
-	--     },
-	--   },
-	-- },
-
-	{
-		"https://github.com/Vigemus/iron.nvim",
-		-- version="*", -- v3 currently broken for latest nvim, need master
-		opts = function(_, opts)
-			vim.keymap.set("n", idemaps.REPLSendEndLine,
-				function()
-					vim.cmd[[normal v$]];
-					require'iron.core'.visual_send()
-			end)
-			return {
-				config = {
-					-- Whether a repl should be discarded or not
-					scratch_repl = true,
-					repl_definition = {
-						sh = {
-							command = { "bash" },
-						},
-					},
-					repl_open_cmd = require("iron.view").split.horizontal.botright(0.2),
-					-- repl_open_cmd = require("iron.view").split.botright(function
-					--  if vim.o.columns > 180 then
-					--      return require("iron.view").split.vertical.botright(50)
-					--  else
-					--      return require("iron.view").split.horizonal.botright(0.20)
-					--  end
-					-- end
-				},
-				keymaps = {
-					send_motion = idemaps.REPLSend,
-					visual_send = idemaps.REPLSend,
-					send_file = idemaps.REPLSendFile,
-					send_line = idemaps.REPLSendLine,
-					-- send_mark = idemaps.REPLSend,
-					-- mark_motion = idemaps.REPLSend,
-					-- mark_visual = idemaps.REPLSend,
-					-- remove_mark = idemaps.REPLSend,
-					-- cr = idemaps.REPLSend,
-					interrupt = idemaps.REPLCancel,
-					exit = idemaps.REPLClose,
-					clear = idemaps.REPLClear,
-				},
-				highlight = {
-					italic = true,
-				},
-				ignore_blank_lines = false,
-			}
-		end,
-		config = function(_, opts)
-			require("iron.core").setup(opts)
-		end,
-		cmd = { "IronFocus", "IronRepl" },
-		keys = {
-			{ "<space>s<c-s>", "<cmd>IronFocus<cr>" },
-			{ idemaps.REPLSend, mode = { "n", "v" } },
-			{ idemaps.REPLSendFile },
-			{ idemaps.REPLSendEndLine },
-			{ idemaps.REPLSendLine },
-		},
-	},
-
-	-- {]} ---------- REPL ----------
-
 	{
 		"jalvesaq/Nvim-R",
 		config = function()
@@ -501,10 +406,3 @@ local spec = {
 		},
 	},
 }
-
-for _, s in ipairs(spec) do
-	if not load then
-		s.cond = false
-	end
-end
-return spec

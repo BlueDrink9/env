@@ -151,4 +151,10 @@ return {
 		},
 		cond = vim.g.ideMode == 1,
 	},
+
+	{
+	   'nvim-lualine/lualine.nvim',
+	   enabled=vim.g.liteMode == 0,
+	   cond = vim.g.vscode ~= 1,
+	},
 }

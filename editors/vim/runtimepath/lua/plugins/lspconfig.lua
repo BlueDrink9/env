@@ -3,9 +3,6 @@
 -- config is required unless modifying behaviour specific to that server.
 -- Additionally, installation is made trivial by Mason's :LspInstall, which
 -- installs a relevant server for the current filetype.
-if vim.g.ideMode == 0 then
-	return {}
-end
 
 -- TODO disable ensure installed. I think lazyvim is setting it (so mabye do it in
 -- override instead)

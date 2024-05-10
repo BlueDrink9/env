@@ -1,7 +1,3 @@
-if vim.g.liteMode == 1 then
-	return {}
-end
-
 function check_treesitter_installable()
 	-- ("tar" and "curl" or "git") and {
 	local fn = vim.fn
