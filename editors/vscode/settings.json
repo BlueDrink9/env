@@ -299,7 +299,8 @@
         },
         {
             "before": ["<leader>", "d", "d"],
-            "commands": ["workbench.action.debug.run"]
+            "after": ["F5"],
+            // "commands": ["workbench.action.debug.run"]
         },
         {
             "before": ["<leader>", "d", "D"],
