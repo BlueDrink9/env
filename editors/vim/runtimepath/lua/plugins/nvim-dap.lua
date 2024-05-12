@@ -172,7 +172,7 @@ local specs = {
                MasonDapOpts = opts
                if DapHandlers then
                   opts.handlers = DapHandlers
-                     require("mason-nvim-dap").setup(opts)
+                  require("mason-nvim-dap").setup(opts)
                end
             end
          },
@@ -269,6 +269,30 @@ local specs = {
          {'https://github.com/nvim-telescope/telescope-dap.nvim',
             config = function() require("telescope").load_extension('dap') end,
          },
+
+         { 
+            'rcarriga/cmp-dap',
+            dependencies = {
+               {
+                  'hrsh7th/nvim-cmp',
+                  opts = function(_, opts)
+                     local old_enabled = opts.enabled
+                     opts.enabled = function()
+                        return old_enabled() and (
+                           vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
+                           or require("cmp_dap").is_dap_buffer()
+                        )
+                     end
+                     require("cmp").setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
+                        sources = {
+                           { name = "dap" },
+                        },
+                     })
+                     return opts
+                  end
+               }
+            }
+         }
 
       }
    }
