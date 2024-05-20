@@ -14,6 +14,9 @@
 ; SendMode Input ; Recommended for new scripts due to its superior speed and reliability.
 SetKeyDelay(5) ; sendevent is delayed by 10 by default, which may be inconvenvient
 ProcessSetPriority("High")
+KeyHistory 0
+A_HotkeyModifierTimeout := 100
+A_MenuMaskKey := "vkFF"
 
 ; We want other hotkey scripts to be usable with this one. Sendlevel means if
 ; this script sends ^t, the user's ahk ^t script should also be triggered.

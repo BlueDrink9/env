@@ -1,4 +1,5 @@
-﻿#Warn  ; Enable warnings to assist with detecting common errors.
+﻿#Requires AutoHotkey v2.0
+#Warn  ; Enable warnings to assist with detecting common errors.
 KeyHistory(0)
 #SingleInstance Force
 ; #NoTrayIcon
@@ -8,6 +9,9 @@ SendMode("Input")  ; Recommended for new scripts due to its superior speed and r
 SetWorkingDir(A_MyDocuments "\..")
 
 #include %A_ScriptDir%\programs_setup.ahk
+
+A_HotkeyModifierTimeout := 10
+A_MenuMaskKey := "vkFF"
 
 ; Include if exists - intended to be local to each machine
 ; Example: Google suite, override and add new
