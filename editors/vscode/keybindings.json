@@ -233,7 +233,7 @@
     },
     {
         "key": "<leader> s",
-        "when": "editorTextFocus && vim.active && vim.mode != 'normal' && editorLangId == 'python'",
+        "when": "editorTextFocus && vim.active && vim.mode != 'normal' && editorLangId == 'python' && !inReferenceSearchEditor && !isInEmbeddedEditor",
         "command": "jupyter.execSelectionInteractive"
     },
     {
