@@ -131,7 +131,7 @@ disable_other_meta_shortcuts(){
   modify_shortcut --group "org.kde.dolphin.desktop" --key "_launch" "none,Meta+E,Dolphin"
 }
 
-install_applet https://github.com/psifidotos/applet-window-title
+install_applet https://github.com/moodyhunter/applet-window-title6
 install_panel_widgets
 configure_applet org.kde.windowtitle General style 3  # style 3 = Title - Application
 configure_applet org.kde.windowtitle General lengthPolicy Fill

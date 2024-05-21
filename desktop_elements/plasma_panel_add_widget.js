@@ -7,7 +7,7 @@ function forEachWidgetInContainmentList(containmentList, callback) {
             var widget = widgets[widgetIndex];
             callback(widget, containment);
             if (widget.type === "org.kde.plasma.systemtray") {
-                systemtrayId = widget.readConfig("SystrayContainmentId");
+                let systemtrayId = widget.readConfig("SystrayContainmentId");
                 if (systemtrayId) {
                     forEachWidgetInContainmentList([desktopById(systemtrayId)], callback)
                 }
@@ -58,7 +58,7 @@ for (var panelIndex = 0; panelIndex < allPanels.length; panelIndex++) {
     for (var widgetIndex = 0; widgetIndex < widgets.length; widgetIndex++) {
         var w = widgets[widgetIndex];
         if (w.type === "org.kde.plasma.taskmanager"
-            or w.type === "org.kde.plasma.icontasks){
+            || w.type === "org.kde.plasma.icontasks"){
             w.remove();
             continue
         }
