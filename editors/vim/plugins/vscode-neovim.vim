@@ -28,7 +28,7 @@ let s:nmappings = {
       \ g:IDE_mappings.diagnostic: 'editor.action.showHover',
       \ g:IDE_mappings.fix: 'editor.action.autoFix',
       \ g:IDE_mappings.codeAction: 'editor.action.quickFix',
-      \ g:IDE_mappings.signiture: 'editor.action.triggerParameterHints',
+      \ g:IDE_mappings.signature: 'editor.action.triggerParameterHints',
       \ g:IDE_mappings.references: 'editor.action.findReferences',
       \ g:IDE_mappings.references2: 'editor.action.findReferences',
       \ g:IDE_mappings.FuzzyOpenFile: 'workbench.action.quickOpen',
