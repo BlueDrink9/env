@@ -310,7 +310,7 @@ local specs = {
 		opts = function(_, opts)
 			vim.api.nvim_create_user_command("SSR", function()
 				require("ssr").open()
-			end)
+			end, {})
 		end,
 		-- lua vim.keymap.set({ "n", "x" }, "<leader>sr", function() require("ssr").open() end)
 	},
