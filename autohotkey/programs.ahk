@@ -8,6 +8,8 @@ KeyHistory(0)
 SendMode("Input")  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir(A_MyDocuments "\..")
 
+#Include %A_Scriptdir%\lib.ahk
+
 A_HotkeyModifierTimeout := 10
 A_MenuMaskKey := "vkFF"
 
@@ -47,12 +49,16 @@ GetDefaultBrowser() {
 ; Default exec functions.
 ; Variables can be overridden by local functions
 
+if !IsSet(nvimBinaryPath){
+    nvimBinaryPath := FindProgramInPath("nvim.exe")
+}
+
 vim(args:=""){
     try {
         ; Don't really need to fork, and it has a slight performance hit.
         ; For better startup perf, specify nvim binary path.
         nvimBinaryArg := ""
-        if IsSet(nvimBinaryPath) {
+        if nvimBinaryPath != "" {
             nvimBinaryArg := Format("--neovim-bin `"{1}`"", nvimBinaryPath)
         }
         Run("neovide.exe " . nvimBinaryArg . " --nofork -- " args)
