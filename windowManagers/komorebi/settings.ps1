@@ -4,7 +4,6 @@
 # optionally, if you want a different colour for stacks of windows
 # komorebic active-window-border-colour [R G B] --window-kind stack
 
-$border_width=7
 $inner_gap=10  # container
 $outer_gap=-$inner_gap  # workspace
 # komorebic container-padding 0 <WORKSPACE_INDEX> $gap
@@ -19,12 +18,6 @@ for ($mon = 0; $mon -lt $n_monitors; $mon++){
     }
 }
 
-# Configure the invisible border dimensions
-# komorebic invisible-borders 7 0 27 10
-$border_width=7
-komorebic global-work-area-offset $border_width `
-    $border_width (2*$border_width) (2*$border_width)
-
 komorebic focus-follows-mouse disable
 # Monitor and workspace switching relies on mouse position. Plus, dragging tabs
 # doesn't immediately retile and make it hard to return the tab like in bspwm,
@@ -32,8 +25,8 @@ komorebic focus-follows-mouse disable
 komorebic mouse-follows-focus enable
 
 komorebic active-window-border enable
-komorebic active-window-border-width $border_width
-komorebic active-window-border-offset -- -3
+komorebic border-width 5
+komorebic border-offset -- -3
 # Automatically set the window border to the triadic complement of the window bar colour.
 # Use the triadic because it doesn't contrast as much as the direct complement
 $windowbarAccentColor = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\DWM"
