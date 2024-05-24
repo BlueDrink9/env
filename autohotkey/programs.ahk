@@ -125,3 +125,5 @@ passwords := keepass
 #Include %A_Scriptdir%\programs_hotkeys.ahk
 
 #Include *i %A_MyDocuments%\local shortcuts.ahk
+
+#Include %A_scriptdir%\colemak_reload.ahk

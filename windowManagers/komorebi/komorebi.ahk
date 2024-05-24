@@ -26,26 +26,6 @@ SetWorkingDir(A_MyDocuments "\..")
 #Include *i %A_MyDocuments%\local shortcuts.ahk
 #Include %A_ScriptDir%\bindings.ahk
 
-
-; Function to find and reload colemak.ahk if it's running, so that its
-; bindings send komorebi ones.
-; Get the list of running AHK scripts
-for process in ComObjGet("winmgmts:").ExecQuery("Select * from Win32_Process where Name = 'AutoHotkey64.exe'") {
-    ; Sometimes the Command Line might be unavailable (null), handle this case
-    if (process.CommandLine) {
-        if (InStr(process.CommandLine, "colemak.ahk")) {
-            scriptPid := process.ProcessID
-            target := "ahk_pid " . scriptPid
-            DetectHiddenWindows(true)
-            if WinExist(target) {
-              ProcessClose(scriptPid)
-                Sleep(1000) ; Wait for a second to let the process close gracefully
-                Run(A_AhkPath . " " . A_scriptdir . "\..\..\AutoHotkey\colemak.ahk")
-            }
-          return
-        }
-    }
-}
-
+#Include %A_scriptdir%\..\..\AutoHotkey\colemak_reload.ahk
 
 #Include *i %A_MyDocuments%\..\.config\komorebi\komorebi_after.ahk
