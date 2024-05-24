@@ -38,15 +38,13 @@ p::passwords
 #HotIf IsPrefix("media")
 s::Run("spotify.exe")
 ; main playlist
-m::
-{
+m::{
   Run("spotify:playlist:3DDy0dVcH0v8hwTsow3rCN:play")
   ; WinWaitActive ahk_exe spotify.exe,,10
   ; send ^s  ; shuffle
 }
 ; Beats playlist
-b::
-{
+b::{
   Run("spotify:playlist:07DNxdotyBhZf3R77tPheP:play")
   ; WinWaitActive ahk_exe spotify.exe,,10
   ; send ^s  ; shuffle
