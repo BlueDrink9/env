@@ -3,6 +3,8 @@ return {
 	{ import = "plugins.firenvim" },
 	{ import = "plugins.lualine" },
 
+	{ import = "lazyvim.plugins.extras.dial", cond = IsPluginUsed("LazyVim") },
+
 	{ "andymass/vim-matchup", event = "VeryLazy" },
 
 	{
