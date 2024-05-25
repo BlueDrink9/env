@@ -101,7 +101,7 @@ export FCEDIT="$shelleditor"
 export GIT_EDITOR='myVim --cmd "let g:liteMode=1" +"set ft=gitcommit"'
 # May need to run `sudo update-alternatives --config editor` if this is not
 # working.
-export SUDO_EDITOR=vim
+export SUDO_EDITOR="$(myVim --print-editor-only)"
 
 fuzzyEdit(){
   $editor "$(fzf)"
@@ -185,6 +185,7 @@ alias py='python'
 alias pip='python -m pip'
 alias venv='python -m venv'
 alias venvc='python -m venv venv'
+alias venv_sys_create='python -m venv venv --system-site-packages'
 alias venva='. venv/bin/activate'
 alias pym='python -m'
 
