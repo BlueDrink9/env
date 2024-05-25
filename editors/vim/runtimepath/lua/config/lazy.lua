@@ -66,7 +66,7 @@ require("lazy").setup({
 		{
 			"LazyVim/LazyVim",
 			import = "lazyvim.plugins",
-			version = "^6.2.0",
+			version = "10.*",
 			opts = {
 				colorscheme = "ayu",
 				defaults = {
@@ -75,6 +75,9 @@ require("lazy").setup({
 				},
 			},
 			cond = vim.g.liteMode == 0,
+			init = function()
+				vim.g.autoformat = false
+			end,
 		},
 
 
