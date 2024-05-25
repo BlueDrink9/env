@@ -21,6 +21,7 @@ bspc rule -a Gimp             desktop='^8' state=floating follow=on
 # Emacs needs to be forced to start tiling.
 bspc rule -a Emacs            state=tiled
 bspc rule -a albert           floating=on  border=off     focus=on
+bspc rule -a pomatez          state=floating floating=on  border=off     focus=on
 bspc rule -a kitty-dropdown   sticky=on
 
 if [ "$XDG_SESSION_DESKTOP" = "plasmax11" ] || \
