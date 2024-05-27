@@ -80,6 +80,10 @@
       ";" #'execute-extended-command  ;; Vertico
       :nv ":" #'pp-eval-expression)
 
+(map! :nv "gk" #'evil-previous-line
+      :nv "gj" #'evil-next-line
+      :nv "k" #'evil-previous-visual-line
+      :nv "j" #'evil-next-visual-line)
 
 ;; Don't allow any package to override these keymaps.
 (map! :map 'override
