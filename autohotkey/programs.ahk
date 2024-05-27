@@ -132,4 +132,5 @@ passwords := keepass
 
 #Include *i %A_MyDocuments%\local shortcuts.ahk
 
-#Include %A_scriptdir%\colemak_reload.ahk
+; If colemak.ahk is in use, reload it to make sure its keys trigger these ones properly.
+colemak_ahk_reload()

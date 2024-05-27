@@ -18,14 +18,13 @@ SetWorkingDir(A_MyDocuments "\..")
 ; resetBorderColour()
 
 #Include *i %A_MyDocuments%\..\.config\komorebi\komorebi_before.ahk
-; Include my standard ahk programs setup script, because if I'm running komo I also will want this.
-#Include %A_scriptdir%\..\..\AutoHotkey\programs_setup.ahk
-#Include %A_scriptdir%\..\..\AutoHotkey\programs_hotkeys.ahk
+; Run my standard ahk programs setup script, because if I'm running komo I also will want this for max keyboard-driven use.
+; we want komorebi to override prefix keys where relevant, I think. So load komo bindings after programs setup
+Run(A_AhkPath . " " . A_scriptdir . "\..\..\AutoHotkey\programs.ahk")
 
-; we want komorebi to override prefix keys where relevant, I think. So load komo bindings after program setup
-#Include *i %A_MyDocuments%\local shortcuts.ahk
 #Include %A_ScriptDir%\bindings.ahk
 
-#Include %A_scriptdir%\..\..\AutoHotkey\colemak_reload.ahk
+#Include %A_Scriptdir%\..\..\AutoHotkey\lib.ahk
+colemak_ahk_reload()
 
 #Include *i %A_MyDocuments%\..\.config\komorebi\komorebi_after.ahk
