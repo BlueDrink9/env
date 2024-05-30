@@ -149,7 +149,9 @@ local specs = {
          vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
          -- require'persistent-breakpoints'
          -- require("telescope").load_extension('dap')
+         -- Explicitly require dependencies to load them
          require'nvim-dap-virtual-text'
+         require'cmp-dap'
          require'goto-breakpoints'
       end,
 
@@ -273,17 +275,23 @@ local specs = {
 
          { 
             'rcarriga/cmp-dap',
+            lazy = true,
+            -- has no setup function
+            config = function()
+               local config = require'cmp.config'
+               local old_enabled = config.enabled or function() return true end
+               cmp_enabled = function()
+                  return old_enabled() and (
+                     vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
+                     or require("cmp_dap").is_dap_buffer()
+                  )
+               end
+               config.enabled = cmp_enabled
+            end,
             dependencies = {
                {
                   'hrsh7th/nvim-cmp',
                   opts = function(_, opts)
-                     local old_enabled = opts.enabled
-                     opts.enabled = function()
-                        return old_enabled() and (
-                           vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
-                           or require("cmp_dap").is_dap_buffer()
-                        )
-                     end
                      require("cmp").setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
                         sources = {
                            { name = "dap" },
@@ -300,4 +308,4 @@ local specs = {
 }
 
 
-         return specs
+return specs
