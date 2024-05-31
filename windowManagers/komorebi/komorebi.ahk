@@ -25,6 +25,6 @@ Run(A_AhkPath . " " . A_scriptdir . "\..\..\AutoHotkey\programs.ahk")
 #Include %A_ScriptDir%\bindings.ahk
 
 #Include %A_Scriptdir%\..\..\AutoHotkey\lib.ahk
-colemak_ahk_reload()
+script_reload(A_scriptdir "\..\..\AutoHotkey\colemak.ahk")
 
 #Include *i %A_MyDocuments%\..\.config\komorebi\komorebi_after.ahk
