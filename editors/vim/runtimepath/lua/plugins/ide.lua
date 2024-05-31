@@ -8,7 +8,6 @@ return {
 	{ import = "plugins.cmp" },
 	{ import = "plugins.lspconfig" },
 	{ import = "plugins.nvim-dap" },
-	{ import = "plugins.repl" },
 	{ import = "plugins.telescope" },
 	
 
