@@ -64,7 +64,7 @@ local specs = {
          }
 
          -- Ensures mappings are only set for filetypes with installed DAPs
-         Set_up_dap_buffer = function()
+         local set_up_dap_buffer = function()
             -- When jumping to a fileline from current tab, don't change tabs if you
             -- dont' have to.
             vim.opt_local.switchbuf="useopen,uselast"
@@ -84,27 +84,30 @@ local specs = {
             end
          end
 
-         Set_up_mason_dap_autocmd = function(source_name)
+         local set_up_dap_autocmd = function(source_name)
             vim.api.nvim_create_autocmd("Filetype", {
                group = "myIDE",
                pattern = source_name,
-               callback = Set_up_dap_buffer,
+               callback = set_up_dap_buffer,
             })
          end
 
          -- Au to get mappings in dapui buffers as well.
-         Set_up_mason_dap_autocmd("dapui_*")
+         set_up_dap_autocmd("dapui_*")
+         -- nvim dap via one-step-for-vimkind/neovim rather than mason
+         set_up_dap_autocmd("lua")
 
+         -- Has to be global because used by dependencies
          DapHandlers = {
             function(config)
                for _, ft in ipairs(config.filetypes) do
-                  Set_up_mason_dap_autocmd(ft)
+                  set_up_dap_autocmd(ft)
                end
                require'mason-nvim-dap'.default_setup(config)
                -- dap.listeners.after.event_initialized["dap"] = on_attach(vim.api.nvim_buf_get_number)
             end,
             python = function(config)
-               Set_up_mason_dap_autocmd("python")
+               set_up_dap_autocmd("python")
                require('dap-python').setup(vim.g.python3_host_prog)
                vim.cmd[[command! -buffer DebugTestMethod lua require('dap-python').test_method()]]
                vim.cmd[[command! -buffer DebugTestClass lua require('dap-python').test_class()]]
