@@ -538,6 +538,7 @@ ln_move() {
       echo "Error: Both the link name '$link_name' and the target '$target' exist." >&2
       return 1
     else
+      mkdir -p "$(dirname "$target")"
       mv "$link_name" "$target"
     fi
   fi
@@ -545,7 +546,7 @@ ln_move() {
 }
 
 fdcd(){
-  dir=""$(fd $@ | fzf)"
+  dir="$(fd $@ | fzf)"
   if [ -f "$dir" ]; then
     dir="$(dirname "$dir")"
   fi
