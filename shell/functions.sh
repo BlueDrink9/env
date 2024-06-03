@@ -543,3 +543,11 @@ ln_move() {
   fi
   ln -s "$target" "$link_name"
 }
+
+fdcd(){
+  dir=""$(fd $@ | fzf)"
+  if [ -f "$dir" ]; then
+    dir="$(dirname "$dir")"
+  fi
+  pushd "$dir"
+}
