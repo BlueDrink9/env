@@ -525,3 +525,21 @@ if command -v broot >/dev/null 2>&1; then
       eval "$d"
   }
 fi
+
+ln_move() {
+  if [ $# -ne 2 ]; then
+    echo "Usage: ln_move /path/to/target /path/to/link_name" >&2
+    return 1
+  fi
+  target="$1"
+  link_name="$2"
+  if [ -e "$link_name" ]; then
+    if [ -e "$target" ]; then
+      echo "Error: Both the link name '$link_name' and the target '$target' exist." >&2
+      return 1
+    else
+      mv "$link_name" "$target"
+    fi
+  fi
+  ln -s "$target" "$link_name"
+}
