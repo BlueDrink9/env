@@ -370,9 +370,12 @@
 (setq-default TeX-master nil)
 (setq TeX-fold-preserve-comments t)
 (setq TeX-fold-unfold-around-mark t)
+
 (after! latex
-(setf (nth 1 (assoc "LaTeX" TeX-command-list))
-      "%`%l –output-directory=latexbuild -interaction=nonstopmode -outdir=latexbuild %(mode)%' %t"))
+        (setf (nth 1 (assoc "LaTeX" TeX-command-list))
+              "%`%l –output-directory=latexbuild -interaction=nonstopmode -outdir=latexbuild %(mode)%' %t")
+        ;; (add-hook TeX-fold-mode-hook (TeX-fold-mode -1))
+        )
 ;;       max_print_line=2000 latexmk -verbose -file-line-error -synctex=1
 ;;       -interaction=nonstopmode -pdf -outdir=latexbuild -pvc -e
 
@@ -537,4 +540,5 @@ rather than file lines."
 
 ;; Start emacs server if we have launched a client.
 ;; For some reason this is slower to start up than regular emacs...
-(unless (server-running-p) (server-start))
+;; Not a valid function if not running client
+;; (unless (server-running-p) (server-start))

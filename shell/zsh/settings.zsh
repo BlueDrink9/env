@@ -52,3 +52,6 @@ WORDCHARS='_$'
 setopt ALWAYS_TO_END 
 # Allows # comments during cmd line
 setopt interactivecomments
+
+# Case-insenstive matching (but prefer matching case)
+# zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'

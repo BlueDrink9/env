@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-nix-env -iA nixpkgs.$1
+nix-env -iA nixpkgs.$1 || nix-env -i $1

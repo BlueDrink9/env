@@ -44,6 +44,16 @@ case "$title" in
 ;;
 esac
 
+case "$(xprop -id $wid "_NET_WM_STATE")" in 
+  # I think this will get misc "above" windows. At the very least, it
+  # should for filebot.
+  "*_NET_WM_STATE_ABOVE*")
+    echo "state=floating center=on follow=on border=off focus=off"
+    break
+    ;;
+esac
+
+
 # if [ "$instance" = fontforge ] ; then
 # 	title=$(xtitle "$wid")
 # 	case "$title" in

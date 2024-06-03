@@ -174,8 +174,7 @@
        ;;kotlin            ; a better, slicker Java(Script)
        (latex             ; writing papers in Emacs has never been so fun
         +latexmk
-        +lsp
-        +fold)
+        +lsp)
        ;;lean
        ;;factor
        ;;ledger            ; an accounting system in Emacs

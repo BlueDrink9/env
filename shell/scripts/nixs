@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-nix search nixpkgs $1
+nix-env -qaP "$1" "$@"

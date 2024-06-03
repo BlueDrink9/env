@@ -182,6 +182,8 @@ super + shift + {_,alt +} {n,d}
 # Useful after a secondary monitor is disconnected
 super + alt + x
     bspc monitor --remove
+super + alt + shift + n
+    bspc monitor --remove
 # focus monitor
 super + alt + bracket{left,right}
   bspc monitor -f {prev, next}
