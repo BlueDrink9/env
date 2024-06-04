@@ -533,7 +533,10 @@ ln_move() {
   fi
   target="$1"
   link_name="$2"
-  if [ -e "$link_name" ]; then
+  if [ -L "$link_name" ]; then
+    # If the link name already exists and is a symbolic link, do nothing
+    return 0
+  elif [ -e "$link_name" ]; then
     if [ -e "$target" ]; then
       echo "Error: Both the link name '$link_name' and the target '$target' exist." >&2
       return 1
@@ -541,9 +544,9 @@ ln_move() {
       mkdir -p "$(dirname "$target")"
       mv "$link_name" "$target"
     fi
-  fi
-  ln -s "$target" "$link_name"
-}
+    fi
+    ln -s "$target" "$link_name"
+  }
 
 fdcd(){
   dir="$(fd $@ | fzf)"
