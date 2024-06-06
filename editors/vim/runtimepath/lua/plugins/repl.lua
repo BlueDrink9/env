@@ -38,7 +38,7 @@ return {
 			-- ipython all the time anyway, ideally.
 			vim.g.neoterm_bracketed_paste = 1
 		end,
-		opts = function(_, opts)
+		config = function(_, opts)  -- Doesn't have a setup func
 			-- neoterm window size only when using it in horizontal mode
 			vim.cmd[[
 				let g:neoterm_callbacks = {}
