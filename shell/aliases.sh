@@ -201,3 +201,5 @@ function rgedit() {
 }
 
 alias bm="cd \"\$(bmm)\""
+# Delete to trash
+alias del="gio trash"
