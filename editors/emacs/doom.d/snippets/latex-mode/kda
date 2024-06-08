@@ -1,0 +1,5 @@
+# -*- Mode: snippet -*-
+# name: SI Kilodalton
+# key: kda
+# --
+\SI{$1}{\kilo\dalton} $0
