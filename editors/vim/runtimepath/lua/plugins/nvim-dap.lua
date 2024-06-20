@@ -9,7 +9,13 @@ local specs = {
       -- Stop this being loaded by lspconfig somewhere.
       -- Only want this module loaded on a debug command.
       module=false,
-      keys = {maps.debugFile},
+      keys = { {
+         maps.debugFile,
+         function()
+            require('dap').continue()
+         end,
+         desc = "Debug file/continue"
+      } },
       cmd = {
          "Debug",
          "DebugTestClass",
