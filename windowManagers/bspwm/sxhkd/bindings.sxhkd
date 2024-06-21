@@ -214,7 +214,7 @@ super + {o,i}
 	bspc wm -h off; \
 	bspc node {older,newer} -f; \
 	bspc wm -h on
-
+ 
 # Toggle between current two desktops
 super + a
 	bspc desktop last -f
