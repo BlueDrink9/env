@@ -15,6 +15,8 @@ return {
 	{ import = "lazyvim.plugins.extras.dap.core" },
 	{ import = "lazyvim.plugins.extras.dap.nlua" },
 
+	{ import = "lazyvim.plugins.extras.coding.copilot", },
+
 	-- { import = "lazyvim.plugins.extras.lang.python", cond = IsPluginUsed("LazyVim") },
 	{ import = "lazyvim.plugins.extras.lang.rust", cond = IsPluginUsed("LazyVim") },
 	{ import = "lazyvim.plugins.extras.lang.yaml", cond = IsPluginUsed("LazyVim") },
@@ -408,4 +410,23 @@ return {
 			},
 		},
 	},
+
+	{
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
+		opts = {
+			suggestion = {
+				keymap = {
+					accept = "<C-j>",
+					next = "<M-j>",
+				}
+			},
+			panel = {
+				keymap = {
+					open = "<M-e>",
+				}
+			}
+		},
+	}
 }
