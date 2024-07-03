@@ -37,6 +37,16 @@
     ]
   }
 
+  , "Create pathlib directory": {
+    "prefix": ["dir"],
+    "body": [
+      "from pathlib import Path"
+      , "$1 = script_dir / \"$2\""
+      , "$1.mkdir(exist_ok=True, parents=True)"
+    ]
+  }
+
+
   , "pytest skip": {
     "prefix": ["skip"],
     "body": [
@@ -70,5 +80,46 @@
       , "view(${1})"
     ]
   }
+
+  , "Logger creation module contents": {
+    "prefix": ["logger_module"],
+    "body": [
+      "import logging"
+      , "import logging.handlers"
+      , "from pathlib import Path"
+      , "script_dir = Path(__file__).parent"
+      , "log_dir = script_dir / \"logs\""
+      , "log_dir.mkdir(exist_ok=True, parents=True)"
+      , ""
+      , ""
+      , "def create_logger(name):"
+      , "  logger = logging.getLogger(name)"
+      , "  logger.setLevel(logging.INFO)"
+      , "  logger.setLevel(logging.INFO)"
+      , "  console_handler = logging.StreamHandler()"
+      , "  file_handler = logging.handlers.RotatingFileHandler("
+      , "     log_dir / 'file.log', maxBytes=100*1000*1000, backupCount=5"
+      , "  )"
+      , "  console_handler.setLevel(logging.INFO)"
+      , "  file_handler.setLevel(logging.DEBUG)"
+      , "  console_format = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')"
+      , "  file_format = logging.Formatter('%(asctime)s - %(filename)s - %(levelname)s - %(funcName)s - %(message)s')"
+      , "  console_handler.setFormatter(console_format)"
+      , "  file_handler.setFormatter(file_format)"
+      , "  logger.addHandler(console_handler)"
+      , "  logger.addHandler(file_handler)"
+      , "  return logger"
+
+    ]
+  }
+
+  , "Import and create logger": {
+    "prefix": ["logger"],
+    "body": [
+      "from logger import create_logger"
+      , "logger = create_logger(__file__)"
+    ]
+  }
+
 
 }
