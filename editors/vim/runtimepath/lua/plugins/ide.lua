@@ -319,6 +319,10 @@ return {
 
 	{
 		"L3MON4D3/LuaSnip",
+		init = function()
+			local script_dir = vim.fn.fnamemodify(debug.getinfo(1).source:sub(2), ":h")
+			vim.g.snippet_dir = vim.fn.PathExpand(script_dir .. "/../../snippets/")
+		end,
 		keys = {
 			{ "<C-e>", function()
 				if require("luasnip").expand_or_locally_jumpable() then
