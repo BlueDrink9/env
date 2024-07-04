@@ -1,52 +1,71 @@
-#!/usr/bin/env bash
-source "$DOTFILES_DIR/shell/script_functions.sh"
+#!/bin/sh
 
-VSCODE_EXTENSIONS_DIR="${HOME}/.vscode/extensions"
-VSCODE_VERSION=code
-VSCODE_APP_DATA="${HOME}/AppData/Roaming/Code"
+set -e
 
-# This is terribly written and does not work any more. Here for legacy/when I
-# eventually decide to use VSCODE again (ie when neovim integration for it is good)
-vscodeExtensions() {
-    if hash code 2> /dev/null || hash code-insiders 2> /dev/null; then # Check if 'code' exists.
-        mkdir -p "$VSCODE_EXTENSIONS_DIR"
-        while IFS='' read -r LINE || [[ -n "$LINE" ]]; do
-            code --install-extension "$LINE"
-        done < "$($SCRIPTDIR_CMD)/extensions"
+CWD="$DOTFILES_DIR/editors/vscode"
 
-        # elif [[ $REPLY =~ ^[cC]$ ]]; then # Load VSCode which detects recommendations.json
-        #     #TODO Where is this meant to be CDed to?
-        #     code ./editors
+# Function to create symbolic link if possible, or copy with replacement otherwise
+link_or_copy() {
+    target=$1
+    destination=$2
+    if ln -sf "$target" "$destination"; then
+        return 0
     else
-        printErr "VSCode not in PATH"
-        return 1
+        cp -f "$target" "$destination"
     fi
-
-    if hash code 2> /dev/null; then # Check if 'code' exists.
-        VSCODE_EXTENSIONS_DIR="${HOME}/.vscode/extensions"
-    else
-        echo -e "VSCode not installed or variable not set."
-        return 1
-    fi
-
-    if [[ $REPLY =~ ^[yY]$ ]]; then # Install extensions from 'vscode/extensions'
-        mkdir -p "$VSCODE_EXTENSIONS_DIR"
-        mkdir -p "${VSCODE_APP_DATA}/User"
-
-        while IFS='' read -r LINE || [[ -n "$LINE" ]]; do
-            "${VSCODE_VERSION}" --install-extension "$LINE"
-        done < "$($SCRIPTDIR_CMD)/extensions"
-
-        cp "$($SCRIPTDIR_CMD)/settings.json" "${VSCODE_APP_DATA}/User"
-
-    elif [[ $REPLY =~ ^[cC]$ ]]; then # Load VSCode which detects recommendations.json
-        $VSCODE_VERSION ./editors
-    fi
-    return 0
 }
 
+# Loop through the different config paths for VS Code and VSCodium
+config_paths="$HOME/.config/Code/User $HOME/.config/VSCodium/User"
 
-# If directly run instead of sourced, do all
-if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
-    vscodeExtensions
+# Create symbolic links or copy files for each path
+for config_path in $config_paths; do
+    mkdir -p "$config_path"
+    link_or_copy "$CWD/settings.json" "$config_path/settings.json"
+    link_or_copy "$CWD/keybindings.json" "$config_path/keybindings.json"
+    link_or_copy "$CWD/../vim/runtimepath/snippets" "$config_path/snippets"
+done
+
+# Enable Microsoft extension gallery
+mkdir -p "$HOME/.config/VSCodium"
+cat > "$HOME/.config/VSCodium/product.json" <<EOL
+{
+  "extensionsGallery": {
+    "serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery",
+    "itemUrl": "https://marketplace.visualstudio.com/items",
+    "cacheUrl": "https://vscode.blob.core.windows.net/gallery/index",
+    "controlUrl": ""
+  }
+}
+EOL
+
+echo "Installing extensions"
+extensions=$(cat "$CWD/extensions.txt")
+
+editors="code codium"
+available_editors=""
+
+# Loop through the editors list and remove the ones that are not available
+for editor in $editors; do
+    if command -v "$editor" >/dev/null 2>&1; then
+        available_editors="$available_editors $editor"
+    fi
+done
+
+# Install extensions in the available editors
+for editor in $available_editors; do
+    installed_extensions=$("$editor" --list-extensions)
+    to_install=$(echo "$extensions" | grep -v -x -F "$installed_extensions")
+
+    echo "Installing these in ${editor}: $to_install"
+    for extension_id in $to_install; do
+        set +e
+        "$editor" --install-extension "$extension_id"
+        set -e
+    done
+    echo "Extensions installation ended in $editor."
+done
+
+if [ -z "$available_editors" ]; then
+    echo "None of the specified editors ($editors) were found."
 fi

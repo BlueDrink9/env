@@ -1,4 +1,4 @@
-MurlocCra4ler.leap
+murloccra4ler.leap
 asvetliakov.vscode-neovim
 bodil.file-browser
 chrischinchilla.vscode-pandoc
