@@ -15,10 +15,13 @@ config_files = [
 ]
 c.InteractiveShellApp.exec_files = [str(scriptdir / f) for f in config_files]
 
-
 c.AliasManager.user_aliases = [
  ('la', 'ls -al')
 ]
+
+## Auto-reload changed modules when pressing enter. May cause performance hit.
+c.InteractiveShellApp.extensions = ['autoreload']     
+c.InteractiveShellApp.exec_lines = ['%autoreload 2']
 
 ## Autoindent IPython code entered interactively.
 #  Default: True
