@@ -12,6 +12,7 @@ return {
 			-- Clear default lsp keymaps
 			-- for i=0, #keys do keys[i]=nil end
 			keys[#keys + 1] = { "<leader>ca", false }
+			keys[#keys + 1] = { "<leader>cc", false }
 		end,
 	},
 
