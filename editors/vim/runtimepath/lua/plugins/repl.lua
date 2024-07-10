@@ -25,7 +25,7 @@ return {
 			vim.g.neoterm_autoinsert = 1
 			-- not actually sure what this does
 			vim.g.neoterm_repl_same_shell = 1
-			vim.g.neoterm_repl_enable_ipython_paste_magic = 1
+			-- vim.g.neoterm_repl_enable_ipython_paste_magic = 1
 			if vim.fn.has("win32") then
 				vim.g.neoterm_eof = "\r"
 			end
@@ -33,7 +33,7 @@ return {
 			vim.g.neoterm_autoscroll = 1
 			vim.g.neoterm_fixedsize = 1
 			-- vim.g.neoterm_auto_repl_cmd = 1
-			vim.g.neoterm_command_prefix = "\\edda"  -- vi-binding clear line and enter insert
+			-- vim.g.neoterm_command_prefix = "\\\\edda"  -- vi-binding clear line and enter insert
 			-- not ideal for pure python, but I'm assuming i'll be using
 			-- ipython all the time anyway, ideally.
 			vim.g.neoterm_bracketed_paste = 1
@@ -53,6 +53,8 @@ return {
 			vim.api.nvim_create_user_command("ReplChange", "TREPLSetTerm", {nargs=1})
 			-- See #286	
 			-- vim.api.nvim_create_user_command("TRegisterAsNeoterm", "call neoterm#new({'from_event': 1})", {nargs=1})
+			-- On load, run ftdetect again
+			vim.cmd[[filetype detect]]
 		end,
 
 		keys = {
