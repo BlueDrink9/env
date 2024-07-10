@@ -81,11 +81,18 @@ local specs = {
 		keys = {
 			{
 				maps.refactor,
-				function()
-					require("telescope").extensions.refactoring.refactors()
-				end,
-				mode = { "n", "v" },
+				function() require('refactoring').select_refactor() end,
+				mode = { "n", "x" },
 			},
+			{
+				"<leader>irp",
+				function() require('refactoring').debug.print_var() end,
+				mode = {"x", "n"}
+			},
+			{
+				"<leader>irP",
+				function() require('refactoring').debug.cleanup() end,
+			}
 		},
 	},
 
