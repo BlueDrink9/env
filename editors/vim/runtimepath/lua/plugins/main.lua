@@ -4,7 +4,7 @@ return {
 	{ import = "plugins.lualine" },
 	{ import = "plugins.repl" },
 
-	{ import = "lazyvim.plugins.extras.dial", cond = IsPluginUsed("LazyVim") },
+	-- { import = "lazyvim.plugins.extras.dial", cond = IsPluginUsed("LazyVim") },
 
 	{ "andymass/vim-matchup", event = "VeryLazy" },
 
