@@ -188,6 +188,7 @@ alias venvc='python -m venv venv'
 alias venv_sys_create='python -m venv venv --system-site-packages'
 alias venva='. venv/bin/activate'
 alias pym='python -m'
+alias ipython='python -m IPython'
 
 alias plasma_reload='qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.refreshCurrentShell'
 alias lsblkids='lsblk -o NAME,SIZE,MOUNTPOINT,UUID,PARTUUID'
