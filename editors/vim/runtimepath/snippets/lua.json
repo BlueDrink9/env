@@ -1,0 +1,14 @@
+{
+    "nvim user cmd": {
+        "prefix": ["user_command", "nvim_user_command"],
+        "body": [
+            "vim.api.nvim_create_user_command(\"${1:CmdName}\", function(opts)"
+            , "   args = opts.args or nil"
+            , "   $1"
+            , "   end,"
+            , "   {}"
+            , ")"
+        ],
+        "description": "Neovim lua create user command"
+    }
+}
