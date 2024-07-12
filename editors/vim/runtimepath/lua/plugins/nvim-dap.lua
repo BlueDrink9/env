@@ -54,7 +54,7 @@ local specs = {
             ["<leader>du"] = 'toggle({})',
          }
          local dapui_vbufmaps = {
-            [maps.REPLSend]  = 'eval()',
+            -- [maps.REPLSend]  = 'eval()',
             -- require("dapui").toggle()
          }
 
@@ -83,7 +83,7 @@ local specs = {
                   table, "<cmd>lua " .. prefix, "n", {buffer=bufnr}
                )
             end
-            for prefix, table in pairs({["require'dapui'"]=dapui_vbufmaps}) do
+            for prefix, table in pairs({["require'dapui'."]=dapui_vbufmaps}) do
                require('my/utils').map_table_with_prefix(
                   table, "<cmd>lua " .. prefix, "v", {buffer=bufnr}
                )
