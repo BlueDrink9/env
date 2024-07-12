@@ -322,8 +322,14 @@ return {
 	{
 		"L3MON4D3/LuaSnip",
 		init = function()
-			local script_dir = vim.fn.fnamemodify(debug.getinfo(1).source:sub(2), ":h")
-			vim.g.snippet_dir = vim.fn.PathExpand(script_dir .. "/../../snippets/")
+			vim.g.snippet_dir = vim.fn.PathExpand(vim.g.configDir  .. "/runtimepath/snippets")
+			vim.api.nvim_create_user_command("SnipEdit", function(opts)
+					args = opts.args or nil
+					local snipPath = vim.fn.PathExpand(vim.g.snippet_dir .. "/" .. vim.bo.filetype .. ".json")
+					vim.cmd(":edit " .. snipPath)
+				end,
+				{}
+			)
 		end,
 		keys = {
 			{ "<C-e>", function()
@@ -336,13 +342,12 @@ return {
 				expr = true, silent = true, mode = "i", }
 		},
 		opts = function(_, opts)
-			local snipdir = vim.g.configDir .. vim.fn.expand("/runtimepath/snippets")
 			-- load snippets from path/of/your/nvim/config/my-cool-snippets
 			require("luasnip.loaders.from_snipmate").lazy_load({
-				paths = { snipdir },
+				paths = { vim.g.snippet_dir },
 			})
 			require("luasnip.loaders.from_vscode").lazy_load({
-				paths = { snipdir },
+				paths = { vim.g.snippet_dir },
 			})
 		end,
 	},
