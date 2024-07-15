@@ -3,8 +3,8 @@
 
 # -- Execute --
 # Terminal + backup
-super + e; {t,shift+t}
-  {kitty, alacritty || konsole || xterm || /bin/xterm || /usr/bin/xterm }
+super + e; {t,alt+t,shift+t}
+  {kitty, kitty -c none env -i bash --norc --noprofile, alacritty || konsole || xterm || /bin/xterm || /usr/bin/xterm }
 # notes, mail, passwords, Facebook messages, OTP Authenticator
 super + e; {n,m,p,f,a}
   {joplin-desktop || joplin,tutanota-desktop,keepassxc,ferdi,_}
@@ -97,9 +97,9 @@ super + grave
 # m = main playlist
 # b = bounce
 super + m; {s,m,b}
-  notify-send "Opening $(which spotify)" && \
-    arg="{_,spotify:playlist:3DDy0dVcH0v8hwTsow3rCN:play,spotify:playlist:07DNxdotyBhZf3R77tPheP:play}" && \
-    spotify $arg || snap run spotify $arg  || gtk-launch spotify $arg
+  notify-send "Opening $(which cider)" && \
+    cider $arg || gtk-launch cider $arg || fopen https://music.apple.com/library/playlist/p.V7VY8EWh4meR6pD
+# arg="{_,spotify:playlist:3DDy0dVcH0v8hwTsow3rCN:play,spotify:playlist:07DNxdotyBhZf3R77tPheP:play}" && \
 
 # XF86AudioNext
 super + m; {space,h,p,n}
