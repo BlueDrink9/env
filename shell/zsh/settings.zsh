@@ -47,11 +47,8 @@ setopt AUTO_LIST
 unsetopt LIST_AMBIGUOUS
 setopt CHECK_JOBS
 # Affects what chars are considered part of a 'word' for ctrl w etc.
-# Default includes most punctuation and symbols, dashes, slashes etc. I don't want this.
-# WORDCHARS='_$/'
-# But I don't know why I didn't want this... at the very least,
-# slashes as very helpful!
-WORDCHARS='*?_-.[]~=&;!#$%^(){}<>/'
+# Default includes most punctuation and symbols, dashes, slashes etc. I want those to indicate separate words.
+WORDCHARS='_$'
 setopt ALWAYS_TO_END 
 # Allows # comments during cmd line
 setopt interactivecomments
