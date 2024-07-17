@@ -30,11 +30,6 @@ bsp_border_reset(){
 }
 export bsp_border_reset
 
-bspc_desktop(){
-  i=2
-  bspc monitor --add-desktops $i
-}
-
 . "$BSPWM_CONFIG_DIR"/companion_programs.sh
 
 #  if [[ $(hostname) == 'myhost' ]]; then
@@ -95,4 +90,4 @@ bspc config presel_feedback_color "$BSPWM_PRESELECT_COLOUR"
 bspc config initial_polarity second_child
 
 bspc config remove_disabled_monitors false
-bspc config remove_unplugged_monitors false
+bspc config remove_unplugged_monitors true
