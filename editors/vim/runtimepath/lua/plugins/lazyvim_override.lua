@@ -7,12 +7,13 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		cond = vim.g.ideMode == 1,
-		init = function()
+		opts = function()
+			vim.print("disabling")
 			local keys = require("lazyvim.plugins.lsp.keymaps").get()
 			-- Clear default lsp keymaps
 			-- for i=0, #keys do keys[i]=nil end
-			keys[#keys + 1] = { "<leader>ca", false }
-			keys[#keys + 1] = { "<leader>cc", false }
+			keys[#keys + 1] = { "<leader>ca", false, mode={"v", "n"} }
+			keys[#keys + 1] = { "<leader>cc", false, mode={"v", "n"} }
 		end,
 	},
 
