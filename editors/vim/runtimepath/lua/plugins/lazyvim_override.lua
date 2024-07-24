@@ -8,7 +8,6 @@ return {
 		"neovim/nvim-lspconfig",
 		cond = vim.g.ideMode == 1,
 		opts = function()
-			vim.print("disabling")
 			local keys = require("lazyvim.plugins.lsp.keymaps").get()
 			-- Clear default lsp keymaps
 			-- for i=0, #keys do keys[i]=nil end
