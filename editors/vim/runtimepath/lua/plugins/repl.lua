@@ -58,9 +58,10 @@ return {
 		end,
 
 		keys = {
-			{idemaps.TermToggle, '<cmd>Ttoggle ' .. vim.o.shell .. ' ' .. vim.fn.substitute(vim.o.shellcmdflag, '[-/]c', '', '') .. '<cr>', mode={"n", "v", "i", "t"}},
-			{idemaps.REPLSendLine, '<Plug>(neoterm-repl-send-line)'},
-			{idemaps.REPLSend, '<Plug>(neoterm-repl-send)', mode={"n", "v"}},
+			{ idemaps.TermToggle,    '<cmd>Ttoggle ' .. vim.o.shell .. ' ' .. vim.fn.substitute(vim.o.shellcmdflag, '[-/]c', '', '') .. '<cr>', mode = { "n", "v", "i", "t" } },
+			{ idemaps.REPLSendLine,  '<Plug>(neoterm-repl-send-line)',                                                                          remap = true },
+			{ idemaps.REPLSend,      '<Plug>(neoterm-repl-send)',                                                                               mode = { "n", "x" },          remap = true },
+			{ idemaps.REPLSendEndLine,      '<Plug>(neoterm-repl-send)$',                                                                               mode = { "n", "x" },          remap = true },
 			{idemaps.REPLToggle, '<cmd>Ttoggle<cr>'},
 			{idemaps.REPLCancel, '<cmd>Texec <cr>'},
 			{idemaps.REPLClear, '<cmd>Tclear<cr>'},
