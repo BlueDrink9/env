@@ -97,7 +97,7 @@ for (var panelIndex = 0; panelIndex < allPanels.length; panelIndex++) {
         // The new config doesn't get the new applets until a reload is
         // triggered. But it works if we do it from script instead!
         // Build write command to update from command line
-        var command=`kwriteconfig5 --file "$(basename "$applet_config")" \
+        var command=`kwriteconfig6 --file "$(basename "$applet_config")" \
           --group Containments --group "${p.id}" --group General \
           --key "AppletOrder" "${order}"`
 
