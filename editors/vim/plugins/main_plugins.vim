@@ -102,8 +102,10 @@ if v:version < 800 && !has('nvim')
     Plugin 'https://github.com/ConradIrwin/vim-bracketed-paste'
 endif
 if has('nvim')
-    Plugin 'https://github.com/monaqa/dial.nvim', {'keys':
-                \ ['<C-a>', '<C-x>', 'g<C-a>', 'g<C-x>']}
+    Plugin 'https://github.com/monaqa/dial.nvim', {
+                \ 'keys': MakeLazyKeys({
+                \ 'nv': ['<C-a>', '<C-x>', 'g<C-a>', 'g<C-x>'],
+                \ })}
 else
     Plugin 'https://github.com/tpope/vim-speeddating'
     Plugin 'https://github.com/Konfekt/vim-CtrlXA'
