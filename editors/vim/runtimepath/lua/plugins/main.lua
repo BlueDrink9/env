@@ -118,6 +118,12 @@ return {
 	},
 
 	{
+		"https://github.com/chomosuke/typst-preview.nvim",
+		ft = "typst",
+	},
+
+
+	{
 		-- Has come up with a decent set of low-clash bindings I think.
 		"julienvincent/nvim-paredit",
 		ft = {

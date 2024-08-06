@@ -374,6 +374,7 @@ Plugin 'mtdl9/vim-log-highlighting', {'for': 'log'}
 Plugin 'https://github.com/glts/vim-texlog', {'for': ['log', 'tex']}
 Plugin 'LnL7/vim-nix', {'for': ['nix']}
 Plugin 'https://github.com/kmonad/kmonad-vim', {'for': ['kbd']}
+Plugin 'https://github.com/kaarmu/typst.vim', {'for': ['typst']}
 " {]} ---------- extra filetype support ----------
 
 " {[} ---------- Git ----------
