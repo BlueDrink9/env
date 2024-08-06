@@ -240,9 +240,6 @@ return {
 			-- { "williamboman/mason-lspconfig.nvim"},
 			-- Create appropriate colours for old colourschemes
 			{ "https://github.com/folke/lsp-colors.nvim.git"},
-			{ "https://github.com/Hrle97/nvim.diagnostic_virtual_text_config.git",
-				event="LspAttach",
-			},
 		}
 
 	},
