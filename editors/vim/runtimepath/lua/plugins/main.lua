@@ -120,6 +120,9 @@ return {
 	{
 		"https://github.com/chomosuke/typst-preview.nvim",
 		ft = "typst",
+		opts=function(_, opts)
+			require('typst-preview').dependencies_bin = 'tinymist'	
+		end
 	},
 
 
