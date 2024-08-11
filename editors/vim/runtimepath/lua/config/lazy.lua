@@ -66,7 +66,7 @@ require("lazy").setup({
 		{
 			"LazyVim/LazyVim",
 			import = "lazyvim.plugins",
-			version = "10.*",
+			version = "12.*",
 			opts = {
 				colorscheme = "ayu",
 				defaults = {

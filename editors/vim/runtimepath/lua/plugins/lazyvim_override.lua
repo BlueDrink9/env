@@ -13,6 +13,7 @@ return {
 			-- for i=0, #keys do keys[i]=nil end
 			keys[#keys + 1] = { "<leader>ca", false, mode={"v", "n"} }
 			keys[#keys + 1] = { "<leader>cc", false, mode={"v", "n"} }
+			keys[#keys + 1] = { "<leader>cs", false, mode={"v", "n"} }
 		end,
 	},
 
@@ -115,19 +116,18 @@ return {
 
 	{
 		"folke/which-key.nvim",
-		cond = vim.g.vscode ~= 1,
+		cond = vim.g.ideMode == 1 and vim.g.vscode ~= 1,
 		opts = {
 			plugins = { spelling = true },
-			defaults = {
-				mode = { "x", "v" },
-				-- Remove these because they begin operator funcs, which get overritten
-				-- by which-key here if lazy-loaded. (E.g. comment)
-				["<leader>c"] = nil,
-				["<leader>s"] = nil,
-				["<leader>u"] = nil,
-			},
-			triggers_blacklist = {
-				v = { "<leader>c" },
+			spec = {
+				{
+					mode = { "x", "v" },
+					-- Remove these because they begin operator funcs, which get overritten
+					-- by which-key here if lazy-loaded. (E.g. comment)
+					{"<leader>c",  nil},
+					{"<leader>s",  nil},
+					-- {"<leader>u",  nil},
+				}
 			},
 		},
 	},
@@ -162,9 +162,13 @@ return {
 	{
 		"folke/todo-comments.nvim",
 		enabled=vim.g.ideMode == 0,
+		cond = vim.g.vscode ~= 1,
 		keys = {
 			{ "<leader>st", false },
 			{ "<leader>sT", false },
 		},
 	}
+
+
+
 }

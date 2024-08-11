@@ -196,11 +196,14 @@ return {
 	},
 
 	{
-		"https://github.com/folke/which-key.nvim.git",
+		"folke/which-key.nvim",
 		opts = {
-			triggers_blacklist = {
-				i = { "k", "v", "(", "{", "[" },
-			},
+			-- triggers_blacklist = {
+			-- 	i = { "k", "v", "(", "{", "[" },
+			-- },
+			-- Don't notify when issues/conflicts detected with mappings
+			-- (can still check with checkhealth, but lots are intentional)
+			notify = false,
 		},
 		event = "VeryLazy",
 	},
