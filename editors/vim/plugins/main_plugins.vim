@@ -42,12 +42,13 @@ endif
 
 " {[} ---------- Misc ----------
 if v:version >= 703
-    " Plugin 'https://github.com/ntpeters/vim-better-whitespace', {
-    "             \ 'event': ['BufWritePre'],
-    "             \ 'on': ['StripWhitespace', 'StripWhitespaceOnChangedLines', 'EnableWhitespace', 'DisableWhitespace']
-    "             \ }
     " Only strips whitespace on edited lines, does not write.
     Plugin 'https://github.com/thirtythreeforty/lessspace.vim'
+    " Don't use for automatic whitespace stripping, only for manual
+    Plugin 'https://github.com/ntpeters/vim-better-whitespace', {
+                \ 'on': ['StripWhitespace', 'StripWhitespaceOnChangedLines', 'EnableWhitespace', 'DisableWhitespace']
+                \ }
+                " \ 'event': ['BufWritePre'],
 endif
 " Close buffers without changing window
 Plugin 'https://github.com/moll/vim-bbye', {'on': 'Bdelete'}
