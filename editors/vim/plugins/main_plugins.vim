@@ -264,10 +264,12 @@ if has('timers')
     Plugin 'mhinz/vim-grepper', { 'on': ['Grepper'] }
     " Live results, fuzzy buffer. Hideous.
     Plugin 'wsdjeg/FlyGrep.vim', {'on': ['FlyGrep']}
-    " Multi-file find and replace with a 'nice' interface. :Farp
-    " I think this also needs python3
-    " x - exclude. i - include. t - toggle. Capital X I T for all.
-    Plugin 'brooth/far.vim', {'on': ['Farp']}
+    if !has('nvim')
+        " Multi-file find and replace with a 'nice' interface. :Farp
+        " I think this also needs python3
+        " x - exclude. i - include. t - toggle. Capital X I T for all.
+        Plugin 'brooth/far.vim', {'on': ['Farp']}
+    endif
 
 else
     " Bsgrep for searching in all open buffers. Also Bsreplace, Bstoc.

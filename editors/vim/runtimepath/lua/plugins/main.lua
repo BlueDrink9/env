@@ -585,4 +585,14 @@ return {
 		}
 	},
 
+	{
+		"MagicDuck/grug-far.nvim",
+		opts = { headerMaxWidth = 80 },
+		cmd = "GrugFar",
+		keys = {
+			{ "<leader>?r", function() require("grug-far").grug_far() end, mode = { "n", "v" }, desc = "Search and Replace (Far)"},
+			{ "<leader>?/", function() require("grug-far").grug_far() end, mode = { "n", "v" }, desc = "Search and Replace (Far)"},
+		},
+	},
+
 }
