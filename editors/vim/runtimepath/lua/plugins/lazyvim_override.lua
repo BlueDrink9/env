@@ -158,4 +158,13 @@ return {
 	   enabled=vim.g.liteMode == 0,
 	   cond = vim.g.vscode ~= 1,
 	},
+
+	{
+		"folke/todo-comments.nvim",
+		enabled=vim.g.ideMode == 0,
+		keys = {
+			{ "<leader>st", false },
+			{ "<leader>sT", false },
+		},
+	}
 }

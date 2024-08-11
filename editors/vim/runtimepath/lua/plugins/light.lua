@@ -125,6 +125,7 @@ return {
       {"cX", function() require('substitute.exchange').eol() end, mode="n"},
       {"cxx", function() require('substitute.exchange').line() end, mode="n"},
       {"cxc", function() require('substitute.exchange').cancel() end, mode="n"},
+      {"cx<esc>", function() require('substitute.exchange').cancel() end, mode="n"},
       {"X", function() require('substitute.exchange').visual() end, mode="x"},
     },
     config=true,
