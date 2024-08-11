@@ -4,7 +4,7 @@
 " Use <leader>i for ide bits.
 " Use <leader>e for errors/linting/fixing.
 let g:IDE_mappings = {
-            \ 'FuzzyFuzzy' : '<leader><cr>',
+            \ 'FuzzyFuzzy' : '<leader><cr><cr>',
             \ 'FuzzyOldFiles' : '<leader><cr>r',
             \ 'FuzzyBuffers' : '<leader>,',
             \ 'FuzzyCommands' : '<leader>;',
