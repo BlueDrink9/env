@@ -3,32 +3,39 @@
 
 local idemaps = vim.g.IDE_mappings
 
+local lazyvim_extras = {
+	{ import = "lazyvim.plugins.extras.coding.yanky"},
+	{ import = "lazyvim.plugins.extras.coding.luasnip"},
+	{ import = "lazyvim.plugins.extras.dap.core"},
+	{ import = "lazyvim.plugins.extras.dap.nlua"},
+
+	{ import = "lazyvim.plugins.extras.coding.copilot"},
+
+	-- { import = "lazyvim.plugins.extras.lang.python", cond = IsPluginUsed("LazyVim") },
+	{ import = "lazyvim.plugins.extras.lang.rust"},
+	{ import = "lazyvim.plugins.extras.lang.yaml"},
+	{ import = "lazyvim.plugins.extras.lang.json"},
+
+	{ import = "lazyvim.plugins.extras.test.core"},
+
+	{ import = "lazyvim.plugins.extras.formatting.prettier"},
+	{ import = "lazyvim.plugins.extras.util.project"},
+
+	-- { import = "lazyvim.plugins.extras.lsp.none-ls", cond = IsPluginUsed("LazyVim") },
+
+}
+for k, _ in pairs(lazyvim_extras) do
+	lazyvim_extras[k].enabled=IsPluginUsed("LazyVim")
+end
+
 return {
+	lazyvim_extras,
 
 	{ import = "plugins.cmp" },
 	{ import = "plugins.lspconfig" },
 	{ import = "plugins.nvim-dap" },
 	{ import = "plugins.telescope" },
 	
-
-	{ import = "lazyvim.plugins.extras.coding.yanky", enabled=IsPluginUsed("LazyVim")},
-	{ import = "lazyvim.plugins.extras.dap.core" },
-	{ import = "lazyvim.plugins.extras.dap.nlua" },
-
-	{ import = "lazyvim.plugins.extras.coding.copilot", },
-
-	-- { import = "lazyvim.plugins.extras.lang.python", cond = IsPluginUsed("LazyVim") },
-	{ import = "lazyvim.plugins.extras.lang.rust", cond = IsPluginUsed("LazyVim") },
-	{ import = "lazyvim.plugins.extras.lang.yaml", cond = IsPluginUsed("LazyVim") },
-	{ import = "lazyvim.plugins.extras.lang.json", cond = IsPluginUsed("LazyVim") },
-
-	{ import = "lazyvim.plugins.extras.test.core", cond = IsPluginUsed("LazyVim") },
-
-	{ import = "lazyvim.plugins.extras.formatting.prettier", cond = IsPluginUsed("LazyVim") },
-	{ import = "lazyvim.plugins.extras.util.project", cond = IsPluginUsed("LazyVim") },
-
-	-- { import = "lazyvim.plugins.extras.lsp.none-ls", cond = IsPluginUsed("LazyVim") },
-
 	{ import = "plugins.repl"},
 
 	-- Dependency for a lot of plugins
