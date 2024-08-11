@@ -25,6 +25,7 @@ require("lazy").setup({
 		-- Colourschemes for installing missing on startup
 		colorscheme = { vim.g.colorSch, "ayu", vim.g.defaultColorSch, "default" },
 	},
+	lockfile = vim.g.plugindir .. "/lazy-lock.json",
 	checker = { enabled = false }, -- don't automatically check for plugin updates
 	performance = {
 		reset_packpath = true, -- reset the package path to improve startup time
