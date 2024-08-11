@@ -45,10 +45,12 @@ if v:version >= 703
     " Only strips whitespace on edited lines, does not write.
     Plugin 'https://github.com/thirtythreeforty/lessspace.vim'
     " Don't use for automatic whitespace stripping, only for manual
+    " Possible alternative if this isn't working out:
+    " https://github.com/johnfrankmorgan/whitespace.nvim
     Plugin 'https://github.com/ntpeters/vim-better-whitespace', {
                 \ 'on': ['StripWhitespace', 'StripWhitespaceOnChangedLines', 'EnableWhitespace', 'DisableWhitespace']
                 \ }
-                " \ 'event': ['BufWritePre'],
+                " \ 'event': ['VeryLazy'],
 endif
 " Close buffers without changing window
 Plugin 'https://github.com/moll/vim-bbye', {'on': 'Bdelete'}
