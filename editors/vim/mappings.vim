@@ -78,6 +78,7 @@ inoremap [<CR> [<CR>]<Esc>O
 inoremap [; [<CR>];<Esc>O
 inoremap [, [<CR>],<Esc>O
 " Switch between the last two files.
+nnoremap <Leader>[ <C-^>
 nnoremap <Leader>a <C-^>
 " Emacs/cocoa BoL and EoL mappings. May remove later.
 " imap <c-e> <Esc>A
