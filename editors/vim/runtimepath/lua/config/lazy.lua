@@ -77,6 +77,7 @@ require("lazy").setup({
 			cond = vim.g.liteMode == 0,
 			init = function()
 				vim.g.autoformat = false
+				vim.g.deprecation_warnings = true
 			end,
 		},
 

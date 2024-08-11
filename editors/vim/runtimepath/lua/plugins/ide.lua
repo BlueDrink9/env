@@ -10,6 +10,8 @@ local lazyvim_extras = {
 	{ import = "lazyvim.plugins.extras.dap.nlua"},
 
 	{ import = "lazyvim.plugins.extras.coding.copilot"},
+	{ import = "lazyvim.plugins.extras.coding.copilot-chat" },
+	-- { import = "lazyvim.plugins.extras.coding.codeium" },
 
 	-- { import = "lazyvim.plugins.extras.lang.python", cond = IsPluginUsed("LazyVim") },
 	{ import = "lazyvim.plugins.extras.lang.rust"},
@@ -19,6 +21,7 @@ local lazyvim_extras = {
 	{ import = "lazyvim.plugins.extras.test.core"},
 
 	{ import = "lazyvim.plugins.extras.formatting.prettier"},
+	{ import = "lazyvim.plugins.extras.coding.neogen" },
 	{ import = "lazyvim.plugins.extras.util.project"},
 
 	-- { import = "lazyvim.plugins.extras.lsp.none-ls", cond = IsPluginUsed("LazyVim") },
