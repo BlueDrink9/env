@@ -123,6 +123,17 @@ local specs = {
 			{'['},
 			{'>,'},
 			{'<,'},
+			-- Not technically textobjects, but useful anyway.
+			-- Go to next node at same level in tree (useful for avoiding entering nested nodes)
+			-- Also see https://github.com/theHamsta/crazy-node-movement
+			{"],", function()
+				local t = require("nvim-treesitter.ts_utils")
+				t.goto_node(t.get_next_node(t.get_node_at_cursor(), true, true), false, true)
+			end},
+			{"[,", function()
+			  local t = require("nvim-treesitter.ts_utils")
+			  t.goto_node(t.get_previous_node(t.get_node_at_cursor(), true, true), false, true)
+			end},
 		},
 		config = function()
 			require("nvim-treesitter.configs").setup({
@@ -147,6 +158,14 @@ local specs = {
 							-- g for goto
 							['ig'] = '@call.inner',
 							['ag'] = '@call.outer',
+							-- aC/iC also used for comments by mini.ai
+							['i/'] = '@comment.inner',
+							['a/'] = '@comment.outer',
+							-- o for object
+							["ao"] = { query = "@variable", query_group = "highlights" },
+							["io"] = { query = "@variable", query_group = "highlights" },
+							["av"] = { query = "@variable", query_group = "highlights" },
+							["iv"] = { query = "@variable", query_group = "highlights" },
 							-- latex textobjects
 							['a<Leader>lf'] = '@frame.outer',
 							['a<Leader>ls'] = '@statement.outer',
