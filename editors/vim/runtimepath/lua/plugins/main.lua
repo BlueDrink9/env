@@ -571,4 +571,18 @@ return {
 	},
 
 	{ "kwkarlwang/bufresize.nvim", event = "VeryLazy" },
+
+	{
+		-- Jump to previous buffer in jumplist (like c-o but only for buffer changes)
+		"kwkarlwang/bufjump.nvim",
+		keys = {
+			{"<leader>]", function() require('bufjump').forward() end, {desc="Jump to next buffer in jumplist"} },
+			{"<leader>[", function() require('bufjump').backward() end, {desc="Jump to previous buffer in jumplist"} },
+		},
+		opts = {
+			forward_key = false,
+			backward_key = false,
+		}
+	},
+
 }
