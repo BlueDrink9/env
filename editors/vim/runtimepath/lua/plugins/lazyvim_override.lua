@@ -162,13 +162,25 @@ return {
 	{
 		"folke/todo-comments.nvim",
 		enabled=vim.g.ideMode == 0,
-		cond = vim.g.vscode ~= 1,
 		keys = {
 			{ "<leader>st", false },
 			{ "<leader>sT", false },
 		},
-	}
+	},
 
+	{
+		"CopilotC-Nvim/CopilotChat.nvim",
+		opts = function(_, opts)
+			-- Want to keep plugin default, will be automatically updated
+			-- to newer models faster.
+			opts.model = nil
+			opts.answer_header = "GPT ",
+			return opts
+		end,
+		keys = {
+			-- { "<c-s>", false },
+		}
+	},
 
 
 }

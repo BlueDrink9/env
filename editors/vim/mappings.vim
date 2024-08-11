@@ -430,3 +430,24 @@ inoremap <S-Tab> <C-P>
 " <CR> to confirm completion, use:
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
 " {]} Misc
+
+" {[} New nvim features
+if has('nvim-0.10')
+lua << EOF
+  local operator_rhs = function()
+    return require('vim._comment').operator()
+  end
+  vim.keymap.set({ 'n', 'x' }, '<leader>c', operator_rhs, { expr = true, desc = 'Toggle comment' })
+
+  local line_rhs = function()
+    return require('vim._comment').operator() .. '_'
+  end
+  vim.keymap.set('n', '<leader>cc', line_rhs, { expr = true, desc = 'Toggle comment line' })
+
+  local textobject_rhs = function()
+    require('vim._comment').textobject()
+  end
+  vim.keymap.set({ 'o' }, '<leader>c', textobject_rhs, { desc = 'Comment textobject' })
+EOF
+endif
+" {]}

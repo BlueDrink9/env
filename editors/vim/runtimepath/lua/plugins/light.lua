@@ -1,6 +1,7 @@
 return {
   {
     "https://github.com/numToStr/Comment.nvim",
+    enabled=not vim.fn.has("nvim-0.10"),
     opts = {
       -- Lines to be ignored while (un)comment
       ignore = '^%s*$',
