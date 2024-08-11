@@ -415,6 +415,9 @@ set lazyredraw
 if exists('+smoothscroll')
     set smoothscroll
 endif
+if exists('+jumpoptions')
+    set jumpoptions="view"
+endif
 
 function! MinimumUI()
   set laststatus=0
