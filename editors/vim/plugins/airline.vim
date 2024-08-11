@@ -76,10 +76,10 @@ else
     " Using predefined symbols
     " This causes linenr to be blank. But without it, symbols don't exist!
     " There's no winning some times.
-    " if !exists('g:airline_symbols')
-    "     let g:airline_symbols = {}
-    "     let g:airline_symbols.linenr = '∥'
-    " endif
+    if !exists('g:airline_symbols')
+        let g:airline_symbols = {}
+        let g:airline_symbols.linenr = '∥'
+    endif
     function! s:makeAirlineCustomParts()
         let g:airline_symbols.columnnr = '∥'
         let g:airline_symbols.maxlinenr = ''
