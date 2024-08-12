@@ -179,7 +179,8 @@ return {
 		end,
 		keys = {
 			{ "<c-l>", false },
-		}
+			{ "<c-s>", "<CR>", ft = "copilot-chat", desc = "Submit Prompt", remap = true },
+		},
 	},
 
 	{
