@@ -50,6 +50,7 @@ return {
 					end
 				endfunction
 			]]
+			vim.api.nvim_create_autocmd("FileType", {pattern="neoterm", command="setlocal nobuflisted"})
 			vim.api.nvim_create_user_command("ReplChange", "TREPLSetTerm", {nargs=1})
 			-- See #286	
 			-- vim.api.nvim_create_user_command("TRegisterAsNeoterm", "call neoterm#new({'from_event': 1})", {nargs=1})
