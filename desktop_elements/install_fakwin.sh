@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 source "$DOTFILES_DIR/shell/script_functions.sh"
 # Installs a shim so that shutting down works on plasma6 when not using kwin
 
@@ -19,6 +20,9 @@ cmake ..
 make
 mkdir -p "$(dirname "$EXECUTABLE")"
 mv fakwin "$EXECUTABLE"
+cd ../..
+
+rm -rf fakwin
 
 # Ensure the service directory exists
 mkdir -p "$SERVICE_DIR"
