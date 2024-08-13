@@ -201,3 +201,14 @@ userHasSudo(){
     return 1
   fi
 }
+
+git_clone_commit(){
+  url=$1
+  commit=$2
+  repo_name=$(basename $url .git)
+  mkdir "$repo_name"
+  git -C "$repo_name" init
+  git -C "$repo_name" remote add origin $url
+  git -C "$repo_name" fetch origin $commit
+  git -C "$repo_name" checkout FETCH_HEAD
+}
