@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -e
+# set -e
 
 CWD="$DOTFILES_DIR/editors/vscode"
 
