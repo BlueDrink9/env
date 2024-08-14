@@ -204,3 +204,5 @@ function rgedit() {
 alias bm="cd \"\$(bmm)\""
 # Delete to trash
 alias del="gio trash"
+
+alias renix='sudo DOTFILES_DIR="$DOTFILES_DIR" nixos-rebuild switch'
