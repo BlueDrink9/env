@@ -6,4 +6,15 @@
     ],
     "description": "Variable containing path to current script"
   }
+
+  , "heredoc": {
+    "prefix": ["heredoc"],
+    "body": [
+      "${1:var}=$(cat <<'EOF'",
+      "$2",
+      "EOF",
+      ")$0"
+    ],
+    "description": "Assign a block of text to a variable with a heredoc"
+  }
 }
