@@ -350,11 +350,11 @@ endfunction
 augroup autosave
     au!
     " Save on focus loss, leaving insert, leaving buffer.
-    au autosave FocusLost,BufLeave * call Autosave()
+    au FocusLost,BufLeave * call Autosave()
     " On some systems, when writes are slow, insertleave delays really suck.
     " Add an option to disable thes.
     if !exists("g:slow_writes")
-        au autosave InsertLeave * call Autosave()
+        au InsertLeave * call Autosave()
     endif
 augroup end
 

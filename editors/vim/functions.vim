@@ -235,3 +235,21 @@ function! s:ReadTemplate()
     endfor
 endfunction
 autocmd myVimrc BufNewFile * call s:ReadTemplate()
+
+function! AutocmdExists(event, pattern, ...)
+    " Check if a group was provided
+    let group = ''
+    if a:0 > 0
+        let group = a:1 . ' '
+    endif
+    " Capture the output of the :autocmd command
+    redir => result
+    silent! execute 'autocmd' group . a:event . ' ' . a:pattern
+    redir END
+    " Remove leading and trailing whitespace
+    let result = substitute(result, '^\s*\n', '', '')
+    let result = substitute(result, '\n\s*$', '', '')
+
+    " Return whether the output is more than just the header
+    return result !=# '--- Autocommands ---'
+endfunction

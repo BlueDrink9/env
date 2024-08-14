@@ -42,8 +42,19 @@ endif
 
 " {[} ---------- Misc ----------
 if v:version >= 703
+    function! Plug_after_lessspace_vim()
+        " lessspace checks &modified before acting. Autowrite resets that
+        " flag, so have to reset the autocmd so it runs after lessspace's
+        " InsertLeave.
+        if AutocmdExists("InsertLeave", "", "autosave")
+            au! autosave InsertLeave
+            autocmd autosave InsertLeave call Autosave()
+        endif
+    endf
     " Only strips whitespace on edited lines, does not write.
-    Plugin 'https://github.com/thirtythreeforty/lessspace.vim'
+    Plugin 'https://github.com/thirtythreeforty/lessspace.vim', {
+                \ 'event': ['TextChanged', 'TextChangedI', 'InsertEnter'],
+                \ 'afterLoad': v:true}
     " Don't use for automatic whitespace stripping, only for manual
     " Possible alternative if this isn't working out:
     " https://github.com/johnfrankmorgan/whitespace.nvim
