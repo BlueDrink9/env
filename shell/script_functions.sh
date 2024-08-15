@@ -202,6 +202,20 @@ userHasSudo(){
   fi
 }
 
+function SudoFunction {
+        local firstArg=$1
+        if [ $(type -t $firstArg) = function ]
+        then
+                shift && command sudo bash -c "$(declare -f $firstArg);$firstArg $*"
+        elif [ $(type -t $firstArg) = alias ]
+        then
+                alias sudo='\sudo '
+                eval "sudo $@"
+        else
+                command sudo "$@"
+        fi
+}
+
 git_clone_commit(){
   url=$1
   commit=$2
