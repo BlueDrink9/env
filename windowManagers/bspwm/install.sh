@@ -25,7 +25,7 @@ replace_plasma_wm(){
   # Two methods. The systemd masking doesn't always work, so this is the
   # backup option.
   # KDEWM method
-  kwriteconfig5 --file startkderc --group General --key systemdBoot false
+  kwriteconfig6 --file startkderc --group General --key systemdBoot false
   kde_env_dir="$XDG_CONFIG_HOME/plasma-workspace/env/"
   mkdir -p "$kde_env_dir"
   printf '#!/bin/sh\nexport KDEWM=bspwm' >| "$kde_env_dir/bspwm.sh"
