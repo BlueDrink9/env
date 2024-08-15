@@ -178,7 +178,7 @@ return {
 			return opts
 		end,
 		keys = {
-			-- { "<c-s>", false },
+			{ "<c-l>", false },
 		}
 	},
 
