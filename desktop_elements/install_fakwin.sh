@@ -4,7 +4,7 @@ source "$DOTFILES_DIR/shell/script_functions.sh"
 # Installs a shim so that shutting down works on plasma6 when not using kwin
 
 # Needs qt6-base-dev (ubuntu) / qt6-qtbase-devel (fedora).
-git_clone_commit https://github.com/DMaroo/fakwin.git f072c95390f9588f3b51a66d54490d1ddaac8385
+git_clone_commit https://github.com/DMaroo/fakwin.git f072c95390f9588f3b51a66d54490d1ddaac8385 || true
 pushd fakwin
 
 # Variables
