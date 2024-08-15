@@ -6,8 +6,7 @@ doGit() {
   if [ "$LITE" = 1 ]; then
     return
   fi
-  gitCredentialCache
-  gitUser "$@"
+  gitCredentials "$@"
 }
 
 undoGit() {
@@ -31,10 +30,11 @@ gitUser() {
   fi
 
   printErr "Setting up git global user..."
-  echo -ne "${Green}Enter your github username:${NC} "
-  read -r GIT_USER
-  echo -ne "${Green}Enter your git email:${NC} "
-  read -r GIT_EMAIL
+  # echo -ne "${Green}Enter your github username:${NC} "
+  # read -r GIT_USER
+  GIT_USER="bluedrink9"
+  # echo -ne "${Green}Enter your git email:${NC} "
+  # read -r GIT_EMAIL
 
   printErr "${Yellow}Configuring git.$NC"
   # Blank or unset: Use github no-reply email as a default.
@@ -49,8 +49,10 @@ gitUser() {
   unset default_email
 }
 
-gitCredentialCache() {
-  if [ "$ALL" == 1 ] || askQuestionYN "${Yellow}Want Git to store your credentials for a while?${NC}"; then
+gitCredentials() {
+  if [ "$ALL" == 1 ] || askQuestionYN "${Yellow}Set up Git credentials?${NC}"; then
+
+    gitUser "$@"
 
     if [[ ! "$(git config --global user.name)" =~ .+ ]] || [[ ! $(git config --global user.email) =~ .+ ]]; then
       printErr "$OK Git global user is not setup correctly."
@@ -58,17 +60,37 @@ gitCredentialCache() {
       return 0
     fi
 
-    printErr "${Green}How long should Git store your credentials? (minutes)${NC} "
-    while true; do
-      read -r REPLY
-      if [[ $REPLY =~ ^[0-9]+$ ]] && [[ $REPLY -gt 0 ]]; then
-        break
-      else
-        printErr "${Red}Invalid input${NC}"
-      fi
-    done
-    printErr "Git will remember your credentials for $REPLY minutes ($(( REPLY * 60 )) seconds)."
-    git config --global credential.helper "cache --timeout $(( REPLY * 60 ))"
+    case "$OSTYPE" in
+      darwin*)
+        # macOS
+        git config --global credential.helper osxkeychain
+        ;;
+      linux*)
+        # Linux
+        if command -v git-credential-manager | /dev/null; then
+          git config --global credential.helper git-credential-manager
+        else if command -v git-credential-oath | /dev/null; then
+          git config --global credential.helper git-credential-manager
+        else
+          git config --global credential.helper "cache --timeout $(( 120 ))"
+        fi
+        ;;
+      cygwin*|msys*|microsoft*|mingw*)
+        # Windows
+        git config --global credential.helper manager
+        ;;
+      *)
+        # Unknown OS
+        printErr "${Red}Unsupported operating system${NC}"
+        exit 1
+        ;;
+    esac
+
+    if command -v gh | /dev/null; then
+      echo "Authenticating via github. Got to github.com/login/devices."
+      gh auth && gh auth setup-git
+    fi
+
   fi
 }
 
