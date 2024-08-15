@@ -57,10 +57,14 @@ for (var panelIndex = 0; panelIndex < allPanels.length; panelIndex++) {
     var widgets = p.widgets();
     for (var widgetIndex = 0; widgetIndex < widgets.length; widgetIndex++) {
         var w = widgets[widgetIndex];
-        if (w.type === "org.kde.plasma.taskmanager"
-            || w.type === "org.kde.plasma.icontasks"){
+
+        const widgetsToRemove = [
+            "org.kde.plasma.taskmanager",
+            "org.kde.plasma.icontasks"
+        ];
+        if (widgetsToRemove.includes(w.type)) {
             w.remove();
-            continue
+            continue;
         }
 
         // Whichever panel has the pager; that's the one I want to add the window title widget to.
@@ -69,15 +73,20 @@ for (var panelIndex = 0; panelIndex < allPanels.length; panelIndex++) {
             continue;
         }
         done = true;
-        var spacer1 = p.addWidget("org.kde.plasma.marginsseparator");
-        var wt = p.addWidget("org.kde.windowtitle");
 
+        // Add widgets and store their IDs in an array
+        var widgets = [
+            // "org.kde.plasma.marginsseparator",
+            "org.kde.plasma.panelspacer",
+            "org.kde.windowtitle",
+            "org.kde.plasma.panelspacer",
+            // "org.kde.plasma.marginsseparator",
+        ].map(w => p.addWidget(w));
 
         // Reorder
         p.currentConfigGroup = ["General"];
-        var key = "AppletOrder"
+        var key = "AppletOrder";
         p.reloadConfig();
-
 
         var order = p.readConfig(key).split(";");
 
@@ -85,24 +94,19 @@ for (var panelIndex = 0; panelIndex < allPanels.length; panelIndex++) {
         const position_in_panel = 2;
 
         // Remove the newly created numbers
-        order = removeItemOnce(order, wt.id);
-        order = removeItemOnce(order, spacer1.id);
-
+        widgets.forEach(widget => {
+            order = removeItemOnce(order, widget.id);
+        });
 
         // Insert the IDs
-        order.splice(position_in_panel, 0, spacer1.id, wt.id);
+        order.splice(position_in_panel, 0, ...widgets.map(w=>w.id));
         order = order.join(";");
         p.writeConfig(key, order);
 
         // The new config doesn't get the new applets until a reload is
-        // triggered. But it works if we do it from script instead!
-        // Build write command to update from command line
-        var command=`kwriteconfig6 --file "$(basename "$applet_config")" \
-          --group Containments --group "${p.id}" --group General \
-          --key "AppletOrder" "${order}"`
-
-        // Print to echo it to bash
-        print(command)
+        // triggered, so need to return the ids to bash, reload, then set the order.
+        // Print to echo it to bash for capture
+        print(JSON.stringify({ panel_id: p.id, order: order }))
 
         // For debugging
         // wt.remove();

@@ -13,7 +13,8 @@ install_applet(){
   dir="$applet_dir/$(basename "$url")"
   rm -rf "$dir"
   git clone --depth=1 "$url" "$dir"
-  kpackagetool6 -i "$dir" || true
+  # Or with true in case already installed
+  kpackagetool6 --type Plasma/Applet --install "$dir" || true
 }
 
 find_applet_groups(){
@@ -68,12 +69,41 @@ append_applet_id(){
   echo "$base;$next"
 }
 
+eval_plasma_script(){
+  qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "$@"
+}
+extract_json_value(){
+  key=$1
+  out="$(eval_plasma_script "print(JSON.parse('"$jsonOutput"').$key)")"
+  if [ -z "$out" ]; then
+    echo "Error: Key not found: $key" >&2
+    exit 1
+  fi
+  printf "$out"
+}
+
+
 install_panel_widgets(){
   # Add the windowtitle widget
   contents=$(<"$DOTFILES_DIR/desktop_elements/plasma_panel_add_widget.js")
-  writeCommand="$(qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "$contents")"
+  jsonOutput="$(eval_plasma_script "$contents")"
+  # echo $jsonOutput
+  panel_id=$(extract_json_value "panel_id")
+  order=$(extract_json_value "order")
+  # The new config doesn't get the new applets until a reload is
+  # triggered, so need to return the ids to bash, reload, then set the order.
   qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.refreshCurrentShell
-  eval $writeCommand
+  set -x
+  kwriteconfig6 --file "$(basename "$applet_config")" \
+    --group Containments --group "${panel_id}" --group General \
+    --key "AppletOrder" "${order}"
+  set +x
+  # Reload again to show the new layout
+  qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.refreshCurrentShell
+
+  return
+  # The js above does the ordering below this better/more reliably, as well as adding the
+  # new widgets.
 
   groups=""
   while IFS="" read -r line; do
@@ -89,9 +119,9 @@ install_panel_widgets(){
 
   first="$(find_applet_groups org.kde.plasma.kickoff | cut -f2)"  # launcher
   order=$(append_applet_id org.kde.plasma.pager "$first")
-  order=$(append_applet_id org.kde.plasma.marginsseparator "$order")
+  order=$(append_applet_id org.kde.plasma.panelspacer "$order")
   order=$(append_applet_id org.kde.windowtitle "$order")
-  order=$(append_applet_id org.kde.plasma.marginsseparator "$order" 2)
+  order=$(append_applet_id org.kde.plasma.panelspacer "$order" 2)
   order=$(append_applet_id org.kde.plasma.systemtray "$order")
   order=$(append_applet_id org.kde.plasma.digitalclock "$order")
   # order=$(append_applet_id org.kde.plasma.showdesktop "$order")
@@ -131,16 +161,8 @@ disable_other_meta_shortcuts(){
   modify_shortcut --group "org.kde.dolphin.desktop" --key "_launch" "none,Meta+E,Dolphin"
 }
 
-install_applet https://github.com/moodyhunter/applet-window-title6
+install_applet https://github.com/dhruv8sh/plasma6-window-title-applet
 install_panel_widgets
-configure_applet org.kde.windowtitle General style 3  # style 3 = Title - Application
-configure_applet org.kde.windowtitle General lengthPolicy Fill
-configure_applet org.kde.windowtitle General boldFont false
-configure_applet org.kde.windowtitle General capitalFont false
-configure_applet org.kde.windowtitle General containmentType Plasma
 
-configure_applet org.kde.plasma.pager General showOnlyCurrentScreen true
-configure_applet org.kde.plasma.pager General showWindowIcons true
-configure_applet org.kde.plasma.pager General wrapPage true
 disable_plasmashell_task_manager_overrides
 disable_other_meta_shortcuts

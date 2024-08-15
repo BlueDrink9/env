@@ -13,10 +13,17 @@ doRofi() {
   addTextIfAbsent "${installText}" "${baseRC}"
 }
 
+doPlasma() {
+  "$($SCRIPTDIR_CMD)/install_fakwin.sh"
+  "$($SCRIPTDIR_CMD)/plasma_setup.sh"
+}
+
+
 # source "$DOTFILES_DIR/generic_rc_installer.sh"
 
 # If directly run instead of sourced, do all
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
   # do${installID}
-  doRofi
+  # doRofi
+  doPlasma
 fi
