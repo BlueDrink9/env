@@ -166,3 +166,11 @@ install_panel_widgets
 
 disable_plasmashell_task_manager_overrides
 disable_other_meta_shortcuts
+
+# plasma-apply-wallpaperimage /path
+
+# look and feel(global theme): plasma-apply-lookandfeel "your favorite global theme"
+# color scheme: plasma-apply-colorscheme "your favorite color scheme"
+# cursor theme: plasma-apply-cursortheme "your favorite cursor"
+# desktop theme(plasma theme?): plasma-apply-desktoptheme "your favorite desktop theme"
+# bonus: accent color: plasma-apply-colorscheme --accent-color "svg color name or hex color code"
