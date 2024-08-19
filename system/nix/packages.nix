@@ -1,19 +1,42 @@
 { pkgs, ... }:
 {
+
+  imports =
+  [
+    # (import (builtins.getFlake "github:xremap/nix-flake").nixosModules.default { system = "x86_64-linux"; })
+    ./main_nongui.nix
+    ./gui.nix
+    ./plasma.nix
+  ];
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   programs.zsh.enable = true;
+  programs.zsh.enableBashCompletion = true;
   programs.git.enable = true;
   programs.htop.enable = true;
+  programs.neovim.defaultEditor = true;
+  programs.ydotool.enable = true;
 
   programs.kdeconnect.enable = true;
+  programs.partition-manager.enable = true;
 
+  programs.mepo.enable = true;
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    localNetworkGameTransfers.openFirewall = true;
+  };
+
+  programs.system-config-printer.enable = true;
   programs.adb.enable = true;
   programs.appimage.enable = true;
   programs.direnv.enable = true;
   programs.direnv.direnvrcExtra = "echo Loaded direnv";
 
+  # programs.java.enable = true;
+  # programs.hyperland.enable = true;
 
   programs.firefox = {
     enable = true;
@@ -98,88 +121,33 @@
     # san-franciso
   ];
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # Essential packages are defined here, I'll basically always want these.
+  # Rest are defined in imports
   environment.systemPackages = with pkgs; [
     vim-full
+    bash
     zsh
     neovim
     wget
-
-    gcc
-    libgcc
-    gnumake
-    cmake
-    automake
-    pkg-config
-
-    python3
-    bspwm
-    sxhkd
-    xclip
-    xsel
+    curl
+    nano  # always nice to have a backup
     ripgrep
     fd
-    kitty
     tmux
+    gcc
+    python3
     unzip
     lsd
     bat
     zoxide
-    syncthing
-    btop
-    ranger
     rsync
-    mosh
     jq
-    cheat
-    openssh
     rlwrap
-    curl
-    ctags
-    universal-ctags
-    ncurses
-    bat-extras.batgrep
-    broot
-    duf
-    mcfly
-    thefuck
-    tldr
-    wget
-    openvpn
-    topgrade
-    playerctl
-    workrave
-    gh
-    lazygit
+    starship
+    ranger
+    openssh
 
-    shellcheck
-    pyright
-
-
-    emacs
-    vscodium
-    thunderbird
-    birdtray
-    etesync-dav
-    keepassxc
-    pandoc
-    typst
-    copyq
-    inkscape
-    gimp
-    zotero
-    joplin
-    signal-desktop
-    neovide
-    brave
-    pcloud
-    megatools
-    f3d
-    libreoffice-qt-fresh
-
-    hunspell
-    hunspellDicts.en_AU
+    # xremap-flake.nixosModules.default
 
   ];
 

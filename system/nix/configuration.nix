@@ -10,8 +10,10 @@ let
   dotfilesDir = builtins.getEnv "DOTFILES_DIR";
   nixDir = "${dotfilesDir}/system/nix";
 in { config, pkgs, ... }:
-
 {
+
+  # TODO: Change this
+  networking.hostName = "placeholder_hostname"; # change in /etc/nixos/flake.nix too
 
   environment.sessionVariables = rec {
     XDG_CACHE_HOME  = "$HOME/.cache";
@@ -41,15 +43,13 @@ in { config, pkgs, ... }:
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.
   time.timeZone = "Pacific/Auckland";
@@ -70,18 +70,16 @@ in { config, pkgs, ... }:
   };
 
   # Enable the X11 windowing system.
-  # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
-
-  # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us,nz";
     variant = "colemak,";
+    options = "grp:win_space_toggle";
   };
+  console.useXkbConfig = true;
+  # console.keyMap = "colemak";
 
   users.defaultUserShell = pkgs.zsh;
 
@@ -107,7 +105,7 @@ in { config, pkgs, ... }:
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -135,5 +133,41 @@ in { config, pkgs, ... }:
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
+
+  # nix.gc = { automatic = true; persistent = true; dates = "05:00:00"; options = "--delete-older-than 7d"; };
+
+  boot.loader.systemd-boot.configurationLimit = 10;
+  # Perform garbage collection weekly to maintain low disk usage
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 2w";
+  };
+
+  # nix.settings.auto-optimise-store = true;
+
+  security.sudo.execWheelOnly = true;
+  security.sudo.extraConfig = ''
+    Defaults        timestamp_timeout=60
+  '';
+
+  # Disable wakeup from PCI devices
+  services.udev.extraRules = ''
+  ACTION=="add", SUBSYSTEM=="pci", DRIVER=="pcieport", ATTR{power/wakeup}="disabled"
+  '';
+
+  services.logind = {
+    lidSwitch="suspend-then-hibernate";
+    lidSwitchDocked="ignore";
+    lidSwitchExternalPower="ignore";
+    suspendKey="suspend-then-hibernate";
+    powerKey="poweroff";
+    extraConfig = ''
+  #   IdleAction=suspend-then-hibernate
+  #   IdleActionSec=10m
+  #   HibernateDelaySec=65m
+    '';
+
+  };
 
 }
