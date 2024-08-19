@@ -595,4 +595,25 @@ return {
 		},
 	},
 
+	-- {
+	-- 	"willothy/flatten.nvim",
+	-- 	opts = {
+	-- 		window = "alternate"
+	-- 	},
+	-- 	init = function()
+	-- 		-- Nb: this isn't working because the shell rc
+	-- 		-- overwrites these variables. Need to come up with an
+	-- 		-- alternative solution.
+	-- 		for _, v in ipairs({"EDITOR", "VISUAL", "SUDO_EDITOR",
+	-- 			"FCEDIT", "GIT_EDITOR"}) do
+	-- 			vim.fn.setenv(v, 'nvim --cmd "let g:flatten_wait=1"')
+	-- 		end
+	-- 	end,
+	-- 	-- Ensure that it runs first to minimize delay when opening file from terminal
+	-- 	-- Won't work if lazy-loaded later :(
+	-- 	lazy = false,
+	-- 	priority = 1001,
+	-- 	-- event="TermOpen",
+	-- },
+
 }
