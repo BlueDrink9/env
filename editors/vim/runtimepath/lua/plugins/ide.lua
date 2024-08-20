@@ -309,6 +309,7 @@ return {
 			"sindrets/diffview.nvim", -- optional
 			-- "ibhagwan/fzf-lua",              -- optional
 		},
+		tag=vim.fn.has("nvim-0.10") == 0 and "v0.0.1" or nil,
 	},
 
 	{
