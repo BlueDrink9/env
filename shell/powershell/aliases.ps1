@@ -42,3 +42,8 @@ function rg { &$(get-command rg.exe) --smart-case $args}
 set-alias komo komorebic
 function pym { python -m $args}
 set-alias py python
+
+function packs { winget search $args}
+function packi { winget install --silent $args}
+function pack? { winget show $args}
+function packrm { winget uninstall $args}
