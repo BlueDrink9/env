@@ -167,6 +167,10 @@ install_panel_widgets
 disable_plasmashell_task_manager_overrides
 disable_other_meta_shortcuts
 
+configure_applet org.kde.plasma.pager General displayedText name
+configure_applet org.kde.plasma.pager General showWindowIcons true
+configure_applet org.kde.plasma.pager General wrapPage true
+
 # plasma-apply-wallpaperimage /path
 
 # look and feel(global theme): plasma-apply-lookandfeel "your favorite global theme"
