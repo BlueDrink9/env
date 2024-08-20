@@ -135,7 +135,6 @@ readSettings() {
       if [ "$ALL" = 1 ] || askQuestionYN "Will this be a GUI system?" ; then
 	installers="$installers doFonts"
 	if [ "$OSTYPE" = "linux-gnu" ]; then
-	  installers="$installers doXresources"
 	  installers="$installers doX11"
 	elif substrInStr "darwin" "$OSTYPE"; then
 	  installers="$installers doOSX"

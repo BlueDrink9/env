@@ -126,7 +126,7 @@ END
 
 # If directly run instead of sourced, do all
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
-  # doTmux
+  doTmux
   if substrInStr "Android" "$(uname -a)";  then
     doTermux
   elif [ "$OSTYPE" != "msys" ]; then

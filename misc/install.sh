@@ -20,6 +20,7 @@ doXremap(){
   if ! userHasSudo; then
     return
   fi
+  echo "Setting up xremap rules"
   # Best installed with cargo I think.
   # https://github.com/k0kubun/xremap
   # Ubuntu setup rules
@@ -33,7 +34,6 @@ doXremap(){
 
 doMisc(){
   doVieb
-  doIPython
   doPyvim
   doXremap
 }
