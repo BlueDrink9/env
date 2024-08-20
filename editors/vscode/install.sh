@@ -4,14 +4,15 @@
 
 CWD="$DOTFILES_DIR/editors/vscode"
 
-# Function to create symbolic link if possible, or copy with replacement otherwise
-link_or_copy() {
+# Function to create symbolic link if possible, or copy with replacement otherwise (e.g. if file already exists)
+force_link() {
     target=$1
-    destination=$2
-    if ln -sf "$target" "$destination"; then
+    linkname=$2
+    rm -f "$linkname"
+    if ln -sf "$target" "$linkname"; then
         return 0
     else
-        cp -f "$target" "$destination"
+        cp -f "$target" "$linkname"
     fi
 }
 
@@ -21,9 +22,9 @@ config_paths="$HOME/.config/Code/User $HOME/.config/VSCodium/User"
 # Create symbolic links or copy files for each path
 for config_path in $config_paths; do
     mkdir -p "$config_path"
-    link_or_copy "$CWD/settings.json" "$config_path/settings.json"
-    link_or_copy "$CWD/keybindings.json" "$config_path/keybindings.json"
-    link_or_copy "$CWD/../vim/runtimepath/snippets" "$config_path/snippets"
+    force_link "$CWD/settings.json" "$config_path/settings.json"
+    force_link "$CWD/keybindings.json" "$config_path/keybindings.json"
+    force_link "$CWD/../vim/runtimepath/snippets" "$config_path/snippets"
 done
 
 # Enable Microsoft extension gallery
