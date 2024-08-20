@@ -32,7 +32,6 @@ ALL=0
 LITE=0
 
 source "$DOTFILES_DIR/editors/vim/install.sh"
-source "$DOTFILES_DIR/editors/vscode/install.sh"
 source "$DOTFILES_DIR/editors/emacs/install.sh"
 source "$DOTFILES_DIR/font_install.sh"
 source "$DOTFILES_DIR/git/install.sh"
@@ -44,6 +43,8 @@ source "$DOTFILES_DIR/system/ssh/install.sh"
 source "$DOTFILES_DIR/terminal/install.sh"
 source "$DOTFILES_DIR/windowManagers/install.sh"
 source "$DOTFILES_DIR/misc/install.sh"
+# Need to change vscode's installer to not autorun. Or maybe leave to only run manually...
+# source "$DOTFILES_DIR/editors/vscode/install.sh"
 
 # # Source every `install.sh` file in env
 # # Problematic because some of the installers are recursive.
