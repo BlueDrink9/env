@@ -14,6 +14,10 @@ doVimPlugins(){
     else
       downloadURLtoFile https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "${VIMFILES}/autoload/plug.vim"
     fi
+    # Do twice in case of segfaults. Install is idempotent, restore isn't
+    # too slow.
+    nvim --headless --cmd "let g:ideMode=1" "+Lazy! install | Lazy! restore" +qa
+    nvim --headless --cmd "let g:ideMode=1" "+Lazy! install | Lazy! restore" +qa
     # This has the problem of making the caret disappear in WSL...
     vim -E +PlugInstall +qall
     # Recover missing cursor due to previous command
