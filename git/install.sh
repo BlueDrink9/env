@@ -67,12 +67,12 @@ gitCredentials() {
         ;;
       linux*)
         # Linux
-        if command -v git-credential-manager | /dev/null; then
+        if command -v git-credential-manager > /dev/null; then
           git config --global credential.helper git-credential-manager
-        else if command -v git-credential-oath | /dev/null; then
-          git config --global credential.helper git-credential-manager
+        elif command -v git-credential-oath > /dev/null; then
+          git config --global credential.helper git-credential-oath
         else
-          git config --global credential.helper "cache --timeout $(( 120 ))"
+          git config --global credential.helper "cache --timeout 120"
         fi
         ;;
       cygwin*|msys*|microsoft*|mingw*)
@@ -86,9 +86,9 @@ gitCredentials() {
         ;;
     esac
 
-    if command -v gh | /dev/null; then
+    if command -v gh > /dev/null; then
       echo "Authenticating via github. Got to github.com/login/devices."
-      gh auth && gh auth setup-git
+      BROWSER=false gh auth login --git-protocol https --hostname github.com --web && gh auth setup-git
     fi
 
   fi
@@ -106,6 +106,5 @@ gitSettings() {
 
 # If directly run instead of sourced, do all
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
-  source "$DOTFILES_DIR/bash/colour_variables.sh"
   doGit "$@"
 fi
