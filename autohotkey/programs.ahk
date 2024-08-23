@@ -55,13 +55,12 @@ if !IsSet(nvimBinaryPath){
 
 vim(args:=""){
     try {
-        ; Don't really need to fork, and it has a slight performance hit.
         ; For better startup perf, specify nvim binary path.
         nvimBinaryArg := ""
         if nvimBinaryPath != "" {
             nvimBinaryArg := Format("--neovim-bin `"{1}`"", nvimBinaryPath)
         }
-        Run("neovide.exe " . nvimBinaryArg . " --nofork -- " args)
+        Run("neovide.exe " . nvimBinaryArg .  args)
     } catch {
         Run("gvim.exe", args)
     }
