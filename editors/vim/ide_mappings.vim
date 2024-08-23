@@ -31,8 +31,6 @@ let g:IDE_mappings = {
             \ 'TermToggle' : '<c-s>',
             \ 'lintBuffer' : '<leader>il',
             \ 'make' : 'm<cr>',
-            \ 'make2' : '<leader>im',
-            \ 'make3' : 'm<space>',
             \ 'allActions' : '<leader>ia',
             \ 'allCommands' : '<leader>ic',
             \ 'hover' : '<leader>ih',

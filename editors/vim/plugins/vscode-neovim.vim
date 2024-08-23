@@ -54,8 +54,6 @@ let s:nmappings = {
       \ g:IDE_mappings.addBreakpointFunctional : 'workbench.debug.viewlet.action.addFunctionBreakpointAction',
       \ g:IDE_mappings.setBreakpointConditional : 'editor.debug.action.conditionalBreakpoint',
       \ g:IDE_mappings.make: 'workbench.action.tasks.build',
-      \ g:IDE_mappings.make2: 'workbench.action.tasks.build',
-      \ g:IDE_mappings.make3: 'workbench.action.tasks.build',
       \ g:IDE_mappings.diagnosticNext: 'editor.action.marker.next',
       \ g:IDE_mappings.diagnosticPrev: 'editor.action.marker.prev',
       \ '<c-s>': 'workbench.action.terminal.toggleTerminal',
