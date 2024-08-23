@@ -66,6 +66,10 @@ function! SetGFN(...)
         " call SetFirstValidGuifont(l:formattedFonts)
         let l:gfn=join(l:formattedFonts, ',')
         if exists("g:neovide")
+            let l:gfn = v:lua.GetFirstExistingFont(l:formattedFonts)
+            if l:gfn == v:null
+                return
+            endif
             let l:gfn=l:gfn . ":h" . g:GUIFontSize
         endif
 
@@ -115,6 +119,39 @@ function! SetFirstValidGuifont(fonts)
     " restore original value if a new valid one not found.
     exec "set guifont=" . substitute(l:fontBackup, "\\ ", "\\\\ ", "g")
 endfunc
+
+if has('nvim')
+lua << EOF
+local cachedFont = {}
+GetFirstExistingFont = function(fonts)
+    -- Remove fonts that are not installed
+    ---@type string[]
+    if cachedFont[fonts] then return cachedFont[fonts] end
+    local installed_fonts
+    if vim.fn.has "unix" == 1 then
+        installed_fonts = vim.split(
+            vim.fn.system "fc-list | sed 's/.*:\\s*\\([^:]*\\):.*/\\1/' | tr ',' '\\n' | sed 's/^[ \\t]*//;s/[ \\t]*$//' | sort | uniq",
+            "\n"
+        )
+    elseif vim.fn.has "win32" == 1 then
+        installed_fonts = vim.split(
+            -- Add-Type -AssemblyName PresentationCore; [Windows.Media.Fonts]::SystemFontFamilies | Select-Object -Property Source
+            vim.fn.system [[
+            powershell -NoProfile -c "Add-Type -AssemblyName PresentationCore; [Windows.Media.Fonts]::SystemFontFamilies.source"
+            ]],
+            "\n"
+        )
+    end
+    if installed_fonts then
+        fonts = vim.tbl_filter(function(font)
+            return vim.tbl_contains(installed_fonts, font)
+        end, fonts)
+    end
+    cachedFont[fonts] = fonts[1] or nil
+    return cachedFont[fonts]
+end
+EOF
+endif
 
 function! IsWSL()
     if !has('unix')
