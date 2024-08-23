@@ -180,6 +180,12 @@ return {
 		keys = {
 			{ "<c-l>", false },
 			{ "<c-s>", "<CR>", ft = "copilot-chat", desc = "Submit Prompt", remap = true },
+			{ "<leader>a", false },
+			{ "<leader>aa", false },
+			{ "<leader>ax", false },
+			{ "<leader>aq", false },
+			{ "<leader>ad", false },
+			{ "<leader>ap", false },
 		},
 	},
 
