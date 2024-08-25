@@ -55,6 +55,9 @@ bindkey -sM vicmd "\b" "ddicd .."
 # Better searching in command mode
 bindkey -M vicmd '?' history-incremental-search-backward
 bindkey -M vicmd '/' history-incremental-search-forward
+bindkey "^R" history-incremental-search-backward
+# "n" vi-repeat-search
+# "N" vi-rev-repeat-search
 
 # Cycle through history based on characters already typed on the line
 autoload -U up-line-or-beginning-search
