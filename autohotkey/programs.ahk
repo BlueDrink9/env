@@ -127,6 +127,18 @@ passwords := keepass
 ; c::Run C:\Users\user\Desktop\Google Meet.lnk
 ; #If
 
+WorkraveToggle(){
+    Process, Exist, workrave.exe
+    if (ErrorLevel)
+    {
+        Process, Close, workrave.exe
+    }
+    else
+    {
+        Run, workrave.exe
+    }
+}
+
 #Include %A_Scriptdir%\programs_hotkeys.ahk
 
 #Include *i %A_MyDocuments%\local shortcuts.ahk

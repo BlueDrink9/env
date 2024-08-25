@@ -33,6 +33,7 @@ k::calendar
 s::chat
 ; Passwords
 p::passwords
+w::WorkraveToggle
 #HotIf
 
 #HotIf IsPrefix("media")
