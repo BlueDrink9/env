@@ -47,7 +47,7 @@ return {
           name = 'buffer',
           option = {
             keyword_length = 2,
-            get_bufnrs = Get_bufnrs_to_complete_from,
+            get_bufnrs = get_bufnrs_to_complete_from,
           },
           sorting = {
             comparators = {
