@@ -11,6 +11,8 @@ return {
 
       vim.g.cmptoggle = true
       opts.enabled = function()
+        local buftype = vim.api.nvim_get_option_value("buftype", {buf=0})
+        if buftype == "prompt" then return false end
         return vim.g.cmptoggle
       end
       -- Create a quick way to toggle cmp
