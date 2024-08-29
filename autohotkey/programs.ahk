@@ -102,7 +102,7 @@ thunderbird(){
 
 signal(){
     global
-    Run(A_appdata . "\Programs\signal-desktop\Signal.exe --use-tray-icon")
+    Run(EnvGet("LOCALAPPDATA") . "\Programs\signal-desktop\Signal.exe --use-tray-icon")
 }
 chat := signal
 
