@@ -7,22 +7,24 @@ binDir="$HOME/.local/bin"
 mkdir -p "$binDir"
 
 mkdir -p "$HOME/.termux"
-downloadURLAndExtractGzTo "https://github.com/adi1090x/termux-style/raw/master/data.tar.gz" \
+downloadURLAndExtractZipTo "https://github.com/adi1090x/termux-style/archive/ee41ce0e1c261fb403763393293797fdc9784a52.zip" \
     "$HOME/.termux/termux-style" && \
     cp "$HOME/.termux/termux-style/solarized-light.properties" "$HOME/.termux/"
 
 # Allow launching of apps by name?
-# Provide launcher support. Launch _
-curl https://github.com/thewisenerd/dotfiles/blob/88d0534c67c2e93f601b1dd757cea9072eda6827/bin/zx -o "$binDir"
+# Provide launcher support. launch _
+curl https://github.com/thewisenerd/dotfiles/blob/88d0534c67c2e93f601b1dd757cea9072eda6827/bin/zx -o "$binDir"/launch
 
 # Disable openssh password auth. Only allow public key.
 sed -i 's/#PasswordAuthentication.*/PasswordAuthentication no/' "$PREFIX/etc/ssh/sshd_config"
 
 # Set up fingerprint ssh auth. Need to have existing key already copied in.
-termux-keystore generate 'default' -a RSA -s 4096 -u 10
+if ! termux-keystore list | grep -q '"alias": "default"'; then
+  termux-keystore generate 'default' -a RSA -s 4096 -u 10
+fi
 ln -s "$($SCRIPTDIR_CMD)/termux-ssh-askpass" "$binDir"/termux-ssh-askpass
 # Interactive (requires typing in old passphrase). Changes it to new one.
-ssh-keygen -p -f ~/.ssh/id_rsa \
+SSH_ASKPASS_REQUIRE="" SSH_ASKPASS="" ssh-keygen -p -f ~/.ssh/id_rsa \
     -N "$(sh termux-ssh-askpass ~/.ssh/id_rsa)"
 
 
