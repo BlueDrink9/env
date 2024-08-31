@@ -52,6 +52,10 @@ elif substrInStr "Android" "$(uname -a)";  then
   export HOSTNAME="$(getprop net.hostname)"
   export HOST="${HOSTNAME}"
   TERM_PROGRAM="termux"
+  if command -v termux-ssh-askpass > /dev/null 2>&1; then
+    export SSH_ASKPASS=termux-ssh-askpass
+    export SSH_ASKPASS_REQUIRE='force'
+  fi
 elif [ -n "$ITERM_SESSION_ID" ]; then
   # Sets term prog, colourterm itself.
   USENF=${USENF:-1}

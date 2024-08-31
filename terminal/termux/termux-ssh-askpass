@@ -1,0 +1,55 @@
+#!/usr/bin/env sh
+
+# termux-ssh-askpass v0.3
+# usage:
+#    termux-ssh-askpass [ prompt text (optional) ] [ /path/to/private.key ]
+# simple drop-in replacement for ssh-askpass that acts as a wrapper script over
+# android's hardware-backed keystore functionality and the fingerprint lock to
+# unlock passphrase-protected OpenSSH keys, often used by ssh-agent and friends
+
+# specifically, a hardware-backed inaccessible private key is stored in the
+# security chip on the device which is only available during a validity period
+# after successful fingerprint unlocks and this is used to sign the matching
+# pubkey file for the portable OpenSSH private key being unlocked by ssh-agent
+# to produce a passphrase from the signed nonce value produced by the security
+# chip
+
+# USAGE NOTES
+# 1. termux-api package and the companion Termux:API app are required
+# 2. this script assumes you have already created an android keystore
+#    RSA key with alias 'default'
+#    eg. termux-keystore generate 'default' -a RSA -s 4096 -u 10
+# 3. your SSH key should be have a passphrase generated from this script before
+#    using with ssh-agent
+#    eg. ssh-keygen -p -f ~/.ssh/id_rsa \
+#            -N "$(termux-ssh-askpass ~/.ssh/id_rsa)" -F 'old passphrase'
+
+NAME="${0##*/}"
+abort() { echo "[$NAME]" "$@" 1>&2; exit 1; }
+
+
+# OpenSSH only provides path to private key via first arg only:
+# eg. $SSH_ASKPASS "Enter passphrase for /path/to/.ssh/id_rsa (blah blah): "
+# paths provided by OpenSSH with spaces may or may not have quotes
+# therefore, DO NOT use spaces in private key paths
+[ -n "$1" ] || abort "Must be run by OpenSSH with arguments."
+f="${1%: }" # strip garbage
+f="${f% (*)}" # strip garbage emitted by ssh-add -c
+f="${f##* }" # strip preceding prompt
+f="${f%\'}"; f="${f#\'}" # strip quotes (as seen with git)
+f="${f%\"}";
+PRIVKEY="${f#\"}" # strip quotes (just in case)
+echo termux-ssh-askpass: Requesting for key "$PRIVKEY"
+
+# pubkey also required for nonce signing so don't allow running standalone
+PUBKEY="$PRIVKEY.pub"
+[ -f "$PUBKEY" ] || abort "Expected pubkey located in '$PUBKEY'."
+
+# hardware-backed signing keys with a validity duration set are only made
+# available by the security chip after successful fingerprint unlock attempt
+SIGNING_KEY='default'
+termux-fingerprint \
+  -t "$NAME" -s 'Authenticate to unlock hardware keystore' \
+  -d "Generating signed passphrase for ${PRIVKEY}" -c 'Abort' \
+  | grep -q 'AUTH_RESULT_SUCCESS' || exit 1
+termux-keystore sign "$SIGNING_KEY" SHA256withRSA < "$PUBKEY" | base64 -w 0
