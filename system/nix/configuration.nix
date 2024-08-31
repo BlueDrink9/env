@@ -35,7 +35,7 @@ in { config, pkgs, ... }:
       # ./hardware-configuration.nix
       # "/home/w/env/system/nix/packages.nix"
       # "${NIX_CONFIG_DIR}/packages.nix"
-      ./packages.nix
+      ./packages/all.nix
     ];
 
 
