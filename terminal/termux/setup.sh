@@ -39,6 +39,10 @@ echo source "$HOME/.shortcuts/vim" >> "$HOME/bin/termux-file-editor"
 # Silence banner
 touch ~/.hushlogin
 
+# If this has already been done, it asks if you want to recreate.
+yes 'n' | termux-setup-storage > /dev/null
+ln -s "$HOME/storage/shared/Work" "$HOME/Work"
+
 chmod +x "$binDir"/*
 
 echo Check https://android.stackexchange.com/questions/37/how-do-i-change-the-name-of-my-android-device to alter the hostname
