@@ -22,10 +22,10 @@ sed -i 's/#PasswordAuthentication.*/PasswordAuthentication no/' "$PREFIX/etc/ssh
 if ! termux-keystore list | grep -q '"alias": "default"'; then
   termux-keystore generate 'default' -a RSA -s 4096 -u 10
 fi
-ln -s "$($SCRIPTDIR_CMD)/termux-ssh-askpass" "$binDir"/termux-ssh-askpass
+ln -fs "$($SCRIPTDIR_CMD)/termux-ssh-askpass" "$binDir"/termux-ssh-askpass
 # Interactive (requires typing in old passphrase). Changes it to new one.
 SSH_ASKPASS_REQUIRE="" SSH_ASKPASS="" ssh-keygen -p -f ~/.ssh/id_rsa \
-    -N "$(sh termux-ssh-askpass ~/.ssh/id_rsa)"
+    -N "$(sh "$binDir/termux-ssh-askpass" ~/.ssh/id_rsa)"
 
 
 # Tasks are run in the background (termux isn't launched).
@@ -43,7 +43,7 @@ touch ~/.hushlogin
 
 # If this has already been done, it asks if you want to recreate.
 yes 'n' | termux-setup-storage > /dev/null
-ln -s "$HOME/storage/shared/Work" "$HOME/Work"
+ln -fs "$HOME/storage/shared/Work" "$HOME/Work"
 
 chmod +x "$binDir"/*
 
