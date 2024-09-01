@@ -26,7 +26,13 @@
 
 NAME="${0##*/}"
 abort() { echo "[$NAME]" "$@" 1>&2; exit 1; }
+# Echo args in case of misc error
+echo $@ 1>&2;
 
+# Deal with case when host key fingerprint isn't known.
+if echo "$@" | grep -q "key fingerprint is "; then
+  abort "Cannot automatically deal with this. Run " SSH_ASKPASS_REQUIRE= ssh [host]
+fi
 
 # OpenSSH only provides path to private key via first arg only:
 # eg. $SSH_ASKPASS "Enter passphrase for /path/to/.ssh/id_rsa (blah blah): "
@@ -37,9 +43,9 @@ f="${1%: }" # strip garbage
 f="${f% (*)}" # strip garbage emitted by ssh-add -c
 f="${f##* }" # strip preceding prompt
 f="${f%\'}"; f="${f#\'}" # strip quotes (as seen with git)
-f="${f%\"}";
-PRIVKEY="${f#\"}" # strip quotes (just in case)
-echo termux-ssh-askpass: Requesting for key "$PRIVKEY"
+f="${f%\"}"; f="${f#\"}" # strip quotes (just in case)
+PRIVKEY="$f"
+echo termux-ssh-askpass: Requesting for key "'$PRIVKEY'" 1>&2;
 
 # pubkey also required for nonce signing so don't allow running standalone
 PUBKEY="$PRIVKEY.pub"
