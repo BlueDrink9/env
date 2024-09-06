@@ -6,16 +6,18 @@ extractPSCmdCol(){
   # The PS COMMAND col is sometimes abbreviated CMD
   awk -v p='C(OM)?M(AN)?D' 'NR==1 {n=match($0, p); next} {print substr($0, n)}'
 }
+
 getShellProgram(){
-  # Get cmd of current process, last row of ps, strip leading - (osx) and trailing args.
-  # Doesn't strip directory though...
-  basename $(ps -p $$ | extractPSCmdCol | tail -1 | sed 's/^-//' | sed 's/ -.*//')
-  # Get default shell, stripping leading '-' and directory
-  # For some reason this just prints the function name.
-  # shell_base="${0##*/}"
-  # shell_base="${shell_base#-}"
-  # echo $shell_base
-  # unset $shell_base
+  # Get cmd of the current process, last row of ps, strip leading - (OSX), and trailing args
+  ps -p $$ | extractPSCmdCol | tail -n1
+  # Commented these bits because I don't seem to need them on linux -
+  # might on OSX?
+  # | {
+  #   read line
+  #   line=${line#-}     # Remove leading dash
+  #   set -- $line       # Split into words
+  #   echo "$1"          # Output the command part (first word)
+  # }
 }
 
 loadProfile(){
@@ -23,8 +25,8 @@ loadProfile(){
   SHELL_PROGRAM="$(getShellProgram)"
   # $SHELL will retain the value of the login shell if starting a
   # new shell as a subprocess, so we can't rely on just using
-  # $SHELL.
-  if [ "$SHELL_PROGRAM" != "$(basename "$SHELL")" ]; then
+  # $SHELL. ##*/ to get basename of process.
+  if [ "$SHELL_PROGRAM" != "${SHELL##*/}" ]; then
     unset PROFILE_LOADED
     export SHELL="$(which $SHELL_PROGRAM)"
   fi
