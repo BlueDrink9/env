@@ -189,7 +189,8 @@ zoxide_init(){
 alias z="zoxide_init"
 
 if command -v thefuck >/dev/null 2>&1; then
-  eval $(thefuck --alias)
+  # lazy-load thefuck because it's super slow to eval
+  alias fuck='if ! declare -f fuck &>/dev/null; then eval -- "$(thefuck -a)"; fi && fuck'
 fi
 
 # For AUR packages
