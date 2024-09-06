@@ -275,15 +275,14 @@ ssh_copy_terminfo (){
 
 generate_export_termoptions_cmd(){
   out=""
-  for _option in ${TERMOPTIONS[*]}; do
-    out="${out} export ${_option}=$(var_expand ${_option}); "
+  for _option in "${TERMOPTIONS[@]}"; do
+    out="${out} export ${_option}=$(var_expand "${_option}"); "
   done
   echo "${out}"
 }
 
 set_tmux_termoptions(){
   if is_tmux_running; then
-    for _option in ${TERMOPTIONS[*]}; do
       # If attaching to a running tmux
       # session, we set a variable in tmux's global environment from
       # the containing shell. (This must be done before attaching to work!)
@@ -291,10 +290,10 @@ set_tmux_termoptions(){
 
       ## Set tmux environment
       # Check that we're in a session
-      if [ ! -z "$TMUX" ]; then
-        for _option in ${TERMOPTIONS[*]}; do
+      if [ -n "$TMUX" ]; then
+        for _option in "${TERMOPTIONS[@]}"; do
           # Refresh term_option shell variables by parsing tmux's global environment
-          optval="$(\tmux show-environment -g ${_option} 2>/dev/null)"
+          optval="$(\tmux show-environment -g "${_option}" 2>/dev/null)"
           # Silence error when tmux is started as a login shell (or close-to).
           if [ -n "${optval}" ]; then
             export "${_option}"="${optval##*=}"
@@ -302,10 +301,11 @@ set_tmux_termoptions(){
           unset optval
         done
       else
-        # Should this go after attaching tmux or before???
-        \tmux setenv -g "${_option}" "$(var_expand ${_option})"
+        for _option in "${TERMOPTIONS[@]}"; do
+          # Should this go after attaching tmux or before???
+          \tmux setenv -g "${_option}" "$(var_expand ${_option})"
+        done
       fi
-    done
   fi
 }
 
