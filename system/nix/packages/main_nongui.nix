@@ -37,6 +37,7 @@
     thefuck
     bluetuith
     sqlite
+    ncurses
 
     veracrypt
     syncthing
