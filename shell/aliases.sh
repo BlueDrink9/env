@@ -34,7 +34,16 @@ case "${OSTYPE}" in
   ;;(*) true ;;
 esac
 
-if command -v lsd >/dev/null 2>&1 && [ "$USENF" = 1 ]; then
+# shellcheck disable=SC2139
+if command -v eza >/dev/null 2>&1; then
+  eza_icons=""
+  if [ "$USENF" = 1 ]; then
+    eza_icons=" --icons=auto"
+  fi
+  alias ls="eza""${eza_icons}"
+  alias tree="eza --tree""${eza_icons}"
+  unset eza_icons
+elif command -v lsd >/dev/null 2>&1 && [ "$USENF" = 1 ]; then
   alias ls="lsd"
   alias tree="lsd --tree"
 elif command -v exa >/dev/null 2>&1; then

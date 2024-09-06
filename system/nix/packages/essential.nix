@@ -44,7 +44,7 @@ in
     gcc
     python3
     unzip
-    lsd
+    eza
     bat
     zoxide
     rsync
