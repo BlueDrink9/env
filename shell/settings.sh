@@ -128,27 +128,35 @@ export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 #{[} fzf
-# This is added to .bashrc by fzf on installation anyway, and it's easier to disable from there.
-# if [ -f ~/.fzf.bash ]; then
-# source ~/.fzf.bash
-# fi
-export FZF_CTRL_R_OPTS='--sort'
-if command -v fd >/dev/null 2>&1; then
-  # Use fd (https://github.com/sharkdp/fd) instead of the default find
-  # command for listing path candidates.
-  # - The first argument to the function ($1) is the base path to start traversal
-  # - See the source code (completion.{bash,zsh}) for the details.
-  _fzf_compgen_path() {
-    fd --hidden --follow --exclude ".git" . "$1"
-  }
-
-  # Use fd to generate the list for directory completion
-  _fzf_compgen_dir() {
-    fd --type d --hidden --follow --exclude ".git" . "$1"
-  }
-  export FZF_DEFAULT_COMMAND='fd --type f --color=never'
-  # export FZF_ALT_C_COMMAND='fd --type d . --color=never'
-  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+if command -v fzf > /dev/null; then
+  # Set up fzf key bindings and fuzzy completion
+  case "$SHELL" in
+    *zsh)
+      . <(fzf --zsh)
+      # Extra completions - commadn not found?
+      # _fzf_setup_completion path ag git kubectl
+      # _fzf_setup_completion dir tree
+      ;;
+    *bash)
+      eval "$(fzf --bash)"
+      ;;
+    *)
+      ;;
+  esac
+  export FZF_CTRL_R_OPTS='--sort'
+  # Default is **, a bit unergonomic. Still need a tab to start it anyway.
+  export FZF_COMPLETION_TRIGGER='*'
+  if command -v fd >/dev/null 2>&1; then
+    _fzf_compgen_path() {
+      fd --hidden --follow --exclude ".git" . "$1"
+    }
+    _fzf_compgen_dir() {
+      fd --type d --hidden --follow --exclude ".git" . "$1"
+    }
+    # export FZF_DEFAULT_COMMAND='fd --type f --color=never'
+    # export FZF_ALT_C_COMMAND='fd --type d . --color=never'
+    # export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  fi
 fi
 #{]}
 

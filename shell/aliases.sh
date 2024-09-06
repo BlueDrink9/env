@@ -113,7 +113,7 @@ export GIT_EDITOR='myVim --cmd "let g:liteMode=1" +"set ft=gitcommit"'
 export SUDO_EDITOR="$(myVim --print-editor-only)"
 
 fuzzyEdit(){
-  $editor "$(fzf)"
+  fzf --multi --bind 'enter:become('"$editor"' {+})'
 }
 # alias ls="ls -CF --color=auto"
 # ;e and ;q are also defined, but via readline
@@ -171,14 +171,20 @@ alias mosh="mosh_with_options"
 alias ssh="ssh_with_options"
 # rg + bat.
 alias bgr="batgrep"
+z_fzf() {
+  [ $# -gt 0 ] && __zoxide_z "$@" && return
+  zoxide query --interactive
+}
 zoxide_init(){
   shell="$(basename "$SHELL")"
-  if [ "$shell" = "sh" ]; then 
+  if [ "$shell" = "sh" ]; then
     eval "$(zoxide init posix --hook prompt)"
   else
     eval "$(zoxide init $shell)"
   fi
-  __zoxide_z "$@"
+  z_fzf "$@"
+  unalias z 2> /dev/null
+  alias z="z_fzf"
 }
 alias z="zoxide_init"
 

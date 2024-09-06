@@ -35,11 +35,6 @@ zinit ice wait lucid
 zinit light wazum/zsh-directory-dot-expansion
 
 
-# Binary release in archive, from GitHub-releases page.
-# After automatic unpacking it provides program "fzf".
-zinit ice wait lucid from"gh-r" as"program"
-zinit load junegunn/fzf-bin
-
 zinit ice wait lucid
 zinit light liangguohuan/zsh-dircolors-solarized
 export DIRCOLORTHEME='dircolors.ansi-universal'
