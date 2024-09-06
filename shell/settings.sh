@@ -18,7 +18,6 @@ COLORTERM=${COLORTERM:-16}
 # Tmux overrides TERM_PROGRAM, so in tmux we may have pushed it
 # into TERMINAL_PROGRAM
 TERM_PROGRAM=${TERMINAL_PROGRAM:${TERM_PROGRAM:-}}
-echo $TERM_PROGRAM
 # Export each term option.
 export ${TERMOPTIONS?}
 # Needed for TERMOPTIONS as a string to export properly.
