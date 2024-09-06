@@ -21,6 +21,9 @@ getShellProgram(){
 loadProfile(){
   # When changing shells, force setup again.
   SHELL_PROGRAM="$(getShellProgram)"
+  # $SHELL will retain the value of the login shell if starting a
+  # new shell as a subprocess, so we can't rely on just using
+  # $SHELL.
   if [ "$SHELL_PROGRAM" != "$(basename "$SHELL")" ]; then
     unset PROFILE_LOADED
     export SHELL="$(which $SHELL_PROGRAM)"

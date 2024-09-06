@@ -42,6 +42,13 @@ in { config, pkgs, ... }:
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.configurationLimit = 10;
+  # boot.loader.systemd-boot.rebootForBitlocker = true; # experimental
+  boot.loader.timeout = 0;
+
+  # boot.plymouth.logo
+  # boot.plymouth.theme
+
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -136,7 +143,6 @@ in { config, pkgs, ... }:
 
   # nix.gc = { automatic = true; persistent = true; dates = "05:00:00"; options = "--delete-older-than 7d"; };
 
-  boot.loader.systemd-boot.configurationLimit = 10;
   # Perform garbage collection weekly to maintain low disk usage
   nix.gc = {
     automatic = true;
@@ -169,5 +175,14 @@ in { config, pkgs, ... }:
     '';
 
   };
+
+  environment.etc = {
+    rc.local = {
+      text = ''
+        alias renix="sudo nixos-rebuild switch"
+        '';
+    };
+  };
+
 
 }

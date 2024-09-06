@@ -9,5 +9,6 @@
     ./gui.nix
     ./plasma.nix
     ./essential.nix
+    ./sysadmin.nix
   ];
 }
