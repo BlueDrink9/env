@@ -46,6 +46,7 @@ in
     unzip
     eza
     bat
+    vivid
     zoxide
     rsync
     jq

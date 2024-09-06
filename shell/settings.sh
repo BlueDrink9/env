@@ -90,7 +90,15 @@ export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --
 # Brew's way of doing it...
 [ -x lesspipe.sh ] && export LESSOPEN="|lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
 
-if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
+# Use bat as man pager for syntax highlighting
+if command -v bat > /dev/null; then
+  # bat->batcat for debian-based systems
+  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+  export MANROFFOPT="-c"
+fi
+export BAT_THEME="OneHalfLight"
+
+if substrInStr "darwin1" "$OSTYPE"; then  # OSX specific stuff
   # Solarized ls dircolours (sort of)
   export CLICOLOR=1
   # Recommended... but wrong?
@@ -99,6 +107,19 @@ if [[ "$OSTYPE" =~ "darwin1" ]]; then  # OSX specific stuff
   export LSCOLORS=exgxbAbAcxbhxbhBhDhcea
 elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
   true
+fi
+if command -v vivid > /dev/null; then
+  args=""
+  if [ "$COLORTERM" != "truecolor" ]; then
+    args=" --color-mode 8-bit"
+  fi
+  if substrInStr ayu "$COLOURSCHEME"; then
+    theme="ayu"
+  else
+    theme="$(echo "$COLOURSCHEME" | tr '_' '-')"
+  fi
+  export LS_COLORS="$(vivid $args generate "$theme")"
+  unset args theme
 fi
 
 export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
