@@ -330,7 +330,8 @@ if (!g:hasGUI || has('terminal') || has('nvim')) && !has('g:vscode')
                 \ 'Lines',
                 \ 'Tags',
                 \ 'Commands',
-                \ 'History'
+                \ 'History',
+                \ 'RG'
                 \ ]}
 else
     Plugin 'https://github.com/ctrlpvim/ctrlp.vim'
