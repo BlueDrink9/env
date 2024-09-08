@@ -163,7 +163,7 @@ super + ctrl + shift + {1-9,0}
 # Swap desktops within current monitor or across monitors
 # Presumably want to focus the new position, or at least switch to showing it in the case of switching monitors...
 # looks like swap for desktops is broken atm? Or just not when sticky window has been opened before.
-super + w; {_,alt +} {comma,period}
+super + w; {_,alt +} {less,greater}
   bspc desktop {--swap,--to-monitor} {prev,next} --follow
 # Create/remove a new desktop on current monitor, with number for name
 super + {w; ,_}{n,d}
