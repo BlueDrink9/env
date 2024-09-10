@@ -128,7 +128,7 @@ spec.config = function()
             vim.g.autowrite_timer_started = true
             vim.fn.timer_start(2000, function()
                 vim.g.autowrite_timer_started = false
-                vim.cmd('write')
+                vim.fn.Autosave()
             end)
         end
     })
