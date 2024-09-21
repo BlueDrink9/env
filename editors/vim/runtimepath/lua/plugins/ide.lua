@@ -439,6 +439,7 @@ return {
 				keymap = {
 					accept = "<C-j>",
 					next = "<M-j>",
+					previous = "<M-k>",
 				}
 			},
 			panel = {
