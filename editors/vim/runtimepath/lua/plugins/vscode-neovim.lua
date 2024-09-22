@@ -195,6 +195,26 @@ local function VSCodeFTMaps(ft)
         return opfuncRunMotion() .. '_'
     end, { expr = true })
 end
+-- Example for using vscode api to map operator
+-- local format = vscode.to_op(function(ctx)
+--   vscode.action("editor.action.formatSelection", { range = ctx.range, callback = esc })
+-- end)
+-- local format_line = function()
+--   return format() .. "_"
+-- end
+--
+-- k({ "n", "x" }, "gq", format)
+-- k({ "n" }, "gqq", format_line)
+-- k({ "n", "x" }, "=", format)
+-- k({ "n" }, "==", format_line)
+-- local comment = vscode.to_op(function(ctx)
+--   local cmd = ctx.is_linewise and "editor.action.commentLine" or "editor.action.blockComment"
+--   local opts = { range = ctx.range, callback = esc }
+--   if ctx.is_linewise and ctx.is_current_line then
+--     opts.range = nil
+--   end
+--   vscode.action(cmd, opts)
+-- end
 
 vim.api.nvim_create_autocmd('FileType', {
     pattern = {'sql', 'python'},
