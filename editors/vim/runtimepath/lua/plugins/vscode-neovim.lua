@@ -80,7 +80,8 @@ local function VSCodeMaps()
         ['<tab>'] = '""',
         [idemaps.FuzzyCommands] = 'workbench.action.showCommands',
         [idemaps.GitStage] = 'git.stageSelectedRanges',
-        [idemaps.GitUnstage] = 'git.unstageSelectedRanges'
+        [idemaps.GitUnstage] = 'git.unstageSelectedRanges',
+        [idemaps.debugConsoleSend] = 'editor.debug.action.selectionToRepl',
     }
 
     VSCodeMapDict(nmappings, vmappings)
@@ -195,18 +196,23 @@ local function VSCodeFTMaps(ft)
         return opfuncRunMotion() .. '_'
     end, { expr = true })
 end
--- Example for using vscode api to map operator
--- local format = vscode.to_op(function(ctx)
---   vscode.action("editor.action.formatSelection", { range = ctx.range, callback = esc })
--- end)
--- local format_line = function()
---   return format() .. "_"
--- end
---
--- k({ "n", "x" }, "gq", format)
--- k({ "n" }, "gqq", format_line)
--- k({ "n", "x" }, "=", format)
--- k({ "n" }, "==", format_line)
+
+
+-- Using vscode api to map operator
+local function esc()
+  local key = vim.api.nvim_replace_termcodes("<esc>", true, true, true)
+  vim.api.nvim_feedkeys(key, "n", false)
+end
+local debugConsoleSend = vscode.to_op(function(ctx)
+    vscode.action("editor.debug.action.selectionToRepl", { range = ctx.range, callback = esc })
+end)
+local debugConsoleSendLine = function()
+    return debugConsoleSend() .. "_"
+end
+
+vim.keymap.set({ "n", "x" }, idemaps.debugConsoleSend, debugConsoleSend)
+vim.keymap.set({ "n", "x" }, idemaps.debugConsoleSendLine, debugConsoleSendLine)
+
 -- local comment = vscode.to_op(function(ctx)
 --   local cmd = ctx.is_linewise and "editor.action.commentLine" or "editor.action.blockComment"
 --   local opts = { range = ctx.range, callback = esc }

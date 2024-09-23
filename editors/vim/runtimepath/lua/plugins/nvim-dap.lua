@@ -48,13 +48,13 @@ local specs = {
          }
 
          local dapui_nbufmaps = {
-            -- [maps.REPLSend]  = 'eval()',
+            [maps.debugConsoleSend]  = 'eval()',
             -- require("dapui").toggle()
             ["<leader>de"]  = 'eval()',
             ["<leader>du"] = 'toggle({})',
          }
          local dapui_vbufmaps = {
-            -- [maps.REPLSend]  = 'eval()',
+            [maps.debugConsoleSend]  = 'eval()',
             -- require("dapui").toggle()
          }
 

@@ -47,6 +47,7 @@ let g:IDE_mappings = {
             \ 'debugShowStoppedLine' : 'gb',
             \ 'debugShowStoppedLine2' : '<leader>dH',
             \ 'debugConsoleSend' : '<leader>r',
+            \ 'debugConsoleSendLine' : '<leader>rr',
             \ 'TermToggle' : '<c-s>',
             \ 'lintBuffer' : '<leader>il',
             \ 'make' : 'm<cr>',
