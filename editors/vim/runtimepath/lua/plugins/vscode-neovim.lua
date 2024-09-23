@@ -148,30 +148,36 @@ vim.api.nvim_create_autocmd('User', {
 -- FT specific
 local function VSCodeFTMaps(ft)
     if ft == 'sql' then
-        REPLSendCommand = 'mssql.runQuery'
+        REPLSendCmd = 'mssql.runQuery'
         VSCodeMapDict({
-            [idemaps.REPLSendFile] = REPLSendCommand,
-            [idemaps.REPLCancel] = 'mssql.cancelQuery'
+            [idemaps.REPLSendFile] = REPLSendCmd,
+            [idemaps.REPLCancel] = 'mssql.cancelQuery',
         }, {
             [idemaps.REPLSend] = 'mssql.runQuery'
         })
     elseif ft == 'python' then
-        REPLSendCommand = 'jupyter.execSelectionInteractive'
+        REPLSendCmd = 'jupyter.execSelectionInteractive'
         VSCodeMapDict({
-            [idemaps.REPLSendFile] = 'jupyter.runFileInteractive'
+            [idemaps.REPLSendFile] = 'jupyter.runFileInteractive',
+            [idemaps.runFile] = 'python.execInTerminal',
         }, {
-            [idemaps.REPLSend] = REPLSendCommand
+            [idemaps.REPLSend] = REPLSendCmd
         })
     else
         -- No filetype specific mappings for this ft yet
         return
     end
+        VSCodeMapDict({
+            [idemaps.REPLSendFile] = 'jupyter.runFileInteractive'
+        }, {
+            [idemaps.REPLSend] = REPLSendCmd
+        })
 
     vim.keymap.set('v', idemaps.REPLSend,
         function()
             -- Reset visual mode so the selection is passed over
             vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>', true, false, true), 'x', true)
-            require('vscode').action(REPLSendCommand, {range = {vim.fn.line("'<"), vim.fn.line("'>")}})
+            require('vscode').action(REPLSendCmd, {range = {vim.fn.line("'<"), vim.fn.line("'>")}})
         end
     )
 
@@ -180,14 +186,14 @@ local function VSCodeFTMaps(ft)
             vim.opt.opfunc = 'v:lua.opfuncRunMotion'
             return 'g@'
         end
-        if not REPLSendCommand then
+        if not REPLSendCmd then
             print("no repl command set for this filetype: '" .. vim.bo.filetype .. "'")
             return
         end
         local line1, line2 = vim.fn.line("'["), vim.fn.line("']")
         -- 0 to deselect visual after calling. Call rather than notify to
         -- not deselect until after.
-        require('vscode').action(REPLSendCommand, { range = range })
+        require('vscode').action(REPLSendCmd, { range = range })
     end
 
     vim.keymap.set('n', idemaps.REPLSend, opfuncRunMotion, { expr = true })
