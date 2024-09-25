@@ -1,0 +1,21 @@
+#!/bin/sh
+
+if echo 'n' | lpass logout 2>&1 | grep -qv "you sure"; then
+    echo 'Not logged in. Enter lastpass username:'
+    read username
+    lpass login "$username"
+    if [ ! "$?" -eq 0 ]; then
+      echo "Failed to login" >&2
+      exit $?
+    fi
+fi
+
+chosen_element="$(lpass ls | fzf)"
+
+if [ "$?" -eq 0 ]; then
+    chosen_element_id="$(echo "$chosen_element" | egrep -o 'id: [0-9]+' | awk '{ print $2; }')"
+    echo "Chose id: $chosen_element_id"
+    lpass show --password "$chosen_element_id" | xclip -selection clipboard
+else
+    echo 'Cancelled operation...'
+fi

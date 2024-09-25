@@ -167,6 +167,7 @@ alias packrm="pack remove"
 alias pack\?="pack info"
 
 alias lpssh="lastpass_ssh_key_add"
+alias lp="lpass-fzf"
 alias mosh="mosh_with_options"
 alias ssh="ssh_with_options"
 # rg + bat.
