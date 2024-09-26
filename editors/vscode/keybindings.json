@@ -41,8 +41,13 @@
     },
     {
         "key": "ctrl+e",
-        "command": "acceptSelectedSuggestion",
+        "command": "acceptSelectedSuggestion"
         "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+    },
+    {
+        "key": "ctrl+e",
+        "command": "editor.action.inlineSuggest.commit",
+        "when": "inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible"
     },
     // {
     //     "key": "down",
