@@ -51,7 +51,11 @@ local function VSCodeMaps()
         [idemaps.GitCommit] = 'git.commit',
         [idemaps.GitStage] = 'git.stage',
         [idemaps.GitAmend] = 'git.commitStagedAmend',
-        [idemaps.debugFile] = 'workbench.action.debug.run',
+        -- [idemaps.debugFile] = 'workbench.action.debug.run',
+        -- Restart will start if not runninng, same as debug.run.
+        -- Meanwhile debug.run will start new instanec rather than
+        -- continue. Prefer to keep that mapping for continue...
+        [idemaps.debugFile] = 'workbench.action.debug.continue',
         [idemaps.debugStart] = 'workbench.action.debug.run',
         [idemaps.debugRestart] = 'workbench.action.debug.restart',
         [idemaps.debugReset] = 'workbench.action.debug.stop',
