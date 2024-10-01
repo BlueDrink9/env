@@ -53,6 +53,7 @@ in
     openssh
     pstree
     ncdu
+    nix-search-cli
   ];
 
 }

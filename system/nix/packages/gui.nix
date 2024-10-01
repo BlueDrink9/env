@@ -122,6 +122,8 @@
     zotero
     joplin
     signal-desktop
+    zapzap
+    caprine-bin
     neovide
     brave
     pcloud
@@ -131,6 +133,15 @@
     marimo
     # Need Hunspell for libreoffice spellcheck, used for emacs too
     libreoffice-qt-fresh hunspell hunspellDicts.en_AU
+    espanso
+    marimo
+
+    flameshot
+    picom
+    feh
+    playerctl
+
+    heroic
 
     # xremap-flake.nixosModules.default
   ];
