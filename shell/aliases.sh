@@ -174,7 +174,7 @@ alias ssh="ssh_with_options"
 alias bgr="batgrep"
 z_fzf() {
   [ $# -gt 0 ] && __zoxide_z "$@" && return
-  zoxide query --interactive
+  __zoxide_z "$(zoxide query --interactive)"
 }
 zoxide_init(){
   shell="$(basename "$SHELL")"
