@@ -1,11 +1,15 @@
 { config, pkgs, lib, ... }:
 let
   plasma6-applets-window-title = import ./plasma6-applets-window-title.nix { inherit pkgs lib; };
+  # sweet-theme-kde = import ./sweet-theme-kde.nix { inherit pkgs lib; };
   dotfilesDir = builtins.getEnv "DOTFILES_DIR";
 in
   {
   home.packages = with pkgs; [
     plasma6-applets-window-title
+    # sweet-theme-kde
+    sweet-nova
+    candy-icons
   ];
 
 
@@ -79,10 +83,19 @@ in
       TerminalApplication = "kitty";
     };
 
+    spectacle.shortcuts.captureRectangularRegion = "";
+
+    # workspace.theme = "sweet";
+    # workspace.iconTheme = "candy";
+    # workspace.windowDecorations = "mojave";
+    # workspace.windowDecorations = "sweet";
 
     panels = [
       {
         location = "bottom";
+        height=44;
+        lengthMode = "fill";
+        screen = "all";
         widgets = [
           {
             kickoff = {
@@ -302,5 +315,6 @@ in
   #   run systemctl --user enable plasma-bspwm.service
   #   '';
   # };
+
 
 }
