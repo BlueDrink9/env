@@ -110,19 +110,19 @@ if substrInStr "darwin1" "$OSTYPE"; then  # OSX specific stuff
 elif [ "$OSTYPE" = "linux-gnu" ]; then  # Linux specific stuff
   true
 fi
-if command -v vivid > /dev/null; then
-  args=""
-  if [ "$COLORTERM" != "truecolor" ]; then
-    args=" --color-mode 8-bit"
-  fi
-  if substrInStr ayu "$COLOURSCHEME"; then
-    theme="ayu"
-  else
-    theme="$(echo "$COLOURSCHEME" | tr '_' '-')"
-  fi
-  export LS_COLORS="$(vivid $args generate "$theme")"
-  unset args theme
-fi
+# if command -v vivid > /dev/null; then
+#   args=""
+#   if [ "$COLORTERM" != "truecolor" ]; then
+#     args=" --color-mode" "8-bit"
+#   fi
+#   if substrInStr ayu "$COLOURSCHEME"; then
+#     theme="ayu"
+#   else
+#     theme="$(echo "$COLOURSCHEME" | tr '_' '-')"
+#   fi
+#   export LS_COLORS="$(vivid $args generate "$theme")"
+#   unset args theme
+# fi
 
 export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
 
