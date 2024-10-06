@@ -5,6 +5,7 @@
   programs.ydotool.enable = true;
   programs.kdeconnect.enable = true;
   programs.system-config-printer.enable = true;
+  programs.command-not-found.enable = true;
   programs.adb.enable = true;
   programs.appimage = {
     enable = true;
@@ -26,6 +27,7 @@
     ncurses
     bat-extras.batgrep
     cheat
+    navi
     tldr
     broot
     duf

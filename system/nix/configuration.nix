@@ -141,8 +141,6 @@ in { config, pkgs, ... }:
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
 
-  # nix.gc = { automatic = true; persistent = true; dates = "05:00:00"; options = "--delete-older-than 7d"; };
-
   # Perform garbage collection weekly to maintain low disk usage
   nix.gc = {
     automatic = true;
@@ -175,6 +173,9 @@ in { config, pkgs, ... }:
     '';
 
   };
+
+  services.thermald.enable = true;
+  services.auto-cpufreq.enable = true;
 
   environment.shellAliases = {
     renix="sudo nixos-rebuild switch";

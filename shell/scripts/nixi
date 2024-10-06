@@ -1,2 +1,19 @@
-#!/usr/bin/env bash
-nix-env -iA nixpkgs.$1 || nix-env -i $1
+#!/bin/sh
+# nix-env -iA nixpkgs.$1 || nix-env -i $1
+
+ # Check if an argument is provided
+ if [ "$#" -ne 1 ]; then
+     echo "Usage: $0 package-name"
+     exit 1
+ fi
+
+ FILE="$HOME/.config/home-manager/local_packages.nix"
+
+ # Insert the new line as the third-to-last line. Should be the
+ # last line before the end of the package list.
+ # Use sed to insert the new line as the third-to-last line
+ sed -i "$(($(wc -l < "$FILE") - 1))i\\
+ $1" "$FILE"
+
+ # Rerun home-manager install
+ home-manager switch
