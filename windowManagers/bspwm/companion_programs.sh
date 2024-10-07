@@ -38,7 +38,9 @@ picom --config "$DOTFILES_DIR"/desktop_elements/picom.conf -b \
    >| $HOME/.logs/picom.log 2>| $HOME/.logs/picom.err
 
 # Plasma nightshift doesn't work without kwin.
-redshift-gtk -l -41.28664:174.77557 -t 6500:3000 -b 1:0.7 &
+if ! pgrep "redshift" > /dev/null 2>&1; then
+  redshift-gtk -l -41.28664:174.77557 -t 6500:3000 -b 1:0.7 &
+fi
 
 "$DOTFILES_DIR"/windowManagers/bspwm/scripts/floating_noborder.sh &
 
