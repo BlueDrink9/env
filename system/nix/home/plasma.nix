@@ -110,6 +110,7 @@ in
                 displayedText = "name";
                 showWindowIcons = true;
                 wrapPage = true;
+                showOnlyCurrentScreen = true;
               };
             };
           }
@@ -122,7 +123,7 @@ in
                 capitalFont = false;
                 containmentType = "Plasma";
                 lengthLastMargin = 15;
-                lengthPolicy = "Fill";
+                lengthPolicy = "Maximum";
                 perScreenActive = true;
                 spacing = 0;
                 style = 3;
@@ -130,8 +131,6 @@ in
             };
           }
           "org.kde.plasma.panelspacer"
-          "org.kde.plasma.systemtray"
-          "org.kde.plasma.digitalclock"
           {
             systemTray.items = {
               shown = [
@@ -144,6 +143,7 @@ in
               ];
             };
           }
+          "org.kde.plasma.digitalclock"
         ];
         # hiding = "autohide";
       }
