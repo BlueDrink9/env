@@ -1,4 +1,5 @@
 #!/bin/sh
+set -eu
 # nix-env -iA nixpkgs.$1 || nix-env -i $1
 
  # Check if an argument is provided
@@ -7,7 +8,7 @@
      exit 1
  fi
 
- FILE="$HOME/.config/home-manager/local_packages.nix"
+ FILE="$HOME/.config/home-manager/local-packages.nix"
 
  # Insert the new line as the third-to-last line. Should be the
  # last line before the end of the package list.
