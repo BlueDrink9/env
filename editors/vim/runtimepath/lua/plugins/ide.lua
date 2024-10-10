@@ -366,6 +366,37 @@ return {
 		end,
 	},
 
+	-- build123d snippets, vscode formatted
+	{
+		url="https://gist.github.com/6233ac42632d9098c99da029fe0615c2.git",
+		name="build123d-OCP.code-snippets",
+		ft="python",
+		build=function(_)
+			local package_json = vim.json.encode({
+				name= "build123d-OCP.code-snippets",
+				engines= {
+					vscode= "^1.11.0"
+				},
+				contributes= {
+					snippets= {
+						{
+							language= {
+								"python",
+							},
+							path= "./build123d-OCP.code-snippets/snippets"
+						}
+					}
+				}
+			})
+			local file = io.open(vim.g.pluginInstallPath ..
+				"/build123d-OCP.code-snippets/package.json", "w")
+			 if file then
+				 file:write(package_json)
+				 file:close()
+			end
+		end
+	},
+
 	{ "polypus74/trusty_rusty_snippets", ft="rust"},
 
 	{ "octaltree/virtualsnip", build = "make", event = "InsertEnter" },
@@ -460,5 +491,36 @@ return {
 		},
 		cmd = { "VenvSelect", "VenvSelectCached" },
 	},
+
+	{ "quarto-dev/quarto-nvim",
+		ft = {"qmd", "quarto", "ipynb"},
+
+		dependencies = {
+			"jmbuhr/otter.nvim",
+			"nvim-treesitter/nvim-treesitter",
+			{ 'GCBallesteros/jupytext.nvim',
+				-- directly open ipynb files as quarto docuements
+				-- and convert back behind the scenes
+				opts = {
+					custom_language_formatting = {
+						python = {
+							extension = 'qmd',
+							style = 'quarto',
+							force_ft = 'quarto',
+						},
+						r = {
+							extension = 'qmd',
+							style = 'quarto',
+							force_ft = 'quarto',
+						},
+					},
+				},
+			},
+
+		},
+
+	},
+
+
 
 }
