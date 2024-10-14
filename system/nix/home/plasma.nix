@@ -93,7 +93,7 @@ in
     panels = [
       {
         location = "bottom";
-        height=44;
+        height=35;
         lengthMode = "fill";
         screen = "all";
         widgets = [
@@ -316,5 +316,11 @@ in
   #   '';
   # };
 
+  # Restart plasmashell
+  home.activation.restartPlasmaShell =
+    config.lib.dag.entryAfter ["reloadSystemd"]
+    ''${pkgs.systemd}/bin/systemctl restart --user plasma-plasmashell && \
+      ${pkgs.systemd}/bin/systemctl enable --user plasma-plasmashell
+    '';
 
 }
