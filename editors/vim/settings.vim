@@ -394,9 +394,9 @@ if v:version >= 800
     " put linebreak in number column? Doesn't seem to work...
     set cpoptions+=n
 endif
-if exists('+wrapmargin')
-    set wrapmargin=3
-endif
+" if exists('+wrapmargin')
+"     set wrapmargin=3
+" endif
 " backspace and cursor keys wrap to previous/next line
 set backspace=indent,eol,start whichwrap+=<,>,[,]
 " Colour the 80th column
