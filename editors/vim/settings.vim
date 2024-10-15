@@ -404,7 +404,7 @@ set colorcolumn=80
 " Linebreak relates to when a line wraps (ie not in a word)
 set linebreak
 set breakindent
-set breakindentopt=sbr,min:30
+set breakindentopt=sbr,min:30,shift:-1
 " Vertical window splits open on right side, horizontal below
 set splitright
 set splitbelow
