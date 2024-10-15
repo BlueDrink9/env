@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, qttools, ... }:
 let
   plasma6-applets-window-title = import ./plasma6-applets-window-title.nix { inherit pkgs lib; };
   # sweet-theme-kde = import ./sweet-theme-kde.nix { inherit pkgs lib; };
@@ -10,6 +10,7 @@ in
     # sweet-theme-kde
     sweet-nova
     candy-icons
+    kdePackages.qttools
   ];
 
 
@@ -93,7 +94,7 @@ in
     panels = [
       {
         location = "bottom";
-        height=35;
+        height=44;
         lengthMode = "fill";
         screen = "all";
         widgets = [
@@ -317,10 +318,13 @@ in
   # };
 
   # Restart plasmashell
-  home.activation.restartPlasmaShell =
-    config.lib.dag.entryAfter ["reloadSystemd"]
-    ''${pkgs.systemd}/bin/systemctl restart --user plasma-plasmashell && \
-      ${pkgs.systemd}/bin/systemctl enable --user plasma-plasmashell
-    '';
+  # Not much point actually, since the panel script doesn't run until autostarting and is tricky to run from within a nix environment.
+      # ${pkgs.plasma-manager}/run_all.sh
+  # home.activation.restartPlasmaShell =
+  #   config.lib.dag.entryAfter ["reloadSystemd"]
+  #   ''${pkgs.systemd}/bin/systemctl restart --user plasma-plasmashell && \
+  #     ${pkgs.systemd}/bin/systemctl enable --user plasma-plasmashell
+  #     ${pkgs.kdePackages.qttools}/bin/qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.refreshCurrentShell
+  #   '';
 
 }
