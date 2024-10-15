@@ -176,13 +176,8 @@ in { config, pkgs, ... }:
 
   };
 
-  environment.etc = {
-    rc.local = {
-      text = ''
-        alias renix="sudo nixos-rebuild switch"
-        '';
-    };
+  environment.shellAliases = {
+    renix="sudo nixos-rebuild switch";
   };
-
 
 }
