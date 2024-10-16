@@ -44,9 +44,6 @@ in
     gcc
     python3
     unzip
-    eza
-    bat
-    vivid
     zoxide
     rsync
     jq

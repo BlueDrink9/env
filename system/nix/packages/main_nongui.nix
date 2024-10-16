@@ -20,12 +20,6 @@
   services.blueman.enable = true;
 
   environment.systemPackages = with pkgs; [
-    libgcc
-    gnumake
-    cmake
-    automake
-    pkg-config
-
     universal-ctags
     ncurses
     bat-extras.batgrep
@@ -37,10 +31,23 @@
     thefuck
     bluetuith
     sqlite
+    vivid
+    bat
+    eza
 
     veracrypt
     syncthing
     topgrade
+    # Easily manage and update project dependencies
+    niv
+    # Github cli, for easy auth. gh auth && gh auth setup-git
+    gh
+    git-credential-manager
+    lazygit
+    shellcheck
+    pyright
+    nil # Nix lsp
+
 
     # Easiest to just let Mason install (and hence trigger configuration for) some packages.
     # Mason needs these installers though.

@@ -98,18 +98,15 @@
     xsel
     workrave
 
+    tdrop
+    picom
+    feh
+    playerctl
+
     btop
     # mosh
-    openvpn
-    # Github cli, for easy auth. gh auth && gh auth setup-git
-    gh
-    git-credential-manager
-    lazygit
+    # openvpn
     kdePackages.kconfig
-
-    shellcheck
-    pyright
-    nil # Nix lsp
 
     emacs
     vscodium
@@ -130,14 +127,10 @@
     pcloud
     megatools
     f3d
-    # Need Hunspell for libreoffice spellcheck, used for emacs too
-    libreoffice-qt-fresh hunspell hunspellDicts.en_AU
     espanso
     marimo
-
-    picom
-    feh
-    playerctl
+    # Need Hunspell for libreoffice spellcheck, used for emacs too
+    libreoffice-qt-fresh hunspell hunspellDicts.en_AU
 
     # xremap-flake.nixosModules.default
   ];
