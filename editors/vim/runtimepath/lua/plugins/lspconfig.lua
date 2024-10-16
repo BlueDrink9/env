@@ -261,9 +261,10 @@ return {
 		event="LspAttach",
 	},
 	
-	{
-		"hinell/lsp-timeout.nvim",
-		dependencies={"neovim/nvim-lspconfig"},
-		event="LspAttach",
-	},
+	-- {
+	-- 	"hinell/lsp-timeout.nvim",
+	-- 	dependencies={"neovim/nvim-lspconfig"},
+	-- 	event="LspAttach",
+	-- },
+
 }
