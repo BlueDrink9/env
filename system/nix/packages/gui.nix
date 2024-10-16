@@ -4,11 +4,6 @@
   programs.partition-manager.enable = true;
 
   programs.mepo.enable = true;
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    localNetworkGameTransfers.openFirewall = true;
-  };
 
 
   programs.firefox = {
@@ -143,7 +138,6 @@
     picom
     feh
     playerctl
-    heroic
 
     # xremap-flake.nixosModules.default
   ];
