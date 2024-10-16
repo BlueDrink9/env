@@ -16,7 +16,9 @@ add_channels(){
   nix-channel --add https://github.com/nix-community/plasma-manager/archive/trunk.tar.gz plasma-manager
   nix-channel --add https://nixos.org/channels/nixpkgs-unstable unstable
 
-  nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
+  if [ ! -d /etc/nixos ]; then
+    nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
+  fi
 
   nix-channel --update
 }
