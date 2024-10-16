@@ -9,7 +9,7 @@
 let
   dotfilesDir = builtins.getEnv "DOTFILES_DIR";
   nixDir = "${dotfilesDir}/system/nix";
-in { config, pkgs, ... }:
+in { lib, config, pkgs, ... }:
 {
 
   # TODO: Change this
