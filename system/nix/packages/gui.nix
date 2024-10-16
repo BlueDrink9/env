@@ -1,6 +1,63 @@
 { config, pkgs, ... }:
 
 {
+
+  environment.systemPackages = with pkgs; [
+    bspwm
+    sxhkd
+    kitty
+    xclip
+    xsel
+    workrave
+
+    tdrop
+    picom
+    feh
+    playerctl
+
+    btop
+    # mosh
+    # openvpn
+    kdePackages.kconfig
+
+    emacs
+    vscodium
+    thunderbird
+    birdtray
+    etesync-dav
+    keepassxc
+    pandoc
+    typst
+    copyq
+    inkscape
+    gimp
+    zotero
+    joplin
+    signal-desktop
+    zapzap
+    caprine-bin
+    neovide
+    brave
+    pcloud
+    megatools
+    f3d
+    espanso
+    marimo
+    # Need Hunspell for libreoffice spellcheck, used for emacs too
+    libreoffice-qt-fresh hunspell hunspellDicts.en_AU
+    espanso
+    marimo
+
+    flameshot
+    picom
+    feh
+    playerctl
+
+    heroic
+
+    # xremap-flake.nixosModules.default
+  ];
+
   programs.partition-manager.enable = true;
 
   programs.mepo.enable = true;
@@ -87,63 +144,6 @@
     (nerdfonts.override { fonts = [ "SourceCodePro" "Meslo" ]; })
     # menlo
     # san-franciso
-  ];
-
-
-  environment.systemPackages = with pkgs; [
-    bspwm
-    sxhkd
-    kitty
-    xclip
-    xsel
-    workrave
-
-    tdrop
-    picom
-    feh
-    playerctl
-
-    btop
-    # mosh
-    # openvpn
-    kdePackages.kconfig
-
-    emacs
-    vscodium
-    thunderbird
-    birdtray
-    etesync-dav
-    keepassxc
-    pandoc
-    typst
-    copyq
-    inkscape
-    gimp
-    zotero
-    joplin
-    signal-desktop
-    zapzap
-    caprine-bin
-    neovide
-    brave
-    pcloud
-    megatools
-    f3d
-    espanso
-    marimo
-    # Need Hunspell for libreoffice spellcheck, used for emacs too
-    libreoffice-qt-fresh hunspell hunspellDicts.en_AU
-    espanso
-    marimo
-
-    flameshot
-    picom
-    feh
-    playerctl
-
-    heroic
-
-    # xremap-flake.nixosModules.default
   ];
 
 }
