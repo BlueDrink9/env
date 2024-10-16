@@ -13,7 +13,7 @@ in { config, pkgs, ... }:
 {
 
   # TODO: Change this
-  networking.hostName = "placeholder_hostname"; # change in /etc/nixos/flake.nix too
+  networking.hostName = lib.mkDefault "placeholder_hostname"; # change in /etc/nixos/flake.nix too
 
   environment.sessionVariables = rec {
     XDG_CACHE_HOME  = "$HOME/.cache";
@@ -59,12 +59,12 @@ in { config, pkgs, ... }:
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.
-  time.timeZone = "Pacific/Auckland";
+  time.timeZone = lib.mkForce "Pacific/Auckland";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_NZ.UTF-8";
+  i18n.defaultLocale = lib.mkForce "en_NZ.UTF-8";
 
-  i18n.extraLocaleSettings = {
+  i18n.extraLocaleSettings = lib.mkForce {
     LC_ADDRESS = "en_NZ.UTF-8";
     LC_IDENTIFICATION = "en_NZ.UTF-8";
     LC_MEASUREMENT = "en_NZ.UTF-8";
@@ -80,7 +80,7 @@ in { config, pkgs, ... }:
   services.xserver.enable = true;
 
   # Configure keymap in X11
-  services.xserver.xkb = {
+  services.xserver.xkb = lib.mkForce {
     layout = "us,nz";
     variant = "colemak,";
     options = "grp:win_space_toggle";
