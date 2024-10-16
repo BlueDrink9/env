@@ -68,7 +68,6 @@ return {
 			{idemaps.REPLClear, '<cmd>Tclear<cr>'},
 			{idemaps.REPLClose, '<cmd>Tclose!<cr>'},
 			{idemaps.REPLSendFile, '<cmd>TREPLSendFile<cr>'},
-			{idemaps.REPLSendFile2, '<cmd>TREPLSendFile<cr>'},
 		},
 	},
 
