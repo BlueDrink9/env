@@ -13,6 +13,7 @@ local spec = {
         -- " endif
         -- let s:firenvim_startup_prologue=''
         -- let g:firenvim_install=":call firenvim#install(0, " . s:firenvim_startup_prologue . ")"
+        vim.cmd("Lazy load firenvim")
         vim.fn["firenvim#install"](0)
     end
 }
