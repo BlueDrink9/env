@@ -187,3 +187,8 @@ export WHEELHOUSE="${STANDARD_CACHE_DIR}/wheelhouse"
 export PIP_FIND_LINKS="file://${WHEELHOUSE}"
 export PIP_WHEEL_DIR="${WHEELHOUSE}"
 mkdir -p "$WHEELHOUSE"
+
+if command -v direnv >/dev/null 2>&1; then
+  eval "$(direnv hook "$SHELL")" || echo "Error setting up direnv in settings"
+fi
+

@@ -26,6 +26,9 @@ if ($env:WT_SESSION){
     $env:TERMCOLOR = 16
 }
 
+if (Get-Command "direnv" -ErrorAction SilentlyContinue) {
+    Invoke-Expression "$(direnv hook pwsh)"
+}
 
 $Shell = $Host.UI.RawUI
 # $Shell.WindowTitle="SysadminGeek"

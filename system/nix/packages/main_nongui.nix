@@ -11,6 +11,8 @@
     binfmt = true;
   };
 
+  # Faster, more automatic and safer direnvs. Run `lorri init` in project dirs.
+  services.lorri.enable = true;
   programs.direnv = {
     enable = true;
     direnvrcExtra = "echo Loaded direnv";
