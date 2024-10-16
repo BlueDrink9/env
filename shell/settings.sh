@@ -134,13 +134,13 @@ if command -v fzf > /dev/null; then
   # Set up fzf key bindings and fuzzy completion
   case "$SHELL" in
     *zsh)
-      . <(fzf --zsh)
+      . <(fzf --zsh) || echo "Error setting up fzf in settings"
       # Extra completions - commadn not found?
       # _fzf_setup_completion path ag git kubectl
       # _fzf_setup_completion dir tree
       ;;
     *bash)
-      eval "$(fzf --bash)"
+      eval "$(fzf --bash)" || echo "Error setting up fzf in settings"
       ;;
     *)
       ;;
