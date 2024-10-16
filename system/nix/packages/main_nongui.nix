@@ -51,6 +51,9 @@
     shellcheck
     pyright
     nil # Nix lsp
+    # Nix disk usage
+    # nix-du -s=500MB > store.dot; zgrviewer store.dot
+    nix-du zgrviewer
 
 
     # Easiest to just let Mason install (and hence trigger configuration for) some packages.
