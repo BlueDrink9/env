@@ -224,3 +224,5 @@ alias del="gio trash"
 
 alias renix='sudo DOTFILES_DIR="$DOTFILES_DIR" nixos-rebuild switch'
 alias homer='home-manager switch'
+
+alias clip='xclip -selection clipboard'
