@@ -13,7 +13,6 @@
     tdrop
     playerctl
     flameshot
-    picom
 
     btop
     # mosh
@@ -36,6 +35,8 @@
 
   programs.firefox = {
     enable = true;
+    # Allow overriding settings set here
+    preferenceStatus = "user";
 
     /* ---- POLICIES ---- */
     # Check about:policies#documentation for options.
@@ -76,12 +77,14 @@
             (extension "privacy-badger17" "jid1-MnnxcxisBPnSXQ@jetpack")
             # vimium:
             (extension "vimium-c" "vimium-c@gdh1995.cn")
+            (extension "multi-account-containers" "firefox")
           ];
 
       /* ---- PREFERENCES ---- */
       # Check about:config for options.
       Preferences = {
         # "browser.contentblocking.category" = { Value = "strict"; Status = "locked"; };
+        "widget.use-xdg-desktop-portal.file-picker" = 1;
         "extensions.pocket.enabled" = false;
         # "extensions.screenshots.disabled" = lock-true;
         # "browser.topsites.contile.enabled" = lock-false;
@@ -106,6 +109,11 @@
         "browser.urlbar.suggest.quickactions" = false;
         # Default search engine?
         "browser.urlbar.placeholderName" = "DuckDuckGo";
+        "browser.urlbar.placeholderName.private" = "DuckDuckGo";
+        "browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts.havePinned" = "DuckDuckGo";
+        "browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts.searchEngines" = "DuckDuckGo";
+        # Don't save passwords
+        "signon.rememberSignons" = false;
       };
     };
   };
