@@ -13,14 +13,7 @@ in
     ./plasma.nix
   ];
 
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "24.05"; # Please read the comment before changing.
+  nixpkgs.config.allowUnfree = true;
 
   # Using home-manager for these packages because they often
   # aren't in mainstream repos (at least, this list isn't on
@@ -44,7 +37,7 @@ in
     vivid
     vscodium
     zotero
-    caprine
+    caprine-bin
     zapzap
     # TODO San francisco fonts
     # https://github.com/Lyndeno/apple-fonts.nix
@@ -130,13 +123,13 @@ in
     EDITOR = "nvim";
   };
 
-  xsession.windowManager.bspwm.enable = true;
-  xsession.windowManager.bspwm.extraConfig = ''
-  . "${dotfilesDir}/windowManagers/bspwm/bspwmrc"
-  if [ -f local_bspwmrc ]; then
-    . local_bspwmrc
-  fi
-  '';
+  # xsession.windowManager.bspwm.enable = true;
+  # xsession.windowManager.bspwm.extraConfig = ''
+  # . "${dotfilesDir}/windowManagers/bspwm/bspwmrc"
+  # if [ -f local_bspwmrc ]; then
+  #   . local_bspwmrc
+  # fi
+  # '';
 
   home.preferXdgDirectories = true;
 
