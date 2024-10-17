@@ -21,13 +21,13 @@ else
   # case $(cat /proc/$PPID/comm) in
   # SESSION_TYPE=remote/ssh;;
   # esac
-  if substrInStr "darwin1" "$OSTYPE"; then
-    parents="$(ps -o ppid,comm | grep $PPID)"
-  elif command -v pstree > /dev/null 2>&1; then
-    parents="$(pstree -p | grep $PPID)"
-  else
-    parents="$(ps | cut -d '' -f 2 | grep $PPID)"
-  fi
+  # if substrInStr "darwin1" "$OSTYPE"; then
+  parents="$(ps -o ppid,comm | grep $PPID)"
+  # elif command -v pstree > /dev/null 2>&1; then
+  #   parents="$(pstree -p | grep $PPID)"
+  # else
+  #   parents="$(ps | cut -d '' -f 2 | grep $PPID)"
+  # fi
   if substrInStr "sshd" "$parents"; then
     SESSION_TYPE=remote/ssh
     export SSHSESSION=1
