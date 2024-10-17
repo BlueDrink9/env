@@ -64,8 +64,14 @@ in
     };
 
     kscreenlocker = {
-      lockOnResume = false;
-      timeout = 5;
+      lockOnResume = true;
+      timeout = 60;
+      autoLock = false;
+      passwordRequiredDelay = 5;
+      appearance = {
+        showMediaControls = true;
+        alwaysShowClock = true;
+      };
     };
 
     configFile.kxkbrc = {
