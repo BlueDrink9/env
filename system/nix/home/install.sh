@@ -26,11 +26,8 @@ add_channels(){
 home_manager_install(){
   nix-shell '<home-manager>' -A install
   installText=". $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
-  baseRC="$HOME/.bashrc"
-  addTextIfAbsent "${installText}" "${baseRC}"
-  installText=". $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
-  baseRC="$HOME/.zshrc"
-  addTextIfAbsent "${installText}" "${baseRC}"
+  addTextIfAbsent "${installText}" "$HOME/.bashrc"
+  addTextIfAbsent "${installText}" "$HOME/.zshrc"
 
   if [ ! -d /etc/NIXOS ]; then
     generic="targets.genericLinux.enable = true;"
