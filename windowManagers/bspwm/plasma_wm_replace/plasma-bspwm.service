@@ -4,6 +4,6 @@ WantedBy=plasma-workspace.target
 Description=Plasma Custom Window Manager
 Before=plasma-workspace.target
 [Service]
-ExecStart=/usr/bin/bspwm
+ExecStart=/usr/bin/env bspwm || /usr/bin/bspwm
 Slice=session.slice
 Restart=on-failure

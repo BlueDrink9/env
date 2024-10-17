@@ -300,14 +300,18 @@ in
   };
 
   # Replace kwin with bspwm
-  xdg.configFile."plasma-workspace/env/bspwm.sh".text = ''
+  xdg.configFile."plasma-workspace/env/bspwm.sh" = {
+    text = ''
         #!/bin/sh
          export KDEWM=bspwm
-  '';
+    '';
+    force = true;
+  };
 
   xdg.configFile."systemd/user/plasma-bspwm.service" = {
     text = builtins.readFile "${dotfilesDir}/windowManagers/bspwm/plasma_wm_replace/plasma-bspwm.service";
     executable = false;
+    force=true;
   };
   # Mask the kwin service
   # xdg.configFile."systemd/user/plasma-kwin.service".source = "/dev/null";
