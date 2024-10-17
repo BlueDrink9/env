@@ -53,7 +53,7 @@
     feh
     playerctl
 
-    heroic
+    qdirstat
 
     # xremap-flake.nixosModules.default
   ];
