@@ -3,6 +3,7 @@
 source "$DOTFILES_DIR/shell/script_functions.sh"
 source "$DOTFILES_DIR/shell/functions.sh"
 source "$DOTFILES_DIR/shell/XDG_setup.sh"
+source "$($SCRIPTDIR_CMD)/../install.sh"
 # nix has a fit if tmp dir has a trailing slash
 export TMPDIR="${TMPDIR%/}"
 
@@ -36,7 +37,14 @@ add_channels(){
 }
 
 home_manager_install(){
-  nix-shell '<home-manager>' -A install
+  if [ ! -d /etc/nixos ]; then
+    nix-shell '<home-manager>' -A install
+  else
+    # Add nixos hm setup config to imports list
+    baseRC="/etc/nixos/configuration.nix"
+    import="$(realpath "$($SCRIPTDIR_CMD)/../packages/home-manager.nix")"
+    AddImport "${import}" "${baseRC}"
+  fi
   installText=". $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
   addTextIfAbsent "${installText}" "$HOME/.bashrc"
   addTextIfAbsent "${installText}" "$HOME/.zshrc"

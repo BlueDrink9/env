@@ -4,6 +4,14 @@ source "$DOTFILES_DIR/shell/script_functions.sh"
 source "$DOTFILES_DIR/shell/functions.sh"
 source "$DOTFILES_DIR/shell/XDG_setup.sh"
 
+AddImport(){
+    importFile=$1
+    baseFile=$2
+    lineNumber=$(awk '/imports =/ {print NR; exit}' "$baseFile")
+    lineNumber=$(($lineNumber+2))
+    SudoFunction prependTextIfAbsent "${importFile}" "${baseFile}" $lineNumber
+}
+
 installID="Nixos"
 installTextFull=$(cat <<EOF
 { config, pkgs, ... }: {
@@ -25,9 +33,7 @@ doNixos() {
     else
         # TODO: is looking for imports too fragile? Could possibly use
         # hardware-configuration instead.
-        lineNumber=$(awk '/imports =/ {print NR; exit}' "/etc/nixos/configuration.nix")
-        lineNumber=$(($lineNumber+2))
-        SudoFunction prependTextIfAbsent "${installText}" "${baseRC}" $lineNumber
+        AddImport "${installText}" "${baseRC}"
     fi
     echo "Building nix; may take a long time!"
     sudo nixos-rebuild switch
