@@ -2,9 +2,9 @@
 {
 
   environment.systemPackages = with pkgs; [
-    usbutils
-    pciutils
-    xdotool
+    signal-desktop
+    zapzap
+    caprine-bin
   ];
 
 }
