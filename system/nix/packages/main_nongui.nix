@@ -55,6 +55,7 @@
     # nix-du -s=500MB > store.dot; zgrviewer store.dot
     nix-du zgrviewer
     chatblade
+    make
 
 # so many programs rely on this for setup/install, so we'll put it in main.
     gcc
