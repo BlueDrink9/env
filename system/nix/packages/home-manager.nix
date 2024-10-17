@@ -6,8 +6,8 @@ in { config, pkgs, ... }:
 {
   imports = [ <home-manager/nixos> ];
 
-  home-manager.users.${user} = {
-    imports = [ "${nixDir}/home/home.nix" ];
-  };
+  # home-manager.users.${user} = {
+  #   imports = [ "${nixDir}/home/home.nix" ];
+  # };
   home-manager.useGlobalPkgs = true;
 }
