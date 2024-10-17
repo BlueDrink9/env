@@ -20,21 +20,40 @@ nix_install(){
   sudo ./nix-installer install --no-confirm
 }
 
-add_channels(){
-  if [ ! -d /etc/nixos ]; then
-    nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
-    nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-    sud=""
-  else
-    sud="sudo"
-    sudo nix-channel --add "https://github.com/nix-community/home-manager/archive/release-${version}.tar.gz" home-manager
-  fi
-  $sud nix-channel --add https://github.com/nix-community/plasma-manager/archive/trunk.tar.gz plasma-manager
-  $sud nix-channel --add https://nixos.org/channels/nixpkgs-unstable unstable
-  $sud nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs-unstable
+if [ ! -d /etc/nixos ]; then
+  version="24.11"
+else
+  version="$(nixos-version | cut -d. -f1,2)"
+fi
 
-  $sud nix-channel --update
+add_channels() {
+  declare -A channels
+  channels["plasma-manager"]="https://github.com/nix-community/plasma-manager/archive/trunk.tar.gz"
+  channels["nixpkgs-unstable"]="https://nixos.org/channels/nixpkgs-unstable"
+
+  if [ -d /etc/nixos ]; then
+    # NixOS: use specific version
+    channels["nixpkgs"]="https://github.com/nixos/nixpkgs/archive/release-24.05.tar.gz"
+    channels["home-manager"]="https://github.com/nix-community/home-manager/archive/release-24.05.tar.gz"
+  else
+    # Non-NixOS: use latest channels
+    channels["nixpkgs"]=channels["nixpkgs-unstable"]
+    channels["home-manager"]="https://github.com/nix-community/home-manager/archive/master.tar.gz"
+  fi
+
+  for channel in "${!channels[@]}"; do
+    if [ -d /etc/nixos ]; then
+      sudo nix-channel --add "${channels[$channel]}" "$channel"
+    fi
+    nix-channel --add "${channels[$channel]}" "$channel"
+  done
+
+  if [ -d /etc/nixos ]; then
+    sudo nix-channel --update
+  fi
+  nix-channel --update
 }
+add_channels
 
 home_manager_install(){
   if [ ! -d /etc/nixos ]; then
@@ -94,7 +113,7 @@ doHomeManager(){
   fi
   add_channels
   home_manager_install
-  # nix-shell -p home-manager --command "home-manager switch"
+  nix-shell -p home-manager --command "home-manager switch"
 }
 
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
