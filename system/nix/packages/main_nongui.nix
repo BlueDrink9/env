@@ -54,7 +54,11 @@
     # Nix disk usage
     # nix-du -s=500MB > store.dot; zgrviewer store.dot
     nix-du zgrviewer
+    chatblade
 
+# so many programs rely on this for setup/install, so we'll put it in main.
+    gcc
+    cmake
 
     # Easiest to just let Mason install (and hence trigger configuration for) some packages.
     # Mason needs these installers though.

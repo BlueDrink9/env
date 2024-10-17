@@ -40,6 +40,7 @@ in
     nano  # always nice to have a backup
     ripgrep
     fd
+    unstable.fzf
     tmux
     gcc
     python3
