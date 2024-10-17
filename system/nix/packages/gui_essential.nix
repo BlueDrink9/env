@@ -36,7 +36,7 @@
   programs.firefox = {
     enable = true;
     # Allow overriding settings set here
-    preferenceStatus = "user";
+    preferencesStatus = "user";
 
     /* ---- POLICIES ---- */
     # Check about:policies#documentation for options.
