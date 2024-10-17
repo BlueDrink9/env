@@ -29,24 +29,30 @@ gitUser() {
     return 0
   fi
 
+  default_user=bluedrink9
   printErr "Setting up git global user..."
-  # echo -ne "${Green}Enter your github username:${NC} "
-  # read -r GIT_USER
-  GIT_USER="bluedrink9"
-  # echo -ne "${Green}Enter your git email:${NC} "
-  # read -r GIT_EMAIL
+  echo -ne "${Green}Enter your github username [$default_user]:${NC} "
+  read -r GIT_USER
+  GIT_USER="${GIT_USER:-$default_user}"
+  # Blank or unset email: Use github no-reply email as a default.
+  default_email="${GIT_USER}@users.noreply.github.com"
+  echo -ne "${Green}Enter your git email [$default_email]:${NC} "
+  read -r GIT_EMAIL
+  GIT_EMAIL="${GIT_EMAIL:-$default_email}"
 
   printErr "${Yellow}Configuring git.$NC"
-  # Blank or unset: Use github no-reply email as a default.
-  default_email="${GIT_USER}@users.noreply.github.com"
-  GIT_EMAIL="${GIT_EMAIL:-$default_email}"
   printErr "Username: $GIT_USER"
   printErr "Email: $GIT_EMAIL"
   git config --global user.name "$GIT_USER"
   git config --global credential.https://github.com.username "$GIT_USER"
   git config --global user.email "$GIT_EMAIL"
-  # printErr "${Cyan}You can update your git user by entering:$NC ./install -gu"
-  unset default_email
+  printErr "${Cyan}You can update your git user by entering:$NC ./install -gu"
+  # Ensure for this env repo that we use bluedrink9
+  git config user.name "$default_user"
+  git config credential.https://github.com.username "$default_user"
+  git config user.email "$default_email"
+
+  unset default_email default_user
 }
 
 gitCredentials() {
@@ -86,7 +92,7 @@ gitCredentials() {
         ;;
     esac
 
-    if command -v gh > /dev/null; then
+    if command -v gh > /dev/null && askQuestionYN "Authenticate https with Github?"; then
       echo "Authenticating via github. Got to github.com/login/devices."
       BROWSER=false gh auth login --git-protocol https --hostname github.com --web && gh auth setup-git
     fi
