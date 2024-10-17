@@ -75,6 +75,7 @@ doHomeManager(){
   fi
   add_channels
   home_manager_install
+  nix-shell -p home-manager --command "home-manager switch"
 }
 
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then

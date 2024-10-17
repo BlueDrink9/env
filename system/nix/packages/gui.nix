@@ -9,6 +9,7 @@
     xclip
     xsel
     workrave
+    home-manager  # putting this in gui bc currently only use it for plasma/gui apps
 
     tdrop
     picom
