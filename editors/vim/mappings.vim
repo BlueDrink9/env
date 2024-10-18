@@ -153,11 +153,6 @@ cabbrev <expr> lr <SID>append_filedir("r") . "<c-r>"
 command! -bang -nargs=* PathCopy let @+ = expand("%:p")
 " Word under cursor.
 cabbrev <cw> <cword>
-" :W! sudo saves the file
-" (useful for handling the permission-denied error)
-" File needs to already exist.
-command! -bang -nargs=* SudoSave w !sudo tee % > /dev/null
-cmap W! SudoSave
 " Quickly edit macros
 " command! -bang -nargs=* MacroEdit c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 command! MRU browse oldfiles
