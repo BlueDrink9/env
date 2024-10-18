@@ -27,8 +27,11 @@
       # This will create two files: .Rprofile and default.nix
       ${R}/bin/R -e '
         requirements <- c(
-          system2("cat", args=c("requirements.txt", "||", "echo"), stdout = TRUE, stderr = FALSE),
-          "dplyr",
+          gsub(
+            "\n", ", ",
+            system2("cat", args=c("requirements.txt", "||", "echo"), stdout = TRUE, stderr = FALSE),
+          ),
+          "dplyr"
         )
         rix::rix(
           r_ver = "4.3.3",
