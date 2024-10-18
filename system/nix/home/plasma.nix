@@ -76,8 +76,8 @@ in
 
     configFile.kxkbrc = {
       Layout = {
-        DisplayNames = ",";
-        LayoutList = "us,us";
+        DisplayNames = "co,qw";
+        LayoutList = "us,nz";
         Options = "grp:win_space_toggle,grp_led:caps";
         ResetOldOptions = true;
         Use = true;
