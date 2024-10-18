@@ -33,8 +33,8 @@ add_channels() {
 
   if [ -d /etc/nixos ]; then
     # NixOS: use specific version
-    channels["nixpkgs"]="https://github.com/nixos/nixpkgs/archive/release-24.05.tar.gz"
-    channels["home-manager"]="https://github.com/nix-community/home-manager/archive/release-24.05.tar.gz"
+    channels["nixpkgs"]="https://github.com/nixos/nixpkgs/archive/release-$version.tar.gz"
+    channels["home-manager"]="https://github.com/nix-community/home-manager/archive/release-$version.tar.gz"
   else
     # Non-NixOS: use latest channels
     channels["nixpkgs"]=channels["nixpkgs-unstable"]
