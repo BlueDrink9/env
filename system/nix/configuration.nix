@@ -83,6 +83,7 @@ in { lib, config, pkgs, ... }:
   # Configure keymap in X11
   services.xserver.xkb = lib.mkForce {
     layout = "us,nz";
+    # DisplayNames = "co,qw"; not actually an option
     variant = "colemak,";
     options = "grp:win_space_toggle";
   };
