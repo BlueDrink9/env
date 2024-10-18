@@ -74,6 +74,18 @@ in
       };
     };
 
+    input.keyboard.layouts = [
+      {
+        layout = "us";
+        variant = "colemak";
+        displayName = "co";
+      }
+      {
+        layout = "nz";
+        displayName = "qw";
+      }
+    ];
+
     configFile.kxkbrc = {
       Layout = {
         DisplayNames = "co,qw";
@@ -329,7 +341,7 @@ in
 
   # Restart plasmashell
   # Not much point actually, since the panel script doesn't run until autostarting and is tricky to run from within a nix environment.
-      # ${pkgs.plasma-manager}/run_all.sh
+  # ${pkgs.plasma-manager}/run_all.sh
   # home.activation.restartPlasmaShell =
   #   config.lib.dag.entryAfter ["reloadSystemd"]
   #   ''${pkgs.systemd}/bin/systemctl restart --user plasma-plasmashell && \
