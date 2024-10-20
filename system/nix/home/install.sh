@@ -14,6 +14,7 @@ else
 fi
 
 nix_install(){
+  echo "Installing nix with Determinate installer (needs sudo)."
   cd "$(mktemp -d)" || exit
   curl -sL -o nix-installer https://github.com/DeterminateSystems/nix-installer/releases/latest/download/nix-installer-x86_64-linux
   chmod +x nix-installer
@@ -27,6 +28,7 @@ else
 fi
 
 add_channels() {
+  echo "Setting nix channels."
   declare -A channels
   channels["plasma-manager"]="https://github.com/nix-community/plasma-manager/archive/trunk.tar.gz"
   channels["nixpkgs-unstable"]="https://nixos.org/channels/nixpkgs-unstable"
@@ -106,6 +108,19 @@ EOF
     addTextIfAbsent "${installTextFull}" "${baseRC}"
   fi
 }
+
+doHomeManagerPackages(){
+  pkgSets="essential main_nongui sysadmin"
+  if [ "${GUISYSTEM}" = 1 ]; then
+    pkgSets="$pkgSets guiEssential guiExtras plasma"
+  fi
+  baseRC="$XDG_CONFIG_HOME/home-manager/home.nix"
+  for set in $pkgSets; do
+    file="$($SCRIPTDIR_CMD)/../packages/${set}.nix"
+    AddImport "${file}" "${baseRC}"
+  done
+}
+
 
 doHomeManager(){
   if [ ! -d /etc/nixos ]; then
