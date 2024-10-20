@@ -317,7 +317,7 @@ return {
 		config = function()
 			vim.fn.SourcePluginFile("nvim-R.vim")
 		end,
-		ft = { "R", "Rmd", "Rnoweb" },
+		ft = { "r", "rmd", "rnoweb" },
 	},
 
 	-- Switching to luasnip via lazyvim
