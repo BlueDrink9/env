@@ -55,7 +55,6 @@ add_channels() {
   fi
   nix-channel --update
 }
-add_channels
 
 home_manager_install(){
   if [ ! -d /etc/nixos ]; then
