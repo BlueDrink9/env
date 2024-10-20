@@ -40,7 +40,7 @@ add_channels() {
     channels["home-manager"]="https://github.com/nix-community/home-manager/archive/release-$version.tar.gz"
   else
     # Non-NixOS: use latest channels
-    channels["nixpkgs"]=channels["nixpkgs-unstable"]
+    channels["nixpkgs"]=${channels["nixpkgs-unstable"]}
     channels["home-manager"]="https://github.com/nix-community/home-manager/archive/master.tar.gz"
   fi
 
