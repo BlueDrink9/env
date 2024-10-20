@@ -19,6 +19,7 @@ nix_install(){
   curl -sL -o nix-installer https://github.com/DeterminateSystems/nix-installer/releases/latest/download/nix-installer-x86_64-linux
   chmod +x nix-installer
   sudo ./nix-installer install --no-confirm
+  . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 }
 
 if [ ! -d /etc/nixos ]; then
