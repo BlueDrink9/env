@@ -31,7 +31,7 @@ in
     powerdevil = {
       AC = {
         powerButtonAction = "shutDown";
-        whenLaptopLidClosed = "nothing";
+        whenLaptopLidClosed = "doNothing";
         autoSuspend = {
           action = "sleep";
           idleTimeout = 120*60;
