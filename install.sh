@@ -149,9 +149,10 @@ readSettings() {
     fi
 
     if [ "$ALL" = 1 ] || askQuestionYN "Install home-manager?" ; then
-      doHomeManager
+
+      installers="$installers doHomeManager"
       if [ "$ALL" = 1 ] || askQuestionYN "Install packages with home-manager?" ; then
-        doHomeManagerPackages
+        installers="$installers doHomeManagerPackages"
       fi
     fi
 
@@ -164,6 +165,7 @@ readSettings() {
   main() {
     readSettings
     for installer in $installers; do
+      printErr "${Yellow} "Installing $installer"
       "$installer" "${1:-}"
     done
     printErr "${Green} Install Complete${NC}"
