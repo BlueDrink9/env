@@ -66,7 +66,8 @@ home_manager_install(){
     import="$(realpath "$($SCRIPTDIR_CMD)/../packages/home-manager.nix")"
     AddImport "${import}" "${baseRC}"
   fi
-  installText=". $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+  toSource="$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+  installText="if [ -f \"$toSource\" ]; then . $toSource; fi"
   addTextIfAbsent "${installText}" "$HOME/.bashrc"
   addTextIfAbsent "${installText}" "$HOME/.zshrc"
 
