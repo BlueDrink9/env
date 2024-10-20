@@ -31,10 +31,11 @@ in
     powerdevil = {
       AC = {
         powerButtonAction = "shutDown";
-        # autoSuspend = {
-        #   action = "sleep";
-        #   idleTimeout = 120*60;
-        # };
+        whenLaptopLidClosed = "nothing";
+        autoSuspend = {
+          action = "sleep";
+          idleTimeout = 120*60;
+        };
         dimDisplay = {
           enable = true;
           idleTimeout = 2*60;
