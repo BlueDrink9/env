@@ -109,7 +109,7 @@ export FCEDIT="$shelleditor"
 export GIT_EDITOR='myVim --cmd "let g:liteMode=1" +"set ft=gitcommit"'
 # May need to run `sudo update-alternatives --config editor` if this is not
 # working.
-export SUDO_EDITOR="(which "$(myVim --print-editor-only)")"
+export SUDO_EDITOR="$(which "$(myVim --print-editor-only)")"
 
 fuzzyEdit(){
   fzf --multi --bind 'enter:become('"$editor"' {+})'
