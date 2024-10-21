@@ -19,7 +19,6 @@ case "${OSTYPE}" in
     }
   alias ls="ls -Fh -G"
   alias grep="grep --color=auto"
-  alias sudoedit="sudo -e"
   # ls and grep should use colours automatically because CLICOLOR is set.
   # Apparently though, don't!
 
@@ -110,7 +109,7 @@ export FCEDIT="$shelleditor"
 export GIT_EDITOR='myVim --cmd "let g:liteMode=1" +"set ft=gitcommit"'
 # May need to run `sudo update-alternatives --config editor` if this is not
 # working.
-export SUDO_EDITOR="$(myVim --print-editor-only)"
+export SUDO_EDITOR="(which "$(myVim --print-editor-only)")"
 
 fuzzyEdit(){
   fzf --multi --bind 'enter:become('"$editor"' {+})'
