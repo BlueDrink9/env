@@ -225,5 +225,6 @@ alias renix='sudo DOTFILES_DIR="$DOTFILES_DIR" nixos-rebuild switch'
 alias homer='home-manager switch'
 
 alias clip='xclip -selection clipboard'
-alias ns='nix-shell --run $(basename $SHELL)'
+alias nix-shell='nix-shell --run $(basename $SHELL)'
+alias ns='nix-shell'
 alias np='nix-shell -p'
