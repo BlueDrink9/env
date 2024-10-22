@@ -15,10 +15,20 @@
     pcloud
     megatools
     f3d
-    espanso
     marimo
 
     qdirstat
+
+    copyq
+    emacs
+    thunderbird
+    birdtray
+    marimo
+
+    gimp
+    inkscape
+    btop
+    vscodium
 
     # xremap-flake.nixosModules.default
   ];

@@ -13,24 +13,16 @@
     tdrop
     playerctl
     flameshot
+    neovide
+    espanso
 
-    btop
     # mosh
     # openvpn
-    kdePackages.kconfig
 
-    emacs
-    vscodium
-    thunderbird
-    birdtray
     keepassxc
-    copyq
     joplin
-    neovide
     # Need Hunspell for libreoffice spellcheck, used for emacs too
     libreoffice-qt-fresh hunspell hunspellDicts.en_AU
-    espanso
-    marimo
   ];
 
   programs.firefox = {

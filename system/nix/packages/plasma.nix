@@ -10,6 +10,7 @@
 
   environment.systemPackages = with pkgs; [
     kdePackages.ksshaskpass
+    kdePackages.kconfig
   ];
 
   qt = {
