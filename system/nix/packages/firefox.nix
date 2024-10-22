@@ -55,6 +55,8 @@
         # "browser.contentblocking.category" = { Value = "strict"; Status = "locked"; };
         "widget.use-xdg-desktop-portal.file-picker" = 1;
         "extensions.pocket.enabled" = false;
+        # Ask where to save downloads.
+        "browser.download.useDownloadDir" = false;
         # "extensions.screenshots.disabled" = lock-true;
         # "browser.topsites.contile.enabled" = lock-false;
         # "browser.formfill.enable" = lock-false;
