@@ -221,7 +221,7 @@ alias bm="cd \"\$(bmm)\""
 # Delete to trash
 alias del="gio trash"
 
-alias renix='sudo DOTFILES_DIR="$DOTFILES_DIR" nixos-rebuild switch'
+alias renix='sudo DOTFILES_DIR="$DOTFILES_DIR" nixos-rebuild switch --impure'
 alias homer='home-manager switch'
 
 alias clip='xclip -selection clipboard'
