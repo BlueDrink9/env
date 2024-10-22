@@ -40,6 +40,17 @@ cat > "$HOME/.config/VSCodium/product.json" <<EOL
 }
 EOL
 
+
+# For some reason setting project.json isn't changing the gallery, but these do
+
+export VSCODE_GALLERY_SERVICE_URL='https://marketplace.visualstudio.com/_apis/public/gallery'
+export VSCODE_GALLERY_CACHE_URL='https://vscode.blob.core.windows.net/gallery/index'
+export VSCODE_GALLERY_ITEM_URL='https://marketplace.visualstudio.com/items'
+export VSCODE_GALLERY_CONTROL_URL=''
+export VSCODE_GALLERY_RECOMMENDATIONS_URL=''
+
+
+
 echo "Installing extensions"
 extensions=$(cat "$CWD/extensions.txt")
 
