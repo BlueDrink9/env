@@ -30,6 +30,7 @@ installDoomEmacs(){
     git -C ~/.emacs.d pull
     ~/.emacs.d/bin/doom upgrade
   fi
+  mkdir -p ~/.local/bin
   ln -s ~/.emacs.d/bin/doom ~/.local/bin/doom
   ~/.emacs.d/bin/doom install
   # If git bash, set user environment variable $DOOMDIR and $EMACS_SERVER_FILE
