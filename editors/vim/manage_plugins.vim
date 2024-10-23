@@ -235,9 +235,11 @@ function! PlugPlusLazyArgs(plugin, args)
     let l:func = get(l:args, 'afterLoad', v:false)
     " If 'afterLoad' is v:true, call function based off a default name
     " convention (the plugin name, with _ replacing . and -). Otherwise
-    " call the function name passed in. Only will be called for
-    " lazy-loaded plugins, so don't use without an 'on' or 'for' mapping.
-    " ('keys' gets ignored).
+    " call the function name passed in. For example, to configure for a
+    " plugin named 'my-plugin.vim', define a function called
+    " Plug_after_my_plugin_vim().
+    " Only will be called for lazy-loaded plugins, so don't use without
+    " an 'on' or 'for' mapping. ('keys' gets ignored).
     if l:func == v:true
         exec 'au User ' . l:plugin_name . ' call ' . PluginNameToFunc(l:plugin_name) . '()'
     elseif l:func != v:false

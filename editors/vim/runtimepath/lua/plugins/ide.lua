@@ -312,13 +312,11 @@ return {
 		tag=vim.fn.has("nvim-0.10") == 0 and "v0.0.1" or nil,
 	},
 
-	{
-		"jalvesaq/Nvim-R",
-		config = function()
-			vim.fn.SourcePluginFile("nvim-R.vim")
-		end,
-		ft = { "r", "rmd", "rnoweb" },
-	},
+		-- dependencies = {
+		-- 	{ "jalvesaq/cmp-nvim-r", enabled=IsPluginUsed("cmp.nvim") },
+		-- 	-- https://github.com/jalvesaq/cmp-zotcite
+		-- 	-- https://github.com/jalvesaq/zotcite
+		-- },
 
 	-- Switching to luasnip via lazyvim
 	-- {

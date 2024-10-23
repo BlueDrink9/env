@@ -136,9 +136,19 @@ endif
 
 " {[} ---------- R ----------
 if Executable('R')
-    if !has('nvim') && !has('job')
-        " Unmaintained version that doesn't need vim 8
-        Plugin 'jcfaria/vim-r-plugin'
+    if !has('nvim')
+        if !has('job')
+            " Unmaintained version that doesn't need vim 8
+            Plugin 'jcfaria/vim-r-plugin'
+        else
+            function! Plug_after_nvim_R()
+                SourcePluginFile("nvim-R.vim")
+            endf
+            Plugin 'jalvesaq/Nvim-R', {
+                        \ 'for': {'r', 'rmd', 'rnoweb'},
+                        \ 'afterLoad': v:true
+                        \ }
+        endif
     endif
 endif
 " {]} ---------- R ----------
