@@ -1,4 +1,4 @@
-" argadd install.sh ~/.vim/vimrc ~/.config/nvim/init.vim vimrc nvimrc settings.vim functions.vim mappings.vim ide_mappings.vim plugins.vim plugins/light_plugins.vim plugins/main_plugins.vim plugins/ide_plugins.vim
+" argadd install.sh ~/.vim/vimrc ~/.config/nvim/init.lua vimrc nvimrc.lua settings.vim functions.vim mappings.vim ide_mappings.vim manage_plugins.vim plugins.vim plugins/light_plugins.vim plugins/main_plugins.vim plugins/ide_plugins.vim runtimepath/lua/plugins/light.lua runtimepath/lua/plugins/main.lua runtimepath/lua/plugins/ide.lua
 
 set nocompatible
 " Use this line to let vim versions < 7.4 pick up .vim/vimrc.
