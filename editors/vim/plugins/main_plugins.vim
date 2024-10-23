@@ -389,6 +389,7 @@ Plugin 'https://github.com/glts/vim-texlog', {'for': ['log', 'tex']}
 Plugin 'LnL7/vim-nix', {'for': ['nix']}
 Plugin 'https://github.com/kmonad/kmonad-vim', {'for': ['kbd']}
 Plugin 'https://github.com/kaarmu/typst.vim', {'for': ['typst']}
+Plugin 'https://github.com/tmux-plugins/vim-tmux', {'for': ['tmux']}
 " {]} ---------- extra filetype support ----------
 
 " {[} ---------- Git ----------

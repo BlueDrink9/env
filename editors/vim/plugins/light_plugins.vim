@@ -71,8 +71,7 @@ Plugin 'https://github.com/junegunn/goyo.vim', {'on' : ['Goyo',]}
 
 " {[} --- TMUX ---
 if $TMUX !=? ""
-    Plugin 'https://github.com/tmux-plugins/vim-tmux'
     Plugin 'https://github.com/christoomey/vim-tmux-navigator'
-    Plugin 'https://github.com/preservim/vimux'
+    " Plugin 'https://github.com/preservim/vimux'
 endif
 " {]} TMUX
