@@ -48,6 +48,9 @@ terminal_kitty_install(){
     if ! command -v kitty > /dev/null 2>&1; then
       curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
     fi
+    echo "Install kitty terminfo on remotes with "
+    echo "infocmp -a xterm-kitty | ssh myserver tic -x -o \~/.terminfo /dev/stdin"
+    echo "or kitten ssh [host]"
 }
 
 eval "$(cat <<END
