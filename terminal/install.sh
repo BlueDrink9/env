@@ -129,14 +129,23 @@ undo${installID}(){
 END
 )"
 
+doTerminals(){
+    # For android, use termux. For unix, use kitty.
+    # (For Win, use Alacritty or Windows Terminal).
+    doTmux
+    if substrInStr "Android" "$(uname -a)";  then
+        doTermux
+    elif [ "$OSTYPE" != "msys" ]; then
+        doKitty
+    else
+        doAlacritty
+    fi
+    if substrInStr "darwin" "$OSTYPE"; then
+        installers="$installers doiTerm2"
+    fi
+}
+
 # If directly run instead of sourced, do all
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
-  doTmux
-  if substrInStr "Android" "$(uname -a)";  then
-    doTermux
-  elif [ "$OSTYPE" != "msys" ]; then
-    doKitty
-  else
-    doAlacritty
-  fi
+    doTerminals
 fi

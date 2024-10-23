@@ -98,18 +98,7 @@ readSettings() {
     installers="$installers doEmacs"
     installers="$installers doMisc"
 
-    # For android, use termux. For unix, use kitty.
-    # (For Win, use Alacritty or Windows Terminal).
-    if substrInStr "Android" "$(uname -a)";  then
-      installers="$installers doTermux"
-    elif [ "$OSTYPE" != "msys" ]; then
-      installers="$installers doKitty"
-    else
-      installers="$installers doAlacritty"
-    fi
-    if substrInStr "darwin" "$OSTYPE"; then
-      installers="$installers doiTerm2"
-    fi
+    installers="$installers doTerminals"
 
 
     if [ "$LITE" = 1 ]; then
