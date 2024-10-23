@@ -17,6 +17,7 @@ local lazyvim_extras = {
 	{ import = "lazyvim.plugins.extras.lang.rust"},
 	{ import = "lazyvim.plugins.extras.lang.yaml"},
 	{ import = "lazyvim.plugins.extras.lang.json"},
+	{ import = "lazyvim.plugins.extras.lang.r"},
 
 	{ import = "lazyvim.plugins.extras.test.core"},
 
@@ -312,11 +313,62 @@ return {
 		tag=vim.fn.has("nvim-0.10") == 0 and "v0.0.1" or nil,
 	},
 
-		-- dependencies = {
-		-- 	{ "jalvesaq/cmp-nvim-r", enabled=IsPluginUsed("cmp.nvim") },
-		-- 	-- https://github.com/jalvesaq/cmp-zotcite
-		-- 	-- https://github.com/jalvesaq/zotcite
-		-- },
+	{
+		"R-nvim/R.nvim",
+		-- R.nvim is still young and we may make some breaking changes from time
+		-- to time. For now we recommend pinning to the latest minor version
+		-- like so:
+		version = "~0.1.0",
+		ft={"r", "rmd", "rnoweb", "quarto", "rhelp"},
+		-- Requirements include > 0.9.5, cmake/make (for nvimcon r pkg), treesitter r, r >= 4.0.0
+		init = function()
+			vim.g.rout_follow_colorscheme = true
+		end,
+		opts = {
+			-- Or "always" for opening sessions with R files etc
+			auto_start = "always",
+			-- object browser on startup?
+			-- objbr_auto_start = true,
+			-- save_win_pos = false
+			-- arrange_windows = false
+			-- objbr_w = 30
+			-- objbr_h = 20
+			-- objbr_opendf = true     -- Show data.frames elements
+			-- objbr_openlist = false  -- Show lists elements
+			-- objbr_allnames = false  -- Show hidden objects (start with .)
+			objbr_mappings = {
+				c = 'class',
+				l = 'length',
+				n = 'names',
+				s = 'summary',
+				t = 'table',
+				gl = 'dplyr::glimpse({object})',
+				gv = function() require('r.browser').toggle_view() end,
+			},
+			bracketed_paste = true,
+			editing_mode = "vi",
+			clear_line = true,
+
+			hook = {
+				on_filetype = function()
+					local nmaps = {
+						[idemaps.REPLSendLine] = "<Plug>RDSendLine",
+						[idemaps.REPLSend] = "<Plug>RSendMotion",
+						[idemaps.REPLSendFile] = "<Plug>RSendFile",
+						[idemaps.REPLSendEndLine] = "<Plug>RNRightPart",
+						[idemaps.REPLClose] = "<Plug>RClose",
+						[idemaps.REPLClear] = "<Plug>RClearConsole",
+					}
+					vim.keymap.set("v", idemaps.REPLSend, "<Plug>RSendSelection", { buffer = true })
+					for map, cmd in pairs(nmaps) do
+						vim.keymap.set("n", map, cmd, { buffer = true })
+					end
+
+				end,
+			},
+			-- disable_cmds = {"RSetwd", "RDputObj"}
+		},
+	},
 
 	-- Switching to luasnip via lazyvim
 	-- {
