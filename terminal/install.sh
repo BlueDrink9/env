@@ -10,6 +10,9 @@ eval "$(cat <<END
 do${installID}() {
     printErr "Enabling custom ${installID} setup..."
     addTextIfAbsent "${installText}" "${baseRC}"
+    if [ -f ~/.tmux/plugins/tpm/bin/install_plugins ]; then
+      sh ~/.tmux/plugins/tpm/bin/install_plugins
+    fi
   }
 END
 )"
