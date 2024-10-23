@@ -467,4 +467,15 @@ return {
 	-- 	-- event="TermOpen",
 	-- },
 
+	{
+		"lambdalisue/vim-suda",
+		cmd = {"SudaRead", "SudaWrite"},
+		init = function()
+			vim.cmd[[
+			command! -bang -nargs=* SudoSave SudaWrite
+			cmap W! SudaWrite
+			]]
+		end
+	},
+
 }

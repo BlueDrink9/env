@@ -290,14 +290,3 @@ function! AutocmdExists(event, pattern, ...)
     " Return whether the output is more than just the header
     return result !=# '--- Autocommands ---'
 endfunction
-
-function! SudoSave()
-    " Prompt for the password and run the command directly
-    execute '!echo ' . inputsecret('Password for sudo: ') .
-                \ ' | sudo -S tee ' . expand('%') . ' > /dev/null'
-endfunction
-" :W! sudo saves the file
-" (useful for handling the permission-denied error)
-" File needs to already exist.
-command! -bang -nargs=* SudoSave call SudoSave(e
-cmap W! SudoSave

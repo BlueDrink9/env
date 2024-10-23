@@ -30,17 +30,19 @@ in
 
   # Essential packages are defined here, I'll basically always want these.
   # Rest are defined in imports
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs;
+    # let unstable = import unstableTarball; in
+      [
     vim-full
     bash
     zsh
-    unstable.neovim
-    wget
+    # unstable.neovim
+    # wget
     curl
     nano  # always nice to have a backup
     ripgrep
     fd
-    unstable.fzf
+    # unstable.fzf
     tmux
     gcc
     python3

@@ -39,6 +39,8 @@ function! myVimrcFunctions#Vimgrepall(pattern)
   cnext
 endfunction
 
+" For writing files with spaces or special chars in their name more
+" easily.
 function! myVimrcFunctions#W(bang, filename) 
     :exe "w".a:bang." ". fnameescape(a:filename) 
 endfunction
@@ -47,6 +49,11 @@ function! myVimrcFunctions#Save(bang, filename)
     :exe "save".a:bang." ". fnameescape(a:filename) 
 endfunction
 
+function! myVimrcFunctions#SudoSave()
+    " Prompt for the password and run the command directly
+    execute '!echo ' . inputsecret('Password for sudo: ') .
+                \ ' | sudo -S tee ' . expand('%') . ' > /dev/null'
+endfunction
 
 function! myVimrcFunctions#toggleSystemClipboard()
   if has('unnamedplus')

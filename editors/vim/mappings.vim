@@ -167,9 +167,15 @@ command! -nargs=1 SearchAll call myVimrcFunctions#Vimgrepall(<f-args>)
 
 command! -nargs=1 Mkdir call mkdir(<f-args>)
 
-" :W and :myVimrcFunctions#Save will escape a file name and write it
-command! -bang -nargs=* W <cmd>call myVimrcFunctions#W(<q-bang>, <q-args>)
-command! -bang -nargs=* Save <cmd>call myVimrcFunctions#Save(<q-bang>, <q-args>)
+" :W and :myVimrcFunctions#Save will escape a file name and write it.
+" Useful if spaces in file name.
+command! -bang -nargs=* W call myVimrcFunctions#W(<q-bang>, <q-args>)
+command! -bang -nargs=* Save call myVimrcFunctions#Save(<q-bang>, <q-args>)
+" :W! sudo saves the file
+" (useful for handling the permission-denied error)
+" File needs to already exist.
+command! -bang -nargs=* SudoSave call myVimrcFunctions#SudoSave()
+cmap W! SudoSave
 
 command! Profile call myVimrcFunctions#Profile()
 command! ProfileStop profile stop
