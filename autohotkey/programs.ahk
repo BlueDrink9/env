@@ -128,14 +128,13 @@ passwords := keepass
 ; #If
 
 WorkraveToggle(){
-    Process, Exist, workrave.exe
-    if (ErrorLevel)
-    {
-        Process, Close, workrave.exe
+
+    if (ProcessExist("workrave.exe")){
+        ProcessClose("workrave.exe")
     }
     else
     {
-        Run, workrave.exe
+        Run "workrave.exe"
     }
 }
 
