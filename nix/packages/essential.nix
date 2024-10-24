@@ -20,6 +20,7 @@ in
 
   programs.zsh.enable = true;
   programs.zsh.enableBashCompletion = true;
+  programs.bash.enableCompletion = true;
   programs.git.enable = true;
   programs.htop.enable = true;
   programs.neovim.defaultEditor = true;
@@ -36,13 +37,13 @@ in
     vim-full
     bash
     zsh
-    # unstable.neovim
-    # wget
+    unstable.neovim
+    wget
     curl
     nano  # always nice to have a backup
     ripgrep
     fd
-    # unstable.fzf
+    unstable.fzf
     tmux
     gcc
     python3
