@@ -58,14 +58,6 @@ add_channels() {
 }
 
 home_manager_install(){
-  if [ ! -d /etc/nixos ]; then
-    nix-shell '<home-manager>' -A install
-  else
-    # Add nixos hm setup config to imports list
-    baseRC="/etc/nixos/configuration.nix"
-    import="$(realpath "$($SCRIPTDIR_CMD)/../packages/home-manager.nix")"
-    AddImport "${import}" "${baseRC}"
-  fi
   toSource="$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
   installText="if [ -f \"$toSource\" ]; then . $toSource; fi"
   addTextIfAbsent "${installText}" "$HOME/.bashrc"
@@ -73,7 +65,7 @@ home_manager_install(){
 
   if [ ! -d /etc/nixos ]; then
     generic="targets.genericLinux.enable = true;"
-    NixOS_essential='++ (import "$($SCRIPTDIR_CMD)/../essential.nix args).environment.systemPackages'
+    NixOS_essential="++ (import \"$($SCRIPTDIR_CMD)/../essential.nix\" args).environment.systemPackages"
   fi
   # installID="HomeManager"
   installTextFull=$(cat <<EOF
@@ -107,11 +99,19 @@ EOF
       ;
     }
 EOF
-)
-baseRC="$XDG_CONFIG_HOME/home-manager/local-packages.nix"
-if [ ! -f "${baseRC}" ]; then
-  addTextIfAbsent "${installTextFull}" "${baseRC}"
-fi
+  )
+  baseRC="$XDG_CONFIG_HOME/home-manager/local-packages.nix"
+  if [ ! -f "${baseRC}" ]; then
+    addTextIfAbsent "${installTextFull}" "${baseRC}"
+  fi
+  if [ ! -d /etc/nixos ]; then
+    nix-shell '<home-manager>' -A install
+  else
+    # Add nixos hm setup config to imports list
+    baseRC="/etc/nixos/configuration.nix"
+    import="$(realpath "$($SCRIPTDIR_CMD)/../packages/home-manager.nix")"
+    AddImport "${import}" "${baseRC}"
+  fi
 }
 
 doHomeManagerPackages(){
@@ -128,7 +128,7 @@ doHomeManagerPackages(){
 
 
 doHomeManager(){
-  if [ ! -d /etc/nixos ]; then
+  if ! command -v nix > /dev/null 2>&1; then
     nix_install
   fi
   add_channels
