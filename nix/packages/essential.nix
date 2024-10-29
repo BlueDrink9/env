@@ -34,31 +34,32 @@ in
   environment.systemPackages = with pkgs;
     let unstable = import unstableTarball {}; in
       [
-    vim-full
-    bash
-    zsh
-    git
-    unstable.neovim
-    wget
-    curl
-    nano  # always nice to have a backup
-    ripgrep
-    fd
-    unstable.fzf
-    tmux
-    gcc
-    python3
-    unzip
-    zoxide
-    rsync
-    jq
-    rlwrap
-    starship
-    ranger
-    openssh
-    pstree
-    ncdu
-    nix-search-cli
-  ];
+      # These are a few packages we always want latest off, and it pays to have installation redundencies.
+      unstable.neovim
+      unstable.git
+      unstable.tmux
+      unstable.zsh
+      vim-full
+      bash
+      wget
+      curl
+      nano  # always nice to have a backup
+      ripgrep
+      fd
+      unstable.fzf
+      gcc
+      python3
+      unzip
+      zoxide
+      rsync
+      jq
+      rlwrap
+      starship
+      ranger
+      openssh
+      pstree
+      ncdu
+      nix-search-cli
+    ];
 
 }
