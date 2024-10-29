@@ -73,7 +73,7 @@ home_manager_install(){
 
   if [ ! -d /etc/nixos ]; then
     generic="targets.genericLinux.enable = true;"
-    NixOS_essential='++ (import "$($SCRIPTDIR_CMD)/../essential.nix args).my.pkgs;'
+    NixOS_essential='++ (import "$($SCRIPTDIR_CMD)/../essential.nix args).environment.systemPackages'
   fi
   # installID="HomeManager"
   installTextFull=$(cat <<EOF

@@ -22,7 +22,7 @@
 
   services.blueman.enable = true;
 
-  my.pkgs = with pkgs; [
+  environment.systemPackages = with pkgs; [
     universal-ctags
     ncurses
     bat-extras.batgrep

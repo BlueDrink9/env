@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
 
-  my.pkgs = with pkgs; [
+  environment.systemPackages = with pkgs; [
     signal-desktop
     zapzap
     caprine-bin

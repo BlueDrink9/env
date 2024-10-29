@@ -8,7 +8,7 @@
   services.desktopManager.plasma6.enable = true;
   services.displayManager.defaultSession = "plasmax11";
 
-  my.pkgs = with pkgs; [
+  environment.systemPackages = with pkgs; [
     kdePackages.ksshaskpass
     kdePackages.kconfig
   ];

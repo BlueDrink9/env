@@ -3,7 +3,7 @@
 {
   imports = [ ./firefox.nix ];
 
-  my.pkgs = with pkgs; [
+  environment.systemPackages = with pkgs; [
     bspwm
     sxhkd
     kitty

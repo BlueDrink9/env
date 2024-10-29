@@ -1,9 +1,9 @@
 { config, pkgs, ... }:
 {
 
-  my.pkgs = with pkgs; [
   # for ddcutil to work
   hardware.i2c.enable = true;
+  environment.systemPackages = with pkgs; [
     usbutils
     pciutils
     xdotool

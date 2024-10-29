@@ -3,7 +3,7 @@
   # aren't in mainstream repos (at least, this list isn't on
   # Fedora)
 {
-  my.pkgs = with pkgs; [
+  environment.systemPackages = with pkgs; [
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
     veracrypt
     tdrop

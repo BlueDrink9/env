@@ -10,13 +10,12 @@ in
   {
   imports = [
     <plasma-manager/modules>
-    ./package_setup.nix
     ./plasma.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
 
-  my.pkgs = with pkgs; [
+  home.packages = with pkgs; [
   ];
 
   xdg.enable = true;
