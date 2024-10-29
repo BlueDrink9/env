@@ -73,6 +73,7 @@ home_manager_install(){
 
   if [ ! -d /etc/nixos ]; then
     generic="targets.genericLinux.enable = true;"
+    NixOS_essential='++ (import "$($SCRIPTDIR_CMD)/../essential.nix args).my.pkgs;'
   fi
   # installID="HomeManager"
   installTextFull=$(cat <<EOF
@@ -97,17 +98,20 @@ EOF
 
   # installID="HomeManager"
   installTextFull=$(cat <<EOF
-  { pkgs, ... }:
+  { pkgs, ... }@args:
     {
-      home.packages = with pkgs; [
-      ];
+      my.pkgs = with pkgs; [
+
+      ]
+      ${NixOS_essential}
+      ;
     }
 EOF
-  )
-  baseRC="$XDG_CONFIG_HOME/home-manager/local-packages.nix"
-  if [ ! -f "${baseRC}" ]; then
-    addTextIfAbsent "${installTextFull}" "${baseRC}"
-  fi
+)
+baseRC="$XDG_CONFIG_HOME/home-manager/local-packages.nix"
+if [ ! -f "${baseRC}" ]; then
+  addTextIfAbsent "${installTextFull}" "${baseRC}"
+fi
 }
 
 doHomeManagerPackages(){

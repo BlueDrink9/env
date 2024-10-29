@@ -31,12 +31,13 @@ in
 
   # Essential packages are defined here, I'll basically always want these.
   # Rest are defined in imports
-  environment.systemPackages = with pkgs;
-    # let unstable = import unstableTarball; in
+  my.pkgs = with pkgs;
+    let unstable = import unstableTarball {}; in
       [
     vim-full
     bash
     zsh
+    git
     unstable.neovim
     wget
     curl

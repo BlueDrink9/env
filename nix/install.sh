@@ -15,8 +15,7 @@ AddImport(){
 installID="Nixos"
 installTextFull=$(cat <<EOF
 { config, pkgs, ... }: {
-    imports =
-    [
+    imports = [
         ./hardware-configuration.nix
         "$($SCRIPTDIR_CMD)/configuration.nix"
     ];

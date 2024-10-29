@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
 
-  environment.systemPackages = with pkgs; [
+  my.pkgs = with pkgs; [
     usbutils
     pciutils
     xdotool

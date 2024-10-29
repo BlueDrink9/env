@@ -2,7 +2,7 @@
 
 {
 
-  environment.systemPackages = with pkgs; [
+  my.pkgs = with pkgs; [
     feh
     playerctl
     picom

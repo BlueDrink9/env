@@ -10,39 +10,13 @@ in
   {
   imports = [
     <plasma-manager/modules>
+    ./package_setup.nix
     ./plasma.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
 
-  # Using home-manager for these packages because they often
-  # aren't in mainstream repos (at least, this list isn't on
-  # Fedora)
-  home.packages = with pkgs; [
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-    veracrypt
-    tdrop
-
-    birdtray
-    unstable.brave
-    duplicacy
-    element
-    espanso
-    fscryptctl
-    pcloud
-    signal-desktop
-    tldr
-    topgrade
-    ventoy
-    vivid
-    vscodium
-    zotero
-    caprine-bin
-    zapzap
-    # TODO San francisco fonts
-    # https://github.com/Lyndeno/apple-fonts.nix
-
-    # albert, ulauncher, dlauncher?
+  my.pkgs = with pkgs; [
   ];
 
   xdg.enable = true;
