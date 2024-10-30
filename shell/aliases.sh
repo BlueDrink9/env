@@ -202,7 +202,12 @@ fi
 
 if command -v thefuck >/dev/null 2>&1; then
   # lazy-load thefuck because it's super slow to eval
-  alias fuck='if ! declare -f fuck &>/dev/null; then eval -- "$(thefuck -a)"; fi && fuck'
+  if command -v thefuck >/dev/null 2>&1; then
+    fuck() {
+      eval -- "$(thefuck -a)"
+      fuck "$@"
+    }
+  fi
 fi
 
 # For AUR packages
