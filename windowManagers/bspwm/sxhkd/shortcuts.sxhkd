@@ -4,7 +4,7 @@
 # -- Execute --
 # Terminal + backup
 super + e; {t,alt+t,shift+t}
-  {kitty, kitty -c none env -i bash --norc --noprofile, alacritty || konsole || xterm || /bin/xterm || /usr/bin/xterm }
+  {kitty --single-instance, kitty -c none env -i bash --norc --noprofile, alacritty || konsole || xterm || /bin/xterm || /usr/bin/xterm }
 # notes, mail, passwords, Facebook messages, OTP Authenticator
 super + e; {n,m,p,f,a}
   {joplin-desktop || joplin,tutanota-desktop,keepassxc,ferdi,_}
