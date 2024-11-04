@@ -35,7 +35,7 @@ doXremap(){
 doMisc(){
   doVieb
   doPyvim
-  doXremap
+  # doXremap
 }
 
 # If directly run instead of sourced, do all
