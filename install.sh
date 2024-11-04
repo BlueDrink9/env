@@ -154,7 +154,7 @@ readSettings() {
   main() {
     readSettings
     for installer in $installers; do
-      printErr "${Yellow} "Installing $installer"
+      printErr "${Yellow} Installing $installer"
       "$installer" "${1:-}"
     done
     printErr "${Green} Install Complete${NC}"
