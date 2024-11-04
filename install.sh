@@ -166,18 +166,25 @@ readSettings() {
 # set default arg to avoid warnings
 arg1=${1:-}
 # echo 'arg' $arg1
-
-if [ "$arg1" = "-u" ]; then
-  uninstall
-  exit
-fi
-
+case "$arg1" in
+  "-h")
+    echo '-l: lite (just dots); -u: uninstall (partially supported); -a: all (sortof)'
+    ;;
+  "-l")
+    LITE=1
+    ;;
+  "-a")
+    ALL=1
+    ;;
+  "-u")
+    uninstall
+    exit
+    ;;
+  *)
+    ;;
+esac
 if [[ $arg1 =~ ^--?[aA][lL]{2}?$ ]]; then
   ALL=1
-fi
-
-if [ "$arg1" = "-l" ]; then
-  LITE=1
 fi
 
 if [ "$OSTYPE" = "linux-gnu" ]; then
