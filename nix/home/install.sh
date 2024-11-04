@@ -65,14 +65,14 @@ home_manager_install(){
 
   if [ ! -d /etc/nixos ]; then
     generic="targets.genericLinux.enable = true;"
-    NixOS_essential="++ (import \"$($SCRIPTDIR_CMD)/../packages/essential.nix\" args).environment.systemPackages"
+    NixOS_essential="++ (import \"${HM_DOTS}/../packages/essential.nix\" args).environment.systemPackages"
   fi
   # installID="HomeManager"
   installTextFull=$(cat <<EOF
   { config, pkgs, ... }: {
     imports =
     [
-    "$($SCRIPTDIR_CMD)/home.nix"
+    "${HM_DOTS}/home.nix"
     ./local-packages.nix
     ];
 
@@ -109,7 +109,7 @@ EOF
   else
     # Add nixos hm setup config to imports list
     baseRC="/etc/nixos/configuration.nix"
-    import="$(realpath "$($SCRIPTDIR_CMD)/../packages/home-manager.nix")"
+    import="$(realpath "${HM_DOTS}/../packages/home-manager.nix")"
     AddImport "${import}" "${baseRC}"
   fi
 }
@@ -128,8 +128,12 @@ doHomeManagerPackages(){
 
 
 doHomeManager(){
+  # nix_install moves to a tmpdir for some reason, so storing this variable
+  HM_DOTS="$($SCRIPTDIR_CMD)"
   if ! command -v nix > /dev/null 2>&1; then
+    pushd "." > /dev/null
     nix_install
+    popd > /dev/null
   fi
   add_channels
   home_manager_install
