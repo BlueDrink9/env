@@ -1,0 +1,9 @@
+#!/bin/sh
+arg=$1
+hostname="$(ssh -G $arg | awk '/^hostname / { print $2 }')"
+if [ -z "$hostname" ]; then
+  echo "Couldn't find $arg in $(ssh -G $arg)"
+else
+  echo "pinging $hostname"
+  ping "$hostname"
+fi
