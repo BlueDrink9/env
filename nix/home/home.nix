@@ -1,7 +1,7 @@
 let
   dotfilesDir = builtins.getEnv "DOTFILES_DIR";
   nixDir = "${dotfilesDir}/system/nix";
-in { config, pkgs, ... }:
+in { config, pkgs, lib, ... }:
 
 let
   unstable = import <nixpkgs-unstable> {};
@@ -122,7 +122,7 @@ in
 
   services.ssh-agent.enable = true;
   services.syncthing = {
-    enable = true;
+    enable = lib.mkDefault true;
     tray.enable = true;
   };
 
