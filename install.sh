@@ -44,8 +44,8 @@ source "$DOTFILES_DIR/system/ssh/install.sh"
 source "$DOTFILES_DIR/terminal/install.sh"
 source "$DOTFILES_DIR/windowManagers/install.sh"
 source "$DOTFILES_DIR/misc/install.sh"
-source "$DOTFILES_DIR/system/nix/install.sh"
-source "$DOTFILES_DIR/system/nix/home/install.sh"
+source "$DOTFILES_DIR/nix/install.sh"
+source "$DOTFILES_DIR/nix/home/install.sh"
 # Need to change vscode's installer to not autorun. Or maybe leave to only run manually...
 # source "$DOTFILES_DIR/editors/vscode/install.sh"
 
