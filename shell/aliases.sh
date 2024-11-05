@@ -239,7 +239,7 @@ alias bm="cd \"\$(bmm)\""
 alias del="gio trash"
 
 alias renix='sudo DOTFILES_DIR="$DOTFILES_DIR" nixos-rebuild switch --impure'
-alias homer='home-manager switch'
+alias homer="(command -v home-manager > /dev/null && home-manager switch) || nix-shell '<home-manager>' -A install"
 
 alias clip='xclip -selection clipboard'
 alias nix-shell='nix-shell --run $(basename $SHELL)'
