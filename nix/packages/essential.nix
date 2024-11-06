@@ -39,15 +39,14 @@ in
       unstable.git
       unstable.tmux
       unstable.zsh
-      vim-full
       bash
+      vim-full
       wget
       curl
       nano  # always nice to have a backup
       ripgrep
       fd
       unstable.fzf
-      gcc
       python3
       unzip
       zoxide
