@@ -39,7 +39,6 @@ in
       unstable.git
       unstable.tmux
       unstable.zsh
-      bash
       vim-full
       wget
       curl
