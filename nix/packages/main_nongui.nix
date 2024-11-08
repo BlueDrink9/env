@@ -23,6 +23,10 @@
   services.blueman.enable = true;
 
   environment.systemPackages = with pkgs; [
+    # Nix bash can cause issues with non-nix packages on non-nixOS
+    # systems, which is why it isn't in essential. Still have modern
+    # shell in essential via zsh.
+    bash
     universal-ctags
     ncurses
     bat-extras.batgrep

@@ -13,6 +13,9 @@ in
     kdePackages.qttools
   ];
 
+  imports = [
+    ./plasma-fakwin.nix
+  ];
 
   programs.plasma = {
     enable = true;
