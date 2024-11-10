@@ -24,6 +24,9 @@
     joplin
     # Need Hunspell for libreoffice spellcheck, used for emacs too
     libreoffice-qt-fresh hunspell hunspellDicts.en_AU
+
+    xorg.xev
+    alsa-utils
   ];
 
   fonts.packages = with pkgs; [
