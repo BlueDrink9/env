@@ -99,8 +99,7 @@ super + grave
 # b = bounce
 super + m; {s,m,b}
   notify-send "Opening $(which cider)" && \
-    cider $arg || gtk-launch cider $arg || fopen https://music.apple.com/library/playlist/p.V7VY8EWh4meR6pD
-# arg="{_,spotify:playlist:3DDy0dVcH0v8hwTsow3rCN:play,spotify:playlist:07DNxdotyBhZf3R77tPheP:play}" && \
+    cider $arg || gtk-launch cider $arg || fopen https://beta.music.apple.com/nz{,/library/playlist/p.V7VY8EWh4meR6pD,/library/playlist/p.LV0Pv4biZXBOk3r}
 
 # XF86AudioNext
 super + m; {space,h,p,n}
