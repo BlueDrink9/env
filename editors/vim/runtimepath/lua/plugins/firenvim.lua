@@ -60,6 +60,7 @@ spec.config = function()
         'roll20.com*',
         'habitica.com*',
         'jira.*',
+        '*.music.apple.com*',
     }
     for _, site in ipairs(disabled_sites) do
         config.localSettings[site] = { priority = 1, selector = '', takeover = 'never' }
