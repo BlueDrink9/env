@@ -348,6 +348,9 @@ return {
 			bracketed_paste = true,
 			editing_mode = "vi",
 			clear_line = true,
+			assignment_keymap = "_",
+			pipe_keymap = ">>",
+			pipe_version = " %>% \n",
 
 			hook = {
 				on_filetype = function()
