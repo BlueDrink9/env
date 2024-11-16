@@ -8,6 +8,8 @@
     pciutils
     xdotool
     ddcutil
+    exfatprogs
+    exfat
   ];
 
 }
