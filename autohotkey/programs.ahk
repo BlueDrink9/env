@@ -60,7 +60,7 @@ vim(args:=""){
         if nvimBinaryPath != "" {
             nvimBinaryArg := Format("--neovim-bin `"{1}`"", nvimBinaryPath)
         }
-        Run("neovide.exe " . nvimBinaryArg .  args)
+        Run("neovide.exe " . nvimBinaryArg . " -- " . args)
     } catch {
         Run("gvim.exe", args)
     }
