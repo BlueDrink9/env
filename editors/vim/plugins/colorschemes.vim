@@ -75,7 +75,6 @@ Plugin 'https://github.com/vim-scripts/oceandeep', {'lazy': v:true}
 Plugin 'ashfinal/vim-colors-violet', {'lazy': v:true}
 Plugin 'dracula/vim', { 'as': 'dracula', 'lazy': v:true }
 Plugin 'https://github.com/pineapplegiant/spaceduck', {'lazy': v:true}
-Plugin 'https://github.com/sainnhe/forest-night', {'lazy': v:true}
 
 if has('nvim')
   Plugin 'https://github.com/uloco/bluloco.nvim', {'lazy': v:true}
@@ -120,6 +119,16 @@ let g:jellybeans_use_term_italics = 1
 let g:jellybeans_overrides = {
       \    'background': { 'guibg': '000000' },
       \}
+
+if has("nvim") && &termguicolors == 1
+    " Lovely green-based scheme, its soft version is a not-too-dark dark mode.
+    Plugin 'neanias/everforest-nvim', {'lazy': v:true, 'opts': {'background': 'soft'}, 'main': 'everforest'}
+else
+    let g:everforest_background = 'soft'
+    let g:everforest_better_performance = 1
+    Plugin 'sainnhe/everforest'
+endif
+
 
 " {[} ---------- Base16 ----------
 " If using a Base16 terminal theme designed to keep the 16 ANSI colors intact (a "256" variation) and have sucessfully modified your 256 colorspace with base16-shell you'll need to add the following to your ~/.vimrc before the colorscheme declaration.
