@@ -348,9 +348,10 @@ return {
 			bracketed_paste = true,
 			editing_mode = "vi",
 			clear_line = true,
-			assignment_keymap = "_",
-			pipe_keymap = ">>",
-			pipe_version = " %>% \n",
+			-- These are mapped rather than done as abbrevs. Not helpful.
+			assignment_keymap = "",
+			pipe_keymap = "",
+			-- pipe_version = "magrittr",
 
 			hook = {
 				on_filetype = function()
