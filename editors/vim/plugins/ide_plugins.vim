@@ -31,6 +31,7 @@ endif
 Plugin 'https://github.com/tpope/vim-characterize', {'on': '<Plug>(characterize)'}
 " :Linediff on two visual selections to open their vimdiff
 Plugin 'https://github.com/AndrewRadev/linediff.vim', {'on': 'Linediff'}
+command! -nargs=* Diffline Linediff <args>
 Plugin 'https://github.com/direnv/direnv.vim'
 " {]} ---------- Misc ----------
 
