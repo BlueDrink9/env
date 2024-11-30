@@ -88,7 +88,7 @@ return {
 
 			local diagnostic_nbufmaps = {
 				[maps.listErrs] = "set_loclist()",
-				[maps.diagnostic] = "open_float(nil, {focus=false})",
+				[maps.diagnostic] = "open_float(nil, {focus=false, scope='cursor',})",
 				[maps.diagnosticPrev] = "goto_prev()",
 				[maps.diagnosticNext] = "goto_next()",
 			}
