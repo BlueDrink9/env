@@ -55,7 +55,6 @@ return {
 				"pyright",
 				"debugpy",
 				"ruff",
-				"ruff-lsp",
 				"stylua",
 				"lua-language-server",
 				"luacheck",
