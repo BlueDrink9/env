@@ -2,12 +2,12 @@ if not IsPluginUsed("LazyVim") then
 	return {}
 end
 
-local spec = {
-
+return {
 	{
 		"neovim/nvim-lspconfig",
 		cond = vim.g.ideMode == 1,
-		opts = function()
+		opts = function(_, opts)
+			-- opts.diagnostic = false
 			local keys = require("lazyvim.plugins.lsp.keymaps").get()
 			-- Clear default lsp keymaps
 			-- for i=0, #keys do keys[i]=nil end
@@ -203,40 +203,35 @@ local spec = {
 		keys = { { "<leader>sr", false } }
 	},
 
-}
-
-if IsPluginUsed("copilot-cmp") then
-	table.insert(spec,
-		{
-			"nvim-cmp",
-			opts = function(_, opts)
-				for _, v in pairs(opts.sources) do
-					if v.name == "copilot" then
-						v.priority = 1
-						break
-					end
+	{
+		"nvim-cmp",
+		optional = IsPluginUsed("copilot-cmp"),
+		opts = function(_, opts)
+			for _, v in pairs(opts.sources) do
+				if v.name == "copilot" then
+					v.priority = 1
+					break
 				end
+			end
 
-				local cmp = require("cmp")
-				opts.sorting = {
-					priority_weight = 1,
-					comparators = {
-						-- Below is the default comparitor list and order for nvim-cmp
-						cmp.config.compare.offset,
-						-- cmp.config.compare.scopes, --this is commented in nvim-cmp too
-						cmp.config.compare.exact,
-						require("copilot_cmp.comparators").prioritize,
-						cmp.config.compare.score,
-						cmp.config.compare.recently_used,
-						cmp.config.compare.locality,
-						cmp.config.compare.kind,
-						cmp.config.compare.sort_text,
-						cmp.config.compare.length,
-						cmp.config.compare.order,
-					},
-				}
-			end,
-		})
-end
-
-return spec
+			local cmp = require("cmp")
+			opts.sorting = {
+				priority_weight = 1,
+				comparators = {
+					-- Below is the default comparitor list and order for nvim-cmp
+					cmp.config.compare.offset,
+					-- cmp.config.compare.scopes, --this is commented in nvim-cmp too
+					cmp.config.compare.exact,
+					require("copilot_cmp.comparators").prioritize,
+					cmp.config.compare.score,
+					cmp.config.compare.recently_used,
+					cmp.config.compare.locality,
+					cmp.config.compare.kind,
+					cmp.config.compare.sort_text,
+					cmp.config.compare.length,
+					cmp.config.compare.order,
+				},
+			}
+		end,
+	},
+}
