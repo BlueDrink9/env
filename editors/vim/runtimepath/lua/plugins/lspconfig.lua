@@ -19,7 +19,11 @@
 vim.diagnostic.config({
 		signs = false,
 		virtual_text = {
+			prefix = function() return "" end,
 			format = function(diagnostic)
+				if DiagnosticVirtualTextPrefix then
+					return DiagnosticVirtualTextPrefix(diagnostic)
+				end
 				symbols = {
 					[vim.diagnostic.severity.ERROR] = "E",
 					[vim.diagnostic.severity.WARN] = "W",

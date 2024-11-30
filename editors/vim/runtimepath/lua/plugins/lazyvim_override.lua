@@ -9,6 +9,19 @@ return {
 		opts = function(_, opts)
 			-- Ensure we use my default config rather than lazyvim's.
 			opts.diagnostics = vim.diagnostic.config()
+			-- Prefix with icon, depending on severity
+			if (vim.g.useNerdFont == 1 and vim.fn.has("nvim-0.10") == 1) then
+				-- opts.diagnostics.virtual_text.prefix = "icons"
+				DiagnosticVirtualTextPrefix = function(diagnostic)
+					local symbols = {
+						require'lazyvim.util'.config.icons.diagnostics.Error,
+						require'lazyvim.util'.config.icons.diagnostics.Warn,
+						require'lazyvim.util'.config.icons.diagnostics.Hint,
+						require'lazyvim.util'.config.icons.diagnostics.Info,
+					}
+					return symbols[diagnostic.severity]
+				end
+			end
 			local keys = require("lazyvim.plugins.lsp.keymaps").get()
 			-- Clear default lsp keymaps
 			-- for i=0, #keys do keys[i]=nil end
@@ -235,4 +248,5 @@ return {
 			}
 		end,
 	},
+
 }
