@@ -36,14 +36,14 @@ vim.diagnostic.config({
 
 local diagnosticsConfig = vim.diagnostic.config()
 vim.g.diagnosticsEnabled = true
-function toggleDiagnostics()
+function ToggleDiagnostics()
 	if not vim.g.diagnosticsEnabled then
 		vim.diagnostic.config(diagnosticsConfig)
 		vim.g.diagnosticsEnabled = true
 	else
 		vim.diagnostic.config({
 			virtual_text = false,
-			sign = false,
+			signs = false,
 			float = false,
 			update_in_insert = false,
 			severity_sort = false,
@@ -52,7 +52,7 @@ function toggleDiagnostics()
 		vim.g.diagnosticsEnabled = false
 	end
 end
-vim.keymap.set("n", "yod", toggleDiagnostics, { noremap = true, silent = true })
+vim.keymap.set("n", "yod", ToggleDiagnostics, { noremap = true, silent = true })
 
 return {
 	{
@@ -106,9 +106,9 @@ return {
 					group = "lsp_on_attach",
 					buffer = bufnr,
 					callback = function()
-						if diagnosticsEnabled then
+						if vim.g.diagnosticsEnabled then
 							vim.diagnostic.open_float(nil, { focus = false })
-							diags = vim.diagnostic.get(bufnr, { lnum = "." })
+							-- Enable underline if the current line as a diagnostic
 							if #vim.diagnostic.get(bufnr, { lnum = vim.fn.line(".") }) > 0 then
 								vim.diagnostic.config({ underline = true })
 							end
