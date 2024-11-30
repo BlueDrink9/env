@@ -61,6 +61,7 @@
     nix-du zgrviewer
     chatblade
     gnumake
+    openssh
 
 # so many programs rely on this for setup/install, so we'll put it in main.
     gcc

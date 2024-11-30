@@ -53,7 +53,6 @@ in
       rlwrap
       starship
       ranger
-      openssh
       pstree
       ncdu
       nix-search-cli
