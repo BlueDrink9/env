@@ -498,5 +498,10 @@
                 "leap.find"
             ]
         }
-    ]
+    ],
+    "python.defaultInterpreterPath": "/home/william/src/keeb_snakeskin/venv/bin/python",
+    "OcpCadViewer.view.center_grid": true,
+    "OcpCadViewer.view.grid_XY": true,
+    "OcpCadViewer.advanced.autostart": false,
+    "git.openRepositoryInParentFolders": "always"
 }

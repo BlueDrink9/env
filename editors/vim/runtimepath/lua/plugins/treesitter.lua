@@ -59,6 +59,7 @@ local specs = {
 
 			return {
 				parser_install_dir = parser_install_dir,
+				-- Auto-install parser if you are opening a file that requires it.
 				auto_install = true,
 				endwise = { enable = true },
 				-- Explicitly blank - use the list and function above.

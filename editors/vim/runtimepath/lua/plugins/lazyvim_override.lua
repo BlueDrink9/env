@@ -63,9 +63,17 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		cond = vim.g.liteMode == 0,
-		opts = function(_, opts)
-			opts.ensure_installed = {}
-		end
+		opts = {
+			ensure_installed = false,
+		},
+	},
+
+	{
+		"williamboman/mason.nvim",
+		opts_extend = { },
+		opts = {
+			ensure_installed = {},
+		},
 	},
 
 	{

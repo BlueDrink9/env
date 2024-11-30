@@ -2,6 +2,9 @@
   # Use home-manager for these packages because they often
   # aren't in mainstream repos (at least, this list isn't on
   # Fedora)
+let
+  unstable = import <nixpkgs-unstable> {};
+in
 {
   environment.systemPackages = with pkgs; [
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
