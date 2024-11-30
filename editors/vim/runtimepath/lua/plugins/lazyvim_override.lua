@@ -235,6 +235,13 @@ return {
 					break
 				end
 			end
+			for i, v in pairs(opts.sources) do
+				if v.name == "buffer" then
+					-- Remove the first lazyvim buffer source, so that my one (with custom sorting) takes precedence.
+					opts.sources[i] = {}
+					break
+				end
+			end
 
 			local cmp = require("cmp")
 			opts.sorting = {
