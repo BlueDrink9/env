@@ -42,6 +42,7 @@
     vivid
     bat
     eza
+    python3
 
     veracrypt
     syncthing

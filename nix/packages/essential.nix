@@ -46,7 +46,6 @@ in
       ripgrep
       fd
       unstable.fzf
-      python3
       unzip
       zoxide
       rsync
