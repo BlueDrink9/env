@@ -25,6 +25,14 @@ HISTFILE="${HISTORY_FILE}"
 SAVEHIST="${HISTORY_FILESIZE}"
 # Zsh HISTORY_IGNORE uses regex (a|b) for separate patterns.
 HISTORY_IGNORE="($(echo ${HISTORY_IGNORE_PATTERNS} | tr ':' '|'))"
+# HISTORY_IGNORE only stops writing to disk. This sets it to also prevent interactive use.
+# At least, that's what the man page says, but even a basic example won't work so I think something else in my config is breaking history adding.
+zshaddhistory() {
+    # USe default settings inside this function.
+    emulate -L zsh
+    # setopt extendedglob
+    [[ $1 != ${~HISTORY_IGNORE} ]]
+}
 setopt HIST_IGNORE_SPACE HIST_IGNORE_DUPS
 setopt hist_no_store histreduceblanks
 # Append to history after every command, not just when shell exits.
@@ -49,7 +57,7 @@ setopt CHECK_JOBS
 # Affects what chars are considered part of a 'word' for ctrl w etc.
 # Default includes most punctuation and symbols, dashes, slashes etc. I want those to indicate separate words.
 WORDCHARS='_$'
-setopt ALWAYS_TO_END 
+setopt ALWAYS_TO_END
 # Allows # comments during cmd line
 setopt interactivecomments
 
