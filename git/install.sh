@@ -51,6 +51,10 @@ gitUser() {
   git config user.name "$default_user"
   git config credential.https://github.com.username "$default_user"
   git config user.email "$default_email"
+  # For this repo we usually want to push with ssh, but we always want to
+  # pull with http to avoid password hassle.
+  current_remote="$(git remote get-url origin)"
+  git config remote.origin.pushurl ssh://git@github.com/$(basename $(dirname $current_remote))/$(basename $current_remote)
 
   unset default_email default_user
 }
