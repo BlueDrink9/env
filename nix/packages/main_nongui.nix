@@ -36,7 +36,7 @@
     broot
     duf
     mcfly
-    thefuck
+    pay-respects
     bluetuith
     sqlite
     vivid

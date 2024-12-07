@@ -209,6 +209,11 @@ if command -v thefuck >/dev/null 2>&1; then
     }
   fi
 fi
+if command -v pay-respects >/dev/null 2>&1; then
+  shell="$(basename "$SHELL")"
+  eval "$(pay-respects "$shell" --alias)"
+fi
+
 
 # For AUR packages
 alias srcinfo='makepkg --printsrcinfo > .SRCINFO'
