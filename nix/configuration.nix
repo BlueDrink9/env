@@ -183,6 +183,9 @@ in { lib, config, pkgs, ... }:
   services.thermald.enable = true;
   services.auto-cpufreq.enable = true;
 
+  # Trim SSDs
+  services.fstrim.enable = true;
+
   environment.shellAliases = {
     renix="sudo nixos-rebuild switch";
   };
