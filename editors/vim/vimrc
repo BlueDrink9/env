@@ -56,6 +56,10 @@ function! s:markExecutable(program)
 endfunction
 
 function! Executable(program)
+    " On Windows, cache executable lookup to reduce impact on startup time.
+    if !has('win32')
+        return executable(a:program)
+    endif
     let l:var = 'g:executable_' . a:program
     if exists(l:var)
         exec 'return ' . l:var
