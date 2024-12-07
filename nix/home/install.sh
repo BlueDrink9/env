@@ -63,7 +63,9 @@ home_manager_install(){
   addTextIfAbsent "${installText}" "$HOME/.bashrc"
   addTextIfAbsent "${installText}" "$HOME/.zshrc"
 
-  if [ ! -d /etc/nixos ]; then
+  if [ -d /etc/nixos ]; then
+    disableSyncthing="services.syncthing.enable = false;"
+  else
     generic="targets.genericLinux.enable = true;"
     NixOS_essential="++ (import \"${HM_DOTS}/../packages/essential.nix\" args).environment.systemPackages"
   fi
@@ -76,6 +78,7 @@ home_manager_install(){
     ./local-packages.nix
     ];
 
+    $disableSyncthing
     $generic
     home.username = "$USER";
     home.homeDirectory = "$HOME";
