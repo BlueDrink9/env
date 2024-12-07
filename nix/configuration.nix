@@ -176,6 +176,10 @@ in { lib, config, pkgs, ... }:
 
   };
 
+  systemd.extraConfig = ''
+    DefaultTimeoutStopSec=30s
+  '';
+
   services.thermald.enable = true;
   services.auto-cpufreq.enable = true;
 
