@@ -182,9 +182,26 @@ in { lib, config, pkgs, ... }:
 
   services.thermald.enable = true;
   services.auto-cpufreq.enable = true;
+  services.power-profiles-daemon.enable = false;
 
   # Trim SSDs
   services.fstrim.enable = true;
+
+  # Better virtual terminal in console
+  services.kmscon = {
+    enable = true;
+    hwRender = true;
+    # fonts = [ {
+    #   name = "MesloLGLDZ Nerd Font";
+    #   package = (pkgs.nerdfonts.override { fonts = [ "menlo" ]; });
+    # } ];
+    useXkbConfig = true;
+    extraConfig = ''
+      font-size=11
+      palette=solarized
+    '';
+  };
+
 
   environment.shellAliases = {
     renix="sudo nixos-rebuild switch";
