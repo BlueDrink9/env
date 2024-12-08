@@ -22,6 +22,9 @@
 
   services.blueman.enable = true;
 
+  # Allow running unpatched dynamic binaries (useful for pip)
+  programs.nix-ld.enable = true;
+
   environment.systemPackages = with pkgs; [
     # Nix bash can cause issues with non-nix packages on non-nixOS
     # systems, which is why it isn't in essential. Still have modern
@@ -43,6 +46,7 @@
     bat
     eza
     python3
+    nix-ld
 
     veracrypt
     syncthing
