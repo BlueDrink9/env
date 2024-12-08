@@ -17,10 +17,9 @@ in
     };
   };
 
-
   programs.zsh.enable = true;
   programs.zsh.enableBashCompletion = true;
-  programs.bash.enableCompletion = true;
+  programs.bash.completion.enable = true;
   programs.git.enable = true;
   programs.htop.enable = true;
   programs.neovim.defaultEditor = true;
