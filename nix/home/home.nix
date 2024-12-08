@@ -122,6 +122,7 @@ in
 
   services.ssh-agent.enable = true;
   services.syncthing = {
+    # Default to true, but on NixOS systems this should be overridden to false.
     enable = lib.mkDefault true;
     tray.enable = true;
   };

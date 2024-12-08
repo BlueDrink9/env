@@ -9,7 +9,7 @@
     localNetworkGameTransfers.openFirewall = true;
   };
 
-  my.pkgs = with pkgs; [
+  environment.systemPackages = with pkgs; [
     heroic
     cider
   ];
