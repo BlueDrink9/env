@@ -10,10 +10,8 @@ set -eu
 
  FILE="$HOME/.config/home-manager/local-packages.nix"
 
- # Insert the new line as the third-to-last line. Should be the
- # last line before the end of the package list.
- # Use sed to insert the new line as the third-to-last line
- sed -i "$(($(wc -l < "$FILE") - 1))i $1" "$FILE"
+ # Insert the new package at the start of the list
+ sed -i '/home.packages = with pkgs;\s*\[/a '"${1}" "$FILE"
 
  # Rerun home-manager install
  home-manager switch
