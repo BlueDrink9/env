@@ -1,9 +1,17 @@
 #!/bin/sh
 MAC="$1"
-Broadcast="$2"
+broadcast="$2"
 # Default to 9
-PortNumber="${3:-9}"
+port="${3:-9}"
 
-echo -e $(echo $(printf 'f%.0s' {1..12}; printf "$(echo $MAC | sed 's/://g')%.0s" {1..16}) \
-  | sed -e 's/../\\x&/g') \
-  | nc -w1 -u -b $Broadcast $PortNumber
+targetmac=$(echo $MAC | sed 's/[ :-]//g')
+# Magic packets consist of 12*`f` followed by 16 repetitions of the MAC address
+magic_packet=$(
+  printf 'f%.0s' {1..12}
+  printf "${targetmac}%.0s" {1..16}
+)
+# ... and they need to be hex-escaped
+magic_packet=$(
+  echo $magic_packet | sed -e 's/../\\x&/g'
+)
+echo -e $magic_packet | nc -w1 -u $broadcast $port
