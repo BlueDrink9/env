@@ -251,3 +251,5 @@ alias clip='xclip -selection clipboard'
 alias nix-shell='nix-shell --run $(basename $SHELL)'
 alias ns='nix-shell'
 alias np='nix-shell -p'
+alias sysmanr=sudo "$(which nix)" run 'github:numtide/system-manager' -- switch --flake $DOTFILES_DIR/nix/system-manager
+
