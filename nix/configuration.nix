@@ -187,6 +187,17 @@ in { lib, config, pkgs, ... }:
   # Trim SSDs
   services.fstrim.enable = true;
 
+  # Limit maximum size of journalctl logs
+  # Runtime is in-memory logs under /run, System is disk logs.
+  services.journald.extraConfig = ''
+    [Journal]
+    Compress=yes
+    SystemMaxUse=1GB
+    SystemKeepFree=1GB
+    RuntimeMaxUse=100MB
+  '';
+
+
   # Better virtual terminal in console
   services.kmscon = {
     enable = true;
