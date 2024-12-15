@@ -222,4 +222,19 @@ in { lib, config, pkgs, ... }:
     renix="sudo nixos-rebuild switch";
   };
 
+  services = {
+    syncthing = {
+      openDefaultPorts = true;
+      settings = {
+        options = {
+          minDiskFree = {value = 1; unit = "%";};
+          minHomeDiskFree = {value = 5; unit = "%";};
+          maxFolderConcurrency = 1;
+          reconnectionIntervalS = 120;
+          progressUpdateIntervalS = 60;
+          urAccepted = -1;
+        };
+    }
+  };
+
 }
