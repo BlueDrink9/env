@@ -4,8 +4,8 @@ let
   nixDir = "${dotfilesDir}/system/nix";
 
   homeManagerTarball = builtins.fetchTarball {
-    url = "https://github.com/nix-community/home-manager/archive/release-24.05.tar.gz";
-    sha256 = "00wp0s9b5nm5rsbwpc1wzfrkyxxmqjwsc1kcibjdbfkh69arcpsn";
+    url = "https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz";
+    sha256 = "17jgljy3c5v2nq5f5gy04xygbgjaaf1mrmcmrchfv3ypmq4mkgk5";
   };
 
   can_import = builtins.tryEval(import <home-manager/nixos>);
