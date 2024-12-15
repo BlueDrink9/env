@@ -51,10 +51,12 @@ if v:version >= 703
             autocmd autosave InsertLeave call Autosave()
         endif
     endf
-    " Only strips whitespace on edited lines, does not write.
-    Plugin 'https://github.com/thirtythreeforty/lessspace.vim', {
-                \ 'event': ['TextChanged', 'TextChangedI', 'InsertEnter'],
-                \ 'afterLoad': v:true}
+    if !exists('g:vscode')
+        " Only strips whitespace on edited lines, does not write.
+        Plugin 'https://github.com/thirtythreeforty/lessspace.vim', {
+                    \ 'event': ['TextChanged', 'TextChangedI', 'InsertEnter'],
+                    \ 'afterLoad': v:true}
+    endif
     " Don't use for automatic whitespace stripping, only for manual
     " Possible alternative if this isn't working out:
     " https://github.com/johnfrankmorgan/whitespace.nvim
@@ -303,7 +305,7 @@ endif
 " Maybe ide candidates...
 " {[}--- Fuzzy finder ---
 " fzf only works in terminal, use ctrlp otherwise
-if (!g:hasGUI || has('terminal') || has('nvim')) && !has('g:vscode')
+if (!g:hasGUI || has('terminal') || has('nvim')) && !exists('g:vscode')
     " PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run the install
     " script
     Plugin 'junegunn/fzf', {
