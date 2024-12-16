@@ -9,17 +9,16 @@ local spec = {
 if vim.g.vscode ~= 1 then return spec end
 
 local idemaps = vim.g.IDE_mappings
-local vscode = require('vscode')
 -- {[} Mappings
 
 local function VSCodeMapDict(mappings, visualMappings)
     for key, value in pairs(mappings) do
         vim.keymap.set('n', key,
-            function() vscode.call(value) end)
+            function() require('vscode').call(value) end)
     end
     for key, value in pairs(visualMappings) do
         vim.keymap.set('v', key,
-            function() vscode.call(value) end)
+            function() require('vscode').call(value) end)
     end
 end
 
@@ -167,7 +166,7 @@ local function VSCodeFTMaps(ft)
         }, {
             [idemaps.REPLSend] = REPLSendCmd
         })
-    elseif ft == 'R' or ft == "quarto" then
+    elseif ft == 'r' or ft == "quarto" then
         REPLSendCmd = 'r.runSelection'
         VSCodeMapDict({
             [idemaps.REPLSendFile] = 'r.runSource',
@@ -183,7 +182,7 @@ local function VSCodeFTMaps(ft)
         function()
             -- Reset visual mode so the selection is passed over
             vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>', true, false, true), 'x', true)
-            vscode.action(REPLSendCmd, {range = {vim.fn.line("'<"), vim.fn.line("'>")}})
+            require('vscode').action(REPLSendCmd, {range = {vim.fn.line("'<"), vim.fn.line("'>")}})
         end
     )
 
@@ -199,7 +198,7 @@ local function VSCodeFTMaps(ft)
         local line1, line2 = vim.fn.line("'["), vim.fn.line("']")
         -- 0 to deselect visual after calling. Call rather than notify to
         -- not deselect until after.
-        vscode.action(REPLSendCmd, { range = range })
+        require('vscode').action(REPLSendCmd, { range = range })
     end
 
     vim.keymap.set('n', idemaps.REPLSend, opfuncRunMotion, { expr = true })
@@ -215,8 +214,8 @@ local function esc()
   local key = vim.api.nvim_replace_termcodes("<esc>", true, true, true)
   vim.api.nvim_feedkeys(key, "n", false)
 end
-local debugConsoleSend = vscode.to_op(function(ctx)
-    vscode.action("editor.debug.action.selectionToRepl", { range = ctx.range, callback = esc })
+local debugConsoleSend = require('vscode').to_op(function(ctx)
+    require('vscode').action("editor.debug.action.selectionToRepl", { range = ctx.range, callback = esc })
 end)
 local debugConsoleSendLine = function()
     return debugConsoleSend() .. "_"
@@ -235,7 +234,7 @@ vim.keymap.set({ "n", "x" }, idemaps.debugConsoleSendLine, debugConsoleSendLine)
 -- end
 
 vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'sql', 'python'},
+    pattern = {'*'},
     callback = function()
         VSCodeFTMaps(vim.bo.filetype)
     end
