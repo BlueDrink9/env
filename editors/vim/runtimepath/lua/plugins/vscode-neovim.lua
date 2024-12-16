@@ -9,10 +9,10 @@ local spec = {
 if vim.g.vscode ~= 1 then return spec end
 
 local idemaps = vim.g.IDE_mappings
+local vscode = require('vscode')
 -- {[} Mappings
 
 local function VSCodeMapDict(mappings, visualMappings)
-    local vscode = require('vscode')
     for key, value in pairs(mappings) do
         vim.keymap.set('n', key,
             function() vscode.call(value) end)
@@ -167,21 +167,23 @@ local function VSCodeFTMaps(ft)
         }, {
             [idemaps.REPLSend] = REPLSendCmd
         })
-    else
-        -- No filetype specific mappings for this ft yet
-        return
-    end
+    elseif ft == 'R' or ft == "quarto" then
+        REPLSendCmd = 'r.runSelection'
         VSCodeMapDict({
-            [idemaps.REPLSendFile] = 'jupyter.runFileInteractive'
+            [idemaps.REPLSendFile] = 'r.runSource',
+            [idemaps.runFile] = 'r.runSource',
         }, {
             [idemaps.REPLSend] = REPLSendCmd
         })
+    else
+        return
+    end
 
     vim.keymap.set('v', idemaps.REPLSend,
         function()
             -- Reset visual mode so the selection is passed over
             vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>', true, false, true), 'x', true)
-            require('vscode').action(REPLSendCmd, {range = {vim.fn.line("'<"), vim.fn.line("'>")}})
+            vscode.action(REPLSendCmd, {range = {vim.fn.line("'<"), vim.fn.line("'>")}})
         end
     )
 
@@ -197,7 +199,7 @@ local function VSCodeFTMaps(ft)
         local line1, line2 = vim.fn.line("'["), vim.fn.line("']")
         -- 0 to deselect visual after calling. Call rather than notify to
         -- not deselect until after.
-        require('vscode').action(REPLSendCmd, { range = range })
+        vscode.action(REPLSendCmd, { range = range })
     end
 
     vim.keymap.set('n', idemaps.REPLSend, opfuncRunMotion, { expr = true })
