@@ -264,4 +264,15 @@ return {
 		end,
 	},
 
+	{
+		"akinsho/bufferline.nvim",
+		keys = {
+			{ "<S-h>", false },
+			{ "<S-l>", false },
+			{ "<left>", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev Buffer" },
+			{ "<right>", "<cmd>BufferLineCycleNext<cr>", desc = "Next Buffer" },
+		}
+
+	},
+
 }
