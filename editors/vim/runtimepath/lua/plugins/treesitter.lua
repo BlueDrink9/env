@@ -360,6 +360,21 @@ local specs = {
 			},
 		},
 	},
+
+	{
+		"aaronik/treewalker.nvim",
+		opts = { highlight = true },
+		keys = {
+			{"g>", function() require("treewalker").move_out() end},
+			{"g<", function() require("treewalker").move_in() end},
+			{"L", function() require("treewalker").move_out() end},
+			{"H", function() require("treewalker").move_in() end},
+			{"g<up>", function() require("treewalker").move_up() end},
+			{"g<down>", function() require("treewalker").move_down() end},
+			{"g<c-k>", function() require("treewalker").move_up() end},
+			{"g<c-j>", function() require("treewalker").move_down() end},
+		},
+	},
 }
 
 require'my.utils'.inject_dependency(specs, "nvim-treesitter/nvim-treesitter")
