@@ -206,13 +206,15 @@ in { lib, config, pkgs, ... }:
     #   name = "MesloLGLDZ Nerd Font";
     #   package = (pkgs.nerdfonts.override { fonts = [ "menlo" ]; });
     # } ];
-    useXkbConfig = true;
+    # useXkbConfig = true;
     extraConfig = ''
       font-size=11
       palette=solarized
     '';
   };
 
+  boot.crashDump.enable = true;
+  boot.kernel.sysctl."kernel.panic_on_oops" = 1;
 
   environment.shellAliases = {
     renix="sudo nixos-rebuild switch";
