@@ -17,6 +17,8 @@
     neovide
     espanso
 
+    power-profiles-daemon
+
     # mosh
     # openvpn
 
