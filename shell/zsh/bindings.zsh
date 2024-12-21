@@ -120,8 +120,8 @@ bindkey '^Z' fancy-ctrl-z
 # Space/leader bindings
 leader=" "
 bindkey -M vicmd "${leader}/" fzf-history-widget
-bindkey -M vicmd "${leader}c" fzf-cd-widget
-bindkey -M vicmd "${leader}f" fzf-file-widget
+bindkey -M vicmd "${leader}," fzf-cd-widget
+bindkey -M vicmd "${leader}space" fzf-file-widget
 # Emulates doom M-x
 fuzzy-search-executables-widget () {
   fuzzy-search-executables "$@"
