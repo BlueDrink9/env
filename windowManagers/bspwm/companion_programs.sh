@@ -1,6 +1,13 @@
 #! /bin/sh
-# Making this a function and exporting it so that it's easier to restart if it
+# Making these a function and exporting it so that it's easier to restart if it
 # fails (terminals that sxhkd start will inherit this function).
+picom_mine() {
+  # -b starts as a bg process
+  picom --config "$DOTFILES_DIR"/desktop_elements/picom.conf -b \
+    >| $HOME/.logs/picom.log 2>| $HOME/.logs/picom.err
+ }
+export -f picom_mine
+
 sxhkd_mine(){
   SXHKD_STATUS_FIFO="/run/user/${UID}/display${DISPLAY}/sxhkd.fifo"
   if [ ! -e "${SXHKD_STATUS_FIFO}" ]; then
@@ -24,18 +31,16 @@ sxhkd_mine(){
     "$DOTFILES_DIR"/windowManagers/bspwm/scripts/sxhkd_status_mon.sh  "${SXHKD_STATUS_FIFO}" &
   fi
 }
-sxhkd_mine
 export -f sxhkd_mine
+sxhkd_mine
+
+picom_mine
 
 wallpaper="$HOME/Pictures/wallpaper.jpg"
 if [ -f "$wallpaper" ]; then
   feh --bg-fill "$wallpaper" &
 fi
 unset wallpaper
-
-# -b starts as a bg process
-picom --config "$DOTFILES_DIR"/desktop_elements/picom.conf -b \
-   >| $HOME/.logs/picom.log 2>| $HOME/.logs/picom.err
 
 # Plasma nightshift doesn't work without kwin.
 if ! pgrep "redshift" > /dev/null 2>&1; then
