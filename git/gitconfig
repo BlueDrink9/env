@@ -44,7 +44,7 @@
   atag = tag -a
   fix = !git commit --fixup $1 && git rebase --autosquash
   merge-into = !sh -c '_CURRENT_BRANCH=$(git symbolic-ref --short HEAD) && git checkout $1 && git merge $_CURRENT_BRANCH && unset _CURRENT_BRANCH -'
-  add-fork = !sh -c 'git remote add fork git@github.com:bluedrink9/$(basename "$(git config --get remote.origin.url)")'
+  add-fork = !sh -c 'git config user.email bluedrink9@users.noreply.github.com && git config user.name bluedrink9 && git remote add fork git@github.com:bluedrink9/$(basename "$(git config --get remote.origin.url)")'
   # Undo mode changes
   permission-reset = !sh -c 'git diff -p -R --no-ext-diff --no-color | grep -E \"^(diff|(old|new) mode)\" --color=never | git apply'
 
