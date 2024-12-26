@@ -253,3 +253,13 @@ alias ns='nix-shell'
 alias np='nix-shell -p'
 alias sysmanr=sudo "$(which nix)" run 'github:numtide/system-manager' -- switch --flake $DOTFILES_DIR/nix/system-manager
 
+alias dva="direnv allow"
+function dvc(){
+  echo "use flake \"github:the-nix-way/dev-templates?dir=$1\"" >> .envrc
+  direnv allow
+}
+function dvt(){
+  nix flake init -t "github:the-nix-way/dev-templates#$1"
+  echo "use flake" >> .envrc
+  direnv allow
+}

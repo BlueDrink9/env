@@ -11,8 +11,8 @@
     pandoc
     typst
     copyq
-    brave
-    pcloud
+    unstable.brave
+    unstable.pcloud
     megatools
     f3d
     marimo

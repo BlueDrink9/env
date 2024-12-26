@@ -13,7 +13,7 @@
   };
 
   # Faster, more automatic and safer direnvs. Run `lorri init` in project dirs.
-  services.lorri.enable = true;
+  # services.lorri.enable = true;
   programs.direnv = {
     enable = true;
     direnvrcExtra = "echo Loaded direnv";
@@ -66,6 +66,7 @@
     chatblade
     gnumake
     openssh
+    nix-direnv
 
 # so many programs rely on this for setup/install, so we'll put it in main.
     gcc
