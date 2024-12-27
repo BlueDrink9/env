@@ -362,6 +362,14 @@ local specs = {
 	},
 
 	{
+		"David-Kunz/treesitter-unit",
+		keys = {
+			{'iu', function() require"treesitter-unit".select() end, mode={"x", "o",}, desc="inside tree-sitter unit"},
+			{'au', function() require"treesitter-unit".select() end, mode={"x", "o",}, desc="around tree-sitter unit"},
+		},
+	},
+
+	{
 		"aaronik/treewalker.nvim",
 		opts = { highlight = true },
 		keys = {
