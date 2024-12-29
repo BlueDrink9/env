@@ -419,6 +419,11 @@ return {
 		end,
 	},
 
+	{
+		"goerz/jupytext.nvim",
+		ft="ipynb",
+	},
+
 	-- build123d snippets, vscode formatted
 	{
 		url="https://gist.github.com/6233ac42632d9098c99da029fe0615c2.git",

@@ -131,7 +131,7 @@ if HasPython()
 endif
 
 " Pip install jupytext. Converts notebooks to text format.
-if Executable('jupytext')
+if !has('nvim') && Executable('jupytext')
     Plugin 'goerz/jupytext.vim', {'for': 'ipynb'}
 endif
 
