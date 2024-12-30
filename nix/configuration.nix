@@ -206,7 +206,7 @@ in { lib, config, pkgs, ... }:
     #   name = "MesloLGLDZ Nerd Font";
     #   package = (pkgs.nerdfonts.override { fonts = [ "menlo" ]; });
     # } ];
-    # useXkbConfig = true;
+    useXkbConfig = true;
     extraConfig = ''
       font-size=11
       palette=solarized
