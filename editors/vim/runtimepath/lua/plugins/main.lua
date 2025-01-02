@@ -478,4 +478,7 @@ return {
 		end
 	},
 
+	{ "hands-free-vim/cursorless.nvim", config = true, },
+	{ "hands-free-vim/talon.nvim", config = true, },
+
 }
