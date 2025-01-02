@@ -45,7 +45,11 @@
     vivid
     bat
     eza
-    python3
+    (python3.withPackages (python-pkgs: with python-pkgs; [
+      pynvim
+    ]))
+    nodejs
+    nodePackages.neovim
     nix-ld
 
     veracrypt
@@ -63,7 +67,7 @@
     # Nix disk usage
     # nix-du -s=500MB > store.dot; zgrviewer store.dot
     nix-du zgrviewer
-    chatblade
+    unstable.chatblade
     gnumake
     openssh
     nix-direnv
