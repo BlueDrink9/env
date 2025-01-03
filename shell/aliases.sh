@@ -267,3 +267,4 @@ function dvt(){
   echo "use flake" >> .envrc
   direnv allow
 }
+alias r="radian"

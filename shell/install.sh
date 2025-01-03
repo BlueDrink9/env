@@ -15,6 +15,7 @@ do${installID}() {
   installBase16Shell
   doReadline
   doPowershell
+  doRadian
   python "$($SCRIPTDIR_CMD)/ipython/install.py"
 }
 END
@@ -70,6 +71,11 @@ do${installID}() {
 }
 END
 )"
+
+installID="Radian"
+installText="$(printf 'source(\\"%s\\")' "$($SCRIPTDIR_CMD)/radian.R")"
+baseRC="$XDG_CONFIG_HOME/radian/profile"
+source "$DOTFILES_DIR/generic_rc_installer.sh"
 
 # If directly run instead of sourced, do all
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then

@@ -23,6 +23,7 @@
     ]; };
       in [
       R
+      python312Packages.radian
       (writeScriptBin "rixi" ''
       # This will create two files: .Rprofile and default.nix
       ${R}/bin/R -e '
