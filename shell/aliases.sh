@@ -246,6 +246,10 @@ alias del="gio trash"
 
 alias renix='sudo DOTFILES_DIR="$DOTFILES_DIR" nixos-rebuild switch --impure'
 alias homer="(command -v home-manager > /dev/null && home-manager switch) || nix-shell '<home-manager>' -A install"
+git-fake-add() {
+  git add --intent-to-add "$@"
+  git update-index --skip-worktree --assume-unchanged "$@"
+}
 
 alias clip='xclip -selection clipboard'
 alias nix-shell='nix-shell --run $(basename $SHELL)'
