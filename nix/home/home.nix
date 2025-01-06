@@ -11,6 +11,7 @@ in
   imports = [
     <plasma-manager/modules>
     ./plasma.nix
+    ./talon.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
