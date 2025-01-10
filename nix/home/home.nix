@@ -12,6 +12,7 @@ in
     <plasma-manager/modules>
     ./plasma.nix
     ./talon.nix
+    ./mime_apps.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
