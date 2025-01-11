@@ -49,6 +49,8 @@ in { lib, config, pkgs, ... }:
   # boot.plymouth.logo
   # boot.plymouth.theme
 
+  # Enable magic sysrq key
+  boot.kernel.sysctl."kernel.sysrq" = 1;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
