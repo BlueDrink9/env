@@ -455,6 +455,8 @@ return {
 		end
 	},
 
+	{ "SidhuK/r-snippets", ft = {"qmd", "quarto",}},
+
 	{ "polypus74/trusty_rusty_snippets", ft="rust"},
 
 	{ "octaltree/virtualsnip", build = "make", event = "InsertEnter" },
