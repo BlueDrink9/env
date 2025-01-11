@@ -24,3 +24,7 @@ reditorsupport.r
 teabyii.ayu
 vspacecode.vspacecode
 vspacecode.whichkey
+pokey.command-server
+pokey.parse-tree
+pokey.cursorless
+pokey.talon
