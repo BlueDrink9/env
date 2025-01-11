@@ -28,3 +28,4 @@ pokey.command-server
 pokey.parse-tree
 pokey.cursorless
 pokey.talon
+AndreasArvidsson.andreas-talon
