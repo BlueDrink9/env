@@ -3,3 +3,4 @@
 iabbrev <buffer> _ <-
 iabbrev <buffer> >> %>%
 iabbrev <buffer> <> %<>%
+set sw=2
