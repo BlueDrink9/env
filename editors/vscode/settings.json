@@ -503,5 +503,24 @@
     "OcpCadViewer.view.center_grid": true,
     "OcpCadViewer.view.grid_XY": true,
     "OcpCadViewer.advanced.autostart": false,
-    "git.openRepositoryInParentFolders": "always"
+    "git.openRepositoryInParentFolders": "always",
+    "window.title": "${dirty}${activeEditorShort}${separator}${rootName}${separator}${profileName}${separator}",
+    "window.titleBarStyle": "custom",
+    "r.plot.useHttpgd": true,
+    "editor.lineHeight": 1.3,
+    "cursorless.hatVerticalOffset": -10,
+    "cursorless.hatSizeAdjustment": 10,
+    "cursorless.hatEnablement.shapes": {
+        "bolt": true,
+        "ex": true,
+        "frame": true
+    },
+    "cursorless.colors.light": {
+        "pink": "#ffb6da",
+        "blue": "#0867d3",
+        "default": "#5c5965"
+    },
+    "cursorless.colors.dark": {
+        "blue": "#0867d3"
+    }
 }
