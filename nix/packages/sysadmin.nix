@@ -10,6 +10,8 @@
     ddcutil
     exfatprogs
     exfat
+    hwinfo
+    wirelesstools
   ];
 
 }
