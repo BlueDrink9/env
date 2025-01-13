@@ -26,6 +26,11 @@ local to_disable = {
     {'nvim-lualine/lualine.nvim'},
     {'kevinhwang91/nvim-ufo'},
     {'folke/which-key.nvim'},
+    {'rainbow-delimiters.nvim'},
+    {'vim-auto-origami'},
+    {'vim-fugitive'},
+    {'vim-relativize'},
+    {'vim-stay'},
 }
 for _, s in ipairs(to_disable) do
     s.optional = true
