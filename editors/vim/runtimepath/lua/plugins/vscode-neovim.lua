@@ -31,6 +31,8 @@ local to_disable = {
     {'vim-fugitive'},
     {'vim-relativize'},
     {'vim-stay'},
+    {'bufresize.nvim'},
+    {'andymass/vim-matchup'},
 }
 for _, s in ipairs(to_disable) do
     s.optional = true
