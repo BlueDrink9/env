@@ -45,6 +45,7 @@
     vivid
     bat
     eza
+    killall
     (python3.withPackages (python-pkgs: with python-pkgs; [
       pynvim
     ]))

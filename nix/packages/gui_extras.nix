@@ -6,6 +6,7 @@
     feh
     playerctl
     picom
+    notify-send
 
     etesync-dav
     pandoc

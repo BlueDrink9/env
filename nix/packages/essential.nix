@@ -22,7 +22,12 @@ in
   programs.bash.completion.enable = true;
   programs.git.enable = true;
   programs.htop.enable = true;
-  programs.neovim.defaultEditor = true;
+  programs.neovim = {
+    defaultEditor = true;
+    # viAlias = true;
+    # vimAlias = true;
+    withPython3 = true;
+  };
 
   # programs.java.enable = true;
   # programs.hyperland.enable = true;
