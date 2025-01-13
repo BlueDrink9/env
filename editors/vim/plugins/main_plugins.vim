@@ -74,7 +74,9 @@ if has('nvim-0.5')
 endif
 
 " Custom text for folds, includes indent level. Integrates with fastfold.
-Plugin 'https://github.com/Konfekt/FoldText', {'event': ['VeryLazy']}
+if exists("g:vscode")
+    Plugin 'https://github.com/Konfekt/FoldText', {'event': ['VeryLazy']}
+endif
 if v:version > 704
     " Auto-set foldcolumn if folds exist in buffer.
     Plugin 'https://github.com/benknoble/vim-auto-origami', {
@@ -83,17 +85,17 @@ if v:version > 704
                 \ 'afterLoad': 'PluginAfterAutoOrigami'}
     function! PluginAfterAutoOrigami()
         au myPlugins CursorHold,BufWinEnter,WinEnter * AutoOrigamiFoldColumn
-    endf
-endif
-" Relative line numbers only in focussed buffer & not in insert mode.
-Plugin 'ericbn/vim-relativize', {'event': ['VeryLazy']}
-" :GhostTextStart/Stop
-if has('nvim') && has('python3')
-    Plugin 'raghur/vim-ghost', {'do': ':GhostInstall', 'on': 'GhostStart'}
-elseif has("channel") && has('python')
-    " :GhostStart/Stop
-    Plugin 'atkenny15/vim-ghosttext', {'on': 'GhostStart'}
-endif
+        endf
+    endif
+    " Relative line numbers only in focussed buffer & not in insert mode.
+    Plugin 'ericbn/vim-relativize', {'event': ['VeryLazy']}
+    " :GhostTextStart/Stop
+    if has('nvim') && has('python3')
+        Plugin 'raghur/vim-ghost', {'do': ':GhostInstall', 'on': 'GhostStart'}
+    elseif has("channel") && has('python')
+        " :GhostStart/Stop
+        Plugin 'atkenny15/vim-ghosttext', {'on': 'GhostStart'}
+    endif
 
 if v:version >= 704
     " Useful for overviews, and deleting lots of buffers.

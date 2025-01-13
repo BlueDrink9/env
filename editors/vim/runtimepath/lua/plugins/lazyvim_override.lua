@@ -2,7 +2,7 @@ if not IsPluginUsed("LazyVim") then
 	return {}
 end
 
-return {
+local spec = {
 	{
 		"neovim/nvim-lspconfig",
 		cond = vim.g.ideMode == 1,
@@ -40,6 +40,7 @@ return {
 	},
 	{ "indent-blankline.nvim", cond = vim.g.ideMode == 1 },
 	{ "nvim-telescope/telescope.nvim", cond = vim.g.ideMode == 1 },
+	{'mfussenegger/nvim-lint', cond = vim.g.vscode ~= 1 }
 
 	{
 		"folke/noice.nvim",
@@ -276,3 +277,9 @@ return {
 	},
 
 }
+
+for _, spec in ipairs(specs) do
+	spec.optional = true
+end
+
+return spec

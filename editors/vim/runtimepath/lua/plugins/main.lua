@@ -481,7 +481,7 @@ return {
 	{
 		"hands-free-vim/cursorless.nvim",
 		config = true,
-		enabled = vim.g.loaded_node_provider and vim.g.loaded_node_provider > 0,
+		enabled = vim.g.loaded_node_provider and vim.g.loaded_node_provider > 0 and vim.g.vscode ~= 1,
 	},
 	{ "hands-free-vim/talon.nvim", config = true, },
 
