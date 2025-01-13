@@ -123,7 +123,7 @@ super + shift + q
   qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1
 
 super + Return
-  echo "actions.speech.toggle()" | ~/.talon/bin/repl
+  echo "actions.speech.toggle()" | ~/.talon/bin/repl || talon
 
 # Toggle Workrave
 super + e; w
