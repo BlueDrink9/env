@@ -513,7 +513,7 @@
     "cursorless.hatEnablement.shapes": {
         "bolt": true,
         "ex": true,
-        "frame": true
+        "curve": true
     },
     "cursorless.colors.light": {
         "pink": "#ffb6da",

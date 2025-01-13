@@ -41,13 +41,18 @@
     },
     {
         "key": "ctrl+e",
-        "command": "acceptSelectedSuggestion"
+        "command": "acceptSelectedSuggestion",
         "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
     },
     {
         "key": "ctrl+e",
         "command": "editor.action.inlineSuggest.commit",
         "when": "inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible"
+    },
+    {
+        // Removing this allows ctrl+e to work in terminal
+        "key": "ctrl+e",
+        "command": "-workbench.action.quickOpen"
     },
     // {
     //     "key": "down",
@@ -227,22 +232,22 @@
     },
 
     {
-        "key": "<leader> s",
+        "key": "space s",
         "when": "editorTextFocus && vim.active && vim.mode != 'normal' && editorLangId == 'sql'",
         "command": "mssql.runQuery"
     },
     {
-        "key": "<leader> s ctrl+c",
+        "key": "space s ctrl+c",
         "when": "editorTextFocus && vim.active && vim.mode != 'normal' && editorLangId == 'sql'",
         "command": "mssql.cancelQuery"
     },
     {
-        "key": "<leader> s",
+        "key": "space s",
         "when": "editorTextFocus && vim.active && vim.mode != 'normal' && editorLangId == 'python' && !inReferenceSearchEditor && !isInEmbeddedEditor",
         "command": "jupyter.execSelectionInteractive"
     },
     {
-        "key": "<leader> shift+s",
+        "key": "space shift+s",
         "when": "editorTextFocus && vim.active && vim.mode != 'normal' && editorLangId == 'python'",
         "command": "jupyter.runFileInteractive"
     },
