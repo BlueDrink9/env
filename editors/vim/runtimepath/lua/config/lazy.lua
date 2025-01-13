@@ -61,38 +61,17 @@ require("lazy").setup({
 		require = false,
 	},
 	spec = {
-		{ "dstein64/vim-startuptime", cond = vim.g.liteMode == 0 },
-
-		-- add LazyVim and import its plugins
-		{
-			"LazyVim/LazyVim",
-			import = "lazyvim.plugins",
-			version = "12.*",
-			opts = {
-				colorscheme = "ayu",
-				defaults = {
-					autocmds = false,
-					keymaps = false,
-				},
-			},
-			cond = vim.g.liteMode == 0,
-			init = function()
-				vim.g.autoformat = false
-				vim.g.deprecation_warnings = true
-			end,
-		},
-
-
 		{ import = "plugins.light" },
 		{ import = "plugins.main", cond = vim.g.liteMode == 0 },
 		{ import = "plugins.ide", cond = vim.g.ideMode == 1 },
 
+		-- From Vimscript Plugin entries.
 		LazyPlugSpecs,
 
 		{ "https://github.com/Shatur/neovim-ayu", lazy = true },
 
-		{ import = "plugins.lazyvim_disabled", cond = vim.g.liteMode == 0  },
-		{ import = "plugins.lazyvim_override", cond = vim.g.liteMode == 0  },
+		{ import = "plugins.lazyvim_disabled"},
+		{ import = "plugins.lazyvim_override"},
 	},
 	-- Unicode alternatives
 	ui = {

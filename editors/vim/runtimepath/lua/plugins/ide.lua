@@ -28,8 +28,8 @@ local lazyvim_extras = {
 	-- { import = "lazyvim.plugins.extras.lsp.none-ls", cond = IsPluginUsed("LazyVim") },
 
 }
-for k, _ in pairs(lazyvim_extras) do
-	lazyvim_extras[k].enabled=IsPluginUsed("LazyVim")
+for _, spec in pairs(lazyvim_extras) do
+	spec.enabled=IsPluginUsed("LazyVim")
 end
 
 return {

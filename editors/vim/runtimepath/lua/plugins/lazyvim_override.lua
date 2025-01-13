@@ -182,7 +182,7 @@ local spec = {
 
 	{
 		"folke/todo-comments.nvim",
-		enabled=vim.g.ideMode == 0,
+		enabled=vim.g.ideMode == 1,
 		keys = {
 			{ "<leader>st", false },
 			{ "<leader>sT", false },
