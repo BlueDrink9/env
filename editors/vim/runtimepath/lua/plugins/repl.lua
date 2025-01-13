@@ -15,7 +15,6 @@ return {
 
 	{
 		"kassio/neoterm",
-		cond = vim.g.vscode ~= 1,
 		init=function()
 			-- Man, I really don't love the neoterm defaults huh
 			vim.g.neoterm_default_mod = "botright"

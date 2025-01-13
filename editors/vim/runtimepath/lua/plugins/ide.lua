@@ -39,7 +39,7 @@ return {
 	{ import = "plugins.lspconfig" },
 	{ import = "plugins.nvim-dap" },
 	{ import = "plugins.telescope" },
-	
+
 	{ import = "plugins.repl"},
 
 	-- Dependency for a lot of plugins

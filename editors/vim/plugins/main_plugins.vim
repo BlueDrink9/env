@@ -51,12 +51,10 @@ if v:version >= 703
             autocmd autosave InsertLeave call Autosave()
         endif
     endf
-    if !exists('g:vscode')
-        " Only strips whitespace on edited lines, does not write.
-        Plugin 'https://github.com/thirtythreeforty/lessspace.vim', {
-                    \ 'event': ['TextChanged', 'TextChangedI', 'InsertEnter'],
-                    \ 'afterLoad': v:true}
-    endif
+    " Only strips whitespace on edited lines, does not write.
+    Plugin 'https://github.com/thirtythreeforty/lessspace.vim', {
+                \ 'event': ['TextChanged', 'TextChangedI', 'InsertEnter'],
+                \ 'afterLoad': v:true}
     " Don't use for automatic whitespace stripping, only for manual
     " Possible alternative if this isn't working out:
     " https://github.com/johnfrankmorgan/whitespace.nvim
@@ -74,9 +72,7 @@ if has('nvim-0.5')
 endif
 
 " Custom text for folds, includes indent level. Integrates with fastfold.
-if exists("g:vscode")
-    Plugin 'https://github.com/Konfekt/FoldText', {'event': ['VeryLazy']}
-endif
+Plugin 'https://github.com/Konfekt/FoldText', {'event': ['VeryLazy']}
 if v:version > 704
     " Auto-set foldcolumn if folds exist in buffer.
     Plugin 'https://github.com/benknoble/vim-auto-origami', {
@@ -307,7 +303,7 @@ endif
 " Maybe ide candidates...
 " {[}--- Fuzzy finder ---
 " fzf only works in terminal, use ctrlp otherwise
-if (!g:hasGUI || has('terminal') || has('nvim')) && !exists('g:vscode')
+if (!g:hasGUI || has('terminal') || has('nvim'))
     " PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run the install
     " script
     Plugin 'junegunn/fzf', {

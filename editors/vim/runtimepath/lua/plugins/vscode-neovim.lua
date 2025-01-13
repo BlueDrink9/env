@@ -8,6 +8,30 @@ local spec = {
 
 if vim.g.vscode ~= 1 then return spec end
 
+local to_disable = {
+    {'mfussenegger/nvim-lint'},
+    {'https://github.com/Konfekt/FoldText'},
+    {'https://github.com/thirtythreeforty/lessspace.vim'},
+    {'junegunn/fzf'},
+    {'junegunn/fzf.vim'},
+    {'https://github.com/ctrlpvim/ctrlp.vim'},
+    {'https://github.com/lewis6991/gitsigns.nvim.git'},
+    {'akinsho/bufferline.nvim'},
+    {'hachy/cmdpalette.nvim'},
+    {'https://github.com/akinsho/toggleterm.nvim'},
+    {'hands-free-vim/cursorless.nvim'},
+    {'https://github.com/stevearc/dressing.nvim.git'},
+    {'folke/noice.nvim'},
+    {'kassio/neoterm'},
+    {'nvim-lualine/lualine.nvim'},
+    {'kevinhwang91/nvim-ufo'},
+    {'folke/which-key.nvim'},
+}
+for _, s in ipairs(to_disable) do
+    s.optional = true
+    s.cond = vim.g.vscode ~= 1
+end
+
 spec.config = function()
     local vscode = require('vscode')
     local idemaps = vim.g.IDE_mappings
@@ -244,4 +268,7 @@ spec.config = function()
 
 end
 
-return spec
+return {
+    spec,
+    to_disable,
+}

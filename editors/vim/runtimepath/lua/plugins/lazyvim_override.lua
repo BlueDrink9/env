@@ -40,12 +40,10 @@ local spec = {
 	},
 	{ "indent-blankline.nvim", cond = vim.g.ideMode == 1 },
 	{ "nvim-telescope/telescope.nvim", cond = vim.g.ideMode == 1 },
-	{'mfussenegger/nvim-lint', cond = vim.g.vscode ~= 1 }
 
 	{
 		"folke/noice.nvim",
 		enabled = false,
-		cond = vim.g.vscode ~= 1,
 		-- opts will be merged with the parent spec
 		opts = {
 			messages = { enabled = false },
@@ -140,7 +138,7 @@ local spec = {
 
 	{
 		"folke/which-key.nvim",
-		cond = vim.g.ideMode == 1 and vim.g.vscode ~= 1,
+		cond = vim.g.ideMode == 1,
 		opts = {
 			plugins = { spelling = true },
 			spec = {
@@ -180,7 +178,6 @@ local spec = {
 	{
 		'nvim-lualine/lualine.nvim',
 		enabled=vim.g.liteMode == 0,
-		cond = vim.g.vscode ~= 1,
 	},
 
 	{
@@ -278,7 +275,7 @@ local spec = {
 
 }
 
-for _, spec in ipairs(specs) do
+for _, spec in ipairs(spec) do
 	spec.optional = true
 end
 

@@ -25,7 +25,7 @@ return {
 
 	{ "https://github.com/NMAC427/guess-indent.nvim", event = "VeryLazy", config = true },
 
-	{ "https://github.com/stevearc/dressing.nvim.git", cond = vim.g.vscode ~= 1, event = "VeryLazy" },
+	{ "https://github.com/stevearc/dressing.nvim.git", event = "VeryLazy" },
 
 	{
 		"ggandor/leap.nvim",
@@ -77,7 +77,6 @@ return {
 	{
 		"https://github.com/lewis6991/gitsigns.nvim.git",
 		event = "VeryLazy",
-		cond = vim.g.vscode ~= 1,
 		on_attach = function(buffer)
 			local gs = package.loaded.gitsigns
 			local function map(mode, l, r, desc)
@@ -212,7 +211,6 @@ return {
 		-- Mainly taken from lazyvim, but leaving out any IDE and lazy bits.
 		-- Lazyvim can add them back in when in IDE mode.
 		"akinsho/bufferline.nvim",
-		cond = vim.g.vscode ~= 1,
 		event = "VeryLazy",
 		keys = {
 			{ "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
@@ -270,7 +268,6 @@ return {
 
 	{
 		"hachy/cmdpalette.nvim",
-		cond = vim.g.vscode ~= 1,
 		keys = {
 			{ "q;", "<Cmd>Cmdpalette<CR>", mode = { "n", "x" } },
 			{ "kv", "<Cmd>Cmdpalette<CR><CR>", mode = { "c" } },
@@ -343,7 +340,6 @@ return {
 
 	-- {
 	-- 	"https://github.com/akinsho/toggleterm.nvim",
-	-- 	cond = vim.g.vscode ~= 1,
 	-- 	keys = "<C-s>",
 	-- 	opts = function()
 	-- 		local send = require("toggleterm").send_lines_to_terminal
@@ -481,7 +477,7 @@ return {
 	{
 		"hands-free-vim/cursorless.nvim",
 		config = true,
-		enabled = vim.g.loaded_node_provider and vim.g.loaded_node_provider > 0 and vim.g.vscode ~= 1,
+		enabled = vim.g.loaded_node_provider and vim.g.loaded_node_provider > 0
 	},
 	{ "hands-free-vim/talon.nvim", config = true, },
 
