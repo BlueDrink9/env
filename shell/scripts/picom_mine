@@ -1,0 +1,5 @@
+#!/bin/sh
+# -b starts as a bg process
+picom --config "$DOTFILES_DIR"/desktop_elements/picom.conf -b \
+  >| $HOME/.logs/picom.log 2>| $HOME/.logs/picom.err
+

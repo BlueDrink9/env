@@ -1,0 +1,22 @@
+#!/bin/sh
+SXHKD_STATUS_FIFO="/run/user/${UID}/display${DISPLAY}/sxhkd.fifo"
+if [ ! -e "${SXHKD_STATUS_FIFO}" ]; then
+  mkdir -p "$(dirname "${SXHKD_STATUS_FIFO}")"
+  mkfifo "${SXHKD_STATUS_FIFO}"
+fi
+
+if ! pgrep -a "^sxhkd$" | grep "${SXHKD_STATUS_FIFO}" > /dev/null 2>&1; then
+  sxhkd -m -1 -s "${SXHKD_STATUS_FIFO}" \
+    -c "$HOME/.config/sxhkd/sxhkdrc" \
+    "$DOTFILES_DIR"/windowManagers/bspwm/sxhkd/*.sxhkd \
+    >| $HOME/.logs/sxhkd.log 2>| $HOME/.logs/sxhkd.err &
+      else
+        # Ensure reload config if already running
+        pkill -USR1 -x sxhkd;
+fi
+
+# Monitor sxhkd status, eg changing border colour during chains.
+# For some reason pgrep won't accept the last couple of letters?
+if ! pgrep "sxhkd_status_mo?.??" > /dev/null 2>&1; then
+  "$DOTFILES_DIR"/windowManagers/bspwm/scripts/sxhkd_status_mon.sh  "${SXHKD_STATUS_FIFO}" &
+fi
