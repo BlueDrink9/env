@@ -1,0 +1,20 @@
+# For a complete introduction, visit the official docs at: https://espanso.org/docs/
+# yaml-language-server: $schema=https://raw.githubusercontent.com/espanso/espanso/dev/schemas/match.schema.json
+
+matches:
+  - trigger: "[d]"
+    replace: "{{isodate}}"
+    vars:
+      - name: isodate
+        type: date
+        params:
+          format: "%Y-%m-%d"
+
+  # # Print the output of a shell command
+  # - trigger: ":shell"
+  #   replace: "{{output}}"
+  #   vars:
+  #     - name: output
+  #       type: shell
+  #       params:
+  #         cmd: "echo 'Hello from your shell'"

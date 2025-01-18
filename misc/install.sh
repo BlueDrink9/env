@@ -32,9 +32,17 @@ doXremap(){
   sudo udevadm control --reload-rules && sudo udevadm trigger
 }
 
+
+installID="Espanso"
+installText="extra_includes:\n  - \\\"$($SCRIPTDIR_CMD)/espanso/match/base.yml\\\"\n  - \\\"$($SCRIPTDIR_CMD)/espanso/config/default.yml\\\""
+baseRC="${XDG_CONFIG_HOME}/espanso/config/default.yml"
+
+source "$DOTFILES_DIR/generic_rc_installer.sh"
+
 doMisc(){
   doVieb
   doPyvim
+  doEspanso
   # doXremap
 }
 
