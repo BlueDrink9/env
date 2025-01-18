@@ -5,7 +5,7 @@
 eval "$(cat <<END
 do${installID}() {
     printErr "Enabling custom ${installID} setup..."
-    addTextIfAbsent "${installText}" "${baseRC}"
+    addTextIfAbsent "${installText}" "${baseRC}" printf
   }
 END
 )"
