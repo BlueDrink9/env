@@ -34,7 +34,7 @@ return {
 			mappings = { start = "", start_with_preview = "gA" },
 		},
 		cmd = "Align",
-		keys = { "gA" },
+		keys = { {"gA", mode={"n", "x"}, desc="Align"} },
 		init = function()
 			vim.api.nvim_create_user_command("Align", function()
 				require("mini.align").action_visual(false)
