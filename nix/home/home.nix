@@ -17,22 +17,12 @@ in
 
   nixpkgs.config.allowUnfree = true;
 
+  home.stateVersion = "24.05";
+
   home.packages = with pkgs; [
   ];
 
   xdg.enable = true;
-
-  xdg.mimeApps = {
-    # enable = true;
-    # associations.added = {
-    #   "all/allfiles" = ["nvim-qt.desktop"];
-    #   # "application/pdf" = ["org.gnome.Evince.desktop"];
-    # };
-    # defaultApplications = {
-    #   "all/allfiles" = ["neovide.desktop" "nvim-qt.desktop" "nvi" "gvim.desktop" "vim"];
-    #   # "application/pdf" = ["evince.desktop"];
-    # };
-  };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.

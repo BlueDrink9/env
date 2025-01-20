@@ -7,11 +7,11 @@ source "$($SCRIPTDIR_CMD)/../install.sh"
 # nix has a fit if tmp dir has a trailing slash
 export TMPDIR="${TMPDIR%/}"
 
-if [ ! -d /etc/nixos ]; then
-  version="24.11"
-else
+if [ -d /etc/nixos ]; then
+  # NixOS: use specific version
   version="$(nixos-version | cut -d. -f1,2)"
 fi
+# Non-NixOS: use latest channels
 
 nix_install(){
   echo "Installing nix with Determinate installer (needs sudo)."
@@ -21,12 +21,6 @@ nix_install(){
   sudo ./nix-installer install --no-confirm
   . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 }
-
-if [ ! -d /etc/nixos ]; then
-  version="24.11"
-else
-  version="$(nixos-version | cut -d. -f1,2)"
-fi
 
 add_channels() {
   echo "Setting nix channels."
@@ -82,7 +76,6 @@ home_manager_install(){
     $generic
     home.username = "$USER";
     home.homeDirectory = "$HOME";
-    home.stateVersion = "$version";
   }
 EOF
   )

@@ -243,15 +243,16 @@ function rgedit() {
 alias bm="cd \"\$(bmm)\""
 # Delete to trash
 alias del="gio trash"
+alias clip='xclip -selection clipboard'
 
 alias renix='sudo DOTFILES_DIR="$DOTFILES_DIR" nixos-rebuild switch --impure'
 alias homer="(command -v home-manager > /dev/null && home-manager switch) || nix-shell '<home-manager>' -A install"
-git-fake-add() {
+alias homeu="nix-channel --update"
+git_fake_add() {
   git add --intent-to-add "$@"
   git update-index --skip-worktree --assume-unchanged "$@"
 }
 
-alias clip='xclip -selection clipboard'
 alias nix-shell='nix-shell --run $(basename $SHELL)'
 alias ns='nix-shell'
 alias np='nix-shell -p'
@@ -267,4 +268,6 @@ function dvt(){
   echo "use flake" >> .envrc
   direnv allow
 }
-alias r="radian"
+if command -v radian >/dev/null 2>&1; then
+  alias r="radian"
+fi
