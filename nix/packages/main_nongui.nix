@@ -72,6 +72,7 @@
     gnumake
     openssh
     nix-direnv
+    csvlens
 
 # so many programs rely on this for setup/install, so we'll put it in main.
     gcc
