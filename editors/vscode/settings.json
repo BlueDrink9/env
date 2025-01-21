@@ -2,8 +2,8 @@
     // Temporarily enable this only, when needing to install extensions if ssl issues crop up.
     // "http.proxyStrictSSL": false,
     "http.experimental.systemCertificatesV2": true,
-    "editor.acceptSuggestionOnEnter": "off",
-    "editor.acceptSuggestionOnCommitCharacter": false,
+    "editor.acceptSuggestionOnEnter": "smart",
+    "editor.suggest.selectionMode": "never",
     "editor.autoClosingBrackets": "beforeWhitespace",
     "editor.autoClosingQuotes": "never",
     "editor.autoSurround": "never",
@@ -522,5 +522,20 @@
     },
     "cursorless.colors.dark": {
         "blue": "#0867d3"
-    }
+    },
+    "remote.autoForwardPortsSource": "hybrid",
+    "quarto.visualEditor.lineNumbers": false,
+
+    "workbench.colorCustomizations": {
+        "editorError.foreground":   "#ff000068",
+        "editorWarning.foreground": "#ffe60043",
+        "editorInfo.foreground":    "#00ff0030"
+    },
+    "editor.suggest.localityBonus": true,
+    "workbench.commandPalette.experimental.suggestCommands": true,
+    "editor.quickSuggestions": {
+        "strings": "inline",
+        "comments": "inline"
+    },
+    "editor.tabCompletion": "on",
 }
