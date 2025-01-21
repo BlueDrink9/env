@@ -22,6 +22,8 @@
         "command": "workbench.action.navigateRight",
         // "when": "terminalFocus"
     },
+
+    // -- Completion --
     // Tab complete like vim - cycle between candidates with Tab
     {
         "key": "tab",
@@ -39,6 +41,12 @@
         "command": "selectNextSuggestion",
         "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
     },
+    // When only one selection visible, use tab to accept it.
+    {
+        "key": "tab",
+        "command": "editor.action.inlineSuggest.commit",
+        "when": "inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible"
+    },
     {
         "key": "ctrl+e",
         "command": "acceptSelectedSuggestion",
@@ -49,6 +57,75 @@
         "command": "editor.action.inlineSuggest.commit",
         "when": "inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible"
     },
+
+    // Space, punction and ( confirm the completion and inputs a space. Hoping this is feels at least a little more natural than ctrl+e or tab...
+    {
+        "key": "space",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                {"command": "acceptSelectedSuggestion"},
+                {"command": "type", "args": {"text": " "}}
+            ]
+        },
+        "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+    },
+    {
+        "key": "space",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                {"command": "editor.action.inlineSuggest.commit"},
+                {"command": "type", "args": {"text": " "}}
+            ]
+        },
+        "when": "inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible"
+    },
+    {
+        "key": "(",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                {"command": "acceptSelectedSuggestion"},
+                {"command": "type", "args": {"text": "("}}
+            ]
+        },
+        "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+    },
+    {
+        "key": "(",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                {"command": "editor.action.inlineSuggest.commit"},
+                {"command": "type", "args": {"text": "("}}
+            ]
+        },
+        "when": "inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible"
+    },
+    {
+        "key": ",",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                {"command": "acceptSelectedSuggestion"},
+                {"command": "type", "args": {"text": ","}}
+            ]
+        },
+        "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+    },
+    {
+        "key": ",",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                {"command": "editor.action.inlineSuggest.commit"},
+                {"command": "type", "args": {"text": ","}}
+            ]
+        },
+        "when": "inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible"
+    },
+
     {
         // Removing this allows ctrl+e to work in terminal
         "key": "ctrl+e",
@@ -69,6 +146,7 @@
     //     "command": "-selectPrevSuggestion",
     //     "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
     // },
+
 
     {
         "key": "ctrl+n",

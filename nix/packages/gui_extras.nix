@@ -6,7 +6,7 @@
     feh
     playerctl
     picom
-    notify-send
+    libnotify
 
     etesync-dav
     pandoc
