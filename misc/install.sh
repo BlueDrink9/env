@@ -33,11 +33,17 @@ doXremap(){
 }
 
 
-installID="Espanso"
+installID="EspansoConf"
 installText="extra_includes:\n  - \\\"$($SCRIPTDIR_CMD)/espanso/match/base.yml\\\"\n  - \\\"$($SCRIPTDIR_CMD)/espanso/config/default.yml\\\""
 baseRC="${XDG_CONFIG_HOME}/espanso/config/default.yml"
-
 source "$DOTFILES_DIR/generic_rc_installer.sh"
+doEspanso(){
+  doEspansoConf
+  if command -v espanso > /dev/null 2>&1; then
+    espanso service register
+    espanso start
+  fi
+}
 
 doMisc(){
   doVieb
