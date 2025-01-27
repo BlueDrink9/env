@@ -534,8 +534,20 @@
     "editor.suggest.localityBonus": true,
     "workbench.commandPalette.experimental.suggestCommands": true,
     "editor.quickSuggestions": {
-        "strings": "inline",
-        "comments": "inline"
+        "comments": "on",
+        "strings": "on"
     },
     "editor.tabCompletion": "on",
+    "window.customTitleBarVisibility": "auto",
+    "window.menuBarVisibility": "visible",
+    "git.allowForcePush": true,
+    "git.autoStash": true,
+    "git.mergeEditor": true,
+    "magit.display-buffer-function": "same-column",
+    "git.untrackedChanges": "separate",
+    "editor.minimap.enabled": false,
+    "terminal.integrated.fontSize": 13,
+    "github.copilot.enable": {
+        "quarto": true
+    },
 }

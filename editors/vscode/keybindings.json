@@ -39,18 +39,30 @@
     {
         "key": "tab",
         "command": "selectNextSuggestion",
-        "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+        "when": "suggestWidgetVisible && textInputFocus"
     },
-    // When only one selection visible, use tab to accept it.
+    // When only inline suggestion visible, use tab to accept it.
     {
         "key": "tab",
         "command": "editor.action.inlineSuggest.commit",
         "when": "inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible"
     },
+    // When only one suggestion visible, use tab to accept it.
+    {
+        "key": "tab",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                {"command": "selectNextSuggestion"},
+                {"command": "acceptSelectedSuggestion"},
+            ]
+        },
+        "when": "suggestWidgetVisible && !suggestWidgetMultipleSuggestions && textInputFocus"
+    },
     {
         "key": "ctrl+e",
         "command": "acceptSelectedSuggestion",
-        "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+        "when": "suggestWidgetVisible && textInputFocus"
     },
     {
         "key": "ctrl+e",
@@ -68,7 +80,7 @@
                 {"command": "type", "args": {"text": " "}}
             ]
         },
-        "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+        "when": "suggestWidgetVisible && textInputFocus"
     },
     {
         "key": "space",
@@ -90,7 +102,7 @@
                 {"command": "type", "args": {"text": "("}}
             ]
         },
-        "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+        "when": "suggestWidgetVisible && textInputFocus"
     },
     {
         "key": "(",
@@ -112,7 +124,7 @@
                 {"command": "type", "args": {"text": ","}}
             ]
         },
-        "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+        "when": "suggestWidgetVisible && textInputFocus"
     },
     {
         "key": ",",
@@ -124,6 +136,39 @@
             ]
         },
         "when": "inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible"
+    },
+    {
+        "key": "=",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                {"command": "acceptSelectedSuggestion"},
+                {"command": "type", "args": {"text": "="}}
+            ]
+        },
+        "when": "suggestWidgetVisible && textInputFocus"
+    },
+    {
+        "key": "\"",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                {"command": "acceptSelectedSuggestion"},
+                {"command": "type", "args": {"text": "\""}}
+            ]
+        },
+        "when": "suggestWidgetVisible && textInputFocus"
+    },
+    {
+        "key": "(",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                {"command": "acceptSelectedSuggestion"},
+                {"command": "type", "args": {"text": "("}}
+            ]
+        },
+        "when": "suggestWidgetVisible && textInputFocus"
     },
 
     {
@@ -139,7 +184,7 @@
     {
         "key": "shift+tab",
         "command": "selectPrevSuggestion",
-        "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+        "when": "suggestWidgetVisible && textInputFocus"
     },
     // {
     //     "key": "up",
@@ -175,35 +220,30 @@
     },
     {
         "key": "left",
-        "command": "-settings.action.focusTOC",
-        "when": "inSettingsEditor && settingRowFocus"
+        "command": "-cursorLeft",
+        "when": "textInputFocus && (neovim.mode != 'normal' && vim.mode != 'normal')"
     },
+    {
+        "key": "right",
+        "command": "-cursorRight",
+        "when": "textInputFocus && (neovim.mode != 'normal' && vim.mode != 'normal')"
+    },
+    // {
+    //     "key": "left",
+    //     "command": "-workbench.statusBar.focusPrevious",
+    //     "when": "statusBarFocused"
+    // },
+    // {
+    //     "key": "right",
+    //     "command": "-workbench.statusBar.focusNext",
+    //     "when": "statusBarFocused"
+    // },
     {
         "key": "left",
         "command": "-notebook.fold",
         "when": "notebookEditorFocused && !inputFocus && activeEditor == 'workbench.editor.notebook'"
     },
-    {
-        "key": "left",
-        "command": "-cursorLeft",
-        "when": "textInputFocus"
-    },
-    {
-        "key": "left",
-        "command": "-workbench.statusBar.focusPrevious",
-        "when": "statusBarFocused"
-    },
-    {
-        "key": "right",
-        "command": "-cursorRight",
-        "when": "textInputFocus"
-    },
-    {
-        "key": "right",
-        "command": "-workbench.statusBar.focusNext",
-        "when": "statusBarFocused"
-    },
-    {
+     {
         "key": "right",
         "command": "-notebook.unfold",
         "when": "notebookEditorFocused && !inputFocus && activeEditor == 'workbench.editor.notebook'"
@@ -328,5 +368,33 @@
         "key": "space shift+s",
         "when": "editorTextFocus && vim.active && vim.mode != 'normal' && editorLangId == 'python'",
         "command": "jupyter.runFileInteractive"
+    },
+    {
+        "key": "ctrl+shift+alt+meta+`",
+        "command": "command-server.runCommand",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+alt+meta+`",
+        "command": "command-server.runCommand",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+shift+alt+p",
+        "command": "-command-server.runCommand",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+alt+p",
+        "command": "-command-server.runCommand",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+shift+alt+meta+`",
+        "command": "command-server.runCommand"
+    },
+    {
+        "key": "ctrl+shift+alt+p",
+        "command": "-command-server.runCommand"
     },
 ]
