@@ -220,7 +220,7 @@ local spec = {
 
 	{
 		"MagicDuck/grug-far.nvim",
-		keys = { { "<leader>sr", false } }
+		keys = { { "<leader>sr", false, mode={"n", "v"} } }
 	},
 
 	{
