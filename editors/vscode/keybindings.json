@@ -160,7 +160,7 @@
         "when": "suggestWidgetVisible && textInputFocus"
     },
     {
-        "key": "(",
+        "key": "shift+9",
         "command": "runCommands",
         "args": {
             "commands": [
@@ -170,6 +170,30 @@
         },
         "when": "suggestWidgetVisible && textInputFocus"
     },
+    {
+        "key": "k",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                {"command": "acceptSelectedSuggestion"},
+                {"command": "type", "args": {"text": "k"}}
+            ]
+        },
+        "when": "suggestWidgetVisible && textInputFocus"
+    },
+    {
+        "key": "v",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                {"command": "acceptSelectedSuggestion"},
+                {"command": "type", "args": {"text": "v"}}
+            ]
+        },
+        "when": "suggestWidgetVisible && textInputFocus"
+    },
+
+
 
     {
         // Removing this allows ctrl+e to work in terminal
@@ -247,6 +271,18 @@
         "key": "right",
         "command": "-notebook.unfold",
         "when": "notebookEditorFocused && !inputFocus && activeEditor == 'workbench.editor.notebook'"
+    },
+    { "key": "space g w",
+        "when": "editorTextFocus && vim.active && vim.mode == 'normal'",
+        "command": "git.stage"
+    },
+    { "key": "space g w",
+        "when": "editorTextFocus && vim.active && vim.mode == 'visual'",
+        "command": "git.diff.stageSelection"
+    },
+    { "key": "space g c c",
+        "when": "editorTextFocus && vim.active && vim.mode == 'normal'",
+        "command": "magit.commit"
     },
 
     {
@@ -347,6 +383,19 @@
     {
         "key": "ctrl+u x",
         "command": "-magit.reset-hard"
+    },
+
+    { "key": "space g g",
+        "when": "editorTextFocus && vim.active && vim.mode != 'insert'",
+        "command": "magit.status"
+    },
+    { "key": "tab",
+        "command": "magit.toggle-fold",
+        "when": "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/ && (neovim.mode != 'insert' && vim.mode != 'insert')"
+    },
+    { "key": "backspace",
+        "command": "magit.toggle-fold",
+        "when": "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/ && (neovim.mode != 'insert' && vim.mode != 'insert')"
     },
 
     {

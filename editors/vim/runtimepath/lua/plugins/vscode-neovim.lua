@@ -105,10 +105,14 @@ spec.config = function()
             [idemaps.diagnosticNext] = 'editor.action.marker.next',
             [idemaps.diagnosticPrev] = 'editor.action.marker.prev',
             ['<c-s>'] = 'workbench.action.terminal.toggleTerminal',
-            ['<leader>a'] = 'workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup'
+            ['<leader>a'] = 'workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup',
             -- [idemaps.definition] = 'editor.action.revealDefinition',
             -- [idemaps.type_definition] = 'editor.action.revealDeclaration',
             -- [idemaps.fix] = 'editor.action.quickFix',
+            ['<leader>gg'] = 'magit.status',
+            ['<leader>gw'] = 'git.stage',
+            -- ['<leader>gca'] = 'git.commitStaged',
+            ['<leader>gc'] = 'magit.commit',
         }
 
         -- 'tab' is just to sync the visual selection with vscode.
@@ -118,6 +122,7 @@ spec.config = function()
             [idemaps.GitStage] = 'git.stageSelectedRanges',
             [idemaps.GitUnstage] = 'git.unstageSelectedRanges',
             [idemaps.debugConsoleSend] = 'editor.debug.action.selectionToRepl',
+            ['<leader>gw'] = 'git.diff.stageSelection',
         }
 
         VSCodeMapDict(nmappings, vmappings)
