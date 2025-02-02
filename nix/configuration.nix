@@ -234,7 +234,8 @@ in { lib, config, pkgs, ... }:
           progressUpdateIntervalS = 60;
           urAccepted = -1;
         };
-    }
+      };
+    };
   };
 
 }
