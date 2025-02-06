@@ -550,4 +550,6 @@
     "github.copilot.enable": {
         "quarto": true
     },
+    // Special window title for terminal so that talon recognises it.
+    "window.title": "${activeEditorShort}${separator}${rootName}${separator}${profileName}${separator}focus:[${focusedView}]",
 }
