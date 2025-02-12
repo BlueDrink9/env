@@ -1,2 +1,14 @@
-#!/usr/bin/env bash
-nix-env -e $1
+#!/bin/sh
+set -eu
+# nix-env -e $1
+
+ # Check if an argument is provided
+ if [ "$#" -ne 1 ]; then
+     echo "Usage: $0 package-name"
+     exit 1
+ fi
+
+ FILE="$HOME/.config/home-manager/local-packages.nix"
+
+ # Insert the new package at the start of the list
+ sed -i "/$1/d" "$FILE"
