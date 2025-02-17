@@ -3,6 +3,8 @@
 pkgs.stdenv.mkDerivation rec {
   pname = "plasma6-applets-window-title";
   version = "0.9.0";
+  # This is an old one, but it may have a feature that truncates the title if its too big?
+  # https://github.com/psifidotos/applet-window-title
   src = pkgs.fetchurl {
     url =
       "https://github.com/dhruv8sh/plasma6-window-title-applet/archive/refs/tags/v${version}.tar.gz";
