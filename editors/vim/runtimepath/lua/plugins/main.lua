@@ -5,7 +5,7 @@ return {
 	{
 		"LazyVim/LazyVim",
 		import = "lazyvim.plugins",
-		version = "12.*",
+		version = "^12.0.0",
 		opts = {
 			colorscheme = "ayu",
 			defaults = {
@@ -56,6 +56,13 @@ return {
 			prev_target = { "<tab>" }, -- Remove ',' from the default
 		},
 		keys = { "s", "S" },
+		-- Defines text objects like `riw`, `raw`, etc., instead of
+		-- targets.vim-style `irw`, `arw`. (Note: prefix is forced if a custom
+		-- text object does not start with "a" or "i".)
+		prefix = true,
+		-- The yanked text will automatically be pasted at the cursor position
+		-- if the unnamed register is in use.
+		paste_on_remote_yank = true,
 		-- Can't really figure out how to use this one atm.
 		-- if vim.fn.IsPluginUsed('leap-ast.nvim') == 1 and vim.fn.IsPluginUsed('nvim-treesitter') == 1 then
 		--     vim.keymap.set(modes, ',W',
