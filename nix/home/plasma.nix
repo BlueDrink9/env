@@ -53,6 +53,7 @@ in
         whenLaptopLidClosed = "sleep";
         powerButtonAction = "shutDown";
         whenSleepingEnter = "standbyThenHibernate";
+        displayBrightness = 70;
         dimDisplay = {
           enable = true;
           idleTimeout = 1*60;
@@ -322,6 +323,29 @@ in
          export KDEWM=bspwm
     '';
     force = true;
+  };
+
+  # Change wallpaper every day
+  systemd.user.timers."plasma-earthporn-wallpapers" = {
+    Unit.Description = "change wallpaper every day";
+    Timer = {
+      Unit = "plasma-earthporn-wallpapers";
+      partOf = [ "plasma-earthporn-wallpapers.service" ];
+      OnCalendar = "08:00";
+      Persistent = true;
+    };
+    Install.WantedBy = [ "timers.target" ];
+  };
+  systemd.user.services."plasma-earthporn-wallpapers" = {
+    Unit = {
+      Description = "change wallpaper every day";
+      After = [ "network.target" ];
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = ../../shell/scripts/plasma_earthporn_wallpapers.sh;
+    };
+    Install.WantedBy = [ "default.target" ];
   };
 
   xdg.configFile."systemd/user/plasma-bspwm.service" = {
