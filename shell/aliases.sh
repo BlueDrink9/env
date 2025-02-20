@@ -1,5 +1,6 @@
 # vim: foldmethod=marker foldmarker={[},{]}{[}{]}
 
+alias \$=""
 # ctrl + L often does this anyway though...
 alias cl="clear"
 alias rl="rlwrap"
@@ -259,11 +260,11 @@ alias np='nix-shell -p'
 alias sysmanr='sudo "$(which nix)" run --impure "github:numtide/system-manager" -- switch --flake $DOTFILES_DIR/nix/system-manager'
 
 alias dva="direnv allow"
-function dvc(){
+function nsc(){
   echo "use flake \"github:the-nix-way/dev-templates?dir=$1\"" >> .envrc
   direnv allow
 }
-function dvt(){
+function nst(){
   nix flake init -t "github:the-nix-way/dev-templates#$1"
   echo "use flake" >> .envrc
   direnv allow
