@@ -24,13 +24,13 @@ feed=$(curl "$feed_url" -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:134.0
 urls=$(echo $feed | grep -oP 'https://i.redd.it/\w{13}\.(jpe?g)')
 
 
-i=0
+screen_i=0
 for res in $(xrandr | grep "\*" | awk '{print $1}'); do
-  i=$((i+1))
+  screen_i=$((screen_i+1))
   url=$(echo "$urls" | shuf -n1)
   tmpfile=$(mktemp).png
   wget "$url" -qO "$tmpfile"
-  mv $tmpfile "$wallpaper_dir/${i}_$wallpaper_name"
+  mv $tmpfile "$wallpaper_dir/${screen_i}_$wallpaper_name"
   # ^ is the fill area flag
   # magick "$tmpfile" -sample ${res}^ -filter Triangle -define filter:support=2 -unsharp 0.25x0.25+8+0.065 -dither None -posterize 136 -quality 82 -define jpeg:fancy-upsampling=off -define png:compression-filter=5 -define png:compression-level=9 -define png:compression-strategy=1 -define png:exclude-chunk=all -interlace none -colorspace sRGB JPG:"$wallpaper_dir/${i}_$wallpaper_name"
 done
@@ -40,11 +40,12 @@ done
 dbus-send --session --dest=org.kde.plasmashell --type=method_call /PlasmaShell org.kde.PlasmaShell.evaluateScript "string:
 var Desktops = desktops();
 for (i=0;i<Desktops.length; i++) {
+        let wp_i = i % $screen_i + 1;
         d = Desktops[i];
         d.wallpaperPlugin = 'org.kde.image';
         d.currentConfigGroup = Array('Wallpaper', 'org.kde.image', 'General');
         d.writeConfig('Image', 'file:///dev/null');
-        d.writeConfig('Image', 'file://$wallpaper_dir/' + i + '_$wallpaper_name');
+        d.writeConfig('Image', 'file://$wallpaper_dir/' + wp_i + '_$wallpaper_name');
 }"
 # Optional, change lockscreen if you want
 # # kwriteconfig5 --file kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key Image "file://$full_image_path"

@@ -1,0 +1,3 @@
+#!/bin/sh
+set -eu
+$EDITOR "$HOME/.config/home-manager/local-packages.nix"
