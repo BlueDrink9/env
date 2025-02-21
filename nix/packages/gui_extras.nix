@@ -1,8 +1,12 @@
 { config, pkgs, ... }:
 
-{
+let
+  nixgl = (builtins.getFlake "github:nix-community/nixGL").packages.${builtins.currentSystem}.default;
+in {
 
   environment.systemPackages = with pkgs; [
+    # Run opengl apps on nixos: nixGL <program>
+    nixgl
     feh
     playerctl
     picom

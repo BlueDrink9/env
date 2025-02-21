@@ -50,8 +50,7 @@
       pynvim
     ]))
     nodejs
-    nodePackages.neovim
-    nix-ld
+    # nodePackages.neovim
 
     veracrypt
     syncthing
@@ -60,6 +59,7 @@
     niv
     # Github cli, for easy auth. gh auth && gh auth setup-git
     gh
+    git-filter-repo
     git-credential-manager
     lazygit
     shellcheck
@@ -73,6 +73,7 @@
     openssh
     nix-direnv
     csvlens
+    ollama
 
 # so many programs rely on this for setup/install, so we'll put it in main.
     gcc

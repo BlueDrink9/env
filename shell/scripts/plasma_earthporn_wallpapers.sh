@@ -16,6 +16,11 @@ wallpaper_name="current-wallpaper.jpg"
 # END
 # )
 
+while ip addr | grep -q 'inet.*global'; do
+  echo "Waiting for network..."
+  sleep 1
+done
+
 subreddit="earthporn/top"
 # echo "Choosing $subreddit"
 feed_url="https://www.reddit.com/r/$subreddit/.rss"

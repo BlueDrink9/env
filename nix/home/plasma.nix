@@ -152,6 +152,12 @@ in
                 spacing = 0;
                 style = 3;
               };
+              Appearance = {
+                # 'middle'
+                elidePos = 2;
+                # Icon fills thickness of panel
+                fillThickness = true;
+              };
             };
           }
           "org.kde.plasma.panelspacer"
@@ -339,10 +345,11 @@ in
   systemd.user.services."plasma-earthporn-wallpapers" = {
     Unit = {
       Description = "change wallpaper every day";
-      After = [ "network.target" ];
+      After = [ "network.target" "network-online.target" ];
     };
     Service = {
       Type = "oneshot";
+      # ExecPreStart = "/usr/bin/env sleep 120";
       ExecStart = ../../shell/scripts/plasma_earthporn_wallpapers.sh;
     };
     Install.WantedBy = [ "default.target" ];
