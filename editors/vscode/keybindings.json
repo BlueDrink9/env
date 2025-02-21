@@ -71,6 +71,7 @@
     },
 
     // Space, punction and ( confirm the completion and inputs a space. Hoping this is feels at least a little more natural than ctrl+e or tab...
+    // Not while inDebugRepl because it is buggled and completions still autoselect. Once that is fixed, that limitation can be removed.
     {
         "key": "space",
         "command": "runCommands",
@@ -80,18 +81,7 @@
                 {"command": "type", "args": {"text": " "}}
             ]
         },
-        "when": "suggestWidgetVisible && textInputFocus"
-    },
-    {
-        "key": "space",
-        "command": "runCommands",
-        "args": {
-            "commands": [
-                {"command": "editor.action.inlineSuggest.commit"},
-                {"command": "type", "args": {"text": " "}}
-            ]
-        },
-        "when": "inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible"
+        "when": "suggestWidgetVisible && textInputFocus && !inDebugRepl"
     },
     {
         "key": "(",
@@ -102,18 +92,7 @@
                 {"command": "type", "args": {"text": "("}}
             ]
         },
-        "when": "suggestWidgetVisible && textInputFocus"
-    },
-    {
-        "key": "(",
-        "command": "runCommands",
-        "args": {
-            "commands": [
-                {"command": "editor.action.inlineSuggest.commit"},
-                {"command": "type", "args": {"text": "("}}
-            ]
-        },
-        "when": "inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible"
+        "when": "suggestWidgetVisible && textInputFocus && !inDebugRepl"
     },
     {
         "key": ",",
@@ -124,18 +103,7 @@
                 {"command": "type", "args": {"text": ","}}
             ]
         },
-        "when": "suggestWidgetVisible && textInputFocus"
-    },
-    {
-        "key": ",",
-        "command": "runCommands",
-        "args": {
-            "commands": [
-                {"command": "editor.action.inlineSuggest.commit"},
-                {"command": "type", "args": {"text": ","}}
-            ]
-        },
-        "when": "inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible"
+        "when": "suggestWidgetVisible && textInputFocus && !inDebugRepl"
     },
     {
         "key": "=",
@@ -146,7 +114,7 @@
                 {"command": "type", "args": {"text": "="}}
             ]
         },
-        "when": "suggestWidgetVisible && textInputFocus"
+        "when": "suggestWidgetVisible && textInputFocus && !inDebugRepl"
     },
     {
         "key": "\"",
@@ -157,7 +125,7 @@
                 {"command": "type", "args": {"text": "\""}}
             ]
         },
-        "when": "suggestWidgetVisible && textInputFocus"
+        "when": "suggestWidgetVisible && textInputFocus && !inDebugRepl"
     },
     {
         "key": "shift+9",
@@ -168,7 +136,7 @@
                 {"command": "type", "args": {"text": "("}}
             ]
         },
-        "when": "suggestWidgetVisible && textInputFocus"
+        "when": "suggestWidgetVisible && textInputFocus && !inDebugRepl"
     },
     {
         "key": "k",
@@ -179,7 +147,7 @@
                 {"command": "type", "args": {"text": "k"}}
             ]
         },
-        "when": "suggestWidgetVisible && textInputFocus"
+        "when": "suggestWidgetVisible && textInputFocus && !inDebugRepl"
     },
     {
         "key": "v",
@@ -190,31 +158,19 @@
                 {"command": "type", "args": {"text": "v"}}
             ]
         },
-        "when": "suggestWidgetVisible && textInputFocus"
+        "when": "suggestWidgetVisible && textInputFocus && !inDebugRepl"
     },
-
-
 
     {
         // Removing this allows ctrl+e to work in terminal
         "key": "ctrl+e",
         "command": "-workbench.action.quickOpen"
     },
-    // {
-    //     "key": "down",
-    //     "command": "-selectNextSuggestion",
-    //     "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
-    // },
     {
         "key": "shift+tab",
         "command": "selectPrevSuggestion",
         "when": "suggestWidgetVisible && textInputFocus"
     },
-    // {
-    //     "key": "up",
-    //     "command": "-selectPrevSuggestion",
-    //     "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
-    // },
 
 
     {
