@@ -191,3 +191,14 @@ function! myVimrcFunctions#CenterText()
   let &signcolumn="yes:" . l:marginSize
 endfunction
 
+function! myVimrcFunctions#VSCodeOpen()
+  let l:file = expand("%:p")
+  if executable("codium")
+    execute "!codium ".fnameescape(l:file)
+  " Open in VSCode if executable exists
+  elseif executable("code")
+    execute "!code ".fnameescape(l:file)
+  else
+    echo "Neither VSCodium nor VSCode found!"
+  endif
+endfunction
