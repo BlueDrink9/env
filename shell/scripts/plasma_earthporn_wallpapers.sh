@@ -18,7 +18,7 @@ wallpaper_name="current-wallpaper.jpg"
 
 # wait until network is up
 i=0
-while ip addr | grep -qv 'inet.*global' && [ "$i" -le 120 ]; do
+while (! ip addr | grep -q 'inet.*global') && [ "$i" -le 120 ]; do
   i=$(("$i" + 1))
   echo "Waiting for network..."
   sleep 1
