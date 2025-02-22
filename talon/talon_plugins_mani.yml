@@ -1,0 +1,69 @@
+# C:\Users\William\Downloads\mani.exe run clone -c .\mani.yml talon_user_dir="$env:APPDATA\talon\user"
+# $env:talon_user_dir="$env:APPDATA\talon\user"; C:\Users\William\Downloads\mani.exe run clone -c .\mani.yml
+projects:
+  community:
+    sync: true
+    path: $talon_user_dir/community
+    url: https://github.com/talonhub/community
+    tags: [talon]
+    remotes:
+      fork: ssh://git@github.com/bluedrink9/talon-community.git
+
+  bluedrink9-talon:
+    sync: true
+    path: $talon_user_dir/bluedrink9-talon
+    url: ssh://git@github.com/bluedrink9/bluedrink9-talon
+    remotes:
+      pushremote: ssh://git@github.com/bluedrink9/bluedrink9-talon
+    tags: [talon]
+
+  cursorless-talon:
+    sync: true
+    path: $talon_user_dir/cursorless-talon
+    url: https://github.com/cursorless-dev/cursorless-talon.git
+    tags: [talon]
+
+  talon-ai-tools:
+    sync: true
+    path: $talon_user_dir/talon-ai-tools
+    url: https://github.com/c-loftus/talon-ai-tools
+    tags: [talon]
+
+  rango-talon:
+    sync: true
+    path: $talon_user_dir/rango-talon
+    url: https://github.com/david-tejada/rango-talon
+    tags: [talon]
+
+  neovim-talon:
+    sync: true
+    path: $talon_user_dir/neovim-talon
+    url: https://github.com/hands-free-vim/neovim-talon.git
+    tags: [talon, neovim]
+
+  talon-vim:
+    sync: true
+    path: $talon_user_dir/talon-vim
+    url: https://github.com/fidgetingbits/talon-vim.git
+    tags: [talon, vim]
+
+targets:
+  all:
+    all: true
+
+tasks:
+  update:
+    desc: Update all given projects.
+    target: all
+    output: text
+    commands:
+      - name: pull update
+        cmd: git pull --all -p
+
+  clone:
+    desc: Clones all projects
+    target: all
+    output: text
+    commands:
+      - name: clone
+        cmd: git clone

@@ -1,0 +1,22 @@
+sources:
+  - repo: "https://github.com/talonhub/community"
+    name: community
+    rev: main
+  - repo: "ssh://git@github.com/bluedrink9/bluedrink9-talon"
+    name: bluedrink9-talon
+    rev: main
+  - repo: "https://github.com/cursorless-dev/cursorless-talon.git"
+    name: cursorless-talon
+    rev: main
+  - repo: "https://github.com/c-loftus/talon-ai-tools"
+    name: talon-ai-tools
+    rev: main
+  - repo: "https://github.com/david-tejada/rango-talon"
+    name: rango-talon
+    rev: main
+  - repo: "https://github.com/hands-free-vim/neovim-talon.git"
+    name: neovim-talon
+    rev: main
+  - repo: "https://github.com/fidgetingbits/talon-vim.git"
+    name: talon-vim
+    rev: main
