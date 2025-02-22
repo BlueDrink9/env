@@ -451,3 +451,5 @@ lua << EOF
 EOF
 endif
 " {]}
+
+command! VSCodeOpen call myVimrcFunctions#VSCodeOpen()
