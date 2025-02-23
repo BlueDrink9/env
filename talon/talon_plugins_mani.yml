@@ -17,6 +17,14 @@ projects:
       pushremote: ssh://git@github.com/bluedrink9/bluedrink9-talon
     tags: [talon]
 
+  bspwm-talon:
+    sync: true
+    path: $talon_user_dir/bspwm-talon
+    url: ssh://git@github.com/bluedrink9/bspwm-talon
+    remotes:
+      pushremote: ssh://git@github.com/bluedrink9/bspwm-talon
+    tags: [talon]
+
   cursorless-talon:
     sync: true
     path: $talon_user_dir/cursorless-talon
