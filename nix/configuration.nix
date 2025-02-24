@@ -194,9 +194,9 @@ in { lib, config, pkgs, ... }:
   services.journald.extraConfig = ''
     [Journal]
     Compress=yes
-    SystemMaxUse=1GB
-    SystemKeepFree=1GB
-    RuntimeMaxUse=100MB
+    SystemMaxUse=1G
+    SystemKeepFree=1G
+    RuntimeMaxUse=100M
   '';
 
 
