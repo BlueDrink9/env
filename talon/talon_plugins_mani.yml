@@ -47,6 +47,11 @@ projects:
     url: https://github.com/fidgetingbits/talon-vim.git
     tags: [talon, vim]
 
+  GoogleSheetsTalon:
+    sync: true
+    path: $talon_user_dir/googlesheets-talon
+    url: https://github.com/FireChickenProductivity/GoogleSheetsTalonCommands.git
+
 targets:
   all:
     all: true
