@@ -14,6 +14,7 @@ return {
 			},
 		},
 		init = function()
+			-- LazyVim disable autoformat
 			vim.g.autoformat = false
 			vim.g.deprecation_warnings = true
 		end,

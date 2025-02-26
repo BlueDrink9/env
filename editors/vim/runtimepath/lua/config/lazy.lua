@@ -7,9 +7,6 @@ local extra_disabled_builtin_plugin_1 = vim.g.liteMode == 1 and "rplugin" or ""
 local extra_disabled_builtin_plugin_2 = vim.g.liteMode == 1 and "editorconfig" or ""
 local extra_disabled_builtin_plugin_3 = vim.g.liteMode == 1 and "health" or ""
 
--- LazyVim disable autoformat
-vim.g.autoformat = false
-
 require("lazy").setup({
 	root = vim.g.pluginInstallPath, -- directory where plugins will be installed
 	defaults = {
