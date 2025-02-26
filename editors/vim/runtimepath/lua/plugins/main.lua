@@ -1,24 +1,6 @@
 return {
 	{ "dstein64/vim-startuptime" },
 
-	-- add LazyVim and import its plugins
-	{
-		"LazyVim/LazyVim",
-		import = "lazyvim.plugins",
-		version = "^12.0.0",
-		opts = {
-			colorscheme = "ayu",
-			defaults = {
-				autocmds = false,
-				keymaps = false,
-			},
-		},
-		init = function()
-			-- LazyVim disable autoformat
-			vim.g.autoformat = false
-			vim.g.deprecation_warnings = true
-		end,
-	},
 	{ import = "lazyvim.plugins.extras.editor.dial", cond = IsPluginUsed("LazyVim") },
 
 	{ import = "plugins.treesitter" },

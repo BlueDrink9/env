@@ -58,6 +58,26 @@ require("lazy").setup({
 		require = false,
 	},
 	spec = {
+		-- add LazyVim and import its plugins. Do this before other specs, so
+		-- that they can override lazyvim cleanly and can know if it's loaded.
+		{
+			"LazyVim/LazyVim",
+			import = "lazyvim.plugins",
+			version = "^12.0.0",
+			opts = {
+				colorscheme = "ayu",
+				defaults = {
+					autocmds = false,
+					keymaps = false,
+				},
+			},
+			init = function()
+				-- LazyVim disable autoformat
+				vim.g.autoformat = false
+				vim.g.deprecation_warnings = true
+			end,
+			cond = vim.g.liteMode == 0
+		},
 		{ import = "plugins.light" },
 		{ import = "plugins.main", cond = vim.g.liteMode == 0 },
 		{ import = "plugins.ide", cond = vim.g.ideMode == 1 },
