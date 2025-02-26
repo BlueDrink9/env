@@ -16,10 +16,13 @@ wallpaper_name="current-wallpaper.jpg"
 # END
 # )
 
-# wait until network is up
+# wait until network is up, up to 5 mins
 i=0
-while (! ip addr | grep -q 'inet.*global') && [ "$i" -le 120 ]; do
+while (! ping -qc 1 reddit.com ); do
   i=$(("$i" + 1))
+  if [ "$i" -ge $((5*60)) ]; then
+    exit 1
+  fi
   echo "Waiting for network..."
   sleep 1
 done
