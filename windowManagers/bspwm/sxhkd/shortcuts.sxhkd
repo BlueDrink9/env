@@ -16,6 +16,8 @@ super + e; {_,shift+,alt+}g
     gvim {_,--cmd 'let g:ideMode=1',--cmd 'let g:liteMode=1'}
 super + e; {_,shift+,alt+}v
     kitty nvim {_,--cmd 'let g:ideMode=1',--cmd 'let g:liteMode=1'}
+super + e; ctrl+v
+    codium || code
 # Signal/secure messages
 super + e; s
   signal-desktop --use-tray-icon
