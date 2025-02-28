@@ -32,6 +32,7 @@ local to_disable = {
     {'vim-relativize'},
     {'vim-stay'},
     {'bufresize.nvim'},
+    {'FastFold'},
     {'andymass/vim-matchup'},
 }
 for _, s in ipairs(to_disable) do
