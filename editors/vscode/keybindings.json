@@ -62,12 +62,12 @@
     {
         "key": "ctrl+e",
         "command": "acceptSelectedSuggestion",
-        "when": "suggestWidgetVisible && textInputFocus"
+        "when": "suggestWidgetVisible && textInputFocus && !inlineSuggestionVisible"
     },
     {
         "key": "ctrl+e",
         "command": "editor.action.inlineSuggest.commit",
-        "when": "inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible"
+        "when": "inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus"
     },
 
     // Space, punction and ( confirm the completion and inputs a space. Hoping this is feels at least a little more natural than ctrl+e or tab...
@@ -89,7 +89,8 @@
         "args": {
             "commands": [
                 {"command": "acceptSelectedSuggestion"},
-                {"command": "type", "args": {"text": "("}}
+                // Don't also type ( because most suggested functions will add it anyway.
+                // {"command": "type", "args": {"text": "("}}
             ]
         },
         "when": "suggestWidgetVisible && textInputFocus && !inDebugRepl"
@@ -249,6 +250,18 @@
     { "key": "g r",
         "command": "magit.refresh",
         "when": "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/"
+    },
+
+    {
+        "key": "ctrl+enter",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                {"command": "workbench.action.files.save"},
+                {"command": "workbench.action.closeActiveEditor"},
+            ]
+        },
+        "when": "editorLangId == 'git-commit'"
     },
 
     {
