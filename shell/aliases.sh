@@ -272,3 +272,4 @@ function nst(){
 if command -v radian >/dev/null 2>&1; then
   alias r="radian"
 fi
+alias c="aichat"

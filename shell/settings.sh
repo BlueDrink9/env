@@ -192,3 +192,6 @@ if command -v direnv >/dev/null 2>&1; then
   eval "$(direnv hook "$SHELL")" || echo "Error setting up direnv in settings"
 fi
 
+export AICHAT_LIGHT_THEME=true
+export AICHAT_WRAP=auto
+export AICHAT_KEYBINDINGS=vi

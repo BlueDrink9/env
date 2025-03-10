@@ -68,7 +68,7 @@
     # Nix disk usage
     # nix-du -s=500MB > store.dot; zgrviewer store.dot
     nix-du zgrviewer
-    unstable.chatblade
+    unstable.aichat
     gnumake
     openssh
     nix-direnv
