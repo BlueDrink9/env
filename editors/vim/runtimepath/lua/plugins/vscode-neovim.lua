@@ -3,6 +3,7 @@
 
 local spec = {
     "vscode-neovim/vscode-neovim",
+    version = "*",
     lazy = vim.g.vscode ~= 1,
 }
 
