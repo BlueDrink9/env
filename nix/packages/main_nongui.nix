@@ -11,6 +11,22 @@
     enable = true;
     binfmt = true;
   };
+  # Allow running unpatched dynamic binaries (useful for pip)
+  programs.nix-ld = {
+    enable = true;
+    # Sets up all the libraries to load
+    libraries = with pkgs; [
+      stdenv.cc.cc
+      zlib
+      fuse3
+      icu
+      nss
+      openssl
+      curl
+      expat
+      # ...
+    ];
+  };
 
   # Faster, more automatic and safer direnvs. Run `lorri init` in project dirs.
   # services.lorri.enable = true;
@@ -21,9 +37,6 @@
 
 
   services.blueman.enable = true;
-
-  # Allow running unpatched dynamic binaries (useful for pip)
-  programs.nix-ld.enable = true;
 
   environment.systemPackages = with pkgs; [
     # Nix bash can cause issues with non-nix packages on non-nixOS

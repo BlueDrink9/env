@@ -516,9 +516,10 @@
         "curve": true
     },
     "cursorless.colors.light": {
-        "pink": "#ffb6da",
         "blue": "#0867d3",
-        "default": "#5c5965"
+        "default": "#5c5965",
+        "yellow": "#cec400",
+        "pink": "#ffb6da"
     },
     "cursorless.colors.dark": {
         "blue": "#0867d3"
