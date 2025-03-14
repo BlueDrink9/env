@@ -92,6 +92,9 @@ editor="myVim"
 IDEVim='myVim --cmd "let g:ideMode=1"'
 liteVim='myVim --cmd "let g:liteMode=1"'
 alias vi="liteVim"
+if command -v codium >/dev/null 2>&1; then
+  alias code="codium"
+fi
 # liteVim and nopluginVim have been moved to dedicated scripts, for
 # discoverability outside shell.
 shelleditor='liteVim +"set ft=sh"'
