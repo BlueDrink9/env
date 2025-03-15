@@ -195,3 +195,5 @@ fi
 export AICHAT_LIGHT_THEME=true
 export AICHAT_WRAP=auto
 export AICHAT_KEYBINDINGS=vi
+
+export BETTER_EXCEPTIONS=1
