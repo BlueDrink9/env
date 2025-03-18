@@ -1,4 +1,5 @@
 AndreasArvidsson.andreas-talon
+usernamehw.errorlens
 PaulSchaaf.talon-filetree
 alefragnani.Bookmarks
 asvetliakov.vscode-neovim
