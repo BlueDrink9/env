@@ -553,6 +553,28 @@
     },
     // Special window title for terminal so that talon recognises it.
     "window.title": "${activeEditorShort}${separator}${rootName}${separator}${profileName}${separator}focus:[${focusedView}]",
+    "cursorless.scopeVisualizer.colors.dark": {
+        "domain": {
+            "background": "#00e1ff18",
+            "borderSolid": "#ebdeec84",
+            "borderPorous": "#ebdeec3b"
+        },
+        "content": {
+            "background": "#ad00bc5b",
+            "borderSolid": "#ee00ff78",
+            "borderPorous": "#ebdeec3b"
+        },
+        "removal": {
+            "background": "#ff00002d",
+            "borderSolid": "#ff000078",
+            "borderPorous": "#ff00004a"
+        },
+        "iteration": {
+            "background": "#00725f6c",
+            "borderSolid": "#00ffd578",
+            "borderPorous": "#00ffd525"
+        }
+    },
     "explorer.confirmDragAndDrop": false,
     "editor.unicodeHighlight.nonBasicASCII": false,
     // "errorLens.codeLensTemplate": "$severity $count $message",
