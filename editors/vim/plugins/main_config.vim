@@ -363,6 +363,12 @@ if IsPluginUsed("vim-fugitive")
     command! -bang -nargs=* Gpush Git push <args>
     command! -bang -nargs=* Gpull Git pull <args>
     autocmd myPlugins filetype fugitive setlocal nobuflisted
+    function! s:fugitiveMappings()
+        " Recursively remap to fugitive diff expand
+        nmap <buffer> <bs> =
+        nmap <buffer> <tab> =
+    endfunc
+    autocmd myPlugins filetype fugitive call <sid>fugitiveMappings()
 
     " Async Fugitive (Fugitive uses whatever `Make` is available).
     " if IsPluginUsed("asyncrun.vim")
