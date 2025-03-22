@@ -12,7 +12,7 @@ pkgs.stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ pkgs.qt6.wrapQtAppsHook ];
-  buildInputs = [ pkgs.plasma-workspace ];
+  buildInputs = [ pkgs.kdePackages.plasma-workspace ];
 
   installPhase = ''
      mkdir -p $out/share/plasma/plasmoids/org.kde.windowtitle
