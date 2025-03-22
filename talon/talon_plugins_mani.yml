@@ -60,6 +60,11 @@ projects:
     path: $talon_user_dir/googlesheets-talon
     url: https://github.com/FireChickenProductivity/GoogleSheetsTalonCommands.git
 
+  talon-ui-helper:
+    sync: true
+    path: $talon_user_dir/talon_ui_helper
+    url: https://github.com/splondike/talon_ui_helper
+
 targets:
   all:
     all: true
