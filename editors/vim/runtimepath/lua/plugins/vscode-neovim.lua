@@ -130,6 +130,9 @@ spec.config = function()
         VSCodeMapDict(nmappings, vmappings)
     end
 
+    -- Undo these, for minor performance fix maybe. Insert is handled by vscode anyway
+    vim.cmd[[imapclear]]
+
     -- Window management
     vim.keymap.set('n', '<leader>w', '<C-w>v<C-w>l')
     vim.keymap.set('n', '<C-w>t', ':tab sb<cr>')
