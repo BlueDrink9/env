@@ -513,13 +513,18 @@
     "cursorless.hatEnablement.shapes": {
         "bolt": true,
         "ex": true,
-        "curve": true
+        "curve": true,
+        "fox": true,
+        "crosshairs": true,
+        "hole": true,
+        "wing": true,
+        "play": true
     },
     "cursorless.colors.light": {
-        "blue": "#0867d3",
         "default": "#5c5965",
         "yellow": "#cec400",
-        "pink": "#ffb6da"
+        "pink": "#ffb6da",
+        "blue": "#3189ef"
     },
     "cursorless.colors.dark": {
         "blue": "#0867d3"
@@ -530,7 +535,9 @@
     "workbench.colorCustomizations": {
         "editorError.foreground":   "#ff000068",
         "editorWarning.foreground": "#ffe60043",
-        "editorInfo.foreground":    "#00ff0030"
+        "editorInfo.foreground":    "#00ff0030",
+        // This doesn't actually seem to set it to all white but it makes it a lot easier to see when using ayu
+        "debugConsole.warningForeground": "#ffffff"
     },
     "editor.suggest.localityBonus": true,
     "workbench.commandPalette.experimental.suggestCommands": true,
@@ -590,4 +597,6 @@
     "errorLens.gutterIconsEnabled": true,
     "errorLens.gutterIconsSize": "60%",
     "errorLens.fontFamily": "noto sans",
+    "search.smartCase": true,
+    "search.mode": "reuseEditor"
 }
