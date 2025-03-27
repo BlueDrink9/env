@@ -2,7 +2,7 @@
 # ssh_reset_permissions(){
   chmod 700 $HOME/.ssh
   chmod 644 $HOME/.ssh/*
-  chmod 600 $HOME/.ssh/*_rsa
+  chmod 600 $HOME/.ssh/id_*
   chmod 644 $HOME/.ssh/*.pub
   chmod go-w $HOME
   chown $USER $HOME/.ssh
