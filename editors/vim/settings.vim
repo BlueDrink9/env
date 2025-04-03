@@ -32,8 +32,10 @@ if has('nvim-0.9')
   lua vim.loader.enable()
 endif
 set encoding=utf-8
-" Need to add M flag before syntax and filetype, because they source menu.vim.
-set guioptions+=M
+if !has('nvim')
+    " Need to add M flag before syntax and filetype, because they source menu.vim.
+    set guioptions+=M
+endif
 " For highlighting, and color schemes
 " Should go before ft plugin on
 if !has('nvim')
@@ -120,45 +122,46 @@ else
 endif
 
 function! SetUpGUI()
-    if g:ideMode
-        set guioptions+=iagmrLtT
-        " Full-screen gvim window
-        " set lines=999 columns=999
-    else
-        " Remove menus to speed up startup
-        set guioptions-=m
-        set guioptions-=t
-        " https://github.com/vim/vim/issues/5246
-        au myVimrc VimEnter * :set guioptions-=T
-        set guioptions+=M
-        " Larger gvim window. Disabling for now because it messes with
-        " firenvim
-        " set lines=40 columns=120
+    if !has('nvim')
+        if g:ideMode
+            set guioptions+=iagmrLtT
+            " Full-screen gvim window
+            set lines=999 columns=999
+        else
+            " Remove menus to speed up startup
+            set guioptions-=m
+            set guioptions+=M
+            set guioptions-=t
+            " https://github.com/vim/vim/issues/5246
+            au myVimrc VimEnter * :set guioptions-=T
+            " Larger gvim window.
+            set lines=40 columns=120
+        endif
+        " Never use ugly tab page that overrides airline's
+        set guioptions-=e
+        " Don't use gui popups for simple questions, use console dialog (ensures
+        " keyboard can always be used)
+        set guioptions+=c
+        " Use terminal window to execute commands
+        " set guioptions+=!
+        set guioptions+=p
+        " Enables some basic mouse input
+        set mouse=a
+        set mousemodel="popup_setpos"
     endif
-    " Never use ugly tab page that overrides airline's
-    set guioptions-=e
-    " Don't use gui popups for simple questions, use console dialog (ensures
-    " keyboard can always be used)
-    set guioptions+=c
-    " Use terminal window to execute commands
-    " set guioptions+=!
-    set guioptions+=p
-    " Enables some basic mouse input
-    set mouse=a
-    set mousemodel="popup_setpos"
     " Default fallback for gui bg colour
     let g:termColors="24bit"
     if &guifont==?""
-      " Call first, but it won't apply until called by the autocmd.
-      " Call first to set it for parsing, eg to set useNF/usePF.
-      call SetGFN()
-      " au myVimrc GUIEnter * call SetGFN()
+        " Call first, but it won't apply until called by the autocmd.
+        " Call first to set it for parsing, eg to set useNF/usePF.
+        call SetGFN()
+        " au myVimrc GUIEnter * call SetGFN()
     endif
     if has("termguicolors")
         set termguicolors
     endif
 endfunction
-    "{]}
+"{]}
 
 function! SetupNvimQT()
     if !exists(':GuiTabline')
