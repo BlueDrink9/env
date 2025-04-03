@@ -87,6 +87,7 @@
     nix-direnv
     csvlens
     ollama
+    dvc  # data vcs
 
 # so many programs rely on this for setup/install, so we'll put it in main.
     gcc
