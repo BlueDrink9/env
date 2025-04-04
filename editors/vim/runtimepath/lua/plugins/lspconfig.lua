@@ -16,37 +16,44 @@
 
 -- Diganostic config. I guess this technically doesn't need to be in the lspconfig module,
 -- but I don't really use diagnostics anywhere else... do I?
-vim.diagnostic.config({
-		signs = false,
-		virtual_text = {
-			prefix = function() return "" end,
-			format = function(diagnostic)
-				if DiagnosticVirtualTextPrefix then
-					return DiagnosticVirtualTextPrefix(diagnostic)
-				end
-				symbols = {
-					[vim.diagnostic.severity.ERROR] = "E",
-					[vim.diagnostic.severity.WARN] = "W",
-					[vim.diagnostic.severity.INFO] = "I",
-					[vim.diagnostic.severity.HINT] = "H",
-				}
-				return symbols[diagnostic.severity]
-			end,
-			severity_sort = true,
-			spacing = 3,
-			underline = false,
-		},
-	})
+local diagnosticConfig = {
+	signs = false,
+	virtual_text = {
+		prefix = function() return "" end,
+		format = function(diagnostic)
+			if DiagnosticVirtualTextPrefix then
+				return DiagnosticVirtualTextPrefix(diagnostic)
+			end
+			symbols = {
+				[vim.diagnostic.severity.ERROR] = "E",
+				[vim.diagnostic.severity.WARN] = "W",
+				[vim.diagnostic.severity.INFO] = "I",
+				[vim.diagnostic.severity.HINT] = "H",
+			}
+			return symbols[diagnostic.severity]
+		end,
+		severity_sort = true,
+		spacing = 3,
+		underline = false,
+	},
+}
+if vim.fn.has("nvim-0.11") == 1 then
+	diagnosticConfig.virtual_lines = {
+		current_line = true,
+	}
+end
+vim.diagnostic.config(diagnosticConfig)
+diagnosticConfig = vim.diagnostic.config()
 
-local diagnosticsConfig = vim.diagnostic.config()
 vim.g.diagnosticsEnabled = true
 function ToggleDiagnostics()
 	if not vim.g.diagnosticsEnabled then
-		vim.diagnostic.config(diagnosticsConfig)
+		vim.diagnostic.config(diagnosticConfig)
 		vim.g.diagnosticsEnabled = true
 	else
 		vim.diagnostic.config({
 			virtual_text = false,
+			virtual_lines = false,
 			signs = false,
 			float = false,
 			update_in_insert = false,
@@ -105,28 +112,30 @@ return {
 				--Enable completion triggered by <c-x><c-o>
 				vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 
-				-- Auto-show diagnostics on pause over them.
-				vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-					group = "lsp_on_attach",
-					buffer = bufnr,
-					callback = function()
-						if vim.g.diagnosticsEnabled then
-							vim.diagnostic.open_float(nil, { focus = false })
-							-- Enable underline if the current line as a diagnostic
-							if #vim.diagnostic.get(bufnr, { lnum = vim.fn.line(".") }) > 0 then
-								vim.diagnostic.config({ underline = true })
+				if vim.fn.has("nvim-0.11") ~= 1 then
+					-- Auto-show diagnostics on pause over them.
+					vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+						group = "lsp_on_attach",
+						buffer = bufnr,
+						callback = function()
+							if vim.g.diagnosticsEnabled then
+								vim.diagnostic.open_float(nil, { focus = false })
+								-- Enable underline if the current line as a diagnostic
+								if #vim.diagnostic.get(bufnr, { lnum = vim.fn.line(".") }) > 0 then
+									vim.diagnostic.config({ underline = true })
+								end
 							end
-						end
-					end,
-				})
-				-- Hide again on move
-				vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-					group = "lsp_on_attach",
-					buffer = bufnr,
-					callback = function()
-						vim.diagnostic.config({ underline = false })
-					end,
-				})
+						end,
+					})
+					-- Hide again on move
+					vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+						group = "lsp_on_attach",
+						buffer = bufnr,
+						callback = function()
+							vim.diagnostic.config({ underline = false })
+						end,
+					})
+				end
 
 				-- Mappings.
 				local tables = {
@@ -139,23 +148,23 @@ return {
 				end
 				if client.server_capabilities.workspaceSymbolProvider then
 					vim.keymap.set('n', maps.FuzzySymbols,
-					function() require('telescope.builtin').lsp_document_symbols() end,
-					{ buffer = bufnr})
+						function() require('telescope.builtin').lsp_document_symbols() end,
+						{ buffer = bufnr})
 				end
 				if client.server_capabilities.documentSymbolProvider then
 					vim.keymap.set('n', maps.FuzzySymbolsWorkspace,
-					function() require('telescope.builtin').lsp_workspace_symbols() end,
-					{ buffer = bufnr})
+						function() require('telescope.builtin').lsp_workspace_symbols() end,
+						{ buffer = bufnr})
 				end
 			end
 
 			vim.api.nvim_create_autocmd("LspAttach", {
-					callback = function(args)
-						local bufnr = args.buf
-						local client = vim.lsp.get_client_by_id(args.data.client_id)
-						on_attach(client, bufnr)
-					end,
-				})
+				callback = function(args)
+					local bufnr = args.buf
+					local client = vim.lsp.get_client_by_id(args.data.client_id)
+					on_attach(client, bufnr)
+				end,
+			})
 
 			opts.main_attachment_callback = on_attach
 			-- Override lazyvim
