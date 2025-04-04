@@ -272,6 +272,9 @@ try
 catch /E474:/
   set completeopt+=preview
 endtry
+if has("nvim-0.11")
+  set completeopt+=fuzzy
+endif
 if exists("g:ideMode") && g:ideMode == 1
     " Include tags and includes in completion.
     set complete+=i
