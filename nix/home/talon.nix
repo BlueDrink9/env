@@ -33,12 +33,7 @@ let
     if [ ! -d /etc/nixos ]; then
       export GIT_SSH="/usr/bin/ssh"
     fi
-    export talon_mani_config="${../../talon/talon_plugins_mani.yml}"
-    export talon_user_dir="$HOME/.talon/user"
-    # Update and clone
-    mani sync --sync-remotes --parallel --config $talon_mani_config
-    # Update
-    mani run update --parallel --config $talon_mani_config
+    . ${../../talon/sync_plugins.sh}"
   '';
 
 }
