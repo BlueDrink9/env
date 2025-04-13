@@ -4,7 +4,7 @@
     "http.experimental.systemCertificatesV2": true,
     "editor.acceptSuggestionOnEnter": "smart",
     "editor.suggest.selectionMode": "never",
-    "editor.autoClosingBrackets": "beforeWhitespace",
+    "editor.autoClosingBrackets": "never",
     "editor.autoClosingQuotes": "never",
     "editor.autoSurround": "never",
     "editor.copyWithSyntaxHighlighting": false,
@@ -19,6 +19,8 @@
     "editor.wordWrap": "on",
     "editor.rulers": [80, 120],
     "editor.minimap.renderCharacters": false,
+    "workbench.editor.limit.enabled": true,
+    "workbench.editor.limit.value": 5,
 
     "extensions.experimental.affinity": {
         "asvetliakov.vscode-neovim": 1,
@@ -559,6 +561,36 @@
     },
     // Special window title for terminal so that talon recognises it.
     "window.title": "${activeEditorShort}${separator}${rootName}${separator}${profileName}${separator}focus:[${focusedView}]",
+    "cursorless.scopeVisualizer.colors.dark": {
+        "domain": {
+            "background": "#00e1ff18",
+            "borderSolid": "#ebdeec84",
+            "borderPorous": "#ebdeec3b"
+        },
+        "content": {
+            "background": "#ad00bc5b",
+            "borderSolid": "#ee00ff78",
+            "borderPorous": "#ebdeec3b"
+        },
+        "removal": {
+            "background": "#ff00002d",
+            "borderSolid": "#ff000078",
+            "borderPorous": "#ff00004a"
+        },
+        "iteration": {
+            "background": "#00725f6c",
+            "borderSolid": "#00ffd578",
+            "borderPorous": "#00ffd525"
+        }
+    },
+    "colorize.include": [
+        "**/*.qmd",
+        "**/*.css",
+        "**/*.scss",
+        "**/*.sass",
+        "**/*.less",
+        "**/*.styl"
+    ],
     "explorer.confirmDragAndDrop": false,
     "search.mode": "reuseEditor",
     "editor.unicodeHighlight.nonBasicASCII": false,
