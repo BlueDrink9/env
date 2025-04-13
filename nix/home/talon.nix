@@ -33,7 +33,7 @@ let
     if [ ! -d /etc/nixos ]; then
       export GIT_SSH="/usr/bin/ssh"
     fi
-    . "${../../talon/sync_plugins.sh}"
+    . "${builtins.toString ../../talon/sync_plugins.sh}"
   '';
 
 }
