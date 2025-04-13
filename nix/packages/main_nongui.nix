@@ -89,6 +89,8 @@
     ollama
     dvc  # data vcs
 
+    uv # pip/venv alternative
+
 # so many programs rely on this for setup/install, so we'll put it in main.
     gcc
     cmake
