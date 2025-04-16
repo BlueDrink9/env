@@ -667,3 +667,6 @@ TSWLatexianTemp*
 # R statistics
 .Rhistory
 .Rdata
+
+# Aider AI files
+.aider*
