@@ -47,17 +47,18 @@
     ncurses
     bat-extras.batgrep
     cheat
-    navi
+    navi  # interactive cheatsheet
+    btop
     tldr
     broot
     duf
-    mcfly
-    pay-respects
+    mcfly # ML-enhanced smart command history
+    pay-respects  # 'f' command to fix previous line
     bluetuith
     sqlite
-    vivid
+    vivid  # colourscheme generation for ls
     bat
-    eza
+    eza  # ls
     killall
     (python3.withPackages (python-pkgs: with python-pkgs; [
       pynvim
