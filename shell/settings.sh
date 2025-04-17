@@ -174,6 +174,10 @@ if command -v mcfly >/dev/null 2>&1; then
   eval "$(mcfly init $(basename $SHELL))"
 fi
 
+# ctrl+g by default, for command cheatshe
+if command -v navi >/dev/null 2>&1; then
+  eval "$(navi widget $(basename $SHELL))"
+fi
 # Cache pip wheels when built. Especially useful for tox, which installs pip
 # packages a lot.
 export STANDARD_CACHE_DIR="${XDG_CACHE_HOME:-${HOME}/.cache}/pip"

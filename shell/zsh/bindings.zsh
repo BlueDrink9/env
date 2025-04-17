@@ -139,6 +139,10 @@ if command -v mcfly >/dev/null 2>&1; then
   bindkey -M viins '^r' mcfly-history-widget
 fi
 
+if command -v navi >/dev/null 2>&1; then
+  bindkey -M vicmd 'K' _navi_widget
+fi
+
 # Vim-surround
 autoload -Uz surround
 zle -N delete-surround surround
