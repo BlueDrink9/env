@@ -175,10 +175,13 @@ fi
 # trap "redirect;" DEBUG
 # PROMPT_COMMAND='undirect;'
 
-export MYFLY_KEY_SCHEME=vim
-export MCFLY_FUZZY=true
-export MCFLY_INTERFACE_VIEW=BOTTOM
-export MCFLY_HISTORY_LIMIT=10000
+if command -v mcfly >/dev/null 2>&1; then
+  export MYFLY_KEY_SCHEME=vim
+  export MCFLY_FUZZY=3
+  export MCFLY_INTERFACE_VIEW=BOTTOM
+  export MCFLY_HISTORY_LIMIT=10000
+  eval "$(mcfly init $(basename $SHELL))"
+fi
 
 # Cache pip wheels when built. Especially useful for tox, which installs pip
 # packages a lot.
