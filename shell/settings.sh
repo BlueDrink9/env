@@ -132,19 +132,10 @@ export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
 #{[} fzf
 if command -v fzf > /dev/null; then
   # Set up fzf key bindings and fuzzy completion
-  case "$SHELL" in
-    *zsh)
-      . <(fzf --zsh) || echo "Error setting up fzf in settings"
-      # Extra completions - commadn not found?
-      # _fzf_setup_completion path ag git kubectl
-      # _fzf_setup_completion dir tree
-      ;;
-    *bash)
-      eval "$(fzf --bash)" || echo "Error setting up fzf in settings"
-      ;;
-    *)
-      ;;
-  esac
+  . <(fzf --"$(basename $SHELL)") || echo "Error setting up fzf in settings"
+  # Extra completions - commadn not found?
+  # _fzf_setup_completion path ag git kubectl
+  # _fzf_setup_completion dir tree
   export FZF_CTRL_R_OPTS='--sort'
   # Default is **, a bit unergonomic. Still need a tab to start it anyway.
   export FZF_COMPLETION_TRIGGER='*'
@@ -155,9 +146,9 @@ if command -v fzf > /dev/null; then
     _fzf_compgen_dir() {
       fd --type d --hidden --follow --exclude ".git" . "$1"
     }
-    # export FZF_DEFAULT_COMMAND='fd --type f --color=never'
-    # export FZF_ALT_C_COMMAND='fd --type d . --color=never'
-    # export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  # export FZF_DEFAULT_COMMAND='fd --type f --color=never'
+  # export FZF_ALT_C_COMMAND='fd --type d . --color=never'
+  # export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
   fi
 fi
 #{]}

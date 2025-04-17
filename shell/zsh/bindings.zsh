@@ -1,5 +1,7 @@
 # Put this line after bindings, otherwise any set bindings will be overridden.
 bindkey -v
+# Space/leader bindings
+leader=" "
 # Otherwise backspace doesn't delete previous entries, like vi (not vim).
 bindkey -v '^?' backward-delete-char
 bindkey -M viins 'kv' vi-cmd-mode
@@ -117,18 +119,25 @@ fi
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
-# Space/leader bindings
-leader=" "
-bindkey -M vicmd "${leader}/" fzf-history-widget
-bindkey -M vicmd "${leader}," fzf-cd-widget
-bindkey -M vicmd "${leader}space" fzf-file-widget
-# Emulates doom M-x
-fuzzy-search-executables-widget () {
-  fuzzy-search-executables "$@"
-}
-zle -N fuzzy-search-executables-widget
-bindkey -M vicmd "${leader};" fuzzy-search-executables-widget
-unset leader
+if command -v fzf >/dev/null 2>&1; then
+  bindkey -M vicmd "${leader}/" fzf-history-widget
+  bindkey -M vicmd "${leader}f" fzf-history-widget
+  bindkey -M viins '^r' fzf-history-widget
+  bindkey -M vicmd "${leader}," fzf-cd-widget
+  bindkey -M vicmd "${leader}space" fzf-file-widget
+  bindkey -M vicmd "^r" redo
+  # Emulates doom M-x
+  fuzzy-search-executables-widget () {
+    fuzzy-search-executables "$@"
+  }
+  zle -N fuzzy-search-executables-widget
+  bindkey -M vicmd "${leader};" fuzzy-search-executables-widget
+fi
+
+if command -v mcfly >/dev/null 2>&1; then
+  bindkey -M vicmd "${leader}/" mcfly-history-widget
+  bindkey -M viins '^r' mcfly-history-widget
+fi
 
 # Vim-surround
 autoload -Uz surround
@@ -139,3 +148,5 @@ bindkey -a cs change-surround
 bindkey -a ds delete-surround
 bindkey -a ys add-surround
 bindkey -M visual s add-surround
+
+unset leader
