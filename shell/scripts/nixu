@@ -1,2 +1,5 @@
 #!/usr/bin/env bash
-nix-env -u
+nix-channel --update
+if [ -d /etc/nixos ]; then
+    sudo nix-channel --update
+fi

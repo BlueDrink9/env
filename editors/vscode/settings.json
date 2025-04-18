@@ -608,7 +608,7 @@
     "errorLens.gutterIconsSize": "60%",
     "errorLens.fontFamily": "noto sans",
     "search.smartCase": true,
-    "search.mode": "reuseEditor"
+    "search.mode": "reuseEditor",
     "window.titleBarStyle": "custom",
     "[typst]": {
         "editor.wordSeparators": "`~!@#$%^&*()=+[{]}\\|;:'\",.<>/?"
@@ -617,4 +617,13 @@
         "editor.wordSeparators": "`~!@#$%^&*()=+[{]}\\|;:'\",.<>/?"
     },
     "tinymist.formatterMode": "typstyle",
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    "python.analysis.autoFormatStrings": true,
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.extraCommitChars": true,
+    "python.analysis.languageServerMode": "full",
+    "python.analysis.supportDocstringTemplate": true,
+    "python.analysis.typeCheckingMode": "basic",
 }

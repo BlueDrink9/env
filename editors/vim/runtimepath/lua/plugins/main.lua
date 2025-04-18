@@ -488,6 +488,11 @@ return {
 		config = true,
 		enabled = vim.g.loaded_node_provider and vim.g.loaded_node_provider > 0
 	},
-	{ "hands-free-vim/talon.nvim", config = true, },
+	{
+		"hands-free-vim/talon.nvim",
+		config = true,
+		-- Breaks because of window title changes? Screws up colours.
+		enabled = vim.fn.getenv("TERM") ~= "linux",
+	},
 
 }

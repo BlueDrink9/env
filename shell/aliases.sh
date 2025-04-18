@@ -260,7 +260,7 @@ git_fake_add() {
 alias nix-shell='nix-shell --run $(basename $SHELL)'
 alias ns='nix-shell'
 alias np='nix-shell -p'
-alias sysmanr='sudo "$(which nix)" run --impure "github:numtide/system-manager" -- switch --flake $DOTFILES_DIR/nix/system-manager'
+alias sysmanr='sudo "$(which nix)" run --impure "github:numtide/system-manager" -- switch --flake $DOTFILES_DIR/nix/system-manager --nix-option pure-eval false'
 
 alias dva="direnv allow"
 function nsc(){
