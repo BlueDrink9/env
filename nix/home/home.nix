@@ -13,7 +13,7 @@ in
   {
   imports = [
     <plasma-manager/modules>
-    # ./plasma.nix
+    ./plasma.nix
     ./talon.nix
     # ./mime_apps.nix
   ];
