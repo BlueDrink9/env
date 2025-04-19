@@ -11,7 +11,7 @@ let
   home.packages = with pkgs; [
     talon_beta
     # talon_pkg
-    mani
+    unstable.mani
     # MS core fonts, needed for non-nixos linux?
     corefonts
     # (python3.withPackages (python-pkgs: with python-pkgs; [
@@ -27,7 +27,7 @@ let
   '';
 
   home.activation."talon user repos" = ''
-    PATH=$PATH:${lib.makeBinPath [ pkgs.mani  pkgs.openssh ]}
+    PATH=$PATH:${lib.makeBinPath [ pkgs.unstable.mani  pkgs.openssh ]}
     # Non-nixos git ssh settings may be funky.
     # https://github.com/NixOS/nixpkgs/issues/160527
     if [ ! -d /etc/nixos ]; then
