@@ -38,6 +38,7 @@ in { lib, config, pkgs, ... }:
       ./packages/all.nix
     ];
 
+  nixpkgs.config.allowUnfree = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
