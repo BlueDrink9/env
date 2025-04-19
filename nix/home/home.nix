@@ -5,17 +5,30 @@ in { config, pkgs, lib, ... }:
 
 let
   unstable = import <nixpkgs-unstable> {};
+  unstableTarball =
+    fetchTarball
+      https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz;
 in
 
   {
   imports = [
     <plasma-manager/modules>
-    ./plasma.nix
+    # ./plasma.nix
     ./talon.nix
-    ./mime_apps.nix
+    # ./mime_apps.nix
   ];
 
-  nixpkgs.config.allowUnfree = true;
+
+  nixpkgs.config = {
+    allowUnfree = true;
+    # Create an alias for the unstable channel
+    packageOverrides = pkgs: {
+      # pass the nixpkgs config to the unstable alias to ensure `allowUnfree = true;` is propagated:
+      unstable = import unstableTarball {
+        config = config.nixpkgs.config;
+      };
+    };
+  };
 
   home.stateVersion = "24.05";
 
