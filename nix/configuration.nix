@@ -43,7 +43,7 @@ in { lib, config, pkgs, ... }:
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot.configurationLimit = 10;
+  boot.loader.systemd-boot.configurationLimit = 4;
   # boot.loader.systemd-boot.rebootForBitlocker = true; # experimental
   boot.loader.timeout = 0;
 
