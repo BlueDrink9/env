@@ -93,9 +93,13 @@ in
   # Perform garbage collection weekly to maintain low disk usage
   nix.gc = {
     automatic = true;
-    # dates = "weekly";
-    options = "--delete-older-than 2w";
+    # Trigger if last cue was missed
+    persistent = true;
+    dates = "weekly";
+    options = "--delete-old";
   };
+  nix.settings.auto-optimise-store = true;
+
 
   home.sessionVariables = {
     EDITOR = "nvim";

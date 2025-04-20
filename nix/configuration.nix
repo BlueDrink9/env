@@ -149,11 +149,12 @@ in { lib, config, pkgs, ... }:
   # Perform garbage collection weekly to maintain low disk usage
   nix.gc = {
     automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 2w";
+    # Trigger if last cue was missed
+    persistent = true;
+    dates = lib.mkDefault "weekly";
+    options = lib.mkDefault "--delete-older-than 2w";
   };
-
-  # nix.settings.auto-optimise-store = true;
+  nix.settings.auto-optimise-store = true;
 
   security.sudo.execWheelOnly = true;
   security.sudo.extraConfig = ''
