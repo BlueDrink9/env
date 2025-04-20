@@ -95,11 +95,9 @@ in
     automatic = true;
     # Trigger if last cue was missed
     persistent = true;
-    dates = "weekly";
     options = "--delete-old";
   };
-  nix.settings.auto-optimise-store = true;
-
+  # nix.settings.auto-optimise-store = true;
 
   home.sessionVariables = {
     EDITOR = "nvim";
