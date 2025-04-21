@@ -16,7 +16,7 @@ mrob95.vscode-talonscript
 ms-python.black-formatter
 ms-python.debugpy
 ms-python.python
-ms-python.vscode-pylance
+detachhead.basedpyright
 ms-toolsai.jupyter
 ms-toolsai.jupyter-keymap
 ms-toolsai.jupyter-renderers
