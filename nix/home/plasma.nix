@@ -7,10 +7,9 @@ in
   {
   home.packages = with pkgs; [
     plasma6-applets-window-title
-    # sweet-theme-kde
-    sweet-nova
-    candy-icons
-    kdePackages.qttools
+    # # sweet-theme-kde
+    # sweet-nova
+    # candy-icons
   ];
 
   imports = [
@@ -393,15 +392,5 @@ in
   #   run systemctl --user enable plasma-bspwm.service
   #   '';
   # };
-
-  # Restart plasmashell
-  # Not much point actually, since the panel script doesn't run until autostarting and is tricky to run from within a nix environment.
-  # ${pkgs.plasma-manager}/run_all.sh
-  # home.activation.restartPlasmaShell =
-  #   config.lib.dag.entryAfter ["reloadSystemd"]
-  #   ''${pkgs.systemd}/bin/systemctl restart --user plasma-plasmashell && \
-  #     ${pkgs.systemd}/bin/systemctl enable --user plasma-plasmashell
-  #     ${pkgs.kdePackages.qttools}/bin/qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.refreshCurrentShell
-  #   '';
 
 }
