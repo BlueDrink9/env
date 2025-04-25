@@ -5,7 +5,7 @@ let
 
   homeManagerTarball = builtins.fetchTarball {
     url = "https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz";
-    sha256 = "15k41il0mvmwyv6jns4z8k6khhmb22jk5gpcqs1paym3l01g6abn";
+    sha256 = "sha256:024jcyjxsr0cj4ycz4r8i60bydrl13l6vc16innv6wq32rcgyacb";
   };
 
   can_import = builtins.tryEval(import <home-manager/nixos>);
