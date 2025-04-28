@@ -13,8 +13,11 @@ in
   ];
 
   imports = [
+    <plasma-manager/modules>
     ./plasma-fakwin.nix
   ];
+
+  programs.okular.general.openFileInTabs = true;
 
   programs.plasma = {
     enable = true;

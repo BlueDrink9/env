@@ -12,7 +12,6 @@ in
 
   {
   imports = [
-    <plasma-manager/modules>
     ./plasma.nix
     ./talon.nix
     # ./mime_apps.nix
@@ -233,5 +232,7 @@ in
     };
   };
 
-  programs.okular.general.openFileInTabs = true;
+  home.file."${config.xdg.configHome}/wlxoverlay/conf.d/passthrough.yaml".text = ''
+    use_passthrough: false
+  '';
 }
