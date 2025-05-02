@@ -17,6 +17,9 @@
 [[ ! -o 'no_brace_expand' ]] || p10k_config_opts+=('no_brace_expand')
 'builtin' 'setopt' 'no_aliases' 'no_sh_glob' 'brace_expand'
 
+# Fix issue with launching stuff from vscode, or other integrations.
+typeset -g POWERLEVEL9K_TERM_SHELL_INTEGRATION=true
+
 () {
   emulate -L zsh
   setopt no_unset extended_glob
