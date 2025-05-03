@@ -42,7 +42,7 @@
     # Nix bash can cause issues with non-nix packages on non-nixOS
     # systems, which is why it isn't in essential. Still have modern
     # shell in essential via zsh.
-    bash
+    # bashInteractive
     universal-ctags
     ncurses
     bat-extras.batgrep
