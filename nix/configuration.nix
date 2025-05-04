@@ -29,10 +29,8 @@ in { lib, config, pkgs, ... }:
     # ];
   };
 
-  # Assumes this file is symlinked into /etc/nixos, where the hardware-configuration is
   imports =
-    [ # Include the results of the hardware scan.
-      # ./hardware-configuration.nix
+    [
       # "/home/w/env/system/nix/packages.nix"
       # "${NIX_CONFIG_DIR}/packages.nix"
       ./packages/all.nix
@@ -239,5 +237,20 @@ in { lib, config, pkgs, ... }:
       };
     };
   };
+
+  # Bind backlight keys. May not be right keys for other than asus k501L
+  programs.light = {
+    enable = true;
+    brightnessKeys.enable = true;
+  };
+
+   # services.actkbd = {
+   #   enable = true;
+   #   bindings = [
+   #     # Need system path for the /run/wrappers/bin/light SUID wrapper.
+   #     { keys = [ 223 ]; events = [ "key" ]; command = "${pkgs.light}/bin/light -A 10"; }
+   #     { keys = [ 224 ]; events = [ "key" ]; command = "${pkgs.light}/bin/light -U 10"; }
+   #   ];
+   # };
 
 }
