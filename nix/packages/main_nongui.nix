@@ -42,7 +42,7 @@
     # Nix bash can cause issues with non-nix packages on non-nixOS
     # systems, which is why it isn't in essential. Still have modern
     # shell in essential via zsh.
-    # bashInteractive
+    bashInteractive
     universal-ctags
     ncurses
     bat-extras.batgrep
@@ -82,7 +82,7 @@
     # Nix disk usage
     # nix-du -s=500MB > store.dot; zgrviewer store.dot
     nix-du zgrviewer
-    unstable.aichat
+    # unstable.aichat
     gnumake
     openssh
     nix-direnv
