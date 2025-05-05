@@ -167,7 +167,7 @@ fi
 # PROMPT_COMMAND='undirect;'
 
 if command -v mcfly >/dev/null 2>&1; then
-  export MYFLY_KEY_SCHEME=vim
+  export MCFLY_KEY_SCHEME=vim
   export MCFLY_FUZZY=3
   export MCFLY_INTERFACE_VIEW=BOTTOM
   export MCFLY_HISTORY_LIMIT=10000
