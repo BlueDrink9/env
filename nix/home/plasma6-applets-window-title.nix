@@ -11,10 +11,10 @@ pkgs.stdenv.mkDerivation rec {
     sha256 = "82a0ae9d10c47e36c510a45fb8f793891def81addfa32b0697b580a84d18a6c2";
   };
 
-  nativeBuildInputs = [ pkgs.qt6.wrapQtAppsHook ];
-  buildInputs = [ pkgs.kdePackages.breeze pkgs.kdePackages.plasma-workspace ];
-
   installPhase = ''
+    # Places in .nix-profile/share. Plasmashell will pick it up if that dir is
+    # in $XDG_DATA_DIRS, which it should be if sourcing
+    # $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
      mkdir -p $out/share/plasma/plasmoids/org.kde.windowtitle
      cp -r * $out/share/plasma/plasmoids/org.kde.windowtitle
      '';
