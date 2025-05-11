@@ -10,7 +10,7 @@ super + alt + Escape
 	bspc quit
 
 
-super + w; super + alt + r
+super + w; super + alt + c
 	bspc wm -o
 
 
