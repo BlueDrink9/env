@@ -2,7 +2,7 @@
 set -o pipefail
 
 rename_desktops() {
-  set -x
+  # set -x
   # Get monitor info
   XRANDR_OUTPUT=$(xrandr --listmonitors | tail -n +2)
   # declare -a MONITORS
@@ -36,8 +36,14 @@ rename_desktops() {
   # # Deduplicate monitors
   # # Remove entries unique to list 1
   # MONITORS=($(comm -1 <(printf '%s\n' "${MONITORS[@]}" | LC_ALL=C sort) <(printf '%s\n' "${BSPWM_MONITORS[@]}" | LC_ALL=C sort)))
-  i=1
+  i=0
   for DESK in $(bspc query --desktops); do
+    i=$((i + 1))
+    # Skip the first 4 desktops
+    if [ "$i" -lt 4 ]; then
+      bspc desktop "$DESK" --rename " "
+      continue
+    fi
     MON="$(bspc query --monitors --desktop $DESK --names)"
     MON_POS_H="${POSITIONS_H["$MON"]}"
     MON_POS_V="${POSITIONS_V["$MON"]}"
@@ -66,10 +72,8 @@ rename_desktops() {
       PREFIX="."
     fi
     bspc desktop "$DESK" --rename "${PREFIX}${i}"
-
-    i=$((i + 1))
   done
-  set +x
+  # set +x
 }
 
 rename_desktops
