@@ -36,7 +36,8 @@ export bsp_border_reset
 # bspc monitor -d I II III IV V VI VII VIII IX X
 # bspc monitor -d " " " " " " "4"
 # Assign 4 desktops to primary monitor, 2 to secondaries.
-sh -c "$BSPWM_CONFIG_DIR"/scripts/assign_monitor_desktops.sh
+# sh -c "$BSPWM_CONFIG_DIR"/scripts/assign_monitor_desktops.sh
+bash "$BSPWM_CONFIG_DIR"/scripts/desktop_renamer.sh &
 
 . "$BSPWM_CONFIG_DIR"/rules.sh
 bspc config external_rules_command "$BSPWM_CONFIG_DIR"/external_rules.sh
