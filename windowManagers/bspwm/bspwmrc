@@ -36,7 +36,8 @@ export bsp_border_reset
 # bspc monitor -d I II III IV V VI VII VIII IX X
 # bspc monitor -d " " " " " " "4"
 # Assign 4 desktops to primary monitor, 2 to secondaries.
-# sh -c "$BSPWM_CONFIG_DIR"/scripts/assign_monitor_desktops.sh
+sh -c "$BSPWM_CONFIG_DIR"/scripts/assign_monitor_desktops.sh
+# Start subscription to rename a service that keeps desktop names consistent
 bash "$BSPWM_CONFIG_DIR"/scripts/desktop_renamer.sh &
 
 . "$BSPWM_CONFIG_DIR"/rules.sh
@@ -90,5 +91,5 @@ bspc config presel_feedback_color "$BSPWM_PRESELECT_COLOUR"
 # Where to add new windows
 bspc config initial_polarity second_child
 
-bspc config remove_disabled_monitors false
-bspc config remove_unplugged_monitors true
+# bspc config remove_disabled_monitors false
+# bspc config remove_unplugged_monitors true
