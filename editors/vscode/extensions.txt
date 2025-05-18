@@ -1,10 +1,10 @@
 AndreasArvidsson.andreas-talon
-usernamehw.errorlens
 PaulSchaaf.talon-filetree
 alefragnani.Bookmarks
 asvetliakov.vscode-neovim
 bodil.file-browser
 chrischinchilla.vscode-pandoc
+detachhead.basedpyright
 frhtylcn.pythonsnippets
 github.copilot
 jacobdufault.fuzzy-search
@@ -16,7 +16,6 @@ mrob95.vscode-talonscript
 ms-python.black-formatter
 ms-python.debugpy
 ms-python.python
-detachhead.basedpyright
 ms-toolsai.jupyter
 ms-toolsai.jupyter-keymap
 ms-toolsai.jupyter-renderers
@@ -24,6 +23,7 @@ ms-toolsai.vscode-jupyter-cell-tags
 ms-toolsai.vscode-jupyter-slideshow
 ms-vscode.live-server
 murloccra4ler.leap
+njpwerner.autodocstring
 nlehmann.vscode-vim-search-and-replace
 piotrgredowski.poor-mans-t-sql-formatter-pg
 pokey.command-server
@@ -35,5 +35,6 @@ randomfractalsinc.geo-data-viewer
 reditorsupport.r
 sleistner.vscode-fileutils
 teabyii.ayu
+usernamehw.errorlens
 vspacecode.vspacecode
 vspacecode.whichkey
