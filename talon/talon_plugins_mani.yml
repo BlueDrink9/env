@@ -8,6 +8,7 @@ projects:
     tags: [talon]
     remotes:
       fork: ssh://git@github.com/bluedrink9/talon-community.git
+      origin: https://github.com/talonhub/community.git
 
   bluedrink9-talon:
     sync: true
