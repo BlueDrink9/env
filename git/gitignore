@@ -58,8 +58,6 @@ Session.vim
 .netrwhist
 *~
 *.tmp
-# Auto-generated tag files
-tags
 # Composer
 vendor
 vendor/*
