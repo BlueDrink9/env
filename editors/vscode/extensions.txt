@@ -3,6 +3,7 @@ PaulSchaaf.talon-filetree
 alefragnani.Bookmarks
 asvetliakov.vscode-neovim
 bodil.file-browser
+charliermarsh.ruff
 chrischinchilla.vscode-pandoc
 detachhead.basedpyright
 frhtylcn.pythonsnippets

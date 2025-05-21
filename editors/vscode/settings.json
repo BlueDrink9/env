@@ -501,7 +501,6 @@
             ]
         }
     ],
-    "python.defaultInterpreterPath": "/home/william/src/keeb_snakeskin/venv/bin/python",
     "OcpCadViewer.view.center_grid": true,
     "OcpCadViewer.view.grid_XY": true,
     "OcpCadViewer.advanced.autostart": false,
@@ -625,5 +624,15 @@
     "python.analysis.extraCommitChars": true,
     "python.analysis.languageServerMode": "full",
     "python.analysis.supportDocstringTemplate": true,
-    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.typeCheckingMode": "off",
+    "talon-filetree.hintPosition": "left",
+    "talon-filetree.hintSeparator": "colon",
+    "roo-cline.allowedCommands": [
+        "npm test",
+        "npm install",
+        "tsc",
+        "git log",
+        "git diff",
+        "git show"
+    ],
 }
