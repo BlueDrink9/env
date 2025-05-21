@@ -4,7 +4,8 @@
 alias cl="clear"
 alias rl="rlwrap"
 alias untar="tar -zxvf"
-alias envupd="git -C \"$DOTFILES_DIR\" pull && $0"
+# $0 to reload shell
+alias envupd="git -C \"$DOTFILES_DIR\" pull && git -C \"$DOTFILES_DIR\" push && $0"
 
 if [ -n "$ISTERMUX" ]; then
   alias su="tsu"
