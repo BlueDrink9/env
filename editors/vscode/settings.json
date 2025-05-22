@@ -537,7 +537,8 @@
         "editorWarning.foreground": "#ffe60043",
         "editorInfo.foreground":    "#00ff0030",
         // This doesn't actually seem to set it to all white but it makes it a lot easier to see when using ayu
-        "debugConsole.warningForeground": "#ffffff"
+        "debugConsole.warningForeground": "#ffffff",
+        "debugConsole.infoForeground": "#777777",
     },
     "editor.suggest.localityBonus": true,
     "workbench.commandPalette.experimental.suggestCommands": true,
