@@ -37,6 +37,7 @@
 
 
   services.blueman.enable = true;
+  services.mullvad-vpn.enable = true;
 
   environment.systemPackages = with pkgs; [
     # Nix bash can cause issues with non-nix packages on non-nixOS
@@ -82,13 +83,13 @@
     # Nix disk usage
     # nix-du -s=500MB > store.dot; zgrviewer store.dot
     nix-du zgrviewer
-    # unstable.aichat
+    unstable.aichat
     gnumake
     openssh
     nix-direnv
     csvlens
     ollama
-    dvc  # data vcs
+    # dvc  # data vcs
 
     uv # pip/venv alternative
 
