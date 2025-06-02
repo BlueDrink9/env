@@ -26,7 +26,7 @@ i::ide
 ; notes
 n::notes
 ; Games
-g::Run(A_AppData . "..\Playnite\Playnite.DesktopApp.exe")
+g::run(A_AppData . "\..\Local\Playnite\Playnite.DesktopApp.exe")
 ; Kalendar
 k::calendar
 ; Signal

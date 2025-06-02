@@ -2,7 +2,7 @@ function check_treesitter_installable()
 	-- ("tar" and "curl" or "git") and {
 	local fn = vim.fn
 	if fn.Executable("git") == 0 then
-		if fn.Executable("curl") == 0 and fn.executable("tar") == 0 then
+		if fn.Executable("curl") == 0 and fn.Executable("tar") == 0 then
 			return false
 		end
 	end

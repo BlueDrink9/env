@@ -57,7 +57,7 @@ tag_symbol = "🏷"
 
 [git_state]
 style = "yellow"
-format = '\([$state( $progress_current/$progress_total)]($style)\)'
+format = '([$state( $progress_current/$progress_total)]($style))'
 
 [git_status]
 modified  = "~"

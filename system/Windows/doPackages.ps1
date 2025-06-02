@@ -44,6 +44,8 @@ function AddToPath($path){
 }
 
 AddToPath "C:\ProgramData\chocolatey\bin"
+# Choco install doesn't seem to shim Ahk v1, but does shim v2. So want v1 above it in the path.
+AddToPath "C:\Program Files\Autohotkey"
 
 # TODO: add git/cmd and git/bin for wherever git gets installed to -
 # local appdata if no admin?
