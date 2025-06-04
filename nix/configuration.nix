@@ -34,6 +34,7 @@ in { lib, config, pkgs, ... }:
       # "/home/w/env/system/nix/packages.nix"
       # "${NIX_CONFIG_DIR}/packages.nix"
       ./packages/all.nix
+      ./packages/vr.nix
     ];
 
   nixpkgs.config.allowUnfree = true;
@@ -57,7 +58,7 @@ in { lib, config, pkgs, ... }:
 
   # Enable networking
   networking.networkmanager.enable = true;
-  networking.networkmanager.wifi.powersave = true;
+  # networking.networkmanager.wifi.powersave = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.
@@ -165,10 +166,12 @@ in { lib, config, pkgs, ... }:
   '';
 
   services.logind = {
-    lidSwitch="suspend-then-hibernate";
+    lidSwitch="suspend";
+    # lidSwitch="suspend-then-hibernate";
     lidSwitchDocked="ignore";
     lidSwitchExternalPower="ignore";
-    suspendKey="suspend-then-hibernate";
+    # suspendKey="suspend-then-hibernate";
+    suspendKey="suspend";
     powerKey="poweroff";
     extraConfig = ''
   #   IdleAction=suspend-then-hibernate

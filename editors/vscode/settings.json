@@ -636,4 +636,5 @@
         "git diff",
         "git show"
     ],
+    "diffEditor.ignoreTrimWhitespace": false,
 }

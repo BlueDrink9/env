@@ -4,6 +4,8 @@ bindkey -v
 leader=" "
 # Otherwise backspace doesn't delete previous entries, like vi (not vim).
 bindkey -v '^?' backward-delete-char
+# Missing for some reason
+bindkey -v "^[[3~" delete-char
 bindkey -M viins 'kv' vi-cmd-mode
 bindkey -M viins 'vk' vi-cmd-mode
 bindkey -M viins '^[' vi-cmd-mode
@@ -39,7 +41,8 @@ POWERLEVEL9K_INSTANT_PROMPT=quiet
 # Many of these may be better suited to zle widgets, since remapping any of
 # the inside keys won't break them?
 # Log in to lastpass/add ssh keys
-bindkey -sM vicmd "" "ddilastpass_ssh_key_add"
+bindkey -sM vicmd "" "ddilastpass_ssh_key_add
+"
 # Insert the arguments from the last command as if from register @a.
 bindkey -sM vicmd "\"ap" "i !!*s" + magic-space
 # Jump to the target folder of the last command and run ls with g!
@@ -52,7 +55,8 @@ bindkey -sM vicmd ";q" "ddiexit"
 bindkey -sM viins ";q" "ddiexit"
 bindkey -sM viins ";e" "I$EDITOR"
 
-bindkey -sM vicmd "\b" "ddicd .."
+bindkey -sM vicmd "\b" "ddicd ..
+"
 
 # Better searching in command mode
 bindkey -M vicmd '?' history-incremental-search-backward

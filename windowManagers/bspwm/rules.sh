@@ -23,6 +23,7 @@ bspc rule -a Emacs            state=tiled
 bspc rule -a albert           floating=on  border=off     focus=on
 bspc rule -a pomatez          state=floating floating=on  border=off     focus=on
 bspc rule -a kitty-dropdown   sticky=on
+# bspc rule -a "Talon Canvas"   border=off shadow=off
 
 if [ "$XDG_SESSION_DESKTOP" = "plasmax11" ] || \
     [ "$XDG_SESSION_DESKTOP" = "KDE" ] || \

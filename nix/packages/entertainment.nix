@@ -13,7 +13,7 @@ in
 
   environment.systemPackages = with pkgs; [
     heroic
-    cider
+    # cider
     moonlight-qt
     (GPUOffloadApp steam "steam")
     (GPUOffloadApp heroic "com.heroicgameslauncher.hgl")
