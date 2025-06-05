@@ -36,7 +36,6 @@ in
     gimp
     inkscape
     btop
-    vscodium
 
     # xremap-flake.nixosModules.default
   ];

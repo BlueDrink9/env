@@ -15,6 +15,7 @@
     playerctl
     flameshot
     neovide
+    unstable.vscodium
     espanso
 
     power-profiles-daemon
