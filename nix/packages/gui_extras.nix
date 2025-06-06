@@ -23,6 +23,7 @@ in
     unstable.pcloud
     megatools
     f3d
+    vlc
     marimo
 
     qdirstat
