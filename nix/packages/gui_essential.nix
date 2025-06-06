@@ -32,10 +32,9 @@
     alsa-utils
   ];
 
-  fonts.packages = with pkgs; [
-    # source-code-pro
-    (nerdfonts.override { fonts = [ "SourceCodePro" "Meslo" ]; })
-    # menlo
+  fonts.packages = with pkgs.nerd-fonts; [
+    sauce-code-pro
+    meslo-lg
     # san-franciso
   ];
 
