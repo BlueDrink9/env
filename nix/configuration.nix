@@ -34,7 +34,6 @@ in { lib, config, pkgs, ... }:
       # "/home/w/env/system/nix/packages.nix"
       # "${NIX_CONFIG_DIR}/packages.nix"
       ./packages/all.nix
-      ./packages/vr.nix
     ];
 
   nixpkgs.config.allowUnfree = true;
@@ -207,6 +206,9 @@ in { lib, config, pkgs, ... }:
     '';
 
   };
+  systemd.sleep.extraConfig = ''
+        HibernateDelaySec=60min
+  '';
 
   systemd.extraConfig = ''
     DefaultTimeoutStopSec=30s
