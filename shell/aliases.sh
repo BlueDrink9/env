@@ -250,7 +250,12 @@ alias bm="cd \"\$(bmm)\""
 alias del="gio trash"
 alias clip='xclip -selection clipboard'
 
-alias renix='sudo DOTFILES_DIR="$DOTFILES_DIR" nixos-rebuild switch --impure'
+if [ -f /etc/nixos/flake.nix ]; then
+  alias renix='sudo DOTFILES_DIR="$DOTFILES_DIR" nixos-rebuild switch --flake /etc/nixos/ --impure'
+  alias nixup="sudo nix flake update /etc/nixos/"
+else
+  alias renix='sudo DOTFILES_DIR="$DOTFILES_DIR" nixos-rebuild switch --impure'
+fi
 alias homer="(command -v home-manager > /dev/null && home-manager switch) || nix-shell '<home-manager>' -A install"
 alias homeu="nix-channel --update"
 git_fake_add() {
