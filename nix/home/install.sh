@@ -26,20 +26,23 @@ add_channels() {
   echo "Setting nix channels."
   declare -A channels
   channels["plasma-manager"]="https://github.com/nix-community/plasma-manager/archive/trunk.tar.gz"
-  channels["nixpkgs-unstable"]="https://nixos.org/channels/nixpkgs-unstable"
 
   if [ -d /etc/nixos ]; then
     # NixOS: use specific version
-    channels["nixpkgs"]="https://github.com/nixos/nixpkgs/archive/release-$version.tar.gz"
+    channels["nixpkgs"]="https://github.com/nixos/nixpkgs/archive/nixos-$version.tar.gz"
+    channels["nixpkgs-unstable"]="https://nixos.org/channels/nixos-unstable"
+    channels["unstable"]="https://nixos.org/channels/nixos-unstable"
     channels["home-manager"]="https://github.com/nix-community/home-manager/archive/release-$version.tar.gz"
   else
     # Non-NixOS: use latest channels
     channels["nixpkgs"]=${channels["nixpkgs-unstable"]}
     channels["home-manager"]="https://github.com/nix-community/home-manager/archive/master.tar.gz"
+    channels["nixpkgs-unstable"]="https://nixos.org/channels/nixpkgs-unstable"
+    channels["unstable"]="https://nixos.org/channels/nixpkgs-unstable"
   fi
 
   for channel in "${!channels[@]}"; do
-    if [ -d /etc/nixos ]; then
+    if [ -d /etc/nixos & ! -f /etc/nixos/flake.nix]; then
       sudo nix-channel --add "${channels[$channel]}" "$channel"
     fi
     nix-channel --add "${channels[$channel]}" "$channel"

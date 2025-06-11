@@ -8,6 +8,8 @@ in
   environment.systemPackages = with pkgs; [
    unstable.wlx-overlay-s
    unstable.opencomposite
+    # Only use packaeg. Option needed for loopback and sound but requiares recompiling
+    # immersed
   # (GPUOffloadApp steam "steam")
   ];
 
@@ -17,14 +19,17 @@ in
   #   localNetworkGameTransfers.openFirewall = true;
   # };
 
-  programs.immersed.enable = true;
+  # boot.kernelModules = "snd-aloop"; # Allow immersed sound
+  # programs.immersed.enable = true;
 
   # programs.alvr.enable = true;
   # programs.alvr.openFirewall = true;
   services.wivrn = {
     enable = true;
     openFirewall = true;
-    package = unstable.wivrn;
+    # Override with this for nvidia
+    # services.wivrn.package = pkgs.unstable.wivrn.override { config.cudaSupport = true; };
+    package = lib.mkDefault unstable.wivrn;
     # Write information to /etc/xdg/openxr/1/active_runtime.json, VR applications
     # will automatically read this and work with WiVRn (Note: This does not currently
     # apply for games run in Valve's Proton)
@@ -39,7 +44,7 @@ in
         scale = 1.0;
         # 100 Mb/s
         bitrate = 100000000;
-        encoders = [
+        encoders =lib.mkDefault [
           {
             encoder = "vaapi";
             codec = "h265";

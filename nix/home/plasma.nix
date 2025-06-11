@@ -7,9 +7,9 @@ in
   {
   home.packages = with pkgs; [
     plasma6-applets-window-title
-    # # sweet-theme-kde
-    # sweet-nova
-    # candy-icons
+    # sweet-theme-kde
+    sweet-nova
+    candy-icons
   ];
 
   imports = [
@@ -353,29 +353,29 @@ in
     force = true;
   };
 
-  # Change wallpaper every day
-  systemd.user.timers."plasma-earthporn-wallpapers" = {
-    Unit.Description = "change wallpaper every day";
-    Timer = {
-      Unit = "plasma-earthporn-wallpapers";
-      partOf = [ "plasma-earthporn-wallpapers.service" ];
-      OnCalendar = "08:00";
-      Persistent = true;
-    };
-    Install.WantedBy = [ "timers.target" ];
-  };
-  systemd.user.services."plasma-earthporn-wallpapers" = {
-    Unit = {
-      Description = "change wallpaper every day";
-      After = [ "network.target" "network-online.target" ];
-    };
-    Service = {
-      Type = "oneshot";
-      # ExecPreStart = "/usr/bin/env sleep 120";
-      ExecStart = ../../shell/scripts/plasma_earthporn_wallpapers.sh;
-    };
-    Install.WantedBy = [ "default.target" ];
-  };
+  # # Change wallpaper every day
+  # systemd.user.timers."plasma-earthporn-wallpapers" = {
+  #   Unit.Description = "change wallpaper every day";
+  #   Timer = {
+  #     Unit = "plasma-earthporn-wallpapers";
+  #     partOf = [ "plasma-earthporn-wallpapers.service" ];
+  #     OnCalendar = "08:00";
+  #     Persistent = true;
+  #   };
+  #   Install.WantedBy = [ "timers.target" ];
+  # };
+  # systemd.user.services."plasma-earthporn-wallpapers" = {
+  #   Unit = {
+  #     Description = "change wallpaper every day";
+  #     After = [ "network.target" "network-online.target" ];
+  #   };
+  #   Service = {
+  #     Type = "oneshot";
+  #     # ExecPreStart = "/usr/bin/env sleep 120";
+  #     ExecStart = ../../shell/scripts/plasma_earthporn_wallpapers.sh;
+  #   };
+  #   Install.WantedBy = [ "default.target" ];
+  # };
 
   xdg.configFile."systemd/user/plasma-bspwm.service" = {
     text = builtins.readFile "${dotfilesDir}/windowManagers/bspwm/plasma_wm_replace/plasma-bspwm.service";
