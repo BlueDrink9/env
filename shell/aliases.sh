@@ -268,6 +268,14 @@ git_fake_add() {
   git add --intent-to-add "$@"
   git update-index --skip-worktree --assume-unchanged "$@"
 }
+nix_cache_query(){
+  drv="$1"
+  # Strip to after last /
+  drv="${1##*/}"
+  # Strip to before -
+  drv="${1%%-*}"
+  curl "https://cache.nixos.org/${drv}.narinfo"
+}
 
 alias nix-shell='nix-shell --run $(basename $SHELL)'
 alias ns='nix-shell'
