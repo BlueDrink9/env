@@ -250,7 +250,12 @@ alias bm="cd \"\$(bmm)\""
 alias del="gio trash"
 alias clip='xclip -selection clipboard'
 
-alias nixup="sudo nix flake update /etc/nixos/"
+flakegit=""
+if [ -d /etc/nixos/.git ]; then
+  flakegit="--commit-lock-file"
+fi
+alias nixup="sudo nix flake update /etc/nixos/ $flakegit"
+unset flakegit
 nom=""
 if command -v nom >/dev/null 2>&1; then
   nom="--log-format internal-json -v |& nom --json"
