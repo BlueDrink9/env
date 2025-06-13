@@ -198,6 +198,7 @@ in { lib, config, pkgs, ... }:
 
   services.thermald.enable = true;
   services.auto-cpufreq.enable = true;
+  # Conflicts with auto-cpufreq; install just the package for kde etc to use it.
   services.power-profiles-daemon.enable = false;
 
   # Trim SSDs
