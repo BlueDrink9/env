@@ -233,7 +233,8 @@ in { lib, config, pkgs, ... }:
 
   # Better virtual terminal in console
   services.kmscon = {
-    enable = true;
+    # TMP: https://github.com/NixOS/nixpkgs/issues/385497
+    enable = false;
     hwRender = true;
     # fonts = [ {
     #   name = "MesloLGLDZ Nerd Font";
