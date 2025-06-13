@@ -106,6 +106,22 @@ in { lib, config, pkgs, ... }:
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp2s0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp3s0.useDHCP = lib.mkDefault true;
+  
+  # Explicitly enable your ethernet interface
+  networking.interfaces.enp0s31f6.useDHCP = true;
+  
+  # Add a systemd service to restart NetworkManager on boot
+  # This helps with issues where NetworkManager starts before all interfaces are ready
+  systemd.services.restart-network-manager = {
+    description = "Restart NetworkManager On Boot";
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.systemd}/bin/systemctl restart NetworkManager";
+      RemainAfterExit = true;
+    };
+  };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
