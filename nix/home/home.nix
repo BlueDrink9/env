@@ -122,8 +122,8 @@ in
     latitude = -41.28664;
     longitude = 174.77557;
     temperature.day = 6500;
-    temperature.night = 2500;
-    settings.redshift.brightness-night = 0.7;
+    temperature.night = 3500;
+    settings.redshift.brightness-night = 0.9;
   };
 
   services.ssh-agent.enable = true;
