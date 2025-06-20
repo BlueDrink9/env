@@ -34,6 +34,7 @@ in { lib, config, pkgs, ... }:
       # "/home/w/env/system/nix/packages.nix"
       # "${NIX_CONFIG_DIR}/packages.nix"
       ./packages/all.nix
+      ./custom-udev-rules-service.nix
     ];
 
   nixpkgs.config.allowUnfree = true;
@@ -287,4 +288,21 @@ in { lib, config, pkgs, ... }:
    #   ];
    # };
 
+  # Comes from https://github.com/MalteT/custom-udev-rules
+  services.udev.customRules = [{
+    name = "10-talon-tobii";
+    rules = ''
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="0127", TAG+="uaccess"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="0118", TAG+="uaccess"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="0106", TAG+="uaccess"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="0128", TAG+="uaccess"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="010a", TAG+="uaccess"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="0102", TAG+="uaccess"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="0313", TAG+="uaccess"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="0318", TAG+="uaccess"
+    '';
+  }];
+
+  # environment.etc."udev/rules.d/10-talon.rules".text = ''
+  # '';
 }
