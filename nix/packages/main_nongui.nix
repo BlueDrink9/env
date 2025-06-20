@@ -5,7 +5,6 @@
   programs.ydotool.enable = true;
   programs.kdeconnect.enable = true;
   programs.system-config-printer.enable = true;
-  programs.command-not-found.enable = true;
   programs.adb.enable = true;
   programs.appimage = {
     enable = true;
@@ -88,7 +87,7 @@
     openssh
     nix-direnv
     csvlens
-    ollama
+    # ollama
     # dvc  # data vcs
 
     uv # pip/venv alternative

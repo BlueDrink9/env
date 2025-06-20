@@ -12,7 +12,8 @@ in
     packageOverrides = pkgs: {
       # pass the nixpkgs config to the unstable alias to ensure `allowUnfree = true;` is propagated:
       unstable = import unstableTarball {
-        config = config.nixpkgs.config;
+        # config = config.nixpkgs.config;
+        config.allowUnfree = true;
       };
     };
   };
@@ -35,9 +36,7 @@ in
 
   # Essential packages are defined here, I'll basically always want these.
   # Rest are defined in imports
-  environment.systemPackages = with pkgs;
-    let unstable = import unstableTarball {}; in
-      [
+  environment.systemPackages = with pkgs; [
       # These are a few packages we always want latest off, and it pays to have installation redundencies.
       unstable.neovim
       unstable.git
@@ -60,6 +59,7 @@ in
       pstree
       ncdu
       nix-search-cli
+      nix-output-monitor
     ];
 
 }
