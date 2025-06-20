@@ -222,6 +222,7 @@ in { lib, config, pkgs, ... }:
     DefaultTimeoutStopSec=30s
   '';
 
+  powerManagement.enable = true;
   services.thermald.enable = true;
   services.auto-cpufreq.enable = true;
   # Conflicts with auto-cpufreq; install just the package for kde etc to use it.
@@ -296,6 +297,14 @@ in { lib, config, pkgs, ... }:
    #     { keys = [ 224 ]; events = [ "key" ]; command = "${pkgs.light}/bin/light -U 10"; }
    #   ];
    # };
+
+  nix.settings.substituters = [
+    "https://nix-community.cachix.org"
+  ];
+
+  nix.settings.trusted-public-keys = [
+    "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+  ];
 
 
   # Comes from https://github.com/MalteT/custom-udev-rules
