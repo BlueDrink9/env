@@ -56,11 +56,6 @@ in { lib, config, pkgs, ... }:
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  # Enable networking
-  networking.networkmanager.enable = true;
-  # networking.networkmanager.wifi.powersave = true;
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
   # Set your time zone.
   time.timeZone = lib.mkForce "Pacific/Auckland";
 
@@ -99,29 +94,41 @@ in { lib, config, pkgs, ... }:
   # Enable CUPS to print documents.
   services.printing.enable = lib.mkDefault true;
 
-  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-  # (the default) this is the recommended approach. When using systemd-networkd it's
-  # still possible to use this option, but it's recommended to use it in conjunction
-  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp2s0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp3s0.useDHCP = lib.mkDefault true;
-  
+
+  # Stop slow boot
+  systemd.services.NetworkManager-wait-online.enable = false;
+  systemd.services.systemd-udev-settle.enable = false;
+
+  networking = {
+    # Enable networking with nm
+    networkmanager.enable = true;
+    # networking.networkmanager.wifi.powersave = true;
+    # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+    # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+    # (the default) this is the recommended approach. When using systemd-networkd it's
+    # still possible to use this option, but it's recommended to use it in conjunction
+    # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+    # useDHCP = lib.mkDefault true;
+    # networking.interfaces.enp2s0.useDHCP = lib.mkDefault true;
+    # networking.interfaces.wlp3s0.useDHCP = lib.mkDefault true;
+
   # Explicitly enable your ethernet interface
-  networking.interfaces.enp0s31f6.useDHCP = true;
-  
-  # Add a systemd service to restart NetworkManager on boot
-  # This helps with issues where NetworkManager starts before all interfaces are ready
-  systemd.services.restart-network-manager = {
-    description = "Restart NetworkManager On Boot";
-    after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.systemd}/bin/systemctl restart NetworkManager";
-      RemainAfterExit = true;
-    };
+  # interfaces.enp0s31f6.useDHCP = true;
   };
+  
+  # # Add a systemd service to restart NetworkManager on boot
+  # # This helps with issues where NetworkManager starts before all interfaces are ready
+  # systemd.services.restart-network-manager = {
+  #   description = "Restart NetworkManager On Boot";
+  #   after = [ "network.target" ];
+  #   wantedBy = [ "multi-user.target" ];
+  #   serviceConfig = {
+  #     Type = "oneshot";
+  #     ExecStart = "${pkgs.systemd}/bin/systemctl restart NetworkManager";
+  #     RemainAfterExit = true;
+  #   };
+  # };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
@@ -253,6 +260,8 @@ in { lib, config, pkgs, ... }:
   boot.crashDump.enable = true;
   boot.kernel.sysctl."kernel.panic_on_oops" = 1;
 
+  # alias for emergency situations when I need to rebuild from root
+  # Otherwise a more sophisticated version of this will exist in shell aliases
   environment.shellAliases = {
     renix="sudo nixos-rebuild switch --impure";
   };
@@ -287,6 +296,7 @@ in { lib, config, pkgs, ... }:
    #     { keys = [ 224 ]; events = [ "key" ]; command = "${pkgs.light}/bin/light -U 10"; }
    #   ];
    # };
+
 
   # Comes from https://github.com/MalteT/custom-udev-rules
   services.udev.customRules = [{
