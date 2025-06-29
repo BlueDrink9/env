@@ -36,6 +36,38 @@ doNixos() {
     fi
     echo "Building nix; may take a long time!"
     sudo nixos-rebuild switch
+
+
+    flake=$(cat <<EOF
+    {
+        description = "nixos";
+        inputs = {
+            nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+        };
+
+        outputs = {
+            self,
+            nixpkgs,
+            ...
+        } @ inputs: let
+            inherit (self) outputs;
+        in {
+            # NixOS configuration entrypoint
+            # Available through 'nixos-rebuild --flake .#your-hostname'
+            nixosConfigurations = {
+            $HOST = nixpkgs.lib.nixosSystem {
+                specialArgs = {inherit inputs outputs;};
+                # > Our main nixos configuration file <
+                modules = [./configuration.nix];
+            };
+            };
+        };
+    }
+EOF
+    )
+
+    echo $flake | sudo tee /etc/nixos/flake.nix
+
 }
 
 eval "$(cat <<END
