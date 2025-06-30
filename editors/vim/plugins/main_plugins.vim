@@ -187,6 +187,9 @@ endif
 Plugin 'https://github.com/zhimsel/vim-stay', {'on': [], 'event': ['CursorHold']}
 " Map os commands (eg maximise), and open windows commands without shell
 " popup.
+" Conflicts with a vim9 plugin ('Open' command). This fixes that.
+" https://github.com/xolox/vim-shell/issues/41
+let g:loaded_openPlugin = 1
 Plugin 'https://github.com/xolox/vim-shell',
             \ {'dependencies': ['xolox/vim-misc'], 'event': ['VeryLazy']}
 if v:version >= 704
