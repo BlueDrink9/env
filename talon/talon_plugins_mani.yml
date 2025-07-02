@@ -66,6 +66,11 @@ projects:
     path: $talon_user_dir/talon_ui_helper
     url: https://github.com/splondike/talon_ui_helper
 
+  flex-mouse-grid:
+    sync: true
+    path: $talon_user_dir/flex-mouse-grid
+    url: https://github.com/brollin/flex-mouse-grid
+
 targets:
   all:
     all: true
