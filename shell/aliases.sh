@@ -261,9 +261,9 @@ if command -v nom >/dev/null 2>&1; then
   nom="--log-format internal-json -v |& nom --json"
 fi
 alias renix="sudo -v && sudo DOTFILES_DIR="$DOTFILES_DIR" nixos-rebuild switch --impure $nom"
-unset nom
-alias homer="(command -v home-manager > /dev/null && home-manager switch) || nix-shell '<home-manager>' -A install"
+alias homer="(command -v home-manager > /dev/null && home-manager switch $nom) || nix-shell '<home-manager>' -A install"
 alias homeu="nix-channel --update"
+unset nom
 git_fake_add() {
   git add --intent-to-add "$@"
   git update-index --skip-worktree --assume-unchanged "$@"
