@@ -3,6 +3,11 @@
     // "when": "vim.active"
 
     {
+        "key": "ctrl+q",
+        "command": "-workbench.action.quit"
+    },
+
+    {
         "key": "ctrl+k",
         "command": "workbench.action.navigateUp",
         // "when": "terminalFocus"
