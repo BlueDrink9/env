@@ -8,10 +8,13 @@ if [ -f "$wallpaper" ]; then
 fi
 unset wallpaper
 
-# Plasma nightshift doesn't work without kwin.
-if ! pgrep "redshift" > /dev/null 2>&1; then
-  redshift-gtk -l -41.28664:174.77557 -t 6500:3000 -b 1:0.7 &
-fi
+# # Plasma's nightshift builtin nightshift requires kwin so still need redshift.
+# Disabled for now because home manager handles it
+# if ! pgrep "redshift" > /dev/null 2>&1; then
+#   redshift-gtk -l -41.28664:174.77557 -t 6500:3000 -b 1:0.7 &
+# fi
+
+talon &
 
 "$DOTFILES_DIR"/windowManagers/bspwm/scripts/floating_noborder.sh &
 
