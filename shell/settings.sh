@@ -15,9 +15,11 @@ else
   USEPF=${USEPF:-0}
 fi
 COLORTERM=${COLORTERM:-16}
-# Tmux overrides TERM_PROGRAM, so in tmux we may have pushed it
-# into TERMINAL_PROGRAM
-TERM_PROGRAM=${TERMINAL_PROGRAM:${TERM_PROGRAM:-}}
+if [ -n "${TERMINAL_PROGRAM}" ]; then
+  # Tmux overrides TERM_PROGRAM, so in tmux we may have pushed it
+  # into TERMINAL_PROGRAM
+  TERM_PROGRAM="${TERMINAL_PROGRAM}"
+fi
 # Export each term option.
 export ${TERMOPTIONS?}
 # Needed for TERMOPTIONS as a string to export properly.
@@ -195,15 +197,15 @@ if [ "$TERM_PROGRAM" = "vscode" ]; then
     alias code="codium"
   fi
   if command -v code >/dev/null 2>&1; then
-    cache_path="$XDG_CACHE_HOME/vscode_shell_integration_path.txt"
-    if [ ! -f "$cache_path"]; then
-      path="$(code --locate-shell-integration-path "$SHELL")" || \
+    cache_path="$XDG_CACHE_HOME/vscode_${SHELL_PROGRAM}_integration_path.txt"
+    if [ ! -f "$cache_path" ]; then
+      sipath="$(code --locate-shell-integration-path "$SHELL_PROGRAM")" || \
         echo "Error setting vscode integration in settings.sh"
-      echo "$path" >| "$cache_path"
+      echo "$sipath" >| "$cache_path"
     else
-      path="$(cat "$cache_path")"
+      sipath="$(cat "$cache_path")"
     fi
-    . "$path" || echo "Error setting vscode integration in settings.sh"
+    . "$sipath" || echo "Error setting vscode integration in settings.sh"
   fi
 fi
 
