@@ -77,6 +77,10 @@ if [ -z "$SSHSESSION" ]; then
     COLORTERM="truecolor"
     export NOTMUX=1
   fi
+  if [ "$TERM_PROGRAM" = "vscode" ]; then
+    COLORTERM="truecolor"
+    export NOTMUX=1
+  fi
 fi
 
 if [ -z "$HOMEBREW_PREFIX" ]; then

@@ -187,7 +187,24 @@ export PIP_WHEEL_DIR="${WHEELHOUSE}"
 mkdir -p "$WHEELHOUSE"
 
 if command -v direnv >/dev/null 2>&1; then
-  eval "$(direnv hook "$SHELL")" || echo "Error setting up direnv in settings"
+  eval "$(direnv hook "$SHELL")" || echo "Error setting up direnv in settings.sh"
+fi
+
+if [ "$TERM_PROGRAM" = "vscode" ]; then
+  if command -v codium >/dev/null 2>&1; then
+    alias code="codium"
+  fi
+  if command -v code >/dev/null 2>&1; then
+    cache_path="$XDG_CACHE_HOME/vscode_shell_integration_path.txt"
+    if [ ! -f "$cache_path"]; then
+      path="$(code --locate-shell-integration-path "$SHELL")" || \
+        echo "Error setting vscode integration in settings.sh"
+      echo "$path" >| "$cache_path"
+    else
+      path="$(cat "$cache_path")"
+    fi
+    . "$path" || echo "Error setting vscode integration in settings.sh"
+  fi
 fi
 
 export AICHAT_LIGHT_THEME=true
