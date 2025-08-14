@@ -100,9 +100,8 @@ super + grave
 # m = main playlist
 # b = bounce
 super + m; {s,m,b}
-  fopen https://beta.music.apple.com/nz{ ,/library/playlist/p.V7VY8EWh4meR6pD,/library/playlist/p.LV0Pv4biZXBOk3r}
-  # notify-send "Opening $(which cider)" && \
-  #   cider $arg || gtk-launch cider $arg ||
+  cider-2 $arg || gtk-launch cider-2 $arg || \
+    fopen https://beta.music.apple.com/nz{ ,/library/playlist/p.V7VY8EWh4meR6pD,/library/playlist/p.LV0Pv4biZXBOk3r}
 
 # XF86AudioNext
 super + m; {space,h,p,n}
@@ -130,4 +129,4 @@ super + Return
 
 # Toggle Workrave
 super + e; w
-  pgrep workrave && killall workrave || workrave
+  pgrep workrave && pkill workrave || workrave
