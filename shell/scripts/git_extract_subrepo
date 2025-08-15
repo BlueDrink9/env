@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# Extract a subdirectory from a Git repo using git subtree,
+# create a new repo in the parent directory,
+# and link it back using git-subrepo.
+
+set -euo pipefail
+
+# --- Input ---
+SUBDIR="${1:-}"
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+PARENT_DIR="$(dirname "$REPO_ROOT")"
+SUBREPO_NAME="$(basename "$SUBDIR")"
+NEW_REPO_PATH="$PARENT_DIR/$SUBREPO_NAME"
+
+# --- Validation ---
+if [[ -z "$SUBDIR" ]]; then
+  echo "Usage: $0 <subdirectory-to-extract>"
+  exit 1
+fi
+
+if [[ ! -d "$REPO_ROOT/$SUBDIR" ]]; then
+  echo "Error: Subdirectory '$SUBDIR' does not exist in repository."
+  exit 2
+fi
+
+# --- Create new repo ---
+mkdir -p "$NEW_REPO_PATH"
+cd "$NEW_REPO_PATH"
+git init -b main
+
+# --- Extract subtree into new repo ---
+SPLIT_COMMIT=$(git -C "$REPO_ROOT" subtree split --prefix="$SUBDIR")
+git pull "$REPO_ROOT" "$SPLIT_COMMIT"
+
+# --- Optional: Push to remote ---
+read -p "Push the new repo to a remote? (y/N): " PUSH_REMOTE
+if [[ "$PUSH_REMOTE" =~ ^[Yy]$ ]]; then
+  read -p "Remote URL: " REMOTE_URL
+  git remote add origin "$REMOTE_URL"
+  git push -u origin main
+fi
+
+# --- Link back using git-subrepo ---
+cd "$REPO_ROOT"
+git subrepo clone "$NEW_REPO_PATH" "$SUBDIR"
+
+echo "Done. '$SUBDIR' is now a subrepo linked to '$NEW_REPO_PATH'."
