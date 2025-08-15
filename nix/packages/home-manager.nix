@@ -2,7 +2,7 @@ let
 
   homeManagerUrl = {
     url = "https://github.com/nix-community/home-manager/archive/release-25.05.tar.gz";
-    sha256 = "sha256:12246mk1xf1bmak1n36yfnr4b0vpcwlp6q66dgvz8ip8p27pfcw2";
+    sha256 = "sha256:026rvynmzmpigax9f8gy9z67lsl6dhzv2p6s8wz4w06v3gjvspm1";
     # url = "https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz";
     # sha256 = "sha256:1mwq9mzyw1al03z4q2ifbp6d0f0sx9f128xxazwrm62z0rcgv4na";
   };
