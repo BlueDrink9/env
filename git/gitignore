@@ -10,6 +10,9 @@ custom-spellings-vim.utf-8.add*
 cache/
 .cache/
 
+# syncthing
+.stfolder/
+
 # Lock files
 *.lck
 
