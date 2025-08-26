@@ -23,7 +23,10 @@ let
   fonts.fontconfig.enable = true;
 
   home.activation."talon python packages" = ''
-    ~/.talon/bin/python -m pip install pynvim
+    pip="$HOME/.talon/bin/python -m pip"
+    $pip install pynvim # neovim
+    $pip install opencv-python-headless # flex-grid
+    $pip install numpy # flex-grid
   '';
 
   home.activation."talon user repos" = ''
