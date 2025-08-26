@@ -51,6 +51,7 @@
     btop
     tldr
     broot
+    dysk
     duf
     mcfly # ML-enhanced smart command history
     pay-respects  # 'f' command to fix previous line
@@ -79,6 +80,7 @@
     shellcheck
     pyright
     nil # Nix lsp
+    nixfmt
     # Nix disk usage
     # nix-du -s=500MB > store.dot; zgrviewer store.dot
     nix-du zgrviewer
@@ -87,6 +89,7 @@
     openssh
     nix-direnv
     csvlens
+    caligula  # dd/disk burning
     # ollama
     # dvc  # data vcs
 
