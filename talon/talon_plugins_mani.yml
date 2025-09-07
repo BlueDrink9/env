@@ -69,7 +69,7 @@ projects:
   flex-mouse-grid:
     sync: true
     path: $talon_user_dir/flex-mouse-grid
-    url: https://github.com/brollin/flex-mouse-grid
+    url: https://github.com/bluedrink9/flex-mouse-grid
 
 targets:
   all:
