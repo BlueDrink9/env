@@ -8,6 +8,7 @@
 	cam = commit --amend
 	cup = commit --amend --no-edit
 	cupa = commit --all --amend --no-edit
+  amendReset = commit --reuse-message=ORIG_HEAD
   # diff = diff --ignore-space-change
   # Word- and character-level diffs. Colour words can take regex, here used to
   # fake char-level diff. Plain diff shows the diffs with markup in-line as
@@ -90,6 +91,8 @@
 # Record resolutions of merges to apply automatically if they occur again.
 [rerere]
   enabled = true
+  # Stage if recorded resolution was found
+  autoupdate = true
 [diff]
   colorMoved = zebra
   submodule = log
