@@ -192,10 +192,10 @@ if command -v direnv >/dev/null 2>&1; then
   eval "$(direnv hook "$SHELL")" || echo "Error setting up direnv in settings.sh"
 fi
 
+if command -v codium >/dev/null 2>&1; then
+  alias code="codium"
+fi
 if [ "$TERM_PROGRAM" = "vscode" ]; then
-  if command -v codium >/dev/null 2>&1; then
-    alias code="codium"
-  fi
   if command -v code >/dev/null 2>&1; then
     cache_path="$XDG_CACHE_HOME/vscode_${SHELL_PROGRAM}_integration_path.txt"
     if [ ! -f "$cache_path" ]; then
@@ -205,7 +205,7 @@ if [ "$TERM_PROGRAM" = "vscode" ]; then
     else
       sipath="$(cat "$cache_path")"
     fi
-    . "$sipath" || echo "Error setting vscode integration in settings.sh"
+    . "$sipath" || echo "Error setting vscode integration in settings.sh" && rm -f "$cache_path"
   fi
 fi
 
