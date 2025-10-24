@@ -14,7 +14,8 @@ unset wallpaper
 #   redshift-gtk -l -41.28664:174.77557 -t 6500:3000 -b 1:0.7 &
 # fi
 
-talon &
+# Stores it own logs, so don't need any in .logs
+talon > /dev/null &
 
 "$DOTFILES_DIR"/windowManagers/bspwm/scripts/floating_noborder.sh &
 
