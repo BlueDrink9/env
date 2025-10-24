@@ -420,4 +420,9 @@
         "key": "ctrl+shift+alt+p",
         "command": "-command-server.runCommand"
     },
+    {
+        "key": "ctrl+v",
+        "command": "workbench.action.terminal.paste",
+        "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+    },
 ]

@@ -19,8 +19,8 @@
     "editor.wordWrap": "on",
     "editor.rulers": [80, 120],
     "editor.minimap.renderCharacters": false,
-    "workbench.editor.limit.enabled": true,
-    "workbench.editor.limit.value": 5,
+    // "workbench.editor.limit.enabled": true,
+    "workbench.editor.showTabIndex": true,
 
     "extensions.experimental.affinity": {
         "asvetliakov.vscode-neovim": 1,
@@ -524,7 +524,8 @@
         "default": "#5c5965",
         "yellow": "#cec400",
         "pink": "#ffb6da",
-        "blue": "#3189ef"
+        "blue": "#3189ef",
+        "green": "#14f123"
     },
     "cursorless.colors.dark": {
         "blue": "#0867d3"
@@ -629,12 +630,37 @@
     "talon-filetree.hintPosition": "left",
     "talon-filetree.hintSeparator": "colon",
     "roo-cline.allowedCommands": [
-        "npm test",
-        "npm install",
-        "tsc",
         "git log",
         "git diff",
-        "git show"
+        "git show",
+        "npm test",
+        "npm install",
+        "tsc"
     ],
     "diffEditor.ignoreTrimWhitespace": false,
+    "graphviz-interactive-preview.debouncingInterval": 1000,
+    "graphviz-interactive-preview.openAutomatically": false,
+    "graphviz-interactive-preview.renderInterval": 5000,
+    "graphviz-interactive-preview.renderLockAdditionalTimeout": 5000,
+    "[sql]": {
+        "editor.defaultFormatter": "piotrgredowski.poor-mans-t-sql-formatter-pg"
+    },
+    "sqltools.codelensLanguages": [
+        "sql",
+        "r"
+    ],
+    "sqltools.formatLanguages": [
+        "sql",
+        "r"
+    ],
+    "sqltools.completionLanguages": [
+        "sql",
+        "r"
+    ],
+    "roo-cline.deniedCommands": [],
+    "files.exclude": {
+        ".aider.chat.history.md": true
+    },
+    "editor.hover.delay": 700,
+    "editor.hover.hidingDelay": 700,
 }
