@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+
+# --- Configuration ---
+GIT_REPO_DIR="${HOME}/src/talon-nix"
+SOURCE_FILE="${GIT_REPO_DIR}/src.json"
+
+# --- Functions ---
+
+# Function to display usage information
+usage() {
+    echo "Usage: $0 <NEW_TAR_XZ_URL>"
+    exit 1
+}
+
+# Function to extract the version from the URL
+extract_version() {
+    local url="$1"
+    # Extracts the version part like '0.4.0-1031' from the URL
+    # Assuming the format is .../talon-linux-115-<VERSION>-<COMMIT_HASH>.tar.xz
+    if [[ "$url" =~ talon-linux-115-([0-9.-]+)-[a-f0-9]+\.tar\.xz ]]; then
+        echo "${BASH_REMATCH[1]}"
+    else
+        echo ""
+    fi
+}
+
+# --- Main Script Execution ---
+
+# 1. Check for the new URL argument
+if [ -z "$1" ]; then
+    echo "Error: Missing new Talon update URL."
+    usage
+fi
+
+NEW_URL="$1"
+
+# 2. Basic environment checks
+if ! command -v nix-prefetch-url &> /dev/null; then
+    echo "Error: 'nix-prefetch-url' is required but not found."
+    exit 1
+fi
+
+if ! command -v jq &> /dev/null; then
+    echo "Error: 'jq' tool is required for JSON manipulation but not found (expected at $JQ_TOOL)."
+    exit 1
+fi
+
+if [ ! -f "$SOURCE_FILE" ]; then
+    echo "Error: Source file not found at $SOURCE_FILE"
+    exit 1
+fi
+
+# 3. Extract the new version number
+NEW_VERSION=$(extract_version "$NEW_URL")
+if [ -z "$NEW_VERSION" ]; then
+    echo "Error: Could not reliably extract version number from the URL: $NEW_URL"
+    exit 1
+fi
+
+echo "New URL: $NEW_URL"
+echo "Detected Version: $NEW_VERSION"
+
+# 4. Prefetch the new URL to get the sha256 hash
+echo "---"
+echo "Fetching new sha256 hash using nix-prefetch-url..."
+
+# Use silent mode and capture the output which is the hash
+NEW_SHA256=$(nix-prefetch-url --type sha256 "$NEW_URL" 2>&1 | tail -n 1)
+
+if [ -z "$NEW_SHA256" ]; then
+    echo "Error: Failed to prefetch URL or calculate sha256 hash."
+    exit 1
+fi
+
+# The hash returned by nix-prefetch-url is already in the 'sha256-...' format.
+echo "New sha256: $NEW_SHA256"
+
+echo "---"
+echo "📝 Updating $SOURCE_FILE with new data..."
+
+# Create a temporary file to store the updated JSON
+TEMP_JSON=$(mktemp)
+
+jq \
+    --arg url "$NEW_URL" \
+    --arg sha256 "$NEW_SHA256" \
+    --arg version "$NEW_VERSION" \
+    '.url = $url | .sha256 = $sha256 | .version = $version' \
+    "$SOURCE_FILE" > "$TEMP_JSON"
+
+# Overwrite the original file with the updated content
+mv "$TEMP_JSON" "$SOURCE_FILE"
+
+echo "Successfully updated $SOURCE_FILE."
+echo "---"
+
+echo "Creating Git commit in $GIT_REPO_DIR..."
+
+# Add the modified file
+git -C $GIT_REPO_DIR add "$SOURCE_FILE"
+
+COMMIT_MSG="bump version to ${NEW_VERSION}"
+
+git -C $GIT_REPO_DIR commit -m "$COMMIT_MSG"
+git -C $GIT_REPO_DIR push

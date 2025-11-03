@@ -11,8 +11,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "DMaroo";
       repo = "fakwin";
-      rev = "master";
-      hash = "sha256-oEMSuy2NMbd3Q7wtGSVz9vrqNWFeZLrNDM3KAsLgUOw=";
+      rev = "d27b5e4dc3010c1ccdca41cd742aecbbc5d8af5e";
+      hash = "sha256-e2G5JsR2pNYxxFM+upRTw+f2S8kpH2iPkPZeD0hL3JE=";
     };
 
     nativeBuildInputs = [ pkgs.cmake pkgs.qt6.wrapQtAppsHook ];
