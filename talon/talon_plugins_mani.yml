@@ -18,6 +18,14 @@ projects:
       pushremote: ssh://git@github.com/bluedrink9/bluedrink9-talon
     tags: [talon]
 
+  homophoner-talon:
+    sync: true
+    path: $talon_user_dir/homophoner-talon
+    url: ssh://git@github.com/bluedrink9/homophoner-talon
+    remotes:
+      pushremote: ssh://git@github.com/bluedrink9/homophoner-talon
+    tags: [talon]
+
   bspwm-talon:
     sync: true
     path: $talon_user_dir/bspwm-talon
