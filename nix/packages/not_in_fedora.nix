@@ -11,6 +11,7 @@ in
     veracrypt
     tdrop
 
+    neovide
     birdtray
     unstable.brave
     duplicacy
@@ -21,14 +22,18 @@ in
     signal-desktop
     tldr
     topgrade
-    ventoy
+    # ventoy
     vivid
     vscodium
     zotero
     caprine-bin
     zapzap
+    # unstable.aider-chat
+    unstable.aichat
     # TODO San francisco fonts
     # https://github.com/Lyndeno/apple-fonts.nix
+
+    nixfmt
 
     # albert, ulauncher, dlauncher?
   ];
