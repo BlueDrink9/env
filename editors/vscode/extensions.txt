@@ -6,8 +6,10 @@ bodil.file-browser
 charliermarsh.ruff
 chrischinchilla.vscode-pandoc
 detachhead.basedpyright
+duniul.git-stage
 frhtylcn.pythonsnippets
 github.copilot
+ignorantshr.git-commit-amend
 jacobdufault.fuzzy-search
 jeanp413.open-remote-ssh
 jnoortheen.nix-ide
