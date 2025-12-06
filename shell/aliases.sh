@@ -293,3 +293,5 @@ if command -v radian >/dev/null 2>&1; then
   alias r="radian"
 fi
 alias c="aichat"
+
+talon-update-plugins="$DOTFILES_DIR/talon/sync_plugins.sh"
