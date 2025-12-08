@@ -14,7 +14,14 @@ do${installID}() {
     chmod u+x "${baseRC}"
     mkdir -p ~/.config/sxhkd
     touch ~/.config/sxhkd/sxhkdrc
-    replace_plasma_wm
+    if command -v kwriteconfig6 > /dev/null 2>&1; then
+        replace_plasma_wm
+    fi
+    if command -v xfconf-query > /dev/null 2>&1; then
+      # Run twice so settings are initialised
+        xfconf_session_set
+        xfconf_session_set
+    fi
 }
 END
 )"
@@ -26,7 +33,7 @@ replace_plasma_wm(){
   # backup option.
   # KDEWM method
   kwriteconfig6 --file startkderc --group General --key systemdBoot false
-  kde_env_dir="$XDG_CONFIG_HOME/plasma-workspace/env/"
+  kde_env_dir="$XDG_CONFIG_HOME/plasma-workspace/env"
   mkdir -p "$kde_env_dir"
   printf '#!/bin/sh\nexport KDEWM=bspwm' >| "$kde_env_dir/bspwm.sh"
   # systemd mask method
@@ -37,6 +44,19 @@ replace_plasma_wm(){
   systemctl --user daemon-reload
   systemctl --user enable plasma-bspwm.service
   systemctl --user add-wants plasma-workspace-x11.target plasma-bspwm.service
+}
+
+xfconf_session_set(){
+  client="$1"
+  setting="$2"
+  xfconf-query --channel xfce4-session --property /sessions/Failsafe/$client --type string --set --force-array "$setting"
+}
+
+replace_xfwm4(){
+  xfconf_session_set Client0_Command xfsettingsd
+  xfconf_session_set Client1_Command xfce4-panel
+  xfconf_session_set Client2_Command xfdesktop
+  xfconf_session_set Client3_Command bspwm
 }
 
 eval "$(cat <<END
