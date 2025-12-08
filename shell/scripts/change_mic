@@ -1,0 +1,17 @@
+#!/bin/sh
+# change_mic() {
+    choice="$(wpctl status \
+        | awk '/Sources:/{flag=1;next}/Filters:/{flag=0}flag' \
+        | sed -E 's/^[[:space:]]+//; s/\[vol.*//' \
+        | fzf --prompt='Select Microphone > ' \
+              --header='Pick a PipeWire source' \
+              --ansi )" || exit
+
+    # Extract digits only from the beginning → the node ID
+    id="$(printf "%s" "$choice" | sed -E 's/[^0-9]*([0-9]+).*/\1/')"
+
+    [ -z "$id" ] && echo "No selection." && exit
+
+    wpctl set-default "$id"
+    echo "Microphone switched to: $choice"
+# }
