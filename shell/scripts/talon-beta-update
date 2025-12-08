@@ -103,3 +103,5 @@ COMMIT_MSG="bump version to ${NEW_VERSION}"
 
 git -C $GIT_REPO_DIR commit -m "$COMMIT_MSG"
 git -C $GIT_REPO_DIR push
+
+nix build $GIT_REPO_DIR
