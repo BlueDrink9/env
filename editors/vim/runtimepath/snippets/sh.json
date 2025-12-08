@@ -17,4 +17,14 @@
     ],
     "description": "Assign a block of text to a variable with a heredoc"
   }
+
+  , "if executable exists check": {
+    "prefix": ["if command", "command", "ifex"],
+    "body": [
+      "if command -v $1 > /dev/null 2>&1; then",
+      "  $0",
+      "fi"
+    ],
+    "description": "Check if program is available as executable"
+  }
 }
