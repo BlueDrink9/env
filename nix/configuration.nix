@@ -35,6 +35,7 @@ in { lib, config, pkgs, ... }:
       # "${NIX_CONFIG_DIR}/packages.nix"
       ./packages/all.nix
       ./custom-udev-rules-service.nix
+      ./root_scripts.nix
     ];
 
   nixpkgs.config.allowUnfree = true;
@@ -116,7 +117,7 @@ in { lib, config, pkgs, ... }:
   # Explicitly enable your ethernet interface
   # interfaces.enp0s31f6.useDHCP = true;
   };
-  
+
   # # Add a systemd service to restart NetworkManager on boot
   # # This helps with issues where NetworkManager starts before all interfaces are ready
   # systemd.services.restart-network-manager = {
