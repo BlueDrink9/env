@@ -20,9 +20,11 @@
         };
       })
       tidyverse
+      languageserver
     ]; };
       in [
       R
+      air-formatter
       python312Packages.radian
       (writeScriptBin "rixi" ''
       # This will create two files: .Rprofile and default.nix
