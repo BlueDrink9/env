@@ -109,7 +109,7 @@ EOF
     # Add nixos hm setup config to imports list
     baseRC="/etc/nixos/configuration.nix"
     import="$(realpath "${HM_DOTS}/../packages/home-manager.nix")"
-    AddImport "${import}" "${baseRC}"
+    AddNixImport "${import}" "${baseRC}"
   fi
 }
 
@@ -121,7 +121,7 @@ doHomeManagerPackages(){
   baseRC="$XDG_CONFIG_HOME/home-manager/home.nix"
   for set in $pkgSets; do
     file="$($SCRIPTDIR_CMD)/../packages/${set}.nix"
-    AddImport "${file}" "${baseRC}"
+    AddNixImport "${file}" "${baseRC}"
   done
 }
 
@@ -137,6 +137,9 @@ doHomeManager(){
   add_channels
   home_manager_install
   nix-shell -p home-manager --command "home-manager switch"
+  if [ ! -d /etc/nixos ]; then
+    doSystemmanager
+  fi
 }
 
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then

@@ -3,8 +3,9 @@
 source "$DOTFILES_DIR/shell/script_functions.sh"
 source "$DOTFILES_DIR/shell/functions.sh"
 source "$DOTFILES_DIR/shell/XDG_setup.sh"
+source "$DOTFILES_DIR/nix/home/install.sh"
 
-AddImport(){
+AddNixImport(){
     importFile=$1
     baseFile=$2
     lineNumber=$(awk '/imports =/ {print NR; exit}' "$baseFile")
@@ -32,7 +33,7 @@ doNixos() {
     else
         # TODO: is looking for imports too fragile? Could possibly use
         # hardware-configuration instead.
-        AddImport "${installText}" "${baseRC}"
+        AddNixImport "${installText}" "${baseRC}"
     fi
     echo "Building nix; may take a long time!"
     sudo nixos-rebuild switch
@@ -77,7 +78,45 @@ undo${installID}(){
 END
 )"
 
+installID="SystemManager"
+installTextFull=$(cat <<EOF
+{ config, pkgs, ... }: {
+    imports = [
+    ];
+}
+EOF
+)
+baseRC="/etc/system-manager.nix"
+
+doSystemManager(){
+  # Mainly use via flake/alias, but this is needed for selinux OSes.
+  if command -v setenforce; then
+    pushd "." > /dev/null
+    nix build --impure --expr "import $($SCRIPTDIR_CMD)/system-manager/selinux-install.nix { pkgs = import <nixpkgs> {}; }"
+    sudo result/bin/install-selinux-policy
+    nix run 'github:numtide/system-manager' --accept-flake-config --extra-experimental-features 'nix-command flakes' -- switch --flake "$DOTFILES_DIR/nix/system-manager" --nix-option pure-eval false --sudo
+    popd > /dev/null
+  fi
+    printErr "Enabling custom ${installID} setup..."
+    if [ ! -f "${baseRC}" ]; then
+        echo "${installTextFull}" | sudo tee "${baseRC}" > /dev/null
+    fi
+
+}
+
+eval "$(cat <<END
+undo${installID}(){
+    sudo sed -in "s|.*${installText}.*||g" "${baseRC}"
+  }
+END
+)"
+
 # If directly run instead of sourced, do all
 if [ ! "${BASH_SOURCE[0]}" != "${0}" ]; then
-  do${installID}
+  if [ -d /etc/nixos ]; then
+    doNixos
+  else
+    doSystemManager
+  fi
 fi
+
