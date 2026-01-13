@@ -67,12 +67,22 @@
       export VISUAL=${pkgs.neovim}/bin/nvim
     '';
 
-    # system.activationScripts.udev.text = ''
-    #   #!${pkgs.runtimeShell}
-    #   PATH=$PATH:${lib.makeBinPath [ pkgs.systemd ]}
-    #   udevadm control --reload-rules
-    #   udevadm trigger
-    # '';
+    # "Activation" script to reload udev rules, in case sys-mgr has changed them.
+    systemd.services.reload-udev-rules = lib.mkDefault {
+      description = "Reload udev rules";
+      enable = true;
+      # Start when sysmgr acviates
+      wantedBy = [ "system-manager.target" ];
+      after = [ "systemd-udevd.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+      script = ''
+        ${pkgs.systemd}/bin/udevadm control --reload-rules
+        ${pkgs.systemd}/bin/udevadm trigger
+      '';
+    };
 
   };
 }
