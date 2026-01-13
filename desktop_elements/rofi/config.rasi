@@ -1,10 +1,10 @@
 /* vim:ft=css
  * */
 configuration {
-	theme: "/usr/share/rofi/themes/purple.rasi";
 	/* modi: "combi,window,drun,run,file-browser,ssh,p:rofi-power-menu,calc,p:rofi-wifi-menu,p:rofi-mpd"; */
 	/* combi-modi: "window,drun,run,file-browser"; */
-	modi: "combi,window,drun,run,ssh,p:rofi-power-menu,calc,p:rofi-wifi-menu,p:rofi-mpd";
+	/* modi: "combi,window,drun,run,ssh,p:rofi-power-menu,calc,p:rofi-wifi-menu,p:rofi-mpd"; */
+	modi: "combi,window,drun,run,ssh,p:rofi-power-menu,p:rofi-wifi-menu,p:rofi-mpd";
 	combi-modi: "window,drun,run";
 	font: "SFNS Display 15";
 	show-icons: true;
@@ -20,7 +20,7 @@ configuration {
 	sorting-method: "fzf";
   parse-hosts: true;
   parse-known-hosts: true;
-  cache-dir: "$XDG_CACHE_HOME/rofi";
+  cache-dir: "~/.cache/rofi";
 	drun-use-desktop-cache: true;
 	/* drun-reload-desktop-cache: false; */
 /*	drun-categories: ;*/
@@ -144,3 +144,5 @@ configuration {
 /*	me-accept-entry: "MouseDPrimary";*/
 /*	me-accept-custom: "Control+MouseDPrimary";*/
 }
+
+/* @theme "/usr/share/rofi/themes/purple.rasi" */

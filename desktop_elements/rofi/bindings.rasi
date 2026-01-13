@@ -1,11 +1,12 @@
 /* vim:ft=css
  * */
 configuration {
- kb-row-up: "Up,Control+p,ISO_Left_Tab";
+ kb-row-up: "Up,Control+p";
  kb-row-down: "Down,Control+n";
- kb-row-tab: "Tab";
+ /* kb-row-tab: "Tab"; */
 /*  kb-mode-next: "Control+l,Shift+Right,Control+Tab"; */
- kb-mode-previous: "Control+h,Shift+Left,Control+ISO_Left_Tab";
+ /* kb-mode-previous: "Control+h,Shift+Left,Control+ISO_Left_Tab"; */
+ kb-mode-previous: "Control+h,Shift+Left";
  kb-cancel: "Escape,Control+g,Control+bracketleft,Alt+space,Super+r";
  kb-row-select: "Control+e";
 	kb-remove-char-forward: "Delete,Shift+d";
