@@ -115,6 +115,12 @@ spec.config = function()
             ['<leader>gw'] = 'git.stage',
             -- ['<leader>gca'] = 'git.commitStaged',
             ['<leader>gc'] = 'magit.commit',
+            ['<backspace>'] = 'editor.toggleFold',
+            ['<za>'] = 'editor.toggleFold',
+            ['<zm>'] = 'editor.fold',
+            ['<zM>'] = 'editor.foldAll',
+            ['<zr>'] = 'editor.unfold',
+            ['<zR>'] = 'editor.unfoldAll',
         }
 
         -- 'tab' is just to sync the visual selection with vscode.
