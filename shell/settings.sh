@@ -28,12 +28,6 @@ TERMOPTIONS="$TERMOPTIONS"; export TERMOPTIONS
 if [ -n "$TMUX" ]; then
   # In a tmux session
   set_tmux_termoptions
-  # if [ "$(echo "$TMUX_VERSION < 2.3" | bc)" = 1 ]; then
-  if compareVersionNum "$TMUX_VERSION" "<" "2.3"; then
-    if [ "$COLORTERM" = "truecolor" ] || [ "$COLORTERM" = "24bit" ]; then
-      COLORTERM=16
-    fi
-  fi
 fi
 
 # {]} Terminal settings

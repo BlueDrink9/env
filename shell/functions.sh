@@ -76,12 +76,19 @@ is1EarlierVersionThan2(){ [ "$(printf "%s\n%s" "$1" "$2" | sort -V | head -n1)" 
 
 # Expand the variable named by $1 into its value. Works in both {ba,z}sh
 # eg: a=HOME $(var_expand $a) == /home/me
+# Returns a blank value if unset
 var_expand() {
-  if [ -z "${1-}" ] || [ $# -ne 1 ]; then
+  if [ -z "${1:-}" ] || [ $# -ne 1 ]; then
     printf 'var_expand: expected one argument\n' >&2;
     return 1;
   fi
-  eval printf '%s' "\"\${$1?}\"" 2>/dev/null || printf ""
+  # Logic:
+  # 1. We use eval to perform indirect expansion.
+  # 2. We wrap the variable name in ${...} and add :- to ensure
+  #    it returns an empty string instead of an error if unset.
+  # 3. We use single quotes for the eval target to prevent the
+  #    current shell from trying to expand it prematurely.
+  eval "printf '%s' \"\${$1:-}\"" 2>/dev/null
 }
 
 ensure_latest_shell(){
