@@ -15,7 +15,11 @@ _set_window_title(){
   fi
   # number of bg jobs, or "" if 0.
   JOBS=$(if [ -n "$(jobs -p)" ]; then echo "%j"; fi)
-  print -Pn "${escape_start}${WINDOW_CUSTOM_NAME}[%1~] %n@%M: [%~] $JOBS - $SHELL_PROGRAM${escape_end}"
+  USER_CONTEXT=
+  if [ -n "$SSHSESSION" ]; then
+    USER_CONTEXT=" %n@%M"
+  fi
+  print -Pn "${escape_start}${WINDOW_CUSTOM_NAME}[%1~]${USER_CONTEXT} (%~) $JOBS - $SHELL_PROGRAM${escape_end}"
 }
 precmd_functions+=(_set_window_title)
 

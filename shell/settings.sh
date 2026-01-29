@@ -4,9 +4,9 @@
 # Prevent duplicating
 PROMPT_COMMAND=""
 
+# {[} Terminal settings  - set the termoptions in here
 # Will get exported to ssh servers (see functions->export_termoptions)
 export TERMOPTIONS=(USENF USEPF COLORTERM TERM_PROGRAM COLOURSCHEME NOTMUX)
-# {[} Terminal settings
 
 USENF=${USENF:-0}
 if [ "$USENF" = 1 ]; then

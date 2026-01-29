@@ -21,7 +21,12 @@ fi
 export PS4='+($(${CURR_SCRIPT_CMD}):${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
 
 # \e]0 escapes to window title, \a ends it. Escaped \$ to evaluate live.
-export WINDOW_TITLE_PATH="\[\e]2;\${WINDOW_CUSTOM_NAME}[\W] \u@\h: [\w] \${GIT_BRANCH} – \${SHELL_PROGRAM}\a\]"
+WINDOW_TITLE_PATH="\[\e]2;\${WINDOW_CUSTOM_NAME}[\W]"
+USER_CONTEXT=
+if [ -n "$SSHSESSION" ]; then
+  USER_CONTEXT=" \u@\h:"
+fi
+export WINDOW_TITLE_PATH="${WINDOW_TITLE_PATH}${USER_CONTEXT} (\w) \${GIT_BRANCH} – \${SHELL_PROGRAM}\a\]"
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
