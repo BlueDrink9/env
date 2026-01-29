@@ -20,10 +20,11 @@ if [ -n "${TERMINAL_PROGRAM}" ]; then
   # into TERMINAL_PROGRAM
   TERM_PROGRAM="${TERMINAL_PROGRAM}"
 fi
-# Export each term option.
-export ${TERMOPTIONS?}
-# Needed for TERMOPTIONS as a string to export properly.
-TERMOPTIONS="$TERMOPTIONS"; export TERMOPTIONS
+# Export each term option and ensure set
+for v in "${TERMOPTIONS[@]}"; do
+  # Must be one line; if not, get an overflow for some reason.
+  export $v="$(var_expand $v)"
+done
 
 if [ -n "$TMUX" ]; then
   # In a tmux session

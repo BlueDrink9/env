@@ -20,7 +20,7 @@ fi
 # Used with -x for debugging shells
 export PS4='+($(${CURR_SCRIPT_CMD}):${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
 
-# \e]0 escapes to window title, \a ends it. Escaped \$ to evaluate live.
+# \e]2 escapes to window title, \a ends it. Escaped \$ to evaluate live.
 WINDOW_TITLE_PATH="\[\e]2;\${WINDOW_CUSTOM_NAME}[\W]"
 USER_CONTEXT=
 if [ -n "$SSHSESSION" ]; then

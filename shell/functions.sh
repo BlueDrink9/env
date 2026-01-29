@@ -294,27 +294,33 @@ set_tmux_termoptions(){
       # session, we set a variable in tmux's global environment from
       # the containing shell. (This must be done before attaching to work!)
       # We then attach, and bash runs the refresh function.
-
       ## Set tmux environment
       # Check that we're in a session
-      if [ -n "$TMUX" ]; then
-        for _option in ${TERMOPTIONS[*]}; do
+      if [ -z "$TMUX" ]; then
+        for _option in "${TERMOPTIONS[@]}"; do
           # Refresh term_option shell variables by parsing tmux's global environment
           optval="$(\tmux show-environment -g ${_option} 2>/dev/null)"
           # Silence error when tmux is started as a login shell (or close-to).
+          set -x
           if [ -n "${optval}" ]; then
             export "${_option}"="${optval##*=}"
           fi
+          set +x
           unset optval
         done
       else
-        for _option in ${TERMOPTIONS[*]}; do
+        for _option in ${TERMOPTIONS[@]}; do
+          export $_option
           # Should this go after attaching tmux or before???
           \tmux setenv -g "${_option}" "$(var_expand ${_option})"
         done
+        # Needed for TERMOPTIONS as a string to export properly.
+        # TERMOPTIONS="$TERMOPTIONS"; export TERMOPTIONS
+        \tmux setenv -g "TERMOPTIONS" "$TERMOPTIONS"
       fi
   fi
 }
+# set_tmux_termoptions
 
 is_tmux_running(){
   # Check tmux is installed
