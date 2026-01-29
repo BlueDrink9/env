@@ -36,7 +36,7 @@ typeset -g POWERLEVEL9K_TERM_SHELL_INTEGRATION=true
   fi
 
   typeset -g POWERLEVEL9K_COLOR_SCHEME='light'
-  if substrInStr "dark" "$COLOURSCHEME"; then
+  if substrInStr "dark" "${COLOURSCHEME:-}"; then
     typeset -g POWERLEVEL10K_COLOR_SCHEME='dark'
   fi
 
