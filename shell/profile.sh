@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+profile(){
 # vim:ft=sh:tw=78:ts=2
 # vim:foldmethod=marker:foldmarker={[},{]}
 # Contains bash and cli bootstrapping/init code designed to be run once per
@@ -7,7 +8,7 @@ SCRIPT_DIR_LOCAL="$(realpath "$PROFILE_DIR/..")"
 export DOTFILES_DIR=$(cd "${SCRIPT_DIR_LOCAL}/.." && pwd)
 . "$SCRIPT_DIR_LOCAL/XDG_setup.sh"
 
-if grep -qE "(Microsoft|WSL)" "$([ -f /proc/version ] && cat /proc/version)" > /dev/null 2>&1; then
+if [ -n "$WSL_DISTRO_NAME" ] || command -v wslinfo > /dev/null 2>&1 || [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
   export isWSL=1
 fi
 
@@ -192,3 +193,5 @@ case $- in
   *) return;;
 esac
 export PROFILE_LOADED=1
+}
+profile
