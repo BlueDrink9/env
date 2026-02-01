@@ -5,10 +5,14 @@
 
 # Checks if the first arg is a substring of the second.
 substrInStr() {
-  substring="$1"
-  string="$2"
-  case "${string?No string given}" in
-    (*${substring?No substring given}*)  return 0 ;;
+  if [ "$#" -ne 2 ]; then
+    printf 'Error: substrInStr requires exactly 2 arguments (got %s)\n' "$#" >&2
+    return 2
+  fi
+  _substring="$1"
+  _string="$2"
+  case "${_string}" in
+    (*"${_substring}"*)  return 0 ;;
     (*)                          return 1 ;;
   esac
 }
