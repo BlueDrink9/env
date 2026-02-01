@@ -113,7 +113,7 @@ export FCEDIT="$shelleditor"
 export GIT_EDITOR='myVim --cmd "let g:liteMode=1" +"set ft=gitcommit"'
 # May need to run `sudo update-alternatives --config editor` if this is not
 # working.
-export SUDO_EDITOR="$(which "$(myVim --print-editor-only)")"
+export SUDO_EDITOR="$(command -v "$(myVim --print-editor-only)")"
 
 fuzzyEdit(){
   fzf --multi --bind 'enter:become('"$editor"' {+})'
@@ -282,7 +282,7 @@ alias nix-shell='nix-shell --run $(basename $SHELL)'
 alias ns='nix-shell'
 alias np='nix-shell -p'
 alias npu='nix-shell -I nixpkgs=channel:nixos-unstable -p'
-alias sysmanr='sudo $(which nix) run --impure "github:numtide/system-manager" -- switch --flake $DOTFILES_DIR/nix/system-manager --nix-option pure-eval false --sudo'
+alias sysmanr='sudo $(command -v nix) run --impure "github:numtide/system-manager" -- switch --flake $DOTFILES_DIR/nix/system-manager --nix-option pure-eval false --sudo'
 alias sysmancheck='sudo journalctl -u system-manager.target; sudo journalctl -xe'
 alias sysman-clearout='sudo nix-env --profile /nix/var/nix/profiles/system-manager-profiles --delete-generations old'
 

@@ -8,7 +8,7 @@ loadProfile(){
   # ##*/ to get basename of process.
   if [ "$SHELL_PROGRAM" != "${SHELL##*/}" ]; then
     unset PROFILE_LOADED
-    export SHELL="$(which $SHELL_PROGRAM)"
+    export SHELL="$(command -v $SHELL_PROGRAM)"
   fi
   if [ -z "$PROFILE_LOADED" ]; then
     source "${SCRIPT_DIR}"/profile.*
