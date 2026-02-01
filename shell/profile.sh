@@ -23,7 +23,8 @@ else
   # SESSION_TYPE=remote/ssh;;
   # esac
   # if substrInStr "darwin1" "$OSTYPE"; then
-  parents="$(ps -o ppid,comm | grep $PPID)"
+  # parents="$(ps -o ppid,comm | grep $PPID)"
+  parents="$(ps -p $PPID -o comm=)"
   # elif command -v pstree > /dev/null 2>&1; then
   #   parents="$(pstree -p | grep $PPID)"
   # else
