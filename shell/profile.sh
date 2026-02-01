@@ -43,6 +43,15 @@ if substrInStr "kitty" "$TERM"; then
   COLORTERM="truecolor"
   USENF=${USENF:-1}
   TERM_PROGRAM="kitty"
+elif [ -n "$ITERM_SESSION_ID" ]; then
+  # Sets term prog, colourterm itself.
+  USENF=${USENF:-1}
+  # Default to dark, for dropdown (which is all I use iTerm for).
+  COLOURSCHEME=${COLOURSCHEME:-solarized_dark}
+elif substrInStr "Apple" "$TERM_PROGRAM"; then
+  COLORTERM=16
+elif substrInStr "screen" "$TERM"; then
+  unset COLORTERM
 elif substrInStr "Android" "$(uname -a)";  then
   # Termux
   export ISTERMUX=1
@@ -58,15 +67,6 @@ elif substrInStr "Android" "$(uname -a)";  then
     export SSH_ASKPASS=termux-ssh-askpass
     export SSH_ASKPASS_REQUIRE='force'
   fi
-elif [ -n "$ITERM_SESSION_ID" ]; then
-  # Sets term prog, colourterm itself.
-  USENF=${USENF:-1}
-  # Default to dark, for dropdown (which is all I use iTerm for).
-  COLOURSCHEME=${COLOURSCHEME:-solarized_dark}
-elif substrInStr "Apple" "$TERM_PROGRAM"; then
-  COLORTERM=16
-elif substrInStr "screen" "$TERM"; then
-  unset COLORTERM
 fi
 # {]} Terminal-specific settings
 
