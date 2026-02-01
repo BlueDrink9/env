@@ -8,6 +8,10 @@ extractPSCmdCol(){
 }
 
 getShellProgram(){
+  if [ -n "$SHELL" ]; then
+    echo "${SHELL##*/}"
+    return
+  fi
   # Get cmd of the current process, last row of ps, strip leading - (OSX), and trailing args
   ps -p $$ | extractPSCmdCol | tail -n1
   # Commented these bits because I don't seem to need them on linux -
