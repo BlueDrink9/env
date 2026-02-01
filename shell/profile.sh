@@ -180,11 +180,13 @@ case $- in
     unset TMUX_256_arg
     # {]} tmux
 
-    ensure_latest_shell
+    # Not needed if system shell is sufficiently up to date.
+    # But useful if homebrew shell version is desirable over system
+    # version.
+    # ensure_latest_shell
 
-    ssh_agent_start
-    # Do this manually instead, using keybinding.
-    # lastpass_ssh_key_add
+    # Replaced with ssh-ident (as ssh in shell/scripts)
+    # ssh_agent_start
 
     ;;
   *) return;;

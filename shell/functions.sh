@@ -351,13 +351,19 @@ ssh_agent_start(){
   # Queries the agent for available keys. If none can be found, it will try
   # to load the agent config from a file, and if still can't connect to the
   # agent, it will start a new one.
+  # https://rabexc.org/posts/pitfalls-of-ssh-agents
+  # Source - https://stackoverflow.com/a/45841963
+  # Posted by AndrewD, modified by community. See post 'Timeline' for change history
+  # Retrieved 2026-02-02, License - CC BY-SA 4.0
   ssh-add -l &>/dev/null
   if [ "$?" = 2 ]; then
+    # Load stored agent connection info.
     test -r ~/.ssh-agent && \
       eval "$(<~/.ssh-agent)" >/dev/null
 
     ssh-add -l &>/dev/null
     if [ "$?" = 2 ]; then
+      # Start agent and store agent connection info.
       (umask 066; ssh-agent > ~/.ssh-agent)
       eval "$(<~/.ssh-agent)" >/dev/null
       # ssh-add
