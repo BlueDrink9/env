@@ -2,34 +2,10 @@
 # For bootstrapping (shell init) functions shared between bash, zsh, other
 # posix shells.
 
-extractPSCmdCol(){
-  # The PS COMMAND col is sometimes abbreviated CMD
-  awk -v p='C(OM)?M(AN)?D' 'NR==1 {n=match($0, p); next} {print substr($0, n)}'
-}
-
-getShellProgram(){
-  if [ -n "$SHELL" ]; then
-    echo "${SHELL##*/}"
-    return
-  fi
-  # Get cmd of the current process, last row of ps, strip leading - (OSX), and trailing args
-  ps -p $$ | extractPSCmdCol | tail -n1
-  # Commented these bits because I don't seem to need them on linux -
-  # might on OSX?
-  # | {
-  #   read line
-  #   line=${line#-}     # Remove leading dash
-  #   set -- $line       # Split into words
-  #   echo "$1"          # Output the command part (first word)
-  # }
-}
-
 loadProfile(){
-  # When changing shells, force setup again.
+  # When changing shells, force setup again with preferred shell.
   SHELL_PROGRAM="$(getShellProgram)"
-  # $SHELL will retain the value of the login shell if starting a
-  # new shell as a subprocess, so we can't rely on just using
-  # $SHELL. ##*/ to get basename of process.
+  # ##*/ to get basename of process.
   if [ "$SHELL_PROGRAM" != "${SHELL##*/}" ]; then
     unset PROFILE_LOADED
     export SHELL="$(which $SHELL_PROGRAM)"
@@ -37,4 +13,24 @@ loadProfile(){
   if [ -z "$PROFILE_LOADED" ]; then
     source "${SCRIPT_DIR}"/profile.*
   fi
+}
+
+getShellProgram() {
+  # 1. Capture the data line (skipping the header)
+  # 'read' without -r is fine here because we want word splitting anyway
+  _line=$(ps -p $$ | {
+    # Header line
+    read -r _h
+    # Data line
+    read -r _l
+    printf '%s' "$_l";
+  })
+  # 2. Trim trailing whitespace first (safety check)
+  _line="${_line%"${_line##*[![:space:]]}"}"
+  # 3. Strip everything up to the last space
+  _cmd="${_line##* }"
+  # 4. Cleanup for shell-specific quirks
+  _cmd="${_cmd#-}"    # Remove leading dash (macOS/Login shells)
+  _cmd="${_cmd##*/}"  # Remove path (e.g., /bin/sh -> sh)
+  printf '%s\n' "$_cmd"
 }
