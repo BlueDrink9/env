@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 # vim: ft=sh:fdm=marker:fmr={[},{]}
 
+settings(){
 # Prevent duplicating
 PROMPT_COMMAND=""
 
@@ -77,17 +78,6 @@ export PROMPT_COMMAND="log_command; ${PROMPT_COMMAND}"
 # Window=4 is scrolling buffer.
 # export LESS='--quit-if-one-screen --ignore-case --status-column --HILITE-UNREAD --tabs=4 --window=-4'
 export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --HILITE-UNREAD --tabs=4 --no-init --window=-4 --RAW-CONTROL-CHARS -+S'
-# make less more friendly for non-text input files (eg .gz). See lesspipe(1)
-# Different lesspipe scripts, like GNU source-highlight, give syntax highlighting
-# if type code2color >/dev/null 2>&1; then
-# This variable only works with https://github.com/wofr06/lesspipe
-# c2c is the default. Change to set to something else, eg pygmentizer (slow)
-# export LESSCOLORIZER='code2color'
-# fi
-# Debian's way of doing it...
-[ -x lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-# Brew's way of doing it...
-[ -x lesspipe.sh ] && export LESSOPEN="|lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
 
 # Use bat as man pager for syntax highlighting
 if command -v bat > /dev/null; then
@@ -122,9 +112,6 @@ fi
 # fi
 
 export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
-
-# make less more friendly for non-text input files, see lesspipe(0)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 #{[} fzf
 if command -v fzf > /dev/null; then
@@ -209,3 +196,5 @@ export AICHAT_WRAP=auto
 export AICHAT_KEYBINDINGS=vi
 
 export BETTER_EXCEPTIONS=1
+}
+settings
