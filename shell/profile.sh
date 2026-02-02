@@ -145,6 +145,35 @@ fi
 # bspwm)
 echo "$PATH" >| "$XDG_CONFIG_HOME/.PATH"
 
+tmux_connect(){
+  # Sort sessions by last activity, to find the most recently attached
+  _tmux_sessions=$(\tmux ls -F \
+    "#{session_activity} #{?session_attached,attached,noclient} #{session_name}" \
+    2>/dev/null |
+    sort -Vr)
+  if [ -z "$_tmux_sessions" ] ; then
+    # No sessions, or all currently existing sessions already have clients, create new
+    $_execCmd tmux $TMUX_256_arg
+  else
+    # Reconnect to the most recent session with activity.
+    _most_recent_session="$({
+      printf '%s\n' "$_tmux_sessions" | while read -r _time _attached _name; do
+        # Skip if the session is currently attached, so viewports
+        # don't get changed by new clients.
+        [ "$_attached" = "attached" ] && continue
+        # the first one that isn't attached is our winner.
+        printf '%s' "$_name"
+        break
+      done
+    })"
+    if [ -z "$_most_recent_session" ]; then
+      # All sessions have clients already
+      $_execCmd tmux $TMUX_256_arg
+    else
+      $_execCmd tmux $TMUX_256_arg attach -t "$_most_recent_session"
+    fi
+  fi
+}
 
 # Check if interactive is part of shell options (running interactively)
 case $- in
@@ -152,14 +181,20 @@ case $- in
     #{[} tmux
     # Run tmux on ssh connect
     # Source functions before this, so tmux is defined to pull options.
-    if substrInStr "256" "$TERM" ; then
-      TMUX_256_arg="-2"
+    if \
+      [ "$COLORTERM" = "truecolor" ] || \
+      [ "$COLORTERM" = "256" ] || \
+      substrInStr "256" "$TERM" || \
+      ; then
+      # Force tmux to assume 256 support
+      TMUX_256_arg="-T 256"
     else
       TMUX_256_arg=""
     fi
     if [ -z "$TMUX_ALLOW_DETACH" ]; then
-      execCmd="exec"
-      # Else nothing
+      _execCmd="exec"
+    else
+      _execCmd=""
     fi
     if command -v 'tmux'>/dev/null && [ -z "$NOTMUX" ]; then
       # Check HAVE_LOADED_BASH so that if you detach and bash gets upgraded,
@@ -169,12 +204,8 @@ case $- in
         # PNAME="$(ps -o comm= $PPID)";
         # useTmuxFor="login sshd gnome-terminal init wslbridge-backe"
         # if contains "$useTmuxFor" "$PNAME"; then
-        if { [ -n "$SSHSESSION" ] || [ -z "$DISPLAY" ]; }; then
-          if tmux ls 2> /dev/null | grep -q -v attached; then
-            $execCmd tmux $TMUX_256_arg attach -t $(tmux ls 2> /dev/null | grep -v attached | head -1 | cut -d : -f 1)
-          else
-            $execCmd tmux $TMUX_256_arg
-          fi
+        if [ -n "$SSHSESSION" ] || [ -z "$DISPLAY" ]; then
+          tmux_connect
         fi
       fi
     fi
