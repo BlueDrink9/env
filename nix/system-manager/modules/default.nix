@@ -84,5 +84,33 @@
       '';
     };
 
+
+    systemd.services.clearShellCaches = lib.mkDefault {
+      # In my shell settings.sh I maintain a cache of shell plugin
+      # activation scripts, eg eval "$(direnv hook sh)"
+      # However, sometimes they use the path to the nix store, so the cache
+      # needs to be invalidated whenever the nix store might have updated.
+      description = "Clear shell init cache for all users";
+      enable = true;
+      # Start when sysmgr acviates
+      wantedBy = [ "system-manager.target" ];
+      after = [ "systemd-udevd.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+      script = ''
+    # Clear cache for all standard users
+    for user_home in /home/*; do
+      # Correct NixOS pattern
+      if [ -n "$DRY_RUN" ]; then
+        echo "Dry run: skipping cache deletion for $user_home"
+      else
+        rm -rf "$user_home/.cache/shell-init-cache"
+      fi
+    done
+      '';
+    };
+
   };
 }

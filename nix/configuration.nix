@@ -31,7 +31,6 @@ in { lib, config, pkgs, ... }:
 
   imports =
     [
-      # "/home/w/env/system/nix/packages.nix"
       # "${NIX_CONFIG_DIR}/packages.nix"
       ./packages/all.nix
       ./custom-udev-rules-service.nix
@@ -142,6 +141,7 @@ in { lib, config, pkgs, ... }:
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    # wireplumber.enable = true;
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
 
@@ -311,18 +311,26 @@ in { lib, config, pkgs, ... }:
   # Comes from https://github.com/MalteT/custom-udev-rules
   services.udev.customRules = [{
     name = "10-talon-tobii";
-    rules = ''
-    SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="0127", TAG+="uaccess"
-    SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="0118", TAG+="uaccess"
-    SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="0106", TAG+="uaccess"
-    SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="0128", TAG+="uaccess"
-    SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="010a", TAG+="uaccess"
-    SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="0102", TAG+="uaccess"
-    SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="0313", TAG+="uaccess"
-    SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="0318", TAG+="uaccess"
-    '';
+    rules = (builtins.readFile ./system-manager/modules/hardware/tobii5_udev.rules);
   }];
 
-  # environment.etc."udev/rules.d/10-talon.rules".text = ''
-  # '';
+  system.activationScripts.clearShellCaches = {
+    # In my shell settings.sh I maintain a cache of shell plugin
+    # activation scripts, eg eval "$(direnv hook sh)"
+    # However, sometimes they use the path to the nix store, so the cache
+    # needs to be invalidated whenever the nix store might have updated.
+    supportsDryRun = true;
+    text = ''
+      # Clear cache for all standard users
+      for user_home in /home/*; do
+        # Correct NixOS pattern
+        if [ -n "$DRY_RUN" ]; then
+          echo "Dry run: skipping cache deletion for $user_home"
+        else
+          rm -rf "$user_home/.cache/shell-init-cache"
+        fi
+      done
+    '';
+  };
+
 }

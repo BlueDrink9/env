@@ -233,6 +233,15 @@ in
   };
 
   home.file."${config.xdg.configHome}/wlxoverlay/conf.d/passthrough.yaml".text = ''
-    use_passthrough: false
+    use_passthrough: true
   '';
+
+    # In my shell settings.sh I maintain a cache of shell plugin
+    # activation scripts, eg eval "$(direnv hook sh)"
+    # However, sometimes they use the path to the nix store, so the cache
+    # needs to be invalidated whenever the nix store might have updated.
+    home.activation.cleanupShellCache = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      # Use -f to avoid errors if the directory doesn't exist yet
+      $DRY_RUN_CMD rm -rf "${config.xdg.cacheHome}/shell-init-cache"
+    '' ;
 }
