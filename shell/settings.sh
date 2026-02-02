@@ -113,10 +113,54 @@ fi
 
 export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
 
+# Cache pip wheels when built. Especially useful for tox, which installs pip
+# packages a lot.
+export STANDARD_CACHE_DIR="${XDG_CACHE_HOME:-${HOME}/.cache}/pip"
+export WHEELHOUSE="${STANDARD_CACHE_DIR}/wheelhouse"
+export PIP_FIND_LINKS="file://${WHEELHOUSE}"
+export PIP_WHEEL_DIR="${WHEELHOUSE}"
+[ -d "$WHEELHOUSE" ] || mkdir -p "$WHEELHOUSE"
+
+lazyload_setup(){
+  # Only run program callback on first use of that program.
+  # Optional todo: support keyboard bindings?
+  _binary="$1"
+  _callback="${2:-_lazy_load_${_binary}}"
+  set -x
+  if ! command -v "$_binary" >/dev/null 2>&1; then
+    return
+  fi
+  alias "$_binary"="unalias $_binary; $_callback; $_binary"
+}
+
+lazy_cache() {
+  # Accelerates shell startup by caching the output of initialization commands needing forks (like eval "$(direnv hook sh)") into static files
+  # usage: lazy_cache "binary_name" "init_command_string"
+  # Remove the cache folder if the underlying tool binary may have changed location
+  _tool="$1"
+  _gen_cmd="$2"
+  if ! command -v "$_tool" >/dev/null 2>&1; then
+    return
+  fi
+
+  _shell_name="${SHELL##*/}"
+  _cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/shell-init-cache/$_shell_name"
+  _cache_file="$_cache_dir/$_tool.sh"
+  # Fast-path: If the static cache exists, source it and exit immediately
+  if [ -f "$_cache_file" ]; then
+    . "$_cache_file"
+    return 0
+  fi
+  # Slow-path: Ensure the isolated directory exists
+  [ -d "$_cache_dir" ] || mkdir -p "$_cache_dir"
+  # Generate the hook code, save to disk, and source it for the current session
+  eval "$_gen_cmd" > "$_cache_file" && . "$_cache_file"
+}
+
 #{[} fzf
 if command -v fzf > /dev/null; then
-  # Set up fzf key bindings and fuzzy completion
-  . <(fzf --"$(basename $SHELL)") || echo "Error setting up fzf in settings"
+  # Set up fzf key bindings and fuzzy completion. Can this be lazier?
+  lazy_cache "fzf" "fzf --${SHELL##*/}" || echo "Error setting up fzf in settings"
   # Extra completions - commadn not found?
   # _fzf_setup_completion path ag git kubectl
   # _fzf_setup_completion dir tree
@@ -137,57 +181,35 @@ if command -v fzf > /dev/null; then
 fi
 #{]}
 
-# Colour all stderr output red.
-# This may be problematic in scripts, actually...
-# exec 9>&2
-# exec 8> >(
-#     while IFS='' read -r line || [ -n "$line" ]; do
-#        echo -e "\033[31m${line}\033[0m"
-#     done
-# )
-# function undirect(){ exec 2>&9; }
-# function redirect(){ exec 2>&8; }
-# trap "redirect;" DEBUG
-# PROMPT_COMMAND='undirect;'
-
 if command -v mcfly >/dev/null 2>&1; then
   export MCFLY_KEY_SCHEME=vim
   export MCFLY_FUZZY=3
   export MCFLY_INTERFACE_VIEW=BOTTOM
   export MCFLY_HISTORY_LIMIT=10000
-  eval "$(mcfly init $(basename $SHELL))"
+  export MCFLY_LIGHT=TRUE
+  if substrInStr "dark" "$COLOURSCHEME"; then
+    export MCFLY_LIGHT=FALSE
+  fi
+  lazy_cache "mcfly" "mcfly init ${SHELL##*/}"
 fi
 
 # ctrl+g by default, for command cheatshe
-if command -v navi >/dev/null 2>&1; then
-  eval "$(navi widget $(basename $SHELL))"
-fi
-# Cache pip wheels when built. Especially useful for tox, which installs pip
-# packages a lot.
-export STANDARD_CACHE_DIR="${XDG_CACHE_HOME:-${HOME}/.cache}/pip"
-export WHEELHOUSE="${STANDARD_CACHE_DIR}/wheelhouse"
-export PIP_FIND_LINKS="file://${WHEELHOUSE}"
-export PIP_WHEEL_DIR="${WHEELHOUSE}"
-mkdir -p "$WHEELHOUSE"
+lazy_cache "navi" "navi widget ${SHELL##*/}"
 
-if command -v direnv >/dev/null 2>&1; then
-  eval "$(direnv hook "$SHELL")" || echo "Error setting up direnv in settings.sh"
-fi
+lazy_cache "direnv" "direnv hook ${SHELL##*/}" || echo "Error setting up direnv in settings.sh"
 
 if command -v codium >/dev/null 2>&1; then
   alias code="codium"
 fi
 if [ "$TERM_PROGRAM" = "vscode" ]; then
-  if command -v code >/dev/null 2>&1; then
-    cache_path="$XDG_CACHE_HOME/vscode_${SHELL_PROGRAM}_integration_path.txt"
-    if [ ! -f "$cache_path" ]; then
-      sipath="$(code --locate-shell-integration-path "$SHELL_PROGRAM")" || \
-        echo "Error setting vscode integration in settings.sh"
-      echo "$sipath" >| "$cache_path"
-    else
-      sipath="$(cat "$cache_path")"
-    fi
-    . "$sipath" || echo "Error setting vscode integration in settings.sh" && rm -f "$cache_path"
+  # Note: Since code is often an alias to codium here, we resolve the path first
+  _code_bin=$(command -v codium || command -v code)
+  if [ -n "$_code_bin" ]; then
+    # We leverage lazy_cache to source the script returned by --locate-shell-integration-path
+    # Note: We wrap the locator in a subshell inside the lazy_cache call so the cache
+    # contains the actual script content, not the path string.
+    lazy_cache code "printf '. \"%s\"' \"\$($_code_bin --locate-shell-integration-path ${SHELL##*/})\"" || \
+      echo "Error setting vscode integration in settings.sh"
   fi
 fi
 
