@@ -5,6 +5,8 @@ instance=$3
 initial_consequences=$4
 title="$(xdotool getwindowname "$wid")"
 
+exec 2> ~/.logs/bspwm_external_rules.err
+
 case "$title" in
   # All the little zoom windows shouldn't be captured, but the main ones
   # should be.
@@ -28,7 +30,7 @@ case "$title" in
     # https://www.reddit.com/r/i3wm/comments/p0fdxa
     if ! command -v xprop > /dev/null || \
       ! command -v timeout > /dev/null; then
-        break
+      return
     fi
     # Monitor the Zoom window for title changes using xprop
     timeout 0.3s xprop -id "$wid" -spy _NET_WM_NAME | while read -r line; do
@@ -53,12 +55,19 @@ case "$(xprop -id $wid "_NET_WM_STATE")" in
     ;;
 esac
 
-
-# if [ "$instance" = fontforge ] ; then
-# 	title=$(xtitle "$wid")
-# 	case "$title" in
-# 		Layers|Tools|Warning)
-# 			echo "focus=off"
-# 			;;
-# 	esac
-# fi
+# Only run expensive xprop checks for plasmashell
+if [ "$class" = "plasmashell" ]; then
+    # fetch the window type from X properties
+    case "$(xprop -id "$wid" _NET_WM_WINDOW_TYPE)" in
+      *"_NET_WM_WINDOW_TYPE_DOCK"*)
+        # This is the taskbar/panel
+        # Force it to be normal layer and managed, so that monacle windows cover it.
+        echo "state=floating border=off manage=on sticky=on focus=off layer=normal follow=off private=on"
+        ;;
+      *)
+        # This is a popup (calendar, application launcher, volume)
+        # Keep it floating, but let it stay on the normal layer (on top of windows)
+        echo "state=floating border=off center=off"
+        ;;
+    esac
+fi
