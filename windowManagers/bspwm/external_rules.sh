@@ -7,6 +7,8 @@ title="$(xdotool getwindowname "$wid")"
 
 exec 2> ~/.logs/bspwm_external_rules.err
 
+# printf "wid=$1 class=$2 instance=$3 initial_consequences=$4 title='$title'" >&2
+
 case "$title" in
   # All the little zoom windows shouldn't be captured, but the main ones
   # should be.
@@ -61,7 +63,7 @@ if [ "$class" = "plasmashell" ]; then
     case "$(xprop -id "$wid" _NET_WM_WINDOW_TYPE)" in
       *"_NET_WM_WINDOW_TYPE_DOCK"*)
         # This is the taskbar/panel
-        # Force it to be normal layer and managed, so that monacle windows cover it.
+        # Force it to be normal layer and managed, so that monacle windows cover it rather than it persistently floating above.
         echo "state=floating border=off manage=on sticky=on focus=off layer=normal follow=off private=on"
         ;;
       *)
