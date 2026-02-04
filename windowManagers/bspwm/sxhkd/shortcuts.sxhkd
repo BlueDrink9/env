@@ -130,3 +130,7 @@ super + Return
 # Toggle Workrave
 super + e; w
   pgrep workrave && pkill workrave || workrave
+
+# Shortcut to log the focussed window details
+super + alt + shift + ctrl + question
+  xprop -id $(xdotool getactivewindow)
