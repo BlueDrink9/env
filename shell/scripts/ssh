@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # vim: tabstop=2 shiftwidth=2 expandtab
 """ssh-ident
 https://github.com/ccontavalli/ssh-ident
