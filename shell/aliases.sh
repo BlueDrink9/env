@@ -1,11 +1,11 @@
 # vim: foldmethod=marker foldmarker={[},{]}{[}{]}
 
+aliases(){
 # ctrl + L often does this anyway though...
 alias cl="clear"
 alias rl="rlwrap"
 alias untar="tar -zxvf"
-# $0 to reload shell
-alias envupd="git -C \"$DOTFILES_DIR\" pull && git -C \"$DOTFILES_DIR\" push && $0"
+alias envupd="git -C \"$DOTFILES_DIR\" pull && git -C \"$DOTFILES_DIR\" push && $SHELL"
 
 if [ -n "$ISTERMUX" ]; then
   alias su="tsu"
@@ -298,3 +298,5 @@ fi
 alias c="aichat"
 
 alias talon-update-plugins="$DOTFILES_DIR/talon/sync_plugins.sh"
+}
+aliases
