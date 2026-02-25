@@ -184,8 +184,8 @@ case $- in
     if \
       [ "$COLORTERM" = "truecolor" ] || \
       [ "$COLORTERM" = "256" ] || \
-      substrInStr "256" "$TERM" || \
-      ; then
+      substrInStr "256" "$TERM"
+      then
       # Force tmux to assume 256 support
       TMUX_256_arg="-T 256"
     else
