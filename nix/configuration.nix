@@ -208,7 +208,7 @@ in { lib, config, pkgs, ... }:
     # suspendKey="suspend-then-hibernate";
     suspendKey="suspend";
     powerKey="poweroff";
-    extraConfig = ''
+    settings.Login = ''
   #   IdleAction=suspend-then-hibernate
   #   IdleActionSec=10m
   #   HibernateDelaySec=65m
@@ -217,10 +217,6 @@ in { lib, config, pkgs, ... }:
   };
   systemd.sleep.extraConfig = ''
         HibernateDelaySec=60min
-  '';
-
-  systemd.extraConfig = ''
-    DefaultTimeoutStopSec=30s
   '';
 
   powerManagement.enable = true;
@@ -319,12 +315,12 @@ in { lib, config, pkgs, ... }:
     # activation scripts, eg eval "$(direnv hook sh)"
     # However, sometimes they use the path to the nix store, so the cache
     # needs to be invalidated whenever the nix store might have updated.
-    supportsDryRun = true;
+    supportsDryActivation = true;
     text = ''
       # Clear cache for all standard users
       for user_home in /home/*; do
         # Correct NixOS pattern
-        if [ -n "$DRY_RUN" ]; then
+        if [ "$NIXOS_ACTION" = 'dry-activate' ]; then
           echo "Dry run: skipping cache deletion for $user_home"
         else
           rm -rf "$user_home/.cache/shell-init-cache"
