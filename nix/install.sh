@@ -4,14 +4,7 @@ source "$DOTFILES_DIR/shell/script_functions.sh"
 source "$DOTFILES_DIR/shell/functions.sh"
 source "$DOTFILES_DIR/shell/XDG_setup.sh"
 source "$DOTFILES_DIR/nix/home/install.sh"
-
-AddNixImport(){
-    importFile=$1
-    baseFile=$2
-    lineNumber=$(awk '/imports =/ {print NR; exit}' "$baseFile")
-    lineNumber=$(($lineNumber+2))
-    SudoFunction prependTextIfAbsent "${importFile}" "${baseFile}" $lineNumber
-}
+source "$DOTFILES_DIR/nix/add_nix_import.sh"
 
 installID="Nixos"
 installTextFull=$(cat <<EOF

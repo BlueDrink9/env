@@ -3,7 +3,7 @@
 source "$DOTFILES_DIR/shell/script_functions.sh"
 source "$DOTFILES_DIR/shell/functions.sh"
 source "$DOTFILES_DIR/shell/XDG_setup.sh"
-source "$($SCRIPTDIR_CMD)/../install.sh"
+source "$DOTFILES_DIR/nix/add_nix_import.sh"
 # nix has a fit if tmp dir has a trailing slash
 export TMPDIR="${TMPDIR%/}"
 
