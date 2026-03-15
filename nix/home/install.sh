@@ -42,7 +42,7 @@ add_channels() {
   fi
 
   for channel in "${!channels[@]}"; do
-    if [ -d /etc/nixos & ! -f /etc/nixos/flake.nix]; then
+    if [ -d /etc/nixos ] && [ ! -f /etc/nixos/flake.nix ]; then
       sudo nix-channel --add "${channels[$channel]}" "$channel"
     fi
     nix-channel --add "${channels[$channel]}" "$channel"
