@@ -255,7 +255,7 @@ flakegit=""
 if [ -d /etc/nixos/.git ]; then
   flakegit="--commit-lock-file"
 fi
-alias nixup="sudo nix flake update /etc/nixos/ $flakegit"
+alias nixup="sudo nix flake update --flake /etc/nixos/ $flakegit"
 unset flakegit
 nom=""
 if command -v nom >/dev/null 2>&1; then
