@@ -114,8 +114,10 @@ readSettings() {
       # installers="$installers doEmacs"
     # fi
 
+    if substrInStr "Android" "$(uname -a)"; then
+      installers="$installers doPackages"
     # Install brew if OS X or no sudo. Otherwise use normal packages.
-    if ! substrInStr "nixos" "$(uname -a)" && \
+    elif ! substrInStr "nixos" "$(uname -a)" && \
       ([ "$ALL" = 1 ] || \
       askQuestionYN "$installStr packages (May require sudo and take a while)?"); then
       if substrInStr "darwin" "$OSTYPE" || ! sudo -v ; then
@@ -183,9 +185,6 @@ case "$arg1" in
   *)
     ;;
 esac
-if [[ $arg1 =~ ^--?[aA][lL]{2}?$ ]]; then
-  ALL=1
-fi
 
 if [ "$OSTYPE" = "linux-gnu" ]; then
   printErr "[$Green Linux ${NC}]"
@@ -193,6 +192,8 @@ elif substrInStr "darwin" "$OSTYPE"; then
   printErr "[$Green OSX ${NC}]"
 elif [ "$OSTYPE" = "msys" ]; then
   printErr "[$Green Win (git bash) ${NC}]"
+elif substrInStr "Android" "$(uname -a)"; then
+  printErr "[$Green Android (termux) ${NC}]"
 else
   printErr "OS not detected..."
   if askQuestionYN "Continue anyway?" ; then
