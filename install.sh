@@ -110,14 +110,17 @@ readSettings() {
       installers="$installers doSSH"
     fi
 
+    if [ "$OSTYPE" = "linux-android" ]; then
+      installers="$installers doPackages"
+      return
+    fi
+
     # if [ "$ALL" = 1 ] || askQuestionYN "$set_up emacs?" ; then
       # installers="$installers doEmacs"
     # fi
 
-    if substrInStr "Android" "$(uname -a)"; then
-      installers="$installers doPackages"
     # Install brew if OS X or no sudo. Otherwise use normal packages.
-    elif ! substrInStr "nixos" "$(uname -a)" && \
+    if ! substrInStr "nixos" "$(uname -a)" && \
       ([ "$ALL" = 1 ] || \
       askQuestionYN "$installStr packages (May require sudo and take a while)?"); then
       if substrInStr "darwin" "$OSTYPE" || ! sudo -v ; then
@@ -126,17 +129,17 @@ readSettings() {
       installers="$installers doPackages"
     fi
 
-    if ! substrInStr "Android" "$(uname -a)" && [ "$OSTYPE" != "msys" ]; then
-          if ([ "$ALL" = 1 ] || askQuestionYN "Will this be a GUI system?"); then
-            GUISYSTEM=1
-            installers="$installers doFonts"
-            if [ "$OSTYPE" = "linux-gnu" ]; then
-              installers="$installers doX11"
-            elif substrInStr "darwin" "$OSTYPE"; then
-              installers="$installers doOSX"
-            fi
-            installers="$installers doWM"
-          fi
+    if [ "$OSTYPE" != "msys" ]; then
+      if ([ "$ALL" = 1 ] || askQuestionYN "Will this be a GUI system?"); then
+        GUISYSTEM=1
+        installers="$installers doFonts"
+        if [ "$OSTYPE" = "linux-gnu" ]; then
+          installers="$installers doX11"
+        elif substrInStr "darwin" "$OSTYPE"; then
+          installers="$installers doOSX"
+        fi
+        installers="$installers doWM"
+      fi
     fi
 
     if [ "$ALL" = 1 ] || askQuestionYN "Install home-manager?" ; then
@@ -192,7 +195,8 @@ elif substrInStr "darwin" "$OSTYPE"; then
   printErr "[$Green OSX ${NC}]"
 elif [ "$OSTYPE" = "msys" ]; then
   printErr "[$Green Win (git bash) ${NC}]"
-elif substrInStr "Android" "$(uname -a)"; then
+# efif substrInStr "Android" "$(uname -a)"; then
+elif [ "$OSTYPE" = "linux-android" ]; then
   printErr "[$Green Android (termux) ${NC}]"
 else
   printErr "OS not detected..."
