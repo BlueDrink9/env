@@ -21,7 +21,9 @@ installZSHPlugins(){
   local DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zinit"
   mkdir -p "$DIR"
   git clone --depth 1 https://github.com/zdharma-continuum/zinit "$DIR"/bin
-  zsh -i -c exit
+  if command -v zsh > /dev/null 2>&1; then
+    zsh -i -c exit
+  fi
 }
 
 eval "$(cat <<END

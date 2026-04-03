@@ -4,6 +4,7 @@ source "$DOTFILES_DIR/shell/script_functions.sh"
 source "$DOTFILES_DIR/shell/functions.sh"
 source "$DOTFILES_DIR/shell/XDG_setup.sh"
 source "$DOTFILES_DIR/nix/add_nix_import.sh"
+source "$DOTFILES_DIR/nix/nix_install.sh"
 # nix has a fit if tmp dir has a trailing slash
 export TMPDIR="${TMPDIR%/}"
 
@@ -12,15 +13,6 @@ if [ -d /etc/nixos ]; then
   version="$(nixos-version | cut -d. -f1,2)"
 fi
 # Non-NixOS: use latest channels
-
-nix_install(){
-  echo "Installing nix with Determinate installer (needs sudo)."
-  cd "$(mktemp -d)" || exit
-  curl -sL -o nix-installer https://github.com/DeterminateSystems/nix-installer/releases/latest/download/nix-installer-x86_64-linux
-  chmod +x nix-installer
-  sudo ./nix-installer install --no-confirm
-  . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-}
 
 add_channels() {
   echo "Setting nix channels."
@@ -129,11 +121,6 @@ doHomeManagerPackages(){
 doHomeManager(){
   # nix_install moves to a tmpdir for some reason, so storing this variable
   HM_DOTS="$($SCRIPTDIR_CMD)"
-  if ! command -v nix > /dev/null 2>&1; then
-    pushd "." > /dev/null
-    nix_install
-    popd > /dev/null
-  fi
   add_channels
   home_manager_install
   nix-shell -p home-manager --command "home-manager switch"

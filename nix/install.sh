@@ -5,6 +5,7 @@ source "$DOTFILES_DIR/shell/functions.sh"
 source "$DOTFILES_DIR/shell/XDG_setup.sh"
 source "$DOTFILES_DIR/nix/home/install.sh"
 source "$DOTFILES_DIR/nix/add_nix_import.sh"
+source "$DOTFILES_DIR/nix/nix_install.sh"
 
 installID="Nixos"
 installTextFull=$(cat <<EOF
@@ -82,6 +83,7 @@ EOF
 baseRC="/etc/system-manager.nix"
 
 doSystemManager(){
+  nix_install
   # Mainly use via flake/alias, but this is needed for selinux OSes.
   if command -v setenforce; then
     pushd "." > /dev/null
