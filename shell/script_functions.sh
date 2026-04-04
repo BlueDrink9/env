@@ -135,12 +135,41 @@ addTextIfAbsent() {
   default="invalid text or filename"
   text="${1:-$default}"
   file="${2:-$default}"
-  echo_cmd="${3:-$echo}"
-  shift 3
+  echo_cmd="${3:-echo}"
+  if [ $# -gt 2 ]; then
+    shift 3
+  else
+    shift $#
+  fi
   mkdir -p "$(dirname "$file")"
   if [ ! -f "$file" ]; then touch "$file"; fi;
   # Check if text exists in file, otherwise append.
   grep -q -F "$text" "$file" > /dev/null 2>&1 || $echo_cmd "$@" "$text" >> "$file"
+}
+
+testAddTextIfAbsent() {
+  testFile="$(mktemp)"
+  addTextIfAbsent "line1" "$testFile"
+  expected="line1\n"
+  if [ ! "$(cat "$testFile")" = "$expected" ]; then
+    printErr "failed"
+  fi
+  rm "$testFile"
+  expected="$(cat << EOF
+dofile("line1
+line2")
+EOF
+  )"
+  addTextIfAbsent "$(printf 'dofile("%s\n%s")' "line1" "line2")" "$testFile"
+  if [ ! "$(cat "$testFile")" = "$expected" ]; then
+    printErr "failed multiline"
+  fi
+  rm "$testFile"
+  addTextIfAbsent "$(printf 'dofile("%s\n%s")' "line1" "line2")" "$testFile"
+  if [ ! "$(cat "$testFile")" = "$expected" ]; then
+    printErr "failed multiline"
+  fi
+  rm "$testFile"
 }
 
 prependTextIfAbsent() {
