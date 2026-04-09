@@ -261,7 +261,7 @@ in { lib, config, pkgs, ... }:
   # alias for emergency situations when I need to rebuild from root
   # Otherwise a more sophisticated version of this will exist in shell aliases
   environment.shellAliases = {
-    renix="sudo nixos-rebuild switch --impure";
+    nor="nixos-rebuild switch --impure --flake /etc/nixos/#$HOSTNAME";
   };
 
   services = {

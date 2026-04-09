@@ -241,7 +241,7 @@ alias snatch='git clone --depth=1'
 alias git-update-all='for f in *; do git -C $f pull; done'
 alias syncthing-remote='"ssh" -L 8385:localhost:8384'
 
-function rgedit() {
+rgedit() {
     myVim $(rg --files-with-matches "$@")
 }
 alias rge="rgedit"
@@ -251,20 +251,35 @@ alias bm="cd \"\$(bmm)\""
 alias del="gio trash"
 alias clip='xclip -selection clipboard'
 
-flakegit=""
-if [ -d /etc/nixos/.git ]; then
-  flakegit="--commit-lock-file"
-fi
-alias nixup="sudo nix flake update --flake /etc/nixos/ $flakegit"
-unset flakegit
 nom=""
 if command -v nom >/dev/null 2>&1; then
   nom="--log-format internal-json -v |& nom --json"
 fi
-alias renix="sudo -v && sudo DOTFILES_DIR="$DOTFILES_DIR" nixos-rebuild switch --impure $nom"
-alias homer="(command -v home-manager > /dev/null && home-manager switch $nom) || nix-shell '<home-manager>' -A install"
-alias homeu="nix-channel --update"
+nixos_rebuild(){
+  sub="${1:-test}"
+  shift 1
+  sudo -v && sudo DOTFILES_DIR="$DOTFILES_DIR" nixos-rebuild "$sub" --impure "$@"
+}
+alias nor="nixos_rebuild test $nom"
+alias nors="nixos_rebuild switch $nom"
+alias norb="nixos_rebuild boot $nom"
+
+alias hm="(command -v home-manager > /dev/null && home-manager switch $nom) || nix-shell '<home-manager>' -A install"
+alias hmr="nix-channel --update"
+
+alias sysmanr='sudo $(command -v nix) run --impure "github:numtide/system-manager" -- switch --flake $DOTFILES_DIR/nix/system-manager --nix-option pure-eval false --sudo $nom'
+alias sysmancheck='sudo journalctl -u system-manager.target; sudo journalctl -xe'
+alias sysman-clearout='sudo nix-env --profile /nix/var/nix/profiles/system-manager-profiles --delete-generations old'
+
 unset nom
+
+flakegit=""
+if [ -d /etc/nixos/.git ]; then
+  flakegit="--commit-lock-file"
+fi
+alias norr="sudo nix flake update --flake /etc/nixos/ $flakegit"
+unset flakegit
+
 git_fake_add() {
   git add --intent-to-add "$@"
   git update-index --skip-worktree --assume-unchanged "$@"
@@ -282,9 +297,6 @@ alias nix-shell='nix-shell --run $(basename $SHELL)'
 alias ns='nix-shell'
 alias np='nix-shell -p'
 alias npu='nix-shell -I nixpkgs=channel:nixos-unstable -p'
-alias sysmanr='sudo $(command -v nix) run --impure "github:numtide/system-manager" -- switch --flake $DOTFILES_DIR/nix/system-manager --nix-option pure-eval false --sudo'
-alias sysmancheck='sudo journalctl -u system-manager.target; sudo journalctl -xe'
-alias sysman-clearout='sudo nix-env --profile /nix/var/nix/profiles/system-manager-profiles --delete-generations old'
 
 alias dva="direnv allow"
 function nsc(){
@@ -292,6 +304,8 @@ function nsc(){
   echo "use flake" >> .envrc
   direnv allow
 }
+
+
 if command -v radian >/dev/null 2>&1; then
   alias r="radian"
 fi
