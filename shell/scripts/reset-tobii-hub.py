@@ -109,7 +109,7 @@ def extract_hub_device_number(hub_line: str) -> str | None:
 def find_parent_hubs(
     eyechip_device: dict[str, str], tree_output: str, lsusb_output: str
 ) -> list[dict[str, str | int]]:
-    """Find all parent hubs of the eyechip device."""
+    """Find all direct parent hubs of the eyechip device."""
     hub_hierarchy: list[dict[str, str | int]] = []
 
     # Combine tree lines with their ID information
@@ -122,7 +122,7 @@ def find_parent_hubs(
         print("ERROR: Eyechip device not found in USB tree")
         return hub_hierarchy
 
-    eyechip_line_index, eyechip_indent = eyechip_location
+    eyechip_line_index, current_indent = eyechip_location
 
     # Work backwards from eyechip to find parent hubs
     for i in range(eyechip_line_index - 1, -1, -1):
@@ -135,7 +135,7 @@ def find_parent_hubs(
         line_indent = get_indent_level(line)
 
         # Only consider lines with less indentation (higher in hierarchy) that are hubs
-        if line_indent < eyechip_indent and "Class=Hub" in line:
+        if line_indent < current_indent and "Class=Hub" in line:
             print(f"Found parent in USB tree at line {i}, indent level: {line_indent}")
             device_num = extract_hub_device_number(line)
             if device_num:
@@ -144,6 +144,10 @@ def find_parent_hubs(
                     hub_info["indent_level"] = line_indent
                     hub_hierarchy.append(hub_info)
                     print(f"Found parent hub: {hub_info['name']} (indent: {line_indent})")
+            current_indent = line_indent
+            # Stop traversing once we hit the root hub (0 indent)
+            if current_indent == 0:
+                break
 
     return hub_hierarchy
 
@@ -179,13 +183,9 @@ def select_hub_to_reset(
     for i, hub in enumerate(hub_hierarchy):
         print(f"  Level {i}: {hub['name']}")
 
-    if len(hub_hierarchy) == 1:
-        print("Using only available parent hub")
-        return hub_hierarchy[0]
-    elif len(hub_hierarchy) >= 2:
-        # Skip immediate parent, use next one up
-        selected = hub_hierarchy[-2]
-        print(f"Skipping immediate parent, using: {selected['name']}")
+    if len(hub_hierarchy) >= 1:
+        selected = hub_hierarchy[-1]
+        print(f"Using immediate parent hub: {selected['name']}")
         return selected
 
     return None
