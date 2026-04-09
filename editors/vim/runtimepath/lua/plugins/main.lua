@@ -130,7 +130,7 @@ return {
 		"https://github.com/chomosuke/typst-preview.nvim",
 		ft = "typst",
 		opts=function(_, opts)
-			require('typst-preview').dependencies_bin = 'tinymist'	
+			require('typst-preview').dependencies_bin = 'tinymist'
 		end
 	},
 
@@ -485,14 +485,14 @@ return {
 
 	{
 		"hands-free-vim/cursorless.nvim",
+		enabled = (vim.env.DISPLAY or false) and (vim.g.loaded_node_provider ~= nil and vim.g.loaded_node_provider > 0 and vim.fn.has("node") == 1),
 		config = true,
-		enabled = vim.g.loaded_node_provider ~= nil and vim.g.loaded_node_provider > 0
 	},
 	{
 		"hands-free-vim/talon.nvim",
-		config = true,
 		-- Breaks because of window title changes? Screws up colours.
-		enabled = vim.fn.getenv("TERM") ~= "linux",
+		enabled = vim.env.DISPLAY or false,
+		config = true,
 	},
 
 }
