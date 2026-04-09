@@ -4,13 +4,61 @@
 import subprocess
 import re
 import sys
+from dataclasses import dataclass
+from typing import Optional
+
+
+@dataclass
+class UsbDevice:
+    """Represents a structured USB device with parent/child hierarchy."""
+    bus: str
+    device_num: str
+    vendor_id: str
+    product_id: str
+    name: str
+    is_hub: bool
+    indent_level: int
+    bus_device: str
+    full_line: str
+    parent: Optional['UsbDevice'] = None
+
+
+def find_eyechip_and_reset_hub() -> bool:
+    """
+    Find eyechip/Tobii device and reset a suitable parent hub.
+    Returns True on success, False on failure.
+    """
+    try:
+        tree_output, lsusb_output = run_lsusb_commands()
+    except RuntimeError as e:
+        print(f"ERROR: {e}")
+        return False
+
+    # Centralized parsing
+    devices = parse_usb_devices(tree_output, lsusb_output)
+
+    eyechip_device = find_eyechip_device(devices)
+    if not eyechip_device:
+        print("ERROR: No eyechip/Tobii device found in USB devices")
+        return False
+
+    hub_hierarchy = find_parent_hubs(eyechip_device)
+
+    # Pass both the hierarchy and the full device list for fallback checking
+    selected_hub = select_hub_to_reset(hub_hierarchy, devices)
+
+    if not selected_hub:
+        print("ERROR: Could not determine suitable parent hub or root hub to reset")
+        return False
+
+    return reset_usb_hub(selected_hub)
 
 
 def run_lsusb_commands() -> tuple[str, str]:
     """Get USB device tree and listing output."""
     try:
         tree_result = subprocess.run(
-            ["lsusb", "-t", "-v"], capture_output=True, text=True, check=True
+            ["lsusb", "-t"], capture_output=True, text=True, check=True
         )
         lsusb_result = subprocess.run(
             ["lsusb"], capture_output=True, text=True, check=True
@@ -20,185 +68,88 @@ def run_lsusb_commands() -> tuple[str, str]:
         raise RuntimeError(f"Failed to run lsusb: {e}")
 
 
-def combine_tree_id_lines(tree_output: str) -> str:
+def parse_usb_devices(tree_output: str, lsusb_output: str) -> list[UsbDevice]:
     """
-    Combine USB tree lines with their ID information.
-    Lines starting with 'ID' are combined with the previous line.
-    Normally, 'lsusb -t -v' outputs lines like:
-        |__ Port 002: Dev 005, If 0, Class=Video, Driver=uvcvideo, 480M
-        ID 046d:0843 Logitech, Inc. Webcam C930e
-    We need to treat these as a single line, especially for indentation purposes
+    Parse both lsusb outputs into a structured list of UsbDevice objects,
+    establishing parent/child hierarchy automatically.
     """
-    lines = tree_output.split("\n")
-    combined_lines = []
-
-    for i, line in enumerate(lines):
-        if line.strip().startswith("ID ") and i > 0 and combined_lines:
-            # Combine this ID line with the previous line
-            combined_lines[-1] += " " + line.strip()
-        else:
-            combined_lines.append(line)
-
-    return "\n".join(combined_lines)
+    lsusb_lookup = parse_lsusb_lookup(lsusb_output)
+    return build_device_tree(tree_output, lsusb_lookup)
 
 
-def find_eyechip_device(lsusb_output: str) -> dict[str, str] | None:
-    """Find eyechip/Tobii device in lsusb output."""
-    for line in lsusb_output.split("\n"):
-        if "Tobii" in line or "eyechip" in line.lower():
-            match = re.search(
-                r"Bus (\d+) Device (\d+): ID ([0-9a-f]{4}):([0-9a-f]{4})", line
-            )
-            if match:
-                device_info = {
-                    "bus": match.group(1),
-                    "device_id": match.group(2),
-                    "vendor": match.group(3),
-                    "product": match.group(4),
-                    "full_line": line.strip(),
-                }
-                print(f"Found eyechip device: {line.strip()}")
-                return device_info
+def find_eyechip_device(devices: list[UsbDevice]) -> UsbDevice | None:
+    """Find eyechip/Tobii device in parsed objects."""
+    for device in devices:
+        if "tobii" in device.name.lower() or "eyechip" in device.name.lower():
+            print(f"Found eyechip device: {device.full_line}")
+            print(f"Found eyechip in USB tree at indent level: {device.indent_level}")
+            return device
     return None
 
 
-def find_hub_info(hub_dev_num: str, lsusb_output: str) -> dict[str, str | int] | None:
-    """Find hub information from lsusb output by device number."""
-    for line in lsusb_output.split("\n"):
-        if f"Device {hub_dev_num}:" in line:
-            match = re.search(
-                r"Bus (\d+) Device (\d+): ID ([0-9a-f]{4}):([0-9a-f]{4}) (.+)", line
-            )
-            if match:
-                bus_num, dev_num, vendor_id, product_id, name = match.groups()
-                return {
-                    "device_num": hub_dev_num,
-                    "bus_device": f"{bus_num}/{dev_num}",
-                    "vendor_product": f"{vendor_id}:{product_id}",
-                    "name": name,
-                    "full_line": line.strip(),
-                    "indent_level": 0,  # Will be set later
-                }
-    return None
+def find_parent_hubs(eyechip_device: UsbDevice) -> list[UsbDevice]:
+    """Find all direct parent hubs of the eyechip device by traversing the object tree."""
+    hub_hierarchy: list[UsbDevice] = []
 
+    current_parent = eyechip_device.parent
 
-def get_indent_level(line: str) -> int:
-    """Get the indentation level of a line (number of leading spaces)."""
-    return len(line) - len(line.lstrip())
+    # Traverse straight up the established parent chain
+    while current_parent:
+        if current_parent.is_hub:
+            print(f"Found parent hub: {current_parent.name} (indent: {current_parent.indent_level})")
+            hub_hierarchy.append(current_parent)
 
-
-def find_eyechip_in_tree(eyechip_device: dict[str, str], tree_lines: list[str]) -> tuple[int, int] | None:
-    """Find the eyechip device in USB tree and return (line_index, indent_level)."""
-    device_pattern = f"ID {eyechip_device['vendor']}:{eyechip_device['product']}"
-
-    for i, line in enumerate(tree_lines):
-        if device_pattern in line and ("Tobii" in line or "eyechip" in line.lower()):
-            indent_level = get_indent_level(line)
-            print(f"Found eyechip in USB tree at line {i}, indent level: {indent_level}")
-            print(line)
-            return i, indent_level
-    return None
-
-
-def extract_hub_device_number(hub_line: str) -> str | None:
-    """Extract device number from a hub line in USB tree."""
-    hub_match = re.search(r"Dev (\d+)", hub_line)
-    return hub_match.group(1) if hub_match else None
-
-
-def find_parent_hubs(
-    eyechip_device: dict[str, str], tree_output: str, lsusb_output: str
-) -> list[dict[str, str | int]]:
-    """Find all direct parent hubs of the eyechip device."""
-    hub_hierarchy: list[dict[str, str | int]] = []
-
-    # Combine tree lines with their ID information
-    combined_tree_output = combine_tree_id_lines(tree_output)
-    tree_lines = combined_tree_output.split("\n")
-
-    # Find the eyechip device in the USB tree
-    eyechip_location = find_eyechip_in_tree(eyechip_device, tree_lines)
-    if not eyechip_location:
-        print("ERROR: Eyechip device not found in USB tree")
-        return hub_hierarchy
-
-    eyechip_line_index, current_indent = eyechip_location
-
-    # Work backwards from eyechip to find parent hubs
-    for i in range(eyechip_line_index - 1, -1, -1):
-        line = tree_lines[i]
-
-        # Skip empty lines
-        if not line.strip():
-            continue
-
-        line_indent = get_indent_level(line)
-
-        # Only consider lines with less indentation (higher in hierarchy) that are hubs
-        if line_indent < current_indent and "Class=Hub" in line:
-            print(f"Found parent in USB tree at line {i}, indent level: {line_indent}")
-            device_num = extract_hub_device_number(line)
-            if device_num:
-                hub_info = find_hub_info(device_num, lsusb_output)
-                if hub_info:
-                    hub_info["indent_level"] = line_indent
-                    hub_hierarchy.append(hub_info)
-                    print(f"Found parent hub: {hub_info['name']} (indent: {line_indent})")
-            current_indent = line_indent
-            # Stop traversing once we hit the root hub (0 indent)
-            if current_indent == 0:
-                break
+        current_parent = current_parent.parent
 
     return hub_hierarchy
 
 
-def find_root_hub(tree_output: str, lsusb_output: str) -> dict[str, str | int] | None:
+def find_root_hub(devices: list[UsbDevice]) -> UsbDevice | None:
     """Find the root hub as a fallback option."""
-    combined_tree_output = combine_tree_id_lines(tree_output)
-    tree_lines = combined_tree_output.split("\n")
-
-    for line in tree_lines:
-        if "Class=root_hub" in line:
-            device_num = extract_hub_device_number(line)
-            if device_num:
-                hub_info = find_hub_info(device_num, lsusb_output)
-                if hub_info:
-                    hub_info["indent_level"] = get_indent_level(line)
-                    print(f"Found root hub: {hub_info['name']}")
-                    return hub_info
+    for device in devices:
+        if device.is_hub and device.indent_level == 0:
+            print(f"Found root hub: {device.name}")
+            return device
     return None
 
 
-def select_hub_to_reset(
-    hub_hierarchy: list[dict[str, str | int]],
-) -> dict[str, str | int] | None:
-    """Choose the most appropriate hub to reset."""
+def select_hub_to_reset(hub_hierarchy: list[UsbDevice], devices: list[UsbDevice]) -> UsbDevice | None:
+    """Choose the most appropriate hub to reset, falling back to the root hub if needed."""
     if not hub_hierarchy:
-        return None
+        print("No parent hubs found for eyechip device, trying to find root hub as fallback...")
+        root_hub = find_root_hub(devices)
+        if root_hub:
+            print("Using root hub as fallback")
+        return root_hub
 
     # Sort by indent level (lower indent = higher in hierarchy)
-    hub_hierarchy.sort(key=lambda x: x["indent_level"])
+    hub_hierarchy.sort(key=lambda x: x.indent_level)
 
     print(f"Found {len(hub_hierarchy)} parent hubs in hierarchy:")
     for i, hub in enumerate(hub_hierarchy):
-        print(f"  Level {i}: {hub['name']}")
+        print(f"  Level {i}: {hub.name}")
 
     if len(hub_hierarchy) >= 1:
         selected = hub_hierarchy[-1]
-        print(f"Using immediate parent hub: {selected['name']}")
+        print(f"Using hub: {selected.name}")
         return selected
 
-    return None
+    # Final safety net (though practically unreachable if len >= 1 is checked above)
+    print("Could not select a hub from hierarchy, trying root hub as fallback...")
+    root_hub = find_root_hub(devices)
+    if root_hub:
+        print("Using root hub as fallback")
+    return root_hub
 
 
-def reset_usb_hub(hub: dict[str, str | int]) -> bool:
+def reset_usb_hub(hub: UsbDevice) -> bool:
     """Reset the specified USB hub."""
-    print(f"Resetting hub: {hub['name']}")
-    print(f"Bus/Device: {hub['bus_device']}")
+    print(f"Resetting hub: {hub.name}")
+    print(f"Bus/Device: {hub.bus_device}")
 
     try:
         result = subprocess.run(
-            ["usbreset", str(hub["bus_device"])],
+            ["usbreset", hub.bus_device],
             capture_output=True,
             text=True,
             check=True,
@@ -214,46 +165,155 @@ def reset_usb_hub(hub: dict[str, str | int]) -> bool:
         return False
 
 
-def find_eyechip_and_reset_hub() -> bool:
+# ==========================================
+# MID-LEVEL PARSING
+# ==========================================
+
+def parse_lsusb_lookup(lsusb_output: str) -> dict[str, dict[str, str]]:
+    """Parse standard lsusb into a lookup dictionary keyed by 'bus/device'."""
+    lsusb_lookup = {}
+    for line in lsusb_output.split("\n"):
+        match = re.search(r"Bus (\d+) Device (\d+): ID ([0-9a-f]{4}):([0-9a-f]{4}) (.+)", line)
+        if match:
+            bus, dev, vid, pid, name = match.groups()
+            lsusb_lookup[f"{bus}/{dev}"] = {
+                "vendor_id": vid,
+                "product_id": pid,
+                "name": name.strip(),
+                "full_line": line.strip()
+            }
+    return lsusb_lookup
+
+
+def parse_usb_devices(tree_output: str, lsusb_output: str) -> list[UsbDevice]:
     """
-    Find eyechip/Tobii device and reset a suitable parent hub.
-    Returns True on success, False on failure.
+    Parse both lsusb outputs into a structured list of UsbDevice objects,
+    establishing parent/child hierarchy automatically.
     """
-    try:
-        tree_output, lsusb_output = run_lsusb_commands()
-    except RuntimeError as e:
-        print(f"ERROR: {e}")
-        return False
+    lsusb_lookup = parse_lsusb_lookup(lsusb_output)
 
-    eyechip_device = find_eyechip_device(lsusb_output)
-    if not eyechip_device:
-        print("ERROR: No eyechip/Tobii device found in USB devices")
-        return False
+    # Pass 1: Extract pure structural sequence from the tree text
+    flat_tree_sequence = parse_flat_tree_sequence(tree_output)
 
-    hub_hierarchy = find_parent_hubs(eyechip_device, tree_output, lsusb_output)
-    if not hub_hierarchy:
-        print("No parent hubs found for eyechip device, trying to find root hub as fallback...")
-        root_hub = find_root_hub(tree_output, lsusb_output)
-        if root_hub:
-            print("Using root hub as fallback")
-            return reset_usb_hub(root_hub)
-        else:
-            print("ERROR: No parent hubs or root hub found")
-            return False
+    # Pass 2: Assemble objects by merging the sequence with the lookup details
+    return build_device_tree(flat_tree_sequence, lsusb_lookup)
 
-    selected_hub = select_hub_to_reset(hub_hierarchy)
-    if not selected_hub:
-        print("Could not determine suitable parent hub, trying root hub as fallback...")
-        root_hub = find_root_hub(tree_output, lsusb_output)
-        if root_hub:
-            print("Using root hub as fallback")
-            return reset_usb_hub(root_hub)
-        else:
-            print("ERROR: Could not determine suitable hub to reset")
-            return False
 
-    return reset_usb_hub(selected_hub)
+def parse_flat_tree_sequence(tree_output: str) -> list[dict]:
+    """Pass 1: Pure string parsing. Converts tree text into a structural sequence."""
+    # The order of the flat tree sequence is important. Must be a list, not a dictionary.
+    flat_data = []
+    current_bus = ""
 
+    for line in tree_output.split("\n"):
+        if not line.strip():
+            continue
+
+        current_bus = extract_bus_number(line) or current_bus
+        dev_num = extract_device_number(line)
+
+        if dev_num:
+            flat_data.append({
+                "bus": current_bus,
+                "dev_num": dev_num,
+                "indent_level": get_indent_level(line),
+                "is_hub": "Class=Hub" in line or "Class=root_hub" in line,
+                "line": line.strip()
+            })
+
+    return flat_data
+
+
+def build_device_tree(flat_tree_sequence: list[dict], lsusb_lookup: dict[str, dict[str, str]]) -> list[UsbDevice]:
+    """Pass 2: Pure logic. Assembles UsbDevice objects and assigns parents."""
+    devices: list[UsbDevice] = []
+    parent_stack: list[tuple[int, UsbDevice]] = []
+    created_devices: set[str] = set()
+
+    for data in flat_tree_sequence:
+        bus_device_key = f"{data['bus']}/{data['dev_num']}"
+
+        # Interface deduplication: We only create the object if we haven't seen the physical device yet, otherwise devices with multiple interfaces in the lsusb output will be created multiple times.
+        # Crucially, we skip stack modifications for duplicates, so the tree hierarchy stays intact!
+        if bus_device_key in created_devices:
+            continue
+
+        created_devices.add(bus_device_key)
+        details = lsusb_lookup.get(bus_device_key, {})
+
+        device = UsbDevice(
+            bus=data["bus"],
+            device_num=data["dev_num"],
+            vendor_id=details.get("vendor_id", ""),
+            product_id=details.get("product_id", ""),
+            name=details.get("name", "Unknown Device"),
+            is_hub=data["is_hub"],
+            indent_level=data["indent_level"],
+            bus_device=bus_device_key,
+            full_line=details.get("full_line", data["line"])
+        )
+
+        assign_parent(device, parent_stack)
+        devices.append(device)
+        parent_stack.append((device.indent_level, device))
+
+    return devices
+
+
+# ==========================================
+# LOW-LEVEL PARSING UTILITIES
+# ==========================================
+
+def extract_bus_number(line: str) -> str | None:
+    """Extract bus number from a tree line."""
+    match = re.search(r"Bus (\d+)", line)
+    return match.group(1) if match else None
+
+
+def extract_device_number(line: str) -> str | None:
+    """Extract device number from a tree line."""
+    match = re.search(r"Dev (\d+)", line)
+    return match.group(1) if match else None
+
+
+def get_indent_level(line: str) -> int:
+    """Get the indentation level of a line (number of leading spaces)."""
+    return len(line) - len(line.lstrip())
+
+
+def create_usb_device(line: str, bus: str, dev_num: str, lsusb_lookup: dict) -> UsbDevice:
+    """Construct a UsbDevice object from parsed line data and lookups."""
+    indent_level = get_indent_level(line)
+    is_hub = "Class=Hub" in line or "Class=root_hub" in line
+    bus_device_key = f"{bus}/{dev_num}"
+
+    details = lsusb_lookup.get(bus_device_key, {})
+
+    return UsbDevice(
+        bus=bus,
+        device_num=dev_num,
+        vendor_id=details.get("vendor_id", ""),
+        product_id=details.get("product_id", ""),
+        name=details.get("name", "Unknown Device"),
+        is_hub=is_hub,
+        indent_level=indent_level,
+        bus_device=bus_device_key,
+        full_line=details.get("full_line", line.strip())
+    )
+
+
+def assign_parent(device: UsbDevice, parent_stack: list[tuple[int, UsbDevice]]) -> None:
+    """Assigns the parent of a device based on current stack indentation depth."""
+    while parent_stack and parent_stack[-1][0] >= device.indent_level:
+        parent_stack.pop()
+
+    if parent_stack:
+        device.parent = parent_stack[-1][1]
+
+
+# ==========================================
+# ENTRY POINT
+# ==========================================
 
 if __name__ == "__main__":
     success = find_eyechip_and_reset_hub()
