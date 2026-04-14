@@ -1,9 +1,9 @@
 { config, pkgs, ... }:
-let
-  unstableTarball =
-    fetchTarball
-      https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz;
-in
+# let
+#   unstableTarball =
+#     fetchTarball
+#       https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz;
+# in
 {
 
   nixpkgs.config = {
@@ -11,7 +11,8 @@ in
     # Create an alias for the unstable channel
     packageOverrides = pkgs: {
       # pass the nixpkgs config to the unstable alias to ensure `allowUnfree = true;` is propagated:
-      unstable = import unstableTarball {
+      unstable = import <unstable> {
+        # import unstableTarball {
         # config = config.nixpkgs.config;
         config.allowUnfree = true;
       };
@@ -60,6 +61,9 @@ in
       ncdu
       nix-search-cli
       nix-output-monitor
+
+      jujutsu
+      lazyjj
     ];
 
 }

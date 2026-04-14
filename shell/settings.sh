@@ -196,6 +196,8 @@ fi
 # ctrl+g by default, for command cheatshe
 lazy_cache "navi" "navi widget ${SHELL##*/}"
 
+lazy_cache "jj" "source <(jj util completion ${SHELL##*/})"
+
 lazy_cache "direnv" "direnv hook ${SHELL##*/}" || echo "Error setting up direnv in settings.sh"
 
 if command -v codium >/dev/null 2>&1; then
