@@ -3,6 +3,11 @@
 {
   imports = [ ./firefox.nix ];
 
+  services.xserver.displayManager.startx.enable = true;
+  services.xserver.displayManager.startx.generateScript = true;
+
+  services.espanso.enable = true;
+
   environment.systemPackages = with pkgs; [
     bspwm
     sxhkd
@@ -25,8 +30,11 @@
 
     keepassxc
     joplin
+
     # Need Hunspell for libreoffice spellcheck, used for emacs too
-    libreoffice-qt-fresh hunspell hunspellDicts.en_AU
+    libreoffice-qt-fresh
+    hunspell
+    hunspellDicts.en_AU
 
     xorg.xev
     alsa-utils

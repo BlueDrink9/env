@@ -25,7 +25,7 @@
       in [
       R
       air-formatter
-      python312Packages.radian
+      radian
       (writeScriptBin "rixi" ''
       # This will create two files: .Rprofile and default.nix
       ${R}/bin/R -e '
