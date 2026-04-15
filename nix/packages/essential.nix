@@ -1,23 +1,6 @@
-{ config, pkgs, ... }:
-# let
-#   unstableTarball =
-#     fetchTarball
-#       https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz;
-# in
-{
+{ config, pkgs, lib, inputs ? {}, ... }:
 
-  nixpkgs.config = {
-    allowUnfree = true;
-    # Create an alias for the unstable channel
-    packageOverrides = pkgs: {
-      # pass the nixpkgs config to the unstable alias to ensure `allowUnfree = true;` is propagated:
-      unstable = import <unstable> {
-        # import unstableTarball {
-        # config = config.nixpkgs.config;
-        config.allowUnfree = true;
-      };
-    };
-  };
+{
 
   programs.zsh.enable = true;
   programs.zsh.enableBashCompletion = true;

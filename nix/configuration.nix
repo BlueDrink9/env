@@ -35,9 +35,8 @@ in { lib, config, pkgs, ... }:
       ./packages/all.nix
       ./custom-udev-rules-service.nix
       ./root_scripts.nix
+      ./nixpkgs_config.nix
     ];
-
-  nixpkgs.config.allowUnfree = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

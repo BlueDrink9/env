@@ -3,8 +3,6 @@ let
   homeManagerUrl = {
     url = "https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz";
     sha256 = "sha256:0xpgskfs8q9jdd0hc8298h1qg2w6i36g0w1mmvyl169lmr8v3zqi";
-    # url = "https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz";
-    # sha256 = "sha256:1mwq9mzyw1al03z4q2ifbp6d0f0sx9f128xxazwrm62z0rcgv4na";
   };
 
   can_import = builtins.tryEval(import <home-manager/nixos>);

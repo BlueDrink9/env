@@ -27,6 +27,7 @@ let
     $pip install pynvim # neovim
     $pip install opencv-python-headless # flex-grid
     $pip install numpy # flex-grid
+    $pip install gensim nltk # homophoner
   '';
 
   home.activation."talon user repos" = ''

@@ -3,32 +3,16 @@ let
   nixDir = "${dotfilesDir}/system/nix";
 in { config, pkgs, lib, ... }:
 
-let
-  unstable = import <nixpkgs-unstable> {};
-  unstableTarball =
-    fetchTarball
-      https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz;
-in
-
   {
   imports = [
     ./plasma.nix
     ./talon.nix
+    ../nixpkgs_config.nix
     # ./mime_apps.nix
   ];
 
 
-  nixpkgs.config = {
-    allowUnfree = true;
-    # Create an alias for the unstable channel
-    packageOverrides = pkgs: {
-      # pass the nixpkgs config to the unstable alias to ensure `allowUnfree = true;` is propagated:
-      unstable = import unstableTarball {
-        config = config.nixpkgs.config;
-      };
-    };
-  };
-
+  # Purely for configuration version, not HM version.
   home.stateVersion = "24.05";
 
   home.packages = with pkgs; [
@@ -243,5 +227,5 @@ in
     home.activation.cleanupShellCache = lib.hm.dag.entryAfter ["writeBoundary"] ''
       # Use -f to avoid errors if the directory doesn't exist yet
       $DRY_RUN_CMD rm -rf "${config.xdg.cacheHome}/shell-init-cache"
-    '' ;
+  '' ;
 }
