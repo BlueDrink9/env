@@ -199,24 +199,18 @@ in { lib, config, pkgs, ... }:
   ACTION=="add", SUBSYSTEM=="pci", DRIVER=="pcieport", ATTR{power/wakeup}="disabled"
   '';
 
-  services.logind = {
-    lidSwitch="suspend";
-    # lidSwitch="suspend-then-hibernate";
-    lidSwitchDocked="ignore";
-    lidSwitchExternalPower="ignore";
-    # suspendKey="suspend-then-hibernate";
-    suspendKey="suspend";
-    powerKey="poweroff";
-    settings.Login = ''
-  #   IdleAction=suspend-then-hibernate
-  #   IdleActionSec=10m
-  #   HibernateDelaySec=65m
-    '';
-
+  services.logind.settings.Login = {
+    # HandleLidSwitch="suspend";
+    HandleLidSwitch="suspend-then-hibernate suspend hibernate";
+    HandleLidSwitchDocked="ignore";
+    HandleLidSwitchExternalPower="ignore";
+    # HandleSuspendKey="suspend";
+    HandleSuspendKey="suspend-then-hibernate suspend hibernate";
+    HandlePowerKey="poweroff";
+    IdleAction="suspend-then-hibernate suspend hibernate";
+    IdleActionSec=60*10;
+    HibernateDelaySec=60*65;
   };
-  systemd.sleep.extraConfig = ''
-        HibernateDelaySec=60min
-  '';
 
   powerManagement.enable = true;
   services.thermald.enable = true;
