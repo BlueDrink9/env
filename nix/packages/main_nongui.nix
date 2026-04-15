@@ -5,7 +5,6 @@
   programs.ydotool.enable = true;
   programs.kdeconnect.enable = true;
   programs.system-config-printer.enable = true;
-  programs.adb.enable = true;
   programs.appimage = {
     enable = true;
     binfmt = true;
@@ -88,11 +87,12 @@
     caligula  # dd/disk burning
     # ollama
     # dvc  # data vcs
+    android-tools
 
     # Dev/LSP
     lazygit
     shellcheck
-    unstable.pyrefly
+    pyrefly
     nil # Nix lsp
 
     uv # pip/venv alternative

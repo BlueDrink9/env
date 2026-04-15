@@ -18,7 +18,6 @@ in
     etesync-dav
     pandoc
     typst
-    copyq
     unstable.brave
     unstable.pcloud
     megatools
