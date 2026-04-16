@@ -213,10 +213,22 @@ in { lib, config, pkgs, ... }:
   };
 
   powerManagement.enable = true;
-  services.thermald.enable = true;
-  services.auto-cpufreq.enable = true;
+  services.thermald.enable = false;
+  # services.auto-cpufreq.enable = true;
+  # powerManagement.powertop.enable = true;
   # Conflicts with auto-cpufreq; install just the package for kde etc to use it.
   services.power-profiles-daemon.enable = false;
+
+  services.tuned = {
+    ppdSupport = true;
+    settings = {
+      daemon = true;
+      dynamic_tuning = true;
+    };
+    ppdSettings = {
+      main.default = "balanced";
+    };
+  };
 
   # Trim SSDs
   services.fstrim.enable = true;
@@ -274,10 +286,10 @@ in { lib, config, pkgs, ... }:
   };
 
   # Bind backlight keys. May not be right keys for other than asus k501L
-  programs.light = {
-    enable = true;
-    brightnessKeys.enable = true;
-  };
+  # programs.light = {
+  #   enable = true;
+  #   brightnessKeys.enable = true;
+  # };
 
    # services.actkbd = {
    #   enable = true;
