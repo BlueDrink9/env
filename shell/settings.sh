@@ -112,6 +112,7 @@ fi
 # fi
 
 export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
+export SSH_ASKPASS_REQUIRE=prefer
 
 # Cache pip wheels when built. Especially useful for tox, which installs pip
 # packages a lot.
