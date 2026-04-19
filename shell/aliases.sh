@@ -251,27 +251,34 @@ alias bm="cd \"\$(bmm)\""
 alias del="gio trash"
 alias clip='xclip -selection clipboard'
 
-nom=""
-if command -v nom >/dev/null 2>&1; then
-  nom="--log-format internal-json -v |& nom --json"
-fi
-nixos_rebuild(){
+with_nom() {
+  # "$@" contains whatever command and arguments are passed to the function
+  if command -v nom >/dev/null 2>&1; then
+    "$@" --log-format internal-json -v 2>&1 | nom --json
+  else
+    "$@"
+  fi
+}
+
+nixos_rebuild() {
   sub="${1:-test}"
   shift 1
-  sudo -v && sudo DOTFILES_DIR="$DOTFILES_DIR" nixos-rebuild "$sub" --impure "$@"
+  sudo -v && with_nom sudo DOTFILES_DIR="$DOTFILES_DIR" nixos-rebuild "$sub" --impure "$@"
 }
-alias nor="nixos_rebuild test $nom"
-alias nors="nixos_rebuild switch $nom"
-alias norb="nixos_rebuild boot $nom"
 
-alias hm="(command -v home-manager > /dev/null && home-manager switch $nom) || nix-shell '<home-manager>' -A install"
+alias nor="nixos_rebuild test"
+alias nors="nixos_rebuild switch"
+alias norb="nixos_rebuild boot"
+
+# home-manager
+alias hm="(command -v home-manager > /dev/null && with_nom home-manager switch) || nix-shell '<home-manager>' -A install"
 alias hmr="nix-channel --update"
 
-alias sysmanr='sudo $(command -v nix) run --impure "github:numtide/system-manager" -- switch --flake $DOTFILES_DIR/nix/system-manager --nix-option pure-eval false --sudo $nom'
+# system-manager
+alias sysmanr='with_nom sudo $(command -v nix) run --impure "github:numtide/system-manager" -- switch --flake "$DOTFILES_DIR/nix/system-manager" --nix-option pure-eval false --sudo'
+
 alias sysmancheck='sudo journalctl -u system-manager.target; sudo journalctl -xe'
 alias sysman-clearout='sudo nix-env --profile /nix/var/nix/profiles/system-manager-profiles --delete-generations old'
-
-unset nom
 
 flakegit=""
 if [ -d /etc/nixos/.git ]; then
