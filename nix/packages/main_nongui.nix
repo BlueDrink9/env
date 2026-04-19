@@ -36,6 +36,17 @@
 
   services.blueman.enable = true;
   services.mullvad-vpn.enable = true;
+  system.activationScripts.noMullvadLockdown = {
+    supportsDryActivation = true;
+    text = ''
+        if [ "$NIXOS_ACTION" = 'dry-activate' ]; then
+          echo "Dry run: mullvad lockdown-mode off"
+        else
+          ${pkgs.mullvad}/bin/mullvad lockdown-mode set off
+        fi
+    '';
+  };
+
 
   environment.systemPackages = with pkgs; [
     # Nix bash can cause issues with non-nix packages on non-nixOS
