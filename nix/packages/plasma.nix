@@ -3,7 +3,7 @@
 {
 
   # Backport fix for bspwm to versions before 6.6. Not necessary from 26.05 onwards.
-  nixpkgs.overlays = if (lib.trivial.version == "25.05") then [
+  nixpkgs.overlays = if (config.system.nixos.release == "25.11") then [
     (final: prev: {
       kdePackages = prev.kdePackages.overrideScope (kfinal: kprev: {
         plasma-workspace = kprev.plasma-workspace.overrideAttrs (oldAttrs: {
