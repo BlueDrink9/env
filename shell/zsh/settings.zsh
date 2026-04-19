@@ -6,20 +6,19 @@ precmd_functions+=(_prompt_command)
 DISABLE_AUTO_TITLE="true"
 # Put info in window title. Curr dir for taskbar quicklook, then full info.
 _set_window_title(){
-  if [ -n "$TMUX" ]; then
-    local escape_start='\e]2;'
-    local escape_end='\a'
-  else
-    local escape_start='\033]'
-    local escape_end='\007'
-  fi
-  # number of bg jobs, or "" if 0.
-  JOBS=$(if [ -n "$(jobs -p)" ]; then echo "%j"; fi)
-  USER_CONTEXT=
+  # Use the standard Xterm title sequence
+  # Inside tmux, this updates the #T variable
+  local escape_start='\e]2;'
+  local escape_end='\a'
+  local JOBS=""
+  [[ -n "$(jobs -p)" ]] && JOBS=" %j"
+  local USER_CONTEXT=""
   if [ -n "$SSHSESSION" ]; then
     USER_CONTEXT=" %n@%M"
   fi
-  print -Pn "${escape_start}${WINDOW_CUSTOM_NAME}[%1~]${USER_CONTEXT} (%~) $JOBS - $SHELL_PROGRAM${escape_end}"
+  local title_content="${WINDOW_CUSTOM_NAME}[%1~]${USER_CONTEXT} (%~) ${JOBS} - ${SHELL_PROGRAM}"
+  # print -Pn interprets % codes and escape sequences
+  print -Pn "${escape_start}${title_content}${escape_end}"
 }
 precmd_functions+=(_set_window_title)
 
