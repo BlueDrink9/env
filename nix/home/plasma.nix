@@ -37,18 +37,18 @@ in
       AC = {
         powerButtonAction = "shutDown";
         whenLaptopLidClosed = "doNothing";
-        # autoSuspend = {
-        #   action = "sleep";
-        #   idleTimeout = 120*60;
-        # };
+        autoSuspend = {
+          action = "sleep";
+          idleTimeout = 120*60;
+        };
         dimDisplay = {
           enable = true;
           idleTimeout = 2*60;
         };
-        # turnOffDisplay = {
-        #   idleTimeout = 5*60;
-        #   idleTimeoutWhenLocked = "immediately";
-        # };
+        turnOffDisplay = {
+          idleTimeout = 5*60;
+          idleTimeoutWhenLocked = "immediately";
+        };
       };
       battery = {
         inhibitLidActionWhenExternalMonitorConnected = true;
@@ -57,14 +57,18 @@ in
         # whenSleepingEnter = "standbyThenHibernate";
         whenSleepingEnter = "standby";
         displayBrightness = 70;
+        autoSuspend = {
+          action = "sleep";
+          idleTimeout = 15*60;
+        };
         dimDisplay = {
           enable = true;
           idleTimeout = 1*60;
         };
-        # turnOffDisplay = {
-        #   idleTimeout = 3*60;
-        #   idleTimeoutWhenLocked = "immediately";
-        # };
+        turnOffDisplay = {
+          idleTimeout = 3*60;
+          idleTimeoutWhenLocked = "immediately";
+        };
       };
       lowBattery = {
         whenLaptopLidClosed = "hibernate";
