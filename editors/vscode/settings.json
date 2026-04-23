@@ -505,7 +505,6 @@
     "OcpCadViewer.view.grid_XY": true,
     "OcpCadViewer.advanced.autostart": false,
     "git.openRepositoryInParentFolders": "always",
-    "window.title": "${activeEditorShort}${separator}${rootName}${separator}${profileName}${separator}focus:[${focusedView}]",
     "r.plot.useHttpgd": true,
     "editor.lineHeight": 1.3,
     "cursorless.hatVerticalOffset": -10,
@@ -557,11 +556,8 @@
     "git.untrackedChanges": "separate",
     "editor.minimap.enabled": false,
     "terminal.integrated.fontSize": 13,
-    "github.copilot.enable": {
-        "quarto": true
-    },
-    // Special window title for terminal so that talon recognises it.
-    "window.title": "${activeEditorShort}${separator}${rootName}${separator}${profileName}${separator}focus:[${focusedView}]",
+    // Special window title for terminal so that talon recognises it. Lang too.
+    "window.title": "${activeEditorShort}${separator}${rootName}${separator}${profileName}${separator}focus:[${focusedView}]${separator}lang:[${activeEditorLanguageId}]",
     "cursorless.scopeVisualizer.colors.dark": {
         "domain": {
             "background": "#00e1ff18",
@@ -663,4 +659,19 @@
     },
     "editor.hover.delay": 700,
     "editor.hover.hidingDelay": 700,
+    "git.blame.editorDecoration.enabled": false,
+    "workbench.editor.limit.value": 20,
+    "workbench.editor.limit.enabled": true,
+    "chat.disableAIFeatures": false,
+    "github.copilot.renameSuggestions.triggerAutomatically": false,
+    "github.copilot.nextEditSuggestions.enabled": true,
+
+    "github.copilot.enable": {
+        "*": false
+    },
+    "editor.inlineSuggest.enabled": false,
+    "chat.viewSessions.orientation": "stacked",
+    "roo-cline.debug": false,
+    "diffEditor.renderSideBySide": true,
+    "workbench.editor.showTabIndex": true,
 }
