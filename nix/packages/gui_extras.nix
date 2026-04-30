@@ -37,6 +37,11 @@ in
     inkscape
     btop
 
+    # talon-gaze-ocr makes use of this, and I'm sure other uses are likely to crop up.
+    tesseract
+    # Image processing/analysis lib
+    leptonica
+
     # xremap-flake.nixosModules.default
   ];
 
