@@ -1,0 +1,31 @@
+super + Return
+  echo "actions.speech.toggle()" | ~/.talon/bin/repl || talon
+
+super + apostrophe; f
+  echo "actions.mode.toggle("face")" | ~/.talon/bin/repl
+
+super + apostrophe; c
+  echo "actions.tracking.calibrate()" | ~/.talon/bin/repl
+
+super + apostrophe; r
+  echo "actions.user.reset_tobii()" | ~/.talon/bin/repl
+
+super + apostrophe; t
+  echo "actions.tracking.zoom_cancel(); \
+  actions.tracking.control_zoom_toggle(False); \
+  actions.tracking.control_toggle()" | ~/.talon/bin/repl
+
+# Disable head/mouse tracking and enable jumping
+super + apostrophe; j
+  echo "actions.tracking.zoom_cancel(); \
+  actions.tracking.control_toggle(True); \
+  actions.tracking.control_zoom_toggle(False); \
+  actions.tracking.control_gaze_toggle(False); \
+  actions.tracking.control_head_toggle(False); \
+  actions.tracking.control_mouse_jump_toggle(True)" | ~/.talon/bin/repl
+
+# Revert the previous block's settings changes
+super + apostrophe; shift + j
+  echo "actions.tracking.control_gaze_toggle(True); \
+  actions.tracking.control_head_toggle(True); \
+  actions.tracking.control_mouse_jump_toggle(False)" | ~/.talon/bin/repl
