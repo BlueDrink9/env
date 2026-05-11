@@ -71,15 +71,15 @@ choosePkgManager(){
     else
         packcmd="${packcmd}"
     fi
-    if [ -n "$PACK_NOCONFIRM" ]; then
-        packcmd="${packcmd} ${noconfirmcmd}"
+    if [ -z "$PACK_NOCONFIRM" ]; then
+        noconfirmcmd=""
     fi
 
   case "$cmd" in
     install | refresh | upgrade | search | remove | info)
       cmd="${cmd}cmd"
       # Expand cmd to get what the actual [$installcmd] is.
-      $(echo "$packcmd") "$(var_expand ${cmd})" $args
+      $(echo "$packcmd") "$(var_expand ${cmd})" ${noconfirmcmd} $args
       ;;
     *)
       $(echo "$packcmd") "$cmd" $args
