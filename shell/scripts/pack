@@ -57,7 +57,7 @@ choosePkgManager(){
             ;;
         pkg )
             # Probably termux, may be freeBSD.
-            noconfirmcmd=""
+            noconfirmcmd="-y"
             true
             ;;
     esac

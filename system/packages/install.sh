@@ -56,7 +56,7 @@ installPackages(){
     elif [[ "$(uname -a)" =~ "Android" ]]; then
         printLine "Installing termux packages..."
         installList "$($SCRIPTDIR_CMD)/termux/list"
-        termux-setup-api
+        # termux-setup-api
     elif [[ "$OSTYPE" =~ "linux" && -z "${isWSL}" ]]; then
         # Linux GUI stuff.
         printLine "Installing linux-specific packages..."
