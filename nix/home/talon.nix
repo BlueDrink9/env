@@ -19,6 +19,8 @@ let
     #   neovim
     #   # gitman
     # ]))
+    # For gaze-ocr
+    tesseract
   ];
   fonts.fontconfig.enable = true;
 
@@ -28,6 +30,7 @@ let
     $pip install opencv-python-headless # flex-grid
     $pip install numpy # flex-grid
     $pip install gensim nltk # homophoner
+    $pip install 'screen-ocr[tesseract]' # gaze-ocr
   '';
 
   home.activation."talon user repos" = ''
