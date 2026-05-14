@@ -181,14 +181,16 @@ if [ "$TERM_PROGRAM" = "vscode" ]; then
 fi
 
 _lazy_load_conda(){
-  if [ -f "$CONDA_DIR" ]; then
-    eval "$(cat $CONDA_DIR/bin/conda "shell.${SHELL##*/}" hook)"
-    conda "$@"
-  else
+  if [ -z "$CONDA_DIR" ]; then
     echo "No CONDA_DIR found in environment"
+  elif [ -d "$CONDA_DIR" ]; then
+    eval "$("$CONDA_DIR/bin/conda" "shell.${SHELL##*/}" hook)"
+    "$CONDA_DIR/bin/conda" "$@"
+  else
+    echo "CONDA_DIR '$CONDA_DIR' is not a directory"
   fi
 }
-lazyload_setup conda _lazy_load_conda
+lazyload_setup true _lazy_load_conda conda
 
 
 export AICHAT_LIGHT_THEME=true
