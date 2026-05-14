@@ -204,15 +204,14 @@ if command -v yazi >/dev/null 2>&1; then
   }
 fi
 
+# lazy-load thefuck because it's super slow to eval
 if command -v thefuck >/dev/null 2>&1; then
-  # lazy-load thefuck because it's super slow to eval
-  if command -v thefuck >/dev/null 2>&1; then
-    fuck() {
-      eval -- "$(thefuck -a)"
-      fuck "$@"
-    }
-  fi
+  fuck() {
+    eval -- "$(thefuck -a)"
+    fuck "$@"
+  }
 fi
+
 if command -v pay-respects >/dev/null 2>&1; then
   shell="$(basename "$SHELL")"
   eval "$(pay-respects "$shell" --alias)"
