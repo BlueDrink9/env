@@ -1,5 +1,47 @@
 # vim: foldmethod=marker foldmarker={[},{]}{[}{]}
 
+lazyload_setup(){
+  # Only run program callback on first use of that program.
+  # Optional todo: support keyboard bindings?
+  # 1: binary name to check and re-alias
+  # 2: name of a callback func that initialises the correct shell env, then calls the new function with args. If name is not provided, defaults to _lazy_load_${binary name}
+  # 3: If the desired alias is not the same as the binary name, put desired alias here.
+  # E.g. usage:
+  # _lazy_load_pay_respects() {eval "$(pay-respects "${SHELL##*/}" --alias)"; f "$@" }
+  # lazyload_setup pay-respects _lazy_load_pay_respects f
+  _binary="$1"
+  _callback="${2:-_lazy_load_${_binary}}"
+  alias_name="${3:-$_binary}"
+  if ! command -v "$_binary" >/dev/null 2>&1; then
+    return
+  fi
+  alias "$alias_name"="unalias $alias_name; $_callback; $_binary"
+}
+
+lazy_cache() {
+  # Accelerates shell startup by caching the output of initialization commands needing forks (like eval "$(direnv hook sh)") into static files
+  # usage: lazy_cache "binary_name" "init_command_string"
+  # Remove the cache folder if the underlying tool binary may have changed location
+  _tool="$1"
+  _gen_cmd="$2"
+  if ! command -v "$_tool" >/dev/null 2>&1; then
+    return
+  fi
+
+  _shell_name="${SHELL##*/}"
+  _cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/shell-init-cache/$_shell_name"
+  _cache_file="$_cache_dir/$_tool.sh"
+  # Fast-path: If the static cache exists, source it and exit immediately
+  if [ -f "$_cache_file" ]; then
+    . "$_cache_file"
+    return 0
+  fi
+  # Slow-path: Ensure the isolated directory exists
+  [ -d "$_cache_dir" ] || mkdir -p "$_cache_dir"
+  # Generate the hook code, save to disk, and source it for the current session
+  eval "$_gen_cmd" > "$_cache_file" && . "$_cache_file"
+}
+
 aliases(){
 # ctrl + L often does this anyway though...
 alias cl="clear"
@@ -180,17 +222,14 @@ z_fzf() {
   __zoxide_z "$(zoxide query --interactive)"
 }
 zoxide_init(){
-  shell="$(basename "$SHELL")"
-  if [ "$shell" = "sh" ]; then
+  _shell="${SHELL##*/}"
+  if [ "$_shell" = "sh" ]; then
     eval "$(zoxide init posix --hook prompt)"
   else
-    eval "$(zoxide init $shell)"
+    eval "$(zoxide init $_shell)"
   fi
-  z_fzf "$@"
-  unalias z 2> /dev/null
-  alias z="z_fzf"
 }
-alias z="zoxide_init"
+lazyload_setup z_fzf zoxide_init z
 
 # use y to change directories with yazi
 if command -v yazi >/dev/null 2>&1; then
@@ -212,9 +251,17 @@ if command -v thefuck >/dev/null 2>&1; then
   }
 fi
 
+# Not working; strange error with nested eval syntax?
+# _lazy_load_pay_respects() {
+#   set -x;
+#   eval "$(pay-respects "${SHELL##*/}" --alias)";
+#   f "$@";
+#   set +x
+# }
+# lazyload_setup pay-respects _lazy_load_pay_respects f
+# This is fast enough anyway IG
 if command -v pay-respects >/dev/null 2>&1; then
-  shell="$(basename "$SHELL")"
-  eval "$(pay-respects "$shell" --alias)"
+  eval "$(pay-respects "${SHELL##*/}" --alias)";
 fi
 
 
