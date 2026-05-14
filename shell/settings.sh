@@ -122,42 +122,6 @@ export PIP_FIND_LINKS="file://${WHEELHOUSE}"
 export PIP_WHEEL_DIR="${WHEELHOUSE}"
 [ -d "$WHEELHOUSE" ] || mkdir -p "$WHEELHOUSE"
 
-lazyload_setup(){
-  # Only run program callback on first use of that program.
-  # Optional todo: support keyboard bindings?
-  _binary="$1"
-  _callback="${2:-_lazy_load_${_binary}}"
-  set -x
-  if ! command -v "$_binary" >/dev/null 2>&1; then
-    return
-  fi
-  alias "$_binary"="unalias $_binary; $_callback; $_binary"
-}
-
-lazy_cache() {
-  # Accelerates shell startup by caching the output of initialization commands needing forks (like eval "$(direnv hook sh)") into static files
-  # usage: lazy_cache "binary_name" "init_command_string"
-  # Remove the cache folder if the underlying tool binary may have changed location
-  _tool="$1"
-  _gen_cmd="$2"
-  if ! command -v "$_tool" >/dev/null 2>&1; then
-    return
-  fi
-
-  _shell_name="${SHELL##*/}"
-  _cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/shell-init-cache/$_shell_name"
-  _cache_file="$_cache_dir/$_tool.sh"
-  # Fast-path: If the static cache exists, source it and exit immediately
-  if [ -f "$_cache_file" ]; then
-    . "$_cache_file"
-    return 0
-  fi
-  # Slow-path: Ensure the isolated directory exists
-  [ -d "$_cache_dir" ] || mkdir -p "$_cache_dir"
-  # Generate the hook code, save to disk, and source it for the current session
-  eval "$_gen_cmd" > "$_cache_file" && . "$_cache_file"
-}
-
 #{[} fzf
 if command -v fzf > /dev/null; then
   # Set up fzf key bindings and fuzzy completion. Can this be lazier?
@@ -215,6 +179,17 @@ if [ "$TERM_PROGRAM" = "vscode" ]; then
       echo "Error setting vscode integration in settings.sh"
   fi
 fi
+
+_lazy_load_conda(){
+  if [ -f "$CONDA_DIR" ]; then
+    eval "$(cat $CONDA_DIR/bin/conda "shell.${SHELL##*/}" hook)"
+    conda "$@"
+  else
+    echo "No CONDA_DIR found in environment"
+  fi
+}
+lazyload_setup conda _lazy_load_conda
+
 
 export AICHAT_LIGHT_THEME=true
 export AICHAT_WRAP=auto
