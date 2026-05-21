@@ -1,3 +1,10 @@
 #:schema https://docs.jj-vcs.dev/latest/config-schema.json
 [aliases]
+s = ["status"]
+l = ["log"]
+d = ["diff"]
+bm = ["bookmark"]
 tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
+
+[ui]
+default-command = ["status"]
