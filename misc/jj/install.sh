@@ -10,8 +10,9 @@ doJJ() {
 }
 
 jjUser() {
-  jj config set --user user.name "$(git config --global user.name)"
-  jj config set --user user.email "$(git config --global user.email)"
+  # Asking for choose...
+  # jj config set --user user.name "$(git config --global user.name)"
+  # jj config set --user user.email "$(git config --global user.email)"
 }
 
 jjSettings() {
@@ -22,8 +23,6 @@ jjSettings() {
     ln -s "$DOTFILES_DIR/misc/jj/jjconfig.toml" "$TARGET"
   fi
   unset TARGET
-  # git config --global core.excludesfile "$($SCRIPTDIR_CMD)/gitignore"
-  # git config --global core.attributesfile "$($SCRIPTDIR_CMD)/gitattributes"
 }
 
 # If directly run instead of sourced, do all
