@@ -1,22 +1,49 @@
+{ config, pkgs, ... }@args:
+
 let
+  # Get source for Home Manager.
+  # 1. Flake input: check if "home-manager" was passed.
+  flakeInput =
+    if !(args ? inputs) then
+      null
+    else if args.inputs ? home-manager then
+      args.inputs.home-manager
+    else
+      null;
 
-  homeManagerUrl = {
-    url = "https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz";
-    sha256 = "sha256:0xpgskfs8q9jdd0hc8298h1qg2w6i36g0w1mmvyl169lmr8v3zqi";
-  };
+  hasFlake = flakeInput != null;
 
-  can_import = builtins.tryEval(import <home-manager/nixos>);
-  homeManagerPath = if can_import.success
-    then <home-manager/nixos>
-    else "${(builtins.fetchTarball homeManagerUrl)}/nixos";
-  hm = import homeManagerPath;
+  # 2. Channel: safely evaluate <home-manager>
+  channel = builtins.tryEval <home-manager>;
 
-in { config, pkgs, ... }:
+  channelSource =
+    if channel.success then
+      channel.value
+    else
+      null;
+
+  # 3. Resolve source based on priority
+  homeManagerSource =
+    if hasFlake then
+      flakeInput
+    else if channelSource != null then
+      channelSource
+    else
+      # 4. Fallback: fetchTarball
+      builtins.fetchTarball {
+        url = "https://github.com/nix-community/home-manager/archive/release-26.05.tar.gz";
+        sha256 = "sha256:0xpgskfs8q9jdd0hc8298h1qg2w6i36g0w1mmvyl169lmr8v3zqi";
+      };
+
+  hm = import "${homeManagerSource}/nixos";
+
+in
 {
   imports = [ hm ];
+
+  home-manager.useGlobalPkgs = true;
 
   # home-manager.users.${user} = {
   #   imports = [ "${nixDir}/home/home.nix" ];
   # };
-  home-manager.useGlobalPkgs = true;
 }
