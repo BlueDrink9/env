@@ -149,22 +149,29 @@ in
           {
             name = "com.ajxcodes.macappmenu";
             config = {
-              General = {
-                boldFont = false;
-                capitalFont = false;
+              Appearance = {
+                # When title avail
+                txt = "%a - %w";
+                # Title and name same
+                txtSameFound = "%w";
+                isBold = false;
+                isCaps = false;
                 containmentType = "Plasma";
                 lengthLastMargin = 15;
-                maximumLength = 1499;
-                lengthPolicy = "Maximum";
-                perScreenActive = true;
+                # Maxiumum length
+                lengthKind = 2;
+                # Applies upper bound on length, in pixels. Set for 1080, with 8
+                # desktops in the pager and a bunch of tray icons.
+                fixedLength = 800;
                 spacing = 0;
-                style = 3;
-              };
-              Appearance = {
+                # style = 3;
                 # 'middle'
                 elidePos = 2;
                 # Icon fills thickness of panel
                 fillThickness = true;
+              };
+              Behaviour = {
+                filterByScreen = true;
               };
             };
           }

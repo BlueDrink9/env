@@ -78,7 +78,7 @@ for (var panelIndex = 0; panelIndex < allPanels.length; panelIndex++) {
         var widgets = [
             // "org.kde.plasma.marginsseparator",
             "org.kde.plasma.panelspacer",
-            "org.kde.windowtitle",
+            "com.ajxcodes.macappmenu",
             "org.kde.plasma.panelspacer",
             // "org.kde.plasma.marginsseparator",
         ].map(w => p.addWidget(w));
