@@ -147,7 +147,7 @@ in
           }
           "org.kde.plasma.panelspacer"
           {
-            name = "org.kde.windowtitle";
+            name = "com.ajxcodes.macappmenu";
             config = {
               General = {
                 boldFont = false;
