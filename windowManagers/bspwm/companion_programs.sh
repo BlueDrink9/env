@@ -1,4 +1,8 @@
 #! /bin/sh
+# Stores it own logs, so don't need any in .logs. Run before sxhkd so it does not override bindings
+# talon > /dev/null &
+# Set keyboard before starting sxhkd, so it uses colemake bindings
+sh "$DOTFILES_DIR"/system/x11/settings.sh
 sh "$DOTFILES_DIR"/shell/scripts/sxhkd_mine
 sh "$DOTFILES_DIR"/shell/scripts/picom_mine
 
@@ -14,9 +18,6 @@ unset wallpaper
 #   redshift-gtk -l -41.28664:174.77557 -t 6500:3000 -b 1:0.7 &
 # fi
 
-# Stores it own logs, so don't need any in .logs
-talon > /dev/null &
-
 "$DOTFILES_DIR"/windowManagers/bspwm/scripts/floating_noborder.sh &
 
 # Daemon tracks which media player has most recent activity, which ensures
@@ -26,6 +27,10 @@ command -v playerctld >/dev/null 2>&1 && playerctld daemon >/dev/null 2>&1
 command -v xremap >/dev/null 2>&1 && \
   xremap "$DOTFILES_DIR"/misc/xremap.yml \
   >| $HOME/.logs/xremap.log 2>| $HOME/.logs/xremap.err &
+
+# command -v albert >/dev/null 2>&1 && \
+#   albert \
+#   >| $HOME/.logs/albert.log 2>| $HOME/.logs/albert.err &
 
 # flashfocus &
 # pgrep autokey-gtk || autokey-gtk \

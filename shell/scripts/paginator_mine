@@ -1,0 +1,31 @@
+#!/bin/sh
+# Desired window size
+N_COL=$(bspc query -D | wc -l)
+WIN_W=$((30 * $N_COL))
+WIN_H=40
+
+# Extract monitor geometry for primary monitor
+MONINFO=$(xrandr --listactivemonitors | grep '\*' | cut -d' ' -f4)
+
+MON_W=$(printf "%s" "$MONINFO" | cut -d'x' -f1 | cut -d'/' -f1)
+MON_H=$(printf "%s" "$MONINFO" | cut -d'x' -f2 | cut -d'/' -f1)
+MON_X=$(printf "%s" "$MONINFO" | cut -d'+' -f2)
+MON_Y=$(printf "%s" "$MONINFO" | cut -d'+' -f3)
+
+# Calculate bottom-left position
+POS_X=$MON_X
+POS_Y=$(("$MON_Y" + "$MON_H" - "$WIN_H"))
+
+
+paginator -xrm "$DOTFILES_DIR/desktop_elements/paginator.Xresources" \
+    -geometry "${WIN_W}x${WIN_H}+${POS_X}+${POS_Y}" \
+    1 $N_COL
+
+
+# # Apply bspwm rule
+# # Make paginator a floating, sticky bar at the bottom
+# bspc rule -a Paginator \
+#     state=floating \
+#     sticky=on \
+#     layer=above \
+#     rectangle=${WIN_W}x${WIN_H}+${POS_X}+${POS_Y}

@@ -14,8 +14,11 @@ runWithLogging(){
 # If running bspwm on its own, start other desktop elements.
 if substrInStr "bspwm" "$DESKTOP_SESSION" || \
   [ -z "$DESKTOP_SESSION" -a "$DEFAULT_SESSION" = "bspwm" ] ; then
-  # Desktop elements
+  ## Desktop elements
+  # launcher
   runWithLogging albert
+  # Alt launcher
+  # runWithLogging onagre
   runWithLogging polybar -c ~/.config/polybar/config.ini mybar
   # Read by bspwm config and tdrop, although bspwm should automatically adjust
   # for panels so may need to remove it from that.

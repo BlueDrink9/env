@@ -4,9 +4,9 @@ configuration {
 	/* modi: "combi,window,drun,run,file-browser,ssh,p:rofi-power-menu,calc,p:rofi-wifi-menu,p:rofi-mpd"; */
 	/* combi-modi: "window,drun,run,file-browser"; */
 	/* modi: "combi,window,drun,run,ssh,p:rofi-power-menu,calc,p:rofi-wifi-menu,p:rofi-mpd"; */
-	modi: "combi,window,drun,run,ssh,p:rofi-power-menu,p:rofi-wifi-menu,p:rofi-mpd";
-	combi-modi: "window,drun,run";
-	font: "SFNS Display 15";
+	/* modi: "combi,window,drun,run,ssh,p:rofi-power-menu,p:rofi-wifi-menu,p:rofi-mpd"; */
+	combi-modi: "window,drun,run,calc";
+	font: "SF Pro 12";
 	show-icons: true;
 	fixed-num-lines: true;
 	matching: "fuzzy";

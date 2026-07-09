@@ -25,9 +25,21 @@ bspc rule -a pomatez          state=floating floating=on  border=off     focus=o
 bspc rule -a kitty-dropdown   sticky=on
 # bspc rule -a "Talon Canvas"   border=off shadow=off
 
+# # Make paginator a floating, sticky bar at the bottom
+bspc rule -a Paginator \
+    state=floating \
+    sticky=on \
+    layer=above \
+    manage=off
+#     rectangle=${WIN_W}x${WIN_H}+${POS_X}+${POS_Y}
+
 if [ "$XDG_SESSION_DESKTOP" = "plasmax11" ] || \
     [ "$XDG_SESSION_DESKTOP" = "KDE" ] || \
     [ "$XDG_CURRENT_DESKTOP" = "KDE" ]
 then
     . "$DOTFILES_DIR"/windowManagers/bspwm/desktopRules/plasma.sh
+fi
+
+if [ "$XDG_CURRENT_DESKTOP" = "XFCE" ]; then
+    . "$DOTFILES_DIR"/windowManagers/bspwm/desktopRules/xfce.sh
 fi

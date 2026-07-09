@@ -75,8 +75,8 @@ super + shift + s
   flameshot gui || spectacle --region
 
 # program launcher
-super + r
-  rofi -show combi
+# super + r
+  # rofi -show combi
 # super + @space
 # 	dmenu_run
 #   rofi -show combi

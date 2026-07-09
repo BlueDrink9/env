@@ -51,7 +51,14 @@ if [ "$class" = "zoom" ]; then
   esac
 fi
 
-case "$(xprop -id $wid "_NET_WM_STATE")" in 
+# case "$title" in
+#   # Thunar Warning
+#   "Warning")
+#     eval "$initial_consequences"
+#     echo "state=floating"
+#   ;;
+
+case "$(xprop -id $wid "_NET_WM_STATE")" in
   # I think this will get misc "above" windows. At the very least, it
   # should for filebot.
   "*_NET_WM_STATE_ABOVE*")

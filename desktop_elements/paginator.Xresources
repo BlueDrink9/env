@@ -1,0 +1,38 @@
+! vim: ft=xdefaults
+! Ayu Light theme for Paginator
+
+! Geometry (optional, bspwm rules can override)
+! Paginator.geometry: 200x100+0+100
+
+! Active window miniatures
+Paginator.activeBackground: #F8F9FA
+Paginator.activeBorderColor: #55B4D4
+Paginator.activeTopShadowColor: #FFFFFF
+Paginator.activeBottomShadowColor: #E0E0E0
+
+! Inactive window miniatures
+Paginator.inactiveBackground: #FAFAFA
+Paginator.inactiveBorderColor: #C0C0C0
+Paginator.inactiveTopShadowColor: #FFFFFF
+Paginator.inactiveBottomShadowColor: #D0D0D0
+
+! Urgent window miniatures
+Paginator.urgentBackground: #FFB454
+Paginator.urgentBorderColor: #F07178
+Paginator.urgentTopShadowColor: #FFDCA8
+Paginator.urgentBottomShadowColor: #E06C75
+
+! Desktop miniatures
+Paginator.currentDesktopBackground: #DDDDDD
+Paginator.desktopBackground: #FFFFFF
+
+! Frame and separators
+Paginator.frameTopShadowColor: #FFFFFF
+Paginator.frameBottomShadowColor: #D0D0D0
+Paginator.frameShadowThickness: 2
+Paginator.separatorColor: #C0C0C0
+Paginator.separatorWidth: 2
+Paginator.shadowThickness: 1
+
+! Borders
+Paginator.borderWidth: 2
