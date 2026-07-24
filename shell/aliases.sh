@@ -352,7 +352,7 @@ alias np='nix-shell -p'
 alias npu='nix-shell -I nixpkgs=channel:nixos-unstable -p'
 
 alias dva="direnv allow"
-function nsc(){
+function nix-shell-template(){
   nix flake init -t "github:the-nix-way/dev-templates#$1"
   echo "use flake" >> .envrc
   direnv allow
