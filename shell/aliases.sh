@@ -321,7 +321,7 @@ alias hm="(command -v home-manager > /dev/null && with_nom home-manager switch -
 alias hmr="nix-channel --update"
 
 # system-manager
-alias sysmanr='with_nom sudo $(command -v nix) run --impure "github:numtide/system-manager" -- switch --flake "$DOTFILES_DIR/nix/system-manager" --nix-option pure-eval false --sudo'
+alias sysmgr='sudo $(command -v nix) run --impure "github:numtide/system-manager" -- switch --flake "$DOTFILES_DIR/nix/system-manager" --nix-option pure-eval false --sudo'
 
 alias sysmancheck='sudo journalctl -u system-manager.target; sudo journalctl -xe'
 alias sysman-clearout='sudo nix-env --profile /nix/var/nix/profiles/system-manager-profiles --delete-generations old'
