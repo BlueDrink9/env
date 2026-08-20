@@ -8,3 +8,7 @@ tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
 
 [ui]
 default-command = ["status"]
+
+[git]
+# Never push commits like these
+private-commits = "description('wip:*') | description('private:*')"
