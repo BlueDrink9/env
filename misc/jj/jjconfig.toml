@@ -2,8 +2,10 @@
 [aliases]
 s = ["status"]
 l = ["log"]
+ol = ["op", "log"]
 d = ["diff"]
 bm = ["bookmark"]
+rm = ["abandon"]
 tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
 ignore = [
   'util', 'exec', '--', 'sh', '-c',
@@ -16,3 +18,9 @@ default-command = ["status"]
 [git]
 # Never push commits like these
 private-commits = "description('wip:*') | description('private:*')"
+
+[merge-tools.diffview]
+program = 'nvim'
+merge-args = ['-n', '-c', 'DiffviewMergeFiles $output $base $left $right']
+merge-tool-edits-conflict-markers = true
+conflict-marker-style = 'git'
