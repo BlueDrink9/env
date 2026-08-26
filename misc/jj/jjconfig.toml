@@ -5,6 +5,10 @@ l = ["log"]
 d = ["diff"]
 bm = ["bookmark"]
 tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
+ignore = [
+  'util', 'exec', '--', 'sh', '-c',
+  'jj config set --repo snapshot.auto-track "$(jj config get snapshot.auto-track) & ~$0" && jj file untrack $0'
+]
 
 [ui]
 default-command = ["status"]
