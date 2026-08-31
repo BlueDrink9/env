@@ -317,7 +317,7 @@ alias nors="nixos_rebuild switch"
 alias norb="nixos_rebuild boot"
 
 # home-manager
-alias hm="(command -v home-manager > /dev/null && with_nom home-manager switch) || nix-shell '<home-manager>' -A install"
+alias hm="(command -v home-manager > /dev/null && with_nom home-manager switch --impure) || nix-shell '<home-manager>' -A install"
 alias hmr="nix-channel --update"
 
 # system-manager
