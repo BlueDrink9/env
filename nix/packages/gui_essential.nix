@@ -29,7 +29,7 @@
     # openvpn
 
     keepassxc
-    joplin
+    unstable.joplin-desktop
 
     # Need Hunspell for libreoffice spellcheck, used for emacs too
     libreoffice-qt-fresh
