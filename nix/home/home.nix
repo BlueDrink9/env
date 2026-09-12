@@ -112,13 +112,17 @@ in { config, pkgs, lib, ... }:
 
   services.ssh-agent.enable = true;
   services.syncthing = {
-    # Default to true, but on NixOS systems this should be overridden to false.
-    enable = lib.mkDefault true;
+    enable = if builtins.pathExists /run/nixos
+            then lib.mkDefault true
+            else  lib.mkDefault false;
     tray.enable = true;
   };
 
   programs.joplin-desktop = {
     enable = true;
+    package = if builtins.pathExists /run/nixos
+            then pkgs.emptyDirectory
+            else pkgs.joplin-desktop;
     sync.interval = "5m";
     sync.target = "dropbox";
     extraConfig = {
