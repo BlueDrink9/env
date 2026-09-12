@@ -1,16 +1,21 @@
 let
   dotfilesDir = builtins.getEnv "DOTFILES_DIR";
   nixDir = "${dotfilesDir}/system/nix";
-in { config, pkgs, lib, ... }:
+in
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
-  {
+{
   imports = [
     ./plasma.nix
     ./talon.nix
     ../nixpkgs_config.nix
     # ./mime_apps.nix
   ];
-
 
   # Purely for configuration version, not HM version.
   home.stateVersion = "24.05";
@@ -96,7 +101,6 @@ in { config, pkgs, lib, ... }:
 
   home.preferXdgDirectories = true;
 
-
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -112,111 +116,107 @@ in { config, pkgs, lib, ... }:
 
   services.ssh-agent.enable = true;
   services.syncthing = {
-    enable = if builtins.pathExists /run/nixos
-            then lib.mkDefault true
-            else  lib.mkDefault false;
+    enable = if builtins.pathExists /run/nixos then lib.mkDefault true else lib.mkDefault false;
     tray.enable = true;
   };
 
   programs.joplin-desktop = {
     enable = true;
-    package = if builtins.pathExists /run/nixos
-            then pkgs.emptyDirectory
-            else pkgs.joplin-desktop;
+    package = if builtins.pathExists /run/nixos then pkgs.emptyDirectory else pkgs.joplin-desktop;
     sync.interval = "5m";
     sync.target = "dropbox";
     extraConfig = {
-      "editor.codeView"= true;
-        "richTextBannerDismissed"= true;
-        "locale"= "en_GB";
-        "theme"= 1;
-        "themeAutoDetect"= true;
-        "preferredDarkTheme"= 5;
-        "notes.sortOrder.field"= "title";
-        "editor.autoMatchingBraces"= false;
-        "markdown.plugin.softbreaks"= false;
-        "markdown.plugin.typographer"= false;
-        "markdown.plugin.sub"= true;
-        "markdown.plugin.sup"= true;
-        "showTrayIcon"= true;
-        "startMinimized"= false;
-        "style.editor.fontFamily"= "SF Pro";
-      "style.editor.monospaceFontFamily"= "SauceCodePro NF";
-      "ui.layout"= {
-        "key"= "root";
-        "children"= [
+      "editor.codeView" = true;
+      "richTextBannerDismissed" = true;
+      "locale" = "en_GB";
+      "theme" = 1;
+      "themeAutoDetect" = true;
+      "preferredDarkTheme" = 5;
+      "notes.sortOrder.field" = "title";
+      "editor.autoMatchingBraces" = false;
+      "markdown.plugin.softbreaks" = false;
+      "markdown.plugin.typographer" = false;
+      "markdown.plugin.sub" = true;
+      "markdown.plugin.sup" = true;
+      "showTrayIcon" = true;
+      "startMinimized" = false;
+      "style.editor.fontFamily" = "SF Pro";
+      "style.editor.monospaceFontFamily" = "SauceCodePro NF";
+      "ui.layout" = {
+        "key" = "root";
+        "children" = [
           {
-            "key"= "tempContainer-LqrvxPVCrSUHMeVk2E5evZ";
-            "children"= [
+            "key" = "tempContainer-LqrvxPVCrSUHMeVk2E5evZ";
+            "children" = [
               {
-                "key"= "plugin-view-joplin.plugin.benji.favorites-favorites.panel";
-                "context"= {
-                  "pluginId"= "joplin.plugin.benji.favorites";
+                "key" = "plugin-view-joplin.plugin.benji.favorites-favorites.panel";
+                "context" = {
+                  "pluginId" = "joplin.plugin.benji.favorites";
                 };
-                "visible"= true;
-                "height"= 46;
+                "visible" = true;
+                "height" = 46;
               }
               {
-                "key"= "sideBar";
-                "visible"= true;
-                "height"= 414;
+                "key" = "sideBar";
+                "visible" = true;
+                "height" = 414;
               }
               {
-                "key"= "noteList";
-                "visible"= true;
-                "height"= 433;
+                "key" = "noteList";
+                "visible" = true;
+                "height" = 433;
               }
               {
-                "key"= "plugin-view-outline-outline.panel";
-                "context"= {
-                  "pluginId"= "outline";
+                "key" = "plugin-view-outline-outline.panel";
+                "context" = {
+                  "pluginId" = "outline";
                 };
-                "visible"= true;
+                "visible" = true;
               }
             ];
-            "visible"= true;
-            "width"= 352;
+            "visible" = true;
+            "width" = 352;
           }
           {
-            "key"= "tempContainer-4LVBFLXPHawEEQXm1pawGY";
-            "children"= [
+            "key" = "tempContainer-4LVBFLXPHawEEQXm1pawGY";
+            "children" = [
               {
-                "key"= "plugin-view-joplin.plugin.note.tabs-note.tabs.panel";
-                "context"= {
-                  "pluginId"= "joplin.plugin.note.tabs";
+                "key" = "plugin-view-joplin.plugin.note.tabs-note.tabs.panel";
+                "context" = {
+                  "pluginId" = "joplin.plugin.note.tabs";
                 };
-                "visible"= true;
-                "height"= 40;
+                "visible" = true;
+                "height" = 40;
               }
               {
-                "key"= "editor";
-                "visible"= true;
+                "key" = "editor";
+                "visible" = true;
               }
               {
-                "key"= "plugin-view-ylc395.noteLinkSystem-panel";
-                "context"= {
-                  "pluginId"= "ylc395.noteLinkSystem";
+                "key" = "plugin-view-ylc395.noteLinkSystem-panel";
+                "context" = {
+                  "pluginId" = "ylc395.noteLinkSystem";
                 };
-                "visible"= false;
+                "visible" = false;
               }
             ];
-            "visible"= true;
+            "visible" = true;
           }
         ];
-        "visible"= true;
+        "visible" = true;
       };
-      "clipperServer.autoStart"= true;
-      "noteVisiblePanes"= [
+      "clipperServer.autoStart" = true;
+      "noteVisiblePanes" = [
         "viewer"
       ];
-      "editor"= "${pkgs.neovide}/bin/neovide";
-      "editor.keyboardMode"= "vim";
-      "revisionService.ttlDays"= 480;
-      "spellChecker.language"= "en-GB";
-      "spellChecker.languages"= [
+      "editor" = "${pkgs.neovide}/bin/neovide";
+      "editor.keyboardMode" = "vim";
+      "revisionService.ttlDays" = 480;
+      "spellChecker.language" = "en-GB";
+      "spellChecker.languages" = [
         "en-GB"
       ];
-      "windowContentZoomFactor"= 100;
+      "windowContentZoomFactor" = 100;
     };
   };
 
@@ -224,12 +224,12 @@ in { config, pkgs, lib, ... }:
     use_passthrough: true
   '';
 
-    # In my shell settings.sh I maintain a cache of shell plugin
-    # activation scripts, eg eval "$(direnv hook sh)"
-    # However, sometimes they use the path to the nix store, so the cache
-    # needs to be invalidated whenever the nix store might have updated.
-    home.activation.cleanupShellCache = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      # Use -f to avoid errors if the directory doesn't exist yet
-      $DRY_RUN_CMD rm -rf "${config.xdg.cacheHome}/shell-init-cache"
-  '' ;
+  # In my shell settings.sh I maintain a cache of shell plugin
+  # activation scripts, eg eval "$(direnv hook sh)"
+  # However, sometimes they use the path to the nix store, so the cache
+  # needs to be invalidated whenever the nix store might have updated.
+  home.activation.cleanupShellCache = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    # Use -f to avoid errors if the directory doesn't exist yet
+    $DRY_RUN_CMD rm -rf "${config.xdg.cacheHome}/shell-init-cache"
+  '';
 }
