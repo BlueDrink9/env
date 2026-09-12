@@ -4,13 +4,23 @@ s = ["status"]
 l = ["log"]
 ol = ["op", "log"]
 d = ["diff"]
-bm = ["bookmark"]
 rm = ["abandon"]
-tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
+heads = ["log", "-r", "heads(all())"]
+grepDesc = [
+  'util', 'exec', '--', 'sh', '-c',
+  'jj log -r "description(substring:$0)"'
+]
+# Adds a new commit as a parent of the current merge (includes all existing parent commits).
+add-parent = ["rebase", "--source", "@", "--destination", "@-", "--destination"]
+remove-parent = [
+  'util', 'exec', '--', 'sh', '-c',
+  "jj rebase --source @ -d '@- ~$1'"
+]
 ignore = [
   'util', 'exec', '--', 'sh', '-c',
   'jj config set --repo snapshot.auto-track "$(jj config get snapshot.auto-track) & ~$0" && jj file untrack $0'
 ]
+#jj rebase -s 'all:roots(trunk..@)' -o trunk
 
 [ui]
 default-command = ["status"]
@@ -24,3 +34,26 @@ program = 'nvim'
 merge-args = ['-n', '-c', 'DiffviewMergeFiles $output $base $left $right']
 merge-tool-edits-conflict-markers = true
 conflict-marker-style = 'git'
+
+[revsets]
+# log = '(present(@) | ancestors(immutable_heads().., 2) | present(trunk())) & ~blacklist()'
+# 
+
+[revset-aliases]
+# 'wip()' = 'description("wip:*")'
+# 'stash()' = 'description("stash:*")'
+# 'blacklist()' = 'stash()'
+# 'private()' = 'mutable() & (description(exact:"") | wip() | (empty() & ~merges())) | blacklist()'
+# 'until(to)' = 'heads(::to & ~private())'
+# 'until_bookmark(to)' = 'heads(::to & bookmarks())'
+# 'branch(to)' = 'heads((::to | to::) & ~private())'
+# 'branch_bookmark(to)' = 'heads((::to | to::) & bookmarks())'
+# 'stack(to)' = 'stack(to, 2)'
+# 'stack(to, n)' = 'ancestors(reachable(to, mutable() & ~blacklist()), n)'
+# 'user(x)' = 'author(x) | committer(x)'
+
+
+
+[template-aliases]
+'format_short_id(id)' = 'id.shortest()'
+
