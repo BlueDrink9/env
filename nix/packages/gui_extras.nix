@@ -13,7 +13,7 @@ in
     playerctl
     picom
     libnotify
-    xorg.xbacklight
+    xbacklight
 
     etesync-dav
     pandoc
@@ -28,13 +28,20 @@ in
     qdirstat
 
     copyq
-    emacs
+    # emacs
+    ((emacsPackagesFor emacs).emacsWithPackages (
+      # Needs to be built otherwise
+      epkgs: [ epkgs.vterm ]
+    ))
+    (aspellWithDicts (dicts: with dicts; [ en en-computers en-science]))
     thunderbird
     birdtray
     marimo
 
     gimp
-    inkscape
+  (inkscape-with-extensions.override {
+    inkscapeExtensions = with inkscape-extensions; [ inkstitch ];
+  })
     btop
 
     # talon-gaze-ocr makes use of this, and I'm sure other uses are likely to crop up.

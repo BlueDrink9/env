@@ -36,7 +36,7 @@
     hunspell
     hunspellDicts.en_AU
 
-    xorg.xev
+    xev
     alsa-utils
   ];
 
