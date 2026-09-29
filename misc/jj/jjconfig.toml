@@ -1,5 +1,7 @@
 #:schema https://docs.jj-vcs.dev/latest/config-schema.json
 [aliases]
+c = ["commit"]
+stale = ["workspace", "update-stale"]
 s = ["status"]
 l = ["log"]
 ol = ["op", "log"]
@@ -10,6 +12,42 @@ grepDesc = [
   'util', 'exec', '--', 'sh', '-c',
   'jj log -r "description(substring:$0)"'
 ]
+  
+force-push = [
+  "util", "exec", "--", "sh", "-c",
+  """
+  bookmark="${1:-$(jj log -r @ --no-graph -T 'local_bookmarks.map(|b| b.name()).join("\n")' | head -n 1)}"
+
+  if [ -z "$bookmark" ]; then
+    echo "Error: No bookmark found at @ and none provided." >&2
+    exit 1
+  fi
+
+  echo "Force-pushing '$bookmark'..."
+  jj git fetch --bookmark "$bookmark" && \
+  jj bookmark set "$bookmark" -r @ --allow-backwards && \
+  jj git push --bookmark "$bookmark"
+  """,
+  "_"
+]
+
+# Usage: jj resolve-bm [bookmark_name]
+resolve-bm = [
+  "util", "exec", "--", "sh", "-c",
+  """
+  bookmark="${1:-$(jj log -r @ --no-graph -T 'local_bookmarks.map(|b| b.name()).join("\n")' | head -n 1)}"
+
+  if [ -z "$bookmark" ]; then
+    echo "Error: No bookmark specified and no local bookmark found at @." >&2
+    exit 1
+  fi
+
+  echo "Setting bookmark '$bookmark' to @..."
+  jj bookmark set "$bookmark" -r @ --allow-backwards
+  """,
+  "_"
+]
+
 # Adds a new commit as a parent of the current merge (includes all existing parent commits).
 add-parent = ["rebase", "--source", "@", "--destination", "@-", "--destination"]
 remove-parent = [
