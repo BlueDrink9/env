@@ -367,3 +367,5 @@ alias c="aichat"
 alias talon-update-plugins="$DOTFILES_DIR/talon/sync_plugins.sh"
 }
 aliases
+
+alias jj_precommit_branch='uvx pre-commit run --files $(jj diff --name-only -r "fork_point(main@origin | @)::@")'
