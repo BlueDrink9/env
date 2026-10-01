@@ -177,6 +177,26 @@ in
           }
           "org.kde.plasma.panelspacer"
           {
+            name = "org.kde.plasma.systemmonitor.cpucore";
+            config = {
+              Appearance = {
+                chartFace = "org.kde.ksysguard.piechart";
+                showTitle = false;
+                title = "Individual Core Usage";
+                updateRateLimit = 0;
+              };
+            };
+          }
+          {
+            name = "org.kde.plasma.systemmonitor.memory";
+            config = {
+              Appearance = {
+                chartFace = "org.kde.ksysguard.piechart";
+                title = "Memory Usage";
+              };
+            };
+          }
+          {
             systemTray.items = {
               shown = [
                 # "org.kde.plasma.battery"
