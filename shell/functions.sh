@@ -328,7 +328,7 @@ set_tmux_termoptions(){
 
 is_tmux_running(){
   # Check tmux is installed
-  if command -v 'tmux' >/dev/null; then
+  if program_exists tmux; then
     # Check tmux has a session running
     # if ! \tmux ls 2>&1 | grep -q "no server running"; then
     if ! substrInStr "no server running" "$(\tmux ls 2>&1)"; then
@@ -344,7 +344,7 @@ tmux_with_options(){
   \tmux "$@"
 }
 # Will trigger if tmux is an alias.
-if command -v 'tmux' >/dev/null; then
+if program_exists tmux; then
   unalias tmux > /dev/null 2>&1
   alias tmux="tmux_with_options"
 fi
@@ -522,7 +522,7 @@ plugupdate() {
   vim +PlugUpgrade +PlugUpdate +CocUpdate +qa && zinit update && $HOME/.tmux/plugins/tpm/bin/update_plugins all
 }
 
-if command -v broot >/dev/null 2>&1; then
+if program_exists broot; then
   alias tree="br"
   # This function starts broot and executes the command
   # it produces, if any.
