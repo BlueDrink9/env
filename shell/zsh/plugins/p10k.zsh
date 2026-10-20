@@ -17,9 +17,6 @@
 [[ ! -o 'no_brace_expand' ]] || p10k_config_opts+=('no_brace_expand')
 'builtin' 'setopt' 'no_aliases' 'no_sh_glob' 'brace_expand'
 
-# Fix issue with launching stuff from vscode, or other integrations.
-typeset -g POWERLEVEL9K_TERM_SHELL_INTEGRATION=true
-
 () {
   emulate -L zsh
   setopt no_unset extended_glob
@@ -27,6 +24,10 @@ typeset -g POWERLEVEL9K_TERM_SHELL_INTEGRATION=true
   # Unset all configuration options. This allows you to apply configiguration changes without
   # restarting zsh. Edit ~/.p10k.zsh and type `source ~/.p10k.zsh`.
   unset -m 'POWERLEVEL9K_*'
+
+  # Fix issue with launching stuff from vscode, or other integrations.
+  # Enables semantic markup via OSC 133 escape sequences for terminal/tmux prompt navigation.
+  typeset -g POWERLEVEL9K_TERM_SHELL_INTEGRATION=true
 
   autoload -Uz is-at-least && is-at-least 5.1 || return
 
