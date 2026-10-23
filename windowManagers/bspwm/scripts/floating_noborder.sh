@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # https://github.com/rajshekhar26/dotfiles/blob/master/.local/bin/floating_noborder
 
 while read -r _ _ _ node state status; do

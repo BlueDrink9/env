@@ -1,0 +1,26 @@
+monitor_geometry 0x00800002 1920x1080+0+0
+monitor_geometry 0x00800004 1920x1080+1920+0
+monitor_add 0x00800040 eDP-1 1920x1200+0+0
+desktop_add 0x00800040 0x00800042 Desktop
+monitor_geometry 0x00800040 1920x1200+0+0
+monitor_geometry 0x00800040 1920x1200+0+0
+monitor_geometry 0x00800040 1920x1200+0+0
+monitor_geometry 0x00800040 1920x1200+0+0
+monitor_geometry 0x00800040 1920x1200+0+0
+monitor_geometry 0x00800040 1920x1200+0+0
+monitor_geometry 0x00800040 1920x1200+0+0
+monitor_geometry 0x00800040 1920x1200+0+0
+monitor_geometry 0x00800040 1920x1200+0+0
+monitor_geometry 0x00800040 1920x1200+0+0
+monitor_geometry 0x00800002 1920x1080+0+0
+monitor_geometry 0x00800004 1920x1080+1920+0
+monitor_geometry 0x00800002 1920x1080+0+0
+monitor_geometry 0x00800004 1920x1080+1920+0
+monitor_geometry 0x00800002 1920x1080+0+0
+monitor_geometry 0x00800004 1920x1080+1920+0
+monitor_geometry 0x00800002 1920x1080+0+0
+monitor_geometry 0x00800004 1920x1080+1920+0
+monitor_geometry 0x00800002 1920x1080+0+0
+monitor_geometry 0x00800004 1920x1080+1920+0
+monitor_geometry 0x00800002 1920x1080+0+0
+monitor_geometry 0x00800004 1920x1080+1920+0
