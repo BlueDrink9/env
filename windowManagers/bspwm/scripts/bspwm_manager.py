@@ -1,17 +1,28 @@
 #!/usr/bin/env python3
 """
-BSPWM Dynamic Monitor & Desktop Manager (ID-First Architecture)
-Tracks and manipulates monitors and workspaces strictly via bspwm Hex IDs.
+BSPWM Dynamic Monitor & Desktop Manager
+Tracks and manipulates monitors and workspaces strictly via atomic bspc JSON dumps and Hex IDs.
 """
 
-import subprocess
-import re
-import sys
-import time
-import logging
 import argparse
 from dataclasses import dataclass
-from typing import List, Dict, Optional, Tuple
+import json
+import logging
+import re
+import subprocess
+import sys
+import threading
+import time
+from typing import Dict, List, Optional
+
+
+@dataclass
+class Desktop:
+    hex_id: str
+    name: str
+    current_monitor_id: str
+    has_nodes: bool = False
+    preferred_slot: str = "primary"
 
 
 @dataclass
@@ -23,16 +34,9 @@ class Monitor:
     y: int
     width: int
     height: int
+    desktop_ids: List[str]
     slot: str = ""
     prefix: str = ""
-
-
-@dataclass
-class Desktop:
-    hex_id: str
-    name: str
-    current_monitor_id: str
-    preferred_slot: str = "primary"
 
 
 class BspcClient:
@@ -47,7 +51,6 @@ class BspcClient:
             return res.stdout.rstrip('\n')
         except subprocess.CalledProcessError as e:
             err_msg = e.stderr.strip()
-            # Silently ignore redundant operations (exit code 1 with empty stderr)
             if e.returncode == 1 and not err_msg:
                 logging.debug(f"Redundant command ignored seamlessly: {cmd_str}")
                 return ""
@@ -55,23 +58,15 @@ class BspcClient:
             return ""
 
     @staticmethod
-    def get_monitor_ids() -> List[str]:
-        return BspcClient.run_cmd(["query", "--monitors"]).splitlines()
-
-    @staticmethod
-    def get_monitor_map() -> Dict[str, str]:
-        """Pairs bspc query -M and bspc query -M --names to construct an ID <-> Name map."""
-        ids = BspcClient.run_cmd(["query", "--monitors"]).splitlines()
-        names = BspcClient.run_cmd(["query", "--monitors", "--names"]).splitlines()
-        return dict(zip(ids, names))
-
-    @staticmethod
-    def get_desktops(monitor_id: str) -> List[str]:
-        return BspcClient.run_cmd(["query", "--desktops", "--monitor", monitor_id]).splitlines()
-
-    @staticmethod
-    def get_desktop_name(desktop_id: str) -> str:
-        return BspcClient.run_cmd(["query", "--desktops", "--desktop", desktop_id, "--names"])
+    def get_wm_dump() -> dict:
+        raw = BspcClient.run_cmd(["wm", "-d"])
+        if not raw:
+            return {}
+        try:
+            return json.loads(raw)
+        except json.JSONDecodeError as e:
+            logging.warning(f"Failed to parse wm -d output: {e}")
+            return {}
 
     @staticmethod
     def move_desktop(desktop_id: str, monitor_id: str):
@@ -99,196 +94,215 @@ class BspcClient:
 
 class WorkspaceManager:
     def __init__(self):
-        # Keyed strictly by monitor Hex ID (e.g. '0x00800002')
         self.monitors: Dict[str, Monitor] = {}
-        # Keyed strictly by desktop Hex ID (e.g. '0x0080003D')
         self.desktops: Dict[str, Desktop] = {}
         self.primary_id: str = ""
 
-    def parse_xrandr(self):
-        """Constructs spatial layout by linking xrandr output to bspwm monitor Hex IDs."""
-        logging.debug("Parsing xrandr layout...")
-        output = subprocess.run(["xrandr", "--listactivemonitors"], capture_output=True, text=True).stdout
+    def ingest_live_state(self):
+        """Parses bspwm JSON state and xrandr layout atomically into unified dataclasses."""
+        dump = BspcClient.get_wm_dump()
+        if not dump:
+            return
 
-        id_to_name = BspcClient.get_monitor_map()
-        name_to_id = {name: m_id for m_id, name in id_to_name.items()}
-
-        raw_monitors = []
-        for line in output.splitlines():
+        # 1. Parse physical layout via xrandr
+        xrandr_out = subprocess.run(["xrandr", "--listactivemonitors"], capture_output=True, text=True).stdout
+        physical_monitors = {}
+        for line in xrandr_out.splitlines():
             if not line.strip() or line.startswith("Monitors:"):
                 continue
-
             parts = line.split()
             if len(parts) < 4:
                 continue
 
             name = parts[-1]
             is_primary = "*" in parts[1]
-
             raw_geom = re.sub(r'/[0-9]+', '', parts[2])
-            # Matches standard +X+Y, -X+Y, +X-Y, as well as +-X+-Y compound signs
             geom_match = re.search(r'(\d+)x(\d+)[+]?(-?\d+)[+]?(-?\d+)', raw_geom)
 
-            if geom_match and name in name_to_id:
+            if geom_match:
                 w, h, x, y = map(int, geom_match.groups())
-                hex_id = name_to_id[name]
-                raw_monitors.append(Monitor(hex_id, name, is_primary, x, y, w, h))
-                logging.debug(f"Matched Monitor {name} ({hex_id}) at {x},{y}")
+                physical_monitors[name] = (x, y, w, h, is_primary)
 
-        if not raw_monitors:
-            logging.warning("No matching active monitors found.")
-            return
+        if physical_monitors and not any(m[4] for m in physical_monitors.values()):
+            first_name = list(physical_monitors.keys())[0]
+            physical_monitors[first_name] = (*physical_monitors[first_name][:4], True)
 
-        if not any(m.is_primary for m in raw_monitors):
-            raw_monitors[0].is_primary = True
+        # 2. Rebuild monitor and desktop state from JSON dump
+        primary_id_int = dump.get("primaryMonitorId")
+        new_monitors: Dict[str, Monitor] = {}
+        valid_desktop_ids = set()
 
-        pri = next(m for m in raw_monitors if m.is_primary)
-        self.primary_id = pri.hex_id
-        pri.slot = "primary"
+        for m_data in dump.get("monitors", []):
+            m_hex = f"0x{m_data['id']:08x}"
+            m_name = m_data.get("name", "")
 
-        rights, lefts, aboves, belows = [], [], [], []
-        for m in raw_monitors:
-            if m.is_primary:
-                continue
-            if m.x > pri.x:
-                rights.append(m)
-            elif m.x < pri.x:
-                lefts.append(m)
-            elif m.y < pri.y:
-                aboves.append(m)
-            elif m.y > pri.y:
-                belows.append(m)
+            # Merge physical xrandr geometry if the monitor is actively connected
+            if m_name in physical_monitors:
+                x, y, w, h, is_pri = physical_monitors[m_name]
+            else:
+                x, y, w, h, is_pri = 0, 0, 0, 0, False
 
-        rights.sort(key=lambda m: m.x)
-        lefts.sort(key=lambda m: m.x, reverse=True)
-        aboves.sort(key=lambda m: m.y, reverse=True)
-        belows.sort(key=lambda m: m.y)
+            if m_data.get("id") == primary_id_int:
+                is_pri = True
 
-        for idx, m in enumerate(rights, 1):
-            m.slot = f"right_{idx}"
-            m.prefix = ">" * idx
+            desk_ids = []
+            for d_data in m_data.get("desktops", []):
+                d_hex = f"0x{d_data['id']:08x}"
+                d_name = d_data.get("name", "")
+                has_nodes = d_data.get("root") is not None
 
-        for idx, m in enumerate(lefts, 1):
-            m.slot = f"left_{idx}"
-            m.prefix = "<" * idx
+                desk_ids.append(d_hex)
+                valid_desktop_ids.add(d_hex)
 
-        for idx, m in enumerate(aboves, 1):
-            m.slot = f"above_{idx}"
-            m.prefix = "^" * idx
+                if d_hex in self.desktops:
+                    desk = self.desktops[d_hex]
+                    desk.name = d_name
+                    desk.current_monitor_id = m_hex
+                    desk.has_nodes = has_nodes
+                else:
+                    self.desktops[d_hex] = Desktop(d_hex, d_name, m_hex, has_nodes=has_nodes)
 
-        for idx, m in enumerate(belows, 1):
-            m.slot = f"below_{idx}"
-            m.prefix = "v" * idx
+            new_monitors[m_hex] = Monitor(m_hex, m_name, is_pri, x, y, w, h, desk_ids)
 
-        self.monitors = {m.hex_id: m for m in raw_monitors}
-        for m_id, mon in self.monitors.items():
-            logging.debug(f"Monitor {mon.name} ({m_id}) -> slot '{mon.slot}', prefix '{mon.prefix}'")
+        self.monitors = new_monitors
+
+        # 3. Calculate dynamic spatial slots for active physical monitors
+        active_mons = [m for m in self.monitors.values() if m.name in physical_monitors]
+        if active_mons:
+            pri = next((m for m in active_mons if m.is_primary), active_mons[0])
+            self.primary_id = pri.hex_id
+            pri.slot = "primary"
+
+            rights, lefts, aboves, belows = [], [], [], []
+            for m in active_mons:
+                if m.hex_id == self.primary_id:
+                    continue
+                if m.x > pri.x: rights.append(m)
+                elif m.x < pri.x: lefts.append(m)
+                elif m.y < pri.y: aboves.append(m)
+                elif m.y > pri.y: belows.append(m)
+
+            rights.sort(key=lambda m: m.x)
+            lefts.sort(key=lambda m: m.x, reverse=True)
+            aboves.sort(key=lambda m: m.y, reverse=True)
+            belows.sort(key=lambda m: m.y)
+
+            for idx, m in enumerate(rights, 1):
+                m.slot, m.prefix = f"right_{idx}", ">" * idx
+            for idx, m in enumerate(lefts, 1):
+                m.slot, m.prefix = f"left_{idx}", "<" * idx
+            for idx, m in enumerate(aboves, 1):
+                m.slot, m.prefix = f"above_{idx}", "^" * idx
+            for idx, m in enumerate(belows, 1):
+                m.slot, m.prefix = f"below_{idx}", "v" * idx
+
+        # 4. Initialize slot memory for new desktops and prune dead ones
+        for d_hex, desk in self.desktops.items():
+            if desk.preferred_slot == "primary" and desk.current_monitor_id in self.monitors:
+                mon = self.monitors[desk.current_monitor_id]
+                if mon.slot:
+                    desk.preferred_slot = mon.slot
+
+        stale_ids = [d for d in self.desktops if d not in valid_desktop_ids]
+        for d in stale_ids:
+            del self.desktops[d]
+            logging.debug(f"Purged stale desktop: {d}")
 
     def get_fallback_monitor_id(self, preferred_slot: str) -> str:
-        """Finds the best available monitor Hex ID for a given spatial slot."""
-        active_slots = {m.slot: m.hex_id for m in self.monitors.values()}
+        active_slots = {m.slot: m.hex_id for m in self.monitors.values() if m.slot}
 
         if preferred_slot in active_slots:
             return active_slots[preferred_slot]
 
-        # 1. Fallback in the same direction
         if "_" in preferred_slot:
             direction, idx = preferred_slot.split("_")
-            idx = int(idx)
-            for i in range(idx - 1, 0, -1):
+            for i in range(int(idx) - 1, 0, -1):
                 fallback = f"{direction}_{i}"
                 if fallback in active_slots:
                     return active_slots[fallback]
 
-        # 2. Fallback to any secondary
-        secondaries = [m.hex_id for m in self.monitors.values() if not m.is_primary]
+        secondaries = [m.hex_id for m in self.monitors.values() if m.slot and not m.is_primary]
         if secondaries:
             return secondaries[0]
 
-        # 3. Fallback to Primary
         return self.primary_id
 
-    def sync_desktops(self):
-            """Syncs all desktops across active monitors and drops stale IDs from memory."""
-            active_bspwm_mon_ids = BspcClient.get_monitor_ids()
-            valid_desktops = set()
-
-            for m_id in active_bspwm_mon_ids:
-                desk_ids = BspcClient.get_desktops(m_id)
-                # Track all live desktops across all monitors before checking self.monitors
-                # Prevents prematurely purging desktops pending evacuation
-                valid_desktops.update(desk_ids)
-
-                if m_id not in self.monitors:
-                    continue
-
-                for d_id in desk_ids:
-                    if d_id not in self.desktops:
-                        name = BspcClient.get_desktop_name(d_id)
-                        self.desktops[d_id] = Desktop(d_id, name, m_id, self.monitors[m_id].slot)
-                        logging.debug(f"Synced new desktop {d_id} on monitor {m_id}")
-
-            stale_ids = [d_id for d_id in self.desktops if d_id not in valid_desktops]
-            for d_id in stale_ids:
-                del self.desktops[d_id]
-                logging.debug(f"Purged stale desktop: {d_id}")
-
-    def enforce_quotas(self):
-        """Ensures minimum desktop counts exist on active monitors."""
-        logging.debug("Enforcing quotas...")
-        for m_id, mon in self.monitors.items():
-            desks = BspcClient.get_desktops(m_id)
-            minimum = 4 if mon.is_primary else 2
-
-            if len(desks) < minimum:
-                needed = minimum - len(desks)
-                logging.info(f"Quota unmet on {mon.name} ({m_id}): adding {needed} desktops.")
-                BspcClient.add_desktops(m_id, needed)
-
-        self.sync_desktops()
-
     def route_desktops(self):
-        """Evacuates disconnected monitors and restores desktops to preferred screens."""
+        """Evacuates dead monitors and restores orphans via memory routes."""
         logging.debug("Routing desktops...")
-        active_bspwm_mon_ids = BspcClient.get_monitor_ids()
+        detached = [m for m in self.monitors.values() if not m.slot]
+        active = [m for m in self.monitors.values() if m.slot]
+        mutated = False
 
-        # Evacuate disconnected monitors by Hex ID
-        for m_id in active_bspwm_mon_ids:
-            if m_id not in self.monitors:
-                logging.info(f"Evacuating detached monitor: {m_id}")
-                desks = BspcClient.get_desktops(m_id)
+        # 1. Evacuate detached monitors using a sacrificial dummy desktop
+        if detached:
+            for m in detached:
+                logging.info(f"Evacuating detached monitor: {m.hex_id}")
+                if m.desktop_ids:
+                    BspcClient.run_cmd(["monitor", m.hex_id, "--add-desktops", "__evac_dummy__"])
+                    for d_id in m.desktop_ids:
+                        desk = self.desktops.get(d_id)
+                        fallback_id = self.get_fallback_monitor_id(desk.preferred_slot if desk else "primary")
+                        BspcClient.move_desktop(d_id, fallback_id)
+                BspcClient.remove_monitor(m.hex_id)
+            mutated = True
 
-                # Move all but the last desktop
-                for d_id in desks[:-1]:
-                    mem_slot = self.desktops.get(d_id, Desktop(d_id, "", "", "primary")).preferred_slot
-                    fallback_id = self.get_fallback_monitor_id(mem_slot)
-                    BspcClient.move_desktop(d_id, fallback_id)
-
-                BspcClient.remove_monitor(m_id)
-
-        # Restore desktops to preferred screens
-        for d_id, desk in self.desktops.items():
-            current_mon_id = BspcClient.run_cmd(["query", "--monitors", "--desktop", d_id])
-            if not current_mon_id:
+        # 2. Restore desktops residing on active screens to their preferred targets
+        for desk in self.desktops.values():
+            if desk.current_monitor_id not in [m.hex_id for m in active]:
                 continue
 
             target_mon_id = self.get_fallback_monitor_id(desk.preferred_slot)
-            if current_mon_id != target_mon_id:
-                BspcClient.move_desktop(d_id, target_mon_id)
-                desk.current_monitor_id = target_mon_id
+            if desk.current_monitor_id != target_mon_id:
+                BspcClient.move_desktop(desk.hex_id, target_mon_id)
+                mutated = True
+
+        if mutated:
+            self.ingest_live_state()
+
+        # 3. Prune empty, untracked placeholder desktops
+        for m in self.monitors.values():
+            if not m.slot or len(m.desktop_ids) <= 1:
+                continue
+
+            for d_id in list(m.desktop_ids):
+                if len(m.desktop_ids) <= 1:
+                    break
+                desk = self.desktops.get(d_id)
+                if desk and not desk.has_nodes and (desk.name in ("Desktop", "__evac_dummy__") or desk.name.startswith("tmp_")):
+                    logging.info(f"Pruning placeholder desktop {d_id} ('{desk.name}') from {m.hex_id}")
+                    BspcClient.run_cmd(["desktop", d_id, "--remove"])
+                    m.desktop_ids.remove(d_id)
+
+    def enforce_quotas(self):
+        """Ensures minimum desktop counts exist on active physical monitors."""
+        logging.debug("Enforcing quotas...")
+        mutated = False
+        for m in self.monitors.values():
+            if not m.slot:
+                continue
+
+            minimum = 4 if m.is_primary else 2
+            if len(m.desktop_ids) < minimum:
+                needed = minimum - len(m.desktop_ids)
+                logging.info(f"Quota unmet on {m.name} ({m.hex_id}): adding {needed} desktops.")
+                BspcClient.add_desktops(m.hex_id, needed)
+                mutated = True
+
+        if mutated:
+            self.ingest_live_state()
 
     def reorder_and_rename(self):
-        """Sorts physical monitors and assigns desktop names strictly by monitor ID."""
+        """Sorts physical monitors and assigns standard naming conventions."""
         logging.debug("Reordering and renaming desktops...")
-        ordered = sorted(self.monitors.values(), key=lambda m: (m.x, m.y))
-        BspcClient.reorder_monitors([m.hex_id for m in ordered])
+        active_ordered = sorted([m for m in self.monitors.values() if m.slot], key=lambda m: (m.x, m.y))
+        if active_ordered:
+            BspcClient.reorder_monitors([m.hex_id for m in active_ordered])
 
         global_idx = 1
-        for mon in ordered:
-            desks = BspcClient.get_desktops(mon.hex_id)
+        for mon in active_ordered:
             local_idx = 1
-
-            for d_id in desks:
+            for d_id in mon.desktop_ids:
                 if mon.is_primary:
                     new_name = " " if local_idx <= 3 else str(global_idx)
                 else:
@@ -299,30 +313,27 @@ class WorkspaceManager:
                     else:
                         new_name = f"{mon.prefix}{global_idx}"
 
-                BspcClient.rename_desktop(d_id, new_name)
-                if d_id in self.desktops:
-                    self.desktops[d_id].name = new_name
+                desk = self.desktops.get(d_id)
+                if desk and desk.name != new_name:
+                    BspcClient.rename_desktop(d_id, new_name)
+                    desk.name = new_name
 
                 local_idx += 1
                 global_idx += 1
 
     def handle_transfer(self, desktop_id: str, dest_monitor_id: str):
-        """Directly processes a desktop transfer event via monitor Hex ID."""
+        """Updates preferred slots when user explicitly moves a workspace."""
+        self.ingest_live_state()
         if dest_monitor_id in self.monitors:
             target_slot = self.monitors[dest_monitor_id].slot
-            if desktop_id not in self.desktops:
-                self.desktops[desktop_id] = Desktop(desktop_id, "", dest_monitor_id, target_slot)
-            else:
+            if desktop_id in self.desktops:
                 self.desktops[desktop_id].preferred_slot = target_slot
-                self.desktops[desktop_id].current_monitor_id = dest_monitor_id
-
-            logging.info(
-                f"Manual Transfer: Desktop {desktop_id} -> {self.monitors[dest_monitor_id].name} ({dest_monitor_id}) [slot: {target_slot}]"
-            )
-            self.reorder_and_rename()
+                logging.info(
+                    f"Manual Transfer: Desktop {desktop_id} -> {self.monitors[dest_monitor_id].name} [slot: {target_slot}]"
+                )
+            self.run_cycle()
 
     def process_event_line(self, line: str) -> bool:
-        """Parses a single subscription line. Returns True if a cycle should run."""
         parts = line.strip().split()
         if not parts:
             return False
@@ -341,28 +352,40 @@ class WorkspaceManager:
         ):
             return True
 
-        elif event == "desktop_transfer":
-            # desktop_transfer <src_mon_id> <desktop_id> <dst_mon_id>
-            if len(parts) >= 4:
-                desk_id = parts[2]
-                dst_mon_id = parts[3]
-                self.handle_transfer(desk_id, dst_mon_id)
+        if event == "desktop_transfer" and len(parts) >= 4:
+            desk_id = parts[2]
+            dst_mon_id = parts[3]
+            self.handle_transfer(desk_id, dst_mon_id)
             return False
 
         return False
 
     def run_cycle(self):
         logging.debug("--- Starting Manager Cycle ---")
-        self.parse_xrandr()
-        self.sync_desktops()
+        self.ingest_live_state()
         self.route_desktops()
         self.enforce_quotas()
         self.reorder_and_rename()
         logging.debug("--- Cycle Complete ---")
 
 
+class DebouncedRunner:
+    def __init__(self, delay: float, target):
+        self.delay = delay
+        self.target = target
+        self.timer: Optional[threading.Timer] = None
+        self._lock = threading.Lock()
+
+    def trigger(self):
+        with self._lock:
+            if self.timer is not None:
+                self.timer.cancel()
+            self.timer = threading.Timer(self.delay, self.target)
+            self.timer.daemon = True
+            self.timer.start()
+
+
 def listen_for_events(manager: WorkspaceManager):
-    """Subscribes to BSPWM events and dispatches updates."""
     logging.info("Starting BSPWM event listener...")
     proc = subprocess.Popen(
         [
@@ -375,11 +398,11 @@ def listen_for_events(manager: WorkspaceManager):
         text=True,
     )
 
+    debouncer = DebouncedRunner(delay=0.15, target=manager.run_cycle)
+
     for line in proc.stdout:
-        needs_cycle = manager.process_event_line(line)
-        if needs_cycle:
-            time.sleep(0.15)
-            manager.run_cycle()
+        if manager.process_event_line(line):
+            debouncer.trigger()
 
 
 if __name__ == "__main__":
