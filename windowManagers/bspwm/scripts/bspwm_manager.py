@@ -42,17 +42,19 @@ class Monitor:
 class BspcClient:
     @staticmethod
     def run_cmd(args: List[str]) -> str:
-        cmd_str = ' '.join(["bspc"] + args)
+        cmd_str = " ".join(["bspc"] + args)
         logging.debug(f"Exec: {cmd_str}")
         try:
             res = subprocess.run(
                 ["bspc"] + args, capture_output=True, text=True, check=True
             )
-            return res.stdout.rstrip('\n')
+            return res.stdout.rstrip("\n")
         except subprocess.CalledProcessError as e:
             err_msg = e.stderr.strip()
             if e.returncode == 1 and not err_msg:
-                logging.debug(f"Redundant command ignored seamlessly: {cmd_str}")
+                logging.debug(
+                    f"Redundant command ignored seamlessly: {cmd_str}"
+                )
                 return ""
             logging.warning(f"bspc command failed: {cmd_str} - {err_msg}")
             return ""
@@ -79,8 +81,12 @@ class BspcClient:
     @staticmethod
     def add_desktops(monitor_id: str, count: int):
         if count > 0:
-            names = [f"tmp_{monitor_id}_{i}_{int(time.time())}" for i in range(count)]
-            BspcClient.run_cmd(["monitor", monitor_id, "--add-desktops"] + names)
+            names = [
+                f"tmp_{monitor_id}_{i}_{int(time.time())}" for i in range(count)
+            ]
+            BspcClient.run_cmd(
+                ["monitor", monitor_id, "--add-desktops"] + names
+            )
 
     @staticmethod
     def remove_monitor(monitor_id: str):
@@ -97,6 +103,9 @@ class WorkspaceManager:
         self.monitors: Dict[str, Monitor] = {}
         self.desktops: Dict[str, Desktop] = {}
         self.primary_id: str = ""
+        self.ignored_desktop_ids = set()
+        self.programmatic_transfers = set()
+        self.sync_in_progress = False
 
     def ingest_live_state(self):
         """Parses bspwm JSON state and xrandr layout atomically into unified dataclasses."""
@@ -104,8 +113,9 @@ class WorkspaceManager:
         if not dump:
             return
 
-        # 1. Parse physical layout via xrandr
-        xrandr_out = subprocess.run(["xrandr", "--listactivemonitors"], capture_output=True, text=True).stdout
+        xrandr_out = subprocess.run(
+            ["xrandr", "--listactivemonitors"], capture_output=True, text=True
+        ).stdout
         physical_monitors = {}
         for line in xrandr_out.splitlines():
             if not line.strip() or line.startswith("Monitors:"):
@@ -116,38 +126,43 @@ class WorkspaceManager:
 
             name = parts[-1]
             is_primary = "*" in parts[1]
-            raw_geom = re.sub(r'/[0-9]+', '', parts[2])
-            geom_match = re.search(r'(\d+)x(\d+)[+]?(-?\d+)[+]?(-?\d+)', raw_geom)
+            raw_geom = re.sub(r"/[0-9]+", "", parts[2])
+            geom_match = re.search(
+                r"(\d+)x(\d+)[+]?(-?\d+)[+]?(-?\d+)", raw_geom
+            )
 
             if geom_match:
                 w, h, x, y = map(int, geom_match.groups())
                 physical_monitors[name] = (x, y, w, h, is_primary)
 
-        if physical_monitors and not any(m[4] for m in physical_monitors.values()):
-            first_name = list(physical_monitors.keys())[0]
-            physical_monitors[first_name] = (*physical_monitors[first_name][:4], True)
+        if not physical_monitors:
+            logging.warning(
+                "xrandr reported 0 active monitors; skipping cycle to prevent monitor loss."
+            )
+            return
 
-        # 2. Rebuild monitor and desktop state from JSON dump
-        primary_id_int = dump.get("primaryMonitorId")
+        if not any(m[4] for m in physical_monitors.values()):
+            first_name = list(physical_monitors.keys())[0]
+            physical_monitors[first_name] = (
+                *physical_monitors[first_name][:4],
+                True,
+            )
+
         new_monitors: Dict[str, Monitor] = {}
         valid_desktop_ids = set()
 
         for m_data in dump.get("monitors", []):
-            m_hex = f"0x{m_data['id']:08x}"
+            m_hex = f"0x{m_data['id']:08x}".lower()
             m_name = m_data.get("name", "")
 
-            # Merge physical xrandr geometry if the monitor is actively connected
             if m_name in physical_monitors:
                 x, y, w, h, is_pri = physical_monitors[m_name]
             else:
                 x, y, w, h, is_pri = 0, 0, 0, 0, False
 
-            if m_data.get("id") == primary_id_int:
-                is_pri = True
-
             desk_ids = []
             for d_data in m_data.get("desktops", []):
-                d_hex = f"0x{d_data['id']:08x}"
+                d_hex = f"0x{d_data['id']:08x}".lower()
                 d_name = d_data.get("name", "")
                 has_nodes = d_data.get("root") is not None
 
@@ -160,14 +175,19 @@ class WorkspaceManager:
                     desk.current_monitor_id = m_hex
                     desk.has_nodes = has_nodes
                 else:
-                    self.desktops[d_hex] = Desktop(d_hex, d_name, m_hex, has_nodes=has_nodes)
+                    self.desktops[d_hex] = Desktop(
+                        d_hex, d_name, m_hex, has_nodes=has_nodes
+                    )
 
-            new_monitors[m_hex] = Monitor(m_hex, m_name, is_pri, x, y, w, h, desk_ids)
+            new_monitors[m_hex] = Monitor(
+                m_hex, m_name, is_pri, x, y, w, h, desk_ids
+            )
 
         self.monitors = new_monitors
 
-        # 3. Calculate dynamic spatial slots for active physical monitors
-        active_mons = [m for m in self.monitors.values() if m.name in physical_monitors]
+        active_mons = [
+            m for m in self.monitors.values() if m.name in physical_monitors
+        ]
         if active_mons:
             pri = next((m for m in active_mons if m.is_primary), active_mons[0])
             self.primary_id = pri.hex_id
@@ -177,10 +197,14 @@ class WorkspaceManager:
             for m in active_mons:
                 if m.hex_id == self.primary_id:
                     continue
-                if m.x > pri.x: rights.append(m)
-                elif m.x < pri.x: lefts.append(m)
-                elif m.y < pri.y: aboves.append(m)
-                elif m.y > pri.y: belows.append(m)
+                if m.x > pri.x:
+                    rights.append(m)
+                elif m.x < pri.x:
+                    lefts.append(m)
+                elif m.y < pri.y:
+                    aboves.append(m)
+                elif m.y > pri.y:
+                    belows.append(m)
 
             rights.sort(key=lambda m: m.x)
             lefts.sort(key=lambda m: m.x, reverse=True)
@@ -196,9 +220,11 @@ class WorkspaceManager:
             for idx, m in enumerate(belows, 1):
                 m.slot, m.prefix = f"below_{idx}", "v" * idx
 
-        # 4. Initialize slot memory for new desktops and prune dead ones
         for d_hex, desk in self.desktops.items():
-            if desk.preferred_slot == "primary" and desk.current_monitor_id in self.monitors:
+            if (
+                desk.preferred_slot == "primary"
+                and desk.current_monitor_id in self.monitors
+            ):
                 mon = self.monitors[desk.current_monitor_id]
                 if mon.slot:
                     desk.preferred_slot = mon.slot
@@ -209,7 +235,9 @@ class WorkspaceManager:
             logging.debug(f"Purged stale desktop: {d}")
 
     def get_fallback_monitor_id(self, preferred_slot: str) -> str:
-        active_slots = {m.slot: m.hex_id for m in self.monitors.values() if m.slot}
+        active_slots = {
+            m.slot: m.hex_id for m in self.monitors.values() if m.slot
+        }
 
         if preferred_slot in active_slots:
             return active_slots[preferred_slot]
@@ -221,7 +249,11 @@ class WorkspaceManager:
                 if fallback in active_slots:
                     return active_slots[fallback]
 
-        secondaries = [m.hex_id for m in self.monitors.values() if m.slot and not m.is_primary]
+        secondaries = [
+            m.hex_id
+            for m in self.monitors.values()
+            if m.slot and not m.is_primary
+        ]
         if secondaries:
             return secondaries[0]
 
@@ -234,33 +266,41 @@ class WorkspaceManager:
         active = [m for m in self.monitors.values() if m.slot]
         mutated = False
 
-        # 1. Evacuate detached monitors using a sacrificial dummy desktop
         if detached:
             for m in detached:
                 logging.info(f"Evacuating detached monitor: {m.hex_id}")
                 if m.desktop_ids:
-                    BspcClient.run_cmd(["monitor", m.hex_id, "--add-desktops", "__evac_dummy__"])
+                    BspcClient.run_cmd(
+                        [
+                            "monitor",
+                            m.hex_id,
+                            "--add-desktops",
+                            "__evac_dummy__",
+                        ]
+                    )
                     for d_id in m.desktop_ids:
                         desk = self.desktops.get(d_id)
-                        fallback_id = self.get_fallback_monitor_id(desk.preferred_slot if desk else "primary")
+                        fallback_id = self.get_fallback_monitor_id(
+                            desk.preferred_slot if desk else "primary"
+                        )
+                        self.programmatic_transfers.add((d_id, fallback_id))
                         BspcClient.move_desktop(d_id, fallback_id)
                 BspcClient.remove_monitor(m.hex_id)
             mutated = True
 
-        # 2. Restore desktops residing on active screens to their preferred targets
         for desk in self.desktops.values():
             if desk.current_monitor_id not in [m.hex_id for m in active]:
                 continue
 
             target_mon_id = self.get_fallback_monitor_id(desk.preferred_slot)
             if desk.current_monitor_id != target_mon_id:
+                self.programmatic_transfers.add((desk.hex_id, target_mon_id))
                 BspcClient.move_desktop(desk.hex_id, target_mon_id)
                 mutated = True
 
         if mutated:
             self.ingest_live_state()
 
-        # 3. Prune empty, untracked placeholder desktops
         for m in self.monitors.values():
             if not m.slot or len(m.desktop_ids) <= 1:
                 continue
@@ -269,8 +309,19 @@ class WorkspaceManager:
                 if len(m.desktop_ids) <= 1:
                     break
                 desk = self.desktops.get(d_id)
-                if desk and not desk.has_nodes and (desk.name in ("Desktop", "__evac_dummy__") or desk.name.startswith("tmp_")):
-                    logging.info(f"Pruning placeholder desktop {d_id} ('{desk.name}') from {m.hex_id}")
+                if (
+                    desk
+                    and not desk.has_nodes
+                    and (
+                        desk.name
+                        in ("Desktop", "__evac_dummy__", "__plasma_sync__")
+                        or desk.name.startswith("tmp_")
+                    )
+                ):
+                    logging.info(
+                        f"Pruning placeholder desktop {d_id} ('{desk.name}') from {m.hex_id}"
+                    )
+                    self.ignored_desktop_ids.add(d_id)
                     BspcClient.run_cmd(["desktop", d_id, "--remove"])
                     m.desktop_ids.remove(d_id)
 
@@ -285,7 +336,9 @@ class WorkspaceManager:
             minimum = 4 if m.is_primary else 2
             if len(m.desktop_ids) < minimum:
                 needed = minimum - len(m.desktop_ids)
-                logging.info(f"Quota unmet on {m.name} ({m.hex_id}): adding {needed} desktops.")
+                logging.info(
+                    f"Quota unmet on {m.name} ({m.hex_id}): adding {needed} desktops."
+                )
                 BspcClient.add_desktops(m.hex_id, needed)
                 mutated = True
 
@@ -295,7 +348,10 @@ class WorkspaceManager:
     def reorder_and_rename(self):
         """Sorts physical monitors and assigns standard naming conventions."""
         logging.debug("Reordering and renaming desktops...")
-        active_ordered = sorted([m for m in self.monitors.values() if m.slot], key=lambda m: (m.x, m.y))
+        active_ordered = sorted(
+            [m for m in self.monitors.values() if m.slot],
+            key=lambda m: (m.x, m.y),
+        )
         if active_ordered:
             BspcClient.reorder_monitors([m.hex_id for m in active_ordered])
 
@@ -323,7 +379,6 @@ class WorkspaceManager:
 
     def handle_transfer(self, desktop_id: str, dest_monitor_id: str):
         """Updates preferred slots when user explicitly moves a workspace."""
-        self.ingest_live_state()
         if dest_monitor_id in self.monitors:
             target_slot = self.monitors[dest_monitor_id].slot
             if desktop_id in self.desktops:
@@ -331,7 +386,6 @@ class WorkspaceManager:
                 logging.info(
                     f"Manual Transfer: Desktop {desktop_id} -> {self.monitors[dest_monitor_id].name} [slot: {target_slot}]"
                 )
-            self.run_cycle()
 
     def process_event_line(self, line: str) -> bool:
         parts = line.strip().split()
@@ -341,24 +395,70 @@ class WorkspaceManager:
         event = parts[0]
         logging.debug(f"Intercepted Event: {event}")
 
+        if event == "desktop_add" and len(parts) >= 4:
+            d_id = parts[2].lower()
+            d_name = parts[3]
+            if (
+                self.sync_in_progress
+                or d_name in ("__plasma_sync__", "__evac_dummy__")
+                or d_name.startswith("tmp_")
+            ):
+                self.ignored_desktop_ids.add(d_id)
+                return False
+            return True
+
+        if event == "desktop_remove" and len(parts) >= 3:
+            d_id = parts[2].lower()
+            if d_id in self.ignored_desktop_ids:
+                self.ignored_desktop_ids.remove(d_id)
+                return False
+            return True
+
         if event in (
             "monitor_add",
             "monitor_remove",
             "monitor_geometry",
             "monitor_swap",
-            "desktop_add",
-            "desktop_remove",
             "desktop_swap",
         ):
             return True
 
         if event == "desktop_transfer" and len(parts) >= 4:
-            desk_id = parts[2]
-            dst_mon_id = parts[3]
+            desk_id = parts[2].lower()
+            dst_mon_id = parts[3].lower()
+
+            transfer_key = (desk_id, dst_mon_id)
+            if transfer_key in self.programmatic_transfers:
+                self.programmatic_transfers.remove(transfer_key)
+                return False
+
             self.handle_transfer(desk_id, dst_mon_id)
-            return False
+            return True
 
         return False
+
+    def force_plasma_sync(self):
+        """Adds a blank desktop and removes it by ID to trigger Plasma pager refresh."""
+        if not self.primary_id:
+            return
+
+        logging.debug("Triggering Plasma UI sync workaround...")
+        self.sync_in_progress = True
+        try:
+            BspcClient.run_cmd(
+                ["monitor", self.primary_id, "--add-desktops", " "]
+            )
+            desks = BspcClient.run_cmd(
+                ["query", "--desktops", "--monitor", self.primary_id]
+            ).splitlines()
+
+            if desks:
+                new_id = desks[-1].lower()
+                self.ignored_desktop_ids.add(new_id)
+                time.sleep(0.05)
+                BspcClient.run_cmd(["desktop", new_id, "--remove"])
+        finally:
+            self.sync_in_progress = False
 
     def run_cycle(self):
         logging.debug("--- Starting Manager Cycle ---")
@@ -366,6 +466,7 @@ class WorkspaceManager:
         self.route_desktops()
         self.enforce_quotas()
         self.reorder_and_rename()
+        self.force_plasma_sync()
         logging.debug("--- Cycle Complete ---")
 
 
@@ -374,25 +475,33 @@ class DebouncedRunner:
         self.delay = delay
         self.target = target
         self.timer: Optional[threading.Timer] = None
-        self._lock = threading.Lock()
+        self._timer_lock = threading.Lock()
+        self._run_lock = threading.Lock()
 
     def trigger(self):
-        with self._lock:
+        with self._timer_lock:
             if self.timer is not None:
                 self.timer.cancel()
-            self.timer = threading.Timer(self.delay, self.target)
+            self.timer = threading.Timer(self.delay, self._execute)
             self.timer.daemon = True
             self.timer.start()
+
+    def _execute(self):
+        with self._run_lock:
+            self.target()
 
 
 def listen_for_events(manager: WorkspaceManager):
     logging.info("Starting BSPWM event listener...")
     proc = subprocess.Popen(
         [
-            "bspc", "subscribe",
+            "bspc",
+            "subscribe",
             "monitor",
-            "desktop_transfer", "desktop_swap",
-            "desktop_add", "desktop_remove",
+            "desktop_transfer",
+            "desktop_swap",
+            "desktop_add",
+            "desktop_remove",
         ],
         stdout=subprocess.PIPE,
         text=True,
@@ -406,15 +515,19 @@ def listen_for_events(manager: WorkspaceManager):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="BSPWM Monitor & Desktop Manager")
-    parser.add_argument("--debug", action="store_true", help="Enable verbose debug logging")
+    parser = argparse.ArgumentParser(
+        description="BSPWM Monitor & Desktop Manager"
+    )
+    parser.add_argument(
+        "--debug", action="store_true", help="Enable verbose debug logging"
+    )
     args = parser.parse_args()
 
     log_level = logging.DEBUG if args.debug else logging.WARNING
     logging.basicConfig(
         level=log_level,
         format="%(levelname)s: %(message)s",
-        handlers=[logging.StreamHandler(sys.stderr)]
+        handlers=[logging.StreamHandler(sys.stderr)],
     )
 
     wm = WorkspaceManager()

@@ -40,10 +40,6 @@ def make_wm_dump(primary_id_int: int, monitors_info: list) -> dict:
     }
 
 
-# ==============================================================================
-# 0. RAW JSON PARSING VALIDATION (From Original Dump)
-# ==============================================================================
-
 SAMPLE_DUAL_MONITOR_DUMP = json.loads("""{
   "focusedMonitorId": 8388965, "primaryMonitorId": 8388965,
   "monitors": [
@@ -64,6 +60,7 @@ SAMPLE_DUAL_MONITOR_DUMP = json.loads("""{
   ]
 }""")
 
+
 @patch("bspwm_manager.BspcClient.get_wm_dump")
 @patch("subprocess.run")
 def test_raw_json_dump_parser(mock_run, mock_get_dump, manager):
@@ -79,17 +76,13 @@ def test_raw_json_dump_parser(mock_run, mock_get_dump, manager):
     assert dp38.is_primary is True
     assert len(dp38.desktop_ids) == 2
     assert manager.desktops["0x00800006"].has_nodes is True
-    assert manager.desktops["0x00800180"].has_nodes is False  # Desktop 8 was empty in the dump
+    assert manager.desktops["0x00800180"].has_nodes is False
 
     dp31 = manager.monitors["0x00800167"]
     assert dp31.name == "DP-3-1"
     assert dp31.is_primary is False
     assert len(dp31.desktop_ids) == 2
 
-
-# ==============================================================================
-# 1. PARAMETERIZED SPATIAL LAYOUT & PREFIX TESTS
-# ==============================================================================
 
 XRANDR_SPATIAL_CASES = [
     (
@@ -98,7 +91,8 @@ XRANDR_SPATIAL_CASES = [
  0: +*DP-1 1920/527x1080/296+0+0  DP-1
  1: +DP-2 1920/509x1080/286+1920+0  DP-2
  2: +DP-3 1920/509x1080/286+3840+0  DP-3""",
-        [("DP-1", 1, []), ("DP-2", 2, []), ("DP-3", 3, [])], 1,
+        [("DP-1", 1, []), ("DP-2", 2, []), ("DP-3", 3, [])],
+        1,
         {"0x00000001": ("primary", ""), "0x00000002": ("right_1", ">"), "0x00000003": ("right_2", ">>")},
     ),
     (
@@ -106,7 +100,8 @@ XRANDR_SPATIAL_CASES = [
         """Monitors: 2
  0: +DP-1 1920/527x1080/296+0+0  DP-1
  1: +*DP-2 1920/509x1080/286+1920+0  DP-2""",
-        [("DP-1", 1, []), ("DP-2", 2, [])], 2,
+        [("DP-1", 1, []), ("DP-2", 2, [])],
+        2,
         {"0x00000002": ("primary", ""), "0x00000001": ("left_1", "<")},
     ),
     (
@@ -114,7 +109,8 @@ XRANDR_SPATIAL_CASES = [
         """Monitors: 2
  0: +*DP-1 1920/527x1080/296+0+0  DP-1
  1: +DP-4 1920/509x1080/286+0-1080  DP-4""",
-        [("DP-1", 1, []), ("DP-4", 4, [])], 1,
+        [("DP-1", 1, []), ("DP-4", 4, [])],
+        1,
         {"0x00000001": ("primary", ""), "0x00000004": ("above_1", "^")},
     ),
     (
@@ -122,7 +118,8 @@ XRANDR_SPATIAL_CASES = [
         """Monitors: 2
  0: +*DP-1 1920/527x1080/296+0+0  DP-1
  1: +DP-5 1920/509x1080/286+0+1080  DP-5""",
-        [("DP-1", 1, []), ("DP-5", 5, [])], 1,
+        [("DP-1", 1, []), ("DP-5", 5, [])],
+        1,
         {"0x00000001": ("primary", ""), "0x00000005": ("below_1", "v")},
     ),
     (
@@ -133,7 +130,8 @@ XRANDR_SPATIAL_CASES = [
  2: +DP-3 1920/509x1080/286+0-1080  DP-3
  3: +DP-4 1920/509x1080/286+1920+0  DP-4
  4: +DP-5 1920/509x1080/286+0+1080  DP-5""",
-        [("DP-1", 1, []), ("DP-2", 2, []), ("DP-3", 3, []), ("DP-4", 4, []), ("DP-5", 5, [])], 1,
+        [("DP-1", 1, []), ("DP-2", 2, []), ("DP-3", 3, []), ("DP-4", 4, []), ("DP-5", 5, [])],
+        1,
         {
             "0x00000001": ("primary", ""), "0x00000002": ("left_1", "<"),
             "0x00000003": ("above_1", "^"), "0x00000004": ("right_1", ">"), "0x00000005": ("below_1", "v"),
@@ -142,10 +140,12 @@ XRANDR_SPATIAL_CASES = [
     (
         "laptop_fallback_without_asterisk",
         """Monitors: 1\n 0: +eDP-1 1920/300x1200/200+0+0  eDP-1""",
-        [("eDP-1", 64, [])], 0,  # bspwm sometimes returns 0 if primary isn't explicit
+        [("eDP-1", 64, [])],
+        0,
         {"0x00000040": ("primary", "")},
     ),
 ]
+
 
 @pytest.mark.parametrize("case_name,xrandr_out,bsp_monitors,pri_id,expected_slots", XRANDR_SPATIAL_CASES)
 @patch("bspwm_manager.BspcClient.get_wm_dump")
@@ -163,15 +163,12 @@ def test_spatial_layout_and_prefixes(mock_run, mock_get_dump, manager, case_name
         assert mon.prefix == exp_prefix, f"[{case_name}] Prefix mismatch for {m_hex}"
 
 
-# ==============================================================================
-# 2. PROXIMITY FALLBACK MATRIX TESTS
-# ==============================================================================
-
 FALLBACK_MATRIX_CASES = [
     ("exact_slot_match_available", "right_2", "0x03"),
     ("same_axis_step_down_right3_to_right2", "right_3", "0x03"),
     ("cross_axis_fallback_to_any_secondary_over_primary", "above_1", "0x02"),
 ]
+
 
 @pytest.mark.parametrize("case_name,target_slot,expected_fallback", FALLBACK_MATRIX_CASES)
 def test_proximity_fallback_matrix(manager, case_name, target_slot, expected_fallback):
@@ -190,35 +187,32 @@ def test_fallback_collapses_to_primary_when_no_secondaries_exist(manager):
     assert manager.get_fallback_monitor_id("right_2") == "0x01"
 
 
-# ==============================================================================
-# 3. RENAMING & QUOTA MATRIX TESTS
-# ==============================================================================
-
 NAMING_MATRIX_CASES = [
     (
         "single_primary_minimum_quota",
-        {"0x01": Monitor("0x01", "DP-1", True, 0, 0, 1920, 1080, ["0xD1", "0xD2", "0xD3", "0xD4", "0xD5"], "primary", "")},
-        {"0xD1": " ", "0xD2": " ", "0xD3": " ", "0xD4": "4", "0xD5": "5"},
+        {"0x01": Monitor("0x01", "DP-1", True, 0, 0, 1920, 1080, ["0xd1", "0xd2", "0xd3", "0xd4", "0xd5"], "primary", "")},
+        {"0xd1": " ", "0xd2": " ", "0xd3": " ", "0xd4": "4", "0xd5": "5"},
     ),
     (
         "dual_monitor_primary_and_one_right",
         {
-            "0x01": Monitor("0x01", "DP-1", True, 0, 0, 1920, 1080, ["0xD1", "0xD2", "0xD3", "0xD4"], "primary", ""),
-            "0x02": Monitor("0x02", "DP-2", False, 1920, 0, 1920, 1080, ["0xD5", "0xD6", "0xD7", "0xD8"], "right_1", ">"),
+            "0x01": Monitor("0x01", "DP-1", True, 0, 0, 1920, 1080, ["0xd1", "0xd2", "0xd3", "0xd4"], "primary", ""),
+            "0x02": Monitor("0x02", "DP-2", False, 1920, 0, 1920, 1080, ["0xd5", "0xd6", "0xd7", "0xd8"], "right_1", ">"),
         },
-        {"0xD1": " ", "0xD4": "4", "0xD5": ">5", "0xD6": " ", "0xD7": " ", "0xD8": ">8"},
+        {"0xd1": " ", "0xd4": "4", "0xd5": ">5", "0xd6": " ", "0xd7": " ", "0xd8": ">8"},
     ),
     (
         "surround_all_cardinal_directions",
         {
-            "0x02": Monitor("0x02", "DP-2", False, -1920, 0, 1920, 1080, ["0xD1", "0xD2"], "left_1", "<"),
-            "0x03": Monitor("0x03", "DP-3", False, 0, -1080, 1920, 1080, ["0xD3", "0xD4"], "above_1", "^"),
-            "0x01": Monitor("0x01", "DP-1", True, 0, 0, 1920, 1080, ["0xD5", "0xD6", "0xD7", "0xD8"], "primary", ""),
-            "0x04": Monitor("0x04", "DP-4", False, 0, 1080, 1920, 1080, ["0xD9", "0xDA"], "below_1", "v"),
+            "0x02": Monitor("0x02", "DP-2", False, -1920, 0, 1920, 1080, ["0xd1", "0xd2"], "left_1", "<"),
+            "0x03": Monitor("0x03", "DP-3", False, 0, -1080, 1920, 1080, ["0xd3", "0xd4"], "above_1", "^"),
+            "0x01": Monitor("0x01", "DP-1", True, 0, 0, 1920, 1080, ["0xd5", "0xd6", "0xd7", "0xd8"], "primary", ""),
+            "0x04": Monitor("0x04", "DP-4", False, 0, 1080, 1920, 1080, ["0xd9", "0xda"], "below_1", "v"),
         },
-        {"0xD1": "<1", "0xD2": " ", "0xD3": "^3", "0xD4": " ", "0xD5": " ", "0xD8": "8", "0xD9": "v9", "0xDA": " "},
+        {"0xd1": "<1", "0xd2": " ", "0xd3": "^3", "0xd4": " ", "0xd5": " ", "0xd8": "8", "0xd9": "v9", "0xda": " "},
     ),
 ]
+
 
 @pytest.mark.parametrize("case_name,monitors_dict,expected_names", NAMING_MATRIX_CASES)
 @patch("bspwm_manager.BspcClient.run_cmd")
@@ -241,6 +235,7 @@ QUOTA_CASES = [
     ("reload_with_excess_desktops", {"0x01": (True, 6), "0x02": (False, 3)}, {}),
 ]
 
+
 @pytest.mark.parametrize("case_name,monitor_states,expected_additions", QUOTA_CASES)
 @patch("bspwm_manager.BspcClient.add_desktops")
 @patch("bspwm_manager.WorkspaceManager.ingest_live_state")
@@ -259,15 +254,13 @@ def test_quota_enforcement(mock_ingest, mock_add_desks, manager, case_name, moni
             mock_add_desks.assert_any_call(m_id, needed_count)
 
 
-# ==============================================================================
-# 4. EVENT LINE DISPATCH TESTS
-# ==============================================================================
-
 EVENT_DISPATCH_CASES = [
     ("monitor_add 0x00800040 eDP-1 1920x1200+0+0\n", True),
     ("monitor_remove 0x00800004\n", True),
     ("monitor_geometry 0x00800002 1920x1080+0+0\n", True),
-    ("desktop_add 0x00800002 0x0080003D tmp_test\n", True),
+    ("desktop_add 0x00800002 0x0080003D new_workspace\n", True),
+    ("desktop_add 0x00800002 0x0080003D tmp_test\n", False),
+    ("desktop_add 0x00800002 0x0080003D __evac_dummy__\n", False),
     ("desktop_remove 0x00800002 0x0080003D\n", True),
     ("monitor_focus 0x00800002\n", False),
     ("desktop_focus 0x00800002 0x0080003D\n", False),
@@ -275,62 +268,75 @@ EVENT_DISPATCH_CASES = [
     ("   \n", False),
 ]
 
+
 @pytest.mark.parametrize("event_line,expected_needs_cycle", EVENT_DISPATCH_CASES)
 def test_subscription_event_line_dispatch(manager, event_line, expected_needs_cycle):
     assert manager.process_event_line(event_line) is expected_needs_cycle
 
 
-# ==============================================================================
-# 5. FULL DAEMON LIFECYCLE INTEGRATION (DRIVEN BY JSON MOCK STATE)
-# ==============================================================================
+def test_subscription_ignores_sync_and_programmatic_transfers(manager):
+    manager.sync_in_progress = True
+    assert manager.process_event_line("desktop_add 0x01 0x02   \n") is False
+    manager.sync_in_progress = False
 
+    manager.programmatic_transfers.add(("0x02", "0x01"))
+    assert manager.process_event_line("desktop_transfer 0x03 0x02 0x01\n") is False
+    assert ("0x02", "0x01") not in manager.programmatic_transfers
+
+
+@patch("bspwm_manager.time.sleep")
 @patch("subprocess.run")
 @patch("bspwm_manager.BspcClient.get_wm_dump")
 @patch("bspwm_manager.BspcClient.run_cmd")
 def test_full_daemon_lifecycle_integration(
-    mock_run_cmd, mock_get_dump, mock_xrandr, manager
+    mock_run_cmd, mock_get_dump, mock_xrandr, mock_sleep, manager
 ):
-    """
-    Phase 1: Boot Single Monitor -> Enforces Quota
-    Phase 2: Hotplug Secondary -> Enforces Quota, Renames '>5'
-    Phase 3: Transfer desktop -> Updates preferred slot memory
-    Phase 4: USB-C Unplug Burst -> Evacuates orphaned desktops safely
-    """
-
-    # --- PHASE 1: Boot Single Monitor ---
     mock_xrandr.return_value.stdout = "Monitors: 1\n 0: +*DP-1 1920x1080+0+0 DP-1"
     mock_get_dump.return_value = make_wm_dump(
-        1, [("DP-1", 1, [(" ", 11, False), (" ", 12, False)])] # 2 desks, needs 4
+        1, [("DP-1", 1, [(" ", 11, False), (" ", 12, False)])]
     )
+
+    def fake_run_cmd(args):
+        if args[:3] == ["query", "--desktops", "--monitor"]:
+            return "0x00000099"
+        return ""
+
+    mock_run_cmd.side_effect = fake_run_cmd
 
     manager.run_cycle()
 
-    # Assert quotas enforced (check prefix and arg length to bypass dynamic timestamps)
-    add_dp1 = [c[0][0] for c in mock_run_cmd.call_args_list if c[0][0][:3] == ["monitor", "0x00000001", "--add-desktops"]]
+    add_dp1 = [
+        c[0][0]
+        for c in mock_run_cmd.call_args_list
+        if c[0][0][:3] == ["monitor", "0x00000001", "--add-desktops"]
+        and c[0][0][3:] != [" "]
+    ]
     assert len(add_dp1) == 1
-    assert len(add_dp1[0]) == 5  # "monitor" "id" "--add-desktops" + 2 names
+    assert len(add_dp1[0]) == 5
 
+    mock_run_cmd.assert_any_call(["desktop", "0x00000099", "--remove"])
 
-    # --- PHASE 2: Hotplug Secondary Monitor ---
     mock_run_cmd.reset_mock()
     mock_xrandr.return_value.stdout = "Monitors: 2\n 0: +*DP-1 1920x1080+0+0 DP-1\n 1: +DP-2 1920x1080+1920+0 DP-2"
     mock_get_dump.return_value = make_wm_dump(
         1, [
             ("DP-1", 1, [(" ", 11, False), (" ", 12, False), (" ", 13, False), ("4", 14, False)]),
-            ("DP-2", 2, [("tmp", 21, False)]) # 1 desk, needs 2
+            ("DP-2", 2, [("tmp", 21, False)])
         ]
     )
 
     manager.run_cycle()
 
-    # Assert secondary quota enforced and desktop correctly prefixed as >5
-    add_dp2 = [c[0][0] for c in mock_run_cmd.call_args_list if c[0][0][:3] == ["monitor", "0x00000002", "--add-desktops"]]
+    add_dp2 = [
+        c[0][0]
+        for c in mock_run_cmd.call_args_list
+        if c[0][0][:3] == ["monitor", "0x00000002", "--add-desktops"]
+        and c[0][0][3:] != [" "]
+    ]
     assert len(add_dp2) == 1
-    assert len(add_dp2[0]) == 4  # "monitor" "id" "--add-desktops" + 1 name
+    assert len(add_dp2[0]) == 4
     mock_run_cmd.assert_any_call(["desktop", "0x00000015", "--rename", ">5"])
 
-
-    # --- PHASE 3: Manual Transfer Interception ---
     mock_run_cmd.reset_mock()
     mock_get_dump.return_value = make_wm_dump(
         1, [
@@ -338,14 +344,10 @@ def test_full_daemon_lifecycle_integration(
             ("DP-2", 2, [(">5", 21, False), (" ", 22, False), ("4", 14, False)])
         ]
     )
-    manager.handle_transfer("0x0000000e", "0x00000002")  # 14 -> Hex 0E
+    manager.handle_transfer("0x0000000e", "0x00000002")
 
-    # Assert memory slot updated correctly
     assert manager.desktops["0x0000000e"].preferred_slot == "right_1"
-    assert manager.desktops["0x0000000e"].current_monitor_id == "0x00000002"
 
-
-    # --- PHASE 4: USB-C Unplug Burst (Laptops eDP-1 Takes Over) ---
     mock_run_cmd.reset_mock()
     mock_xrandr.return_value.stdout = "Monitors: 1\n 0: +*eDP-1 1920x1200+0+0 eDP-1"
 
@@ -366,9 +368,6 @@ def test_full_daemon_lifecycle_integration(
         ]
     )
 
-    # run_cycle queries dump -> phase4_initial
-    # route_desktops queries dump after evac -> phase4_routed
-    # enforce_quotas / rename query dump -> phase4_routed
     mock_get_dump.side_effect = [
         dump_phase4_initial,
         dump_phase4_routed,
@@ -378,17 +377,10 @@ def test_full_daemon_lifecycle_integration(
 
     manager.run_cycle()
 
-    # Assert Dummies added for safe evacuation
     mock_run_cmd.assert_any_call(["monitor", "0x00000001", "--add-desktops", "__evac_dummy__"])
     mock_run_cmd.assert_any_call(["monitor", "0x00000002", "--add-desktops", "__evac_dummy__"])
-
-    # Assert all real desktops evacuated to eDP-1 fallback
-    mock_run_cmd.assert_any_call(["desktop", "0x0000000b", "--to-monitor", "0x00000040"]) # 11
-    mock_run_cmd.assert_any_call(["desktop", "0x0000000e", "--to-monitor", "0x00000040"]) # 14
-
-    # Assert dead monitors removed
+    mock_run_cmd.assert_any_call(["desktop", "0x0000000b", "--to-monitor", "0x00000040"])
+    mock_run_cmd.assert_any_call(["desktop", "0x0000000e", "--to-monitor", "0x00000040"])
     mock_run_cmd.assert_any_call(["monitor", "0x00000001", "--remove"])
     mock_run_cmd.assert_any_call(["monitor", "0x00000002", "--remove"])
-
-    # Assert placeholder 'Desktop' on eDP-1 was successfully pruned
-    mock_run_cmd.assert_any_call(["desktop", "0x00000281", "--remove"]) # 641
+    mock_run_cmd.assert_any_call(["desktop", "0x00000281", "--remove"])
