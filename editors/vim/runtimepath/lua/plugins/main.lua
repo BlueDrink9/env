@@ -7,12 +7,11 @@ return {
 	{ import = "plugins.firenvim" },
 	{ import = "plugins.vscode-neovim" },
 	{ import = "plugins.lualine" },
-	{ import = "plugins.repl" },
-
+	
 	{ "andymass/vim-matchup", event = "VeryLazy" },
 
 	{
-		"echasnovski/mini.align",
+		"nvim-mini/mini.align",
 		opts = {
 			mappings = { start = "", start_with_preview = "gA" },
 		},
@@ -27,10 +26,9 @@ return {
 
 	{ "https://github.com/NMAC427/guess-indent.nvim", event = "VeryLazy", config = true },
 
-	{ "https://github.com/stevearc/dressing.nvim.git", event = "VeryLazy" },
-
+	
 	{
-		"ggandor/leap.nvim",
+		"https://codeberg.org/andyg/leap.nvim",
 		config = function()
 			-- Will not override existing mappings.
 			require("leap").add_default_mappings()

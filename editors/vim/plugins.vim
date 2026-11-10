@@ -65,8 +65,7 @@ function! IdeMode()
         " manually reload the key plugins for quick ide work.
         Lazy load mason-lspconfig.nvim
         Lazy load nvim-lspconfig
-        Lazy load nvim-cmp
-        Lazy load cmp-buffer
+        Lazy load blink.cmp
         Lazy load refactoring.nvim
     endif
     filetype detect

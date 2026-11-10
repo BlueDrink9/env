@@ -57,24 +57,6 @@ if IsPluginUsed("tcomment_vim")
     " Swap comments from mutliple lines (not all at once)
     xnoremap <leader>gc  :norm! <leader>cc<CR>
 endif
-if IsPluginUsed("vim-showmarks.git")
-    " More advanced version of showmarks. Lots of mappings, eg m]
-    Plugin 'jeetsukumaran/vim-markology', {'on': ['MarkologyEnable', 'MarkologyToggle']}
-    nnoremap m? <cmd>MarkologyEnable<cr>
-    let g:markology_enable=0
-    let g:markology_ignore_type="hpq"
-    let g:markology_include=
-                \ "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.'`^<>[]()\""
-    call add (g:customHLGroups, "link MarkologyHLl LineNr")
-    call add (g:customHLGroups, "link MarkologyHLu LineNr")
-    call add (g:customHLGroups, "link MarkologyHLo LineNr")
-    " call add (g:customHLGroups, "link MarkologyHLo LineNr")
-endif
-
-if IsPluginUsed("vim-mundo")
-    cabbrev undo MundoToggle
-endif
-
 if IsPluginUsed("vim-CtrlXA")
     nmap <Plug>SpeedDatingFallbackUp   <Plug>(CtrlXA-CtrlA)
     nmap <Plug>SpeedDatingFallbackDown <Plug>(CtrlXA-CtrlX)
@@ -107,16 +89,6 @@ if IsPluginUsed("detectindent")
     let g:detectindent_preferred_expandtab = &expandtab
     let g:detectindent_preferred_indent = &shiftwidth
     au myPlugins BufReadPost * silent! :DetectIndent
-endif
-
-" Zoom window to tab, and out again
-if IsPluginUsed('zoomwintab.vim')
-    nnoremap <c-w>z <cmd>ZoomWinTabToggle<cr>
-endif
-
-if IsPluginUsed('bufexplorer')
-  let g:bufExplorerDisableDefaultKeyMapping=1
-  command! Bufs BufExplorer
 endif
 " {]} ---------- Misc----------
 
@@ -256,37 +228,7 @@ if IsPluginUsed("vim-buffersaurus")
     command! Replace2 Bsreplace
     let g:buffersaurus_autodismiss_on_select=0
 endif
-
-" {[}--- Fuzzy finder ---
-if IsPluginUsed("ctrlp.vim")
-    " Look in buffers, files and MRU.
-    let g:ctrlp_cmd = 'CtrlPMixed'
-    if Executable('fd')
-        let g:ctrlp_user_command = 'fd %s -type f'
-    endif
-    let g:ctrlp_map = '<leader><space>'
-    let g:ctrlp_cache_dir = CreateVimDir("ctrpCache") " Purge cache with f5 in buffer
-    let g:ctrlp_clear_cache_on_exit = 0
-    if ideMode == 1
-        let g:ctrlp_extensions = ['tag', 'buffertag', 'rtscript']
-    endif
-endif
-if IsPluginUsed("fzf")
-    call SourcePluginFile("fzf.vim")
-endif
-" {]}--- Fuzzy finder ---
 " {]}--- Searching, replacing, finding ---
-
-" {[} Tags
-if IsPluginUsed("vim-todo")
-    command! Todo OpenTodo
-endif
-if IsPluginUsed("TaskList.vim")
-    " Need a mapping to prevent it auto-creating and overriding <leader>t
-    nmap <Plug>__blank <Plug>TaskList
-    command! Todo TaskList
-endif
-" {]}
 
 "{[} Running/executing
 if IsPluginUsed("vim-dispatch")

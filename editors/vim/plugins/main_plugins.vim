@@ -63,13 +63,6 @@ if v:version >= 703
                 \ }
                 " \ 'event': ['VeryLazy'],
 endif
-" Close buffers without changing window
-Plugin 'https://github.com/moll/vim-bbye', {'on': 'Bdelete'}
-cabbrev bd Bdelete
-if has('nvim-0.5')
-    " Prerequisite for many nvim lua plugins.
-    Plugin 'nvim-lua/plenary.nvim'
-endif
 
 " Custom text for folds, includes indent level. Integrates with fastfold.
 Plugin 'https://github.com/Konfekt/FoldText', {'event': ['VeryLazy']}
@@ -93,22 +86,15 @@ if v:version > 704
         Plugin 'atkenny15/vim-ghosttext', {'on': 'GhostStart'}
     endif
 
-if v:version >= 704
-    " Useful for overviews, and deleting lots of buffers.
-    Plugin 'https://github.com/jlanzarotta/bufexplorer.git', {'on': 'BufExplorer'}
-endif
-
 if !has('nvim')
     Plugin 'https://github.com/tomtom/tcomment_vim'
 endif
 
 
-Plugin 'jeetsukumaran/vim-markology', {'on': ['MarkologyEnable', 'MarkologyToggle']}
 " https://github.com/chentoast/marks.nvim
 "
 " Adds a bunch of unix-mapped filesystem ops from vim
 Plugin 'https://github.com/tpope/vim-eunuch', {'event': ['VeryLazy']}
-Plugin 'https://github.com/simnalamburt/vim-mundo', {'on': 'MundoToggle'}
 
 " Way better search and replace, also case coersion
 Plugin 'https://github.com/tpope/vim-abolish', {'keys': ['cr'],
@@ -146,8 +132,6 @@ if HasPython() && Executable('pfp')
     Plugin 'https://github.com/d0c-s4vage/pfp-vim', {'on': 'HexEditFull'}
 endif
 
-" Limelight Looks really nice, esp for prose. Highlight slightly current paragraph.
-Plugin 'junegunn/limelight.vim', { 'for': g:proseFileTypes, 'on': 'Limelight' }
 if !has('nvim')
     " Alternative is vim-sleuth, which seems overzealous.
     " This plugin has several forks. I am using the most updated one, but may be
@@ -156,12 +140,6 @@ if !has('nvim')
     Plugin 'https://github.com/idbrii/detectindent'
 endif
 
-" Zoom window to tab, and out again
-Plugin 'https://github.com/troydm/zoomwintab.vim', {'on': 'ZoomWinTabToggle'}
-" fzf for all the shortcuts defined in vim
-Plugin 'https://github.com/sunaku/vim-shortcut', {'on': 'Shortcut'}
-" Confirms opening empty file on tabcomplete
-Plugin 'https://github.com/EinfachToll/DidYouMean', {'event': ['BufReadPre']}
 " Not lazyloading because I want completions asap
 if Executable("zoxide")
     Plugin 'nanotee/zoxide.vim'
@@ -216,10 +194,12 @@ Plugin 'PeterRincker/vim-argumentative', {
             \ })}
 " See https://github.com/kana/vim-textobj-user/wiki for more, esp for
 " lang-specific.
+if !has("nvim")
 " Add text object for whole buffer
 Plugin 'https://github.com/kana/vim-textobj-entire', {
             \ 'dependencies': ['kana/vim-textobj-user'],
             \ 'on': ['<Plug>(textobj-entire-a)', '<Plug>(textobj-entire-i)']}
+endif
 " av/iv for lines continued by \, but only in specific filetypes >:
 Plugin 'rhysd/vim-textobj-continuous-line', {
             \ 'keys': MakeLazyKeys({'vo': ['iv', 'av']}),
@@ -303,48 +283,7 @@ if !(has("nvim") || has("patch-8.1.0271"))
     Plugin 'https://github.com/markonm/traces.vim'
 endif
 
-" Maybe ide candidates...
-" {[}--- Fuzzy finder ---
-" fzf only works in terminal, use ctrlp otherwise
-if (!g:hasGUI || has('terminal') || has('nvim'))
-    " PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run the install
-    " script
-    Plugin 'junegunn/fzf', {
-                \ 'do': { -> fzf#install() },
-                \ 'on': [
-                \ 'FZF',
-                \ 'Buffers',
-                \ 'BLines',
-                \ 'Lines',
-                \ 'Tags',
-                \ 'Commands',
-                \ 'History'
-                \ ]}
-    " Adds some vim-specific fzf commands.
-    Plugin 'junegunn/fzf.vim', {'dependencies': ['junegunn/fzf'],
-                \ 'on': [
-                \ 'Buffers',
-                \ 'BLines',
-                \ 'Lines',
-                \ 'Tags',
-                \ 'Commands',
-                \ 'History',
-                \ 'RG'
-                \ ]}
-else
-    Plugin 'https://github.com/ctrlpvim/ctrlp.vim'
-endif
-" {]}--- Fuzzy finder ---
-" {]}--- Searching, replacing, finding ---
-
-" {[} Tags
-if has('timers')
-    Plugin 'https://github.com/wsdjeg/vim-todo', {'on': 'OpenTodo'}
-else
-    " :TaskList to show list of TODOs etc.
-    Plugin 'https://github.com/vim-scripts/TaskList.vim', {'on': ['Tasklist']}
-endif
-" {]}
+" Maybe ide candidates..." {]}--- Searching, replacing, finding ---
 
 "{[} Running/executing
 " Run shell commands async (uses python)

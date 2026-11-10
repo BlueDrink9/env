@@ -4,50 +4,45 @@
 local idemaps = vim.g.IDE_mappings
 
 local lazyvim_extras = {
-	{ import = "lazyvim.plugins.extras.coding.yanky"},
-	{ import = "lazyvim.plugins.extras.coding.luasnip"},
-	{ import = "lazyvim.plugins.extras.dap.core"},
-	{ import = "lazyvim.plugins.extras.dap.nlua"},
+	{ import = "lazyvim.plugins.extras.coding.yanky" },
+	{ import = "lazyvim.plugins.extras.coding.luasnip" },
+	{ import = "lazyvim.plugins.extras.dap.core" },
+	{ import = "lazyvim.plugins.extras.dap.nlua" },
 
-	{ import = "lazyvim.plugins.extras.coding.copilot"},
-	{ import = "lazyvim.plugins.extras.coding.copilot-chat" },
+{ import = "lazyvim.plugins.extras.ai.copilot" },
+  { import = "lazyvim.plugins.extras.ai.copilot-chat" },
 	-- { import = "lazyvim.plugins.extras.coding.codeium" },
 
 	-- { import = "lazyvim.plugins.extras.lang.python", cond = IsPluginUsed("LazyVim") },
-	{ import = "lazyvim.plugins.extras.lang.rust"},
-	{ import = "lazyvim.plugins.extras.lang.yaml"},
-	{ import = "lazyvim.plugins.extras.lang.json"},
-	{ import = "lazyvim.plugins.extras.lang.r"},
+	{ import = "lazyvim.plugins.extras.lang.rust" },
+	{ import = "lazyvim.plugins.extras.lang.yaml" },
+	{ import = "lazyvim.plugins.extras.lang.json" },
+	{ import = "lazyvim.plugins.extras.lang.r" },
 
-	{ import = "lazyvim.plugins.extras.test.core"},
+	{ import = "lazyvim.plugins.extras.test.core" },
 
-	{ import = "lazyvim.plugins.extras.formatting.prettier"},
+	{ import = "lazyvim.plugins.extras.formatting.prettier" },
 	{ import = "lazyvim.plugins.extras.coding.neogen" },
-	{ import = "lazyvim.plugins.extras.util.project"},
+	{ import = "lazyvim.plugins.extras.util.project" },
 
 	-- { import = "lazyvim.plugins.extras.lsp.none-ls", cond = IsPluginUsed("LazyVim") },
-
 }
 for _, spec in pairs(lazyvim_extras) do
-	spec.enabled=IsPluginUsed("LazyVim")
+	spec.enabled = IsPluginUsed("LazyVim")
 end
 
 return {
 	lazyvim_extras,
 
-	{ import = "plugins.cmp" },
 	{ import = "plugins.lspconfig" },
 	{ import = "plugins.nvim-dap" },
-	{ import = "plugins.telescope" },
-
-	{ import = "plugins.repl"},
 
 	-- Dependency for a lot of plugins
 	{ "nvim-lua/plenary.nvim", lazy = true },
 
 	-- For installing LSPs (and other packages)
 	{
-		"williamboman/mason.nvim",
+		"mason-org/mason.nvim",
 		cmd = "Mason",
 
 		opts = function(_, opts)
@@ -81,14 +76,15 @@ return {
 				"MasonInstallMine",
 				-- Best practice is to check/refresh the package registry before installing
 				function()
-					require("mason-registry").refresh(
-						function () vim.cmd.MasonInstall(to_install) end
-					)
+					require("mason-registry").refresh(function()
+						vim.cmd.MasonInstall(to_install)
+					end)
 				end,
-			{})
+				{}
+			)
 
 			override_opts = {
-				ensure_installed=false,
+				ensure_installed = false,
 				ui = {
 					icons = {
 						package_installed = "✓",
@@ -101,7 +97,7 @@ return {
 		end,
 
 		dependencies = {
-			"https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim"
+			"https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim",
 		},
 	},
 
@@ -109,34 +105,34 @@ return {
 	-- {'nvim-notify', opt={stages="static"}},
 
 	-- {[} ---------- Visual ----------
-	{
-		"folke/noice.nvim",
-		enabled = false,
-		opts = {
-			cmdline = {
-				-- view = "cmdline",  -- or "cmdline_popup" for fancy.
-				-- Sent to nui.nvim's input popup
-				input = {
-					-- input:map("n", "<esc>", input.input_props.on_close, { noremap = true })
-				},
-			},
-			popupmenu = {
-				enabled = true,
-			},
-			presets = {
-				command_palette = true,
-				long_message_to_split = true,
-			},
-			messages = {
-				view_search = false,
-			},
-			lsp = {
-				progress = {
-					enabled = false,
-				},
-			},
-		},
-	},
+	-- {
+	-- 	"folke/noice.nvim",
+	-- 	-- enabled = false,
+	-- 	opts = {
+	-- 		cmdline = {
+	-- 			-- view = "cmdline",  -- or "cmdline_popup" for fancy.
+	-- 			-- Sent to nui.nvim's input popup
+	-- 			input = {
+	-- 				-- input:map("n", "<esc>", input.input_props.on_close, { noremap = true })
+	-- 			},
+	-- 		},
+	-- 		popupmenu = {
+	-- 			enabled = true,
+	-- 		},
+	-- 		presets = {
+	-- 			command_palette = true,
+	-- 			long_message_to_split = true,
+	-- 		},
+	-- 		messages = {
+	-- 			view_search = false,
+	-- 		},
+	-- 		lsp = {
+	-- 			progress = {
+	-- 				enabled = false,
+	-- 			},
+	-- 		},
+	-- 	},
+	-- },
 	-- override my normal mapping to ctrl-f, since noice can handle it like normal
 	-- vim.api.nvim_create_autocmd(
 	-- "VimEnter",
@@ -148,62 +144,6 @@ return {
 	--      vim.api.nvim_set_keymap('c', "vk", "<esc>", { noremap=true, silent=true })
 	--   end,
 	--  })
-
-	{
-		"https://github.com/lukas-reineke/indent-blankline.nvim.git",
-		main = "ibl",
-		opts = {
-			indent = {
-				char = "┆",
-				tab_char = "┆",
-				-- char_blankline = "",
-				highlight = {
-					"IndentBlanklineIndent1",
-					"IndentBlanklineIndent2",
-					"IndentBlanklineIndent3",
-					"IndentBlanklineIndent4",
-					"IndentBlanklineIndent5",
-				},
-			},
-			-- May be a touch slow
-			scope = {
-				show_start = true,
-				show_exact_scope = true,
-				-- show_end = false,
-			},
-		},
-		config = function(_, opts)
-			opts.scope.enabled = IsPluginUsed("nvim-treesitter")
-
-			local hooks = require("ibl.hooks")
-			hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
-			hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_tab_indent_level)
-
-			local indentcolours = {}
-			if vim.opt.termguicolors then
-				-- Auto-gen some greys
-				for i = 100, 201, (200 - 100) / 5 do
-					table.insert(indentcolours, string.format("#%02x%02x%02x", i, i, i))
-				end
-			else
-				indentcolours = {
-					"Red",
-					"Yellow",
-					"Green",
-					"Blue",
-					"Purple",
-				}
-			end
-
-			hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-				for i, colour in pairs(indentcolours) do
-					vim.api.nvim_set_hl(0, "IndentBlanklineIndent" .. i, { fg = colour, nocombine = true })
-				end
-			end)
-
-			require("ibl").setup(opts)
-		end,
-	},
 
 	{
 		"folke/which-key.nvim",
@@ -256,7 +196,7 @@ return {
 	-- 	"jay-babu/mason-null-ls.nvim",
 	-- 	event = { "BufReadPre", "BufNewFile" },
 	-- 	dependencies = {
-	-- 		"williamboman/mason.nvim",
+	-- 		"mason-org/mason.nvim",
 	-- 		"nvimtools/none-ls.nvim",
 	-- 	},
 	-- 	opts = {
@@ -309,7 +249,7 @@ return {
 			"sindrets/diffview.nvim", -- optional
 			-- "ibhagwan/fzf-lua",              -- optional
 		},
-		tag=vim.fn.has("nvim-0.10") == 0 and "v0.0.1" or nil,
+		tag = vim.fn.has("nvim-0.10") == 0 and "v0.0.1" or nil,
 	},
 
 	{
@@ -318,7 +258,7 @@ return {
 		-- to time. For now we recommend pinning to the latest minor version
 		-- like so:
 		version = "~0.1.0",
-		ft={"r", "rmd", "rnoweb", "quarto", "rhelp"},
+		ft = { "r", "rmd", "rnoweb", "quarto", "rhelp" },
 		-- Requirements include > 0.9.5, cmake/make (for nvimcon r pkg), treesitter r, r >= 4.0.0
 		init = function()
 			vim.g.rout_follow_colorscheme = true
@@ -336,13 +276,15 @@ return {
 			-- objbr_openlist = false  -- Show lists elements
 			-- objbr_allnames = false  -- Show hidden objects (start with .)
 			objbr_mappings = {
-				c = 'class',
-				l = 'length',
-				n = 'names',
-				s = 'summary',
-				t = 'table',
-				gl = 'dplyr::glimpse({object})',
-				gv = function() require('r.browser').toggle_view() end,
+				c = "class",
+				l = "length",
+				n = "names",
+				s = "summary",
+				t = "table",
+				gl = "dplyr::glimpse({object})",
+				gv = function()
+					require("r.browser").toggle_view()
+				end,
 			},
 			bracketed_paste = true,
 			editing_mode = "vi",
@@ -366,7 +308,6 @@ return {
 					for map, cmd in pairs(nmaps) do
 						vim.keymap.set("n", map, cmd, { buffer = true })
 					end
-
 				end,
 			},
 			-- disable_cmds = {"RSetwd", "RDputObj"}
@@ -384,80 +325,45 @@ return {
 	--  end,
 	--  event = "InsertEnter",
 	-- },
-	-- { "hrsh7th/vim-vsnip-integ", event = "InsertEnter" },
-
-	{
-		"L3MON4D3/LuaSnip",
-		init = function()
-			vim.g.snippet_dir = vim.fn.PathExpand(vim.g.configDir  .. "/runtimepath/snippets")
-			vim.api.nvim_create_user_command("SnipEdit", function(opts)
-					args = opts.args or nil
-					local snipPath = vim.fn.PathExpand(vim.g.snippet_dir .. "/" .. vim.bo.filetype .. ".json")
-					vim.cmd(":edit " .. snipPath)
-				end,
-				{}
-			)
-		end,
-		keys = {
-			{ "<C-e>", function()
-				if require("luasnip").expand_or_locally_jumpable() then
-					require("luasnip").expand_or_jump()
-				else
-					return "<C-e>"
-				end
-				end,
-				expr = true, silent = true, mode = "i", }
-		},
-		opts = function(_, opts)
-			-- load snippets from path/of/your/nvim/config/my-cool-snippets
-			require("luasnip.loaders.from_snipmate").lazy_load({
-				paths = { vim.g.snippet_dir },
-			})
-			require("luasnip.loaders.from_vscode").lazy_load({
-				paths = { vim.g.snippet_dir },
-			})
-		end,
-	},
 
 	{
 		"goerz/jupytext.nvim",
-		ft="ipynb",
+		ft = "ipynb",
 	},
 
 	-- build123d snippets, vscode formatted
 	{
-		url="https://gist.github.com/6233ac42632d9098c99da029fe0615c2.git",
-		name="build123d-OCP.code-snippets",
-		ft="python",
-		build=function(_)
+		url = "https://gist.github.com/6233ac42632d9098c99da029fe0615c2.git",
+		name = "build123d-OCP.code-snippets",
+		ft = "python",
+		build = function(_)
 			local package_json = vim.json.encode({
-				name= "build123d-OCP.code-snippets",
-				engines= {
-					vscode= "^1.11.0"
+				name = "build123d-OCP.code-snippets",
+				engines = {
+					vscode = "^1.11.0",
 				},
-				contributes= {
-					snippets= {
+				contributes = {
+					snippets = {
 						{
-							language= {
+							language = {
 								"python",
 							},
-							path= "./build123d-OCP.code-snippets/snippets"
-						}
-					}
-				}
+							path = "./build123d-OCP.code-snippets/snippets",
+						},
+					},
+				},
 			})
-			local file = io.open(vim.g.pluginInstallPath ..
-				"/build123d-OCP.code-snippets/package.json", "w")
-			 if file then
-				 file:write(package_json)
-				 file:close()
+			local file = io.open(vim.g.pluginInstallPath .. "/build123d-OCP.code-snippets/package.json", "w")
+			if file then
+				file:write(package_json)
+				file:close()
 			end
-		end
+		end,
 	},
 
-	{ "SidhuK/r-snippets", ft = {"qmd", "quarto",}},
+	{ "SidhuK/r-snippets", ft = { "qmd", "quarto" } },
 
-	{ "polypus74/trusty_rusty_snippets", ft="rust"},
+	{ "polypus74/trusty_rusty_snippets", ft = "rust" },
 
 	{ "octaltree/virtualsnip", build = "make", event = "InsertEnter" },
 
@@ -485,12 +391,6 @@ return {
 				},
 			},
 		},
-	},
-
-	{ -- docs generator
-		"kkoomen/vim-doge",
-		build = ":call doge#install()",
-		cmd = "DogeGenerate",
 	},
 
 	{
@@ -531,56 +431,53 @@ return {
 					accept = "<C-j>",
 					next = "<M-j>",
 					previous = "<M-k>",
-				}
+				},
 			},
 			panel = {
 				keymap = {
 					open = "<M-e>",
-				}
-			}
+				},
+			},
 		},
 	},
 
 	{
-		'linux-cultist/venv-selector.nvim',
-		dependencies = { 'neovim/nvim-lspconfig', 'nvim-telescope/telescope.nvim' },
+		"linux-cultist/venv-selector.nvim",
+		dependencies = { "neovim/nvim-lspconfig", "nvim-telescope/telescope.nvim" },
 		opts = {
-			name = {"venv", ".venv"},
+			name = { "venv", ".venv" },
 			auto_refresh = true,
 			dap_enabled = true,
 		},
 		cmd = { "VenvSelect", "VenvSelectCached" },
 	},
 
-	{ "quarto-dev/quarto-nvim",
-		ft = {"qmd", "quarto", "ipynb"},
+	{
+		"quarto-dev/quarto-nvim",
+		ft = { "qmd", "quarto", "ipynb" },
 
 		dependencies = {
 			"jmbuhr/otter.nvim",
 			"nvim-treesitter/nvim-treesitter",
-			{ 'GCBallesteros/jupytext.nvim',
+			{
+				"GCBallesteros/jupytext.nvim",
 				-- directly open ipynb files as quarto docuements
 				-- and convert back behind the scenes
 				opts = {
 					custom_language_formatting = {
 						python = {
-							extension = 'qmd',
-							style = 'quarto',
-							force_ft = 'quarto',
+							extension = "qmd",
+							style = "quarto",
+							force_ft = "quarto",
 						},
 						r = {
-							extension = 'qmd',
-							style = 'quarto',
-							force_ft = 'quarto',
+							extension = "qmd",
+							style = "quarto",
+							force_ft = "quarto",
 						},
 					},
 				},
 			},
-
 		},
-
 	},
-
-
-
 }

@@ -64,10 +64,7 @@ Plugin 'tommcdo/vim-ninja-feet',
 " Highlight f and t chars to get where you want.
 if !has('nvim')
     Plugin 'unblevable/quick-scope'
-endif
-" Distraction-free vim.
-Plugin 'https://github.com/junegunn/goyo.vim', {'on' : ['Goyo',]}
-" {]}--- Visual ---
+endif" {]}--- Visual ---
 
 " {[} --- TMUX ---
 if $TMUX !=? ""

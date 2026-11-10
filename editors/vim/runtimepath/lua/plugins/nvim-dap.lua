@@ -167,7 +167,7 @@ local specs = {
       dependencies = {
 
          {'jayp0521/mason-nvim-dap.nvim',
-            dependencies={'williamboman/mason.nvim', 'mfussenegger/nvim-dap'},
+            dependencies={'mason-org/mason.nvim', 'mfussenegger/nvim-dap'},
             cmd = { "DapInstall", "DapUninstall" },
             opts = {
                -- ensure_installed = {'stylua', 'jq'}

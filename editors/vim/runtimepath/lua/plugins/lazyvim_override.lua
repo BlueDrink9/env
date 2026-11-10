@@ -4,20 +4,35 @@ end
 
 local spec = {
 	{
+		"LazyVim/LazyVim",
+		opts = {
+			defaults = {
+				keymaps = false,
+			},
+		},
+		init = function()
+			vim.g.autoformat = false
+			vim.g.deprecation_warnings = true
+			pcall(vim.keymap.del, "n", "<leader>c")
+			pcall(vim.keymap.del, "n", "<leader>s")
+		end,
+	},
+
+	{
 		"neovim/nvim-lspconfig",
 		cond = vim.g.ideMode == 1,
 		opts = function(_, opts)
 			-- Ensure we use my default config rather than lazyvim's.
 			opts.diagnostics = vim.diagnostic.config()
 			-- Prefix with icon, depending on severity
-			if (vim.g.useNerdFont == 1 and vim.fn.has("nvim-0.10") == 1) then
+			if vim.g.useNerdFont == 1 and vim.fn.has("nvim-0.10") == 1 then
 				-- opts.diagnostics.virtual_text.prefix = "icons"
 				DiagnosticVirtualTextPrefix = function(diagnostic)
 					local symbols = {
-						require'lazyvim.util'.config.icons.diagnostics.Error,
-						require'lazyvim.util'.config.icons.diagnostics.Warn,
-						require'lazyvim.util'.config.icons.diagnostics.Hint,
-						require'lazyvim.util'.config.icons.diagnostics.Info,
+						require("lazyvim.util").config.icons.diagnostics.Error,
+						require("lazyvim.util").config.icons.diagnostics.Warn,
+						require("lazyvim.util").config.icons.diagnostics.Hint,
+						require("lazyvim.util").config.icons.diagnostics.Info,
 					}
 					return symbols[diagnostic.severity]
 				end
@@ -25,38 +40,17 @@ local spec = {
 			local keys = require("lazyvim.plugins.lsp.keymaps").get()
 			-- Clear default lsp keymaps
 			-- for i=0, #keys do keys[i]=nil end
-			keys[#keys + 1] = { "<leader>ca", false, mode={"v", "n"} }
-			keys[#keys + 1] = { "<leader>cc", false, mode={"v", "n"} }
-			keys[#keys + 1] = { "<leader>cs", false, mode={"v", "n"} }
-			keys[#keys + 1] = { "<c-k>", false, mode={"i"} }
+			keys[#keys + 1] = { "<leader>ca", false, mode = { "v", "n" } }
+			keys[#keys + 1] = { "<leader>cc", false, mode = { "v", "n" } }
+			keys[#keys + 1] = { "<leader>cs", false, mode = { "v", "n" } }
+			keys[#keys + 1] = { "<c-k>", false, mode = { "i" } }
 		end,
 	},
 
-	{ "hrsh7th/nvim-cmp", cond = vim.g.ideMode == 1 },
 	{
 		"conform.nvim",
 		cond = vim.g.ideMode == 1,
 		keys = { { "<leader>cF", false, mode = { "v", "n" } } },
-	},
-	{ "indent-blankline.nvim", cond = vim.g.ideMode == 1 },
-	{ "nvim-telescope/telescope.nvim", cond = vim.g.ideMode == 1 },
-
-	{
-		"folke/noice.nvim",
-		enabled = false,
-		-- opts will be merged with the parent spec
-		opts = {
-			messages = { enabled = false },
-			cmdline = { enabled = false },
-		},
-		config = function()
-			vim.cmd("echom noice loaded")
-			vim.opt.lazyredraw = false
-		end,
-		init = function()
-			vim.opt.lazyredraw = false
-		end,
-		event = "VeryLazy",
 	},
 
 	{
@@ -64,19 +58,20 @@ local spec = {
 		cond = vim.g.liteMode == 0,
 		opts = {
 			ensure_installed = false,
+			auto_install = false,
 		},
 	},
 
 	{
-		"williamboman/mason.nvim",
-		opts_extend = { },
+		"mason-org/mason.nvim",
+		opts_extend = {},
 		opts = {
 			ensure_installed = {},
 		},
 	},
 
 	{
-		"echasnovski/mini.surround",
+		"nvim-mini/mini.surround",
 		enabled = false,
 		opts = {
 			mappings = {
@@ -92,7 +87,7 @@ local spec = {
 	},
 
 	{
-		"echasnovski/mini.comment",
+		"nvim-mini/mini.comment",
 		enabled = false,
 		opts = {
 			mappings = {
@@ -104,37 +99,27 @@ local spec = {
 	},
 
 	{
-		"echasnovski/mini.ai",
-		opts = {
-			custom_textobjects = {
-				-- Replace class key with C so that comment can be c
-				C = function()
-					return require("mini.ai").config.custom_textobjects.c
-				end,
-			},
-		},
+		"nvim-mini/mini.ai",
+		opts = function(_, opts)
+			opts.mappings = vim.tbl_deep_extend("force", opts.mappings or {}, {
+				around = "a",
+				inside = "i",
+				around_next = "",
+				inside_next = "",
+				around_last = "",
+				inside_last = "",
+			})
+			opts.custom_textobjects = opts.custom_textobjects or {}
+			opts.custom_textobjects.C = function()
+				return require("mini.ai").config.custom_textobjects.c
+			end
+			return opts
+		end,
 		keys = {
 			{ "a", mode = "o" },
 			{ "i", mode = "o" },
 		},
 	},
-
-	{ "L3MON4D3/LuaSnip", cond = vim.g.ideMode == 1, },
-
-	-- {
-	-- 	"nvimtools/none-ls.nvim",
-	-- 	cond = vim.g.ideMode == 1,
-	-- 	opts = function()
-	-- 		local nls = require("null-ls")
-	-- 		return {
-	-- 			sources = {
-	-- 				nls.builtins.formatting.stylua,
-	-- 				nls.builtins.formatting.shfmt,
-	-- 				-- nls.builtins.diagnostics.flake8,
-	-- 			},
-	-- 		}
-	-- 	end,
-	-- },
 
 	{
 		"folke/which-key.nvim",
@@ -146,10 +131,10 @@ local spec = {
 					mode = { "x", "v" },
 					-- Remove these because they begin operator funcs, which get overritten
 					-- by which-key here if lazy-loaded. (E.g. comment)
-					{"<leader>c",  nil},
-					{"<leader>s",  nil},
+					{ "<leader>c", nil },
+					{ "<leader>s", nil },
 					-- {"<leader>u",  nil},
-				}
+				},
 			},
 		},
 	},
@@ -176,13 +161,13 @@ local spec = {
 	},
 
 	{
-		'nvim-lualine/lualine.nvim',
-		enabled=vim.g.liteMode == 0,
+		"nvim-lualine/lualine.nvim",
+		enabled = vim.g.liteMode == 0,
 	},
 
 	{
 		"folke/todo-comments.nvim",
-		enabled=vim.g.ideMode == 1,
+		enabled = vim.g.ideMode == 1,
 		keys = {
 			{ "<leader>st", false },
 			{ "<leader>sT", false },
@@ -214,52 +199,13 @@ local spec = {
 	{
 		"danymat/neogen",
 		keys = {
-			{"<leader>cn", false},
+			{ "<leader>cn", false },
 		},
 	},
 
 	{
 		"MagicDuck/grug-far.nvim",
-		keys = { { "<leader>sr", false, mode={"n", "v"} } }
-	},
-
-	{
-		"nvim-cmp",
-		optional = IsPluginUsed("copilot-cmp"),
-		opts = function(_, opts)
-			for _, v in pairs(opts.sources) do
-				if v.name == "copilot" then
-					v.priority = 1
-					break
-				end
-			end
-			for i, v in pairs(opts.sources) do
-				if v.name == "buffer" then
-					-- Remove the first lazyvim buffer source, so that my one (with custom sorting) takes precedence.
-					opts.sources[i] = {}
-					break
-				end
-			end
-
-			local cmp = require("cmp")
-			opts.sorting = {
-				priority_weight = 1,
-				comparators = {
-					-- Below is the default comparitor list and order for nvim-cmp
-					cmp.config.compare.offset,
-					-- cmp.config.compare.scopes, --this is commented in nvim-cmp too
-					cmp.config.compare.exact,
-					require("copilot_cmp.comparators").prioritize,
-					cmp.config.compare.score,
-					cmp.config.compare.recently_used,
-					cmp.config.compare.locality,
-					cmp.config.compare.kind,
-					cmp.config.compare.sort_text,
-					cmp.config.compare.length,
-					cmp.config.compare.order,
-				},
-			}
-		end,
+		keys = { { "<leader>sr", false, mode = { "n", "v" } } },
 	},
 
 	{
@@ -269,14 +215,34 @@ local spec = {
 			{ "<S-l>", false },
 			{ "<left>", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev Buffer" },
 			{ "<right>", "<cmd>BufferLineCycleNext<cr>", desc = "Next Buffer" },
-		}
-
+		},
 	},
 
+	-- {
+	--     "folke/noice.nvim",
+	--     opts = {
+	--       -- Keeps the command line at the very bottom where it belongs
+	--       cmdline = { view = "cmdline" },
+	--       -- Lets Noice catch the "Press Enter" warnings and route them to Snacks
+	--       messages = { enabled = true },
+	--       -- Disables the annoying popup when you search with '/'
+	--       search = { view = "cmdline" },
+	--     },
+	--   },
 }
 
-for _, spec in ipairs(spec) do
-	spec.optional = true
+for _, s in ipairs(spec) do
+	s.optional = true
 end
+
+-- Inject lightline AFTER making everything else optional,
+-- so it is guaranteed to load in liteMode.
+table.insert(spec, {
+	"itchyny/lightline.vim",
+	lazy = false,
+	cond = function()
+		return vim.g.liteMode == 1
+	end,
+})
 
 return spec

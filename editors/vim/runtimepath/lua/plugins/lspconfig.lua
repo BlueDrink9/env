@@ -250,7 +250,7 @@ return {
 		dependencies = {
 			-- Relying on lazyvim for these
 			-- { "mason.nvim"},
-			-- { "williamboman/mason-lspconfig.nvim"},
+			-- { "mason-org/mason-lspconfig.nvim"},
 			-- Create appropriate colours for old colourschemes
 			{ "https://github.com/folke/lsp-colors.nvim.git"},
 		}

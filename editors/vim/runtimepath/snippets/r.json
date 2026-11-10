@@ -1,0 +1,9 @@
+{
+	"pipe": {
+		"prefix": ">>",
+		"body": [
+			"%>%",
+		],
+		"description": "%>%"
+	}
+}

@@ -54,7 +54,6 @@ nnoremap ` '
 nnoremap Y y$
 " Remember cursor location and reformat file
 nnoremap g= gg=G$()
-nnoremap gQ gggqG$()
 " Insertmode deletes create an undopoint first, as do punctuation
 inoremap <c-u> <c-g>u<c-u>
 inoremap <c-w> <c-g>u<c-w>
@@ -100,9 +99,6 @@ vnoremap g/ "-y/\V<C-R>=escape(@-,'/\')<CR><CR>
 nnoremap <leader>cd <cmd>lcd %:p:h<CR>:pwd<CR>
 " Autocomplete from tags
 " inoremap <c-]> <c-x><c-]>
-" Quickly re-run last macro with one key (also stop accidentally entering Ex).
-" Redundant in neovim
-nnoremap Q @@
 " Run last macro on selected lines
 vnoremap g@ :norm! @@<CR>
 " Used as a weird undo. Good candidate for remapping.
