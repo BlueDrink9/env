@@ -155,4 +155,13 @@ return {
   --   end
   -- },
 
+  {
+    "itchyny/lightline.vim",
+    lazy = false,
+    disabled = false,
+    cond = function()
+      return vim.g.liteMode == 1
+    end,
+  },
+
 }

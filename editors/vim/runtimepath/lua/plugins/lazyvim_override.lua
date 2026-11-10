@@ -235,14 +235,4 @@ for _, s in ipairs(spec) do
 	s.optional = true
 end
 
--- Inject lightline AFTER making everything else optional,
--- so it is guaranteed to load in liteMode.
-table.insert(spec, {
-	"itchyny/lightline.vim",
-	lazy = false,
-	cond = function()
-		return vim.g.liteMode == 1
-	end,
-})
-
 return spec
