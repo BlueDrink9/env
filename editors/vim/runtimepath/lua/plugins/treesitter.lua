@@ -2,39 +2,36 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    branch = "main", -- Modern Treesitter engine
+    branch = "main",
+    lazy = false, -- The 'main' rewrite does not support lazy-loading
     build = ":TSUpdate",
-    event = { "BufReadPost", "BufNewFile" },
-    opts = {
-      ensure_installed = {}, -- Restored manual control
-      auto_install = false,  -- Restored manual control
-    },
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
+    config = function()
+      local ts = require("nvim-treesitter")
 
-      -- Restored your manual install wrapper
+      ts.setup()
+
+      -- Manual parser installation command for the 'main' branch API
       vim.api.nvim_create_user_command("TSInstallMine", function()
         local parsers = {
           "bash", "c", "json", "lua", "make", "markdown", "markdown_inline",
-          "python", "query", "r", "regex", "sql", "toml", "vim", "vimdoc", "yaml"
+          "python", "query", "r", "regex", "sql", "toml", "vim", "vimdoc", "yaml",
         }
-        require("nvim-treesitter.install").ensure_installed(parsers)
-      end, {})
+        ts.install(parsers)
+      end, { desc = "Install personal set of Treesitter parsers" })
 
-      -- Native 0.12/0.13 FileType attachment
       vim.api.nvim_create_autocmd("FileType", {
         group = vim.api.nvim_create_augroup("NativeTreesitterAttach", { clear = true }),
         callback = function(args)
           local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
           if lang and not pcall(vim.treesitter.start, args.buf, lang) then
-            -- Parser unavailable; fallback to syntax
+            -- Parser unavailable or compiling; fallback to standard syntax
           end
           vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
           vim.wo.foldmethod = "expr"
         end,
       })
 
-      -- Core AST sibling movement: bypasses deprecated ts_utils
+      -- Core AST sibling movement using native TSNode traversal
       vim.keymap.set("n", "],", function()
         local node = vim.treesitter.get_node()
         if node and node:next_sibling() then
@@ -53,7 +50,7 @@ return {
     end,
   },
 
-  -- Keep textobjects plugin on main branch
+  -- Keep textobjects module on the 'main' branch
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     branch = "main",
