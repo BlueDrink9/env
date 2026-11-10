@@ -33,6 +33,7 @@
       ripgrep
       fd
       unstable.fzf
+      tree-sitter
       unzip
       zoxide
       rsync
@@ -45,7 +46,7 @@
       nix-search-cli
       nix-output-monitor
 
-      jujutsu
+      unstable.jujutsu
       lazyjj
     ];
 
