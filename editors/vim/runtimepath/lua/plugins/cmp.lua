@@ -33,6 +33,11 @@ return {
         end,
         desc = "Terminate snippet session on entering Normal mode",
       })
+      vim.api.nvim_create_user_command("SnipEdit", function()
+        local snip_dir = vim.fn.stdpath("config") .. "/runtimepath/snippets"
+        local target = snip_dir .. "/" .. vim.bo.filetype .. ".json"
+        vim.cmd.edit(target)
+      end, { desc = "Edit snippet file for current filetype" })
     end,
   },
 

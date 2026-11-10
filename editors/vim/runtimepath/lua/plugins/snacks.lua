@@ -67,7 +67,7 @@ return {
     dim = { enabled = true },
     zen = { enabled = true },
     input = { enabled = true },
-    notifier = { enabled = false },
+    notifier = { enabled = true },
     dashboard = { enabled = false },
   },
   keys = {

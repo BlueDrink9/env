@@ -5,7 +5,6 @@ local idemaps = vim.g.IDE_mappings
 
 local lazyvim_extras = {
 	{ import = "lazyvim.plugins.extras.coding.yanky" },
-	{ import = "lazyvim.plugins.extras.coding.luasnip" },
 	{ import = "lazyvim.plugins.extras.dap.core" },
 	{ import = "lazyvim.plugins.extras.dap.nlua" },
 
@@ -313,18 +312,6 @@ return {
 			-- disable_cmds = {"RSetwd", "RDputObj"}
 		},
 	},
-
-	-- Switching to luasnip via lazyvim
-	-- {
-	--  "https://github.com/hrsh7th/vim-vsnip",
-	--  keys = {
-	--      { idemaps.snippetExpand, "<Plug>(vsnip-expand-or-jump)", mode = { "i", "v" } },
-	--  },
-	--  config = function()
-	--      vim.g.vsnip_snippet_dir = vim.fn.PathExpand(vim.g.plugin_config_dir .. "/../runtimepath/snippets")
-	--  end,
-	--  event = "InsertEnter",
-	-- },
 
 	{
 		"goerz/jupytext.nvim",
