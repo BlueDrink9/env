@@ -30,13 +30,17 @@ bsp_border_reset(){
 }
 export bsp_border_reset
 
-. "$BSPWM_CONFIG_DIR"/companion_programs.sh
+# Only spawn background programs and manager on cold session start ($1 == 0).
+# On 'bspc wm -r' ($1 > 0), existing processes continue running uninterrupted.
+if [ "${1:-0}" -eq 0 ]; then
+  . "$BSPWM_CONFIG_DIR"/companion_programs.sh
 
-#  if [[ $(hostname) == 'myhost' ]]; then
-# bspc monitor -d I II III IV V VI VII VIII IX X
-# bspc monitor -d " " " " " " "4"
+  #  if [[ $(hostname) == 'myhost' ]]; then
+  # bspc monitor -d I II III IV V VI VII VIII IX X
+  # bspc monitor -d " " " " " " "4"
 
-/bin/env python3 "$BSPWM_CONFIG_DIR"/scripts/bspwm_manager.py &
+  /bin/env python3 "$BSPWM_CONFIG_DIR"/scripts/bspwm_manager.py &
+fi
 
 . "$BSPWM_CONFIG_DIR"/rules.sh
 bspc config external_rules_command "$BSPWM_CONFIG_DIR"/external_rules.sh

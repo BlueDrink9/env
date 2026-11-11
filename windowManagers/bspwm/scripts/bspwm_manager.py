@@ -6,8 +6,10 @@ Tracks and manipulates monitors and workspaces strictly via atomic bspc JSON dum
 
 import argparse
 from dataclasses import dataclass
+import fcntl
 import json
 import logging
+import os
 import re
 import subprocess
 import sys
@@ -234,10 +236,12 @@ class WorkspaceManager:
             del self.desktops[d]
             logging.debug(f"Purged stale desktop: {d}")
 
-    def get_fallback_monitor_id(self, preferred_slot: str) -> str:
+    def get_fallback_monitor_id(self, preferred_slot: str) -> Optional[str]:
         active_slots = {
             m.slot: m.hex_id for m in self.monitors.values() if m.slot
         }
+        if not active_slots:
+            return None
 
         if preferred_slot in active_slots:
             return active_slots[preferred_slot]
@@ -257,13 +261,17 @@ class WorkspaceManager:
         if secondaries:
             return secondaries[0]
 
-        return self.primary_id
+        return self.primary_id or (list(active_slots.values())[0] if active_slots else None)
 
     def route_desktops(self):
         """Evacuates dead monitors and restores orphans via memory routes."""
         logging.debug("Routing desktops...")
-        detached = [m for m in self.monitors.values() if not m.slot]
         active = [m for m in self.monitors.values() if m.slot]
+        if not active:
+            logging.warning("No active monitors detected; aborting routing cycle.")
+            return
+
+        detached = [m for m in self.monitors.values() if not m.slot]
         mutated = False
 
         if detached:
@@ -278,14 +286,32 @@ class WorkspaceManager:
                             "__evac_dummy__",
                         ]
                     )
-                    for d_id in m.desktop_ids:
+                    for d_id in list(m.desktop_ids):
                         desk = self.desktops.get(d_id)
                         fallback_id = self.get_fallback_monitor_id(
                             desk.preferred_slot if desk else "primary"
                         )
-                        self.programmatic_transfers.add((d_id, fallback_id))
-                        BspcClient.move_desktop(d_id, fallback_id)
-                BspcClient.remove_monitor(m.hex_id)
+                        if fallback_id and fallback_id != m.hex_id:
+                            self.programmatic_transfers.add((d_id, fallback_id))
+                            BspcClient.move_desktop(d_id, fallback_id)
+
+                # Safety check: do not remove monitor if windows still reside on it
+                dump = BspcClient.get_wm_dump()
+                mon_data = next((md for md in dump.get("monitors", []) if f"0x{md['id']:08x}".lower() == m.hex_id), None)
+                has_windows = False
+                if mon_data:
+                    for d_data in mon_data.get("desktops", []):
+                        if d_data.get("root") is not None:
+                            has_windows = True
+                            break
+
+                if has_windows:
+                    logging.critical(
+                        f"Refusing to remove monitor {m.hex_id} ({m.name}): active windows still detected."
+                    )
+                else:
+                    BspcClient.remove_monitor(m.hex_id)
+
             mutated = True
 
         for desk in self.desktops.values():
@@ -293,7 +319,7 @@ class WorkspaceManager:
                 continue
 
             target_mon_id = self.get_fallback_monitor_id(desk.preferred_slot)
-            if desk.current_monitor_id != target_mon_id:
+            if target_mon_id and desk.current_monitor_id != target_mon_id:
                 self.programmatic_transfers.add((desk.hex_id, target_mon_id))
                 BspcClient.move_desktop(desk.hex_id, target_mon_id)
                 mutated = True
@@ -438,25 +464,38 @@ class WorkspaceManager:
         return False
 
     def force_plasma_sync(self):
-        """Adds a blank desktop and removes it by ID to trigger Plasma pager refresh."""
+        """Adds a blank desktop and removes it to trigger Plasma pager refresh."""
         if not self.primary_id:
             return
 
         logging.debug("Triggering Plasma UI sync workaround...")
         self.sync_in_progress = True
         try:
+            # This has to be fast, in order to not leave the new desktop orphaned in the pager
             BspcClient.run_cmd(
-                ["monitor", self.primary_id, "--add-desktops", " "]
+                [
+                    "monitor",
+                    self.primary_id,
+                    "--add-desktops",
+                    "__plasma_sync__",
+                ]
             )
-            desks = BspcClient.run_cmd(
-                ["query", "--desktops", "--monitor", self.primary_id]
-            ).splitlines()
+            BspcClient.run_cmd(
+                [
+                    "desktop",
+                    "__plasma_sync__",
+                    "--remove",
+                ]
+            )
+            # desks = BspcClient.run_cmd(
+            #     ["query", "--desktops", "--monitor", self.primary_id]
+            # ).splitlines()
 
-            if desks:
-                new_id = desks[-1].lower()
-                self.ignored_desktop_ids.add(new_id)
-                time.sleep(0.05)
-                BspcClient.run_cmd(["desktop", new_id, "--remove"])
+            # if desks:
+            #     new_id = desks[-1].lower()
+            #     self.ignored_desktop_ids.add(new_id)
+            #     # time.sleep(0.05)
+            #     BspcClient.run_cmd(["desktop", new_id, "--remove"])
         finally:
             self.sync_in_progress = False
 
@@ -489,6 +528,21 @@ class DebouncedRunner:
     def _execute(self):
         with self._run_lock:
             self.target()
+
+
+_lock_file_handle = None
+
+
+def acquire_pid_lock():
+    """Ensures only a single instance of the daemon runs across reloads."""
+    global _lock_file_handle
+    lock_file = "/tmp/bspwm_workspace_manager.lock"
+    _lock_file_handle = open(lock_file, "w")
+    try:
+        fcntl.lockf(_lock_file_handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except IOError:
+        logging.warning("Workspace manager daemon already running. Exiting silently.")
+        sys.exit(0)
 
 
 def listen_for_events(manager: WorkspaceManager):
@@ -529,6 +583,8 @@ if __name__ == "__main__":
         format="%(levelname)s: %(message)s",
         handlers=[logging.StreamHandler(sys.stderr)],
     )
+
+    acquire_pid_lock()
 
     wm = WorkspaceManager()
     wm.run_cycle()
