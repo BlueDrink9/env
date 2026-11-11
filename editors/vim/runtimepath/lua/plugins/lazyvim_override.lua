@@ -13,9 +13,30 @@ local spec = {
 		init = function()
 			vim.g.autoformat = false
 			vim.g.deprecation_warnings = true
+			-- Strip lazyvim tree mappings to allow them to be replaced without halting.
 			pcall(vim.keymap.del, "n", "<leader>c")
 			pcall(vim.keymap.del, "n", "<leader>s")
+			pcall(vim.keymap.del, "n", "<leader>f")
 		end,
+	},
+
+	{
+		"folke/which-key.nvim",
+		cond = vim.g.ideMode == 1,
+		opts = {
+			plugins = { spelling = true },
+			spec = {
+				{
+					mode = { "x", "v" },
+					-- Remove these because they begin operator funcs, which get overritten
+					-- by which-key here if lazy-loaded. (E.g. comment)
+					{ "<leader>c", nil },
+					{ "<leader>s", nil },
+					{ "<leader>f", nil },
+					-- {"<leader>u",  nil},
+				},
+			},
+		},
 	},
 
 	{
@@ -118,24 +139,6 @@ local spec = {
 		keys = {
 			{ "a", mode = "o" },
 			{ "i", mode = "o" },
-		},
-	},
-
-	{
-		"folke/which-key.nvim",
-		cond = vim.g.ideMode == 1,
-		opts = {
-			plugins = { spelling = true },
-			spec = {
-				{
-					mode = { "x", "v" },
-					-- Remove these because they begin operator funcs, which get overritten
-					-- by which-key here if lazy-loaded. (E.g. comment)
-					{ "<leader>c", nil },
-					{ "<leader>s", nil },
-					-- {"<leader>u",  nil},
-				},
-			},
 		},
 	},
 

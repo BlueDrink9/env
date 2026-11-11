@@ -5,7 +5,7 @@ return {
 
 	{ import = "plugins.treesitter" },
 	{ import = "plugins.firenvim" },
-	{ import = "plugins.vscode-neovim" },
+	{ import = "plugins.vscode-neovim", cond = (function() return vim.g.vscode end) },
 	{ import = "plugins.lualine" },
 	
 	{ "andymass/vim-matchup", event = "VeryLazy" },

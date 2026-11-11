@@ -71,32 +71,56 @@ return {
     dashboard = { enabled = false },
   },
   keys = {
-    -- Pickers mapping to legacy IDE_mappings
-    { maps.FuzzyCommands or "<leader>;", function() Snacks.picker.commands() end, desc = "Commands" },
+    -- 1. Core Pickers (Exact IDE_mappings parity)
+    { maps.FuzzyFuzzy, function() Snacks.picker() end, desc = "All Pickers" },
+    { maps.FuzzyOpenFile, function() Snacks.picker.files() end, desc = "Find Files" },
+    { maps.FuzzyOldFiles, function() Snacks.picker.recent() end, desc = "Recent Files (MRU)" },
+    { maps.FuzzyBuffers, function() Snacks.picker.buffers() end, desc = "Buffers" },
+    { maps.FuzzyCommands, function() Snacks.picker.commands() end, desc = "Commands" },
     { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
-    { maps.FuzzyOpenFile or "<leader><leader>", function() Snacks.picker.files() end, desc = "Find Files" },
-    { maps.FuzzyOldFiles or "<leader><cr>r", function() Snacks.picker.recent() end, desc = "Recent Files (MRU)" },
-    { maps.FuzzyBuffers or "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
-    { maps.FuzzySearchBuffer or "<leader>/", function() Snacks.picker.lines() end, desc = "Search Buffer Lines" },
-    { maps.FuzzySearchFiles or "<leader>??", function() Snacks.picker.grep() end, desc = "Grep Project" },
-    { maps.FuzzySymbols or "<leader>j", function() Snacks.picker.lsp_symbols() end, desc = "Document Symbols" },
-    { maps.FuzzySymbolsWorkspace or "<leader>J", function() Snacks.picker.lsp_workspace_symbols() end, desc = "Workspace Symbols" },
 
-    -- Visual Undo (replaces vim-mundo)
+    -- 2. Buffer & Line Text Searching (The 3 Parity Levels)
+    { maps.FuzzySearchBuffer, function() Snacks.picker.lines() end, desc = "Search Current Buffer (BLines)" },
+    { maps.FuzzySearchBuffers, function() Snacks.picker.grep_buffers() end, desc = "Search All Open Buffers (Lines)" },
+    { maps.FuzzySearchFiles, function() Snacks.picker.grep() end, desc = "Grep Entire Project" },
+
+    -- 3. Code Symbols & Tags
+    { maps.FuzzySymbols, function() Snacks.picker.lsp_symbols() end, desc = "LSP Document Symbols" },
+    { maps.FuzzySymbolsWorkspace, function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
+    { maps.FuzzyTags, function() Snacks.picker.tags() end, desc = "Tags" },
+
+    -- 4. Extensions Parity (Telescope-undo, marks, projects)
+    { (maps.FuzzyFuzzy) .. "u", function() Snacks.picker.undo() end, desc = "Undo History Tree" },
     { "<leader>u", function() Snacks.picker.undo() end, desc = "Undo History Tree" },
+    { (maps.FuzzyFuzzy) .. "m", function() Snacks.picker.marks() end, desc = "Marks" },
+    { (maps.FuzzyFuzzy) .. "r", function() Snacks.picker.projects() end, desc = "Projects / Repos" },
 
-    -- Terminal Toggle
+    -- 5. Terminal & Buffer Lifecycle
     { "<C-s>", function() Snacks.terminal.toggle() end, desc = "Toggle Terminal", mode = { "n", "t" } },
-
-    -- Layout-preserving Buffer Delete (replaces vim-bbye :Bdelete)
     { "<C-w>x", function() Snacks.bufdelete() end, desc = "Delete Buffer (Preserve Splits)", mode = "n" },
-    
-    -- Window Zoom (replaces zoomwintab and goyo)
     { "<C-w>z", function() Snacks.zen.zoom() end, desc = "Zoom Split Window", mode = "n" },
 
-    -- Custom REPL Sender via Opfunc (handles visual, line, and motions like `yip`)
-    { maps.REPLSend or "<leader>sr", _G.snacks_repl_opfunc, mode = { "n", "x" }, expr = true, desc = "Send Motion/Selection to Auto-REPL" },
-    { (maps.REPLSend or "<leader>sr") .. (maps.REPLSend or "<leader>sr"):sub(-1), function() return _G.snacks_repl_opfunc() .. "_" end, mode = "n", expr = true, desc = "Send Line to Auto-REPL" },
+    -- 6. Visual REPL Send
+    {
+      "<leader>sr",
+      function()
+        local text = table.concat(require("snacks.utils").get_vsel_text(), "\n") .. "\n"
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          if vim.bo[buf].buftype == "terminal" then
+            local chan = vim.b[buf].terminal_job_id
+            if chan then
+              vim.api.nvim_chan_send(chan, text)
+              vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", true)
+              return
+            end
+          end
+        end
+        vim.notify("No active terminal found. Press <C-s> to open a terminal first.", vim.log.levels.WARN)
+      end,
+      mode = "x",
+      desc = "Send Selection to Snacks Terminal",
+    },
   },
   init = function()
     -- Compatibility user command for :Bdelete
