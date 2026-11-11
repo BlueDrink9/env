@@ -1,3 +1,27 @@
+-- In your liteMode setup or settings:
+if vim.g.liteMode == 1 then
+  vim.o.showtabline = 2
+
+  function _G.simple_buffer_tabline()
+    local s = ""
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+      if vim.bo[buf].buflisted and vim.api.nvim_buf_is_loaded(buf) then
+        local name = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ":t")
+        name = (name == "" and "[No Name]" or name)
+        local is_current = (buf == vim.api.nvim_get_current_buf())
+        local modified = vim.bo[buf].modified and " +" or ""
+
+        -- Highlight active vs inactive buffer tabs
+        s = s .. (is_current and "%#TabLineSel#" or "%#TabLine#")
+        s = s .. " " .. buf .. ":" .. name .. modified .. " "
+      end
+    end
+    return s .. "%#TabLineFill#"
+  end
+
+  vim.o.tabline = "%!v:lua.simple_buffer_tabline()"
+end
+
 return {
   {
     "https://github.com/numToStr/Comment.nvim",

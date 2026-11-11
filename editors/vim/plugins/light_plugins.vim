@@ -7,9 +7,10 @@ if g:liteMode
     if !has('nvim')
         " Use better, but heavier, 'vim-sandwich' in main.
         Plugin 'https://github.com/tpope/vim-surround.git'
+        " Lighter alt to airline for putting buffers in tabline. In nvim,
+        " use built-in tabline
+        Plugin 'https://github.com/ap/vim-buftabline', {'event': ['BufNewFile', 'BufReadPost']}
     endif
-    " Lighter alt to airline for putting buffers in tabline.
-    Plugin 'https://github.com/ap/vim-buftabline', {'event': ['BufNewFile', 'BufReadPost']}
 endif
 " {]} Litemode only
 

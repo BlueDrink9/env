@@ -43,7 +43,6 @@ local spec = {
                     { "<leader>c", group = false },
                     { "<leader>s", group = false },
                     { "<leader>?", group = false },
-                    -- { "<leader>f", group = false },
                 },
             },
         },
