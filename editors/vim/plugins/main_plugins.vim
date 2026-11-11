@@ -180,11 +180,13 @@ endif
 
 " {[} Extra text objects
 " Additional text objects for next bracket, i/a comma, pairs, smarter searching.
-Plugin 'wellle/targets.vim', {
-            \ 'keys': MakeLazyKeys({
-            \ 'n': ['[', ']'],
-            \ 'ov': ['i,', 'a', 'I', 'A'],
-            \ })}
+if !has("nvim")
+    Plugin 'wellle/targets.vim', {
+                \ 'keys': MakeLazyKeys({
+                \ 'n': ['[', ']'],
+                \ 'ov': ['i,', 'a', 'I', 'A'],
+                \ })}
+endif
 " Move args with >, <,. Next arg ], [,. New text obj a, i,.
 " ],
 Plugin 'PeterRincker/vim-argumentative', {

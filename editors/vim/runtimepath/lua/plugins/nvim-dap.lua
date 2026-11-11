@@ -160,7 +160,6 @@ local specs = {
          -- require("telescope").load_extension('dap')
          -- Explicitly require dependencies to load them
          require'nvim-dap-virtual-text'
-         require'cmp-dap'
          require'goto-breakpoints'
       end,
 
@@ -281,36 +280,6 @@ local specs = {
          {'https://github.com/nvim-telescope/telescope-dap.nvim',
             config = function() require("telescope").load_extension('dap') end,
          },
-
-         { 
-            'rcarriga/cmp-dap',
-            lazy = true,
-            -- has no setup function
-            config = function()
-               local config = require'cmp.config'
-               local old_enabled = config.enabled or function() return true end
-               cmp_enabled = function()
-                  return old_enabled() and (
-                     vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
-                     or require("cmp_dap").is_dap_buffer()
-                  )
-               end
-               config.enabled = cmp_enabled
-            end,
-            dependencies = {
-               {
-                  'hrsh7th/nvim-cmp',
-                  opts = function(_, opts)
-                     require("cmp").setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
-                        sources = {
-                           { name = "dap" },
-                        },
-                     })
-                     return opts
-                  end
-               }
-            }
-         }
 
       }
    }

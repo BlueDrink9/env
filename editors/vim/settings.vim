@@ -691,8 +691,10 @@ endif
 if $TERM =~ 'kitty'
     let &t_ut=''
 endif
-if has('nvim')
-  autocmd myVimrc TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=3000, on_visual=true}
+if has('nvim-0.11')
+    autocmd myVimrc TextYankPost * lua vim.hl.on_yank({higroup="IncSearch", timeout=3000, visual=true})
+elseif has('nvim')
+    autocmd myVimrc TextYankPost * lua vim.highlight.on_yank({higroup="IncSearch", timeout=3000, on_visual=true})
 endif
 
 autocmd myVimrc BufWritePre * :call myVimrcFunctions#MkNonExDir(expand('<afile>'), +expand('<abuf>'))
